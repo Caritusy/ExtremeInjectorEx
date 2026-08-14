@@ -1,9 +1,10 @@
 .vs/
+/out/
+/AppData/
+/settings.xml
 **/bin/
 **/obj/
 **/packages/
 TestResults/
 *.user
 *.suo
-analysis/build-*.log
-

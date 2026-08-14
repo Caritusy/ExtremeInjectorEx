@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App.Title" xml:space="preserve"><value>Extreme Injector Ex</value></data>
+  <data name="Dialog.DllFilter" xml:space="preserve"><value>DLL 文件|*.dll</value></data>
+  <data name="Language.System" xml:space="preserve"><value>跟随系统语言</value></data>
+  <data name="Language.English" xml:space="preserve"><value>英语</value></data>
+  <data name="Language.SimplifiedChinese" xml:space="preserve"><value>简体中文</value></data>
+  <data name="Main.WindowTitle" xml:space="preserve"><value>Extreme Injector Ex {0}.{1}.{2}</value></data>
+  <data name="Main.TargetProcess" xml:space="preserve"><value>目标进程</value></data>
+  <data name="Main.NoProcessSelected" xml:space="preserve"><value>未选择进程</value></data>
+  <data name="Main.ProcessDetails" xml:space="preserve"><value>{0}&#xA;进程 ID：0x{1:X}（{1}）</value></data>
+  <data name="Main.NoDescription" xml:space="preserve"><value>未提供进程描述</value></data>
+  <data name="Main.Select" xml:space="preserve"><value>选择</value></data>
+  <data name="Main.DllList" xml:space="preserve"><value>DLL 列表</value></data>
+  <data name="Main.AddDll" xml:space="preserve"><value>添加 DLL</value></data>
+  <data name="Main.Toggle" xml:space="preserve"><value>启用/禁用</value></data>
+  <data name="Main.Remove" xml:space="preserve"><value>移除</value></data>
+  <data name="Main.Clear" xml:space="preserve"><value>清空</value></data>
+  <data name="Main.DllColumn" xml:space="preserve"><value>DLL</value></data>
+  <data name="Main.Options" xml:space="preserve"><value>选项</value></data>
+  <data name="Main.AdvancedOptionsTooltip" xml:space="preserve"><value>高级模块选项</value></data>
+  <data name="Main.About" xml:space="preserve"><value>关于</value></data>
+  <data name="Main.Settings" xml:space="preserve"><value>设置</value></data>
+  <data name="Main.Inject" xml:space="preserve"><value>注入</value></data>
+  <data name="Main.EmptyDllList" xml:space="preserve"><value>未添加 DLL</value></data>
+  <data name="Main.Status.Injecting" xml:space="preserve"><value>正在注入 {0}…</value></data>
+  <data name="Main.Status.WaitBefore" xml:space="preserve"><value>将在 {0} 秒后开始注入…</value></data>
+  <data name="Main.Status.RunningExport" xml:space="preserve"><value>正在调用导出函数…（{0}）</value></data>
+  <data name="Main.Status.ExportError" xml:space="preserve"><value>调用导出函数时发生错误。</value></data>
+  <data name="Main.Status.WaitBetween" xml:space="preserve"><value>将在 {0} 秒后注入下一个 DLL…</value></data>
+  <data name="Main.WaitingForProcess" xml:space="preserve"><value>已启用自动注入。Extreme Injector Ex 正在等待目标进程（{0}）启动；进程启动后将立即开始注入。</value></data>
+  <data name="Main.NoProcessEntered" xml:space="preserve"><value>尚未选择或输入目标进程。</value></data>
+  <data name="Main.ProcessNotRunning" xml:space="preserve"><value>所选或输入的目标进程当前未运行。</value></data>
+  <data name="Settings.Title" xml:space="preserve"><value>设置</value></data>
+  <data name="Settings.Description" xml:space="preserve"><value>配置注入方式、自动化行为、界面外观、语言和实用工具。</value></data>
+  <data name="Settings.InjectionMethod" xml:space="preserve"><value>注入方式</value></data>
+  <data name="Settings.InjectionBackend" xml:space="preserve"><value>选择注入方式</value></data>
+  <data name="Settings.Method.Standard" xml:space="preserve"><value>标准注入</value></data>
+  <data name="Settings.Method.ThreadHijacking" xml:space="preserve"><value>线程劫持</value></data>
+  <data name="Settings.Method.LdrLoadDllStub" xml:space="preserve"><value>LdrLoadDll 存根</value></data>
+  <data name="Settings.Method.LdrpLoadDllStub" xml:space="preserve"><value>LdrpLoadDll 存根</value></data>
+  <data name="Settings.Method.ManualMap" xml:space="preserve"><value>手动映射</value></data>
+  <data name="Settings.Advanced" xml:space="preserve"><value>高级设置</value></data>
+  <data name="Settings.InjectionBehavior" xml:space="preserve"><value>注入行为</value></data>
+  <data name="Settings.AutoInject" xml:space="preserve"><value>目标进程启动后自动注入</value></data>
+  <data name="Settings.CloseOnInject" xml:space="preserve"><value>注入成功后关闭程序</value></data>
+  <data name="Settings.StealthInject" xml:space="preserve"><value>启用隐蔽注入</value></data>
+  <data name="Settings.DelayBefore" xml:space="preserve"><value>注入前延迟（毫秒）</value></data>
+  <data name="Settings.DelayBetween" xml:space="preserve"><value>模块间注入延迟（毫秒）</value></data>
+  <data name="Settings.Scrambling" xml:space="preserve"><value>DLL 混淆</value></data>
+  <data name="Settings.Preset" xml:space="preserve"><value>预设</value></data>
+  <data name="Settings.Preset.None" xml:space="preserve"><value>无</value></data>
+  <data name="Settings.Preset.Basic" xml:space="preserve"><value>基础</value></data>
+  <data name="Settings.Preset.Standard" xml:space="preserve"><value>标准</value></data>
+  <data name="Settings.Preset.Extreme" xml:space="preserve"><value>极限</value></data>
+  <data name="Settings.Preset.Custom" xml:space="preserve"><value>自定义</value></data>
+  <data name="Settings.PostInjection" xml:space="preserve"><value>注入后处理</value></data>
+  <data name="Settings.HideModule" xml:space="preserve"><value>注入后隐藏模块</value></data>
+  <data name="Settings.ErasePe" xml:space="preserve"><value>注入后擦除 PE 头</value></data>
+  <data name="Settings.Appearance" xml:space="preserve"><value>外观与语言</value></data>
+  <data name="Settings.TextColor" xml:space="preserve"><value>文本颜色</value></data>
+  <data name="Settings.PrimaryAccent" xml:space="preserve"><value>主色</value></data>
+  <data name="Settings.SecondaryAccent" xml:space="preserve"><value>辅助色</value></data>
+  <data name="Settings.Language" xml:space="preserve"><value>界面语言</value></data>
+  <data name="Settings.RandomizeWindowTitle" xml:space="preserve"><value>每次启动使用不同的窗口标题</value></data>
+  <data name="Settings.CliHint" xml:space="preserve"><value>命令行用法：Extreme Injector.exe --cli --help</value></data>
+  <data name="Settings.Tools" xml:space="preserve"><value>实用工具</value></data>
+  <data name="Settings.SecureMode" xml:space="preserve"><value>使用安全模式重新启动</value></data>
+  <data name="Settings.ScrambleDll" xml:space="preserve"><value>混淆 DLL</value></data>
+  <data name="Settings.ProcessInfo" xml:space="preserve"><value>查看进程信息</value></data>
+  <data name="Settings.Reset" xml:space="preserve"><value>重置设置</value></data>
+  <data name="Settings.SaveClose" xml:space="preserve"><value>保存并关闭</value></data>
+  <data name="Module.Title" xml:space="preserve"><value>高级模块选项</value></data>
+  <data name="Module.Heading" xml:space="preserve"><value>调用导出函数</value></data>
+  <data name="Module.Description" xml:space="preserve"><value>如 DLL 导出了初始化函数，可在注入完成后调用它。</value></data>
+  <data name="Module.ExportOptions" xml:space="preserve"><value>导出函数选项</value></data>
+  <data name="Module.ExportFunction" xml:space="preserve"><value>导出函数</value></data>
+  <data name="Module.CallingConvention" xml:space="preserve"><value>调用约定</value></data>
+  <data name="Module.Parameters" xml:space="preserve"><value>参数</value></data>
+  <data name="Module.Add" xml:space="preserve"><value>添加</value></data>
+  <data name="Module.Number" xml:space="preserve"><value>序号</value></data>
+  <data name="Module.Type" xml:space="preserve"><value>类型</value></data>
+  <data name="Module.Value" xml:space="preserve"><value>值</value></data>
+  <data name="Module.Done" xml:space="preserve"><value>完成</value></data>
+  <data name="Module.Convention.StdCall" xml:space="preserve"><value>StdCall</value></data>
+  <data name="Module.Convention.FastCall" xml:space="preserve"><value>FastCall</value></data>
+  <data name="Module.Convention.Cdecl" xml:space="preserve"><value>Cdecl</value></data>
+  <data name="Module.Parameter.Qword" xml:space="preserve"><value>QWORD</value></data>
+  <data name="Module.Parameter.Float" xml:space="preserve"><value>FLOAT</value></data>
+  <data name="Module.Parameter.Dword" xml:space="preserve"><value>DWORD</value></data>
+  <data name="Module.Parameter.AnsiString" xml:space="preserve"><value>LPCSTR</value></data>
+  <data name="Module.Parameter.UnicodeString" xml:space="preserve"><value>LPCWSTR</value></data>
+  <data name="Module.Parameter.Byte" xml:space="preserve"><value>BYTE</value></data>
+  <data name="Module.Parameter.Word" xml:space="preserve"><value>WORD</value></data>
+  <data name="About.Title" xml:space="preserve"><value>关于 Extreme Injector Ex</value></data>
+  <data name="About.Product" xml:space="preserve"><value>Extreme Injector Ex</value></data>
+  <data name="About.Initials" xml:space="preserve"><value>T. R. L. S.</value></data>
+  <data name="About.OriginalCredit" xml:space="preserve"><value>原版 Extreme Injector 由 master131 开发，原作者保留全部权利。</value></data>
+  <data name="About.MaintainerCredit" xml:space="preserve"><value>Extreme Injector Ex 由 HaleonMaerion1337 维护。</value></data>
+  <data name="About.ProjectLink" xml:space="preserve"><value>在 GitHub 上查看项目</value></data>
+  <data name="Common.Close" xml:space="preserve"><value>关闭</value></data>
+  <data name="Common.OK" xml:space="preserve"><value>确定</value></data>
+  <data name="ManualMap.Title" xml:space="preserve"><value>高级注入设置</value></data>
+  <data name="ManualMap.Options" xml:space="preserve"><value>手动映射选项</value></data>
+  <data name="ManualMap.General" xml:space="preserve"><value>常规</value></data>
+  <data name="ManualMap.DisableExceptions" xml:space="preserve"><value>禁用异常支持</value></data>
+  <data name="ManualMap.MapImports" xml:space="preserve"><value>解析导入表</value></data>
+  <data name="ManualMap.HideThreads" xml:space="preserve"><value>向调试器隐藏线程</value></data>
+  <data name="ManualMap.DisableSehValidation" xml:space="preserve"><value>禁用 SEH 处理程序校验</value></data>
+  <data name="Scramble.Title" xml:space="preserve"><value>高级混淆设置</value></data>
+  <data name="Scramble.HeaderOptions" xml:space="preserve"><value>PE 头选项</value></data>
+  <data name="Scramble.SectionOptions" xml:space="preserve"><value>节选项</value></data>
+  <data name="Scramble.DirectoryOptions" xml:space="preserve"><value>数据目录选项</value></data>
+  <data name="Scramble.HeaderFields" xml:space="preserve"><value>扰乱 PE 头字段</value></data>
+  <data name="Scramble.RemoveUselessData" xml:space="preserve"><value>移除无用数据</value></data>
+  <data name="Scramble.ShiftSectionData" xml:space="preserve"><value>平移节数据</value></data>
+  <data name="Scramble.InsertSections" xml:space="preserve"><value>插入额外节</value></data>
+  <data name="Scramble.ModifyCode" xml:space="preserve"><value>修改机器代码</value></data>
+  <data name="Scramble.RenameSections" xml:space="preserve"><value>重命名节</value></data>
+  <data name="Scramble.NewEntryPoint" xml:space="preserve"><value>创建新入口点</value></data>
+  <data name="Scramble.ModifyImports" xml:space="preserve"><value>修改导入表</value></data>
+  <data name="Scramble.RemoveDebug" xml:space="preserve"><value>移除调试数据</value></data>
+  <data name="Scramble.MoveRelocations" xml:space="preserve"><value>移动基址重定位表</value></data>
+  <data name="Scramble.FakeDebug" xml:space="preserve"><value>创建伪造的调试目录</value></data>
+  <data name="Scramble.ShiftMemory" xml:space="preserve"><value>平移节的内存位置</value></data>
+  <data name="Scramble.StripCharacteristics" xml:space="preserve"><value>清除节特征标志</value></data>
+  <data name="ProcessList.Title" xml:space="preserve"><value>进程列表</value></data>
+  <data name="ProcessList.Processes" xml:space="preserve"><value>进程列表</value></data>
+  <data name="ProcessList.Windows" xml:space="preserve"><value>窗口列表</value></data>
+  <data name="ProcessList.Select" xml:space="preserve"><value>选择</value></data>
+  <data name="ProcessInfo.Title" xml:space="preserve"><value>进程信息</value></data>
+  <data name="ProcessInfo.Process" xml:space="preserve"><value>进程</value></data>
+  <data name="ProcessInfo.Summary" xml:space="preserve"><value>{0}&#xA;{1}&#xA;进程 ID：0x{2:X}（{2}）&#xA;模块：{3}    线程：{4}</value></data>
+  <data name="ProcessInfo.Modules" xml:space="preserve"><value>模块</value></data>
+  <data name="ProcessInfo.ModuleName" xml:space="preserve"><value>模块名称</value></data>
+  <data name="ProcessInfo.ModuleBase" xml:space="preserve"><value>模块基址</value></data>
+  <data name="ProcessInfo.ModuleSize" xml:space="preserve"><value>模块大小</value></data>
+  <data name="ProcessInfo.UnloadModule" xml:space="preserve"><value>卸载模块</value></data>
+  <data name="ProcessInfo.KillProcess" xml:space="preserve"><value>终止进程</value></data>
+  <data name="ProcessInfo.Threads" xml:space="preserve"><value>线程</value></data>
+  <data name="ProcessInfo.ThreadId" xml:space="preserve"><value>线程 ID</value></data>
+  <data name="ProcessInfo.StartAddress" xml:space="preserve"><value>起始地址</value></data>
+  <data name="ProcessInfo.Priority" xml:space="preserve"><value>优先级</value></data>
+  <data name="ProcessInfo.Suspend" xml:space="preserve"><value>挂起</value></data>
+  <data name="ProcessInfo.Resume" xml:space="preserve"><value>恢复</value></data>
+  <data name="ProcessInfo.KillThread" xml:space="preserve"><value>终止</value></data>
+  <data name="Dependency.Title" xml:space="preserve"><value>安装依赖项</value></data>
+  <data name="Dependency.Connecting" xml:space="preserve"><value>正在连接下载服务器…</value></data>
+  <data name="Dependency.Downloading" xml:space="preserve"><value>正在下载 {0}… [{1}/{2}]</value></data>
+  <data name="Dependency.Extracting" xml:space="preserve"><value>正在解压文件…</value></data>
+  <data name="Dependency.Installing" xml:space="preserve"><value>正在安装 {0}…</value></data>
+  <data name="Message.ResetSettings" xml:space="preserve"><value>确定要将所有设置恢复为默认值吗？</value></data>
+  <data name="Message.ScrambleStandaloneInfo" xml:space="preserve"><value>Extreme Injector Ex 可以在注入过程中混淆 DLL。此处的独立混淆功能仅用于为其他注入器预先处理 DLL。</value></data>
+  <data name="Message.ScrambleSuccess" xml:space="preserve"><value>DLL 混淆成功。</value></data>
+  <data name="Message.ScrambleFailed" xml:space="preserve"><value>无法混淆所选 DLL。&#xA;&#xA;{0}</value></data>
+  <data name="Message.SecureModeFailed" xml:space="preserve"><value>无法以安全模式启动 Extreme Injector Ex。&#xA;&#xA;{0}</value></data>
+  <data name="Message.ManualMapDisableExceptions" xml:space="preserve"><value>确定要禁用异常支持吗？禁用后，某些 DLL 在手动映射后可能崩溃。</value></data>
+  <data name="Message.ManualMapDisableSeh" xml:space="preserve"><value>确定要禁用 SEH 处理程序校验吗？此选项仅适用于当前手动映射实现尚未正式支持的操作系统。</value></data>
+  <data name="Message.ProcessTerminated" xml:space="preserve"><value>进程已成功终止。</value></data>
+  <data name="Message.ProcessTerminateFailed" xml:space="preserve"><value>无法终止所选进程。</value></data>
+  <data name="Message.ModuleUnloaded" xml:space="preserve"><value>已成功从进程中卸载 {0}。</value></data>
+  <data name="Message.ModuleUnloadFailed" xml:space="preserve"><value>无法从进程中卸载 {0}。</value></data>
+  <data name="Message.ModuleUnloadError" xml:space="preserve"><value>卸载所选模块时发生错误。&#xA;&#xA;{0}</value></data>
+  <data name="Message.ThreadResumeFailed" xml:space="preserve"><value>无法恢复所选线程。</value></data>
+  <data name="Message.ThreadSuspendFailed" xml:space="preserve"><value>无法挂起所选线程。</value></data>
+  <data name="Message.ThreadResumed" xml:space="preserve"><value>所选线程已成功恢复。</value></data>
+  <data name="Message.ThreadSuspended" xml:space="preserve"><value>所选线程已成功挂起。</value></data>
+  <data name="Message.ThreadTerminateFailed" xml:space="preserve"><value>无法终止所选线程。</value></data>
+  <data name="Message.ThreadTerminated" xml:space="preserve"><value>所选线程已成功终止。</value></data>
+  <data name="Message.ManualMapCompatibility" xml:space="preserve"><value>当前 Windows 版本尚未经过完整的手动映射注入验证，注入可能失败或导致进程崩溃。遇到问题时请改用其他注入方式并提交问题报告；也可以尝试在高级注入设置中启用“禁用 SEH 处理程序校验”。</value></data>
+  <data name="Message.LdrpCompatibility" xml:space="preserve"><value>当前 Windows 版本尚未经过完整的 LdrpLoadDll 注入验证，注入可能失败或导致进程崩溃。如有需要，请改用其他注入方式并提交问题报告。</value></data>
+  <data name="Message.ScramblingWarning" xml:space="preserve"><value>DLL 混淆可能导致部分模块无法正常工作。若发生此问题，请降低混淆强度（例如从“极限”改为“基础”），或完全关闭混淆。</value></data>
+  <data name="Message.InjectionCompleted" xml:space="preserve"><value>注入已成功完成。</value></data>
+  <data name="Message.InvalidDll" xml:space="preserve"><value>“{0}”不是有效的 DLL。</value></data>
+  <data name="Message.PlatformMismatch" xml:space="preserve"><value>体系结构不匹配：无法将 {0} DLL“{1}”注入 {2} 进程“{3}”。</value></data>
+  <data name="Message.InjectFailed" xml:space="preserve"><value>将“{0}”注入“{1}”时发生错误。</value></data>
+  <data name="Message.InjectionReturnedNull" xml:space="preserve"><value>所选注入方式未返回模块地址。</value></data>
+  <data name="Message.TargetNoLongerActive" xml:space="preserve"><value>目标进程已不再运行。</value></data>
+  <data name="Message.ExportNotFound" xml:space="preserve"><value>DLL 未导出名为“{0}”的函数。</value></data>
+  <data name="Message.ExportDirectoryMissing" xml:space="preserve"><value>DLL 中不存在导出目录。</value></data>
+  <data name="Message.ErasePeFailed" xml:space="preserve"><value>擦除“{0}”的 PE 头时发生错误。</value></data>
+  <data name="Message.HideModuleFailed" xml:space="preserve"><value>隐藏模块“{0}”时发生错误。</value></data>
+  <data name="Message.Dependency.UnsupportedXp" xml:space="preserve"><value>DLL“{0}”依赖“{1}”，但 Windows XP 不支持该依赖。请联系 DLL 作者，要求其提供兼容 Windows XP 的 Release 版本。</value></data>
+  <data name="Message.Dependency.VersionMismatch" xml:space="preserve"><value>DLL“{0}”依赖“{1}”，但已安装的版本不兼容。请仔细核对路径后删除“{2}”，再重新安装 {3}。是否现在安装 {3}？</value></data>
+  <data name="Message.Dependency.Missing" xml:space="preserve"><value>DLL“{0}”依赖“{1}”，但尚未安装所需文件。是否现在安装 {2}？</value></data>
+  <data name="Message.Dependency.Decision" xml:space="preserve"><value>DLL“{0}”依赖“{1}”，但该依赖缺失或安装不正确。选择“是”可由 Extreme Injector Ex 自动下载，选择“否”可手动安装，选择“取消”则忽略。</value></data>
+  <data name="Message.Dependency.ExtractManually" xml:space="preserve"><value>页面打开后，请下载 ZIP 文件，并将其中的 DLL 解压到“{0}”。请仔细核对目标路径。</value></data>
+  <data name="Message.Dependency.AdminRequired" xml:space="preserve"><value>请以管理员身份重新启动 Extreme Injector Ex，以便保存所需文件。</value></data>
+  <data name="Message.Dependency.DownloadFailed" xml:space="preserve"><value>无法下载所需文件。&#xA;&#xA;{0}</value></data>
+  <data name="Message.Dependency.SetupExitCode" xml:space="preserve"><value>安装程序未成功完成（退出代码 {0}）。</value></data>
+  <data name="Message.Dependency.SetupFailed" xml:space="preserve"><value>无法保存或启动安装程序。&#xA;&#xA;{0}</value></data>
+  <data name="Message.Dependency.Completed" xml:space="preserve"><value>依赖项已成功安装。</value></data>
+  <data name="Message.Dependency.ManualInstall" xml:space="preserve"><value>页面打开后，请先下载并安装“{0}”，然后再开始注入。</value></data>
+  <data name="Message.NewVersion" xml:space="preserve"><value>Extreme Injector Ex {0} 已发布。&#xA;&#xA;请前往 GitHub 下载：&#xA;&#xA;https://github.com/Caritusy/ExtremeInjectorEx</value></data>
+  <data name="Cli.Help" xml:space="preserve"><value>Extreme Injector Ex 命令行&#xA;&#xA;用法：&#xA;  Extreme Injector.exe --cli (--pid &lt;进程 ID&gt; | --process &lt;进程名&gt;) [选项]&#xA;  Extreme Injector.exe -c --help&#xA;&#xA;选择目标进程：&#xA;  --pid &lt;进程 ID&gt;                  按 PID 精确选择一个进程。&#xA;  --process &lt;进程名&gt;               按可执行文件名选择一个进程。&#xA;  --auto-inject / --no-auto-inject  等待／不等待指定名称的进程启动。&#xA;  --wait-timeout &lt;秒&gt;              超过指定时间后停止等待；0 表示无限等待。&#xA;  如果进程名匹配多个进程，命令将失败并列出 [序号] 窗口标题 (PID)。&#xA;&#xA;DLL 与导出函数：&#xA;  --dll &lt;路径&gt;                     添加 DLL；可重复指定多个。&#xA;  --clear-dlls                     清空已保存的 DLL 列表。&#xA;  --enable-dll / --disable-dll     启用／禁用最近添加的 DLL。&#xA;  --export &lt;名称&gt;                  调用最近添加 DLL 的导出函数。&#xA;  --calling-convention &lt;值&gt;       stdcall | fastcall | cdecl。&#xA;  --arg &lt;类型:值&gt;                 添加导出函数参数。类型：ansi、unicode、byte、uint16、uint32、uint64、float。&#xA;&#xA;注入：&#xA;  --method &lt;值&gt;                   standard | thread-hijacking | ldrp-load-dll | ldrp-load-dll-stub | manual-map。&#xA;  --close-on-inject / --no-close-on-inject&#xA;  --stealth / --no-stealth&#xA;  --delay-before &lt;毫秒&gt;           每次注入前的延迟。&#xA;  --delay-between &lt;毫秒&gt;          多个 DLL 之间的延迟。&#xA;  --erase-pe / --no-erase-pe&#xA;  --hide-module / --no-hide-module&#xA;  --hide-from-debugger / --no-hide-from-debugger&#xA;  --resolve-imports / --no-resolve-imports&#xA;  --disable-exceptions / --enable-exceptions&#xA;  --disable-seh-validation / --enable-seh-validation&#xA;&#xA;DLL 混淆：&#xA;  --scramble &lt;none|basic|standard|extreme|custom&gt;&#xA;  --scramble-header-fields / --no-scramble-header-fields&#xA;  --remove-useless-data / --keep-useless-data&#xA;  --insert-sections / --no-insert-sections&#xA;  --shift-section-data / --no-shift-section-data&#xA;  --modify-code / --no-modify-code&#xA;  --rename-sections / --no-rename-sections&#xA;  --new-entry-point / --no-new-entry-point&#xA;  --modify-imports / --no-modify-imports&#xA;  --remove-debug-data / --keep-debug-data&#xA;  --move-relocations / --no-move-relocations&#xA;  --fake-debug-directory / --no-fake-debug-directory&#xA;  --strip-section-flags / --keep-section-flags&#xA;  --shift-section-memory / --no-shift-section-memory&#xA;&#xA;界面与持久化：&#xA;  --language &lt;system|en|zh-CN&gt;&#xA;  --random-title / --no-random-title&#xA;  --primary-color &lt;#RRGGBB&gt; --secondary-color &lt;#RRGGBB&gt; --text-color &lt;#RRGGBB&gt;&#xA;  --reset-settings                  在内存中将全部设置恢复为默认值。&#xA;  --save-settings                   保存本次指定的设置；无需提供目标进程。&#xA;  --reset-warnings&#xA;  --ack-ldrp-warning / --unack-ldrp-warning&#xA;  --ack-manual-map-warning / --unack-manual-map-warning&#xA;  --ack-scramble-warning / --unack-scramble-warning&#xA;  -h, --help                        显示此帮助。</value></data>
+  <data name="Cli.Error.TargetRequired" xml:space="preserve"><value>请使用 --pid &lt;进程 ID&gt; 或 --process &lt;进程名&gt; 选择目标进程。</value></data>
+  <data name="Cli.Error.AdminRequired" xml:space="preserve"><value>注入操作需要提升权限。请以管理员身份重新启动终端。</value></data>
+  <data name="Cli.Error.DllRequired" xml:space="preserve"><value>没有可用且已启用的 DLL。请使用 --dll &lt;路径&gt; 添加，或在已保存的设置中启用 DLL。</value></data>
+  <data name="Cli.Error.DllNotFound" xml:space="preserve"><value>找不到 DLL：{0}</value></data>
+  <data name="Cli.Error.PidNotFound" xml:space="preserve"><value>没有 PID 为 {0} 的运行中进程。</value></data>
+  <data name="Cli.Error.ProcessNotFound" xml:space="preserve"><value>没有运行中的进程匹配“{0}”。</value></data>
+  <data name="Cli.Error.AmbiguousProcess" xml:space="preserve"><value>“{0}”匹配到多个进程：</value></data>
+  <data name="Cli.Error.UsePid" xml:space="preserve"><value>请使用 --pid &lt;进程 ID&gt; 重新执行命令，以精确选择一个进程。</value></data>
+  <data name="Cli.Error.WaitTimedOut" xml:space="preserve"><value>等待“{0}”启动超时。</value></data>
+  <data name="Cli.Canceled" xml:space="preserve"><value>操作已取消。</value></data>
+  <data name="Cli.WaitingForProcess" xml:space="preserve"><value>正在等待进程“{0}”… 按 Ctrl+C 可取消。</value></data>
+  <data name="Cli.SelectedProcess" xml:space="preserve"><value>目标进程：{0} ({1})</value></data>
+  <data name="Cli.Injecting" xml:space="preserve"><value>正在注入 {0}…</value></data>
+  <data name="Cli.ExportInvoked" xml:space="preserve"><value>已调用导出函数：{0}</value></data>
+  <data name="Cli.Injected" xml:space="preserve"><value>已将 {0} 注入至 0x{1}。</value></data>
+  <data name="Cli.Error.Export" xml:space="preserve"><value>无法调用导出函数“{0}”：{1}</value></data>
+  <data name="Cli.Error.InjectionFailed" xml:space="preserve"><value>注入 {0} 失败。</value></data>
+  <data name="Cli.Completed" xml:space="preserve"><value>注入已成功完成。</value></data>
+  <data name="Cli.CompletedWithErrors" xml:space="preserve"><value>注入已完成，但出现错误。</value></data>
+  <data name="Cli.SettingsSaved" xml:space="preserve"><value>设置已保存。</value></data>
+  <data name="Cli.Error.SettingsInUse" xml:space="preserve"><value>另一 Extreme Injector Ex 实例正在使用设置。请关闭该实例后再从命令行保存。</value></data>
+  <data name="Cli.Error.Argument" xml:space="preserve"><value>命令行参数无效：{0}</value></data>
+  <data name="Cli.Error.Unexpected" xml:space="preserve"><value>发生意外错误：{0}</value></data>
+  <data name="Cli.Error.UnknownOption" xml:space="preserve"><value>未知选项：{0}</value></data>
+  <data name="Cli.Error.TargetMutuallyExclusive" xml:space="preserve"><value>--pid 与 --process 只能选择一个，不能同时使用。</value></data>
+  <data name="Cli.Error.OptionRequiresDll" xml:space="preserve"><value>{0} 必须写在某个 --dll 选项之后。</value></data>
+  <data name="Cli.Error.MissingValue" xml:space="preserve"><value>{0} 缺少必需的值。</value></data>
+  <data name="Cli.Error.PositiveInteger" xml:space="preserve"><value>{0} 的值必须是正整数。</value></data>
+  <data name="Cli.Error.NonNegativeInteger" xml:space="preserve"><value>{0} 的值必须是非负整数。</value></data>
+  <data name="Cli.Error.InvalidMethod" xml:space="preserve"><value>未知的注入方式：{0}</value></data>
+  <data name="Cli.Error.InvalidScramble" xml:space="preserve"><value>未知的混淆预设：{0}</value></data>
+  <data name="Cli.Error.InvalidLanguage" xml:space="preserve"><value>未知的语言：{0}</value></data>
+  <data name="Cli.Error.InvalidConvention" xml:space="preserve"><value>未知的调用约定：{0}</value></data>
+  <data name="Cli.Error.InvalidArgumentValue" xml:space="preserve"><value>导出函数参数必须使用“类型:值”格式。</value></data>
+  <data name="Cli.Error.InvalidArgumentType" xml:space="preserve"><value>未知的导出函数参数类型：{0}</value></data>
+  <data name="Cli.Error.InvalidColor" xml:space="preserve"><value>{0} 不接受颜色“{1}”。请使用 #1E90FF 等 HTML 颜色值。</value></data>
+  <data name="Common.UnknownProcess" xml:space="preserve"><value>未知进程</value></data>
+  <data name="Cli.SettingsPathHelp" xml:space="preserve"><value>  --settings &lt;路径&gt;                 从指定文件加载设置，并将更改保存回该文件。</value></data>
+</root>

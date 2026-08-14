@@ -1,66 +1,215 @@
-# Extreme Injector Ex 3.7.4
+# Extreme Injector Ex
 
-This repository contains Extreme Injector Ex, a maintained continuation of the recovered Extreme Injector 3.7.3 source. The original recovery was performed by static analysis only; the supplied executable was not launched.
+[![Version](https://img.shields.io/badge/version-3.7.4-1677c8)](./version)
+![Platform](https://img.shields.io/badge/platform-Windows-0078d4)
+![Framework](https://img.shields.io/badge/.NET_Framework-4.8-512bd4)
 
-## Current status
+**English** | [简体中文](./README.zh-CN.md)
 
-- Target: .NET Framework 4.8 Windows Forms application
-- Recovered source: 217 C# files and 8 WinForms `.resx` files
-- Recovered resources: application icon, manifest, managed resources, and embedded binary resources
-- Clean development project: `src\ExtremeInjector.Clean\ExtremeInjector.Clean.csproj`
-- Per-monitor V2 UI with content-measured WinForms layouts and a redesigned main/About experience
-- Unified settings: `%AppData%\ExtremeInjectorEx\settings.xml`, with automatic migration from legacy folder-local settings
-- UI/settings smoke checks: `tests\ExtremeInjector.UiSmoke\ExtremeInjector.UiSmoke.csproj`
-- Build status: full solution succeeds with 0 errors
-- Detected protector: Goliath .NET Obfuscator 2.2.0
-- Babel, Dotfuscator, and Xenocode strings in the assembly are decoy markers, not the active protector
+Extreme Injector Ex is a maintained Windows DLL injector based on the recoverable source of Extreme Injector 3.7.3. This repository reorganizes the recovered code into a buildable project and continues development with a modernized interface, reliable PE parsing, bilingual localization, portable single-file distribution, and a scriptable command-line mode.
 
-Open `ExtremeInjector.Recovered.sln` in Visual Studio 2022, or build from a Developer PowerShell:
+> [!WARNING]
+> Use this software only with programs that you own or are explicitly authorized to test. Injecting code into third-party processes may violate software licenses, security policies, or local law.
+
+## Highlights
+
+- Standard (`LoadLibrary`), thread-hijacking, `LdrLoadDll`, `LdrLoadDll Stub`, and Manual Map injection methods.
+- PE32 and PE32+ parsing for imports, exports, relocations, TLS, resources, and CLR directories.
+- Target/DLL architecture validation before injection.
+- Configurable delays, automatic injection, post-injection PE erasure, module hiding, and DLL scrambling.
+- Export invocation with calling-convention and typed-argument support.
+- A consistent, DPI-aware WinForms interface in English and Simplified Chinese.
+- System-language detection with an immediate, persistent language override.
+- One GUI instance per Windows user; later launches restore and foreground the existing window.
+- Complete CLI access through `-c` or `--cli`, including every persisted application setting.
+- Embedded runtime dependencies and localization resources: the built EXE can be copied and run on its own.
+
+## Requirements
+
+### Running
+
+- Windows 10 or Windows 11.
+- .NET Framework 4.8.
+- Administrator privileges when an injection operation requires access to the target process.
+- Matching target-process and DLL architectures.
+
+### Building
+
+- Visual Studio 2022 or Build Tools 2022.
+- .NET Framework 4.8 Developer Pack.
+- A .NET SDK capable of building SDK-style `net48` projects.
+
+## Build from source
+
+Clone the repository and run the following commands from its root:
 
 ```powershell
-dotnet restore .\ExtremeInjector.Recovered.sln
-dotnet build .\ExtremeInjector.Recovered.sln -c Release
+dotnet restore .\ExtremeInjectorEx.sln
+dotnet build .\ExtremeInjectorEx.sln -c Release
 ```
 
-The application project intended for continued cleanup is:
+The Release output is written to:
 
 ```text
-src\ExtremeInjector.Clean\ExtremeInjector.Clean.csproj
+out/bin/ExtremeInjector/Release/net48/
 ```
 
-## Recovery layout
+All intermediate files are kept under `out/obj/`. Build output, local settings, test results, and IDE state are excluded from Git.
 
-- `src\ExtremeInjector.Clean`: active, buildable source tree with recovered domain and workflow names
-- `src\ExtremeInjector.KeepInlined`: preserved buildable recovery baseline
-- `artifacts\original`: byte-for-byte preserved input and extracted embedded assemblies
-- `artifacts\deobfuscated`: de4dot variants and normalized managed assemblies
-- `tools\MetadataNormalizer`: reproducible dnlib metadata repair tool
-- `analysis`: compiler logs retained during recovery
+## GUI quick start
 
-The preserved original has this SHA-256 hash:
+Run `Extreme Injector.exe` normally to open the graphical interface:
+
+1. Select a target process.
+2. Add one or more DLLs.
+3. Choose an injection method and optional behavior in **Settings**.
+4. Select **Inject**.
+
+The GUI is single-instance per Windows user. Starting the application again restores and foregrounds the existing main window instead of opening another settings writer.
+
+Settings are stored at:
 
 ```text
-B65F40618F584303CA0BCF9B5F88C233CC4237699C0C4BF40BA8FACBE8195A46
+%AppData%\ExtremeInjectorEx\settings.xml
 ```
 
-The selected normalized assembly is:
+Writes use a temporary file and atomic replacement. Legacy settings found beside the executable are migrated to the per-user location.
+
+### Portable distribution
+
+Only `Extreme Injector.exe` is required at runtime. The generated `.config` and `.pdb` files are build/debug artifacts rather than runtime dependencies.
+
+## Command-line interface
+
+Enable CLI mode with `-c` or `--cli`. The executable remains windowless during ordinary GUI launches while behaving like a regular console program in CLI mode.
+
+Show the authoritative option list for the current build:
+
+```powershell
+& '.\Extreme Injector.exe' --cli --help
+```
+
+### Select a target
+
+Inject a DLL by process ID:
+
+```powershell
+& '.\Extreme Injector.exe' --cli --pid 1234 `
+  --dll 'D:\Modules\Example.dll'
+```
+
+Wait for a named process and use Manual Map:
+
+```powershell
+& '.\Extreme Injector.exe' -c --process Game.exe `
+  --auto-inject --wait-timeout 60 `
+  --dll 'D:\Modules\Example.dll' --method manual-map
+```
+
+Process names may be supplied with or without `.exe`. A name must resolve to exactly one process. When multiple processes match, the CLI exits with code `3` and prints candidates without guessing:
 
 ```text
-artifacts\deobfuscated\ExtremeInjector-3.7.3.keep-inlined.normalized.dll
+[0] First window title (1234)
+[1] Second window title (5678)
 ```
 
-## What was repaired
+Run the command again with the required PID.
 
-The metadata normalizer removes fake obfuscator attributes and invalid `MethodImpl` mappings, restores usable member visibility, and assigns stable names to invalid virtual methods and their overrides. The keep-inlined de4dot variant was selected because it preserved required definitions while producing fewer invalid decompiler constructs than the other variants.
+### Multiple DLLs and exported routines
 
-Several pointer-heavy methods were decompiled into illegal C# because control-flow jumps crossed pinned regions. Their raw ILSpy bodies remain in the source under `#if false`, while equivalent readable implementations are active for byte-pattern search, masked-pattern search, array marshalling, and process-memory stream reads/writes. This keeps the recovery evidence without preventing compilation.
+Repeat `--dll` to add multiple modules. `--export`, `--calling-convention`, and `--arg` apply to the most recently added DLL:
 
-The clean project also restores the settings contract, scramble presets, form names, main-form controls and events, process-selection state, and the top-level injection workflow. The workflow now explicitly performs per-module file checks, configured delays, architecture validation, working-copy preparation, backend selection, post-injection options, optional export invocation, and UI completion. Automatic injection is tracked by process ID so the timer injects once per process instance. The former flattened single-module wrapper is retained under `#if false` as recovery evidence while the active implementation is sequential.
+```powershell
+& '.\Extreme Injector.exe' --cli --pid 1234 `
+  --dll 'D:\Modules\First.dll' `
+  --export Initialize --calling-convention stdcall --arg uint32:1 `
+  --dll 'D:\Modules\Second.dll'
+```
 
-The Ex interface uses DPI-aware layout containers instead of the recovered absolute-position designers. DLL headers and rows are measured from their fonts and padding at the current monitor DPI. The smoke project exercises configuration migration, round-trip persistence, the main form, and the About form without entering the injector runtime.
+Supported exported-routine argument types are `ansi`, `unicode`, `byte`, `uint16`, `uint32`, `uint64`, and `float`.
 
-## Recovery limits
+### Configuration and persistence
 
-This is not the exact original project. Obfuscation permanently removed original private type/member names, comments, local names, formatting, and the original solution layout. Names such as `Class171` are stable recovered names, not the authors' original identifiers. Lower-level injection, PE parsing, and native interop code still contains recovered `ClassN` and `smethod_N` names and control-flow state machines; those areas must be cleaned incrementally against the preserved baseline.
+Every user-configurable GUI setting has a CLI equivalent, including:
 
-The rebuilt executable is a recovered development artifact, not a byte-identical reproduction of the supplied executable. Runtime behavior has not been exercised as part of this static recovery.
+- Injection method, automatic injection, close-on-success behavior, and stealth injection.
+- Pre-injection and between-module delays.
+- PE-header erasure, module hiding, and Manual Map options.
+- Scrambling preset and every individual scrambling flag.
+- Interface language, random window title, and all three interface colors.
+- Warning acknowledgements and the saved DLL list.
+
+Arguments affect only the current invocation unless `--save-settings` is supplied. Use `--settings <path>` to work with an isolated settings file:
+
+```powershell
+& '.\Extreme Injector.exe' --cli --settings '.\automation.xml' `
+  --reset-settings --language zh-CN --no-random-title --save-settings
+```
+
+CLI injection may run alongside the GUI. A settings write acquires the same per-user lock as the GUI; if another instance owns it, the command exits with code `7` rather than risking a conflicting write.
+
+### Exit codes
+
+| Code | Meaning |
+| ---: | --- |
+| `0` | Operation completed successfully. |
+| `1` | Invalid command-line arguments. |
+| `2` | Target process was not found. |
+| `3` | The process name matched multiple targets. |
+| `4` | A DLL was missing, invalid, or no enabled DLL was available. |
+| `5` | Administrator privileges are required. |
+| `6` | Injection failed. |
+| `7` | Another instance currently owns the settings lock. |
+| `8` | Process waiting was canceled. |
+
+## Localization
+
+The interface defaults to the Windows display language: Simplified Chinese is selected for Chinese systems and English elsewhere. The language can be changed immediately under **Settings → Appearance and language → Interface language**.
+
+Project-owned UI and CLI text uses stable resource keys. English and Simplified Chinese resources are kept in:
+
+```text
+res/Localization/Strings.en.resx
+res/Localization/Strings.zh-CN.resx
+```
+
+Both files must contain the same key set. Process names, DLL names, export names, paths, window titles, and operating-system error details remain unchanged because they originate outside the application.
+
+## Repository layout
+
+```text
+ExtremeInjectorEx/
+├─ src/ExtremeInjector/
+│  ├─ Application/          Entry points, CLI, settings, and application models
+│  ├─ Assembly/             AsmJit and BeaEngine interop
+│  ├─ Collections/          Internal collection implementations
+│  ├─ Compression/          Embedded-resource decompression
+│  ├─ Injection/            Injection strategies, remote processes, and Manual Map
+│  ├─ Interop/              Win32 declarations
+│  ├─ Localization/         Language selection and resource access
+│  ├─ PortableExecutable/   PE32/PE32+ structures and parsing
+│  ├─ Runtime/              Startup, resource loading, and recovered compatibility code
+│  ├─ UI/                   WinForms windows and controls
+│  └─ Utilities/            Shared helpers
+├─ res/
+│  ├─ Embedded/             Protected and compressed runtime resources
+│  ├─ Forms/                WinForms resources
+│  └─ Localization/         English and Simplified Chinese text
+└─ out/                     Local build output (not committed)
+```
+
+## Development notes
+
+- The application currently targets .NET Framework 4.8; it is not a NativeAOT application.
+- Normal application paths use typed factories and bindings instead of reflection-based construction. The recovered compatibility runtime still depends on dynamic IL, dynamic assembly loading, and metadata-token resolution.
+- Because of those runtime requirements, WinFormsComInterop, trimming, and NativeAOT cannot be adopted as drop-in changes. A modern .NET migration must replace the dynamic runtime chain first and validate WinForms/COM behavior separately.
+- Logical names for protected resources are intentionally preserved for compatibility. Check the resource resolver before changing them.
+- Changes to PE parsing, process access, assembly generation, embedded dependencies, or localization should be followed by a Release build and focused regression testing.
+
+## Project history
+
+Extreme Injector was originally developed by **master131**. Extreme Injector Ex 3.7.4 is a community-maintained reconstruction based on the recoverable 3.7.3 program source. It does not claim to reproduce lost private identifiers, comments, or the original project layout.
+
+## License
+
+This repository does not currently include a standalone license file. Do not assume permission to redistribute or reuse the code beyond rights granted by the original project and individual contributors. Review and establish the applicable licensing terms before distributing derived builds.

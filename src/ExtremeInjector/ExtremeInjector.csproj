@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <AssemblyName>Extreme Injector</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <OutputType>Exe</OutputType>
+    <UseWindowsForms>True</UseWindowsForms>
+    <TargetFramework>net48</TargetFramework>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <LangVersion>12.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <ApplicationIcon>..\..\res\app.ico</ApplicationIcon>
+    <ApplicationManifest>..\..\res\app.manifest</ApplicationManifest>
+    <AppConfig>..\..\res\App.config</AppConfig>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\res\Forms\AboutForm.resx" LogicalName="AboutForm.resources" />
+    <EmbeddedResource Include="..\..\res\Forms\AdvancedScrambleSettingsForm.resx" LogicalName="AdvancedScrambleSettingsForm.resources" />
+    <EmbeddedResource Include="..\..\res\Forms\DependencyInstallerForm.resx" LogicalName="DependencyInstallerForm.resources" />
+    <EmbeddedResource Include="..\..\res\Forms\MainForm.resx" LogicalName="MainForm.resources" />
+    <EmbeddedResource Include="..\..\res\Forms\ManualMapOptionsForm.resx" LogicalName="ManualMapOptionsForm.resources" />
+    <EmbeddedResource Include="..\..\res\Forms\ProcessInspectorForm.resx" LogicalName="ProcessInspectorForm.resources" />
+    <EmbeddedResource Include="..\..\res\Forms\ProcessSelectorForm.resx" LogicalName="ProcessSelectorForm.resources" />
+    <EmbeddedResource Include="..\..\res\Forms\SettingsForm.resx" LogicalName="SettingsForm.resources" />
+	<EmbeddedResource Include="..\..\res\Localization\Strings.en.resx" LogicalName="ExtremeInjector.Localization.Strings.en.resources">
+	  <WithCulture>false</WithCulture>
+	</EmbeddedResource>
+	<EmbeddedResource Include="..\..\res\Localization\Strings.zh-CN.resx" LogicalName="ExtremeInjector.Localization.Strings.zh-CN.resources">
+	  <WithCulture>false</WithCulture>
+	</EmbeddedResource>
+    <EmbeddedResource Include="..\..\res\Embedded\ProtectedResource.f4f5d655.bin" LogicalName="{f4f5d655-d3f5-4ecf-9a53-3a2fe4afba9b}" />
+    <EmbeddedResource Include="..\..\res\Embedded\ProtectedResource.c61cd46d.bin" LogicalName="{c61cd46d-9d75-437f-8270-5249854f931f}" />
+    <EmbeddedResource Include="..\..\res\Embedded\DynamicMethodPayload.lzma" LogicalName="&#x14;" />
+    <EmbeddedResource Include="..\..\res\Embedded\ProtectedResource.5a3e54c3.bin" LogicalName="{5a3e54c3-0556-4780-bd19-e692c4c55323}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+    <PackageReference Include="DotNetZip.Reduced" Version="1.9.1.8" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+  </ItemGroup>
+  <Target Name="EmbedPrivatePackageAssemblies"
+          AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <EmbeddedDependency Include="@(ReferenceCopyLocalPaths)"
+                          Condition="'%(ReferenceCopyLocalPaths.Extension)' == '.dll' and '%(ReferenceCopyLocalPaths.NuGetPackageId)' != ''" />
+      <EmbeddedResource Include="@(EmbeddedDependency)">
+        <LogicalName>ExtremeInjector.Dependencies.%(Filename)%(Extension)</LogicalName>
+      </EmbeddedResource>
+      <ReferenceCopyLocalPaths Remove="@(EmbeddedDependency)" />
+    </ItemGroup>
+  </Target>
+  <Target Name="RemoveEmbeddedDependenciesFromOutput"
+          AfterTargets="CopyFilesToOutputDirectory">
+    <Delete Files="@(EmbeddedDependency->'$(OutDir)%(DestinationSubPath)')" />
+  </Target>
+</Project>
