@@ -5,114 +5,38 @@ public sealed class DelayImportDirectory : ImportDirectory
 {
 	internal DelayImportDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0)
 	{
-		uint uint_ = default(uint);
-		uint num5 = default(uint);
-		List<ImportedSymbol> ienumerable_ = default(List<ImportedSymbol>);
-		long num3 = default(long);
-		long position = default(long);
-		string text = default(string);
-		long num7 = default(long);
-		while (true)
+		for (;;)
 		{
-			int num = -218151579;
-			while (true)
+			bool flag = class5_0.ReadUInt32() != 0u;
+			uint uint_ = class5_0.ReadUInt32();
+			RecoveredRuntime.smethod_217(class5_0, 8);
+			uint num = class5_0.ReadUInt32();
+			num = ((!flag) ? ((uint)((ulong)num - class154_0.method_6().method_3().imethod_17())) : num);
+			if (num == 0u)
 			{
-				uint num2;
-				int num6;
-				switch ((num2 = (uint)(num ^ -2005067522)) % 21)
-				{
-				case 20u:
-				{
-					uint num4 = class5_0.ReadUInt32();
-					uint_ = class5_0.ReadUInt32();
-					RecoveredRuntime.smethod_217(class5_0, 8);
-					num5 = class5_0.ReadUInt32();
-					if (num4 != 0)
-					{
-						num = -1572069179;
-						continue;
-					}
-					num6 = (int)(num5 - class154_0.method_6().method_3().imethod_17());
-					goto IL_0046;
-				}
-				case 19u:
-					ienumerable_ = RecoveredRuntime.smethod_162(class5_0, this, class154_0);
-					num = (int)((num2 * 261873551) ^ 0x1E727D74);
-					continue;
-				case 18u:
-					RecoveredRuntime.smethod_157(class5_0, num3);
-					num = ((int)num2 * -1075521554) ^ -71612391;
-					continue;
-				case 17u:
-					num6 = (int)num5;
-					goto IL_0046;
-				case 16u:
-					RecoveredRuntime.smethod_157(class5_0, position);
-					num = -2125535480;
-					continue;
-				case 15u:
-					num3 = RecoveredRuntime.smethod_135(class154_0, num5);
-					num = ((int)num2 * -180754170) ^ -954673433;
-					continue;
-				case 14u:
-					gclass0_0[text].AddRange(RecoveredRuntime.smethod_412(text, ienumerable_, this));
-					num = ((int)num2 * -1996935720) ^ -925238987;
-					continue;
-				case 13u:
-					RecoveredRuntime.smethod_157(class5_0, num7);
-					num = ((int)num2 * -1001612891) ^ 0x1466CD48;
-					continue;
-				case 12u:
-					num = ((int)num2 * -625814704) ^ -1011025019;
-					continue;
-				case 11u:
-					num = ((!class5_0.imethod_0(num3)) ? 1371805544 : 194879996) ^ (int)(num2 * 641368292);
-					continue;
-				case 9u:
-					num = (class5_0.imethod_0(num7) ? (-1937903147) : (-1819096362)) ^ (int)(num2 * 1238390751);
-					continue;
-				case 8u:
-					num7 = RecoveredRuntime.smethod_135(class154_0, uint_);
-					num = (int)((num2 * 1640284739) ^ 0x11A3AA21);
-					continue;
-				case 7u:
-					gclass0_0.imethod_0(text, new List<string>(RecoveredRuntime.smethod_412(text, ienumerable_, this)));
-					num = -1518140740;
-					continue;
-				case 6u:
-					num = ((num3 == -1L) ? 1003874172 : 714216600) ^ ((int)num2 * -1816408943);
-					continue;
-				case 5u:
-					num = ((num7 == -1L) ? 1678945404 : 1920623651) ^ (int)(num2 * 490064160);
-					continue;
-				case 4u:
-					num = ((!gclass0_0.imethod_6(text)) ? (-986402917) : (-1776977515)) ^ ((int)num2 * -2075410241);
-					continue;
-				case 2u:
-					RecoveredRuntime.smethod_217(class5_0, 12);
-					position = class5_0.BaseStream.Position;
-					num = (int)((num2 * 729185275) ^ 0x7FEA226);
-					continue;
-				case 1u:
-					text = RecoveredRuntime.smethod_404(class5_0);
-					num = ((int)num2 * -1295727977) ^ -1135815491;
-					continue;
-				case 0u:
-					num = (int)((num2 * 1888667547) ^ 0x70B0E3C5);
-					continue;
-				default:
-					return;
-				case 10u:
-					break;
-				case 3u:
-					return;
-					IL_0046:
-					num5 = (uint)num6;
-					num = ((num5 != 0) ? (-39825176) : (-1272076612));
-					continue;
-				}
 				break;
 			}
+			long num2 = RecoveredRuntime.smethod_135(class154_0, num);
+			long num3 = RecoveredRuntime.smethod_135(class154_0, uint_);
+			RecoveredRuntime.smethod_217(class5_0, 12);
+			long position = class5_0.BaseStream.Position;
+			if (num2 == -1L || num3 == -1L || !class5_0.imethod_0(num2) || !class5_0.imethod_0(num3))
+			{
+				break;
+			}
+			RecoveredRuntime.smethod_157(class5_0, num3);
+			string text = RecoveredRuntime.smethod_404(class5_0);
+			RecoveredRuntime.smethod_157(class5_0, num2);
+			List<ImportedSymbol> ienumerable_ = RecoveredRuntime.smethod_162(class5_0, this, class154_0);
+			if (this.gclass0_0.imethod_6(text))
+			{
+				this.gclass0_0[text].AddRange(RecoveredRuntime.smethod_412(text, ienumerable_, this));
+			}
+			else
+			{
+				this.gclass0_0.imethod_0(text, new List<string>(RecoveredRuntime.smethod_412(text, ienumerable_, this)));
+			}
+			RecoveredRuntime.smethod_157(class5_0, position);
 		}
 	}
 

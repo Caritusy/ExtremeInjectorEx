@@ -25,36 +25,13 @@ public sealed class AsmJitAssembler : IDisposable
 
 	public AsmJitAssembler()
 	{
-		while (true)
+		this.struct19_0 = default(AsmJitAssemblerState);
+		if (AsmJitRuntime.bool_0)
 		{
-			int num = -1595971014;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1301443688)) % 6)
-				{
-				case 5u:
-					num = ((!AsmJitRuntime.bool_0) ? (-839802934) : (-1812750530)) ^ ((int)num2 * -784569684);
-					continue;
-				case 4u:
-					struct19_0 = default(AsmJitAssemblerState);
-					num = (int)((num2 * 1937383864) ^ 0x47133627);
-					continue;
-				case 2u:
-					AsmJitApi.smethod_2()(ref struct19_0, IntPtr.Zero);
-					num = (int)(num2 * 1754946619) ^ -212852007;
-					continue;
-				case 3u:
-					break;
-				default:
-					AsmJitApi.smethod_0()(ref struct19_0, IntPtr.Zero);
-					return;
-				case 1u:
-					return;
-				}
-				break;
-			}
+			AsmJitApi.smethod_2()(ref this.struct19_0, IntPtr.Zero);
+			return;
 		}
+		AsmJitApi.smethod_0()(ref this.struct19_0, IntPtr.Zero);
 	}
 
 	~AsmJitAssembler()

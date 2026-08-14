@@ -179,57 +179,17 @@ public sealed class PeSectionHeader
 
 	public PeSectionHeader(BinaryReader binaryReader_0)
 	{
-		byte[] ienumerable_ = default(byte[]);
-		while (true)
-		{
-			int num = 1949148112;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x29A665CE)) % 9)
-				{
-				case 8u:
-					method_15(binaryReader_0.ReadUInt16());
-					num = (int)((num2 * 358457584) ^ 0x4C1497FC);
-					continue;
-				case 7u:
-					ienumerable_ = binaryReader_0.ReadBytes(8);
-					num = (int)((num2 * 1539616028) ^ 0x562D65A6);
-					continue;
-				case 6u:
-					method_7(binaryReader_0.ReadUInt32());
-					method_9(binaryReader_0.ReadUInt32());
-					method_11(binaryReader_0.ReadUInt32());
-					num = ((int)num2 * -481452740) ^ 0x1BE43287;
-					continue;
-				case 4u:
-					method_1(RecoveredRuntime.smethod_186(ienumerable_));
-					num = ((int)num2 * -1383373167) ^ 0x4DA1823;
-					continue;
-				case 3u:
-					method_13(binaryReader_0.ReadUInt32());
-					num = ((int)num2 * -1962298138) ^ -94192800;
-					continue;
-				case 2u:
-					method_17(binaryReader_0.ReadUInt16());
-					method_19((SectionCharacteristics)binaryReader_0.ReadUInt32());
-					num = ((int)num2 * -1858070482) ^ 0x70D29774;
-					continue;
-				case 1u:
-					method_3(binaryReader_0.ReadUInt32());
-					method_5(binaryReader_0.ReadUInt32());
-					num = (int)((num2 * 614120263) ^ 0x7291A21E);
-					continue;
-				default:
-					return;
-				case 0u:
-					break;
-				case 5u:
-					return;
-				}
-				break;
-			}
-		}
+		byte[] ienumerable_ = binaryReader_0.ReadBytes(8);
+		this.method_1(RecoveredRuntime.smethod_186(ienumerable_));
+		this.method_3(binaryReader_0.ReadUInt32());
+		this.method_5(binaryReader_0.ReadUInt32());
+		this.method_7(binaryReader_0.ReadUInt32());
+		this.method_9(binaryReader_0.ReadUInt32());
+		this.method_11(binaryReader_0.ReadUInt32());
+		this.method_13(binaryReader_0.ReadUInt32());
+		this.method_15(binaryReader_0.ReadUInt16());
+		this.method_17(binaryReader_0.ReadUInt16());
+		this.method_19((SectionCharacteristics)binaryReader_0.ReadUInt32());
 	}
 
 	internal static byte[] smethod_0(BinaryReader binaryReader_0, int int_0)

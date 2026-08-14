@@ -64,47 +64,20 @@ public sealed class ProcessModuleCollection : List<ProcessModuleInfo>
 
 	public IntPtr method_0(string string_0)
 	{
-		int num3 = default(int);
-		string string_1 = default(string);
-		while (true)
+		int num;
+		if (!Path.IsPathRooted(string_0))
 		{
-			int num = -840541156;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -508880491)) % 9)
-				{
-				case 8u:
-					num = ((num3 >= 0) ? (-289575236) : (-673426763));
-					continue;
-				case 7u:
-					num3 = FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.method_8().Equals(string_1, StringComparison.OrdinalIgnoreCase));
-					num = -108590644;
-					continue;
-				case 6u:
-					string_1 = string_0;
-					num = ((int)num2 * -1257608882) ^ 0x350496;
-					continue;
-				case 3u:
-					num = (Path.IsPathRooted(string_1) ? (-1151442079) : (-1550847651)) ^ ((int)num2 * -1418292516);
-					continue;
-				case 1u:
-					num3 = FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.method_6().Equals(string_1, StringComparison.OrdinalIgnoreCase));
-					num = (int)(num2 * 1214666303) ^ -886877397;
-					continue;
-				case 0u:
-					num = (int)(num2 * 1690923808) ^ -427076340;
-					continue;
-				case 5u:
-					break;
-				default:
-					return base[num3].method_0();
-				case 4u:
-					return IntPtr.Zero;
-				}
-				break;
-			}
+			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.method_8().Equals(string_0, StringComparison.OrdinalIgnoreCase));
 		}
+		else
+		{
+			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.method_6().Equals(string_0, StringComparison.OrdinalIgnoreCase));
+		}
+		if (num < 0)
+		{
+			return IntPtr.Zero;
+		}
+		return base[num].method_0();
 	}
 
 	internal static bool smethod_0(string string_0)

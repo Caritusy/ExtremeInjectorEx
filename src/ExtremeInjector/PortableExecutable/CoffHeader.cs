@@ -128,38 +128,13 @@ public sealed class CoffHeader
 
 	public CoffHeader(BinaryReader binaryReader_0)
 	{
-		while (true)
-		{
-			int num = 1388187943;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x14173F55)) % 5)
-				{
-				case 4u:
-					method_1((MachineType)binaryReader_0.ReadUInt16());
-					method_3(binaryReader_0.ReadUInt16());
-					num = (int)((num2 * 389654741) ^ 0x4503E34F);
-					continue;
-				case 2u:
-					method_7(binaryReader_0.ReadUInt32());
-					method_9(binaryReader_0.ReadUInt32());
-					method_11(binaryReader_0.ReadUInt16());
-					num = ((int)num2 * -862691565) ^ 0x7E421306;
-					continue;
-				case 0u:
-					method_5(binaryReader_0.ReadUInt32());
-					num = (int)((num2 * 221832006) ^ 0x2A730908);
-					continue;
-				case 3u:
-					break;
-				default:
-					method_13((CoffCharacteristics)binaryReader_0.ReadUInt16());
-					return;
-				}
-				break;
-			}
-		}
+		this.method_1((MachineType)binaryReader_0.ReadUInt16());
+		this.method_3(binaryReader_0.ReadUInt16());
+		this.method_5(binaryReader_0.ReadUInt32());
+		this.method_7(binaryReader_0.ReadUInt32());
+		this.method_9(binaryReader_0.ReadUInt32());
+		this.method_11(binaryReader_0.ReadUInt16());
+		this.method_13((CoffCharacteristics)binaryReader_0.ReadUInt16());
 	}
 
 	internal static ushort smethod_0(BinaryReader binaryReader_0)

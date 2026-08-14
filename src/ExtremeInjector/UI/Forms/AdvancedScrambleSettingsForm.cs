@@ -81,34 +81,9 @@ public sealed class AdvancedScrambleSettingsForm : Form
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing)
+		if (disposing && this.icontainer_0 != null)
 		{
-			while (true)
-			{
-				int num = -819503620;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -468039133)) % 4)
-					{
-					case 3u:
-						num = ((icontainer_0 != null) ? (-297161400) : (-624615149)) ^ (int)(num2 * 1811205811);
-						continue;
-					case 2u:
-						icontainer_0.Dispose();
-						num = ((int)num2 * -1637467239) ^ -1396314904;
-						continue;
-					case 0u:
-						break;
-					default:
-						goto end_IL_0067;
-					}
-					break;
-				}
-				continue;
-				end_IL_0067:
-				break;
-			}
+			this.icontainer_0.Dispose();
 		}
 		base.Dispose(disposing);
 	}

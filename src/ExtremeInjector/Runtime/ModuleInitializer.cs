@@ -18,67 +18,27 @@ internal class _003CModule_003E
 
 		internal uint method_1(Class0 class0_0)
 		{
-			uint num = (class0_0.uint_1 >> 11) * uint_0;
-			while (true)
+			uint num = (class0_0.uint_1 >> 11) * this.uint_0;
+			if (class0_0.uint_0 >= num)
 			{
-				int num2 = -1482665512;
-				while (true)
+				class0_0.uint_1 -= num;
+				class0_0.uint_0 -= num;
+				this.uint_0 -= this.uint_0 >> 5;
+				if (class0_0.uint_1 < 16777216u)
 				{
-					uint num3;
-					switch ((num3 = (uint)(num2 ^ -561030677)) % 14)
-					{
-					case 13u:
-						class0_0.uint_0 = (class0_0.uint_0 << 8) | (byte)class0_0.stream_0.ReadByte();
-						num2 = (int)(num3 * 782264802) ^ -670693456;
-						continue;
-					case 11u:
-						num2 = ((class0_0.uint_0 < num) ? (-1490340055) : (-1278109904)) ^ (int)(num3 * 185027884);
-						continue;
-					case 10u:
-						class0_0.uint_0 -= num;
-						num2 = ((int)num3 * -844632580) ^ -1057274537;
-						continue;
-					case 9u:
-						class0_0.uint_1 <<= 8;
-						num2 = ((int)num3 * -810143152) ^ -1946398797;
-						continue;
-					case 8u:
-						uint_0 -= uint_0 >> 5;
-						num2 = ((int)num3 * -286112980) ^ -1923396915;
-						continue;
-					case 7u:
-						class0_0.uint_1 -= num;
-						num2 = -1686703431;
-						continue;
-					case 6u:
-						class0_0.uint_1 <<= 8;
-						num2 = ((int)num3 * -1939396155) ^ -615803802;
-						continue;
-					case 5u:
-						num2 = ((class0_0.uint_1 < 16777216) ? (-230819871) : (-627254481)) ^ (int)(num3 * 1589862973);
-						continue;
-					case 4u:
-						num2 = ((class0_0.uint_1 < 16777216) ? (-1826388386) : (-1465563911)) ^ (int)(num3 * 818304679);
-						continue;
-					case 3u:
-						class0_0.uint_0 = (class0_0.uint_0 << 8) | (byte)class0_0.stream_0.ReadByte();
-						num2 = ((int)num3 * -83092176) ^ -438518859;
-						continue;
-					case 2u:
-						class0_0.uint_1 = num;
-						uint_0 += 2048 - uint_0 >> 5;
-						num2 = ((int)num3 * -1855129892) ^ 0x4D022C98;
-						continue;
-					case 0u:
-						break;
-					case 1u:
-						return 0u;
-					default:
-						return 1u;
-					}
-					break;
+					class0_0.uint_0 = (class0_0.uint_0 << 8 | (uint)((byte)class0_0.stream_0.ReadByte()));
+					class0_0.uint_1 <<= 8;
 				}
+				return 1u;
 			}
+			class0_0.uint_1 = num;
+			this.uint_0 += 2048u - this.uint_0 >> 5;
+			if (class0_0.uint_1 < 16777216u)
+			{
+				class0_0.uint_0 = (class0_0.uint_0 << 8 | (uint)((byte)class0_0.stream_0.ReadByte()));
+				class0_0.uint_1 <<= 8;
+			}
+			return 0u;
 		}
 	}
 
@@ -97,160 +57,49 @@ internal class _003CModule_003E
 		internal void method_0()
 		{
 			uint num = 1u;
-			while (true)
+			while ((ulong)num < (ulong)(1L << (this.int_0 & 31)))
 			{
-				int num2 = ((num < 1 << int_0) ? (-1045090369) : (-165194433));
-				while (true)
-				{
-					uint num3;
-					switch ((num3 = (uint)(num2 ^ -1595099347)) % 5)
-					{
-					case 4u:
-						struct0_0[num].method_0();
-						num2 = -170203815;
-						continue;
-					case 2u:
-						num++;
-						num2 = ((int)num3 * -2084685499) ^ 0x43B5B3E7;
-						continue;
-					case 0u:
-						num2 = -1045090369;
-						continue;
-					default:
-						return;
-					case 1u:
-						break;
-					case 3u:
-						return;
-					}
-					break;
-				}
+				this.struct0_0[(int)((UIntPtr)num)].method_0();
+				num += 1u;
 			}
 		}
 
 		internal uint method_1(Class0 class0_0)
 		{
 			uint num = 1u;
-			int num2 = int_0;
-			while (true)
+			for (int i = this.int_0; i > 0; i--)
 			{
-				int num3 = -864641978;
-				while (true)
-				{
-					uint num4;
-					switch ((num4 = (uint)(num3 ^ -2142626707)) % 6)
-					{
-					case 5u:
-						num = (num << 1) + struct0_0[num].method_1(class0_0);
-						num3 = -1933271591;
-						continue;
-					case 4u:
-						num2--;
-						num3 = (int)(num4 * 2076212624) ^ -922970573;
-						continue;
-					case 1u:
-						num3 = ((int)num4 * -1851776481) ^ 0x1AB87446;
-						continue;
-					case 0u:
-						num3 = ((num2 <= 0) ? (-1122563594) : (-1800143092));
-						continue;
-					case 2u:
-						break;
-					default:
-						return num - (uint)(1 << int_0);
-					}
-					break;
-				}
+				num = (num << 1) + this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0);
 			}
+			return num - (1u << this.int_0);
 		}
 
 		internal uint method_2(Class0 class0_0)
 		{
 			uint num = 1u;
 			uint num2 = 0u;
-			int num3 = 0;
-			uint num6 = default(uint);
-			while (true)
+			for (int i = 0; i < this.int_0; i++)
 			{
-				int num4 = ((num3 >= int_0) ? (-420650930) : (-281944708));
-				while (true)
-				{
-					uint num5;
-					switch ((num5 = (uint)(num4 ^ -662547698)) % 6)
-					{
-					case 5u:
-						num += num6;
-						num2 |= num6 << num3;
-						num3++;
-						num4 = (int)(num5 * 1830743773) ^ -401392596;
-						continue;
-					case 4u:
-						num6 = struct0_0[num].method_1(class0_0);
-						num4 = -1205533436;
-						continue;
-					case 3u:
-						num4 = -281944708;
-						continue;
-					case 2u:
-						num <<= 1;
-						num4 = ((int)num5 * -1140198338) ^ -1129283723;
-						continue;
-					case 1u:
-						break;
-					default:
-						return num2;
-					}
-					break;
-				}
+				uint num3 = this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0);
+				num <<= 1;
+				num += num3;
+				num2 |= num3 << i;
 			}
+			return num2;
 		}
 
 		internal static uint smethod_0(Struct0[] struct0_1, uint uint_0, Class0 class0_0, int int_1)
 		{
 			uint num = 1u;
 			uint num2 = 0u;
-			int num6 = default(int);
-			uint num5 = default(uint);
-			while (true)
+			for (int i = 0; i < int_1; i++)
 			{
-				int num3 = 1538976348;
-				while (true)
-				{
-					uint num4;
-					switch ((num4 = (uint)(num3 ^ 0x4AEB94BA)) % 8)
-					{
-					case 6u:
-						num6 = 0;
-						num3 = ((int)num4 * -490148988) ^ -1401186058;
-						continue;
-					case 5u:
-						num += num5;
-						num2 |= num5 << num6;
-						num6++;
-						num3 = (int)((num4 * 176167312) ^ 0x385DF35B);
-						continue;
-					case 4u:
-						num3 = (int)((num4 * 299963937) ^ 0x49B19BDF);
-						continue;
-					case 3u:
-						num <<= 1;
-						num3 = (int)(num4 * 1066836187) ^ -1632868666;
-						continue;
-					case 1u:
-						num3 = ((num6 >= int_1) ? 1058496680 : 1575767410);
-						continue;
-					case 0u:
-						num5 = struct0_1[uint_0 + num].method_1(class0_0);
-						num3 = 817707265;
-						continue;
-					case 7u:
-						break;
-					default:
-						return num2;
-					}
-					break;
-				}
+				uint num3 = struct0_1[(int)((UIntPtr)(uint_0 + num))].method_1(class0_0);
+				num <<= 1;
+				num += num3;
+				num2 |= num3 << i;
 			}
+			return num2;
 		}
 	}
 
@@ -264,48 +113,12 @@ internal class _003CModule_003E
 
 		internal void method_0(Stream stream_1)
 		{
-			stream_0 = stream_1;
-			int num3 = default(int);
-			while (true)
+			this.stream_0 = stream_1;
+			this.uint_0 = 0u;
+			this.uint_1 = uint.MaxValue;
+			for (int i = 0; i < 5; i++)
 			{
-				int num = -1732760144;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -452011378)) % 8)
-					{
-					case 6u:
-						uint_0 = 0u;
-						num = ((int)num2 * -1282323443) ^ -766242148;
-						continue;
-					case 5u:
-						num3 = 0;
-						num = ((int)num2 * -644163719) ^ 0x1B6E5B69;
-						continue;
-					case 4u:
-						uint_1 = uint.MaxValue;
-						num = ((int)num2 * -487275483) ^ -1987477449;
-						continue;
-					case 3u:
-						num = ((num3 < 5) ? (-189035201) : (-1006976626));
-						continue;
-					case 2u:
-						num = (int)(num2 * 365611904) ^ -1412079539;
-						continue;
-					case 1u:
-						uint_0 = (uint_0 << 8) | (byte)stream_0.ReadByte();
-						num3++;
-						num = -1467916467;
-						continue;
-					default:
-						return;
-					case 7u:
-						break;
-					case 0u:
-						return;
-					}
-					break;
-				}
+				this.uint_0 = (this.uint_0 << 8 | (uint)((byte)this.stream_0.ReadByte()));
 			}
 		}
 
@@ -316,104 +129,33 @@ internal class _003CModule_003E
 
 		internal void method_2()
 		{
-			while (true)
+			while (this.uint_1 < 16777216u)
 			{
-				int num = ((uint_1 >= 16777216) ? (-1403435843) : (-1765376218));
-				while (true)
-				{
-					switch ((uint)(num ^ -526729413) % 4u)
-					{
-					case 3u:
-						num = -1765376218;
-						continue;
-					case 1u:
-						uint_0 = (uint_0 << 8) | (byte)stream_0.ReadByte();
-						uint_1 <<= 8;
-						num = -2077651469;
-						continue;
-					default:
-						return;
-					case 0u:
-						break;
-					case 2u:
-						return;
-					}
-					break;
-				}
+				this.uint_0 = (this.uint_0 << 8 | (uint)((byte)this.stream_0.ReadByte()));
+				this.uint_1 <<= 8;
 			}
 		}
 
 		internal uint method_3(int int_0)
 		{
-			uint num = uint_1;
-			int num7 = default(int);
-			uint num4 = default(uint);
-			uint num5 = default(uint);
-			uint num6 = default(uint);
-			while (true)
+			uint num = this.uint_1;
+			uint num2 = this.uint_0;
+			uint num3 = 0u;
+			for (int i = int_0; i > 0; i--)
 			{
-				int num2 = 1037090477;
-				while (true)
+				num >>= 1;
+				uint num4 = num2 - num >> 31;
+				num2 -= (num & num4 - 1u);
+				num3 = (num3 << 1 | 1u - num4);
+				if (num < 16777216u)
 				{
-					uint num3;
-					switch ((num3 = (uint)(num2 ^ 0x23E679C0)) % 14)
-					{
-					case 13u:
-						num2 = ((num7 <= 0) ? 2099884953 : 1127736123);
-						continue;
-					case 12u:
-						num4 = 0u;
-						num7 = int_0;
-						num2 = ((int)num3 * -1901188992) ^ -122513367;
-						continue;
-					case 11u:
-						num5 = (num5 << 8) | (byte)stream_0.ReadByte();
-						num <<= 8;
-						num2 = (int)(num3 * 1001686) ^ -136200854;
-						continue;
-					case 9u:
-						num >>= 1;
-						num2 = 655143809;
-						continue;
-					case 8u:
-						num2 = ((num < 16777216) ? (-52126715) : (-860186966)) ^ ((int)num3 * -619387647);
-						continue;
-					case 7u:
-						num5 = uint_0;
-						num2 = (int)(num3 * 658534868) ^ -1254034608;
-						continue;
-					case 6u:
-						num7--;
-						num2 = 1105004111;
-						continue;
-					case 5u:
-						uint_1 = num;
-						num2 = ((int)num3 * -153540702) ^ -1763791646;
-						continue;
-					case 4u:
-						num4 = (num4 << 1) | (1 - num6);
-						num2 = (int)((num3 * 1126207310) ^ 0x32B7961E);
-						continue;
-					case 3u:
-						num2 = ((int)num3 * -2024415622) ^ -89621179;
-						continue;
-					case 1u:
-						num6 = num5 - num >> 31;
-						num5 -= num & (num6 - 1);
-						num2 = (int)(num3 * 134028520) ^ -66563058;
-						continue;
-					case 0u:
-						uint_0 = num5;
-						num2 = (int)((num3 * 1346957901) ^ 0x6B767202);
-						continue;
-					case 2u:
-						break;
-					default:
-						return num4;
-					}
-					break;
+					num2 = (num2 << 8 | (uint)((byte)this.stream_0.ReadByte()));
+					num <<= 8;
 				}
 			}
+			this.uint_1 = num;
+			this.uint_0 = num2;
+			return num3;
 		}
 
 		internal Class0()
@@ -439,137 +181,43 @@ internal class _003CModule_003E
 
 			internal void method_0(uint uint_1)
 			{
-				uint num = uint_0;
-				while (true)
+				for (uint num = this.uint_0; num < uint_1; num += 1u)
 				{
-					int num2 = ((num >= uint_1) ? (-233945094) : (-797387834));
-					while (true)
-					{
-						uint num3;
-						switch ((num3 = (uint)(num2 ^ -352424823)) % 6)
-						{
-						case 5u:
-							uint_0 = uint_1;
-							num2 = (int)(num3 * 884197342) ^ -1732369979;
-							continue;
-						case 4u:
-						{
-							ref Struct1 reference2 = ref struct1_1[num];
-							reference2 = new Struct1(3);
-							num++;
-							num2 = (int)((num3 * 492387694) ^ 0x5EA049C6);
-							continue;
-						}
-						case 3u:
-						{
-							ref Struct1 reference = ref struct1_0[num];
-							reference = new Struct1(3);
-							num2 = -815493333;
-							continue;
-						}
-						case 2u:
-							num2 = -797387834;
-							continue;
-						default:
-							return;
-						case 1u:
-							break;
-						case 0u:
-							return;
-						}
-						break;
-					}
+					this.struct1_0[(int)((UIntPtr)num)] = new _003CModule_003E.Struct1(3);
+					this.struct1_1[(int)((UIntPtr)num)] = new _003CModule_003E.Struct1(3);
 				}
+				this.uint_0 = uint_1;
 			}
 
 			internal void method_1()
 			{
-				struct0_0.method_0();
-				uint num3 = default(uint);
-				while (true)
+				this.struct0_0.method_0();
+				for (uint num = 0u; num < this.uint_0; num += 1u)
 				{
-					int num = -1841094755;
-					while (true)
-					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ -1847890553)) % 7)
-						{
-						case 5u:
-							num3 = 0u;
-							num = (int)((num2 * 706123138) ^ 0x182B61AE);
-							continue;
-						case 4u:
-							num = ((int)num2 * -999431762) ^ -825857402;
-							continue;
-						case 3u:
-							num = ((num3 >= uint_0) ? (-101296835) : (-830622758));
-							continue;
-						case 2u:
-							struct0_1.method_0();
-							num = ((int)num2 * -1909258561) ^ -1521699136;
-							continue;
-						case 1u:
-							struct1_0[num3].method_0();
-							struct1_1[num3].method_0();
-							num3++;
-							num = -136394704;
-							continue;
-						case 6u:
-							break;
-						default:
-							struct1_2.method_0();
-							return;
-						}
-						break;
-					}
+					this.struct1_0[(int)((UIntPtr)num)].method_0();
+					this.struct1_1[(int)((UIntPtr)num)].method_0();
 				}
+				this.struct0_1.method_0();
+				this.struct1_2.method_0();
 			}
 
 			internal uint method_2(Class0 class0_0, uint uint_1)
 			{
-				if (struct0_0.method_1(class0_0) == 0)
+				if (this.struct0_0.method_1(class0_0) == 0u)
 				{
-					goto IL_0020;
+					return this.struct1_0[(int)((UIntPtr)uint_1)].method_1(class0_0);
 				}
-				goto IL_00af;
-				IL_0020:
-				int num = -914802962;
-				goto IL_0073;
-				IL_0073:
-				uint num3 = default(uint);
-				while (true)
+				uint num = 8u;
+				if (this.struct0_1.method_1(class0_0) != 0u)
 				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -1893361839)) % 7)
-					{
-					case 6u:
-						break;
-					case 2u:
-						num3 += 8;
-						num3 += struct1_2.method_1(class0_0);
-						num = -1075930321;
-						continue;
-					case 1u:
-						num = (int)(num2 * 1222964019) ^ -1361667440;
-						continue;
-					case 0u:
-						num3 += struct1_1[uint_1].method_1(class0_0);
-						num = ((int)num2 * -126805751) ^ -520810783;
-						continue;
-					case 5u:
-						goto IL_00af;
-					default:
-						return num3;
-					case 4u:
-						return struct1_0[uint_1].method_1(class0_0);
-					}
-					break;
+					num += 8u;
+					num += this.struct1_2.method_1(class0_0);
 				}
-				goto IL_0020;
-				IL_00af:
-				num3 = 8u;
-				num = ((struct0_1.method_1(class0_0) != 0) ? (-985488212) : (-1609372964));
-				goto IL_0073;
+				else
+				{
+					num += this.struct1_1[(int)((UIntPtr)uint_1)].method_1(class0_0);
+				}
+				return num;
 			}
 
 			internal Class2()
@@ -590,116 +238,42 @@ internal class _003CModule_003E
 
 				internal void method_1()
 				{
-					int num = 0;
-					while (true)
+					for (int i = 0; i < 768; i++)
 					{
-						int num2 = ((num < 768) ? 1830197561 : 728531120);
-						while (true)
-						{
-							uint num3;
-							switch ((num3 = (uint)(num2 ^ 0x6306E2AC)) % 5)
-							{
-							case 2u:
-								struct0_0[num].method_0();
-								num2 = 1716901106;
-								continue;
-							case 1u:
-								num++;
-								num2 = (int)((num3 * 1562895348) ^ 0x54D0D83B);
-								continue;
-							case 0u:
-								num2 = 1830197561;
-								continue;
-							default:
-								return;
-							case 3u:
-								break;
-							case 4u:
-								return;
-							}
-							break;
-						}
+						this.struct0_0[i].method_0();
 					}
 				}
 
 				internal byte method_2(Class0 class0_0)
 				{
 					uint num = 1u;
-					while (true)
+					do
 					{
-						int num2 = -60627530;
-						while (true)
-						{
-							uint num3;
-							switch ((num3 = (uint)(num2 ^ -1094990177)) % 4)
-							{
-							case 3u:
-								num2 = ((num >= 256) ? (-2009338857) : (-1125201750)) ^ (int)(num3 * 1574279700);
-								continue;
-							case 1u:
-								num = (num << 1) | struct0_0[num].method_1(class0_0);
-								num2 = -853109564;
-								continue;
-							case 2u:
-								break;
-							default:
-								return (byte)num;
-							}
-							break;
-						}
+						num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0));
 					}
+					while (num < 256u);
+					return (byte)num;
 				}
 
 				internal byte method_3(Class0 class0_0, byte byte_0)
 				{
 					uint num = 1u;
-					uint num5 = default(uint);
-					uint num4 = default(uint);
-					while (true)
+					while (num < 256u)
 					{
-						int num2 = 1922335340;
-						while (true)
+						uint num2 = (uint)(byte_0 >> 7 & 1);
+						byte_0 = (byte)(byte_0 << 1);
+						uint num3 = this.struct0_0[(int)((UIntPtr)((1u + num2 << 8) + num))].method_1(class0_0);
+						num = (num << 1 | num3);
+						if (num2 != num3)
 						{
-							uint num3;
-							switch ((num3 = (uint)(num2 ^ 0x3874DDF7)) % 10)
+							while (num < 256u)
 							{
-							case 9u:
-								num2 = ((num >= 256) ? 690103299 : 259318676);
-								continue;
-							case 7u:
-								byte_0 <<= 1;
-								num5 = struct0_0[(1 + num4 << 8) + num].method_1(class0_0);
-								num = (num << 1) | num5;
-								num2 = ((int)num3 * -316735394) ^ -1522371530;
-								continue;
-							case 6u:
-								num2 = ((int)num3 * -1577906800) ^ -1202066321;
-								continue;
-							case 5u:
-								num2 = ((num4 == num5) ? (-1060089890) : (-324980810)) ^ (int)(num3 * 1972060313);
-								continue;
-							case 3u:
-								num4 = (uint)((byte_0 >> 7) & 1);
-								num2 = 1423518192;
-								continue;
-							case 2u:
-								num2 = ((num >= 256) ? 1516245295 : 1922335340);
-								continue;
-							case 1u:
-								num = (num << 1) | struct0_0[num].method_1(class0_0);
-								num2 = 489190566;
-								continue;
-							case 0u:
-								num2 = (int)((num3 * 1983271454) ^ 0x504A052A);
-								continue;
-							case 4u:
-								break;
-							default:
-								return (byte)num;
+								num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0));
 							}
-							break;
+							return (byte)num;
 						}
 					}
+					return (byte)num;
 				}
 			}
 
@@ -713,112 +287,27 @@ internal class _003CModule_003E
 
 			internal void method_0(int int_2, int int_3)
 			{
-				if (struct2_0 != null)
+				if (this.struct2_0 == null || this.int_1 != int_3 || this.int_0 != int_2)
 				{
-					goto IL_003a;
-				}
-				goto IL_0166;
-				IL_003a:
-				int num = -190740277;
-				goto IL_0120;
-				IL_0120:
-				uint num3 = default(uint);
-				uint num4 = default(uint);
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -1237201894)) % 13)
+					this.int_0 = int_2;
+					this.uint_0 = (1u << int_2) - 1u;
+					this.int_1 = int_3;
+					uint num = 1u << this.int_1 + this.int_0;
+					this.struct2_0 = new _003CModule_003E.Class1.Class3.Struct2[num];
+					for (uint num2 = 0u; num2 < num; num2 += 1u)
 					{
-					case 12u:
-						num = ((int_1 == int_3) ? (-1647888010) : (-1215430410)) ^ (int)(num2 * 595648171);
-						continue;
-					case 10u:
-						break;
-					case 9u:
-						num3 = 0u;
-						num = (int)(num2 * 73114855) ^ -766495291;
-						continue;
-					case 8u:
-						int_1 = int_3;
-						num4 = (uint)(1 << int_1 + int_0);
-						num = (int)(num2 * 677528127) ^ -858257779;
-						continue;
-					case 6u:
-						num = ((int_0 == int_2) ? (-205925375) : (-1310479785)) ^ ((int)num2 * -629160426);
-						continue;
-					case 5u:
-						goto IL_00ae;
-					case 4u:
-						num = (int)(num2 * 1395705167) ^ -1874184488;
-						continue;
-					case 2u:
-						struct2_0 = new Struct2[num4];
-						num = (int)(num2 * 1795199909) ^ -1051077288;
-						continue;
-					case 1u:
-						struct2_0[num3].method_0();
-						num = -1532549820;
-						continue;
-					case 0u:
-						num3++;
-						num = (int)(num2 * 1055825112) ^ -36487834;
-						continue;
-					default:
-						return;
-					case 3u:
-						goto IL_0166;
-					case 7u:
-						return;
-					case 11u:
-						return;
+						this.struct2_0[(int)((UIntPtr)num2)].method_0();
 					}
-					break;
-					IL_00ae:
-					num = ((num3 < num4) ? (-914601657) : (-1640221460));
+					return;
 				}
-				goto IL_003a;
-				IL_0166:
-				int_0 = int_2;
-				uint_0 = (uint)((1 << int_2) - 1);
-				num = -319527772;
-				goto IL_0120;
 			}
 
 			internal void method_1()
 			{
-				uint num = (uint)(1 << int_1 + int_0);
-				uint num2 = 0u;
-				while (true)
+				uint num = 1u << this.int_1 + this.int_0;
+				for (uint num2 = 0u; num2 < num; num2 += 1u)
 				{
-					int num3 = 1564945476;
-					while (true)
-					{
-						uint num4;
-						switch ((num4 = (uint)(num3 ^ 0x53A6E1B5)) % 6)
-						{
-						case 5u:
-							num3 = ((num2 < num) ? 169880687 : 468490712);
-							continue;
-						case 4u:
-							struct2_0[num2].method_1();
-							num3 = 1558354531;
-							continue;
-						case 1u:
-							num3 = ((int)num4 * -1482296666) ^ 0xF63BD5C;
-							continue;
-						case 0u:
-							num2++;
-							num3 = ((int)num4 * -1538497572) ^ 0x774BCCF2;
-							continue;
-						default:
-							return;
-						case 2u:
-							break;
-						case 3u:
-							return;
-						}
-						break;
-					}
+					this.struct2_0[(int)((UIntPtr)num2)].method_1();
 				}
 			}
 
@@ -880,86 +369,23 @@ internal class _003CModule_003E
 
 		internal Class1()
 		{
-			int num3 = default(int);
-			while (true)
+			this.uint_0 = uint.MaxValue;
+			int num = 0;
+			while ((long)num < 4L)
 			{
-				int num = 600614466;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x6A85ABE0)) % 7)
-					{
-					case 6u:
-						uint_0 = uint.MaxValue;
-						num3 = 0;
-						num = (int)(num2 * 1555453221) ^ -303309956;
-						continue;
-					case 5u:
-						num = ((num3 >= 4L) ? 1339467794 : 1077001280);
-						continue;
-					case 3u:
-					{
-						ref Struct1 reference = ref struct1_0[num3];
-						reference = new Struct1(6);
-						num = 503589266;
-						continue;
-					}
-					case 1u:
-						num = (int)(num2 * 194810056) ^ -1290725123;
-						continue;
-					case 0u:
-						num3++;
-						num = ((int)num2 * -1028375637) ^ -176340757;
-						continue;
-					default:
-						return;
-					case 4u:
-						break;
-					case 2u:
-						return;
-					}
-					break;
-				}
+				this.struct1_0[num] = new _003CModule_003E.Struct1(6);
+				num++;
 			}
 		}
 
 		internal void method_0(uint uint_3)
 		{
-			if (uint_0 == uint_3)
+			if (this.uint_0 != uint_3)
 			{
-				return;
-			}
-			uint uint_4 = default(uint);
-			while (true)
-			{
-				int num = 2110839870;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x509E4C37)) % 5)
-					{
-					case 3u:
-						class4_0.method_0(uint_4);
-						num = (int)(num2 * 714414128) ^ -496028594;
-						continue;
-					case 2u:
-						uint_4 = Math.Max(uint_1, 4096u);
-						num = ((int)num2 * -1912216509) ^ 0x3CC262D5;
-						continue;
-					case 1u:
-						uint_0 = uint_3;
-						uint_1 = Math.Max(uint_0, 1u);
-						num = (int)(num2 * 354795731) ^ -1163555448;
-						continue;
-					default:
-						return;
-					case 4u:
-						break;
-					case 0u:
-						return;
-					}
-					break;
-				}
+				this.uint_0 = uint_3;
+				this.uint_1 = Math.Max(this.uint_0, 1u);
+				uint uint_4 = Math.Max(this.uint_1, 4096u);
+				this.class4_0.method_0(uint_4);
 			}
 		}
 
@@ -970,454 +396,175 @@ internal class _003CModule_003E
 
 		internal void method_2(int int_0)
 		{
-			uint num = (uint)(1 << int_0);
-			class2_0.method_0(num);
-			class2_1.method_0(num);
-			while (true)
-			{
-				int num2 = 552644696;
-				while (true)
-				{
-					uint num3;
-					switch ((num3 = (uint)(num2 ^ 0x678B76A4)) % 3)
-					{
-					case 2u:
-						goto IL_0021;
-					default:
-						return;
-					case 0u:
-						break;
-					case 1u:
-						return;
-					}
-					break;
-					IL_0021:
-					uint_2 = num - 1;
-					num2 = ((int)num3 * -1478886059) ^ 0x72EFED8;
-				}
-			}
+			uint num = 1u << int_0;
+			this.class2_0.method_0(num);
+			this.class2_1.method_0(num);
+			this.uint_2 = num - 1u;
 		}
 
 		internal void method_3(Stream stream_0, Stream stream_1)
 		{
-			class0_0.method_0(stream_0);
-			class4_0.method_1(stream_1, bool_0);
-			uint num = 0u;
-			uint num5 = default(uint);
-			uint num4 = default(uint);
-			while (true)
+			this.class0_0.method_0(stream_0);
+			this.class4_0.method_1(stream_1, this.bool_0);
+			for (uint num = 0u; num < 12u; num += 1u)
 			{
-				int num2 = ((num >= 12) ? (-1277945897) : (-714459888));
-				while (true)
+				for (uint num2 = 0u; num2 <= this.uint_2; num2 += 1u)
 				{
-					uint num3;
-					switch ((num3 = (uint)(num2 ^ -1008674607)) % 22)
-					{
-					case 21u:
-						struct0_1[num5].method_0();
-						num2 = ((int)num3 * -1540943649) ^ 0x72D54B2A;
-						continue;
-					case 20u:
-						struct1_1.method_0();
-						num2 = ((int)num3 * -842206476) ^ 0x38EE6D3;
-						continue;
-					case 19u:
-						class2_0.method_1();
-						num2 = ((int)num3 * -21363847) ^ -354019433;
-						continue;
-					case 18u:
-						num = 0u;
-						num2 = (int)(num3 * 314572390) ^ -1039179043;
-						continue;
-					case 17u:
-						num++;
-						num2 = ((int)num3 * -1810248889) ^ 0xBC53E7A;
-						continue;
-					case 16u:
-						class3_0.method_1();
-						num2 = ((int)num3 * -2036359302) ^ 0x60670763;
-						continue;
-					case 15u:
-						struct0_6[num].method_0();
-						num2 = -899262504;
-						continue;
-					case 14u:
-						num2 = ((num >= 114) ? (-653096770) : (-1496137992));
-						continue;
-					case 12u:
-						num4++;
-						num2 = (int)((num3 * 194213881) ^ 0x2EB34A73);
-						continue;
-					case 11u:
-						struct0_2[num].method_0();
-						num2 = (int)((num3 * 1249551394) ^ 0x41D2772C);
-						continue;
-					case 9u:
-						class2_1.method_1();
-						num2 = ((int)num3 * -818036306) ^ 0x65943D25;
-						continue;
-					case 8u:
-						num++;
-						num2 = (int)(num3 * 62659238) ^ -569375707;
-						continue;
-					case 7u:
-						num = 0u;
-						num2 = (int)(num3 * 1927906152) ^ -510076787;
-						continue;
-					case 6u:
-						num5 = (num << 4) + num4;
-						struct0_0[num5].method_0();
-						num2 = -750041396;
-						continue;
-					case 5u:
-						num2 = -714459888;
-						continue;
-					case 4u:
-						num2 = ((num4 <= uint_2) ? (-1415254865) : (-1718996138));
-						continue;
-					case 3u:
-						struct0_3[num].method_0();
-						struct0_4[num].method_0();
-						struct0_5[num].method_0();
-						num++;
-						num2 = ((int)num3 * -1442820834) ^ 0x5229BC0C;
-						continue;
-					case 2u:
-						num2 = ((num < 4) ? (-489366501) : (-1503653788));
-						continue;
-					case 1u:
-						num4 = 0u;
-						num2 = -386344821;
-						continue;
-					case 0u:
-						struct1_0[num].method_0();
-						num2 = -812934269;
-						continue;
-					default:
-						return;
-					case 13u:
-						break;
-					case 10u:
-						return;
-					}
-					break;
+					uint num3 = (num << 4) + num2;
+					this.struct0_0[(int)((UIntPtr)num3)].method_0();
+					this.struct0_1[(int)((UIntPtr)num3)].method_0();
 				}
+				this.struct0_2[(int)((UIntPtr)num)].method_0();
+				this.struct0_3[(int)((UIntPtr)num)].method_0();
+				this.struct0_4[(int)((UIntPtr)num)].method_0();
+				this.struct0_5[(int)((UIntPtr)num)].method_0();
 			}
+			this.class3_0.method_1();
+			for (uint num = 0u; num < 4u; num += 1u)
+			{
+				this.struct1_0[(int)((UIntPtr)num)].method_0();
+			}
+			for (uint num = 0u; num < 114u; num += 1u)
+			{
+				this.struct0_6[(int)((UIntPtr)num)].method_0();
+			}
+			this.class2_0.method_1();
+			this.class2_1.method_1();
+			this.struct1_1.method_0();
 		}
 
 		internal void method_4(Stream stream_0, Stream stream_1, long long_0, long long_1)
 		{
-			method_3(stream_0, stream_1);
-			Struct3 @struct = default(Struct3);
-			uint num7 = default(uint);
-			uint num6 = default(uint);
-			uint num5 = default(uint);
-			uint num11 = default(uint);
-			ulong num4 = default(ulong);
-			int num8 = default(int);
-			uint num10 = default(uint);
-			uint num13 = default(uint);
-			uint num3 = default(uint);
-			uint num12 = default(uint);
-			ulong num9 = default(ulong);
-			byte byte_3 = default(byte);
-			byte byte_2 = default(byte);
-			byte byte_ = default(byte);
-			while (true)
+			this.method_3(stream_0, stream_1);
+			_003CModule_003E.Struct3 @struct = default(_003CModule_003E.Struct3);
+			@struct.method_0();
+			uint num = 0u;
+			uint num2 = 0u;
+			uint num3 = 0u;
+			uint num4 = 0u;
+			ulong num5 = 0UL;
+			if (num5 < (ulong)long_1)
 			{
-				int num = -1337619577;
-				while (true)
+				this.struct0_0[(int)((UIntPtr)(@struct.uint_0 << 4))].method_1(this.class0_0);
+				@struct.method_1();
+				byte byte_ = this.class3_0.method_3(this.class0_0, 0u, 0);
+				this.class4_0.method_5(byte_);
+				num5 += 1UL;
+			}
+			while (num5 < (ulong)long_1)
+			{
+				uint num6 = (uint)num5 & this.uint_2;
+				if (this.struct0_0[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].method_1(this.class0_0) != 0u)
 				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -407382515)) % 58)
+					uint num7;
+					if (this.struct0_2[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) != 1u)
 					{
-					case 57u:
-						num = ((num7 >= 4) ? 1359427326 : 2067794981) ^ ((int)num2 * -328131802);
-						continue;
-					case 56u:
-						num6 += struct1_1.method_2(class0_0);
-						num = (int)((num2 * 526361586) ^ 0x640CAADE);
-						continue;
-					case 55u:
-						num = ((struct0_5[@struct.uint_0].method_1(class0_0) == 0) ? (-1248632687) : (-1809211252));
-						continue;
-					case 54u:
-						num5 = 0u;
-						num = (int)((num2 * 1017489376) ^ 0x7C336152);
-						continue;
-					case 53u:
-						num11 = (uint)(int)num4 & uint_2;
-						num = -988239852;
-						continue;
-					case 52u:
-						num4++;
-						num = (int)(num2 * 1124941110) ^ -1625159907;
-						continue;
-					case 51u:
-						num8 = (int)((num7 >> 1) - 1);
-						num = (int)((num2 * 1914911841) ^ 0x1CB30ED5);
-						continue;
-					case 50u:
-						class4_0.method_2();
-						num = (int)((num2 * 303187424) ^ 0x687330F);
-						continue;
-					case 49u:
-						num = ((num6 < uint_1) ? 898526258 : 1189937676) ^ ((int)num2 * -640790325);
-						continue;
-					case 48u:
+						num4 = num3;
+						num3 = num2;
+						num2 = num;
+						num7 = 2u + this.class2_0.method_2(this.class0_0, num6);
 						@struct.method_2();
-						num7 = struct1_0[smethod_0(num10)].method_1(class0_0);
-						num = ((int)num2 * -1461993096) ^ 0x39DE63C2;
-						continue;
-					case 47u:
-						num13 = num5;
-						num = -1231133269;
-						continue;
-					case 46u:
-						num13 = num3;
-						num = ((int)num2 * -541851995) ^ 0x4B517AD8;
-						continue;
-					case 45u:
-						num = ((num6 < num4) ? (-1862143550) : (-929479895));
-						continue;
-					case 44u:
-						num = ((int)num2 * -203944997) ^ -1585394592;
-						continue;
-					case 43u:
-						num = ((struct0_4[@struct.uint_0].method_1(class0_0) == 0) ? (-594536348) : (-876616826));
-						continue;
-					case 42u:
-						class4_0.method_4(num6, num10);
-						num4 += num10;
-						num = -1395830287;
-						continue;
-					case 41u:
-						num13 = num12;
-						num = ((int)num2 * -704797486) ^ -1632884353;
-						continue;
-					case 40u:
-						num = ((struct0_3[@struct.uint_0].method_1(class0_0) != 0) ? 889312694 : 911504967) ^ (int)(num2 * 630858724);
-						continue;
-					case 39u:
-						num4 = 0uL;
-						num9 = (ulong)long_1;
-						num = ((int)num2 * -1113113823) ^ -2123151994;
-						continue;
-					case 38u:
-						num = ((num4 >= num9) ? (-1385511912) : (-1645303706));
-						continue;
-					case 37u:
-						num10 = 2 + class2_0.method_2(class0_0, num11);
-						num = (int)((num2 * 42193682) ^ 0x323B2429);
-						continue;
-					case 36u:
-						@struct.method_4();
-						num = ((int)num2 * -1272930093) ^ -468038409;
-						continue;
-					case 35u:
-						byte_3 = class4_0.method_6(0u);
-						num = ((int)num2 * -261316813) ^ -526608919;
-						continue;
-					case 34u:
-						class4_0.method_5(class4_0.method_6(num6));
-						num = (int)((num2 * 540858692) ^ 0x6A6C357A);
-						continue;
-					case 33u:
-						num12 = 0u;
-						num = (int)((num2 * 99336276) ^ 0x2A51DE89);
-						continue;
-					case 31u:
-						num5 = num3;
-						num = -1381916856;
-						continue;
-					case 30u:
-						num6 = num13;
-						num = (int)((num2 * 842694813) ^ 0x29E452EE);
-						continue;
-					case 29u:
-						struct0_0[@struct.uint_0 << 4].method_1(class0_0);
-						@struct.method_1();
-						num = (int)(num2 * 1770392019) ^ -426935866;
-						continue;
-					case 28u:
-						byte_2 = class3_0.method_4(class0_0, (uint)num4, byte_3, class4_0.method_6(num6));
-						num = (int)((num2 * 1019543528) ^ 0x676837D7);
-						continue;
-					case 27u:
-						num3 = num12;
-						num = -16007331;
-						continue;
-					case 26u:
-						byte_ = class3_0.method_3(class0_0, 0u, 0);
-						num = (int)(num2 * 298170400) ^ -863198324;
-						continue;
-					case 25u:
-						num4++;
-						num = ((int)num2 * -1072017999) ^ 0xF7C0FBE;
-						continue;
-					case 24u:
-						byte_2 = class3_0.method_3(class0_0, (uint)num4, byte_3);
-						num = -1349348971;
-						continue;
-					case 23u:
-						num3 = num12;
-						num = (int)((num2 * 156918821) ^ 0x5F486910);
-						continue;
-					case 22u:
-						num12 = num6;
-						num = ((int)num2 * -1138113436) ^ 0x614DF080;
-						continue;
-					case 21u:
-						num = ((struct0_2[@struct.uint_0].method_1(class0_0) == 1) ? (-1493144817) : (-1507761882));
-						continue;
-					case 20u:
-						num = ((struct0_1[(@struct.uint_0 << 4) + num11].method_1(class0_0) == 0) ? (-1827742711) : (-965113850)) ^ (int)(num2 * 2075313238);
-						continue;
-					case 19u:
-						num = (@struct.method_5() ? (-379561225) : (-885941737)) ^ (int)(num2 * 1010133382);
-						continue;
-					case 18u:
-						num = ((num6 != uint.MaxValue) ? (-1141232361) : (-1385511912));
-						continue;
-					case 17u:
-						num = ((num7 >= 14) ? (-1100147191) : (-1728445105)) ^ (int)(num2 * 902177399);
-						continue;
-					case 16u:
-						class4_0.method_5(byte_2);
-						@struct.method_1();
-						num = -1082992433;
-						continue;
-					case 14u:
-						num = ((int)num2 * -1453548756) ^ 0x478B6C66;
-						continue;
-					case 13u:
-						num = ((struct0_0[(@struct.uint_0 << 4) + num11].method_1(class0_0) == 0) ? (-1343914652) : (-1353592326)) ^ (int)(num2 * 2048643258);
-						continue;
-					case 12u:
-						num = ((int)num2 * -1924364751) ^ 0x751BFA4F;
-						continue;
-					case 11u:
-						num6 = (2 | (num7 & 1)) << num8;
-						num = ((int)num2 * -1336482945) ^ 0x345E33A7;
-						continue;
-					case 10u:
-						@struct.method_0();
-						num6 = 0u;
-						num = ((int)num2 * -651831807) ^ -964793602;
-						continue;
-					case 9u:
-						num6 += class0_0.method_3(num8 - 4) << 4;
-						num = -979525319;
-						continue;
-					case 8u:
-						num12 = num6;
-						num = -689014503;
-						continue;
-					case 7u:
-						num10 = class2_1.method_2(class0_0, num11) + 2;
-						@struct.method_3();
-						num = -740364383;
-						continue;
-					case 6u:
-						num = ((num4 < num9) ? (-2081556342) : (-83414135)) ^ (int)(num2 * 442085078);
-						continue;
-					case 5u:
-						class4_0.method_3();
-						num = -1000160411;
-						continue;
-					case 4u:
-						num6 = num7;
-						num = -1168481802;
-						continue;
-					case 3u:
-						num6 += Struct1.smethod_0(struct0_6, num6 - num7 - 1, class0_0, num8);
-						num = (int)(num2 * 1529313188) ^ -643422389;
-						continue;
-					case 2u:
-						num5 = num3;
-						num = (int)(num2 * 2028717812) ^ -324100500;
-						continue;
-					case 1u:
-						class4_0.method_5(byte_);
-						num4++;
-						num = (int)((num2 * 927754581) ^ 0x5DB29A64);
-						continue;
-					case 0u:
-						num3 = 0u;
-						num = (int)((num2 * 903893584) ^ 0x12436725);
-						continue;
-					case 15u:
-						break;
-					default:
-						class0_0.method_1();
-						return;
+						uint num8 = this.struct1_0[(int)((UIntPtr)_003CModule_003E.Class1.smethod_0(num7))].method_1(this.class0_0);
+						if (num8 < 4u)
+						{
+							num = num8;
+						}
+						else
+						{
+							int num9 = (int)((num8 >> 1) - 1u);
+							num = (2u | (num8 & 1u)) << num9;
+							if (num8 < 14u)
+							{
+								num += _003CModule_003E.Struct1.smethod_0(this.struct0_6, num - num8 - 1u, this.class0_0, num9);
+							}
+							else
+							{
+								num += this.class0_0.method_3(num9 - 4) << 4;
+								num += this.struct1_1.method_2(this.class0_0);
+							}
+						}
 					}
-					break;
+					else
+					{
+						if (this.struct0_3[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) == 0u)
+						{
+							if (this.struct0_1[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].method_1(this.class0_0) == 0u)
+							{
+								@struct.method_4();
+								this.class4_0.method_5(this.class4_0.method_6(num));
+								num5 += 1UL;
+								continue;
+							}
+						}
+						else
+						{
+							uint num10;
+							if (this.struct0_4[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) != 0u)
+							{
+								if (this.struct0_5[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) != 0u)
+								{
+									num10 = num4;
+									num4 = num3;
+								}
+								else
+								{
+									num10 = num3;
+								}
+								num3 = num2;
+							}
+							else
+							{
+								num10 = num2;
+							}
+							num2 = num;
+							num = num10;
+						}
+						num7 = this.class2_1.method_2(this.class0_0, num6) + 2u;
+						@struct.method_3();
+					}
+					if (((ulong)num >= num5 || num >= this.uint_1) && num == 4294967295u)
+					{
+						break;
+					}
+					this.class4_0.method_4(num, num7);
+					num5 += (ulong)num7;
+				}
+				else
+				{
+					byte byte_2 = this.class4_0.method_6(0u);
+					byte byte_3;
+					if (!@struct.method_5())
+					{
+						byte_3 = this.class3_0.method_4(this.class0_0, (uint)num5, byte_2, this.class4_0.method_6(num));
+					}
+					else
+					{
+						byte_3 = this.class3_0.method_3(this.class0_0, (uint)num5, byte_2);
+					}
+					this.class4_0.method_5(byte_3);
+					@struct.method_1();
+					num5 += 1UL;
 				}
 			}
+			this.class4_0.method_3();
+			this.class4_0.method_2();
+			this.class0_0.method_1();
 		}
 
 		internal void method_5(byte[] byte_0)
 		{
-			int int_ = byte_0[0] % 9;
-			uint num5 = default(uint);
-			int int_3 = default(int);
-			int num4 = default(int);
-			int int_2 = default(int);
-			int num3 = default(int);
-			while (true)
+			int int_ = (int)(byte_0[0] % 9);
+			int num = (int)(byte_0[0] / 9);
+			int int_2 = num % 5;
+			int int_3 = num / 5;
+			uint num2 = 0u;
+			for (int i = 0; i < 4; i++)
 			{
-				int num = 1468090495;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x57BA2E26)) % 11)
-					{
-					case 10u:
-						num5 = 0u;
-						num = ((int)num2 * -1127778501) ^ -1584426345;
-						continue;
-					case 9u:
-						int_3 = num4 % 5;
-						num = ((int)num2 * -919059956) ^ -62378822;
-						continue;
-					case 8u:
-						int_2 = num4 / 5;
-						num = ((int)num2 * -517398619) ^ -1989801024;
-						continue;
-					case 7u:
-						num3++;
-						num = ((int)num2 * -1145869148) ^ 0x31AB817C;
-						continue;
-					case 6u:
-						method_0(num5);
-						method_1(int_3, int_);
-						num = ((int)num2 * -808704091) ^ 0x31F617F2;
-						continue;
-					case 4u:
-						num5 += (uint)(byte_0[1 + num3] << num3 * 8);
-						num = 979499674;
-						continue;
-					case 2u:
-						num4 = byte_0[0] / 9;
-						num = ((int)num2 * -1893516666) ^ 0xF8033D6;
-						continue;
-					case 1u:
-						num3 = 0;
-						num = (int)(num2 * 962567508) ^ -410736576;
-						continue;
-					case 0u:
-						num = ((num3 < 4) ? 1030447791 : 1603928250);
-						continue;
-					case 3u:
-						break;
-					default:
-						method_2(int_2);
-						return;
-					}
-					break;
-				}
+				num2 += (uint)((uint)byte_0[1 + i] << i * 8);
 			}
+			this.method_0(num2);
+			this.method_1(int_2, int_);
+			this.method_2(int_3);
 		}
 
 		internal static uint smethod_0(uint uint_3)
@@ -1445,274 +592,87 @@ internal class _003CModule_003E
 
 		internal void method_0(uint uint_3)
 		{
-			if (uint_2 != uint_3)
+			if (this.uint_2 != uint_3)
 			{
-				goto IL_0009;
+				this.byte_0 = new byte[uint_3];
 			}
-			goto IL_006c;
-			IL_0009:
-			int num = 685192165;
-			goto IL_0047;
-			IL_0047:
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x4B94A685)) % 5)
-				{
-				case 2u:
-					break;
-				case 1u:
-					byte_0 = new byte[uint_3];
-					num = (int)((num2 * 2146410385) ^ 0x693A72DA);
-					continue;
-				case 0u:
-					uint_0 = 0u;
-					uint_1 = 0u;
-					num = (int)(num2 * 1515285787) ^ -1229791540;
-					continue;
-				default:
-					return;
-				case 3u:
-					goto IL_006c;
-				case 4u:
-					return;
-				}
-				break;
-			}
-			goto IL_0009;
-			IL_006c:
-			uint_2 = uint_3;
-			num = 2100117882;
-			goto IL_0047;
+			this.uint_2 = uint_3;
+			this.uint_0 = 0u;
+			this.uint_1 = 0u;
 		}
 
 		internal void method_1(Stream stream_1, bool bool_0)
 		{
-			method_2();
-			while (true)
+			this.method_2();
+			this.stream_0 = stream_1;
+			if (!bool_0)
 			{
-				int num = 1346625645;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x347FE2E3)) % 5)
-					{
-					case 4u:
-						stream_0 = stream_1;
-						num = ((int)num2 * -1426997398) ^ -1817875224;
-						continue;
-					case 2u:
-						uint_1 = 0u;
-						uint_0 = 0u;
-						num = (int)((num2 * 1365847987) ^ 0x1C1998BE);
-						continue;
-					case 0u:
-						num = ((!bool_0) ? 1652117821 : 1250891794) ^ ((int)num2 * -539458905);
-						continue;
-					default:
-						return;
-					case 3u:
-						break;
-					case 1u:
-						return;
-					}
-					break;
-				}
+				this.uint_1 = 0u;
+				this.uint_0 = 0u;
 			}
 		}
 
 		internal void method_2()
 		{
-			method_3();
-			while (true)
-			{
-				int num = 1012151136;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x219FC8B1)) % 4)
-					{
-					case 2u:
-						Buffer.BlockCopy(new byte[byte_0.Length], 0, byte_0, 0, byte_0.Length);
-						num = (int)((num2 * 1476207457) ^ 0x75F9A063);
-						continue;
-					case 1u:
-						stream_0 = null;
-						num = (int)((num2 * 176098173) ^ 0x76CF9C0A);
-						continue;
-					default:
-						return;
-					case 3u:
-						break;
-					case 0u:
-						return;
-					}
-					break;
-				}
-			}
+			this.method_3();
+			this.stream_0 = null;
+			Buffer.BlockCopy(new byte[this.byte_0.Length], 0, this.byte_0, 0, this.byte_0.Length);
 		}
 
 		internal void method_3()
 		{
-			uint num = uint_0 - uint_1;
-			if (num == 0)
+			uint num = this.uint_0 - this.uint_1;
+			if (num == 0u)
 			{
-				goto IL_0020;
+				return;
 			}
-			goto IL_006c;
-			IL_0020:
-			int num2 = -557627916;
-			goto IL_003b;
-			IL_003b:
-			while (true)
+			this.stream_0.Write(this.byte_0, (int)this.uint_1, (int)num);
+			if (this.uint_0 >= this.uint_2)
 			{
-				uint num3;
-				switch ((num3 = (uint)(num2 ^ -405864337)) % 5)
-				{
-				case 4u:
-					break;
-				case 1u:
-					uint_0 = 0u;
-					num2 = (int)(num3 * 1013125888) ^ -1750625193;
-					continue;
-				case 0u:
-					goto IL_006c;
-				default:
-					uint_1 = uint_0;
-					return;
-				case 3u:
-					return;
-				}
-				break;
+				this.uint_0 = 0u;
 			}
-			goto IL_0020;
-			IL_006c:
-			stream_0.Write(byte_0, (int)uint_1, (int)num);
-			num2 = ((uint_0 >= uint_2) ? (-1659043254) : (-2117063849));
-			goto IL_003b;
+			this.uint_1 = this.uint_0;
 		}
 
 		internal void method_4(uint uint_3, uint uint_4)
 		{
-			uint num = uint_0 - uint_3 - 1;
-			if (num >= uint_2)
+			uint num = this.uint_0 - uint_3 - 1u;
+			if (num >= this.uint_2)
 			{
-				goto IL_00d9;
+				num += this.uint_2;
 			}
-			goto IL_012f;
-			IL_00d9:
-			int num2 = 1522374204;
-			goto IL_00ea;
-			IL_00ea:
-			while (true)
+			while (uint_4 > 0u)
 			{
-				uint num3;
-				switch ((num3 = (uint)(num2 ^ 0x2FF3F740)) % 9)
+				if (num >= this.uint_2)
 				{
-				case 7u:
-					break;
-				case 6u:
 					num = 0u;
-					num2 = ((int)num3 * -402364887) ^ -342425420;
-					continue;
-				case 5u:
-					num += uint_2;
-					num2 = ((int)num3 * -2114653781) ^ -144472460;
-					continue;
-				case 4u:
-					method_3();
-					num2 = (int)(num3 * 392034071) ^ -101852385;
-					continue;
-				case 3u:
-					goto IL_00b7;
-				case 2u:
-					goto end_IL_00ea;
-				case 0u:
-					uint_4--;
-					num2 = 2083741600;
-					continue;
-				default:
-					return;
-				case 1u:
-					goto IL_012f;
-				case 8u:
-					return;
 				}
-				byte_0[uint_0++] = byte_0[num++];
-				num2 = ((uint_0 < uint_2) ? 172380858 : 1752681955);
-				continue;
-				IL_00b7:
-				num2 = ((num < uint_2) ? 505652767 : 796758003);
-				continue;
-				end_IL_00ea:
-				break;
+				this.byte_0[(int)((UIntPtr)(this.uint_0++))] = this.byte_0[(int)((UIntPtr)(num++))];
+				if (this.uint_0 >= this.uint_2)
+				{
+					this.method_3();
+				}
+				uint_4 -= 1u;
 			}
-			goto IL_00d9;
-			IL_012f:
-			num2 = ((uint_4 != 0) ? 368457801 : 527043648);
-			goto IL_00ea;
 		}
 
 		internal void method_5(byte byte_1)
 		{
-			byte_0[uint_0++] = byte_1;
-			while (true)
+			this.byte_0[(int)((UIntPtr)(this.uint_0++))] = byte_1;
+			if (this.uint_0 >= this.uint_2)
 			{
-				int num = 187488161;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x2F227780)) % 4)
-					{
-					case 3u:
-						method_3();
-						num = (int)(num2 * 1654264936) ^ -1967612268;
-						continue;
-					case 1u:
-						num = ((uint_0 < uint_2) ? (-1849486298) : (-1594807339)) ^ ((int)num2 * -1045278742);
-						continue;
-					default:
-						return;
-					case 2u:
-						break;
-					case 0u:
-						return;
-					}
-					break;
-				}
+				this.method_3();
 			}
 		}
 
 		internal byte method_6(uint uint_3)
 		{
-			uint num = uint_0 - uint_3 - 1;
-			if (num >= uint_2)
+			uint num = this.uint_0 - uint_3 - 1u;
+			if (num >= this.uint_2)
 			{
-				while (true)
-				{
-					int num2 = -15603262;
-					while (true)
-					{
-						uint num3;
-						switch ((num3 = (uint)(num2 ^ -1039702623)) % 3)
-						{
-						case 1u:
-							num += uint_2;
-							num2 = (int)(num3 * 2111331112) ^ -1726411691;
-							continue;
-						case 2u:
-							break;
-						default:
-							goto end_IL_0049;
-						}
-						break;
-					}
-					continue;
-					end_IL_0049:
-					break;
-				}
+				num += this.uint_2;
 			}
-			return byte_0[num];
+			return this.byte_0[(int)((UIntPtr)num)];
 		}
 
 		internal Class4()
@@ -1731,48 +691,17 @@ internal class _003CModule_003E
 
 		internal void method_1()
 		{
-			if (uint_0 < 4)
+			if (this.uint_0 < 4u)
 			{
-				goto IL_002d;
+				this.uint_0 = 0u;
+				return;
 			}
-			goto IL_0088;
-			IL_002d:
-			int num = 82721790;
-			goto IL_004f;
-			IL_004f:
-			while (true)
+			if (this.uint_0 < 10u)
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x1C89A3AE)) % 7)
-				{
-				case 6u:
-					uint_0 -= 6u;
-					num = 367667521;
-					continue;
-				case 3u:
-					break;
-				case 2u:
-					uint_0 -= 3u;
-					num = ((int)num2 * -1159247612) ^ -2110553976;
-					continue;
-				default:
-					return;
-				case 5u:
-					goto IL_0088;
-				case 0u:
-					return;
-				case 1u:
-					uint_0 = 0u;
-					return;
-				case 4u:
-					return;
-				}
-				break;
+				this.uint_0 -= 3u;
+				return;
 			}
-			goto IL_002d;
-			IL_0088:
-			num = ((uint_0 < 10) ? 1376997659 : 1476411834);
-			goto IL_004f;
+			this.uint_0 -= 6u;
 		}
 
 		internal void method_2()
@@ -1808,723 +737,374 @@ internal class _003CModule_003E
 	static _003CModule_003E()
 	{
 		IntegrityBootstrap.smethod_0();
-		smethod_1();
-		while (true)
-		{
-			int num = -2032088137;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -2055460935)) % 3)
-				{
-				case 1u:
-					goto IL_000c;
-				default:
-					return;
-				case 0u:
-					break;
-				case 2u:
-					return;
-				}
-				break;
-				IL_000c:
-				RecoveredRuntime.smethod_28();
-				RecoveredRuntime.smethod_192();
-				num = ((int)num2 * -2078845404) ^ 0x2DE1661;
-			}
-		}
+		_003CModule_003E.smethod_1();
+		RecoveredRuntime.smethod_28();
+		RecoveredRuntime.smethod_192();
 	}
 
 	internal static byte[] smethod_0(byte[] byte_1)
 	{
 		MemoryStream memoryStream = new MemoryStream(byte_1);
-		int num4 = default(int);
-		Class1 @class = default(Class1);
-		byte[] buffer = default(byte[]);
-		long num3 = default(long);
-		MemoryStream stream_ = default(MemoryStream);
-		byte[] array = default(byte[]);
-		while (true)
+		_003CModule_003E.Class1 @class = new _003CModule_003E.Class1();
+		byte[] buffer = new byte[5];
+		memoryStream.Read(buffer, 0, 5);
+		@class.method_5(buffer);
+		long num = 0L;
+		for (int i = 0; i < 8; i++)
 		{
-			int num = 83875857;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x17D0DB64)) % 13)
-				{
-				case 12u:
-					num = ((num4 < 8) ? 602391595 : 1420452137);
-					continue;
-				case 10u:
-					@class.method_5(buffer);
-					num3 = 0L;
-					num = ((int)num2 * -348752593) ^ -628989981;
-					continue;
-				case 8u:
-					buffer = new byte[5];
-					num = ((int)num2 * -1470371784) ^ 0x3AA2A04C;
-					continue;
-				case 7u:
-					num = (int)((num2 * 1281832558) ^ 0x12C1DE31);
-					continue;
-				case 6u:
-					memoryStream.Read(buffer, 0, 5);
-					num = (int)((num2 * 1917943549) ^ 0x40943B29);
-					continue;
-				case 5u:
-					@class = new Class1();
-					num = ((int)num2 * -442210329) ^ 0x4B3D03D9;
-					continue;
-				case 4u:
-					num4++;
-					num = ((int)num2 * -2045305445) ^ 0x3EB33091;
-					continue;
-				case 3u:
-				{
-					int num5 = memoryStream.ReadByte();
-					num3 |= (long)((ulong)(byte)num5 << 8 * num4);
-					num = 277001426;
-					continue;
-				}
-				case 2u:
-				{
-					long long_ = memoryStream.Length - 13L;
-					@class.method_4(memoryStream, stream_, long_, num3);
-					num = ((int)num2 * -1595612353) ^ -807152236;
-					continue;
-				}
-				case 1u:
-					num4 = 0;
-					num = (int)((num2 * 591382081) ^ 0x6DAA6CC7);
-					continue;
-				case 0u:
-					array = new byte[(int)num3];
-					stream_ = new MemoryStream(array, writable: true);
-					num = ((int)num2 * -1648618480) ^ -1705044582;
-					continue;
-				case 9u:
-					break;
-				default:
-					return array;
-				}
-				break;
-			}
+			int num2 = memoryStream.ReadByte();
+			num |= (long)((long)((ulong)((byte)num2)) << 8 * i);
 		}
+		byte[] array = new byte[(int)num];
+		MemoryStream stream_ = new MemoryStream(array, true);
+		long long_ = memoryStream.Length - 13L;
+		@class.method_4(memoryStream, stream_, long_, num);
+		return array;
 	}
 
 	internal static void smethod_1()
 	{
 		uint num = 128u;
-		uint num10 = default(uint);
-		int num9 = default(int);
-		uint[] array = default(uint[]);
-		uint[] array2 = default(uint[]);
-		byte[] array3 = default(byte[]);
-		int num6 = default(int);
-		uint num5 = default(uint);
-		int num7 = default(int);
-		uint[] array4 = default(uint[]);
-		int num8 = default(int);
-		int num4 = default(int);
-		while (true)
+		uint[] array = new uint[]
 		{
-			int num2 = -1038203879;
-			while (true)
-			{
-				uint num3;
-				switch ((num3 = (uint)(num2 ^ -303148808)) % 39)
-				{
-				case 38u:
-					num10 ^= num10 << 25;
-					num2 = ((int)num3 * -367555477) ^ 0x5F819FF1;
-					continue;
-				case 37u:
-					num9++;
-					num2 = ((int)num3 * -996478885) ^ -857810974;
-					continue;
-				case 36u:
-					array[0] = array[0] ^ array2[0];
-					num2 = (int)((num3 * 1189142098) ^ 0x41B17A3C);
-					continue;
-				case 35u:
-					byte_0 = smethod_0(array3);
-					num2 = ((int)num3 * -74345989) ^ 0x4DF0F623;
-					continue;
-				case 34u:
-					num10 ^= num10 >> 12;
-					num2 = -1786695588;
-					continue;
-				case 33u:
-					num10 = 581480289u;
-					num2 = (int)((num3 * 909371414) ^ 0x42EB74F);
-					continue;
-				case 31u:
-					array[15] = array[15] ^ array2[15];
-					num6 = 0;
-					num2 = ((int)num3 * -1169373188) ^ 0xE133A8B;
-					continue;
-				case 30u:
-					array2[num6] ^= num5;
-					num2 = ((int)num3 * -1008568464) ^ 0x1DE2A681;
-					continue;
-				case 29u:
-					num7 = 0;
-					num2 = (int)(num3 * 1529477198) ^ -1560878547;
-					continue;
-				case 28u:
-					array4 = new uint[128]
-					{
-						1957332392u, 1319566164u, 1587619075u, 2091896606u, 3864415354u, 97700868u, 1650040906u, 2360015924u, 4129106248u, 3006749097u,
-						1031910614u, 3524800352u, 3412120460u, 1689481309u, 2497614635u, 3400203107u, 1802961641u, 819651037u, 4063462567u, 3995447687u,
-						3512874700u, 1993626851u, 3938034490u, 3864477941u, 1353227138u, 2352255295u, 2126870529u, 2196017374u, 3106366467u, 2548181872u,
-						1991899700u, 3972658092u, 1172096690u, 3982088401u, 2977644097u, 4088704665u, 2544295570u, 2278221996u, 1304186728u, 4163965759u,
-						1911949160u, 2227873079u, 3345480617u, 1234434799u, 471628875u, 3337175277u, 2309587834u, 3757890827u, 1576203844u, 2324386241u,
-						4147515788u, 2999444704u, 343453038u, 1785585660u, 2234548322u, 2198534532u, 1324546174u, 1629699064u, 1581795255u, 1160662755u,
-						3681933699u, 3979200575u, 3321143298u, 969146504u, 2184841096u, 427578669u, 233559082u, 3634205982u, 2330929493u, 1877402109u,
-						929095195u, 1457885371u, 3274334145u, 2415081268u, 233015183u, 3483221976u, 3892214582u, 662532956u, 1119603083u, 1175967302u,
-						3520419681u, 2056118047u, 75457098u, 3609296924u, 2289206548u, 3391110248u, 2926480878u, 328075587u, 1245198102u, 3255925618u,
-						4126180607u, 3058616185u, 4075304258u, 2040410236u, 1214377972u, 3700918618u, 2489185519u, 2862302891u, 1056397816u, 2014322700u,
-						1195640214u, 1767556131u, 3316680939u, 547252974u, 3215595004u, 2035623006u, 4137403168u, 2802159994u, 85673811u, 3270802236u,
-						2822043008u, 635911357u, 2944388483u, 1451679926u, 2343178139u, 1624901190u, 224142271u, 1594966101u, 1697484516u, 1684642143u,
-						864513567u, 2174444447u, 4137411154u, 2802159994u, 85673811u, 3270802236u, 2822043008u, 635911357u
-					};
-					num2 = (int)(num3 * 1933173989) ^ -377767329;
-					continue;
-				case 27u:
-					num10 = (array2[num9] = num10 ^ (num10 >> 27));
-					num2 = ((int)num3 * -1802803075) ^ -790263158;
-					continue;
-				case 26u:
-					num8++;
-					num2 = (int)((num3 * 1965282890) ^ 0x28901CD4);
-					continue;
-				case 25u:
-					num2 = ((num9 < 16) ? (-1458891360) : (-706133209));
-					continue;
-				case 24u:
-					num8 = 0;
-					num2 = -558388382;
-					continue;
-				case 23u:
-					num2 = ((num6 >= 16) ? (-503973680) : (-1739190959));
-					continue;
-				case 22u:
-					num2 = ((int)num3 * -610769461) ^ -558746923;
-					continue;
-				case 21u:
-					num2 = ((num7 < num) ? (-960477214) : (-380146827));
-					continue;
-				case 20u:
-					array[6] = array[6] ^ array2[6];
-					num2 = ((int)num3 * -1325084261) ^ 0x4F85C6FE;
-					continue;
-				case 19u:
-					array[13] = array[13] ^ array2[13];
-					array[14] = array[14] ^ array2[14];
-					num2 = ((int)num3 * -803764440) ^ 0x56438E46;
-					continue;
-				case 18u:
-					array[9] = array[9] ^ array2[9];
-					num2 = ((int)num3 * -105536113) ^ 0x2F7BF167;
-					continue;
-				case 17u:
-					array[11] = array[11] ^ array2[11];
-					array[12] = array[12] ^ array2[12];
-					num2 = ((int)num3 * -527054386) ^ 0x22729F50;
-					continue;
-				case 16u:
-					num9 = 0;
-					num2 = (int)((num3 * 634248665) ^ 0x1D716D0A);
-					continue;
-				case 15u:
-					array2 = new uint[16];
-					num2 = (int)(num3 * 697322692) ^ -743431567;
-					continue;
-				case 14u:
-					num2 = ((num8 >= 16) ? (-1654029732) : (-1337576814));
-					continue;
-				case 13u:
-					array[10] = array[10] ^ array2[10];
-					num2 = ((int)num3 * -1949034865) ^ 0xB346FEF;
-					continue;
-				case 12u:
-					array[num8] = array4[num7 + num8];
-					num2 = -1386141177;
-					continue;
-				case 11u:
-					num5 = array[num6];
-					array3[num4++] = (byte)num5;
-					num2 = -1660879826;
-					continue;
-				case 10u:
-					num4 = 0;
-					num2 = ((int)num3 * -1001876630) ^ -2095929055;
-					continue;
-				case 9u:
-					array[7] = array[7] ^ array2[7];
-					array[8] = array[8] ^ array2[8];
-					num2 = (int)((num3 * 2145942063) ^ 0x6C0C59D8);
-					continue;
-				case 7u:
-					num7 += 16;
-					num2 = ((int)num3 * -446735836) ^ 0x22D7FFE4;
-					continue;
-				case 6u:
-					array[1] = array[1] ^ array2[1];
-					array[2] = array[2] ^ array2[2];
-					array[3] = array[3] ^ array2[3];
-					array[4] = array[4] ^ array2[4];
-					num2 = (int)(num3 * 2022687963) ^ -400780800;
-					continue;
-				case 5u:
-					array3[num4++] = (byte)(num5 >> 16);
-					num2 = ((int)num3 * -949279133) ^ 0x39D85AB1;
-					continue;
-				case 4u:
-					array = new uint[16];
-					array3 = new byte[num * 4];
-					num2 = ((int)num3 * -413807125) ^ -1228121775;
-					continue;
-				case 3u:
-					num6++;
-					num2 = ((int)num3 * -912557069) ^ -2116348585;
-					continue;
-				case 2u:
-					array3[num4++] = (byte)(num5 >> 24);
-					num2 = (int)((num3 * 757087650) ^ 0x75BAC1E3);
-					continue;
-				case 1u:
-					array3[num4++] = (byte)(num5 >> 8);
-					num2 = (int)(num3 * 1606387807) ^ -1539481250;
-					continue;
-				case 0u:
-					array[5] = array[5] ^ array2[5];
-					num2 = ((int)num3 * -1735690534) ^ 0x79049636;
-					continue;
-				default:
-					return;
-				case 32u:
-					break;
-				case 8u:
-					return;
-				}
-				break;
-			}
+			1957332392u,
+			1319566164u,
+			1587619075u,
+			2091896606u,
+			3864415354u,
+			97700868u,
+			1650040906u,
+			2360015924u,
+			4129106248u,
+			3006749097u,
+			1031910614u,
+			3524800352u,
+			3412120460u,
+			1689481309u,
+			2497614635u,
+			3400203107u,
+			1802961641u,
+			819651037u,
+			4063462567u,
+			3995447687u,
+			3512874700u,
+			1993626851u,
+			3938034490u,
+			3864477941u,
+			1353227138u,
+			2352255295u,
+			2126870529u,
+			2196017374u,
+			3106366467u,
+			2548181872u,
+			1991899700u,
+			3972658092u,
+			1172096690u,
+			3982088401u,
+			2977644097u,
+			4088704665u,
+			2544295570u,
+			2278221996u,
+			1304186728u,
+			4163965759u,
+			1911949160u,
+			2227873079u,
+			3345480617u,
+			1234434799u,
+			471628875u,
+			3337175277u,
+			2309587834u,
+			3757890827u,
+			1576203844u,
+			2324386241u,
+			4147515788u,
+			2999444704u,
+			343453038u,
+			1785585660u,
+			2234548322u,
+			2198534532u,
+			1324546174u,
+			1629699064u,
+			1581795255u,
+			1160662755u,
+			3681933699u,
+			3979200575u,
+			3321143298u,
+			969146504u,
+			2184841096u,
+			427578669u,
+			233559082u,
+			3634205982u,
+			2330929493u,
+			1877402109u,
+			929095195u,
+			1457885371u,
+			3274334145u,
+			2415081268u,
+			233015183u,
+			3483221976u,
+			3892214582u,
+			662532956u,
+			1119603083u,
+			1175967302u,
+			3520419681u,
+			2056118047u,
+			75457098u,
+			3609296924u,
+			2289206548u,
+			3391110248u,
+			2926480878u,
+			328075587u,
+			1245198102u,
+			3255925618u,
+			4126180607u,
+			3058616185u,
+			4075304258u,
+			2040410236u,
+			1214377972u,
+			3700918618u,
+			2489185519u,
+			2862302891u,
+			1056397816u,
+			2014322700u,
+			1195640214u,
+			1767556131u,
+			3316680939u,
+			547252974u,
+			3215595004u,
+			2035623006u,
+			4137403168u,
+			2802159994u,
+			85673811u,
+			3270802236u,
+			2822043008u,
+			635911357u,
+			2944388483u,
+			1451679926u,
+			2343178139u,
+			1624901190u,
+			224142271u,
+			1594966101u,
+			1697484516u,
+			1684642143u,
+			864513567u,
+			2174444447u,
+			4137411154u,
+			2802159994u,
+			85673811u,
+			3270802236u,
+			2822043008u,
+			635911357u
+		};
+		uint[] array2 = new uint[16];
+		uint num2 = 581480289u;
+		for (int i = 0; i < 16; i++)
+		{
+			num2 ^= num2 >> 12;
+			num2 ^= num2 << 25;
+			num2 ^= num2 >> 27;
+			array2[i] = num2;
 		}
+		int num3 = 0;
+		int num4 = 0;
+		uint[] array3 = new uint[16];
+		byte[] array4 = new byte[num * 4u];
+		while ((long)num3 < (long)((ulong)num))
+		{
+			for (int j = 0; j < 16; j++)
+			{
+				array3[j] = array[num3 + j];
+			}
+			array3[0] = (array3[0] ^ array2[0]);
+			array3[1] = (array3[1] ^ array2[1]);
+			array3[2] = (array3[2] ^ array2[2]);
+			array3[3] = (array3[3] ^ array2[3]);
+			array3[4] = (array3[4] ^ array2[4]);
+			array3[5] = (array3[5] ^ array2[5]);
+			array3[6] = (array3[6] ^ array2[6]);
+			array3[7] = (array3[7] ^ array2[7]);
+			array3[8] = (array3[8] ^ array2[8]);
+			array3[9] = (array3[9] ^ array2[9]);
+			array3[10] = (array3[10] ^ array2[10]);
+			array3[11] = (array3[11] ^ array2[11]);
+			array3[12] = (array3[12] ^ array2[12]);
+			array3[13] = (array3[13] ^ array2[13]);
+			array3[14] = (array3[14] ^ array2[14]);
+			array3[15] = (array3[15] ^ array2[15]);
+			for (int k = 0; k < 16; k++)
+			{
+				uint num5 = array3[k];
+				array4[num4++] = (byte)num5;
+				array4[num4++] = (byte)(num5 >> 8);
+				array4[num4++] = (byte)(num5 >> 16);
+				array4[num4++] = (byte)(num5 >> 24);
+				array2[k] ^= num5;
+			}
+			num3 += 16;
+		}
+		_003CModule_003E.byte_0 = _003CModule_003E.smethod_0(array4);
 	}
 
 	internal static T smethod_2<T>(uint uint_0)
 	{
-		uint_0 = (uint_0 * 319591615) ^ 0x626FF7BE;
+		uint_0 = (uint_0 * 319591615u ^ 1651505086u);
 		uint num = uint_0 >> 30;
-		T[] array = default(T[]);
-		int count = default(int);
-		int num4 = default(int);
-		Array array2 = default(Array);
 		T result = default(T);
-		while (true)
+		uint_0 &= 1073741823u;
+		uint_0 <<= 2;
+		if ((ulong)num != 0UL)
 		{
-			int num2 = 2104689040;
-			while (true)
+			if ((ulong)num == 2UL)
 			{
-				uint num3;
-				switch ((num3 = (uint)(num2 ^ 0x3F83DFA6)) % 13)
-				{
-				case 12u:
-					num2 = (int)(num3 * 418364452) ^ -2050695770;
-					continue;
-				case 11u:
-					Buffer.BlockCopy(byte_0, (int)uint_0, array, 0, System.Runtime.CompilerServices.Unsafe.SizeOf<T>());
-					num2 = ((int)num3 * -200390942) ^ 0x7511EE7E;
-					continue;
-				case 10u:
-					count = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num2 = ((int)num3 * -766260534) ^ -466677878;
-					continue;
-				case 9u:
-				{
-					num4 = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					int length = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
-					num2 = ((int)num3 * -1289920387) ^ 0x3248D6B8;
-					continue;
-				}
-				case 7u:
-					Buffer.BlockCopy(byte_0, (int)uint_0, array2, 0, num4 - 4);
-					result = (T)(object)array2;
-					num2 = ((int)num3 * -1804498415) ^ -1488710886;
-					continue;
-				case 6u:
-					num2 = (((long)num != 2L) ? 1372364673 : 1637823455);
-					continue;
-				case 5u:
-					array = new T[1];
-					num2 = ((int)num3 * -1913375468) ^ 0x3D00D957;
-					continue;
-				case 4u:
-					result = default(T);
-					uint_0 &= 0x3FFFFFFF;
-					uint_0 <<= 2;
-					num2 = (((long)num == 0L) ? 575826946 : 1222715999) ^ ((int)num3 * -949515245);
-					continue;
-				case 3u:
-					result = (T)(object)string.Intern(Encoding.UTF8.GetString(byte_0, (int)uint_0, count));
-					num2 = (int)((num3 * 439078781) ^ 0x752846D);
-					continue;
-				case 1u:
-					result = array[0];
-					num2 = (int)((num3 * 12615277) ^ 0x116F24A0);
-					continue;
-				case 0u:
-					num2 = (((long)num != 1L) ? 378930538 : 559924768);
-					continue;
-				case 2u:
-					break;
-				default:
-					return result;
-				}
-				break;
+				T[] array = new T[1];
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, Marshal.SizeOf(typeof(T)));
+				result = array[0];
+			}
+			else if ((ulong)num == 1UL)
+			{
+				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				Array array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, num2 - 4);
+				result = (T)((object)array2);
 			}
 		}
+		else
+		{
+			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+		}
+		return result;
 	}
 
 	internal static T smethod_3<T>(uint uint_0)
 	{
-		uint_0 = (uint_0 * 119080739) ^ 0xB9668836u;
-		T[] array2 = default(T[]);
+		uint_0 = (uint_0 * 119080739u ^ 3110504502u);
+		uint num = uint_0 >> 30;
 		T result = default(T);
-		Array array = default(Array);
-		int count = default(int);
-		uint num4 = default(uint);
-		int num3 = default(int);
-		while (true)
+		uint_0 &= 1073741823u;
+		uint_0 <<= 2;
+		if ((ulong)num != 1UL)
 		{
-			int num = -1363992508;
-			while (true)
+			if ((ulong)num == 2UL)
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -48073947)) % 16)
-				{
-				case 15u:
-					array2 = new T[1];
-					Buffer.BlockCopy(byte_0, (int)uint_0, array2, 0, System.Runtime.CompilerServices.Unsafe.SizeOf<T>());
-					num = ((int)num2 * -2147045856) ^ -1937608147;
-					continue;
-				case 12u:
-					uint_0 <<= 2;
-					num = ((int)num2 * -621262069) ^ -1343341437;
-					continue;
-				case 11u:
-					result = (T)(object)array;
-					num = (int)((num2 * 1415169289) ^ 0x61EA2F5B);
-					continue;
-				case 10u:
-					count = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num = ((int)num2 * -290336298) ^ -774935008;
-					continue;
-				case 9u:
-					result = (T)(object)string.Intern(Encoding.UTF8.GetString(byte_0, (int)uint_0, count));
-					num = (int)(num2 * 1342680284) ^ -316184676;
-					continue;
-				case 8u:
-					result = array2[0];
-					num = ((int)num2 * -555389148) ^ 0x4730AC58;
-					continue;
-				case 7u:
-					num = (((long)num4 != 2L) ? (-1990350943) : (-628212486));
-					continue;
-				case 6u:
-					result = default(T);
-					uint_0 &= 0x3FFFFFFF;
-					num = ((int)num2 * -2082478041) ^ 0x47520FE3;
-					continue;
-				case 5u:
-					num = ((int)num2 * -114047512) ^ 0x5B392F70;
-					continue;
-				case 4u:
-					num = (((long)num4 == 3L) ? (-114213515) : (-1690778376));
-					continue;
-				case 3u:
-					Buffer.BlockCopy(byte_0, (int)uint_0, array, 0, num3 - 4);
-					num = ((int)num2 * -1800054209) ^ -148827357;
-					continue;
-				case 2u:
-					num = (((long)num4 == 1L) ? (-1866089945) : (-1899808518)) ^ (int)(num2 * 1040644932);
-					continue;
-				case 1u:
-					num4 = uint_0 >> 30;
-					num = ((int)num2 * -1266712988) ^ 0x7B6A3187;
-					continue;
-				case 0u:
-				{
-					num3 = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					int length = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					array = Array.CreateInstance(typeof(T).GetElementType(), length);
-					num = (int)(num2 * 1144900225) ^ -2039567098;
-					continue;
-				}
-				case 14u:
-					break;
-				default:
-					return result;
-				}
-				break;
+				T[] array = new T[1];
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, Marshal.SizeOf(typeof(T)));
+				result = array[0];
+			}
+			else if ((ulong)num == 3UL)
+			{
+				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				Array array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, num2 - 4);
+				result = (T)((object)array2);
 			}
 		}
+		else
+		{
+			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+		}
+		return result;
 	}
 
 	internal static T smethod_4<T>(uint uint_0)
 	{
-		uint_0 = (uint)(((int)uint_0 * -236364275) ^ 0x4733CC0C);
-		int count = default(int);
-		uint num3 = default(uint);
+		uint_0 = (uint_0 * 4058603021u ^ 1194576908u);
+		uint num = uint_0 >> 30;
 		T result = default(T);
-		T[] array2 = default(T[]);
-		int num4 = default(int);
-		int length = default(int);
-		Array array = default(Array);
-		while (true)
+		uint_0 &= 1073741823u;
+		uint_0 <<= 2;
+		if ((ulong)num != 3UL)
 		{
-			int num = -225525275;
-			while (true)
+			if ((ulong)num != 1UL)
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -2033139848)) % 16)
+				if ((ulong)num == 0UL)
 				{
-				case 15u:
-					uint_0 <<= 2;
-					num = (int)(num2 * 1566060702) ^ -70163336;
-					continue;
-				case 14u:
-					count = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num = (int)(num2 * 813746646) ^ -2131280736;
-					continue;
-				case 13u:
-					num3 = uint_0 >> 30;
-					result = default(T);
-					uint_0 &= 0x3FFFFFFF;
-					num = ((int)num2 * -2074029314) ^ -1271519;
-					continue;
-				case 12u:
-					result = (T)(object)string.Intern(Encoding.UTF8.GetString(byte_0, (int)uint_0, count));
-					num = ((int)num2 * -1374138969) ^ 0x3FB8C15F;
-					continue;
-				case 10u:
-					result = array2[0];
-					num = (int)((num2 * 60784189) ^ 0x2FF2AFEF);
-					continue;
-				case 9u:
-					array2 = new T[1];
-					Buffer.BlockCopy(byte_0, (int)uint_0, array2, 0, System.Runtime.CompilerServices.Unsafe.SizeOf<T>());
-					num = (int)(num2 * 1689533281) ^ -626732373;
-					continue;
-				case 8u:
-					num = (((long)num3 != 0L) ? (-391071837) : (-85534273));
-					continue;
-				case 7u:
-					num4 = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					length = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num = (int)(num2 * 455720360) ^ -212592394;
-					continue;
-				case 6u:
-					array = Array.CreateInstance(typeof(T).GetElementType(), length);
-					Buffer.BlockCopy(byte_0, (int)uint_0, array, 0, num4 - 4);
-					num = (int)((num2 * 270900228) ^ 0x8D83DD1);
-					continue;
-				case 5u:
-					num = (int)(num2 * 1481134200) ^ -2115070341;
-					continue;
-				case 4u:
-					num = (((long)num3 == 1L) ? (-1976241823) : (-1978190192));
-					continue;
-				case 3u:
-					num = (int)(num2 * 1899503450) ^ -1451549299;
-					continue;
-				case 2u:
-					num = (((long)num3 == 3L) ? (-663127100) : (-595726370)) ^ ((int)num2 * -128543543);
-					continue;
-				case 1u:
-					result = (T)(object)array;
-					num = (int)((num2 * 1202731083) ^ 0x1CAB3338);
-					continue;
-				case 0u:
-					break;
-				default:
-					return result;
+					int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+					int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+					Array array = Array.CreateInstance(typeof(T).GetElementType(), length);
+					Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, num2 - 4);
+					result = (T)((object)array);
 				}
-				break;
+			}
+			else
+			{
+				T[] array2 = new T[1];
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, Marshal.SizeOf(typeof(T)));
+				result = array2[0];
 			}
 		}
+		else
+		{
+			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+		}
+		return result;
 	}
 
 	internal static T smethod_5<T>(uint uint_0)
 	{
-		uint_0 = (uint_0 * 938235797) ^ 0x6B143145;
-		uint num3 = default(uint);
-		Array array2 = default(Array);
-		int length = default(int);
+		uint_0 = (uint_0 * 938235797u ^ 1796485445u);
+		uint num = uint_0 >> 30;
 		T result = default(T);
-		int num4 = default(int);
-		while (true)
+		uint_0 &= 1073741823u;
+		uint_0 <<= 2;
+		if ((ulong)num == 0UL)
 		{
-			int num = 309777911;
-			while (true)
+			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+		}
+		else if ((ulong)num != 3UL)
+		{
+			if ((ulong)num == 2UL)
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x64A8931E)) % 15)
-				{
-				case 14u:
-					num = (((long)num3 == 2L) ? 578997478 : 1549440828);
-					continue;
-				case 13u:
-					num3 = uint_0 >> 30;
-					num = (int)(num2 * 64366174) ^ -211531556;
-					continue;
-				case 12u:
-					num = (int)(num2 * 1866578013) ^ -1085115600;
-					continue;
-				case 11u:
-					num = (((long)num3 == 3L) ? 590279660 : 785948);
-					continue;
-				case 9u:
-					array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
-					num = ((int)num2 * -1008495083) ^ -161300101;
-					continue;
-				case 8u:
-				{
-					int count = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					result = (T)(object)string.Intern(Encoding.UTF8.GetString(byte_0, (int)uint_0, count));
-					num = (int)(num2 * 1765967801) ^ -2038960710;
-					continue;
-				}
-				case 7u:
-					result = default(T);
-					num = ((int)num2 * -1368445227) ^ -2080396822;
-					continue;
-				case 5u:
-					num4 = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					length = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num = (int)(num2 * 229401068) ^ -479157249;
-					continue;
-				case 4u:
-					Buffer.BlockCopy(byte_0, (int)uint_0, array2, 0, num4 - 4);
-					result = (T)(object)array2;
-					num = ((int)num2 * -1096709213) ^ -1188856148;
-					continue;
-				case 3u:
-				{
-					T[] array = new T[1];
-					Buffer.BlockCopy(byte_0, (int)uint_0, array, 0, System.Runtime.CompilerServices.Unsafe.SizeOf<T>());
-					result = array[0];
-					num = ((int)num2 * -2044176226) ^ 0x4B37153E;
-					continue;
-				}
-				case 2u:
-					uint_0 &= 0x3FFFFFFF;
-					num = (int)((num2 * 399251689) ^ 0x6E7F9335);
-					continue;
-				case 1u:
-					uint_0 <<= 2;
-					num = (((long)num3 != 0L) ? (-1105255177) : (-785236726)) ^ ((int)num2 * -2055893936);
-					continue;
-				case 0u:
-					num = (int)((num2 * 1974259005) ^ 0x399BFBDC);
-					continue;
-				case 10u:
-					break;
-				default:
-					return result;
-				}
-				break;
+				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				Array array = Array.CreateInstance(typeof(T).GetElementType(), length);
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, num2 - 4);
+				result = (T)((object)array);
 			}
 		}
+		else
+		{
+			T[] array2 = new T[1];
+			Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, Marshal.SizeOf(typeof(T)));
+			result = array2[0];
+		}
+		return result;
 	}
 
 	internal static T smethod_6<T>(uint uint_0)
 	{
-		uint_0 = (uint_0 * 1979878659) ^ 0x66B4C8EC;
+		uint_0 = (uint_0 * 1979878659u ^ 1723123948u);
 		uint num = uint_0 >> 30;
 		T result = default(T);
-		uint_0 &= 0x3FFFFFFF;
-		Array array2 = default(Array);
-		T[] array = default(T[]);
-		int length = default(int);
-		int num4 = default(int);
-		int count = default(int);
-		while (true)
+		uint_0 &= 1073741823u;
+		uint_0 <<= 2;
+		if ((ulong)num != 3UL)
 		{
-			int num2 = -947709337;
-			while (true)
+			if ((ulong)num == 1UL)
 			{
-				uint num3;
-				switch ((num3 = (uint)(num2 ^ -1152731815)) % 18)
-				{
-				case 17u:
-					num2 = (int)(num3 * 392289306) ^ -744583729;
-					continue;
-				case 16u:
-					uint_0 <<= 2;
-					num2 = (int)(num3 * 1386945789) ^ -1189447478;
-					continue;
-				case 15u:
-					num2 = (((long)num == 2L) ? (-561386887) : (-1298802895));
-					continue;
-				case 13u:
-					num2 = (((long)num == 3L) ? 719864777 : 71150165) ^ ((int)num3 * -387768235);
-					continue;
-				case 12u:
-					result = (T)(object)array2;
-					num2 = ((int)num3 * -1824200518) ^ 0x5635BC65;
-					continue;
-				case 10u:
-					array = new T[1];
-					num2 = ((int)num3 * -1239555787) ^ -3122323;
-					continue;
-				case 9u:
-					num2 = (int)(num3 * 142071794) ^ -201581193;
-					continue;
-				case 8u:
-					length = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num2 = ((int)num3 * -88869405) ^ 0x7588CFE4;
-					continue;
-				case 7u:
-					result = array[0];
-					num2 = (int)((num3 * 1466185745) ^ 0x3EA55BF3);
-					continue;
-				case 6u:
-					num4 = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num2 = ((int)num3 * -575163344) ^ -1616570005;
-					continue;
-				case 5u:
-					count = byte_0[uint_0++] | (byte_0[uint_0++] << 8) | (byte_0[uint_0++] << 16) | (byte_0[uint_0++] << 24);
-					num2 = ((int)num3 * -1615198869) ^ -776853620;
-					continue;
-				case 4u:
-					result = (T)(object)string.Intern(Encoding.UTF8.GetString(byte_0, (int)uint_0, count));
-					num2 = ((int)num3 * -1052153187) ^ -1603862980;
-					continue;
-				case 3u:
-					num2 = (((long)num != 1L) ? (-908551498) : (-885776363));
-					continue;
-				case 2u:
-					Buffer.BlockCopy(byte_0, (int)uint_0, array2, 0, num4 - 4);
-					num2 = ((int)num3 * -1128537617) ^ 0x41050F9;
-					continue;
-				case 1u:
-					array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
-					num2 = (int)(num3 * 984759928) ^ -88552833;
-					continue;
-				case 0u:
-					Buffer.BlockCopy(byte_0, (int)uint_0, array, 0, System.Runtime.CompilerServices.Unsafe.SizeOf<T>());
-					num2 = ((int)num3 * -1195227427) ^ -1809995664;
-					continue;
-				case 11u:
-					break;
-				default:
-					return result;
-				}
-				break;
+				T[] array = new T[1];
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, Marshal.SizeOf(typeof(T)));
+				result = array[0];
+			}
+			else if ((ulong)num == 2UL)
+			{
+				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				Array array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
+				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, num2 - 4);
+				result = (T)((object)array2);
 			}
 		}
+		else
+		{
+			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+		}
+		return result;
 	}
 }

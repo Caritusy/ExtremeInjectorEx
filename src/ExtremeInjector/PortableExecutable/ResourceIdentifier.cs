@@ -38,32 +38,8 @@ public abstract class ResourceIdentifier
 
 	protected ResourceIdentifier(int int_1)
 	{
-		while (true)
-		{
-			int num = -700503343;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -607848980)) % 4)
-				{
-				case 1u:
-					method_1(null);
-					num = (int)(num2 * 923626857) ^ -1758856579;
-					continue;
-				case 0u:
-					method_3(int_1);
-					num = (int)((num2 * 2042707922) ^ 0x4EE9D967);
-					continue;
-				default:
-					return;
-				case 2u:
-					break;
-				case 3u:
-					return;
-				}
-				break;
-			}
-		}
+		this.method_1(null);
+		this.method_3(int_1);
 	}
 
 	protected ResourceIdentifier(string string_1)

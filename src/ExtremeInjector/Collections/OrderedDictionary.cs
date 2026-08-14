@@ -73,79 +73,18 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 	{
 		get
 		{
-			if (int_0 >= 0)
+			if (int_0 >= 0 && int_0 < class41_0.Count)
 			{
-				KeyValuePair<T, U> keyValuePair = default(KeyValuePair<T, U>);
-				while (true)
-				{
-					int num = -1903626567;
-					while (true)
-					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ -569182065)) % 5)
-						{
-						case 3u:
-							keyValuePair = class41_0[int_0];
-							num = -1146259231;
-							continue;
-						case 2u:
-							num = ((int_0 >= class41_0.Count) ? 1320491480 : 1584990902) ^ (int)(num2 * 1070056468);
-							continue;
-						case 4u:
-							break;
-						case 1u:
-							goto end_IL_006c;
-						default:
-							return keyValuePair.Value;
-						}
-						break;
-					}
-					continue;
-					end_IL_006c:
-					break;
-				}
+				return class41_0[int_0].Value;
 			}
 			throw smethod_1(smethod_0("The index is outside the bounds of the dictionary: {0}", int_0));
 		}
 		set
 		{
-			if (int_0 >= 0)
+			if (int_0 >= 0 && int_0 < class41_0.Count)
 			{
-				KeyValuePair<T, U> value2 = default(KeyValuePair<T, U>);
-				while (true)
-				{
-					int num = -185787422;
-					while (true)
-					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ -1196772839)) % 6)
-						{
-						case 4u:
-							class41_0[int_0] = value2;
-							num = (int)((num2 * 1966283937) ^ 0x4E0CEE0C);
-							continue;
-						case 3u:
-							num = ((int_0 < class41_0.Count) ? 468629021 : 2084389224) ^ (int)(num2 * 585343483);
-							continue;
-						case 1u:
-							value2 = new KeyValuePair<T, U>(class41_0[int_0].Key, value);
-							num = -228068843;
-							continue;
-						default:
-							return;
-						case 0u:
-							break;
-						case 2u:
-							goto end_IL_00a1;
-						case 5u:
-							return;
-						}
-						break;
-					}
-					continue;
-					end_IL_00a1:
-					break;
-				}
+				class41_0[int_0] = new KeyValuePair<T, U>(class41_0[int_0].Key, value);
+				return;
 			}
 			throw smethod_1(smethod_0("The index is outside the bounds of the dictionary: {0}", int_0));
 		}
@@ -165,37 +104,12 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 		{
 			KeyValuePair<T, U> keyValuePair = new KeyValuePair<T, U>(key, value);
 			int num = imethod_3(key);
-			while (true)
+			if (num > -1)
 			{
-				int num2 = 856213008;
-				while (true)
-				{
-					uint num3;
-					switch ((num3 = (uint)(num2 ^ 0x480AD231)) % 6)
-					{
-					case 5u:
-						class41_0[num] = keyValuePair;
-						num2 = (int)((num3 * 1480371522) ^ 0x7220DF17);
-						continue;
-					case 1u:
-						num2 = ((num <= -1) ? (-1152417044) : (-691802909)) ^ (int)(num3 * 825531771);
-						continue;
-					case 0u:
-						class41_0.Add(keyValuePair);
-						num2 = 1257289523;
-						continue;
-					default:
-						return;
-					case 3u:
-						break;
-					case 2u:
-						return;
-					case 4u:
-						return;
-					}
-					break;
-				}
+				class41_0[num] = keyValuePair;
+				return;
 			}
+			class41_0.Add(keyValuePair);
 		}
 	}
 
@@ -291,43 +205,21 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	public OrderedDictionary(IOrderedDictionaryEx<T, U> interface1_0)
 	{
-		while (true)
+		this.method_0(null);
+		IEnumerator<KeyValuePair<T, U>> enumerator = interface1_0.imethod_8();
+		try
 		{
-			int num = -1677717654;
-			while (true)
+			while (OrderedDictionary<T, U>.smethod_2(enumerator))
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1074880585)) % 3)
-				{
-				case 2u:
-					goto IL_0008;
-				case 0u:
-					break;
-				default:
-				{
-					IEnumerator<KeyValuePair<T, U>> enumerator = interface1_0.imethod_8();
-					try
-					{
-						while (smethod_2(enumerator))
-						{
-							KeyValuePair<T, U> current = enumerator.Current;
-							class41_0.Add(current);
-						}
-						return;
-					}
-					finally
-					{
-						if (enumerator != null)
-						{
-							smethod_3(enumerator);
-						}
-					}
-				}
-				}
-				break;
-				IL_0008:
-				method_0(null);
-				num = ((int)num2 * -307350283) ^ 0x3302A9F7;
+				KeyValuePair<T, U> item = enumerator.Current;
+				this.class41_0.Add(item);
+			}
+		}
+		finally
+		{
+			if (enumerator != null)
+			{
+				OrderedDictionary<T, U>.smethod_3(enumerator);
 			}
 		}
 	}
@@ -400,34 +292,11 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	public KeyValuePair<T, U> imethod_7(int int_0)
 	{
-		if (int_0 >= 0)
+		if (int_0 >= 0 && int_0 < this.class41_0.Count)
 		{
-			while (true)
-			{
-				int num = 149602795;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x73E43D95)) % 4)
-					{
-					case 2u:
-						num = ((int_0 >= class41_0.Count) ? (-863561030) : (-1310218164)) ^ ((int)num2 * -1826660524);
-						continue;
-					case 0u:
-						break;
-					case 3u:
-						goto end_IL_0054;
-					default:
-						return class41_0[int_0];
-					}
-					break;
-				}
-				continue;
-				end_IL_0054:
-				break;
-			}
+			return this.class41_0[int_0];
 		}
-		throw smethod_1(smethod_0("The index was outside the bounds of the dictionary: {0}", int_0));
+		throw OrderedDictionary<T, U>.smethod_1(OrderedDictionary<T, U>.smethod_0(EncodedStringTable.smethod_0(4321), int_0));
 	}
 
 	public IEnumerator<KeyValuePair<T, U>> imethod_8()
@@ -442,35 +311,11 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	public void imethod_10(int index)
 	{
-		if (index >= 0)
+		if (index < 0 || index >= this.class41_0.Count)
 		{
-			while (true)
-			{
-				int num = 1954811865;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x1A1F641B)) % 4)
-					{
-					case 2u:
-						num = ((index < class41_0.Count) ? 915017582 : 1978604860) ^ (int)(num2 * 181349);
-						continue;
-					case 0u:
-						break;
-					case 1u:
-						goto end_IL_0054;
-					default:
-						class41_0.RemoveAt(index);
-						return;
-					}
-					break;
-				}
-				continue;
-				end_IL_0054:
-				break;
-			}
+			throw OrderedDictionary<T, U>.smethod_1(OrderedDictionary<T, U>.smethod_0(EncodedStringTable.smethod_0(4321), index));
 		}
-		throw smethod_1(smethod_0("The index was outside the bounds of the dictionary: {0}", index));
+		this.class41_0.RemoveAt(index);
 	}
 
 	public bool imethod_11(T key, out U value)
@@ -501,30 +346,8 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	public void method_4()
 	{
-		Comparer<U> icomparer_ = Comparer<U>.Default;
-		while (true)
-		{
-			int num = 1957830221;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x1AE74DEC)) % 3)
-				{
-				case 1u:
-					goto IL_0008;
-				default:
-					return;
-				case 0u:
-					break;
-				case 2u:
-					return;
-				}
-				break;
-				IL_0008:
-				method_5(icomparer_);
-				num = (int)((num2 * 1369091714) ^ 0x20F68EA4);
-			}
-		}
+		Comparer<U> @default = Comparer<U>.Default;
+		this.method_5(@default);
 	}
 
 	public void method_5(IComparer<U> icomparer_0)

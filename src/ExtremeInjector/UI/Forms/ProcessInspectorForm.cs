@@ -198,373 +198,104 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void method_2()
 	{
-		dataGridView_0.Rows.Clear();
-		dataGridView_1.Rows.Clear();
-		ProcessModuleCollection @class = default(ProcessModuleCollection);
-		DataGridViewRow dataGridViewRow = default(DataGridViewRow);
-		ProcessModuleInfo current = default(ProcessModuleInfo);
-		ProcessThreadInfo current2 = default(ProcessThreadInfo);
-		DataGridViewRow dataGridViewRow2 = default(DataGridViewRow);
-		while (true)
+		this.dataGridView_0.Rows.Clear();
+		this.dataGridView_1.Rows.Clear();
+		ProcessModuleCollection @class = RecoveredRuntime.smethod_42(this.method_0());
+		foreach (ProcessModuleInfo gclass in @class)
 		{
-			int num = 1079689502;
-			while (true)
+			if (!gclass.method_12())
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x3EBECFA2)) % 3)
+				DataGridViewRow dataGridViewRow = new DataGridViewRow
 				{
-				case 1u:
-					goto IL_0022;
-				case 0u:
-					break;
-				default:
+					Tag = gclass
+				};
+				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
 				{
-					using (List<ProcessModuleInfo>.Enumerator enumerator = @class.GetEnumerator())
-					{
-						while (true)
-						{
-							IL_023a:
-							int num3 = ((!enumerator.MoveNext()) ? 639173813 : 2104826547);
-							while (true)
-							{
-								switch ((num2 = (uint)(num3 ^ 0x3EBECFA2)) % 10)
-								{
-								case 9u:
-									num3 = 2104826547;
-									continue;
-								case 8u:
-									dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
-									{
-										Value = "0x" + current.method_0().ToString("X"),
-										Tag = current.method_0().ToInt64()
-									});
-									num3 = ((int)num2 * -961743698) ^ -2045217925;
-									continue;
-								case 6u:
-									num3 = (current.method_12() ? (-243569838) : (-173658280)) ^ ((int)num2 * -98594269);
-									continue;
-								case 5u:
-									current = enumerator.Current;
-									num3 = 1369324496;
-									continue;
-								case 4u:
-									dataGridViewRow = new DataGridViewRow
-									{
-										Tag = current
-									};
-									num3 = (int)((num2 * 73226851) ^ 0x10BFB436);
-									continue;
-								case 3u:
-									dataGridView_0.Rows.Add(dataGridViewRow);
-									num3 = (int)(num2 * 1905236751) ^ -589127819;
-									continue;
-								case 1u:
-									dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
-									{
-										Value = RecoveredRuntime.smethod_442(current.method_4()),
-										Tag = current.method_4()
-									});
-									num3 = (int)((num2 * 1556010828) ^ 0x5A6F03E1);
-									continue;
-								case 0u:
-									dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
-									{
-										Value = current.method_8(),
-										Tag = current.method_8()
-									});
-									num3 = ((int)num2 * -1624413917) ^ 0x714AD670;
-									continue;
-								default:
-									goto end_IL_01f0;
-								case 2u:
-									break;
-								case 7u:
-									goto end_IL_01f0;
-								}
-								goto IL_023a;
-								continue;
-								end_IL_01f0:
-								break;
-							}
-							break;
-						}
-					}
-					Icon icon = RecoveredRuntime.smethod_11(method_0().FilePath, IconSize.const_1);
-					try
-					{
-						pictureBox_0.BackgroundImage = icon?.ToBitmap();
-					}
-					finally
-					{
-						if (icon != null)
-						{
-							while (true)
-							{
-								IL_02bf:
-								int num4 = 717180417;
-								while (true)
-								{
-									switch ((num2 = (uint)(num4 ^ 0x3EBECFA2)) % 3)
-									{
-									case 1u:
-										goto IL_028c;
-									default:
-										goto end_IL_02a1;
-									case 0u:
-										break;
-									case 2u:
-										goto end_IL_02a1;
-									}
-									goto IL_02bf;
-									IL_028c:
-									((IDisposable)icon).Dispose();
-									num4 = (int)(num2 * 568451320) ^ -1690526814;
-									continue;
-									end_IL_02a1:
-									break;
-								}
-								break;
-							}
-						}
-					}
-					label_0.Text = UiText.Format("ProcessInfo.Summary", method_0().Name, method_0().FilePath, method_0().ProcessId, RecoveredRuntime.smethod_42(method_0()).Count, RecoveredRuntime.smethod_179(method_0()).Count);
-					using List<ProcessThreadInfo>.Enumerator enumerator2 = RecoveredRuntime.smethod_179(method_0()).GetEnumerator();
-					while (true)
-					{
-						int num5 = (enumerator2.MoveNext() ? 990697753 : 644568432);
-						while (true)
-						{
-							switch ((num2 = (uint)(num5 ^ 0x3EBECFA2)) % 6)
-							{
-							case 5u:
-								current2 = enumerator2.Current;
-								dataGridViewRow2 = new DataGridViewRow
-								{
-									Tag = current2
-								};
-								dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
-								{
-									Value = current2.method_0().ToString(),
-									Tag = current2.method_0()
-								});
-								dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
-								{
-									Value = smethod_0(@class, current2.method_2()),
-									Tag = current2.method_2()
-								});
-								num5 = 861797416;
-								continue;
-							case 3u:
-								dataGridView_1.Rows.Add(dataGridViewRow2);
-								num5 = ((int)num2 * -173819140) ^ -1492809243;
-								continue;
-							case 2u:
-								num5 = 990697753;
-								continue;
-							case 0u:
-								dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
-								{
-									Value = RecoveredRuntime.smethod_182(current2.method_7()),
-									Tag = current2.method_7()
-								});
-								num5 = ((int)num2 * -396315488) ^ -1965781529;
-								continue;
-							default:
-								return;
-							case 1u:
-								break;
-							case 4u:
-								return;
-							}
-							break;
-						}
-					}
-				}
-				}
-				break;
-				IL_0022:
-				@class = RecoveredRuntime.smethod_42(method_0());
-				num = (int)(num2 * 1929385556) ^ -2040208312;
+					Value = gclass.method_8(),
+					Tag = gclass.method_8()
+				});
+				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
+				{
+					Value = EncodedStringTable.smethod_0(2072) + gclass.method_0().ToString(EncodedStringTable.smethod_0(2077)),
+					Tag = gclass.method_0().ToInt64()
+				});
+				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
+				{
+					Value = RecoveredRuntime.smethod_442((long)((ulong)gclass.method_4())),
+					Tag = gclass.method_4()
+				});
+				this.dataGridView_0.Rows.Add(dataGridViewRow);
 			}
+		}
+		using (Icon icon = RecoveredRuntime.smethod_11(this.method_0().FilePath, IconSize.const_1))
+		{
+			this.pictureBox_0.BackgroundImage = ((icon == null) ? null : icon.ToBitmap());
+		}
+		this.label_0.Text = string.Format(EncodedStringTable.smethod_0(2082), new object[]
+		{
+			this.method_0().Name,
+			this.method_0().FilePath,
+			this.method_0().ProcessId,
+			RecoveredRuntime.smethod_42(this.method_0()).Count,
+			RecoveredRuntime.smethod_179(this.method_0()).Count
+		});
+		foreach (ProcessThreadInfo class2 in RecoveredRuntime.smethod_179(this.method_0()))
+		{
+			DataGridViewRow dataGridViewRow2 = new DataGridViewRow
+			{
+				Tag = class2
+			};
+			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
+			{
+				Value = class2.method_0().ToString(),
+				Tag = class2.method_0()
+			});
+			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
+			{
+				Value = ProcessInspectorForm.smethod_0(@class, class2.method_2()),
+				Tag = class2.method_2()
+			});
+			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
+			{
+				Value = RecoveredRuntime.smethod_182(class2.method_7()),
+				Tag = class2.method_7()
+			});
+			this.dataGridView_1.Rows.Add(dataGridViewRow2);
 		}
 	}
 
 	internal static string smethod_0(IEnumerable<ProcessModuleInfo> ienumerable_0, IntPtr intptr_0)
 	{
-		IEnumerator<ProcessModuleInfo> enumerator = ienumerable_0.GetEnumerator();
-		string result = default(string);
-		try
+		foreach (ProcessModuleInfo gclass in ienumerable_0)
 		{
-			ProcessModuleInfo current = default(ProcessModuleInfo);
-			uint num4 = default(uint);
-			ExportedSymbol @class = default(ExportedSymbol);
-			ExportedSymbol current2 = default(ExportedSymbol);
-			while (true)
+			if ((long)intptr_0 >= (long)gclass.method_0() && (long)intptr_0 <= (long)gclass.method_0() + (long)((ulong)gclass.method_4()))
 			{
-				if (enumerator.MoveNext())
+				List<ExportedSymbol> list = RecoveredRuntime.smethod_131(gclass);
+				uint num = (uint)((long)intptr_0 - (long)gclass.method_0());
+				ExportedSymbol @class = null;
+				foreach (ExportedSymbol class2 in list)
 				{
-					while (true)
+					if (num > class2.method_6() && (@class == null || class2.method_6() > @class.method_6()))
 					{
-						current = enumerator.Current;
-						if ((ulong)(long)intptr_0 < (ulong)(long)current.method_0())
-						{
-							break;
-						}
-						int num = 472145156;
-						while (true)
-						{
-							uint num2;
-							switch ((num2 = (uint)(num ^ 0x560B19B8)) % 4)
-							{
-							case 3u:
-								num = 1670308201;
-								continue;
-							case 0u:
-								break;
-							case 1u:
-								goto end_IL_0047;
-							default:
-								goto IL_0088;
-							}
-							if ((ulong)(long)intptr_0 > (ulong)((long)current.method_0() + current.method_4()))
-							{
-								goto end_IL_0069;
-							}
-							num = ((int)num2 * -821109673) ^ -688514198;
-							continue;
-							end_IL_0047:
-							break;
-						}
-						continue;
-						end_IL_0069:
-						break;
-					}
-					continue;
-				}
-				int num3 = 1936350653;
-				goto IL_0221;
-				IL_021c:
-				num3 = 671841505;
-				goto IL_0221;
-				IL_0221:
-				switch ((uint)(num3 ^ 0x560B19B8) % 6u)
-				{
-				case 0u:
-					break;
-				case 2u:
-					goto IL_021c;
-				default:
-					goto end_IL_0263;
-				case 5u:
-					continue;
-				case 1u:
-					result = current.method_8() + "+0x" + num4.ToString("X");
-					goto IL_02fe;
-				case 3u:
-					goto end_IL_0263;
-				case 4u:
-					goto IL_02fe;
-				}
-				goto IL_01b6;
-				IL_0088:
-				List<ExportedSymbol> list = RecoveredRuntime.smethod_131(current);
-				num4 = (uint)((long)intptr_0 - (long)current.method_0());
-				@class = null;
-				using (List<ExportedSymbol>.Enumerator enumerator2 = list.GetEnumerator())
-				{
-					while (true)
-					{
-						IL_0195:
-						int num5 = ((!enumerator2.MoveNext()) ? 408886547 : 847219454);
-						while (true)
-						{
-							uint num2;
-							switch ((num2 = (uint)(num5 ^ 0x560B19B8)) % 7)
-							{
-							case 5u:
-								@class = current2;
-								num5 = 1678597690;
-								continue;
-							case 4u:
-								num5 = 847219454;
-								continue;
-							case 3u:
-								current2 = enumerator2.Current;
-								num5 = ((num4 <= current2.method_6()) ? 1678597690 : 1969053891);
-								continue;
-							case 2u:
-								num5 = ((@class != null) ? 113000516 : 390188438) ^ ((int)num2 * -78067621);
-								continue;
-							case 1u:
-								num5 = ((current2.method_6() > @class.method_6()) ? 134880809 : 44813116) ^ ((int)num2 * -344017330);
-								continue;
-							default:
-								goto end_IL_0158;
-							case 0u:
-								break;
-							case 6u:
-								goto end_IL_0158;
-							}
-							goto IL_0195;
-							continue;
-							end_IL_0158:
-							break;
-						}
-						break;
+						@class = class2;
 					}
 				}
 				if (@class != null)
 				{
-					goto IL_01b6;
-				}
-				goto IL_021c;
-				IL_01b6:
-				uint num6 = num4 - @class.method_6();
-				result = current.method_8() + "!" + ((!@class.method_0()) ? @class.method_2().ToString() : @class.method_4()) + "+0x" + num6.ToString("X");
-				num3 = 299249054;
-				goto IL_0221;
-				continue;
-				end_IL_0263:
-				break;
-			}
-		}
-		finally
-		{
-			if (enumerator != null)
-			{
-				while (true)
-				{
-					IL_02d5:
-					int num7 = 868955022;
-					while (true)
+					uint num2 = num - @class.method_6();
+					return string.Concat(new string[]
 					{
-						uint num2;
-						switch ((num2 = (uint)(num7 ^ 0x560B19B8)) % 3)
-						{
-						case 2u:
-							goto IL_02a3;
-						default:
-							goto end_IL_02b7;
-						case 0u:
-							break;
-						case 1u:
-							goto end_IL_02b7;
-						}
-						goto IL_02d5;
-						IL_02a3:
-						enumerator.Dispose();
-						num7 = ((int)num2 * -1031815348) ^ 0x3756192C;
-						continue;
-						end_IL_02b7:
-						break;
-					}
-					break;
+						gclass.method_8(),
+						EncodedStringTable.smethod_0(2176),
+						(!@class.method_0()) ? @class.method_2().ToString() : @class.method_4(),
+						EncodedStringTable.smethod_0(2171),
+						num2.ToString(EncodedStringTable.smethod_0(2077))
+					});
 				}
+				return gclass.method_8() + EncodedStringTable.smethod_0(2171) + num.ToString(EncodedStringTable.smethod_0(2077));
 			}
 		}
-		return "0x" + intptr_0.ToString("X");
-		IL_02fe:
-		return result;
+		return EncodedStringTable.smethod_0(2072) + intptr_0.ToString(EncodedStringTable.smethod_0(2077));
 	}
 
 	internal void method_3(object sender, EventArgs e)
@@ -576,73 +307,29 @@ public sealed class ProcessInspectorForm : Form
 	{
 		try
 		{
-			RecoveredRuntime.smethod_411(method_0());
-			while (true)
-			{
-				int num = -2074048646;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -1410434573)) % 3)
-					{
-					case 1u:
-						goto IL_000e;
-					default:
-						return;
-					case 2u:
-						break;
-					case 0u:
-						return;
-					}
-					break;
-					IL_000e:
-					MessageBox.Show(UiText.Get("Message.ProcessTerminated"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-					num = (int)(num2 * 174653001) ^ -5123630;
-				}
-			}
+			RecoveredRuntime.smethod_411(this.method_0());
+			MessageBox.Show(EncodedStringTable.smethod_0(2181), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
 		catch (Exception)
 		{
-			MessageBox.Show(UiText.Get("Message.ProcessTerminateFailed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(EncodedStringTable.smethod_0(2242), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
 	internal void method_5(object sender, EventArgs e)
 	{
-		if (!RecoveredRuntime.HasProcessExited(method_0()))
+		if (!RecoveredRuntime.HasProcessExited(this.method_0()))
 		{
-			goto IL_000d;
-		}
-		goto IL_0031;
-		IL_000d:
-		int num = -1009207916;
-		goto IL_0012;
-		IL_0012:
-		switch ((uint)(num ^ -464339707) % 4u)
-		{
-		case 0u:
-			break;
-		case 3u:
-			goto IL_0031;
-		case 1u:
-			return;
-		default:
-		{
-			Button button = button_0;
-			Button button2 = button_1;
-			Button button3 = button_3;
-			button_4.Enabled = false;
-			button3.Enabled = false;
-			button2.Enabled = false;
-			button.Enabled = false;
 			return;
 		}
-		}
-		goto IL_000d;
-		IL_0031:
-		timer_0.Stop();
-		num = -767225361;
-		goto IL_0012;
+		this.timer_0.Stop();
+		Control control = this.button_0;
+		Control control2 = this.button_1;
+		Control control3 = this.button_3;
+		this.button_4.Enabled = false;
+		control3.Enabled = false;
+		control2.Enabled = false;
+		control.Enabled = false;
 	}
 
 	internal void method_6(object sender, EventArgs e)
@@ -652,36 +339,14 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void method_7(object sender, DataGridViewSortCompareEventArgs e)
 	{
-		DataGridView obj = (DataGridView)sender;
-		DataGridViewCell dataGridViewCell = obj[e.Column.Index, e.RowIndex1];
-		DataGridViewCell dataGridViewCell2 = obj[e.Column.Index, e.RowIndex2];
-		if (!(dataGridViewCell.Tag is IComparable comparable))
+		DataGridView dataGridView = (DataGridView)sender;
+		DataGridViewCell dataGridViewCell = dataGridView[e.Column.Index, e.RowIndex1];
+		DataGridViewCell dataGridViewCell2 = dataGridView[e.Column.Index, e.RowIndex2];
+		IComparable comparable = dataGridViewCell.Tag as IComparable;
+		if (comparable != null)
 		{
-			return;
-		}
-		while (true)
-		{
-			int num = 1571599917;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x1FAE9B90)) % 3)
-				{
-				case 2u:
-					goto IL_0046;
-				default:
-					return;
-				case 0u:
-					break;
-				case 1u:
-					return;
-				}
-				break;
-				IL_0046:
-				e.SortResult = comparable.CompareTo(dataGridViewCell2.Tag);
-				e.Handled = true;
-				num = (int)((num2 * 1317880195) ^ 0x5CA896E4);
-			}
+			e.SortResult = comparable.CompareTo(dataGridViewCell2.Tag);
+			e.Handled = true;
 		}
 	}
 
@@ -695,219 +360,64 @@ public sealed class ProcessInspectorForm : Form
 	{
 		try
 		{
-			ProcessModuleInfo gClass = (ProcessModuleInfo)dataGridView_0.SelectedRows[0].Tag;
-			if (RecoveredRuntime.smethod_103(gClass, new RemoteModuleManager(method_0())))
+			ProcessModuleInfo gclass = (ProcessModuleInfo)this.dataGridView_0.SelectedRows[0].Tag;
+			if (RecoveredRuntime.smethod_103(gclass, new RemoteModuleManager(this.method_0())))
 			{
-				goto IL_0030;
+				this.method_2();
+				MessageBox.Show(gclass.method_8() + EncodedStringTable.smethod_0(2327), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
-			goto IL_00a6;
-			IL_0030:
-			int num = 615984725;
-			goto IL_0081;
-			IL_0081:
-			while (true)
+			else
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x298E9195)) % 5)
-				{
-				case 4u:
-					break;
-				case 3u:
-					method_2();
-					MessageBox.Show(UiText.Format("Message.ModuleUnloaded", gClass.method_8()), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-					num = (int)(num2 * 1446355278) ^ -31155133;
-					continue;
-				case 1u:
-					num = (int)((num2 * 516441638) ^ 0xC1C7ED);
-					continue;
-				default:
-					return;
-				case 2u:
-					goto IL_00a6;
-				case 0u:
-					return;
-				}
-				break;
+				MessageBox.Show(gclass.method_8() + EncodedStringTable.smethod_0(2396), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
-			goto IL_0030;
-			IL_00a6:
-			MessageBox.Show(UiText.Format("Message.ModuleUnloadFailed", gClass.method_8()), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			num = 2037362985;
-			goto IL_0081;
 		}
 		catch (Exception ex)
 		{
-			MessageBox.Show(UiText.Format("Message.ModuleUnloadError", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(EncodedStringTable.smethod_0(2453) + ex.Message, EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
 	internal void method_10(object sender, EventArgs e)
 	{
-		Button button = button_3;
-		bool enabled = (button_4.Enabled = timer_0.Enabled);
-		button.Enabled = enabled;
-		while (true)
+		this.button_3.Enabled = (this.button_4.Enabled = this.timer_0.Enabled);
+		if (this.timer_0.Enabled)
 		{
-			int num = 1380314093;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x30B4587)) % 4)
-				{
-				case 2u:
-					num = ((!timer_0.Enabled) ? (-598167744) : (-743784286)) ^ ((int)num2 * -1603810802);
-					continue;
-				case 1u:
-					RecoveredRuntime.smethod_88(this);
-					num = ((int)num2 * -1297105286) ^ 0x7A03EF86;
-					continue;
-				default:
-					return;
-				case 0u:
-					break;
-				case 3u:
-					return;
-				}
-				break;
-			}
+			RecoveredRuntime.smethod_88(this);
 		}
 	}
 
 	internal void method_11(object sender, EventArgs e)
 	{
-		ProcessThreadInfo class75_ = (ProcessThreadInfo)dataGridView_1.SelectedRows[0].Tag;
+		ProcessThreadInfo class75_ = (ProcessThreadInfo)this.dataGridView_1.SelectedRows[0].Tag;
 		bool flag;
-		if (!(flag = button_3.Text == UiText.Get("ProcessInfo.Resume")))
+		if (!((!(flag = (this.button_3.Text == EncodedStringTable.smethod_0(2546)))) ? RecoveredRuntime.smethod_300(class75_) : RecoveredRuntime.smethod_97(class75_)))
 		{
-			goto IL_0095;
+			MessageBox.Show(EncodedStringTable.smethod_0(2555) + (flag ? EncodedStringTable.smethod_0(2585) : EncodedStringTable.smethod_0(2572)) + EncodedStringTable.smethod_0(2594), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
-		bool num = RecoveredRuntime.smethod_97(class75_);
-		goto IL_012b;
-		IL_011c:
-		num = RecoveredRuntime.smethod_300(class75_);
-		goto IL_012b;
-		IL_012b:
-		if (num)
+		else
 		{
-			goto IL_0045;
+			MessageBox.Show(EncodedStringTable.smethod_0(2623) + ((!flag) ? EncodedStringTable.smethod_0(2664) : EncodedStringTable.smethod_0(2677)) + EncodedStringTable.smethod_0(2690), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
-		int num2 = 312454150;
-		goto IL_00e6;
-		IL_0095:
-		num2 = 1484077775;
-		goto IL_00e6;
-		IL_00e6:
-		while (true)
-		{
-			switch ((uint)(num2 ^ 0x44FB4084) % 6u)
-			{
-			case 4u:
-				break;
-			case 5u:
-				RecoveredRuntime.smethod_88(this);
-				num2 = 1699181933;
-				continue;
-			case 2u:
-				goto IL_0095;
-			case 0u:
-				MessageBox.Show(UiText.Get(flag ? "Message.ThreadResumeFailed" : "Message.ThreadSuspendFailed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				num2 = 2093860131;
-				continue;
-			default:
-				return;
-			case 1u:
-				goto IL_011c;
-			case 3u:
-				return;
-			}
-			break;
-		}
-		goto IL_0045;
-		IL_0045:
-		MessageBox.Show(UiText.Get(flag ? "Message.ThreadResumed" : "Message.ThreadSuspended"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-		num2 = 2093860131;
-		goto IL_00e6;
+		RecoveredRuntime.smethod_88(this);
 	}
 
 	internal void method_12(object sender, EventArgs e)
 	{
-		if (!RecoveredRuntime.smethod_74((ProcessThreadInfo)dataGridView_1.SelectedRows[0].Tag))
+		if (!RecoveredRuntime.smethod_74((ProcessThreadInfo)this.dataGridView_1.SelectedRows[0].Tag))
 		{
-			goto IL_0022;
+			MessageBox.Show(EncodedStringTable.smethod_0(2711), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			return;
 		}
-		goto IL_0078;
-		IL_0022:
-		int num = -1029997403;
-		goto IL_0053;
-		IL_0053:
-		while (true)
-		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ -666740338)) % 5)
-			{
-			case 4u:
-				break;
-			case 3u:
-				MessageBox.Show(UiText.Get("Message.ThreadTerminateFailed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				num = (int)(num2 * 354435775) ^ -677172765;
-				continue;
-			default:
-				return;
-			case 1u:
-				goto IL_0078;
-			case 0u:
-				return;
-			case 2u:
-				return;
-			}
-			break;
-		}
-		goto IL_0022;
-		IL_0078:
-		MessageBox.Show(UiText.Get("Message.ThreadTerminated"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-		num = -1446707801;
-		goto IL_0053;
+		MessageBox.Show(EncodedStringTable.smethod_0(2796), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 	}
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing)
+		if (disposing && this.icontainer_0 != null)
 		{
-			goto IL_0048;
+			this.icontainer_0.Dispose();
 		}
-		goto IL_0072;
-		IL_0048:
-		int num = 1868565375;
-		goto IL_004d;
-		IL_004d:
-		while (true)
-		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ 0x3CB1E8EC)) % 5)
-			{
-			case 2u:
-				icontainer_0.Dispose();
-				num = (int)((num2 * 447977154) ^ 0xFF48042);
-				continue;
-			case 1u:
-				num = ((icontainer_0 == null) ? 417993808 : 388882196) ^ ((int)num2 * -1736371094);
-				continue;
-			case 0u:
-				break;
-			default:
-				return;
-			case 3u:
-				goto IL_0072;
-			case 4u:
-				return;
-			}
-			break;
-		}
-		goto IL_0048;
-		IL_0072:
 		base.Dispose(disposing);
-		num = 1205798872;
-		goto IL_004d;
 	}
 
 	internal static DataGridViewRowCollection smethod_1(DataGridView dataGridView_2)

@@ -13,29 +13,7 @@ public sealed class NativeAsmJitMemoryManager : AsmJitMemoryManager
 
 	internal NativeAsmJitMemoryManager(IntPtr intptr_1)
 	{
-		while (true)
-		{
-			int num = -730954214;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -2009850770)) % 3)
-				{
-				case 2u:
-					goto IL_0008;
-				default:
-					return;
-				case 0u:
-					break;
-				case 1u:
-					return;
-				}
-				break;
-				IL_0008:
-				intptr_0 = intptr_1;
-				num = (int)(num2 * 463483546) ^ -180098689;
-			}
-		}
+		this.intptr_0 = intptr_1;
 	}
 
 	internal T method_0<T>(int int_0)
@@ -47,33 +25,10 @@ public sealed class NativeAsmJitMemoryManager : AsmJitMemoryManager
 	{
 		if (AsmJitRuntime.bool_0)
 		{
-			while (true)
-			{
-				int num = 2020841994;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x4F933F4F)) % 4)
-					{
-					case 1u:
-						method_0<Delegate43>(2)(intptr_0, intptr_1);
-						num = (int)(num2 * 1359226588) ^ -1805477605;
-						continue;
-					case 2u:
-						break;
-					case 0u:
-						return;
-					default:
-						goto end_IL_004a;
-					}
-					break;
-				}
-				continue;
-				end_IL_004a:
-				break;
-			}
+			this.method_0<NativeAsmJitMemoryManager.Delegate43>(2)(this.intptr_0, intptr_1);
+			return;
 		}
-		method_0<Delegate42>(2)(intptr_0, intptr_1);
+		this.method_0<NativeAsmJitMemoryManager.Delegate42>(2)(this.intptr_0, intptr_1);
 	}
 
 	internal static IntPtr smethod_0(IntPtr intptr_1)

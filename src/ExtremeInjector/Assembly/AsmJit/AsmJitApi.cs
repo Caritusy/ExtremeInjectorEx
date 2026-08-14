@@ -771,180 +771,63 @@ public static class AsmJitApi
 	{
 		if (AsmJitRuntime.bool_0)
 		{
-			goto IL_0121;
+			AsmJitApi.smethod_3(AsmJitNative.smethod_0<AsmJitApi.Delegate2>(EncodedStringTable.smethod_0(4502)));
+			AsmJitApi.smethod_12(AsmJitNative.smethod_0<AsmJitApi.Delegate7>(EncodedStringTable.smethod_0(4567)));
+			AsmJitApi.smethod_14(AsmJitNative.smethod_0<AsmJitApi.Delegate8>(EncodedStringTable.smethod_0(4632)));
+			AsmJitApi.smethod_16(AsmJitNative.smethod_0<AsmJitApi.Delegate9>(EncodedStringTable.smethod_0(4717)));
+			AsmJitApi.smethod_17(AsmJitNative.smethod_0<AsmJitApi.Delegate10>(EncodedStringTable.smethod_0(4802)));
+			AsmJitApi.smethod_21(AsmJitNative.smethod_0<AsmJitApi.Delegate12>(EncodedStringTable.smethod_0(4891)));
+			AsmJitApi.smethod_23(AsmJitNative.smethod_0<AsmJitApi.Delegate14>(EncodedStringTable.smethod_0(4944)));
+			AsmJitApi.smethod_27(AsmJitNative.smethod_0<AsmJitApi.Delegate16>(EncodedStringTable.smethod_0(5005)));
+			AsmJitApi.smethod_31(AsmJitNative.smethod_0<AsmJitApi.Delegate18>(EncodedStringTable.smethod_0(5070)));
+			AsmJitApi.smethod_32(AsmJitNative.smethod_0<AsmJitApi.Delegate19>(EncodedStringTable.smethod_0(5127)));
+			AsmJitApi.smethod_33(AsmJitNative.smethod_0<AsmJitApi.Delegate20>(EncodedStringTable.smethod_0(5196)));
+			AsmJitApi.smethod_34(AsmJitNative.smethod_0<AsmJitApi.Delegate21>(EncodedStringTable.smethod_0(5265)));
+			AsmJitApi.smethod_38(AsmJitNative.smethod_0<AsmJitApi.Delegate23>(EncodedStringTable.smethod_0(5354)));
+			AsmJitApi.smethod_42(AsmJitNative.smethod_0<AsmJitApi.Delegate23>(EncodedStringTable.smethod_0(5427)));
+			AsmJitApi.smethod_46(AsmJitNative.smethod_0<AsmJitApi.Delegate25>(EncodedStringTable.smethod_0(5508)));
+			AsmJitApi.smethod_50(AsmJitNative.smethod_0<AsmJitApi.Delegate27>(EncodedStringTable.smethod_0(5577)));
+			AsmJitApi.smethod_52(AsmJitNative.smethod_0<AsmJitApi.Delegate28>(EncodedStringTable.smethod_0(5642)));
+			AsmJitApi.smethod_53(AsmJitNative.smethod_0<AsmJitApi.Delegate30>(EncodedStringTable.smethod_0(5711)));
+			AsmJitApi.smethod_54(AsmJitNative.smethod_0<AsmJitApi.Delegate29>(EncodedStringTable.smethod_0(5796)));
+			AsmJitApi.smethod_55(AsmJitNative.smethod_0<AsmJitApi.Delegate31>(EncodedStringTable.smethod_0(5881)));
+			AsmJitApi.smethod_56(AsmJitNative.smethod_0<AsmJitApi.Delegate33>(EncodedStringTable.smethod_0(5938)));
+			AsmJitApi.smethod_57(AsmJitNative.smethod_0<AsmJitApi.Delegate32>(EncodedStringTable.smethod_0(6011)));
+			AsmJitApi.smethod_58(AsmJitNative.smethod_0<AsmJitApi.Delegate35>(EncodedStringTable.smethod_0(6084)));
+			AsmJitApi.smethod_59(AsmJitNative.smethod_0<AsmJitApi.Delegate37>(EncodedStringTable.smethod_0(6153)));
+			AsmJitApi.smethod_61(AsmJitNative.smethod_0<AsmJitApi.Delegate34>(EncodedStringTable.smethod_0(6226)));
+			AsmJitApi.smethod_62(AsmJitNative.smethod_0<AsmJitApi.Delegate36>(EncodedStringTable.smethod_0(6295)));
+			AsmJitApi.smethod_66(AsmJitNative.smethod_0<AsmJitApi.Delegate39>(EncodedStringTable.smethod_0(6368)));
+			AsmJitApi.smethod_67(AsmJitNative.smethod_0<AsmJitApi.Delegate40>(EncodedStringTable.smethod_0(6421)));
+			return;
 		}
-		goto IL_070d;
-		IL_0121:
-		int num = -1341267528;
-		goto IL_0673;
-		IL_0673:
-		while (true)
-		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ -1277021839)) % 34)
-			{
-			case 33u:
-				smethod_5(AsmJitNative.smethod_0<Delegate3>("?_emitInstruction@AssemblerCore@AsmJit@@QAEXI@Z"));
-				smethod_7(AsmJitNative.smethod_0<Delegate4>("?_emitInstruction@AssemblerCore@AsmJit@@QAEXIPBUOperand@2@@Z"));
-				smethod_9(AsmJitNative.smethod_0<Delegate5>("?_emitInstruction@AssemblerCore@AsmJit@@QAEXIPBUOperand@2@0@Z"));
-				smethod_10(AsmJitNative.smethod_0<Delegate6>("?_emitInstruction@AssemblerCore@AsmJit@@QAEXIPBUOperand@2@00@Z"));
-				smethod_19(AsmJitNative.smethod_0<Delegate11>("?make@AssemblerCore@AsmJit@@UAEPAXXZ"));
-				smethod_22(AsmJitNative.smethod_0<Delegate13>("?relocCode@AssemblerCore@AsmJit@@QBEIPAX@Z"));
-				num = (int)((num2 * 1196119306) ^ 0x456CA949);
-				continue;
-			case 31u:
-				smethod_31(AsmJitNative.smethod_0<Delegate18>("?embed@AssemblerCore@AsmJit@@QEAAXPEBX_K@Z"));
-				smethod_32(AsmJitNative.smethod_0<Delegate19>("?_BaseVarMem@AsmJit@@YA?AUMem@1@AEBUBaseVar@1@I@Z"));
-				smethod_33(AsmJitNative.smethod_0<Delegate20>("?_BaseVarMem@AsmJit@@YA?AUMem@1@AEBUBaseVar@1@I_J@Z"));
-				smethod_34(AsmJitNative.smethod_0<Delegate21>("?_BaseVarMem@AsmJit@@YA?AUMem@1@AEBUBaseVar@1@IAEBUGPVar@1@I_J@Z"));
-				num = ((int)num2 * -962074183) ^ -1920045067;
-				continue;
-			case 30u:
-				smethod_62(AsmJitNative.smethod_0<Delegate36>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@AEBUGPReg@1@0I_JI@Z"));
-				num = ((int)num2 * -1657934781) ^ -914786592;
-				continue;
-			case 29u:
-				break;
-			case 28u:
-				smethod_21(AsmJitNative.smethod_0<Delegate12>("?make@AssemblerCore@AsmJit@@UEAAPEAXXZ"));
-				num = ((int)num2 * -673764457) ^ 0x6C93520B;
-				continue;
-			case 27u:
-				smethod_33(AsmJitNative.smethod_0<Delegate20>("?_BaseVarMem@AsmJit@@YA?AUMem@1@ABUBaseVar@1@IH@Z"));
-				num = (int)((num2 * 1734852647) ^ 0x51F223B);
-				continue;
-			case 25u:
-				smethod_66(AsmJitNative.smethod_0<Delegate39>("?align@AssemblerCore@AsmJit@@QEAAXI@Z"));
-				smethod_67(AsmJitNative.smethod_0<Delegate40>("?getCpuInfo@AsmJit@@YAPEAUCpuInfo@1@XZ"));
-				num = (int)(num2 * 434143659) ^ -665007127;
-				continue;
-			case 24u:
-				smethod_48(AsmJitNative.smethod_0<Delegate26>("?bind@AssemblerCore@AsmJit@@QAEXABULabel@2@@Z"));
-				num = (int)(num2 * 2122514231) ^ -440936829;
-				continue;
-			case 23u:
-				smethod_16(AsmJitNative.smethod_0<Delegate9>("?_emitInstruction@AssemblerCore@AsmJit@@QEAAXIPEBUOperand@2@0@Z"));
-				num = (int)((num2 * 696543215) ^ 0x1B6DE183);
-				continue;
-			case 22u:
-				smethod_61(AsmJitNative.smethod_0<Delegate34>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@ABUGPReg@1@HI@Z"));
-				smethod_62(AsmJitNative.smethod_0<Delegate36>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@ABUGPReg@1@0IHI@Z"));
-				smethod_64(AsmJitNative.smethod_0<Delegate38>("?align@AssemblerCore@AsmJit@@QAEXI@Z"));
-				smethod_67(AsmJitNative.smethod_0<Delegate40>("?getCpuInfo@AsmJit@@YAPAUCpuInfo@1@XZ"));
-				num = (int)(num2 * 895985413) ^ -446343743;
-				continue;
-			case 21u:
-				smethod_38(AsmJitNative.smethod_0<Delegate23>("?_emitJcc@AssemblerCore@AsmJit@@QEAAXIPEBULabel@2@I@Z"));
-				smethod_42(AsmJitNative.smethod_0<Delegate23>("?_emitShortJcc@AssemblerCore@AsmJit@@QEAAXIPEBULabel@2@I@Z"));
-				smethod_46(AsmJitNative.smethod_0<Delegate25>("?newLabel@AssemblerCore@AsmJit@@QEAA?AULabel@2@XZ"));
-				num = ((int)num2 * -121652205) ^ 0xAC6820F;
-				continue;
-			case 20u:
-				smethod_56(AsmJitNative.smethod_0<Delegate33>("?_MemPtrAbs@AsmJit@@YA?AUMem@1@PAXABUGPVar@1@IHII@Z"));
-				num = (int)(num2 * 333293934) ^ -645935615;
-				continue;
-			case 19u:
-				smethod_53(AsmJitNative.smethod_0<Delegate30>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@ABULabel@1@ABUGPVar@1@IHI@Z"));
-				smethod_54(AsmJitNative.smethod_0<Delegate29>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@ABULabel@1@ABUGPReg@1@IHI@Z"));
-				smethod_55(AsmJitNative.smethod_0<Delegate31>("?_MemPtrAbs@AsmJit@@YA?AUMem@1@PAXHII@Z"));
-				num = (int)((num2 * 1490566432) ^ 0x1F6E2FAD);
-				continue;
-			case 18u:
-				smethod_23(AsmJitNative.smethod_0<Delegate14>("?relocCode@AssemblerCore@AsmJit@@QEBA_KPEAX@Z"));
-				num = (int)((num2 * 1998723183) ^ 0x27806C6A);
-				continue;
-			case 16u:
-				smethod_55(AsmJitNative.smethod_0<Delegate31>("?_MemPtrAbs@AsmJit@@YA?AUMem@1@PEAX_JII@Z"));
-				num = ((int)num2 * -3091937) ^ -1118132975;
-				continue;
-			case 15u:
-				smethod_17(AsmJitNative.smethod_0<Delegate10>("?_emitInstruction@AssemblerCore@AsmJit@@QEAAXIPEBUOperand@2@00@Z"));
-				num = ((int)num2 * -2118282574) ^ 0xD478499;
-				continue;
-			case 14u:
-				smethod_58(AsmJitNative.smethod_0<Delegate35>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@AEBUGPVar@1@_JI@Z"));
-				smethod_59(AsmJitNative.smethod_0<Delegate37>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@AEBUGPVar@1@0I_JI@Z"));
-				smethod_61(AsmJitNative.smethod_0<Delegate34>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@AEBUGPReg@1@_JI@Z"));
-				num = ((int)num2 * -1409907384) ^ 0x620537E1;
-				continue;
-			case 13u:
-				smethod_27(AsmJitNative.smethod_0<Delegate16>("?relocCode@AssemblerCore@AsmJit@@UEBA_KPEAX_K@Z"));
-				num = (int)((num2 * 1828761674) ^ 0x52C25E10);
-				continue;
-			case 12u:
-				smethod_25(AsmJitNative.smethod_0<Delegate15>("?relocCode@AssemblerCore@AsmJit@@UBEIPAXI@Z"));
-				smethod_29(AsmJitNative.smethod_0<Delegate17>("?embed@AssemblerCore@AsmJit@@QAEXPBXI@Z"));
-				smethod_32(AsmJitNative.smethod_0<Delegate19>("?_BaseVarMem@AsmJit@@YA?AUMem@1@ABUBaseVar@1@I@Z"));
-				num = (int)(num2 * 107551787) ^ -179146432;
-				continue;
-			case 11u:
-				smethod_14(AsmJitNative.smethod_0<Delegate8>("?_emitInstruction@AssemblerCore@AsmJit@@QEAAXIPEBUOperand@2@@Z"));
-				num = (int)(num2 * 209425370) ^ -154550372;
-				continue;
-			case 10u:
-				smethod_57(AsmJitNative.smethod_0<Delegate32>("?_MemPtrAbs@AsmJit@@YA?AUMem@1@PAXABUGPReg@1@IHII@Z"));
-				smethod_58(AsmJitNative.smethod_0<Delegate35>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@ABUGPVar@1@HI@Z"));
-				smethod_59(AsmJitNative.smethod_0<Delegate37>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@ABUGPVar@1@0IHI@Z"));
-				num = ((int)num2 * -2080771052) ^ -796745299;
-				continue;
-			case 9u:
-				smethod_50(AsmJitNative.smethod_0<Delegate27>("?bind@AssemblerCore@AsmJit@@QEAAXAEBULabel@2@@Z"));
-				smethod_52(AsmJitNative.smethod_0<Delegate28>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@AEBULabel@1@_JI@Z"));
-				num = (int)((num2 * 908118575) ^ 0x16723E26);
-				continue;
-			case 8u:
-				smethod_52(AsmJitNative.smethod_0<Delegate28>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@ABULabel@1@HI@Z"));
-				num = ((int)num2 * -791906480) ^ 0x1808A38A;
-				continue;
-			case 7u:
-				smethod_34(AsmJitNative.smethod_0<Delegate21>("?_BaseVarMem@AsmJit@@YA?AUMem@1@ABUBaseVar@1@IABUGPVar@1@IH@Z"));
-				num = (int)((num2 * 1725047075) ^ 0x641813D5);
-				continue;
-			case 6u:
-				smethod_53(AsmJitNative.smethod_0<Delegate30>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@AEBULabel@1@AEBUGPVar@1@I_JI@Z"));
-				num = ((int)num2 * -1532055740) ^ -1836865515;
-				continue;
-			case 5u:
-				smethod_3(AsmJitNative.smethod_0<Delegate2>("??0Assembler@AsmJit@@QEAA@PEAUCodeGenerator@1@@Z"));
-				num = ((int)num2 * -824094394) ^ -2022050220;
-				continue;
-			case 4u:
-				smethod_56(AsmJitNative.smethod_0<Delegate33>("?_MemPtrAbs@AsmJit@@YA?AUMem@1@PEAXAEBUGPVar@1@I_JII@Z"));
-				smethod_57(AsmJitNative.smethod_0<Delegate32>("?_MemPtrAbs@AsmJit@@YA?AUMem@1@PEAXAEBUGPReg@1@I_JII@Z"));
-				num = (int)(num2 * 662436778) ^ -110276275;
-				continue;
-			case 3u:
-				smethod_12(AsmJitNative.smethod_0<Delegate7>("?_emitInstruction@AssemblerCore@AsmJit@@QEAAXI@Z"));
-				num = ((int)num2 * -896242470) ^ 0x7A41C64A;
-				continue;
-			case 2u:
-				smethod_44(AsmJitNative.smethod_0<Delegate24>("?newLabel@AssemblerCore@AsmJit@@QAE?AULabel@2@XZ"));
-				num = (int)((num2 * 1169383290) ^ 0x7550B9AD);
-				continue;
-			case 1u:
-				smethod_36(AsmJitNative.smethod_0<Delegate22>("?_emitJcc@AssemblerCore@AsmJit@@QAEXIPBULabel@2@I@Z"));
-				smethod_40(AsmJitNative.smethod_0<Delegate22>("?_emitShortJcc@AssemblerCore@AsmJit@@QAEXIPBULabel@2@I@Z"));
-				num = ((int)num2 * -905851105) ^ 0x2A5E19B4;
-				continue;
-			case 0u:
-				smethod_54(AsmJitNative.smethod_0<Delegate29>("?_MemPtrBuild@AsmJit@@YA?AUMem@1@AEBULabel@1@AEBUGPReg@1@I_JI@Z"));
-				num = (int)(num2 * 1702517025) ^ -1870632873;
-				continue;
-			default:
-				return;
-			case 32u:
-				goto IL_070d;
-			case 17u:
-				return;
-			case 26u:
-				return;
-			}
-			break;
-		}
-		goto IL_0121;
-		IL_070d:
-		smethod_1(AsmJitNative.smethod_0<Delegate1>("??0Assembler@AsmJit@@QAE@PAUCodeGenerator@1@@Z"));
-		num = -1901417842;
-		goto IL_0673;
+		AsmJitApi.smethod_1(AsmJitNative.smethod_0<AsmJitApi.Delegate1>(EncodedStringTable.smethod_0(6474)));
+		AsmJitApi.smethod_5(AsmJitNative.smethod_0<AsmJitApi.Delegate3>(EncodedStringTable.smethod_0(6539)));
+		AsmJitApi.smethod_7(AsmJitNative.smethod_0<AsmJitApi.Delegate4>(EncodedStringTable.smethod_0(6604)));
+		AsmJitApi.smethod_9(AsmJitNative.smethod_0<AsmJitApi.Delegate5>(EncodedStringTable.smethod_0(6685)));
+		AsmJitApi.smethod_10(AsmJitNative.smethod_0<AsmJitApi.Delegate6>(EncodedStringTable.smethod_0(6770)));
+		AsmJitApi.smethod_19(AsmJitNative.smethod_0<AsmJitApi.Delegate11>(EncodedStringTable.smethod_0(6855)));
+		AsmJitApi.smethod_22(AsmJitNative.smethod_0<AsmJitApi.Delegate13>(EncodedStringTable.smethod_0(6904)));
+		AsmJitApi.smethod_25(AsmJitNative.smethod_0<AsmJitApi.Delegate15>(EncodedStringTable.smethod_0(6961)));
+		AsmJitApi.smethod_29(AsmJitNative.smethod_0<AsmJitApi.Delegate17>(EncodedStringTable.smethod_0(7022)));
+		AsmJitApi.smethod_32(AsmJitNative.smethod_0<AsmJitApi.Delegate19>(EncodedStringTable.smethod_0(7075)));
+		AsmJitApi.smethod_33(AsmJitNative.smethod_0<AsmJitApi.Delegate20>(EncodedStringTable.smethod_0(7140)));
+		AsmJitApi.smethod_34(AsmJitNative.smethod_0<AsmJitApi.Delegate21>(EncodedStringTable.smethod_0(7209)));
+		AsmJitApi.smethod_36(AsmJitNative.smethod_0<AsmJitApi.Delegate22>(EncodedStringTable.smethod_0(7294)));
+		AsmJitApi.smethod_40(AsmJitNative.smethod_0<AsmJitApi.Delegate22>(EncodedStringTable.smethod_0(7363)));
+		AsmJitApi.smethod_44(AsmJitNative.smethod_0<AsmJitApi.Delegate24>(EncodedStringTable.smethod_0(7440)));
+		AsmJitApi.smethod_48(AsmJitNative.smethod_0<AsmJitApi.Delegate26>(EncodedStringTable.smethod_0(7505)));
+		AsmJitApi.smethod_52(AsmJitNative.smethod_0<AsmJitApi.Delegate28>(EncodedStringTable.smethod_0(7566)));
+		AsmJitApi.smethod_53(AsmJitNative.smethod_0<AsmJitApi.Delegate30>(EncodedStringTable.smethod_0(7631)));
+		AsmJitApi.smethod_54(AsmJitNative.smethod_0<AsmJitApi.Delegate29>(EncodedStringTable.smethod_0(7712)));
+		AsmJitApi.smethod_55(AsmJitNative.smethod_0<AsmJitApi.Delegate31>(EncodedStringTable.smethod_0(7793)));
+		AsmJitApi.smethod_56(AsmJitNative.smethod_0<AsmJitApi.Delegate33>(EncodedStringTable.smethod_0(7846)));
+		AsmJitApi.smethod_57(AsmJitNative.smethod_0<AsmJitApi.Delegate32>(EncodedStringTable.smethod_0(7915)));
+		AsmJitApi.smethod_58(AsmJitNative.smethod_0<AsmJitApi.Delegate35>(EncodedStringTable.smethod_0(7984)));
+		AsmJitApi.smethod_59(AsmJitNative.smethod_0<AsmJitApi.Delegate37>(EncodedStringTable.smethod_0(8049)));
+		AsmJitApi.smethod_61(AsmJitNative.smethod_0<AsmJitApi.Delegate34>(EncodedStringTable.smethod_0(8118)));
+		AsmJitApi.smethod_62(AsmJitNative.smethod_0<AsmJitApi.Delegate36>(EncodedStringTable.smethod_0(8183)));
+		AsmJitApi.smethod_64(AsmJitNative.smethod_0<AsmJitApi.Delegate38>(EncodedStringTable.smethod_0(8252)));
+		AsmJitApi.smethod_67(AsmJitNative.smethod_0<AsmJitApi.Delegate40>(EncodedStringTable.smethod_0(8301)));
 	}
 }

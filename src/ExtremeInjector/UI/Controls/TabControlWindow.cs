@@ -8,85 +8,23 @@ public sealed class TabControlWindow : NativeWindow
 
 	public TabControlWindow(TabControl tabControl_1)
 	{
-		while (true)
-		{
-			int num = -1385563919;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -315089379)) % 3)
-				{
-				case 2u:
-					goto IL_0008;
-				case 0u:
-					break;
-				default:
-					tabControl_1.HandleDestroyed += method_0;
-					AssignHandle(tabControl_1.Handle);
-					return;
-				}
-				break;
-				IL_0008:
-				tabControl_0 = tabControl_1;
-				num = (int)((num2 * 889290799) ^ 0x7DDC06C4);
-			}
-		}
+		this.tabControl_0 = tabControl_1;
+		tabControl_1.HandleDestroyed += this.method_0;
+		base.AssignHandle(tabControl_1.Handle);
 	}
 
 	protected override void WndProc(ref Message message_0)
 	{
 		if (message_0.Msg == 4904)
 		{
-			goto IL_008b;
+			NativeTypes.Struct37 @struct = (NativeTypes.Struct37)message_0.GetLParam(typeof(NativeTypes.Struct37));
+			@struct.int_0 -= 3;
+			@struct.int_2++;
+			@struct.int_1--;
+			@struct.int_3++;
+			Marshal.StructureToPtr(@struct, message_0.LParam, true);
 		}
-		goto IL_00ee;
-		IL_008b:
-		int num = 1820758606;
-		goto IL_00bd;
-		IL_00bd:
-		NativeTypes.Struct37 @struct = default(NativeTypes.Struct37);
-		while (true)
-		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ 0x1A479132)) % 8)
-			{
-			case 7u:
-				@struct.int_0 -= 3;
-				num = (int)((num2 * 1687154831) ^ 0x67230D98);
-				continue;
-			case 5u:
-				@struct.int_1--;
-				num = (int)((num2 * 1590491792) ^ 0xACFCB03);
-				continue;
-			case 4u:
-				@struct = (NativeTypes.Struct37)message_0.GetLParam(typeof(NativeTypes.Struct37));
-				num = (int)(num2 * 1594782365) ^ -1189625175;
-				continue;
-			case 3u:
-				@struct.int_2++;
-				num = ((int)num2 * -1371927912) ^ -614484777;
-				continue;
-			case 2u:
-				break;
-			case 1u:
-				@struct.int_3++;
-				Marshal.StructureToPtr((object)@struct, message_0.LParam, true);
-				num = ((int)num2 * -972060597) ^ -1306738727;
-				continue;
-			default:
-				return;
-			case 0u:
-				goto IL_00ee;
-			case 6u:
-				return;
-			}
-			break;
-		}
-		goto IL_008b;
-		IL_00ee:
 		base.WndProc(ref message_0);
-		num = 151842380;
-		goto IL_00bd;
 	}
 
 	internal void method_0(object sender, EventArgs e)

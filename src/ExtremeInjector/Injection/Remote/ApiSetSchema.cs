@@ -144,101 +144,34 @@ public static class ApiSetSchema
 
 	static ApiSetSchema()
 	{
-		dictionary_0 = new Dictionary<string, List<string>>();
 		try
 		{
-			if (!PlatformInfo.bool_2)
+			if (PlatformInfo.bool_2)
 			{
-				goto IL_0144;
-			}
-			goto IL_01b9;
-			IL_0144:
-			int num = 349269374;
-			goto IL_0167;
-			IL_0167:
-			IntPtr intPtr = default(IntPtr);
-			RemoteProcess gclass2_ = default(RemoteProcess);
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x4C198557)) % 16)
+				RemoteProcess gclass2_ = RecoveredRuntime.smethod_211();
+				RemotePeb peb = RecoveredRuntime.smethod_427(gclass2_)
+					? (RemotePeb)RecoveredRuntime.smethod_255(gclass2_)
+					: RecoveredRuntime.smethod_369(gclass2_);
+				IntPtr intPtr = peb.method_0822();
+				if (!(intPtr == IntPtr.Zero) && RecoveredRuntime.smethod_184(intPtr))
 				{
-				case 15u:
-					break;
-				case 14u:
-					RecoveredRuntime.smethod_346(intPtr);
-					num = (int)((num2 * 133978026) ^ 0x7F1745CB);
-					continue;
-				case 12u:
-					goto IL_0080;
-				case 11u:
-					goto IL_00a3;
-				case 10u:
-					RecoveredRuntime.smethod_120(intPtr);
-					num = (int)(num2 * 1784602965) ^ -189528296;
-					continue;
-				case 8u:
-					goto IL_00c3;
-				case 7u:
-					num = ((!RecoveredRuntime.smethod_184(intPtr)) ? 2127447680 : 263686937) ^ (int)(num2 * 1001523022);
-					continue;
-				case 6u:
-					goto IL_010f;
-				case 4u:
-					RecoveredRuntime.smethod_241(intPtr);
-					num = ((int)num2 * -949187477) ^ -198061526;
-					continue;
-				case 3u:
-					goto end_IL_0167;
-				case 1u:
-					num = ((int)num2 * -766021260) ^ -733024530;
-					continue;
-				case 0u:
-					num = (int)(num2 * 1317096156) ^ -494846310;
-					continue;
-				default:
-					return;
-				case 2u:
-					goto IL_01b9;
-				case 5u:
-					return;
-				case 9u:
-					return;
-				case 13u:
-					return;
+					if (PlatformInfo.bool_7)
+					{
+						RecoveredRuntime.smethod_241(intPtr);
+					}
+					else if (!PlatformInfo.bool_6)
+					{
+						if (PlatformInfo.bool_2)
+						{
+							RecoveredRuntime.smethod_120(intPtr);
+						}
+					}
+					else
+					{
+						RecoveredRuntime.smethod_346(intPtr);
+					}
 				}
-				if (!RecoveredRuntime.smethod_427(gclass2_))
-				{
-					num = (int)(num2 * 979097383) ^ -448170699;
-					continue;
-				}
-				object obj = RecoveredRuntime.smethod_255(gclass2_);
-				goto IL_0039;
-				IL_010f:
-				num = (PlatformInfo.bool_2 ? 1986895341 : 2116528346);
-				continue;
-				IL_0080:
-				num = ((!PlatformInfo.bool_7) ? 436100847 : 1836794611);
-				continue;
-				IL_0039:
-				intPtr = ((RemotePeb)obj).method_0822();
-				num = ((intPtr == IntPtr.Zero) ? 121932162 : 2042119616);
-				continue;
-				IL_00c3:
-				num = (PlatformInfo.bool_6 ? 1270059529 : 190208129);
-				continue;
-				IL_00a3:
-				obj = RecoveredRuntime.smethod_369(gclass2_);
-				goto IL_0039;
-				continue;
-				end_IL_0167:
-				break;
 			}
-			goto IL_0144;
-			IL_01b9:
-			gclass2_ = RecoveredRuntime.smethod_211();
-			num = 1429077992;
-			goto IL_0167;
 		}
 		catch
 		{
@@ -249,66 +182,24 @@ public static class ApiSetSchema
 	{
 		int num = typeof(T).smethod_7();
 		IntPtr intPtr = intptr_0.smethod_8(num - 4);
-		U[] array = default(U[]);
-		int num6 = default(int);
-		IntPtr intPtr2 = default(IntPtr);
-		int num4 = default(int);
-		int num5 = default(int);
-		while (true)
+		if (RecoveredRuntime.smethod_184(intPtr))
 		{
-			int num2 = -1176202962;
-			while (true)
+			int num2 = Marshal.ReadInt32(intPtr);
+			intptr_0 = intptr_0.smethod_8(num);
+			int num3 = typeof(U).smethod_7();
+			U[] array = new U[num2];
+			for (int i = 0; i < num2; i++)
 			{
-				uint num3;
-				switch ((num3 = (uint)(num2 ^ -1907594869)) % 13)
+				IntPtr intPtr2 = intptr_0.smethod_8(num3 * i);
+				if (!RecoveredRuntime.smethod_184(intPtr2))
 				{
-				case 12u:
-					array[num6] = (U)Marshal.PtrToStructure(intPtr2, typeof(U));
-					num2 = -285090992;
-					continue;
-				case 11u:
-					intPtr2 = intptr_0.smethod_8(num4 * num6);
-					num2 = (RecoveredRuntime.smethod_184(intPtr2) ? (-1137399727) : (-167464756));
-					continue;
-				case 10u:
-					num2 = ((num6 >= num5) ? (-1343833363) : (-668948579));
-					continue;
-				case 6u:
-					num6 = 0;
-					num2 = (int)(num3 * 1769655649) ^ -1909233994;
-					continue;
-				case 5u:
-					num2 = ((!RecoveredRuntime.smethod_184(intPtr)) ? 1277327886 : 178372332) ^ ((int)num3 * -1223382523);
-					continue;
-				case 4u:
-					num6++;
-					num2 = ((int)num3 * -1767482405) ^ -1483248001;
-					continue;
-				case 3u:
-					num5 = Marshal.ReadInt32(intPtr);
-					intptr_0 = intptr_0.smethod_8(num);
-					num2 = -1062384333;
-					continue;
-				case 1u:
-					array = new U[num5];
-					num2 = ((int)num3 * -1472543404) ^ 0x17D2FE9B;
-					continue;
-				case 0u:
-					num4 = typeof(U).smethod_7();
-					num2 = ((int)num3 * -730041885) ^ -2122295869;
-					continue;
-				case 8u:
-					break;
-				case 2u:
 					return new U[0];
-				case 7u:
-					return new U[0];
-				default:
-					return array;
 				}
-				break;
+				array[i] = (U)((object)Marshal.PtrToStructure(intPtr2, typeof(U)));
 			}
+			return array;
 		}
+		return new U[0];
 	}
 
 	internal static Type smethod_1(RuntimeTypeHandle runtimeTypeHandle_0)

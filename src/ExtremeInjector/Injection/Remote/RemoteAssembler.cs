@@ -24,29 +24,7 @@ public sealed class RemoteAssembler
 
 		public Class48(AsmJitLabel class58_1)
 		{
-			while (true)
-			{
-				int num = -1309916334;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -1150050368)) % 3)
-					{
-					case 1u:
-						goto IL_0008;
-					default:
-						return;
-					case 0u:
-						break;
-					case 2u:
-						return;
-					}
-					break;
-					IL_0008:
-					method_1(class58_1);
-					num = (int)(num2 * 1238232558) ^ -985049822;
-				}
-			}
+			this.method_1(class58_1);
 		}
 	}
 
@@ -112,67 +90,30 @@ public sealed class RemoteAssembler
 
 	public void method_4<T>()
 	{
-		class58_0 = RecoveredRuntime.smethod_48(class53_0);
-		while (true)
+		this.class58_0 = RecoveredRuntime.smethod_48(this.class53_0);
+		this.int_0 = PlatformInfo.smethod_1<T>();
+		if (typeof(T) == typeof(IntPtr) || typeof(T) == typeof(UIntPtr))
 		{
-			int num = -2068964950;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -714431061)) % 16)
-				{
-				case 14u:
-					RecoveredRuntime.smethod_75(class53_0, RecoveredRuntime.smethod_116(class58_0, 0L, this), AsmJitRuntime.class63_21);
-					num = (int)((num2 * 1326707871) ^ 0x39C56CDC);
-					continue;
-				case 13u:
-					RecoveredRuntime.smethod_75(class53_0, RecoveredRuntime.smethod_290(class58_0, 0L, this), AsmJitRuntime.class63_37);
-					num = (int)((num2 * 739642685) ^ 0x4565DAE6);
-					continue;
-				case 12u:
-					num = (((object)typeof(T) == typeof(IntPtr)) ? 1935894933 : 640685527) ^ ((int)num2 * -1601807039);
-					continue;
-				case 9u:
-					num = ((int_0 == 2) ? (-410853547) : (-587012189));
-					continue;
-				case 8u:
-					num = ((int_0 != 1) ? (-1989533555) : (-383820506));
-					continue;
-				case 7u:
-					num = ((int_0 == 4) ? (-744592575) : (-1399359950));
-					continue;
-				case 3u:
-					int_0 = (bool_0 ? 4 : 8);
-					num = -747413692;
-					continue;
-				case 2u:
-					RecoveredRuntime.smethod_75(class53_0, RecoveredRuntime.smethod_221(this, class58_0, 0L), bool_0 ? AsmJitRuntime.class63_37 : AsmJitRuntime.class63_53);
-					num = -2037542776;
-					continue;
-				case 1u:
-					int_0 = PlatformInfo.smethod_1<T>();
-					num = ((int)num2 * -799940171) ^ -1787245134;
-					continue;
-				case 0u:
-					num = (((object)typeof(T) == typeof(UIntPtr)) ? (-1885138615) : (-1557595092)) ^ ((int)num2 * -641305757);
-					continue;
-				case 11u:
-					break;
-				case 4u:
-					return;
-				case 5u:
-					return;
-				default:
-					throw new InvalidOperationException("Unknown return type.");
-				case 10u:
-					RecoveredRuntime.smethod_75(class53_0, RecoveredRuntime.smethod_80(0L, this, class58_0), AsmJitRuntime.class63_37);
-					return;
-				case 15u:
-					return;
-				}
-				break;
-			}
+			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_221(this, this.class58_0, 0L), this.bool_0 ? AsmJitRuntime.class63_37 : AsmJitRuntime.class63_53);
+			this.int_0 = (this.bool_0 ? 4 : 8);
+			return;
 		}
+		if (this.int_0 == 4)
+		{
+			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_80(0L, this, this.class58_0), AsmJitRuntime.class63_37);
+			return;
+		}
+		if (this.int_0 == 2)
+		{
+			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_116(this.class58_0, 0L, this), AsmJitRuntime.class63_21);
+			return;
+		}
+		if (this.int_0 == 1)
+		{
+			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_290(this.class58_0, 0L, this), AsmJitRuntime.class63_37);
+			return;
+		}
+		throw new InvalidOperationException(EncodedStringTable.smethod_0(4473));
 	}
 
 	internal static Type smethod_0(RuntimeTypeHandle runtimeTypeHandle_0)

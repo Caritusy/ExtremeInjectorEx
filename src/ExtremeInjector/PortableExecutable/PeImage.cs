@@ -14,51 +14,11 @@ public sealed class PeImage : IDisposable
 	{
 		public long imethod_0(PeImage class154_0, uint uint_0)
 		{
-			using (List<PeSectionHeader>.Enumerator enumerator = class154_0.method_8().GetEnumerator())
+			foreach (PeSectionHeader gclass in class154_0.method_8())
 			{
-				PeSectionHeader current = default(PeSectionHeader);
-				long result = default(long);
-				while (true)
+				if (uint_0 >= gclass.method_4() && uint_0 < gclass.method_4() + gclass.method_6())
 				{
-					IL_00f1:
-					int num = ((!enumerator.MoveNext()) ? (-1572770025) : (-669986976));
-					while (true)
-					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ -813529743)) % 8)
-						{
-						case 7u:
-							num = ((uint_0 >= current.method_4() + current.method_6()) ? 1661393667 : 1961237498) ^ (int)(num2 * 840203914);
-							continue;
-						case 5u:
-							result = uint_0 - current.method_4() + current.method_8();
-							num = (int)((num2 * 312627368) ^ 0x285EE639);
-							continue;
-						case 3u:
-							num = ((uint_0 < current.method_4()) ? 304465364 : 81893455) ^ ((int)num2 * -993563573);
-							continue;
-						case 2u:
-							num = -669986976;
-							continue;
-						case 1u:
-							current = enumerator.Current;
-							num = -137276558;
-							continue;
-						default:
-							goto end_IL_00b1;
-						case 4u:
-							break;
-						case 6u:
-							goto end_IL_00b1;
-						case 0u:
-							return result;
-						}
-						goto IL_00f1;
-						continue;
-						end_IL_00b1:
-						break;
-					}
-					break;
+					return (long)((ulong)(uint_0 - gclass.method_4() + gclass.method_8()));
 				}
 			}
 			return -1L;
@@ -347,42 +307,14 @@ public sealed class PeImage : IDisposable
 
 	public PeImage(Stream stream_1, PeImageLayout enum39_1)
 	{
-		while (true)
+		this.method_30(enum39_1);
+		this.method_29(stream_1);
+		if (enum39_1 != PeImageLayout.const_0)
 		{
-			int num = -1679192658;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -433066232)) % 7)
-				{
-				case 5u:
-					interface3_0 = new Class155();
-					num = ((int)num2 * -1506842910) ^ -723329806;
-					continue;
-				case 3u:
-					num = ((enum39_1 == PeImageLayout.const_0) ? (-847196778) : (-13216941)) ^ (int)(num2 * 290839860);
-					continue;
-				case 2u:
-					interface3_0 = new Class156();
-					num = -265587503;
-					continue;
-				case 1u:
-					method_30(enum39_1);
-					method_29(stream_1);
-					num = ((int)num2 * -1146167102) ^ -1392579271;
-					continue;
-				default:
-					return;
-				case 4u:
-					break;
-				case 0u:
-					return;
-				case 6u:
-					return;
-				}
-				break;
-			}
+			this.interface3_0 = new PeImage.Class156();
+			return;
 		}
+		this.interface3_0 = new PeImage.Class155();
 	}
 
 	public PeImage(Stream stream_1, bool bool_1, PeImageLayout enum39_1)
@@ -393,32 +325,9 @@ public sealed class PeImage : IDisposable
 
 	~PeImage()
 	{
-		if (!bool_0)
+		if (this.bool_0)
 		{
-			return;
-		}
-		while (true)
-		{
-			int num = -1241300689;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1031244942)) % 3)
-				{
-				case 2u:
-					goto IL_000b;
-				default:
-					return;
-				case 0u:
-					break;
-				case 1u:
-					return;
-				}
-				break;
-				IL_000b:
-				((IDisposable)this).Dispose();
-				num = ((int)num2 * -755813774) ^ -244268752;
-			}
+			((IDisposable)this).Dispose();
 		}
 	}
 
@@ -429,38 +338,10 @@ public sealed class PeImage : IDisposable
 
 	void IDisposable.Dispose()
 	{
-		if (!bool_0)
+		if (this.bool_0 && this.method_28() != null)
 		{
-			return;
-		}
-		while (true)
-		{
-			int num = 36478713;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x1274D5EE)) % 5)
-				{
-				case 3u:
-					method_28().Dispose();
-					num = (int)(num2 * 1805078712) ^ -290425668;
-					continue;
-				case 2u:
-					num = ((method_28() == null) ? 567030699 : 247700802) ^ (int)(num2 * 1981427340);
-					continue;
-				case 1u:
-					method_29(null);
-					num = (int)((num2 * 1801503697) ^ 0x78880C8D);
-					continue;
-				default:
-					return;
-				case 4u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-			}
+			this.method_28().Dispose();
+			this.method_29(null);
 		}
 	}
 

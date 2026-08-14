@@ -16,44 +16,9 @@ public sealed class WorkingSetTrimmer
 	{
 		try
 		{
-			Process currentProcess = Process.GetCurrentProcess();
-			try
+			using (Process currentProcess = Process.GetCurrentProcess())
 			{
-				SetProcessWorkingSetSize(currentProcess.Handle, new IntPtr(-1), new IntPtr(-1));
-			}
-			finally
-			{
-				if (currentProcess != null)
-				{
-					while (true)
-					{
-						IL_0056:
-						int num = 1020822574;
-						while (true)
-						{
-							uint num2;
-							switch ((num2 = (uint)(num ^ 0x4ED53F2E)) % 3)
-							{
-							case 2u:
-								goto IL_0026;
-							default:
-								goto end_IL_0039;
-							case 0u:
-								break;
-							case 1u:
-								goto end_IL_0039;
-							}
-							goto IL_0056;
-							IL_0026:
-							((IDisposable)currentProcess).Dispose();
-							num = ((int)num2 * -238454007) ^ 0x2FA9F433;
-							continue;
-							end_IL_0039:
-							break;
-						}
-						break;
-					}
-				}
+				WorkingSetTrimmer.SetProcessWorkingSetSize(currentProcess.Handle, new IntPtr(-1), new IntPtr(-1));
 			}
 		}
 		catch
@@ -65,40 +30,11 @@ public sealed class WorkingSetTrimmer
 	{
 		try
 		{
-			DateTime now = DateTime.Now;
-			long ticks = default(long);
-			while (true)
+			long ticks = DateTime.Now.Ticks;
+			if (ticks - this.long_0 > 10000000L)
 			{
-				int num = 1458592250;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x5A2D52D4)) % 6)
-					{
-					case 5u:
-						method_0();
-						num = ((int)num2 * -1567642888) ^ -528889065;
-						continue;
-					case 4u:
-						num = ((ticks - long_0 > 10000000L) ? 415436325 : 1818206141) ^ (int)(num2 * 1151514469);
-						continue;
-					case 2u:
-						ticks = now.Ticks;
-						num = ((int)num2 * -1102080687) ^ 0x39A4AE40;
-						continue;
-					case 1u:
-						long_0 = ticks;
-						num = (int)((num2 * 1984842549) ^ 0x25E58978);
-						continue;
-					default:
-						return;
-					case 0u:
-						break;
-					case 3u:
-						return;
-					}
-					break;
-				}
+				this.long_0 = ticks;
+				this.method_0();
 			}
 		}
 		catch
@@ -108,30 +44,8 @@ public sealed class WorkingSetTrimmer
 
 	internal WorkingSetTrimmer()
 	{
-		while (true)
-		{
-			int num = 1982843409;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x342359F2)) % 3)
-				{
-				case 2u:
-					goto IL_001b;
-				default:
-					return;
-				case 0u:
-					break;
-				case 1u:
-					return;
-				}
-				break;
-				IL_001b:
-				Application.Idle += method_1;
-				method_0();
-				num = ((int)num2 * -1099491764) ^ -1958239290;
-			}
-		}
+		Application.Idle += this.method_1;
+		this.method_0();
 	}
 
 	internal static Process smethod_0()

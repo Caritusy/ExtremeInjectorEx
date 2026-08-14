@@ -19,49 +19,17 @@ public sealed class EmbeddedAssemblyResolver
 		public string method_0(bool bool_0)
 		{
 			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.Append(string_0);
-			if (bool_0)
+			stringBuilder.Append(this.string_0);
+			if (bool_0 && this.version_0 != null)
 			{
-				goto IL_0019;
+				stringBuilder.Append(_003CModule_003E.smethod_5<string>(2088884392u));
+				stringBuilder.Append(this.version_0);
 			}
-			goto IL_00d3;
-			IL_0019:
-			int num = -1407974179;
-			goto IL_00aa;
-			IL_00aa:
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1027399608)) % 6)
-				{
-				case 5u:
-					break;
-				case 3u:
-					num = ((version_0 != null) ? (-1736204103) : (-950266078)) ^ ((int)num2 * -1083559574);
-					continue;
-				case 1u:
-					stringBuilder.Append(global::_003CModule_003E.smethod_5<string>(2088884392u));
-					stringBuilder.Append(version_0);
-					num = ((int)num2 * -44155482) ^ -1697979422;
-					continue;
-				case 0u:
-					stringBuilder.Append((string_1.Length == 0) ? global::_003CModule_003E.smethod_4<string>(4180971965u) : string_1);
-					num = -40593040;
-					continue;
-				case 2u:
-					goto IL_00d3;
-				default:
-					stringBuilder.Append(global::_003CModule_003E.smethod_2<string>(2500547674u));
-					stringBuilder.Append((string_2.Length == 0) ? global::_003CModule_003E.smethod_6<string>(868523558u) : string_2);
-					return stringBuilder.ToString();
-				}
-				break;
-			}
-			goto IL_0019;
-			IL_00d3:
-			stringBuilder.Append(global::_003CModule_003E.smethod_6<string>(3582041215u));
-			num = -1709531986;
-			goto IL_00aa;
+			stringBuilder.Append(_003CModule_003E.smethod_6<string>(3582041215u));
+			stringBuilder.Append((this.string_1.Length == 0) ? _003CModule_003E.smethod_4<string>(4180971965u) : this.string_1);
+			stringBuilder.Append(_003CModule_003E.smethod_2<string>(2500547674u));
+			stringBuilder.Append((this.string_2.Length == 0) ? _003CModule_003E.smethod_6<string>(868523558u) : this.string_2);
+			return stringBuilder.ToString();
 		}
 
 		public Struct79(string string_3)
@@ -170,47 +138,14 @@ public sealed class EmbeddedAssemblyResolver
 		{
 			try
 			{
-				string text = Process.GetCurrentProcess().MainModule.ModuleName.ToLower();
-				bool result = default(bool);
-				while (true)
+				string a = Process.GetCurrentProcess().MainModule.ModuleName.ToLower();
+				if (a == _003CModule_003E.smethod_6<string>(2162436899u))
 				{
-					IL_00ca:
-					int num = 1594212398;
-					while (true)
-					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ 0x1A7CFD23)) % 8)
-						{
-						case 5u:
-							num = ((!(text == global::_003CModule_003E.smethod_6<string>(2162436899u))) ? 1833580387 : 1606128040) ^ ((int)num2 * -816973014);
-							continue;
-						case 3u:
-							result = true;
-							num = (int)((num2 * 1960835525) ^ 0x59A50F98);
-							continue;
-						case 2u:
-							num = ((!(text == global::_003CModule_003E.smethod_3<string>(348880682u))) ? 1288425533 : 1924341784);
-							continue;
-						case 1u:
-							result = true;
-							num = ((int)num2 * -971330851) ^ -118081439;
-							continue;
-						default:
-							goto end_IL_0099;
-						case 0u:
-							break;
-						case 6u:
-							goto end_IL_0099;
-						case 4u:
-						case 7u:
-							return result;
-						}
-						goto IL_00ca;
-						continue;
-						end_IL_0099:
-						break;
-					}
-					break;
+					return true;
+				}
+				if (a == _003CModule_003E.smethod_3<string>(348880682u))
+				{
+					return true;
 				}
 			}
 			catch

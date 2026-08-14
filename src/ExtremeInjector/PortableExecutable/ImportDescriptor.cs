@@ -127,29 +127,7 @@ public sealed class ImportDescriptor
 
 	public ImportDescriptor()
 	{
-		while (true)
-		{
-			int num = 1299504858;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x5AAD8739)) % 3)
-				{
-				case 1u:
-					goto IL_0008;
-				default:
-					return;
-				case 0u:
-					break;
-				case 2u:
-					return;
-				}
-				break;
-				IL_0008:
-				method_9(new List<ImportedSymbol>());
-				method_11(new List<ImportedSymbol>());
-				num = (int)((num2 * 1468486695) ^ 0x33FCD510);
-			}
-		}
+		this.method_9(new List<ImportedSymbol>());
+		this.method_11(new List<ImportedSymbol>());
 	}
 }

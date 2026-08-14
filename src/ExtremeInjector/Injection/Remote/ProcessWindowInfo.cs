@@ -12,29 +12,11 @@ public sealed class ProcessWindowInfo
 		internal bool method_0(IntPtr intptr_0, IntPtr intptr_1)
 		{
 			ProcessWindowInfo @class = new ProcessWindowInfo(intptr_0);
-			while (true)
+			if (RecoveredRuntime.smethod_151(@class))
 			{
-				int num = -362964560;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -1116067151)) % 4)
-					{
-					case 2u:
-						list_0.Add(@class);
-						num = ((int)num2 * -1507514700) ^ 0x481F19BD;
-						continue;
-					case 1u:
-						num = (RecoveredRuntime.smethod_151(@class) ? (-372243937) : (-1192695)) ^ (int)(num2 * 523148188);
-						continue;
-					case 3u:
-						break;
-					default:
-						return true;
-					}
-					break;
-				}
+				this.list_0.Add(@class);
 			}
+			return true;
 		}
 	}
 
