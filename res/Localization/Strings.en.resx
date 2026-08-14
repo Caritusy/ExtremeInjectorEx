@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App.Title" xml:space="preserve"><value>Extreme Injector Ex</value></data>
+  <data name="Dialog.DllFilter" xml:space="preserve"><value>DLL files|*.dll</value></data>
+  <data name="Language.System" xml:space="preserve"><value>Use system language</value></data>
+  <data name="Language.English" xml:space="preserve"><value>English</value></data>
+  <data name="Language.SimplifiedChinese" xml:space="preserve"><value>Simplified Chinese</value></data>
+  <data name="Main.WindowTitle" xml:space="preserve"><value>Extreme Injector Ex {0}.{1}.{2}</value></data>
+  <data name="Main.TargetProcess" xml:space="preserve"><value>Target process</value></data>
+  <data name="Main.NoProcessSelected" xml:space="preserve"><value>No process selected</value></data>
+  <data name="Main.ProcessDetails" xml:space="preserve"><value>{0}&#xA;Process ID: 0x{1:X} ({1})</value></data>
+  <data name="Main.NoDescription" xml:space="preserve"><value>No description available</value></data>
+  <data name="Main.Select" xml:space="preserve"><value>Select</value></data>
+  <data name="Main.DllList" xml:space="preserve"><value>DLL list</value></data>
+  <data name="Main.AddDll" xml:space="preserve"><value>Add DLL</value></data>
+  <data name="Main.Toggle" xml:space="preserve"><value>Enable/disable</value></data>
+  <data name="Main.Remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="Main.Clear" xml:space="preserve"><value>Clear</value></data>
+  <data name="Main.DllColumn" xml:space="preserve"><value>DLL</value></data>
+  <data name="Main.Options" xml:space="preserve"><value>Options</value></data>
+  <data name="Main.About" xml:space="preserve"><value>About</value></data>
+  <data name="Main.Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="Main.Inject" xml:space="preserve"><value>Inject</value></data>
+  <data name="Main.EmptyDllList" xml:space="preserve"><value>No DLLs added</value></data>
+  <data name="Main.Status.Injecting" xml:space="preserve"><value>Injecting {0}...</value></data>
+  <data name="Main.Status.WaitBefore" xml:space="preserve"><value>Waiting {0} seconds before injection...</value></data>
+  <data name="Main.Status.RunningExport" xml:space="preserve"><value>Running export routine... ({0})</value></data>
+  <data name="Main.Status.ExportError" xml:space="preserve"><value>An error occurred while running the export routine.</value></data>
+  <data name="Main.Status.WaitBetween" xml:space="preserve"><value>Waiting {0} seconds before injecting the next DLL...</value></data>
+  <data name="Main.WaitingForProcess" xml:space="preserve"><value>Extreme Injector Ex is waiting for the specified process ({0}) to start because automatic injection is enabled. Injection will begin when the process starts.</value></data>
+  <data name="Main.NoProcessEntered" xml:space="preserve"><value>No target process has been selected or entered.</value></data>
+  <data name="Main.ProcessNotRunning" xml:space="preserve"><value>The selected or entered target process is not currently running.</value></data>
+  <data name="Settings.Title" xml:space="preserve"><value>Settings</value></data>
+  <data name="Settings.Description" xml:space="preserve"><value>Configure injection behavior, appearance, language, and maintenance tools.</value></data>
+  <data name="Settings.InjectionMethod" xml:space="preserve"><value>Injection method</value></data>
+  <data name="Settings.InjectionBackend" xml:space="preserve"><value>Injection backend</value></data>
+  <data name="Settings.Method.Standard" xml:space="preserve"><value>Standard injection</value></data>
+  <data name="Settings.Method.ThreadHijacking" xml:space="preserve"><value>Thread hijacking</value></data>
+  <data name="Settings.Method.LdrLoadDllStub" xml:space="preserve"><value>LdrLoadDll stub</value></data>
+  <data name="Settings.Method.LdrpLoadDllStub" xml:space="preserve"><value>LdrpLoadDll stub</value></data>
+  <data name="Settings.Method.ManualMap" xml:space="preserve"><value>Manual map</value></data>
+  <data name="Settings.Advanced" xml:space="preserve"><value>Advanced</value></data>
+  <data name="Settings.InjectionBehavior" xml:space="preserve"><value>Injection behavior</value></data>
+  <data name="Settings.AutoInject" xml:space="preserve"><value>Inject automatically when the process starts</value></data>
+  <data name="Settings.CloseOnInject" xml:space="preserve"><value>Close after a successful injection</value></data>
+  <data name="Settings.StealthInject" xml:space="preserve"><value>Use stealth injection</value></data>
+  <data name="Settings.DelayBefore" xml:space="preserve"><value>Delay before injection (ms)</value></data>
+  <data name="Settings.DelayBetween" xml:space="preserve"><value>Delay between modules (ms)</value></data>
+  <data name="Settings.Scrambling" xml:space="preserve"><value>DLL scrambling</value></data>
+  <data name="Settings.Preset" xml:space="preserve"><value>Preset</value></data>
+  <data name="Settings.Preset.None" xml:space="preserve"><value>None</value></data>
+  <data name="Settings.Preset.Basic" xml:space="preserve"><value>Basic</value></data>
+  <data name="Settings.Preset.Standard" xml:space="preserve"><value>Standard</value></data>
+  <data name="Settings.Preset.Extreme" xml:space="preserve"><value>Extreme</value></data>
+  <data name="Settings.Preset.Custom" xml:space="preserve"><value>Custom</value></data>
+  <data name="Settings.PostInjection" xml:space="preserve"><value>Post-injection</value></data>
+  <data name="Settings.HideModule" xml:space="preserve"><value>Hide the module from loader lists</value></data>
+  <data name="Settings.ErasePe" xml:space="preserve"><value>Erase PE headers</value></data>
+  <data name="Settings.Appearance" xml:space="preserve"><value>Appearance and language</value></data>
+  <data name="Settings.TextColor" xml:space="preserve"><value>Text color</value></data>
+  <data name="Settings.PrimaryAccent" xml:space="preserve"><value>Primary accent</value></data>
+  <data name="Settings.SecondaryAccent" xml:space="preserve"><value>Secondary accent</value></data>
+  <data name="Settings.Language" xml:space="preserve"><value>Interface language</value></data>
+  <data name="Settings.Tools" xml:space="preserve"><value>Tools</value></data>
+  <data name="Settings.SecureMode" xml:space="preserve"><value>Start in secure mode</value></data>
+  <data name="Settings.ScrambleDll" xml:space="preserve"><value>Scramble a DLL</value></data>
+  <data name="Settings.ProcessInfo" xml:space="preserve"><value>View process information</value></data>
+  <data name="Settings.Reset" xml:space="preserve"><value>Reset settings</value></data>
+  <data name="Settings.SaveClose" xml:space="preserve"><value>Save and close</value></data>
+  <data name="Module.Title" xml:space="preserve"><value>Advanced module options</value></data>
+  <data name="Module.Heading" xml:space="preserve"><value>Export invocation</value></data>
+  <data name="Module.Description" xml:space="preserve"><value>Optionally call an exported routine after this module is injected.</value></data>
+  <data name="Module.ExportOptions" xml:space="preserve"><value>Export options</value></data>
+  <data name="Module.ExportFunction" xml:space="preserve"><value>Export function or routine</value></data>
+  <data name="Module.CallingConvention" xml:space="preserve"><value>Calling convention</value></data>
+  <data name="Module.Parameters" xml:space="preserve"><value>Parameters and arguments</value></data>
+  <data name="Module.Add" xml:space="preserve"><value>Add</value></data>
+  <data name="Module.Number" xml:space="preserve"><value>#</value></data>
+  <data name="Module.Type" xml:space="preserve"><value>Type</value></data>
+  <data name="Module.Value" xml:space="preserve"><value>Value</value></data>
+  <data name="Module.Done" xml:space="preserve"><value>Done</value></data>
+  <data name="Module.Convention.StdCall" xml:space="preserve"><value>StdCall</value></data>
+  <data name="Module.Convention.FastCall" xml:space="preserve"><value>FastCall</value></data>
+  <data name="Module.Convention.Cdecl" xml:space="preserve"><value>Cdecl</value></data>
+  <data name="Module.Parameter.Qword" xml:space="preserve"><value>QWORD</value></data>
+  <data name="Module.Parameter.Float" xml:space="preserve"><value>FLOAT</value></data>
+  <data name="Module.Parameter.Dword" xml:space="preserve"><value>DWORD</value></data>
+  <data name="Module.Parameter.AnsiString" xml:space="preserve"><value>LPCSTR</value></data>
+  <data name="Module.Parameter.UnicodeString" xml:space="preserve"><value>LPCWSTR</value></data>
+  <data name="Module.Parameter.Byte" xml:space="preserve"><value>BYTE</value></data>
+  <data name="Module.Parameter.Word" xml:space="preserve"><value>WORD</value></data>
+  <data name="About.Title" xml:space="preserve"><value>About Extreme Injector Ex</value></data>
+  <data name="About.Product" xml:space="preserve"><value>Extreme Injector Ex</value></data>
+  <data name="About.Initials" xml:space="preserve"><value>T. R. L. S.</value></data>
+  <data name="About.OriginalCredit" xml:space="preserve"><value>Original Extreme Injector by master131. All rights reversed.</value></data>
+  <data name="About.MaintainerCredit" xml:space="preserve"><value>Extreme Injector Ex is maintained by HaleonMaerion1337.</value></data>
+  <data name="About.ProjectLink" xml:space="preserve"><value>View project on GitHub</value></data>
+  <data name="Common.Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Common.OK" xml:space="preserve"><value>OK</value></data>
+  <data name="ManualMap.Title" xml:space="preserve"><value>Advanced injection settings</value></data>
+  <data name="ManualMap.Options" xml:space="preserve"><value>Manual map options</value></data>
+  <data name="ManualMap.General" xml:space="preserve"><value>General</value></data>
+  <data name="ManualMap.DisableExceptions" xml:space="preserve"><value>Disable exception support</value></data>
+  <data name="ManualMap.MapImports" xml:space="preserve"><value>Resolve imports manually</value></data>
+  <data name="ManualMap.HideThreads" xml:space="preserve"><value>Hide threads from the debugger</value></data>
+  <data name="ManualMap.DisableSehValidation" xml:space="preserve"><value>Disable SEH handler validation</value></data>
+  <data name="Scramble.Title" xml:space="preserve"><value>Advanced scrambling settings</value></data>
+  <data name="Scramble.HeaderOptions" xml:space="preserve"><value>PE header options</value></data>
+  <data name="Scramble.SectionOptions" xml:space="preserve"><value>Section options</value></data>
+  <data name="Scramble.DirectoryOptions" xml:space="preserve"><value>Data-directory options</value></data>
+  <data name="Scramble.HeaderFields" xml:space="preserve"><value>Scramble header fields</value></data>
+  <data name="Scramble.RemoveUselessData" xml:space="preserve"><value>Remove unused data</value></data>
+  <data name="Scramble.ShiftSectionData" xml:space="preserve"><value>Shift section data</value></data>
+  <data name="Scramble.InsertSections" xml:space="preserve"><value>Insert extra sections</value></data>
+  <data name="Scramble.ModifyCode" xml:space="preserve"><value>Modify assembly code</value></data>
+  <data name="Scramble.RenameSections" xml:space="preserve"><value>Rename sections</value></data>
+  <data name="Scramble.NewEntryPoint" xml:space="preserve"><value>Create a new entry point</value></data>
+  <data name="Scramble.ModifyImports" xml:space="preserve"><value>Modify the import table</value></data>
+  <data name="Scramble.RemoveDebug" xml:space="preserve"><value>Remove debug data</value></data>
+  <data name="Scramble.MoveRelocations" xml:space="preserve"><value>Move the base-relocation table</value></data>
+  <data name="Scramble.FakeDebug" xml:space="preserve"><value>Create a fake debug directory</value></data>
+  <data name="Scramble.ShiftMemory" xml:space="preserve"><value>Shift section memory</value></data>
+  <data name="Scramble.StripCharacteristics" xml:space="preserve"><value>Strip section characteristics</value></data>
+  <data name="ProcessList.Title" xml:space="preserve"><value>Process list</value></data>
+  <data name="ProcessList.Processes" xml:space="preserve"><value>Process list</value></data>
+  <data name="ProcessList.Windows" xml:space="preserve"><value>Window list</value></data>
+  <data name="ProcessList.Select" xml:space="preserve"><value>Select</value></data>
+  <data name="ProcessInfo.Title" xml:space="preserve"><value>Process information</value></data>
+  <data name="ProcessInfo.Process" xml:space="preserve"><value>Process</value></data>
+  <data name="ProcessInfo.Summary" xml:space="preserve"><value>{0}&#xA;&#xA;{1}&#xA;&#xA;Process ID: 0x{2:X} ({2})&#xA;&#xA;Modules: {3}    Threads: {4}</value></data>
+  <data name="ProcessInfo.Modules" xml:space="preserve"><value>Modules</value></data>
+  <data name="ProcessInfo.ModuleName" xml:space="preserve"><value>Module name</value></data>
+  <data name="ProcessInfo.ModuleBase" xml:space="preserve"><value>Module base</value></data>
+  <data name="ProcessInfo.ModuleSize" xml:space="preserve"><value>Module size</value></data>
+  <data name="ProcessInfo.UnloadModule" xml:space="preserve"><value>Unload module</value></data>
+  <data name="ProcessInfo.KillProcess" xml:space="preserve"><value>Terminate process</value></data>
+  <data name="ProcessInfo.Threads" xml:space="preserve"><value>Threads</value></data>
+  <data name="ProcessInfo.ThreadId" xml:space="preserve"><value>Thread ID</value></data>
+  <data name="ProcessInfo.StartAddress" xml:space="preserve"><value>Start address</value></data>
+  <data name="ProcessInfo.Priority" xml:space="preserve"><value>Priority</value></data>
+  <data name="ProcessInfo.Suspend" xml:space="preserve"><value>Suspend</value></data>
+  <data name="ProcessInfo.Resume" xml:space="preserve"><value>Resume</value></data>
+  <data name="ProcessInfo.KillThread" xml:space="preserve"><value>Terminate</value></data>
+  <data name="Dependency.Title" xml:space="preserve"><value>Dependency installer</value></data>
+  <data name="Dependency.Connecting" xml:space="preserve"><value>Connecting to the download server...</value></data>
+  <data name="Dependency.Downloading" xml:space="preserve"><value>Downloading {0}... [{1}/{2}]</value></data>
+  <data name="Dependency.Extracting" xml:space="preserve"><value>Extracting files...</value></data>
+  <data name="Dependency.Installing" xml:space="preserve"><value>Installing {0}...</value></data>
+  <data name="Message.ResetSettings" xml:space="preserve"><value>Reset every setting to its default value?</value></data>
+  <data name="Message.ScrambleStandaloneInfo" xml:space="preserve"><value>Extreme Injector Ex can scramble DLLs as part of injection. Use this standalone command only when preparing a DLL for another injector.</value></data>
+  <data name="Message.ScrambleSuccess" xml:space="preserve"><value>The DLL was scrambled successfully.</value></data>
+  <data name="Message.ScrambleFailed" xml:space="preserve"><value>Extreme Injector Ex could not scramble the selected DLL.&#xA;&#xA;{0}</value></data>
+  <data name="Message.SecureModeFailed" xml:space="preserve"><value>Extreme Injector Ex could not start in secure mode.&#xA;&#xA;{0}</value></data>
+  <data name="Message.ManualMapDisableExceptions" xml:space="preserve"><value>Disable exception support? Some DLLs may crash after manual mapping when this option is disabled.</value></data>
+  <data name="Message.ManualMapDisableSeh" xml:space="preserve"><value>Disable SEH handler validation? This is intended only for operating systems that the current manual-map implementation does not officially support.</value></data>
+  <data name="Message.ProcessTerminated" xml:space="preserve"><value>The process was terminated successfully.</value></data>
+  <data name="Message.ProcessTerminateFailed" xml:space="preserve"><value>Extreme Injector Ex could not terminate the selected process.</value></data>
+  <data name="Message.ModuleUnloaded" xml:space="preserve"><value>{0} was unloaded from the process successfully.</value></data>
+  <data name="Message.ModuleUnloadFailed" xml:space="preserve"><value>{0} could not be unloaded from the process.</value></data>
+  <data name="Message.ModuleUnloadError" xml:space="preserve"><value>An error occurred while unloading the selected module.&#xA;&#xA;{0}</value></data>
+  <data name="Message.ThreadResumeFailed" xml:space="preserve"><value>The selected thread could not be resumed.</value></data>
+  <data name="Message.ThreadSuspendFailed" xml:space="preserve"><value>The selected thread could not be suspended.</value></data>
+  <data name="Message.ThreadResumed" xml:space="preserve"><value>The selected thread was resumed successfully.</value></data>
+  <data name="Message.ThreadSuspended" xml:space="preserve"><value>The selected thread was suspended successfully.</value></data>
+  <data name="Message.ThreadTerminateFailed" xml:space="preserve"><value>Extreme Injector Ex could not terminate the selected thread.</value></data>
+  <data name="Message.ThreadTerminated" xml:space="preserve"><value>The selected thread was terminated successfully.</value></data>
+  <data name="Message.ManualMapCompatibility" xml:space="preserve"><value>This version of Windows has not been fully validated with manual-map injection. Injection may fail or crash. If it does, use another injection method and report the issue. You can also try “Disable SEH handler validation” under the advanced injection settings.</value></data>
+  <data name="Message.LdrpCompatibility" xml:space="preserve"><value>This version of Windows has not been fully validated with LdrpLoadDll injection. Injection may fail or crash; use another injection method if necessary and report the issue.</value></data>
+  <data name="Message.ScramblingWarning" xml:space="preserve"><value>DLL scrambling can make some modules stop working. If that happens, choose a less aggressive preset—for example, Basic instead of Extreme—or disable scrambling.</value></data>
+  <data name="Message.InjectionCompleted" xml:space="preserve"><value>Injection completed successfully.</value></data>
+  <data name="Message.InvalidDll" xml:space="preserve"><value>“{0}” is not a valid DLL.</value></data>
+  <data name="Message.PlatformMismatch" xml:space="preserve"><value>Architecture mismatch: the {0} DLL “{1}” cannot be injected into the {2} process “{3}”.</value></data>
+  <data name="Message.InjectFailed" xml:space="preserve"><value>An error occurred while injecting “{0}” into “{1}”.</value></data>
+  <data name="Message.ErasePeFailed" xml:space="preserve"><value>An error occurred while erasing the PE headers of “{0}”.</value></data>
+  <data name="Message.HideModuleFailed" xml:space="preserve"><value>An error occurred while hiding the module “{0}”.</value></data>
+  <data name="Message.Dependency.UnsupportedXp" xml:space="preserve"><value>The DLL “{0}” requires “{1}”, which is not supported on Windows XP. Ask the DLL author to produce an XP-compatible Release build.</value></data>
+  <data name="Message.Dependency.VersionMismatch" xml:space="preserve"><value>The DLL “{0}” requires “{1}”, but the installed version is incompatible. Delete “{2}” after verifying the path, then reinstall {3}. Install {3} now?</value></data>
+  <data name="Message.Dependency.Missing" xml:space="preserve"><value>The DLL “{0}” requires “{1}”, but the required files are not installed. Install {2} now?</value></data>
+  <data name="Message.Dependency.Decision" xml:space="preserve"><value>The DLL “{0}” requires “{1}”, but the dependency is missing or installed incorrectly. Select Yes to let Extreme Injector Ex download it, No to install it manually, or Cancel to ignore it.</value></data>
+  <data name="Message.Dependency.ExtractManually" xml:space="preserve"><value>When the page opens, download the ZIP file and extract its DLL files to “{0}”. Verify the destination path carefully.</value></data>
+  <data name="Message.Dependency.AdminRequired" xml:space="preserve"><value>Restart Extreme Injector Ex as an administrator so it can save the required files.</value></data>
+  <data name="Message.Dependency.DownloadFailed" xml:space="preserve"><value>The required files could not be downloaded.&#xA;&#xA;{0}</value></data>
+  <data name="Message.Dependency.SetupExitCode" xml:space="preserve"><value>The installer did not complete successfully (exit code {0}).</value></data>
+  <data name="Message.Dependency.SetupFailed" xml:space="preserve"><value>The installer could not be saved or started.&#xA;&#xA;{0}</value></data>
+  <data name="Message.Dependency.Completed" xml:space="preserve"><value>The dependency was installed successfully.</value></data>
+  <data name="Message.Dependency.ManualInstall" xml:space="preserve"><value>When the page opens, download and install “{0}” before starting injection.</value></data>
+  <data name="Message.NewVersion" xml:space="preserve"><value>Extreme Injector Ex {0} is available.&#xA;&#xA;Download it from GitHub:&#xA;&#xA;https://github.com/Caritusy/ExtremeInjectorEx</value></data>
+</root>

@@ -21,6 +21,7 @@ public static class Program
 		}
 
 		LoadExternalSettings(args);
+		UiText.Configure(ApplicationSettings.Current.Language);
 
 		Application.EnableVisualStyles();
 		Application.SetCompatibleTextRenderingDefault(defaultValue: false);

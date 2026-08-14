@@ -248,7 +248,7 @@ internal static class ModernUi
 
 internal sealed class EmptyStateDataGridView : DataGridView
 {
-	public string EmptyStateText { get; set; } = "No DLLs added";
+	public string EmptyStateText { get; set; } = UiText.Get("Main.EmptyDllList");
 
 	public EmptyStateDataGridView()
 	{

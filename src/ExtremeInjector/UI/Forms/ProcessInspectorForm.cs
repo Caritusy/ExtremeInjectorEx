@@ -203,7 +203,7 @@ public sealed class ProcessInspectorForm : Form
 							}
 						}
 					}
-					label_0.Text = string.Format("{0}\n\n{1}\n\nProcess ID: 0x{2:X} ({2})\n\nModules: {3}    Threads: {4}", method_0().Name, method_0().FilePath, method_0().ProcessId, RecoveredRuntime.smethod_42(method_0()).Count, RecoveredRuntime.smethod_179(method_0()).Count);
+					label_0.Text = UiText.Format("ProcessInfo.Summary", method_0().Name, method_0().FilePath, method_0().ProcessId, RecoveredRuntime.smethod_42(method_0()).Count, RecoveredRuntime.smethod_179(method_0()).Count);
 					using List<ProcessThreadInfo>.Enumerator enumerator2 = RecoveredRuntime.smethod_179(method_0()).GetEnumerator();
 					while (true)
 					{
@@ -472,14 +472,14 @@ public sealed class ProcessInspectorForm : Form
 					}
 					break;
 					IL_000e:
-					MessageBox.Show("The process has been successfully terminated.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show(UiText.Get("Message.ProcessTerminated"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					num = (int)(num2 * 174653001) ^ -5123630;
 				}
 			}
 		}
 		catch (Exception)
 		{
-			MessageBox.Show("Extreme Injector Ex was unable to terminate the specified process.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(UiText.Get("Message.ProcessTerminateFailed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
@@ -590,7 +590,7 @@ public sealed class ProcessInspectorForm : Form
 					break;
 				case 3u:
 					method_2();
-					MessageBox.Show(gClass.method_8() + " has been successfully unloaded from the process.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show(UiText.Format("Message.ModuleUnloaded", gClass.method_8()), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					num = (int)(num2 * 1446355278) ^ -31155133;
 					continue;
 				case 1u:
@@ -607,13 +607,13 @@ public sealed class ProcessInspectorForm : Form
 			}
 			goto IL_0030;
 			IL_00a6:
-			MessageBox.Show(gClass.method_8() + " could not be unloaded from the process.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(UiText.Format("Message.ModuleUnloadFailed", gClass.method_8()), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			num = 2037362985;
 			goto IL_0081;
 		}
 		catch (Exception ex)
 		{
-			MessageBox.Show("An error occurred when attempting to unload the specified module:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(UiText.Format("Message.ModuleUnloadError", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
@@ -653,7 +653,7 @@ public sealed class ProcessInspectorForm : Form
 	{
 		ProcessThreadInfo class75_ = (ProcessThreadInfo)dataGridView_1.SelectedRows[0].Tag;
 		bool flag;
-		if (!(flag = button_3.Text == "Resume"))
+		if (!(flag = button_3.Text == UiText.Get("ProcessInfo.Resume")))
 		{
 			goto IL_0095;
 		}
@@ -686,7 +686,7 @@ public sealed class ProcessInspectorForm : Form
 			case 2u:
 				goto IL_0095;
 			case 0u:
-				MessageBox.Show("Unable to " + (flag ? "resume" : "suspend") + " the selected thread.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(UiText.Get(flag ? "Message.ThreadResumeFailed" : "Message.ThreadSuspendFailed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				num2 = 2093860131;
 				continue;
 			default:
@@ -700,7 +700,7 @@ public sealed class ProcessInspectorForm : Form
 		}
 		goto IL_0045;
 		IL_0045:
-		MessageBox.Show("The selected thread has been " + ((!flag) ? "suspended" : "resumed") + " successfully.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+		MessageBox.Show(UiText.Get(flag ? "Message.ThreadResumed" : "Message.ThreadSuspended"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		num2 = 2093860131;
 		goto IL_00e6;
 	}
@@ -724,7 +724,7 @@ public sealed class ProcessInspectorForm : Form
 			case 4u:
 				break;
 			case 3u:
-				MessageBox.Show("Extreme Injector Ex was unable to terminate the selected thread.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(UiText.Get("Message.ThreadTerminateFailed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				num = (int)(num2 * 354435775) ^ -677172765;
 				continue;
 			default:
@@ -740,7 +740,7 @@ public sealed class ProcessInspectorForm : Form
 		}
 		goto IL_0022;
 		IL_0078:
-		MessageBox.Show("The selected thread has been terminated successfully.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+		MessageBox.Show(UiText.Get("Message.ThreadTerminated"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		num = -1446707801;
 		goto IL_0053;
 	}

@@ -39,7 +39,7 @@ public sealed partial class RecoveredRuntime
 				{
 				case 71u:
 					form0_0.groupBox_0.TabStop = false;
-					form0_0.groupBox_0.Text = "Export Options";
+					form0_0.groupBox_0.Text = UiText.Get("Module.ExportOptions");
 					num = ((int)num2 * -10012300) ^ -993370950;
 					continue;
 				case 70u:
@@ -105,7 +105,7 @@ public sealed partial class RecoveredRuntime
 				case 59u:
 					form0_0.button_0.Size = new Size(51, 23);
 					form0_0.button_0.TabIndex = 8;
-					form0_0.button_0.Text = "Add";
+					form0_0.button_0.Text = UiText.Get("Module.Add");
 					form0_0.button_0.UseVisualStyleBackColor = true;
 					form0_0.button_0.Click += form0_0.method_7;
 					num = ((int)num2 * -886628270) ^ 0x2441D5AE;
@@ -138,7 +138,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 52u:
 					form0_0.StartPosition = FormStartPosition.CenterParent;
-					form0_0.Text = "Advanced Module Options";
+					form0_0.Text = UiText.Get("Module.Title");
 					form0_0.Load += form0_0.method_4;
 					num = (int)(num2 * 1908332636) ^ -730069252;
 					continue;
@@ -204,7 +204,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 660957898) ^ 0x6730FEF3);
 					continue;
 				case 37u:
-					form0_0.dataGridViewTextBoxColumn_1.HeaderText = "Type";
+					form0_0.dataGridViewTextBoxColumn_1.HeaderText = UiText.Get("Module.Type");
 					form0_0.dataGridViewTextBoxColumn_1.Name = "TypeColumn";
 					num = ((int)num2 * -2102444401) ^ 0x3F917287;
 					continue;
@@ -229,7 +229,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -923596769) ^ -569183374;
 					continue;
 				case 31u:
-					form0_0.label_1.Text = "Calling Convention:";
+					form0_0.label_1.Text = UiText.Get("Module.CallingConvention");
 					form0_0.comboBox_0.DropDownStyle = ComboBoxStyle.DropDownList;
 					num = ((int)num2 * -1929047089) ^ -494413140;
 					continue;
@@ -296,7 +296,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 2061221051) ^ 0x3C51857A);
 					continue;
 				case 16u:
-					form0_0.label_2.Text = "Parameters/Arguments:";
+					form0_0.label_2.Text = UiText.Get("Module.Parameters");
 					num = ((int)num2 * -1847463114) ^ 0x345735A0;
 					continue;
 				case 15u:
@@ -336,7 +336,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 1791822145) ^ 0x1567FB5E);
 					continue;
 				case 7u:
-					form0_0.dataGridViewTextBoxColumn_2.HeaderText = "Value";
+					form0_0.dataGridViewTextBoxColumn_2.HeaderText = UiText.Get("Module.Value");
 					form0_0.dataGridViewTextBoxColumn_2.Name = "ValueColumn";
 					form0_0.dataGridViewTextBoxColumn_2.ReadOnly = true;
 					num = ((int)num2 * -1254743129) ^ 0x17AE915E;
@@ -350,7 +350,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1351954849) ^ -405506269;
 					continue;
 				case 4u:
-					form0_0.label_0.Text = "Export Function/Routine:";
+					form0_0.label_0.Text = UiText.Get("Module.ExportFunction");
 					num = ((int)num2 * -1100384208) ^ 0x2930EEC6;
 					continue;
 				case 3u:
@@ -588,13 +588,13 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1727692378) ^ -1613471598;
 					continue;
 				case 12u:
-					form3_0.label_0.Text = "Connecting to download link...";
+					form3_0.label_0.Text = UiText.Get("Dependency.Connecting");
 					num = ((int)num2 * -1941043425) ^ 0x3A311E50;
 					continue;
 				case 11u:
 					form3_0.MinimizeBox = false;
 					form3_0.Name = "DepedencyDownloadForm";
-					form3_0.Text = "Dependency Downloader";
+					form3_0.Text = UiText.Get("Dependency.Title");
 					form3_0.FormClosing += form3_0.method_1;
 					form3_0.Load += form3_0.method_0;
 					num = ((int)num2 * -996366165) ^ -1124440156;
@@ -706,7 +706,7 @@ public sealed partial class RecoveredRuntime
 			MessageBox.Show(
 				mainForm,
 				smethod_345(message, exception, bool_0: true),
-				"Extreme Injector Ex",
+				UiText.Get("App.Title"),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation);
 		});
@@ -714,7 +714,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static void smethod_177(string string_0, MainForm mainForm, string string_1)
 	{
-		MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_1 + "\" requires \"" + string_0 + "\" in order to work properly, but you are running Windows XP which does not support it. Please notify the creator of the DLL to build in Release mode with XP compatibility.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+		MessageBox.Show(mainForm, UiText.Format("Message.Dependency.UnsupportedXp", string_1, string_0), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 	}
 
 	internal static TabControlWindow smethod_204(TabControl tabControl_0)
@@ -760,7 +760,7 @@ public sealed partial class RecoveredRuntime
 		catch (Exception exception)
 		{
 			string processName = mainForm.selectedProcess?.Name ?? "unknown process";
-			ShowInjectionError(mainForm, "An error occurred while injecting \"" + Path.GetFileName(sourceModulePath) + "\" into \"" + processName + "\".", exception);
+			ShowInjectionError(mainForm, UiText.Format("Message.InjectFailed", Path.GetFileName(sourceModulePath), processName), exception);
 			return false;
 		}
 		finally
@@ -818,7 +818,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 179u:
 					gform2_0.groupBox_3.TabStop = false;
-					gform2_0.groupBox_3.Text = "Post-Inject Options:";
+					gform2_0.groupBox_3.Text = UiText.Get("Settings.PostInjection");
 					num = ((int)num2 * -239965145) ^ -211201171;
 					continue;
 				case 178u:
@@ -843,7 +843,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -2119591525) ^ -1190375878;
 					continue;
 				case 173u:
-					gform2_0.button_5.Text = "Scramble DLL";
+					gform2_0.button_5.Text = UiText.Get("Settings.ScrambleDll");
 					gform2_0.button_5.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -1680119209) ^ 0x3B34FB72;
 					continue;
@@ -862,11 +862,11 @@ public sealed partial class RecoveredRuntime
 					gform2_0.comboBox_1.FormattingEnabled = true;
 					gform2_0.comboBox_1.Items.AddRange(new object[5]
 					{
-						"None",
-						"Basic",
-						"Standard",
-						"Extreme",
-						"Custom"
+						UiText.Get("Settings.Preset.None"),
+						UiText.Get("Settings.Preset.Basic"),
+						UiText.Get("Settings.Preset.Standard"),
+						UiText.Get("Settings.Preset.Extreme"),
+						UiText.Get("Settings.Preset.Custom")
 					});
 					num = (int)(num2 * 1682174863) ^ -382272157;
 					continue;
@@ -935,11 +935,11 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 852726921) ^ 0x5DA0E3D1);
 					continue;
 				case 154u:
-					gform2_0.checkBox_0.Text = "Stealth Inject";
+					gform2_0.checkBox_0.Text = UiText.Get("Settings.StealthInject");
 					num = ((int)num2 * -1680241984) ^ -1051479027;
 					continue;
 				case 153u:
-					gform2_0.button_4.Text = "Start in Secure Mode";
+					gform2_0.button_4.Text = UiText.Get("Settings.SecureMode");
 					gform2_0.button_4.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -1121812860) ^ -1523937389;
 					continue;
@@ -973,7 +973,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 409551097) ^ 0x24AF0746);
 					continue;
 				case 145u:
-					gform2_0.checkBox_4.Text = "Erase PE";
+					gform2_0.checkBox_4.Text = UiText.Get("Settings.ErasePe");
 					gform2_0.checkBox_4.UseVisualStyleBackColor = true;
 					gform2_0.groupBox_4.Controls.Add(gform2_0.label_2);
 					gform2_0.groupBox_4.Controls.Add(gform2_0.panel_0);
@@ -989,7 +989,7 @@ public sealed partial class RecoveredRuntime
 					gform2_0.MaximizeBox = false;
 					gform2_0.MinimizeBox = false;
 					gform2_0.Name = "SettingsForm";
-					gform2_0.Text = "Settings";
+					gform2_0.Text = UiText.Get("Settings.Title");
 					gform2_0.FormClosing += gform2_0.method_9;
 					gform2_0.groupBox_0.ResumeLayout(performLayout: false);
 					gform2_0.groupBox_1.ResumeLayout(performLayout: false);
@@ -998,7 +998,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 142u:
 					gform2_0.button_0.TabIndex = 1;
-					gform2_0.button_0.Text = "Advanced";
+					gform2_0.button_0.Text = UiText.Get("Settings.Advanced");
 					gform2_0.button_0.UseVisualStyleBackColor = true;
 					num = (int)(num2 * 599319832) ^ -818623083;
 					continue;
@@ -1037,7 +1037,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1991297696) ^ -151477556;
 					continue;
 				case 133u:
-					gform2_0.checkBox_1.Text = "Close on inject";
+					gform2_0.checkBox_1.Text = UiText.Get("Settings.CloseOnInject");
 					gform2_0.checkBox_1.UseVisualStyleBackColor = true;
 					num = (int)((num2 * 114144290) ^ 0x16D65E45);
 					continue;
@@ -1082,7 +1082,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1108374785) ^ 0x6584D4F7;
 					continue;
 				case 123u:
-					gform2_0.button_3.Text = "OK";
+					gform2_0.button_3.Text = UiText.Get("Common.OK");
 					num = ((int)num2 * -1435986023) ^ 0x380CC975;
 					continue;
 				case 122u:
@@ -1090,11 +1090,11 @@ public sealed partial class RecoveredRuntime
 					gform2_0.comboBox_0.FormattingEnabled = true;
 					gform2_0.comboBox_0.Items.AddRange(new object[5]
 					{
-						"Standard Injection",
-						"Thread Hijacking",
-						"LdrLoadDll Stub",
-						"LdrpLoadDll Stub",
-						"Manual Map"
+						UiText.Get("Settings.Method.Standard"),
+						UiText.Get("Settings.Method.ThreadHijacking"),
+						UiText.Get("Settings.Method.LdrLoadDllStub"),
+						UiText.Get("Settings.Method.LdrpLoadDllStub"),
+						UiText.Get("Settings.Method.ManualMap")
 					});
 					num = (int)((num2 * 1971766879) ^ 0x75DE5166);
 					continue;
@@ -1147,7 +1147,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 111u:
 					gform2_0.checkBox_3.TabIndex = 1;
-					gform2_0.checkBox_3.Text = "Hide Module";
+					gform2_0.checkBox_3.Text = UiText.Get("Settings.HideModule");
 					gform2_0.checkBox_3.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -1893466107) ^ 0x2ADCD6AE;
 					continue;
@@ -1164,7 +1164,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 162111896) ^ 0x56F1B289);
 					continue;
 				case 107u:
-					gform2_0.label_1.Text = "Inject delay:";
+					gform2_0.label_1.Text = UiText.Get("Settings.DelayBefore");
 					num = ((int)num2 * -300611719) ^ -1512168135;
 					continue;
 				case 106u:
@@ -1280,7 +1280,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 81u:
 					gform2_0.label_0.TabIndex = 5;
-					gform2_0.label_0.Text = "Delay between:";
+					gform2_0.label_0.Text = UiText.Get("Settings.DelayBetween");
 					num = (int)(num2 * 100035645) ^ -576261038;
 					continue;
 				case 80u:
@@ -1292,7 +1292,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -425049992) ^ -1536749328;
 					continue;
 				case 78u:
-					gform2_0.button_6.Text = "View Process Information";
+					gform2_0.button_6.Text = UiText.Get("Settings.ProcessInfo");
 					num = (int)(num2 * 83058863) ^ -1651661353;
 					continue;
 				case 77u:
@@ -1300,7 +1300,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 651707463) ^ -1158182476;
 					continue;
 				case 76u:
-					gform2_0.checkBox_2.Text = "Auto Inject";
+					gform2_0.checkBox_2.Text = UiText.Get("Settings.AutoInject");
 					gform2_0.checkBox_2.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -1492198581) ^ 0x2F92B1CB;
 					continue;
@@ -1309,12 +1309,12 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 717293402) ^ -1623797971;
 					continue;
 				case 74u:
-					gform2_0.label_4.Text = "Text Color:";
+					gform2_0.label_4.Text = UiText.Get("Settings.TextColor");
 					gform2_0.panel_2.BorderStyle = BorderStyle.FixedSingle;
 					num = (int)(num2 * 1508877135) ^ -232209066;
 					continue;
 				case 73u:
-					gform2_0.label_2.Text = "Background Color #2:";
+					gform2_0.label_2.Text = UiText.Get("Settings.SecondaryAccent");
 					gform2_0.panel_0.BorderStyle = BorderStyle.FixedSingle;
 					num = (int)(num2 * 1646328371) ^ -130906542;
 					continue;
@@ -1323,7 +1323,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1082079) ^ 0x3AB6AB34;
 					continue;
 				case 71u:
-					gform2_0.groupBox_0.Text = "Injection Method:";
+					gform2_0.groupBox_0.Text = UiText.Get("Settings.InjectionMethod");
 					num = (int)(num2 * 1258531918) ^ -1146556521;
 					continue;
 				case 70u:
@@ -1391,7 +1391,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -635074520) ^ 0x1CD1180C;
 					continue;
 				case 57u:
-					gform2_0.groupBox_1.Text = "Injection Options:";
+					gform2_0.groupBox_1.Text = UiText.Get("Settings.InjectionBehavior");
 					num = (int)(num2 * 1705913247) ^ -1066752638;
 					continue;
 				case 56u:
@@ -1414,7 +1414,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1627378003) ^ -556650304;
 					continue;
 				case 52u:
-					gform2_0.groupBox_5.Text = "Tools:";
+					gform2_0.groupBox_5.Text = UiText.Get("Settings.Tools");
 					gform2_0.button_4.Location = new Point(9, 65);
 					gform2_0.button_4.Name = "startInSecureModeButton";
 					gform2_0.button_4.Size = new Size(162, 23);
@@ -1447,7 +1447,7 @@ public sealed partial class RecoveredRuntime
 					gform2_0.groupBox_2.Size = new Size(180, 84);
 					gform2_0.groupBox_2.TabIndex = 2;
 					gform2_0.groupBox_2.TabStop = false;
-					gform2_0.groupBox_2.Text = "Scrambling Options:";
+					gform2_0.groupBox_2.Text = UiText.Get("Settings.Scrambling");
 					num = ((int)num2 * -1738138535) ^ -763755152;
 					continue;
 				case 45u:
@@ -1456,7 +1456,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 1300305928) ^ 0x39A2A41F);
 					continue;
 				case 44u:
-					gform2_0.button_1.Text = "Advanced";
+					gform2_0.button_1.Text = UiText.Get("Settings.Advanced");
 					num = (int)((num2 * 104117610) ^ 0x4E2C57DB);
 					continue;
 				case 43u:
@@ -1472,7 +1472,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 946625981) ^ 0x3A49E1A6);
 					continue;
 				case 40u:
-					gform2_0.button_2.Text = "Reset";
+					gform2_0.button_2.Text = UiText.Get("Settings.Reset");
 					num = ((int)num2 * -2063498107) ^ -425840925;
 					continue;
 				case 39u:
@@ -1495,7 +1495,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 692903669) ^ 0x3172A2FF);
 					continue;
 				case 35u:
-					gform2_0.groupBox_4.Text = "Theme Options:";
+					gform2_0.groupBox_4.Text = UiText.Get("Settings.Appearance");
 					num = (int)((num2 * 765100405) ^ 0xF905A1B);
 					continue;
 				case 34u:
@@ -1553,7 +1553,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -2012857834) ^ -93567473;
 					continue;
 				case 22u:
-					gform2_0.label_3.Text = "Background Color #1:";
+					gform2_0.label_3.Text = UiText.Get("Settings.PrimaryAccent");
 					num = ((int)num2 * -1675504492) ^ -929453098;
 					continue;
 				case 21u:
@@ -1676,7 +1676,7 @@ public sealed partial class RecoveredRuntime
 			switch ((num2 = (uint)(num ^ 0xCF75D19)) % 6)
 			{
 			case 2u:
-				num = ((MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_1 + "\" in order to work properly but it appears you have an incorrect version installed. In order to fix this, you need to delete \"" + string_2 + "\" (check carefully) and then re-install the " + string_3 + ". Would you like to install the " + string_3 + " now?", "Extreme Injector Ex", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? (-972875680) : (-1020958494)) ^ ((int)num2 * -275383844);
+				num = ((MessageBox.Show(mainForm, UiText.Format("Message.Dependency.VersionMismatch", string_0, string_1, string_2, string_3), UiText.Get("App.Title"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? (-972875680) : (-1020958494)) ^ ((int)num2 * -275383844);
 				continue;
 			case 0u:
 				break;
@@ -1693,7 +1693,7 @@ public sealed partial class RecoveredRuntime
 		}
 		goto IL_00c5;
 		IL_0102:
-		num = ((MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_1 + "\" in order to work properly but it appears you have not installed the required files. Would you like to install the " + string_3 + "?", "Extreme Injector Ex", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? 1866094268 : 1156328842);
+		num = ((MessageBox.Show(mainForm, UiText.Format("Message.Dependency.Missing", string_0, string_1, string_3), UiText.Get("App.Title"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? 1866094268 : 1156328842);
 		goto IL_00ca;
 	}
 
@@ -1853,7 +1853,7 @@ public sealed partial class RecoveredRuntime
 
 		if (bool_0)
 		{
-			MessageBox.Show("Injection has completed successfully!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show(UiText.Get("Message.InjectionCompleted"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
 
 		if (mainForm.selectedProcess != null && HasProcessExited(mainForm.selectedProcess))
@@ -1868,7 +1868,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static void smethod_405(string string_0, MainForm mainForm, string string_1, string string_2, string string_3)
 	{
-		DialogResult dialogResult = MessageBox.Show(mainForm, "The DLL you selected, \"" + string_0 + "\", requires \"" + string_3 + "\", but the dependency is missing or installed incorrectly. Extreme Injector Ex can download it automatically. Select Yes to download it, No to install it manually, or Cancel to ignore it.", "Extreme Injector Ex", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+		DialogResult dialogResult = MessageBox.Show(mainForm, UiText.Format("Message.Dependency.Decision", string_0, string_3), UiText.Get("App.Title"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
 		if (dialogResult == DialogResult.Yes)
 		{
 			goto IL_00bf;
@@ -1884,7 +1884,7 @@ public sealed partial class RecoveredRuntime
 			switch ((num2 = (uint)(num ^ -1204839189)) % 9)
 			{
 			case 8u:
-				MessageBox.Show(mainForm, "When the page appears, download and extract the DLL files inside the ZIP file to \"" + string_1 + "\" (look at the path carefully).", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show(mainForm, UiText.Format("Message.Dependency.ExtractManually", string_1), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 				num = ((int)num2 * -1180998039) ^ -766772100;
 				continue;
 			case 7u:
@@ -1911,7 +1911,7 @@ public sealed partial class RecoveredRuntime
 			case 0u:
 				return;
 			case 3u:
-				MessageBox.Show(mainForm, "Restart Extreme Injector Ex as an administrator so it can save the required files.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(mainForm, UiText.Get("Message.Dependency.AdminRequired"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				return;
 			case 4u:
 				return;
@@ -1983,7 +1983,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1662144353) ^ 0x6B3A0129;
 					continue;
 				case 108u:
-					form4_0.Text = "Process Information";
+					form4_0.Text = UiText.Get("ProcessInfo.Title");
 					form4_0.Load += form4_0.method_8;
 					num = ((int)num2 * -1915030955) ^ -1304656414;
 					continue;
@@ -2091,7 +2091,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 82u:
 					form4_0.tabPage_0.TabIndex = 0;
-					form4_0.tabPage_0.Text = "Modules";
+					form4_0.tabPage_0.Text = UiText.Get("ProcessInfo.Modules");
 					form4_0.tabPage_0.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -704552755) ^ 0xB1B455B;
 					continue;
@@ -2110,7 +2110,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 78u:
 					form4_0.dataGridViewTextBoxColumn_0.Width = 150;
-					form4_0.dataGridViewTextBoxColumn_1.HeaderText = "Module Base";
+					form4_0.dataGridViewTextBoxColumn_1.HeaderText = UiText.Get("ProcessInfo.ModuleBase");
 					num = ((int)num2 * -627271498) ^ -453027333;
 					continue;
 				case 77u:
@@ -2139,7 +2139,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 72u:
 					form4_0.button_3.TabIndex = 15;
-					form4_0.button_3.Text = "Suspend";
+					form4_0.button_3.Text = UiText.Get("ProcessInfo.Suspend");
 					num = ((int)num2 * -2012751643) ^ 0x71E45379;
 					continue;
 				case 71u:
@@ -2204,7 +2204,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 58u:
 					form4_0.dataGridViewTextBoxColumn_4.ReadOnly = true;
-					form4_0.dataGridViewTextBoxColumn_5.HeaderText = "Priority";
+					form4_0.dataGridViewTextBoxColumn_5.HeaderText = UiText.Get("ProcessInfo.Priority");
 					form4_0.dataGridViewTextBoxColumn_5.Name = "threadStateColumn";
 					num = (int)((num2 * 999546692) ^ 0x26FBE465);
 					continue;
@@ -2241,13 +2241,13 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1407908096) ^ -1027878506;
 					continue;
 				case 50u:
-					form4_0.dataGridViewTextBoxColumn_2.HeaderText = "Module Size";
+					form4_0.dataGridViewTextBoxColumn_2.HeaderText = UiText.Get("ProcessInfo.ModuleSize");
 					num = (int)(num2 * 1672614920) ^ -1298649630;
 					continue;
 				case 49u:
 					form4_0.button_1.Size = new Size(97, 22);
 					form4_0.button_1.TabIndex = 14;
-					form4_0.button_1.Text = "Unload Module";
+					form4_0.button_1.Text = UiText.Get("ProcessInfo.UnloadModule");
 					num = (int)((num2 * 1071731497) ^ 0x51E9761E);
 					continue;
 				case 48u:
@@ -2260,11 +2260,11 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 46u:
 					form4_0.button_0.TabIndex = 13;
-					form4_0.button_0.Text = "Kill Process";
+					form4_0.button_0.Text = UiText.Get("ProcessInfo.KillProcess");
 					num = ((int)num2 * -1896737684) ^ -702008778;
 					continue;
 				case 45u:
-					form4_0.tabPage_1.Text = "Threads";
+					form4_0.tabPage_1.Text = UiText.Get("ProcessInfo.Threads");
 					form4_0.tabPage_1.UseVisualStyleBackColor = true;
 					num = (int)(num2 * 1425762367) ^ -422594718;
 					continue;
@@ -2274,7 +2274,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 43u:
 					form4_0.dataGridViewTextBoxColumn_4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-					form4_0.dataGridViewTextBoxColumn_4.HeaderText = "Start Address";
+					form4_0.dataGridViewTextBoxColumn_4.HeaderText = UiText.Get("ProcessInfo.StartAddress");
 					num = ((int)num2 * -391774442) ^ -214321483;
 					continue;
 				case 42u:
@@ -2312,7 +2312,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1560831611) ^ -1030759883;
 					continue;
 				case 34u:
-					form4_0.label_0.Text = "Process Name";
+					form4_0.label_0.Text = UiText.Get("ProcessInfo.Process");
 					num = ((int)num2 * -279299136) ^ 0x1365B4B7;
 					continue;
 				case 33u:
@@ -2332,7 +2332,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1053164096) ^ -928959558;
 					continue;
 				case 29u:
-					form4_0.button_4.Text = "Kill";
+					form4_0.button_4.Text = UiText.Get("ProcessInfo.KillThread");
 					form4_0.button_4.UseVisualStyleBackColor = true;
 					form4_0.button_4.Click += form4_0.method_12;
 					num = (int)(num2 * 1326306197) ^ -2098700400;
@@ -2389,7 +2389,7 @@ public sealed partial class RecoveredRuntime
 					form4_0.dataGridView_1.TabIndex = 12;
 					form4_0.dataGridView_1.SelectionChanged += form4_0.method_10;
 					form4_0.dataGridView_1.SortCompare += form4_0.method_7;
-					form4_0.dataGridViewTextBoxColumn_3.HeaderText = "Thread ID";
+					form4_0.dataGridViewTextBoxColumn_3.HeaderText = UiText.Get("ProcessInfo.ThreadId");
 					num = ((int)num2 * -2136049403) ^ -1524411868;
 					continue;
 				case 18u:
@@ -2402,7 +2402,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 1052512932) ^ 0x20E9DB51);
 					continue;
 				case 16u:
-					form4_0.dataGridViewTextBoxColumn_0.HeaderText = "Module Name";
+					form4_0.dataGridViewTextBoxColumn_0.HeaderText = UiText.Get("ProcessInfo.ModuleName");
 					form4_0.dataGridViewTextBoxColumn_0.Name = "moduleNameColumn";
 					num = (int)(num2 * 144185050) ^ -511044056;
 					continue;
@@ -2424,12 +2424,12 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1866918174) ^ 0x817EFF8;
 					continue;
 				case 12u:
-					form4_0.groupBox_0.Text = "Process";
+					form4_0.groupBox_0.Text = UiText.Get("ProcessInfo.Process");
 					form4_0.label_0.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 					num = ((int)num2 * -2011165707) ^ -338311936;
 					continue;
 				case 11u:
-					form4_0.button_2.Text = "Close";
+					form4_0.button_2.Text = UiText.Get("Common.Close");
 					num = ((int)num2 * -940598734) ^ -1436476336;
 					continue;
 				case 10u:
@@ -2522,7 +2522,7 @@ public sealed partial class RecoveredRuntime
 		}
 		goto IL_0009;
 		IL_002d:
-		MessageBox.Show("A new version of Extreme Injector Ex has been detected (v" + string_ + ").\n\nDownload it from GitHub:\n\nhttps://github.com/Caritusy/ExtremeInjectorEx", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+		MessageBox.Show(UiText.Format("Message.NewVersion", string_), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		num = -1339150522;
 		goto IL_000e;
 	}

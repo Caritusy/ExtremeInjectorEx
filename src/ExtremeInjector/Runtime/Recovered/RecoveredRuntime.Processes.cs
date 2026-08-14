@@ -621,7 +621,7 @@ public sealed partial class RecoveredRuntime
 			switch ((num2 = (uint)(num ^ -938941599)) % 6)
 			{
 			case 4u:
-				form4_0.button_3.Text = "Resume";
+				form4_0.button_3.Text = UiText.Get("ProcessInfo.Resume");
 				num = ((int)num2 * -667996033) ^ 0x3EDCEFF9;
 				continue;
 			case 3u:
@@ -642,7 +642,7 @@ public sealed partial class RecoveredRuntime
 		}
 		goto IL_0058;
 		IL_00b5:
-		form4_0.button_3.Text = "Suspend";
+		form4_0.button_3.Text = UiText.Get("ProcessInfo.Suspend");
 		num = -109253225;
 		goto IL_008c;
 	}
@@ -2264,7 +2264,7 @@ public sealed partial class RecoveredRuntime
 				case 48u:
 					form5_0.button_3.Size = new Size(122, 23);
 					form5_0.button_3.TabIndex = 4;
-					form5_0.button_3.Text = "Close";
+					form5_0.button_3.Text = UiText.Get("Common.Close");
 					form5_0.button_3.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -768709894) ^ -691705746;
 					continue;
@@ -2321,7 +2321,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 35u:
 					form5_0.Name = "ProcessSelectForm";
-					form5_0.Text = "Process List";
+					form5_0.Text = UiText.Get("ProcessList.Title");
 					num = (int)(num2 * 618651243) ^ -275190735;
 					continue;
 				case 34u:
@@ -2364,7 +2364,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -445815404) ^ 0x5421F815;
 					continue;
 				case 25u:
-					form5_0.button_1.Text = "Window List";
+					form5_0.button_1.Text = UiText.Get("ProcessList.Windows");
 					num = ((int)num2 * -1714145420) ^ -1343087227;
 					continue;
 				case 24u:
@@ -2423,7 +2423,7 @@ public sealed partial class RecoveredRuntime
 					form5_0.button_2.Name = "selectButton";
 					form5_0.button_2.Size = new Size(122, 23);
 					form5_0.button_2.TabIndex = 3;
-					form5_0.button_2.Text = "Select";
+					form5_0.button_2.Text = UiText.Get("ProcessList.Select");
 					num = (int)(num2 * 1787356769) ^ -2051678009;
 					continue;
 				case 10u:
@@ -2455,7 +2455,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 1860751607) ^ 0x226EFCD8);
 					continue;
 				case 4u:
-					form5_0.button_0.Text = "Process List";
+					form5_0.button_0.Text = UiText.Get("ProcessList.Processes");
 					num = ((int)num2 * -371993339) ^ 0x7DE2F620;
 					continue;
 				case 3u:
@@ -2838,7 +2838,7 @@ public sealed partial class RecoveredRuntime
 		previousImage?.Dispose();
 
 		mainForm.selectedProcess = gclass2_0;
-		mainForm.processDescriptionLabel.Text = "No process selected";
+		mainForm.processDescriptionLabel.Text = UiText.Get("Main.NoProcessSelected");
 
 		if (gclass2_0 == null)
 		{
@@ -2860,7 +2860,7 @@ public sealed partial class RecoveredRuntime
 			mainForm.processIconPictureBox.BackgroundImage = null;
 		}
 
-		string description = "No description";
+		string description = UiText.Get("Main.NoDescription");
 		try
 		{
 			FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(gclass2_0.FilePath);
@@ -2878,7 +2878,7 @@ public sealed partial class RecoveredRuntime
 			description = description.Substring(0, 50) + "...";
 		}
 
-		mainForm.processDescriptionLabel.Text = string.Format("{0}\nProcess ID: 0x{1:X} ({1})", description, gclass2_0.ProcessId);
+		mainForm.processDescriptionLabel.Text = UiText.Format("Main.ProcessDetails", description, gclass2_0.ProcessId);
 		ApplicationSettings.Current.ProcessName = mainForm.processNameTextBox.Text;
 		ApplicationSettings.Save();
 		mainForm.injectButton.Enabled = !ApplicationSettings.Current.Options.AutoInject;

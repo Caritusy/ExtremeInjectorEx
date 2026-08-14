@@ -17,11 +17,12 @@ public sealed class AboutForm : Form
 	internal LinkLabel linkLabel_0;
 	internal Label label_4;
 
-	private Button closeButton;
+	internal Button closeButton;
 
 	public AboutForm()
 	{
 		InitializeModernComponents();
+		ApplyLocalizedText();
 		Version version = Assembly.GetExecutingAssembly().GetName().Version;
 		label_0.Text = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 	}
@@ -54,7 +55,7 @@ public sealed class AboutForm : Form
 		Name = "AboutForm";
 		ShowInTaskbar = false;
 		StartPosition = FormStartPosition.CenterParent;
-		Text = "About Extreme Injector Ex";
+		Text = UiText.Get("About.Title");
 
 		var rootLayout = new TableLayoutPanel
 		{
@@ -115,7 +116,7 @@ public sealed class AboutForm : Form
 		label_1.ForeColor = ModernUi.TextPrimary;
 		label_1.Margin = Padding.Empty;
 		label_1.Name = "productNameLabel";
-		label_1.Text = "Extreme Injector Ex";
+		label_1.Text = UiText.Get("About.Product");
 
 		label_0.AutoSize = true;
 		label_0.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular, GraphicsUnit.Point);
@@ -128,7 +129,7 @@ public sealed class AboutForm : Form
 		label_2.ForeColor = ModernUi.TextPrimary;
 		label_2.Margin = new Padding(1, 6, 0, 0);
 		label_2.Name = "initialsLabel";
-		label_2.Text = "T. R. L. S.";
+		label_2.Text = UiText.Get("About.Initials");
 
 		identityLayout.Controls.Add(label_1, 0, 0);
 		identityLayout.Controls.Add(label_0, 0, 1);
@@ -156,7 +157,7 @@ public sealed class AboutForm : Form
 		label_3.ForeColor = ModernUi.TextPrimary;
 		label_3.Margin = Padding.Empty;
 		label_3.Name = "originalCreditLabel";
-		label_3.Text = "Original Extreme Injector by master131. All rights reversed.";
+		label_3.Text = UiText.Get("About.OriginalCredit");
 
 		label_4.AutoSize = true;
 		label_4.Dock = DockStyle.Top;
@@ -164,7 +165,7 @@ public sealed class AboutForm : Form
 		label_4.ForeColor = ModernUi.TextPrimary;
 		label_4.Margin = new Padding(0, 8, 0, 0);
 		label_4.Name = "exCreditLabel";
-		label_4.Text = "Extreme Injector Ex maintained by HaleonMaerion1337.";
+		label_4.Text = UiText.Get("About.MaintainerCredit");
 
 		Color accent = ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1);
 		linkLabel_0.ActiveLinkColor = ModernUi.Darken(accent, 0.18f);
@@ -173,7 +174,7 @@ public sealed class AboutForm : Form
 		linkLabel_0.Anchor = AnchorStyles.Left;
 		linkLabel_0.Margin = Padding.Empty;
 		linkLabel_0.Name = "projectLinkLabel";
-		linkLabel_0.Text = "View project on GitHub";
+		linkLabel_0.Text = UiText.Get("About.ProjectLink");
 		linkLabel_0.VisitedLinkColor = accent;
 		linkLabel_0.LinkClicked += OnProjectLinkClicked;
 
@@ -197,7 +198,7 @@ public sealed class AboutForm : Form
 		closeButton.Margin = Padding.Empty;
 		closeButton.MinimumSize = new Size(74, 30);
 		closeButton.Name = "closeButton";
-		closeButton.Text = "Close";
+		closeButton.Text = UiText.Get("Common.Close");
 		ModernUi.StylePrimaryButton(closeButton, accent, ModernUi.Darken(accent, 0.08f));
 		footerLayout.Controls.Add(linkLabel_0, 0, 0);
 		footerLayout.Controls.Add(closeButton, 1, 0);
@@ -211,6 +212,17 @@ public sealed class AboutForm : Form
 
 		((ISupportInitialize)pictureBox_0).EndInit();
 		ResumeLayout(performLayout: true);
+	}
+
+	private void ApplyLocalizedText()
+	{
+		Text = UiText.Get("About.Title");
+		label_1.Text = UiText.Get("About.Product");
+		label_2.Text = UiText.Get("About.Initials");
+		label_3.Text = UiText.Get("About.OriginalCredit");
+		label_4.Text = UiText.Get("About.MaintainerCredit");
+		linkLabel_0.Text = UiText.Get("About.ProjectLink");
+		closeButton.Text = UiText.Get("Common.Close");
 	}
 
 	// 打开项目主页，系统浏览器启动失败时保持关于窗口可用。

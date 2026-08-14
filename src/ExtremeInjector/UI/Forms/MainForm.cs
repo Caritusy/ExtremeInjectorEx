@@ -178,7 +178,7 @@ public sealed class MainForm : Form
 		processNameLabel.ForeColor = ModernUi.TextPrimary;
 		processNameLabel.Margin = new Padding(0, 0, 0, 5);
 		processNameLabel.Name = "processNameLabel";
-		processNameLabel.Text = "Target process";
+		processNameLabel.Text = UiText.Get("Main.TargetProcess");
 
 		processSurface.AutoSize = true;
 		processSurface.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -248,7 +248,7 @@ public sealed class MainForm : Form
 		processDescriptionLabel.ForeColor = ModernUi.TextSecondary;
 		processDescriptionLabel.Margin = new Padding(1, 5, 0, 0);
 		processDescriptionLabel.Name = "processDescriptionLabel";
-		processDescriptionLabel.Text = "No process selected";
+		processDescriptionLabel.Text = UiText.Get("Main.NoProcessSelected");
 
 		processTextLayout.Controls.Add(processNameFrame, 0, 0);
 		processTextLayout.Controls.Add(processDescriptionLabel, 0, 1);
@@ -258,7 +258,7 @@ public sealed class MainForm : Form
 		selectProcessButton.MinimumSize = new Size(76, 30);
 		selectProcessButton.Name = "selectProcessButton";
 		selectProcessButton.TabIndex = 1;
-		selectProcessButton.Text = "Select";
+		selectProcessButton.Text = UiText.Get("Main.Select");
 		selectProcessButton.Click += OnSelectProcessClicked;
 
 		processLayout.Controls.Add(processIconPictureBox, 0, 0);
@@ -312,28 +312,28 @@ public sealed class MainForm : Form
 		injectionListLabel.ForeColor = ModernUi.TextPrimary;
 		injectionListLabel.Margin = new Padding(1, 0, 0, 8);
 		injectionListLabel.Name = "injectionListLabel";
-		injectionListLabel.Text = "DLL list";
+		injectionListLabel.Text = UiText.Get("Main.DllList");
 
 		addDllButton.Name = "addDllButton";
-		addDllButton.Text = "Add DLL";
+		addDllButton.Text = UiText.Get("Main.AddDll");
 		addDllButton.Dock = DockStyle.Top;
 		addDllButton.Margin = new Padding(0, 0, 0, 2);
 		addDllButton.MinimumSize = new Size(84, 22);
 		addDllButton.Click += OnAddDllClicked;
 		toggleButton.Name = "toggleButton";
-		toggleButton.Text = "Toggle";
+		toggleButton.Text = UiText.Get("Main.Toggle");
 		toggleButton.Dock = DockStyle.Top;
 		toggleButton.Margin = new Padding(0, 0, 0, 2);
 		toggleButton.MinimumSize = new Size(84, 22);
 		toggleButton.Click += OnToggleModuleClicked;
 		removeButton.Name = "removeButton";
-		removeButton.Text = "Remove";
+		removeButton.Text = UiText.Get("Main.Remove");
 		removeButton.Dock = DockStyle.Top;
 		removeButton.Margin = new Padding(0, 0, 0, 2);
 		removeButton.MinimumSize = new Size(84, 22);
 		removeButton.Click += OnRemoveModuleClicked;
 		clearButton.Name = "clearButton";
-		clearButton.Text = "Clear";
+		clearButton.Text = UiText.Get("Main.Clear");
 		clearButton.Dock = DockStyle.Top;
 		clearButton.Margin = Padding.Empty;
 		clearButton.MinimumSize = new Size(84, 22);
@@ -350,7 +350,7 @@ public sealed class MainForm : Form
 		enabledColumn.Name = "enabledColumn";
 		enabledColumn.Width = 38;
 		dllNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-		dllNameColumn.HeaderText = "DLL";
+		dllNameColumn.HeaderText = UiText.Get("Main.DllColumn");
 		dllNameColumn.MinimumWidth = 180;
 		dllNameColumn.Name = "dllNameColumn";
 		dllNameColumn.ReadOnly = true;
@@ -359,7 +359,7 @@ public sealed class MainForm : Form
 		exportOptionsColumn.HeaderText = string.Empty;
 		exportOptionsColumn.Name = "exportOptionsColumn";
 		exportOptionsColumn.ReadOnly = true;
-		exportOptionsColumn.Text = "Options";
+		exportOptionsColumn.Text = UiText.Get("Main.Options");
 		exportOptionsColumn.UseColumnTextForButtonValue = true;
 		exportOptionsColumn.Width = 82;
 
@@ -404,12 +404,12 @@ public sealed class MainForm : Form
 		footerLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 		footerLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 		aboutButton.Name = "aboutButton";
-		aboutButton.Text = "About";
+		aboutButton.Text = UiText.Get("Main.About");
 		aboutButton.Margin = new Padding(0, 0, 6, 0);
 		aboutButton.MinimumSize = new Size(78, 30);
 		aboutButton.Click += OnAboutClicked;
 		settingsButton.Name = "settingsButton";
-		settingsButton.Text = "Settings";
+		settingsButton.Text = UiText.Get("Main.Settings");
 		settingsButton.Margin = Padding.Empty;
 		settingsButton.MinimumSize = new Size(78, 30);
 		settingsButton.Click += OnSettingsClicked;
@@ -419,7 +419,7 @@ public sealed class MainForm : Form
 		injectButton.MinimumSize = new Size(104, 32);
 		injectButton.Name = "injectButton";
 		injectButton.TabIndex = 3;
-		injectButton.Text = "Inject";
+		injectButton.Text = UiText.Get("Main.Inject");
 		injectButton.Click += OnInjectClicked;
 		injectButton.EnabledChanged += OnInjectButtonEnabledChanged;
 		footerLayout.Controls.Add(aboutButton, 0, 0);
@@ -510,7 +510,7 @@ public sealed class MainForm : Form
 	private void UpdateWindowTitle()
 	{
 		Version version = Assembly.GetExecutingAssembly().GetName().Version;
-		Text = string.Format("Extreme Injector Ex {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+		Text = UiText.Format("Main.WindowTitle", version.Major, version.Minor, version.Build);
 	}
 
 	private void OnModuleSelectionChanged(object sender, EventArgs e)
@@ -556,8 +556,8 @@ public sealed class MainForm : Form
 			}
 
 			string moduleName = Path.GetFileName(modulePath);
-			SetProcessStatus("Injecting " + moduleName + "...");
-			RecoveredRuntime.WaitWithStatus(this, ApplicationSettings.Current.Options.DelayBeforeInjection, "Waiting {0} seconds before injection...");
+			SetProcessStatus(UiText.Format("Main.Status.Injecting", moduleName));
+			RecoveredRuntime.WaitWithStatus(this, ApplicationSettings.Current.Options.DelayBeforeInjection, UiText.Get("Main.Status.WaitBefore"));
 
 			IntPtr moduleBase = IntPtr.Zero;
 			attemptedInjection = true;
@@ -565,21 +565,21 @@ public sealed class MainForm : Form
 
 			if (moduleSucceeded && !string.IsNullOrEmpty(module.Entry.ExportName))
 			{
-				SetProcessStatus("Running export routine... (" + moduleName + ")");
+				SetProcessStatus(UiText.Format("Main.Status.RunningExport", moduleName));
 				try
 				{
 					moduleSucceeded = RecoveredRuntime.InvokeExport(module, moduleBase, this);
 				}
 				catch (Exception exception)
 				{
-					RecoveredRuntime.ShowInjectionError(this, "An error occurred while running the export routine.", exception);
+				RecoveredRuntime.ShowInjectionError(this, UiText.Get("Main.Status.ExportError"), exception);
 					moduleSucceeded = false;
 				}
 			}
 
 			allModulesSucceeded &= moduleSucceeded;
 
-			RecoveredRuntime.WaitWithStatus(this, ApplicationSettings.Current.Options.DelayBetweenModules, "Waiting {0} seconds before injecting the next DLL...");
+			RecoveredRuntime.WaitWithStatus(this, ApplicationSettings.Current.Options.DelayBetweenModules, UiText.Get("Main.Status.WaitBetween"));
 		}
 
 		bool injectionSucceeded = attemptedInjection && allModulesSucceeded;
@@ -685,7 +685,7 @@ public sealed class MainForm : Form
 
 	internal void OnAddDllClicked(object sender, EventArgs e)
 	{
-		using (OpenFileDialog dialog = new OpenFileDialog { Filter = "DLL Files|*.dll" })
+		using (OpenFileDialog dialog = new OpenFileDialog { Filter = UiText.Get("Dialog.DllFilter") })
 		{
 			if (dialog.ShowDialog() != DialogResult.OK)
 			{
@@ -738,8 +738,13 @@ public sealed class MainForm : Form
 	internal void OnSettingsClicked(object sender, EventArgs e)
 	{
 		RecoveredRuntime.ShowSettings(selectedProcess);
+		UiText.Configure(ApplicationSettings.Current.Language);
+		ApplyLocalizedText();
+		RecoveredRuntime.SetSelectedProcess(this, selectedProcess);
 		Invalidate();
 		ApplyModernTheme();
+		UpdateLayoutMetrics();
+		PerformLayout();
 	}
 
 	internal void OnInjectClicked(object sender, EventArgs e)
@@ -769,24 +774,24 @@ public sealed class MainForm : Form
 		if (ApplicationSettings.Current.Options.AutoInject)
 		{
 			MessageBox.Show(
-				"Extreme Injector Ex is waiting for the specified process (" + processNameTextBox.Text + ") to start because auto-inject is enabled. Injection will begin when the process starts.",
-				"Extreme Injector Ex",
+				UiText.Format("Main.WaitingForProcess", processNameTextBox.Text),
+				UiText.Get("App.Title"),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Asterisk);
 		}
 		else if (string.IsNullOrEmpty(processNameTextBox.Text))
 		{
 			MessageBox.Show(
-				"You have not selected or entered a process to be injected.",
-				"Extreme Injector Ex",
+				UiText.Get("Main.NoProcessEntered"),
+				UiText.Get("App.Title"),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation);
 		}
 		else
 		{
 			MessageBox.Show(
-				"You have not selected or entered a process that is currently running.",
-				"Extreme Injector Ex",
+				UiText.Get("Main.ProcessNotRunning"),
+				UiText.Get("App.Title"),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation);
 		}
@@ -820,6 +825,25 @@ public sealed class MainForm : Form
 		var detailsSize = new Size(0, processDetailsHeight);
 		processDescriptionLabel.MinimumSize = detailsSize;
 		processDescriptionLabel.MaximumSize = detailsSize;
+	}
+
+	internal void ApplyLocalizedText()
+	{
+		processNameLabel.Text = UiText.Get("Main.TargetProcess");
+		selectProcessButton.Text = UiText.Get("Main.Select");
+		injectionListLabel.Text = UiText.Get("Main.DllList");
+		addDllButton.Text = UiText.Get("Main.AddDll");
+		toggleButton.Text = UiText.Get("Main.Toggle");
+		removeButton.Text = UiText.Get("Main.Remove");
+		clearButton.Text = UiText.Get("Main.Clear");
+		dllNameColumn.HeaderText = UiText.Get("Main.DllColumn");
+		exportOptionsColumn.Text = UiText.Get("Main.Options");
+		aboutButton.Text = UiText.Get("Main.About");
+		settingsButton.Text = UiText.Get("Main.Settings");
+		injectButton.Text = UiText.Get("Main.Inject");
+		((EmptyStateDataGridView)moduleGrid).EmptyStateText = UiText.Get("Main.EmptyDllList");
+		UpdateWindowTitle();
+		moduleGrid.Invalidate();
 	}
 
 	protected override void Dispose(bool disposing)

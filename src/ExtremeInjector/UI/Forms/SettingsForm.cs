@@ -108,12 +108,14 @@ public sealed partial class SettingsForm : Form
 	internal Button button_6;
 
 	internal ColorDialog colorDialog_0;
+	private bool updatingLanguageSelection;
 
 	public SettingsForm()
 	{
 		InitializeModernSettingsForm();
 		button_4.Enabled = !string.IsNullOrEmpty(Assembly.GetExecutingAssembly().Location);
 		RecoveredRuntime.smethod_258(this);
+		InitializeLanguageSelection();
 	}
 
 	[SpecialName]
@@ -168,35 +170,18 @@ public sealed partial class SettingsForm : Form
 
 	internal void method_7(object sender, EventArgs e)
 	{
-		if (MessageBox.Show("Are you sure you want to reset the settings?", "Extreme Injector Ex", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+		if (MessageBox.Show(UiText.Get("Message.ResetSettings"), UiText.Get("App.Title"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
 		{
 			return;
 		}
-		while (true)
-		{
-			int num = -1733663445;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1198282611)) % 3)
-				{
-				case 1u:
-					goto IL_0021;
-				default:
-					return;
-				case 2u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-				IL_0021:
-				ApplicationSettings.Current = new ApplicationSettings();
-				ApplicationSettings.Save();
-				RecoveredRuntime.smethod_258(this);
-				num = (int)(num2 * 874433739) ^ -228795254;
-			}
-		}
+
+		ApplicationSettings.Current = new ApplicationSettings();
+		UiText.Configure(LanguagePreference.System);
+		ApplicationSettings.Save();
+		RecoveredRuntime.smethod_258(this);
+		SetLanguageSelection(LanguagePreference.System);
+		ApplyLocalizedText();
+		PerformLayout();
 	}
 
 	internal void method_8(object sender, EventArgs e)
@@ -206,7 +191,62 @@ public sealed partial class SettingsForm : Form
 
 	internal void method_9(object sender, FormClosingEventArgs e)
 	{
+		ApplicationSettings.Current.Language = GetSelectedLanguage();
+		UiText.Configure(ApplicationSettings.Current.Language);
 		RecoveredRuntime.smethod_330(this);
+	}
+
+	private void InitializeLanguageSelection()
+	{
+		SetLanguageSelection(ApplicationSettings.Current.Language);
+		languageComboBox.SelectedIndexChanged += OnLanguageSelectionChanged;
+	}
+
+	private void OnLanguageSelectionChanged(object sender, EventArgs e)
+	{
+		if (updatingLanguageSelection)
+		{
+			return;
+		}
+
+		LanguagePreference preference = GetSelectedLanguage();
+		ApplicationSettings.Current.Language = preference;
+		UiText.Configure(preference);
+		updatingLanguageSelection = true;
+		try
+		{
+			ApplyLocalizedText();
+			languageComboBox.SelectedIndex = (int)preference;
+		}
+		finally
+		{
+			updatingLanguageSelection = false;
+		}
+
+		PerformLayout();
+	}
+
+	private LanguagePreference GetSelectedLanguage()
+	{
+		int selectedIndex = languageComboBox.SelectedIndex;
+		return Enum.IsDefined(typeof(LanguagePreference), selectedIndex)
+			? (LanguagePreference)selectedIndex
+			: LanguagePreference.System;
+	}
+
+	private void SetLanguageSelection(LanguagePreference preference)
+	{
+		updatingLanguageSelection = true;
+		try
+		{
+			languageComboBox.SelectedIndex = Enum.IsDefined(typeof(LanguagePreference), preference)
+				? (int)preference
+				: (int)LanguagePreference.System;
+		}
+		finally
+		{
+			updatingLanguageSelection = false;
+		}
 	}
 
 	internal void method_10(object sender, EventArgs e)
@@ -227,7 +267,7 @@ public sealed partial class SettingsForm : Form
 					switch ((num2 = (uint)(num ^ -605434328)) % 4)
 					{
 					case 2u:
-						MessageBox.Show("Extreme Injector Ex can scramble DLLs during injection. Use this standalone action only when preparing a DLL for another injector.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+						MessageBox.Show(UiText.Get("Message.ScrambleStandaloneInfo"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 						num = (int)((num2 * 233957255) ^ 0x12755E55);
 						continue;
 					case 1u:
@@ -249,7 +289,7 @@ public sealed partial class SettingsForm : Form
 		OpenFileDialog openFileDialog = new OpenFileDialog();
 		try
 		{
-			openFileDialog.Filter = "DLL Files|*.dll";
+		openFileDialog.Filter = UiText.Get("Dialog.DllFilter");
 			if (openFileDialog.ShowDialog() != DialogResult.OK)
 			{
 				return;
@@ -344,7 +384,7 @@ public sealed partial class SettingsForm : Form
 															case 0u:
 																break;
 															default:
-																MessageBox.Show("The specified DLL has been successfully scrambled!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+																MessageBox.Show(UiText.Get("Message.ScrambleSuccess"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 																return;
 															}
 															break;
@@ -475,7 +515,7 @@ public sealed partial class SettingsForm : Form
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("An error occurred while trying to scramble the specified file:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(UiText.Format("Message.ScrambleFailed", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 		finally
@@ -636,7 +676,7 @@ public sealed partial class SettingsForm : Form
 						}
 						break;
 						IL_026a:
-						MessageBox.Show("An error occurred while trying to start in secure mode:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show(UiText.Format("Message.SecureModeFailed", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						num3 = ((int)num2 * -1892939032) ^ -911176050;
 					}
 				}

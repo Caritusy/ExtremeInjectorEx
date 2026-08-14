@@ -47,7 +47,7 @@ public sealed class DependencyInstallerForm : Form
 						num = (int)((num2 * 522087323) ^ 0x3DBD0C68);
 						continue;
 					case 3u:
-						form3_0.label_0.Text = "Downloading " + text + "... [" + RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.BytesReceived) + "/" + RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.TotalBytesToReceive) + "]";
+						form3_0.label_0.Text = UiText.Format("Dependency.Downloading", text, RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.BytesReceived), RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.TotalBytesToReceive));
 						num = -2111451650;
 						continue;
 					case 2u:
@@ -180,7 +180,7 @@ public sealed class DependencyInstallerForm : Form
 					num = ((int)num2 * -1958857336) ^ -1983099817;
 					continue;
 				case 1u:
-					MessageBox.Show(form3_0, "An error occurred while downloading the required files:\n\n" + downloadDataCompletedEventArgs_0.Error.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(form3_0, UiText.Format("Message.Dependency.DownloadFailed", downloadDataCompletedEventArgs_0.Error.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					num = (int)(num2 * 977009865) ^ -647304280;
 					continue;
 				case 3u:
@@ -207,7 +207,7 @@ public sealed class DependencyInstallerForm : Form
 									}
 									form3_0.Invoke((MethodInvoker)delegate
 									{
-										form3_0.label_0.Text = "Extracting contents...";
+										form3_0.label_0.Text = UiText.Get("Dependency.Extracting");
 									});
 									MemoryStream memoryStream = new MemoryStream(downloadDataCompletedEventArgs_0.Result);
 									try
@@ -339,7 +339,7 @@ public sealed class DependencyInstallerForm : Form
 									{
 										form3_0.Invoke((MethodInvoker)delegate
 										{
-											form3_0.label_0.Text = "Installing " + form3_0.string_2 + "...";
+											form3_0.label_0.Text = UiText.Format("Dependency.Installing", form3_0.string_2);
 										});
 										try
 										{
@@ -391,7 +391,7 @@ public sealed class DependencyInstallerForm : Form
 												case 9u:
 													goto IL_02c9;
 												case 0u:
-													throw new Exception("The setup did not complete successfully. Exit code: " + process.ExitCode);
+												throw new Exception(UiText.Format("Message.Dependency.SetupExitCode", process.ExitCode));
 												case 5u:
 													goto end_IL_019a;
 												}
@@ -425,7 +425,7 @@ public sealed class DependencyInstallerForm : Form
 													}
 													goto IL_035d;
 													IL_0307:
-													MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+											MessageBox.Show(UiText.Format("Message.Dependency.SetupFailed", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 													flag = false;
 													num6 = ((int)num4 * -893526725) ^ 0x3B80B715;
 													continue;
@@ -456,7 +456,7 @@ public sealed class DependencyInstallerForm : Form
 										switch ((num4 = (uint)(num10 ^ -265431999)) % 4)
 										{
 										case 1u:
-											MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+										MessageBox.Show(UiText.Get("Message.Dependency.Completed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 											num10 = (int)((num4 * 1571657903) ^ 0x24EA10B1);
 											continue;
 										case 0u:
@@ -512,7 +512,7 @@ public sealed class DependencyInstallerForm : Form
 						}
 						form3_0.Invoke((MethodInvoker)delegate
 						{
-							form3_0.label_0.Text = "Extracting contents...";
+							form3_0.label_0.Text = UiText.Get("Dependency.Extracting");
 						});
 						MemoryStream memoryStream = new MemoryStream(downloadDataCompletedEventArgs_0.Result);
 						try
@@ -644,7 +644,7 @@ public sealed class DependencyInstallerForm : Form
 						{
 							form3_0.Invoke((MethodInvoker)delegate
 							{
-								form3_0.label_0.Text = "Installing " + form3_0.string_2 + "...";
+								form3_0.label_0.Text = UiText.Format("Dependency.Installing", form3_0.string_2);
 							});
 							try
 							{
@@ -696,7 +696,7 @@ public sealed class DependencyInstallerForm : Form
 									case 9u:
 										goto IL_02c9;
 									case 0u:
-										throw new Exception("The setup did not complete successfully. Exit code: " + process.ExitCode);
+									throw new Exception(UiText.Format("Message.Dependency.SetupExitCode", process.ExitCode));
 									case 5u:
 										goto end_IL_019a;
 									}
@@ -730,7 +730,7 @@ public sealed class DependencyInstallerForm : Form
 										}
 										goto IL_035d;
 										IL_0307:
-										MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+								MessageBox.Show(UiText.Format("Message.Dependency.SetupFailed", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 										flag = false;
 										num4 = ((int)num2 * -893526725) ^ 0x3B80B715;
 										continue;
@@ -761,7 +761,7 @@ public sealed class DependencyInstallerForm : Form
 							switch ((num2 = (uint)(num8 ^ -265431999)) % 4)
 							{
 							case 1u:
-								MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+							MessageBox.Show(UiText.Get("Message.Dependency.Completed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 								num8 = (int)((num2 * 1571657903) ^ 0x24EA10B1);
 								continue;
 							case 0u:
@@ -1004,7 +1004,7 @@ public sealed class DependencyInstallerForm : Form
 								num3 = (int)((num4 * 522087323) ^ 0x3DBD0C68);
 								continue;
 							case 3u:
-								form3_0.label_0.Text = "Downloading " + text + "... [" + RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.BytesReceived) + "/" + RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.TotalBytesToReceive) + "]";
+								form3_0.label_0.Text = UiText.Format("Dependency.Downloading", text, RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.BytesReceived), RecoveredRuntime.smethod_442(downloadProgressChangedEventArgs_0.TotalBytesToReceive));
 								num3 = -2111451650;
 								continue;
 							case 2u:
@@ -1058,7 +1058,7 @@ public sealed class DependencyInstallerForm : Form
 					num = ((int)num2 * -1958857336) ^ -1983099817;
 					continue;
 				case 1u:
-					MessageBox.Show(this, "An error occurred while downloading the required files:\n\n" + e.Error.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(this, UiText.Format("Message.Dependency.DownloadFailed", e.Error.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					num = (int)(num2 * 977009865) ^ -647304280;
 					continue;
 				case 3u:
@@ -1085,7 +1085,7 @@ public sealed class DependencyInstallerForm : Form
 									}
 									Invoke((MethodInvoker)delegate
 									{
-										label_0.Text = "Extracting contents...";
+										label_0.Text = UiText.Get("Dependency.Extracting");
 									});
 									MemoryStream memoryStream = new MemoryStream(e.Result);
 									try
@@ -1217,7 +1217,7 @@ public sealed class DependencyInstallerForm : Form
 									{
 										Invoke((MethodInvoker)delegate
 										{
-											label_0.Text = "Installing " + string_2 + "...";
+											label_0.Text = UiText.Format("Dependency.Installing", string_2);
 										});
 										try
 										{
@@ -1269,7 +1269,7 @@ public sealed class DependencyInstallerForm : Form
 												case 9u:
 													goto IL_02c9;
 												case 0u:
-													throw new Exception("The setup did not complete successfully. Exit code: " + process.ExitCode);
+												throw new Exception(UiText.Format("Message.Dependency.SetupExitCode", process.ExitCode));
 												case 5u:
 													goto end_IL_019a;
 												}
@@ -1303,7 +1303,7 @@ public sealed class DependencyInstallerForm : Form
 													}
 													goto IL_035d;
 													IL_0307:
-													MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+											MessageBox.Show(UiText.Format("Message.Dependency.SetupFailed", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 													flag = false;
 													num6 = ((int)num4 * -893526725) ^ 0x3B80B715;
 													continue;
@@ -1334,7 +1334,7 @@ public sealed class DependencyInstallerForm : Form
 										switch ((num4 = (uint)(num10 ^ -265431999)) % 4)
 										{
 										case 1u:
-											MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+										MessageBox.Show(UiText.Get("Message.Dependency.Completed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 											num10 = (int)((num4 * 1571657903) ^ 0x24EA10B1);
 											continue;
 										case 0u:
@@ -1479,7 +1479,7 @@ public sealed class DependencyInstallerForm : Form
 				switch ((num2 = (uint)(num4 ^ -1523805111)) % 5)
 				{
 				case 3u:
-					MessageBox.Show("When the page appears, download \"" + string_2 + "\" and install it before injection.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show(UiText.Format("Message.Dependency.ManualInstall", string_2), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					Process.Start(string_0);
 					num4 = (int)((num2 * 766058975) ^ 0x4B474E8F);
 					continue;
@@ -1556,13 +1556,13 @@ public sealed class DependencyInstallerForm : Form
 	[CompilerGenerated]
 	internal void method_2()
 	{
-		label_0.Text = "Installing " + string_2 + "...";
+		label_0.Text = UiText.Format("Dependency.Installing", string_2);
 	}
 
 	[CompilerGenerated]
 	internal void method_3()
 	{
-		label_0.Text = "Extracting contents...";
+		label_0.Text = UiText.Get("Dependency.Extracting");
 	}
 
 	[CompilerGenerated]
@@ -1673,7 +1673,7 @@ public sealed class DependencyInstallerForm : Form
 			switch ((num2 = (uint)(num4 ^ -1523805111)) % 5)
 			{
 			case 3u:
-				MessageBox.Show("When the page appears, download \"" + string_2 + "\" and install it before injection.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show(UiText.Format("Message.Dependency.ManualInstall", string_2), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 				Process.Start(string_0);
 				num4 = (int)((num2 * 766058975) ^ 0x4B474E8F);
 				continue;

@@ -46,6 +46,9 @@ public sealed class ApplicationSettings
 	[DataMember(Name = "LastUpdateCheck")]
 	public DateTime LastUpdateCheck { get; set; }
 
+	[DataMember(Name = "Language")]
+	public LanguagePreference Language { get; set; }
+
 	public static ApplicationSettings Current { get; set; }
 
 	static ApplicationSettings()
@@ -202,6 +205,10 @@ public sealed class ApplicationSettings
 		Modules = Modules ?? new List<ModuleEntry>();
 		Warnings = Warnings ?? new WarningPreferences();
 		Options = Options ?? new InjectionOptions();
+		if (!Enum.IsDefined(typeof(LanguagePreference), Language))
+		{
+			Language = LanguagePreference.System;
+		}
 	}
 
 	private void InitializeDefaults()

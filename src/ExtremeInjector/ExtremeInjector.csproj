@@ -23,6 +23,12 @@
     <EmbeddedResource Include="..\..\res\Forms\ProcessInspectorForm.resx" LogicalName="ProcessInspectorForm.resources" />
     <EmbeddedResource Include="..\..\res\Forms\ProcessSelectorForm.resx" LogicalName="ProcessSelectorForm.resources" />
     <EmbeddedResource Include="..\..\res\Forms\SettingsForm.resx" LogicalName="SettingsForm.resources" />
+	<EmbeddedResource Include="..\..\res\Localization\Strings.en.resx" LogicalName="ExtremeInjector.Localization.Strings.en.resources">
+	  <WithCulture>false</WithCulture>
+	</EmbeddedResource>
+	<EmbeddedResource Include="..\..\res\Localization\Strings.zh-CN.resx" LogicalName="ExtremeInjector.Localization.Strings.zh-CN.resources">
+	  <WithCulture>false</WithCulture>
+	</EmbeddedResource>
     <EmbeddedResource Include="..\..\res\Embedded\ProtectedResource.f4f5d655.bin" LogicalName="{f4f5d655-d3f5-4ecf-9a53-3a2fe4afba9b}" />
     <EmbeddedResource Include="..\..\res\Embedded\ProtectedResource.c61cd46d.bin" LogicalName="{c61cd46d-9d75-437f-8270-5249854f931f}" />
     <EmbeddedResource Include="..\..\res\Embedded\DynamicMethodPayload.lzma" LogicalName="&#x14;" />

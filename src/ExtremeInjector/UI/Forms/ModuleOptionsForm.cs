@@ -156,7 +156,7 @@ public sealed partial class ModuleOptionsForm : Form
 					}
 					IL_01b2:
 					comboBox_0.SelectedIndex = selectedIndex;
-					comboBox_1.Items.Add("StdCall");
+					comboBox_1.Items.Add(UiText.Get("Module.Convention.StdCall"));
 					while (true)
 					{
 						int num4 = -1090224113;
@@ -165,7 +165,7 @@ public sealed partial class ModuleOptionsForm : Form
 							switch ((num2 = (uint)(num4 ^ -880575615)) % 19)
 							{
 							case 18u:
-								comboBox_2.Items.Add("QWORD");
+								comboBox_2.Items.Add(UiText.Get("Module.Parameter.Qword"));
 								num4 = ((int)num2 * -1559685076) ^ 0x2AAF2DE2;
 								continue;
 							case 17u:
@@ -176,7 +176,7 @@ public sealed partial class ModuleOptionsForm : Form
 								num4 = ((method_0().CallingConvention == (CallingConvention)0) ? (-229270540) : (-943580251)) ^ (int)(num2 * 654463414);
 								continue;
 							case 15u:
-								comboBox_1.Items.Add("FastCall");
+								comboBox_1.Items.Add(UiText.Get("Module.Convention.FastCall"));
 								num4 = ((int)num2 * -337876557) ^ 0x1D2162E2;
 								continue;
 							case 14u:
@@ -186,21 +186,21 @@ public sealed partial class ModuleOptionsForm : Form
 								num4 = ((method_0().Parameters != null) ? 6450968 : 1792036083) ^ ((int)num2 * -237178418);
 								continue;
 							case 12u:
-								comboBox_1.Items.Add("Cdecl");
+								comboBox_1.Items.Add(UiText.Get("Module.Convention.Cdecl"));
 								num4 = ((int)num2 * -1117680441) ^ -1434670704;
 								continue;
 							case 11u:
 								num4 = (int)(num2 * 1608728107) ^ -932300848;
 								continue;
 							case 10u:
-								comboBox_2.Items.Add("FLOAT");
+								comboBox_2.Items.Add(UiText.Get("Module.Parameter.Float"));
 								num4 = ((int)num2 * -1421628372) ^ 0x7DE74003;
 								continue;
 							case 7u:
 								num4 = ((method_0().CallingConvention != CallingConvention.FastCall) ? (-340801925) : (-1363730));
 								continue;
 							case 6u:
-								comboBox_2.Items.Add("DWORD");
+								comboBox_2.Items.Add(UiText.Get("Module.Parameter.Dword"));
 								num4 = (int)((num2 * 1268467148) ^ 0x526E179C);
 								continue;
 							case 5u:
@@ -215,10 +215,10 @@ public sealed partial class ModuleOptionsForm : Form
 								num4 = ((method_0().CallingConvention != CallingConvention.StdCall) ? 303533518 : 1377154188) ^ (int)(num2 * 1400031935);
 								continue;
 							case 1u:
-								comboBox_2.Items.Add("LPCSTR");
-								comboBox_2.Items.Add("LPCWSTR");
-								comboBox_2.Items.Add("BYTE");
-								comboBox_2.Items.Add("WORD");
+								comboBox_2.Items.Add(UiText.Get("Module.Parameter.AnsiString"));
+								comboBox_2.Items.Add(UiText.Get("Module.Parameter.UnicodeString"));
+								comboBox_2.Items.Add(UiText.Get("Module.Parameter.Byte"));
+								comboBox_2.Items.Add(UiText.Get("Module.Parameter.Word"));
 								num4 = -176907944;
 								continue;
 							case 0u:

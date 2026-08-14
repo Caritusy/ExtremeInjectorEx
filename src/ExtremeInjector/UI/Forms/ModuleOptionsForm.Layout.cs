@@ -23,7 +23,7 @@ public sealed partial class ModuleOptionsForm
 		ShowInTaskbar = false;
 		SizeGripStyle = SizeGripStyle.Hide;
 		StartPosition = FormStartPosition.CenterParent;
-		Text = "Advanced Module Options";
+		Text = UiText.Get("Module.Title");
 
 		moduleOptionsRootLayout = new TableLayoutPanel
 		{
@@ -68,7 +68,7 @@ public sealed partial class ModuleOptionsForm
 			Font = new Font("Segoe UI Semibold", 16f, FontStyle.Bold, GraphicsUnit.Point),
 			ForeColor = ModernUi.TextPrimary,
 			Margin = Padding.Empty,
-			Text = "Export invocation"
+			Text = UiText.Get("Module.Heading")
 		}, 0, 0);
 		header.Controls.Add(new Label
 		{
@@ -76,7 +76,7 @@ public sealed partial class ModuleOptionsForm
 			Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point),
 			ForeColor = ModernUi.TextSecondary,
 			Margin = new Padding(1, 2, 0, 0),
-			Text = "Optionally call an exported routine after this module is injected."
+			Text = UiText.Get("Module.Description")
 		}, 0, 1);
 		return header;
 	}
@@ -88,13 +88,13 @@ public sealed partial class ModuleOptionsForm
 			Dock = DockStyle.Fill,
 			Margin = new Padding(0, 0, 0, 8),
 			Name = "exportGroupBox",
-			Text = "Export options"
+			Text = UiText.Get("Module.ExportOptions")
 		};
 		ModernUi.StyleCard(groupBox_0);
 
-		label_0 = CreateModuleFieldLabel("exportFunctionLabel", "Export function or routine");
-		label_1 = CreateModuleFieldLabel("callingConventionLabel", "Calling convention");
-		label_2 = CreateModuleFieldLabel("parametersLabel", "Parameters and arguments");
+		label_0 = CreateModuleFieldLabel("exportFunctionLabel", UiText.Get("Module.ExportFunction"));
+		label_1 = CreateModuleFieldLabel("callingConventionLabel", UiText.Get("Module.CallingConvention"));
+		label_2 = CreateModuleFieldLabel("parametersLabel", UiText.Get("Module.Parameters"));
 
 		comboBox_0 = CreateModuleComboBox("exportFunctionComboBox");
 		comboBox_0.SelectedIndexChanged += method_5;
@@ -114,7 +114,7 @@ public sealed partial class ModuleOptionsForm
 		{
 			Enabled = false,
 			Name = "addButton",
-			Text = "Add"
+			Text = UiText.Get("Module.Add")
 		};
 		button_0.Click += method_7;
 		button_0.EnabledChanged += (sender, args) => ApplyModernModuleOptionsTheme();
@@ -122,7 +122,7 @@ public sealed partial class ModuleOptionsForm
 		dataGridViewTextBoxColumn_0 = new DataGridViewTextBoxColumn
 		{
 			AutoSizeMode = DataGridViewAutoSizeColumnMode.None,
-			HeaderText = "#",
+			HeaderText = UiText.Get("Module.Number"),
 			Name = "NumberColumn",
 			ReadOnly = true,
 			SortMode = DataGridViewColumnSortMode.NotSortable,
@@ -131,7 +131,7 @@ public sealed partial class ModuleOptionsForm
 		dataGridViewTextBoxColumn_1 = new DataGridViewTextBoxColumn
 		{
 			AutoSizeMode = DataGridViewAutoSizeColumnMode.None,
-			HeaderText = "Type",
+			HeaderText = UiText.Get("Module.Type"),
 			Name = "TypeColumn",
 			ReadOnly = true,
 			SortMode = DataGridViewColumnSortMode.NotSortable,
@@ -140,7 +140,7 @@ public sealed partial class ModuleOptionsForm
 		dataGridViewTextBoxColumn_2 = new DataGridViewTextBoxColumn
 		{
 			AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-			HeaderText = "Value",
+			HeaderText = UiText.Get("Module.Value"),
 			Name = "ValueColumn",
 			ReadOnly = true,
 			SortMode = DataGridViewColumnSortMode.NotSortable
@@ -227,7 +227,7 @@ public sealed partial class ModuleOptionsForm
 		{
 			DialogResult = DialogResult.OK,
 			Name = "closeButton",
-			Text = "Done"
+			Text = UiText.Get("Module.Done")
 		};
 		closeButton.Click += (sender, args) => Close();
 		var footer = new FlowLayoutPanel

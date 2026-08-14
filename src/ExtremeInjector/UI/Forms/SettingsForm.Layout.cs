@@ -5,6 +5,12 @@ using System.Windows.Forms;
 public sealed partial class SettingsForm
 {
 	private TableLayoutPanel settingsRootLayout;
+	private Label settingsTitleLabel;
+	private Label settingsDescriptionLabel;
+	private Label injectionBackendLabel;
+	private Label scramblePresetLabel;
+	private Label languageLabel;
+	internal ComboBox languageComboBox;
 
 	private void InitializeModernSettingsForm()
 	{
@@ -24,7 +30,7 @@ public sealed partial class SettingsForm
 		ShowInTaskbar = false;
 		SizeGripStyle = SizeGripStyle.Hide;
 		StartPosition = FormStartPosition.CenterParent;
-		Text = "Settings";
+		Text = UiText.Get("Settings.Title");
 
 		var resources = new ComponentResourceManager(typeof(SettingsForm));
 		if (resources.GetObject("$this.Icon") is Icon icon)
@@ -69,22 +75,24 @@ public sealed partial class SettingsForm
 		};
 		header.RowStyles.Add(new RowStyle(SizeType.Absolute, 31f));
 		header.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
-		header.Controls.Add(new Label
+		settingsTitleLabel = new Label
 		{
 			AutoSize = true,
 			Font = new Font("Segoe UI Semibold", 16f, FontStyle.Bold, GraphicsUnit.Point),
 			ForeColor = ModernUi.TextPrimary,
 			Margin = Padding.Empty,
-			Text = "Settings"
-		}, 0, 0);
-		header.Controls.Add(new Label
+			Text = UiText.Get("Settings.Title")
+		};
+		header.Controls.Add(settingsTitleLabel, 0, 0);
+		settingsDescriptionLabel = new Label
 		{
 			AutoSize = true,
 			Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point),
 			ForeColor = ModernUi.TextSecondary,
 			Margin = new Padding(1, 2, 0, 0),
-			Text = "Configure injection behavior, appearance, and maintenance tools."
-		}, 0, 1);
+			Text = UiText.Get("Settings.Description")
+		};
+		header.Controls.Add(settingsDescriptionLabel, 0, 1);
 		return header;
 	}
 
@@ -137,18 +145,18 @@ public sealed partial class SettingsForm
 
 	private GroupBox CreateInjectionMethodCard()
 	{
-		groupBox_0 = CreateCard("Injection method");
+		groupBox_0 = CreateCard(UiText.Get("Settings.InjectionMethod"));
 		comboBox_0 = CreateComboBox("injectionMethodComboBox");
 		comboBox_0.Items.AddRange(new object[]
 		{
-			"Standard Injection",
-			"Thread Hijacking",
-			"LdrLoadDll Stub",
-			"LdrpLoadDll Stub",
-			"Manual Map"
+			UiText.Get("Settings.Method.Standard"),
+			UiText.Get("Settings.Method.ThreadHijacking"),
+			UiText.Get("Settings.Method.LdrLoadDllStub"),
+			UiText.Get("Settings.Method.LdrpLoadDllStub"),
+			UiText.Get("Settings.Method.ManualMap")
 		});
 
-		button_0 = CreateSecondaryButton("advancedInjectOptions", "Advanced");
+		button_0 = CreateSecondaryButton("advancedInjectOptions", UiText.Get("Settings.Advanced"));
 		button_0.Click += method_4;
 
 		var row = new TableLayoutPanel
@@ -163,9 +171,9 @@ public sealed partial class SettingsForm
 		row.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 		row.RowStyles.Add(new RowStyle(SizeType.Absolute, 22f));
 		row.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
-		var label = CreateFieldLabel("Injection backend");
-		row.Controls.Add(label, 0, 0);
-		row.SetColumnSpan(label, 2);
+		injectionBackendLabel = CreateFieldLabel(UiText.Get("Settings.InjectionBackend"));
+		row.Controls.Add(injectionBackendLabel, 0, 0);
+		row.SetColumnSpan(injectionBackendLabel, 2);
 		comboBox_0.Dock = DockStyle.Fill;
 		comboBox_0.Margin = new Padding(0, 0, 8, 0);
 		button_0.Dock = DockStyle.Fill;
@@ -178,15 +186,15 @@ public sealed partial class SettingsForm
 
 	private GroupBox CreateInjectionBehaviorCard()
 	{
-		groupBox_1 = CreateCard("Injection behavior");
-		checkBox_2 = CreateCheckBox("autoInjectCheckBox", "Auto inject when the process starts");
-		checkBox_1 = CreateCheckBox("closeOnInjectCheckBox", "Close after a successful injection");
-		checkBox_0 = CreateCheckBox("stealthInjectCheckBox", "Use stealth injection");
+		groupBox_1 = CreateCard(UiText.Get("Settings.InjectionBehavior"));
+		checkBox_2 = CreateCheckBox("autoInjectCheckBox", UiText.Get("Settings.AutoInject"));
+		checkBox_1 = CreateCheckBox("closeOnInjectCheckBox", UiText.Get("Settings.CloseOnInject"));
+		checkBox_0 = CreateCheckBox("stealthInjectCheckBox", UiText.Get("Settings.StealthInject"));
 		checkBox_2.CheckedChanged += method_2;
 
-		label_1 = CreateFieldLabel("Delay before injection (ms)");
+		label_1 = CreateFieldLabel(UiText.Get("Settings.DelayBefore"));
 		label_1.Name = "injectDelayLabel";
-		label_0 = CreateFieldLabel("Delay between modules (ms)");
+		label_0 = CreateFieldLabel(UiText.Get("Settings.DelayBetween"));
 		label_0.Name = "delayBetweenLabel";
 		numericUpDown_1 = CreateDelayInput("injectDelayNumericUpDown");
 		numericUpDown_0 = CreateDelayInput("delayBetweenNumericUpDown");
@@ -222,11 +230,11 @@ public sealed partial class SettingsForm
 
 	private GroupBox CreateScramblingCard()
 	{
-		groupBox_2 = CreateCard("Scrambling");
+		groupBox_2 = CreateCard(UiText.Get("Settings.Scrambling"));
 		comboBox_1 = CreateComboBox("scramblePresetCheckBox");
-		comboBox_1.Items.AddRange(new object[] { "None", "Basic", "Standard", "Extreme", "Custom" });
+		comboBox_1.Items.AddRange(GetScramblePresetLabels());
 		comboBox_1.SelectedIndexChanged += method_6;
-		button_1 = CreateSecondaryButton("advancedScramblingOptions", "Advanced");
+		button_1 = CreateSecondaryButton("advancedScramblingOptions", UiText.Get("Settings.Advanced"));
 		button_1.Click += method_3;
 
 		var layout = new TableLayoutPanel
@@ -241,9 +249,9 @@ public sealed partial class SettingsForm
 		layout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 22f));
 		layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
-		var label = CreateFieldLabel("Preset");
-		layout.Controls.Add(label, 0, 0);
-		layout.SetColumnSpan(label, 2);
+		scramblePresetLabel = CreateFieldLabel(UiText.Get("Settings.Preset"));
+		layout.Controls.Add(scramblePresetLabel, 0, 0);
+		layout.SetColumnSpan(scramblePresetLabel, 2);
 		comboBox_1.Dock = DockStyle.Fill;
 		comboBox_1.Margin = new Padding(0, 0, 8, 0);
 		button_1.Dock = DockStyle.Fill;
@@ -256,9 +264,9 @@ public sealed partial class SettingsForm
 
 	private GroupBox CreatePostInjectionCard()
 	{
-		groupBox_3 = CreateCard("Post-injection");
-		checkBox_3 = CreateCheckBox("hideModuleCheckBox", "Hide module from the loader lists");
-		checkBox_4 = CreateCheckBox("erasePECheckBox", "Erase PE headers");
+		groupBox_3 = CreateCard(UiText.Get("Settings.PostInjection"));
+		checkBox_3 = CreateCheckBox("hideModuleCheckBox", UiText.Get("Settings.HideModule"));
+		checkBox_4 = CreateCheckBox("erasePECheckBox", UiText.Get("Settings.ErasePe"));
 		var layout = new FlowLayoutPanel
 		{
 			AutoScroll = false,
@@ -276,16 +284,19 @@ public sealed partial class SettingsForm
 
 	private GroupBox CreateAppearanceCard()
 	{
-		groupBox_4 = CreateCard("Appearance");
-		label_4 = CreateFieldLabel("Text color");
+		groupBox_4 = CreateCard(UiText.Get("Settings.Appearance"));
+		label_4 = CreateFieldLabel(UiText.Get("Settings.TextColor"));
 		label_4.Name = "textColorLabel";
-		label_3 = CreateFieldLabel("Primary accent");
+		label_3 = CreateFieldLabel(UiText.Get("Settings.PrimaryAccent"));
 		label_3.Name = "backgroundColor1Label";
-		label_2 = CreateFieldLabel("Secondary accent");
+		label_2 = CreateFieldLabel(UiText.Get("Settings.SecondaryAccent"));
 		label_2.Name = "backgroundColor2Label";
 		panel_2 = CreateColorSwatch("textColorBox", method_13);
 		panel_1 = CreateColorSwatch("backgroundColor1Box", method_14);
 		panel_0 = CreateColorSwatch("backgroundColor2Box", method_15);
+		languageLabel = CreateFieldLabel(UiText.Get("Settings.Language"));
+		languageComboBox = CreateComboBox("languageComboBox");
+		languageComboBox.Items.AddRange(GetLanguageLabels());
 
 		var layout = new TableLayoutPanel
 		{
@@ -293,13 +304,13 @@ public sealed partial class SettingsForm
 			Dock = DockStyle.Fill,
 			Margin = Padding.Empty,
 			Padding = new Padding(0, 5, 0, 0),
-			RowCount = 3
+			RowCount = 4
 		};
 		layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
-		layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 42f));
-		for (int index = 0; index < 3; index++)
+		layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 142f));
+		for (int index = 0; index < 4; index++)
 		{
-			layout.RowStyles.Add(new RowStyle(SizeType.Percent, 33.333f));
+			layout.RowStyles.Add(new RowStyle(SizeType.Percent, 25f));
 		}
 		layout.Controls.Add(label_4, 0, 0);
 		layout.Controls.Add(panel_2, 1, 0);
@@ -307,17 +318,21 @@ public sealed partial class SettingsForm
 		layout.Controls.Add(panel_1, 1, 1);
 		layout.Controls.Add(label_2, 0, 2);
 		layout.Controls.Add(panel_0, 1, 2);
+		layout.Controls.Add(languageLabel, 0, 3);
+		languageComboBox.Dock = DockStyle.Fill;
+		languageComboBox.Margin = new Padding(6, 2, 0, 2);
+		layout.Controls.Add(languageComboBox, 1, 3);
 		groupBox_4.Controls.Add(layout);
 		return groupBox_4;
 	}
 
 	private GroupBox CreateToolsCard()
 	{
-		groupBox_5 = CreateCard("Tools");
+		groupBox_5 = CreateCard(UiText.Get("Settings.Tools"));
 		groupBox_5.Margin = new Padding(0, 0, 0, 8);
-		button_4 = CreateSecondaryButton("startInSecureModeButton", "Start in secure mode");
-		button_5 = CreateSecondaryButton("scrambleDLLButton", "Scramble a DLL");
-		button_6 = CreateSecondaryButton("viewProcessInformationButton", "View process information");
+		button_4 = CreateSecondaryButton("startInSecureModeButton", UiText.Get("Settings.SecureMode"));
+		button_5 = CreateSecondaryButton("scrambleDLLButton", UiText.Get("Settings.ScrambleDll"));
+		button_6 = CreateSecondaryButton("viewProcessInformationButton", UiText.Get("Settings.ProcessInfo"));
 		button_4.Click += method_12;
 		button_5.Click += method_11;
 		button_6.Click += method_10;
@@ -342,9 +357,9 @@ public sealed partial class SettingsForm
 
 	private Control CreateSettingsFooter()
 	{
-		button_2 = CreateSecondaryButton("resetButton", "Reset settings");
+		button_2 = CreateSecondaryButton("resetButton", UiText.Get("Settings.Reset"));
 		button_2.Click += method_7;
-		button_3 = new Button { Name = "okButton", Text = "Save and close" };
+		button_3 = new Button { Name = "okButton", Text = UiText.Get("Settings.SaveClose") };
 		button_3.Click += method_8;
 
 		var footer = new FlowLayoutPanel
@@ -376,6 +391,99 @@ public sealed partial class SettingsForm
 		ModernUi.StyleSecondaryButton(button_5, accent);
 		ModernUi.StyleSecondaryButton(button_6, accent);
 		ModernUi.StylePrimaryButton(button_3, accent, hoverAccent);
+	}
+
+	internal void ApplyLocalizedText()
+	{
+		Text = UiText.Get("Settings.Title");
+		settingsTitleLabel.Text = UiText.Get("Settings.Title");
+		settingsDescriptionLabel.Text = UiText.Get("Settings.Description");
+		groupBox_0.Text = UiText.Get("Settings.InjectionMethod");
+		injectionBackendLabel.Text = UiText.Get("Settings.InjectionBackend");
+		button_0.Text = UiText.Get("Settings.Advanced");
+		groupBox_1.Text = UiText.Get("Settings.InjectionBehavior");
+		checkBox_2.Text = UiText.Get("Settings.AutoInject");
+		checkBox_1.Text = UiText.Get("Settings.CloseOnInject");
+		checkBox_0.Text = UiText.Get("Settings.StealthInject");
+		label_1.Text = UiText.Get("Settings.DelayBefore");
+		label_0.Text = UiText.Get("Settings.DelayBetween");
+		groupBox_2.Text = UiText.Get("Settings.Scrambling");
+		scramblePresetLabel.Text = UiText.Get("Settings.Preset");
+		button_1.Text = UiText.Get("Settings.Advanced");
+		groupBox_3.Text = UiText.Get("Settings.PostInjection");
+		checkBox_3.Text = UiText.Get("Settings.HideModule");
+		checkBox_4.Text = UiText.Get("Settings.ErasePe");
+		groupBox_4.Text = UiText.Get("Settings.Appearance");
+		label_4.Text = UiText.Get("Settings.TextColor");
+		label_3.Text = UiText.Get("Settings.PrimaryAccent");
+		label_2.Text = UiText.Get("Settings.SecondaryAccent");
+		languageLabel.Text = UiText.Get("Settings.Language");
+		groupBox_5.Text = UiText.Get("Settings.Tools");
+		button_4.Text = UiText.Get("Settings.SecureMode");
+		button_5.Text = UiText.Get("Settings.ScrambleDll");
+		button_6.Text = UiText.Get("Settings.ProcessInfo");
+		button_2.Text = UiText.Get("Settings.Reset");
+		button_3.Text = UiText.Get("Settings.SaveClose");
+
+		ReplaceComboItems(comboBox_0, GetInjectionMethodLabels());
+		comboBox_1.SelectedIndexChanged -= method_6;
+		ReplaceComboItems(comboBox_1, GetScramblePresetLabels());
+		comboBox_1.SelectedIndexChanged += method_6;
+		languageComboBox.SelectedIndexChanged -= OnLanguageSelectionChanged;
+		ReplaceComboItems(languageComboBox, GetLanguageLabels());
+		languageComboBox.SelectedIndexChanged += OnLanguageSelectionChanged;
+	}
+
+	private static object[] GetInjectionMethodLabels()
+	{
+		return new object[]
+		{
+			UiText.Get("Settings.Method.Standard"),
+			UiText.Get("Settings.Method.ThreadHijacking"),
+			UiText.Get("Settings.Method.LdrLoadDllStub"),
+			UiText.Get("Settings.Method.LdrpLoadDllStub"),
+			UiText.Get("Settings.Method.ManualMap")
+		};
+	}
+
+	private static object[] GetScramblePresetLabels()
+	{
+		return new object[]
+		{
+			UiText.Get("Settings.Preset.None"),
+			UiText.Get("Settings.Preset.Basic"),
+			UiText.Get("Settings.Preset.Standard"),
+			UiText.Get("Settings.Preset.Extreme"),
+			UiText.Get("Settings.Preset.Custom")
+		};
+	}
+
+	private static object[] GetLanguageLabels()
+	{
+		return new object[]
+		{
+			UiText.Get("Language.System"),
+			UiText.Get("Language.English"),
+			UiText.Get("Language.SimplifiedChinese")
+		};
+	}
+
+	private static void ReplaceComboItems(ComboBox comboBox, object[] items)
+	{
+		int selectedIndex = comboBox.SelectedIndex;
+		comboBox.BeginUpdate();
+		try
+		{
+			comboBox.Items.Clear();
+			comboBox.Items.AddRange(items);
+			comboBox.SelectedIndex = selectedIndex >= 0 && selectedIndex < items.Length
+				? selectedIndex
+				: 0;
+		}
+		finally
+		{
+			comboBox.EndUpdate();
+		}
 	}
 
 	private static GroupBox CreateCard(string text)
@@ -453,11 +561,12 @@ public sealed partial class SettingsForm
 	{
 		var swatch = new ColorSwatchPanel
 		{
+			Anchor = AnchorStyles.Right,
 			Cursor = Cursors.Hand,
-			Dock = DockStyle.Fill,
 			Margin = new Padding(6, 4, 0, 4),
 			MinimumSize = new Size(34, 22),
 			Name = name,
+			Size = new Size(34, 24),
 			TabStop = true
 		};
 		swatch.Click += clickHandler;

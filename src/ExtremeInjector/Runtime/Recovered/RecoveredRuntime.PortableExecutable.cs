@@ -392,7 +392,7 @@ public sealed partial class RecoveredRuntime
 
 		if (!PlatformInfo.bool_11 && options.Method == InjectionMethod.ManualMap && !warnings.ManualMapAcknowledged)
 		{
-			MessageBox.Show(mainForm, "It appears you are using a version of Windows that has not been properly tested with the manual map injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me. If it crashes, you may want to try ticking \"Disable SEH handler validation\" under Injection Method's Advanced settings.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(mainForm, UiText.Get("Message.ManualMapCompatibility"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			warnings.ManualMapAcknowledged = true;
 			warningsChanged = true;
 		}
@@ -400,14 +400,14 @@ public sealed partial class RecoveredRuntime
 		bool usesLdrpLoadDll = options.Method == InjectionMethod.LdrpLoadDll || options.Method == InjectionMethod.LdrpLoadDllStub;
 		if (!PlatformInfo.bool_11 && usesLdrpLoadDll && !warnings.LdrpLoadDllAcknowledged)
 		{
-			MessageBox.Show(mainForm, "It appears you are using a version of Windows that has not been properly tested with the LdrpLoadDll injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(mainForm, UiText.Get("Message.LdrpCompatibility"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			warnings.LdrpLoadDllAcknowledged = true;
 			warningsChanged = true;
 		}
 
 		if (scramblePreset != ScramblePreset.None && !warnings.ScrambleAcknowledged)
 		{
-			MessageBox.Show(mainForm, "It appears it's the first time you have used the scrambling feature. Sometimes scrambling may cause a DLL to stop working. If this happens, try lowering the scrambling preset (eg. Extreme -> Basic) or turn scrambling off completely.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(mainForm, UiText.Get("Message.ScramblingWarning"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			warnings.ScrambleAcknowledged = true;
 			warningsChanged = true;
 		}
@@ -1882,8 +1882,8 @@ public sealed partial class RecoveredRuntime
 			string processPlatform = processIs32Bit ? "32-bit" : "64-bit";
 			MessageBox.Show(
 				mainForm,
-				"Platform mismatch detected. You are trying to inject a " + modulePlatform + " DLL (" + Path.GetFileName(modulePath) + ") into a " + processPlatform + " process (" + mainForm.selectedProcess.Name + ") which is not supported.",
-				"Extreme Injector Ex",
+				UiText.Format("Message.PlatformMismatch", modulePlatform, Path.GetFileName(modulePath), processPlatform, mainForm.selectedProcess.Name),
+				UiText.Get("App.Title"),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation);
 		});
@@ -1946,7 +1946,7 @@ public sealed partial class RecoveredRuntime
 			}
 			catch (Exception exception)
 			{
-				ShowInjectionError(mainForm, "An error occurred while erasing the PE for \"" + Path.GetFileName(sourceModulePath) + "\"", exception);
+				ShowInjectionError(mainForm, UiText.Format("Message.ErasePeFailed", Path.GetFileName(sourceModulePath)), exception);
 			}
 		}
 
@@ -1958,7 +1958,7 @@ public sealed partial class RecoveredRuntime
 			}
 			catch (Exception exception)
 			{
-				ShowInjectionError(mainForm, "An error occurred while hiding the module (" + Path.GetFileName(sourceModulePath) + ").", exception);
+				ShowInjectionError(mainForm, UiText.Format("Message.HideModuleFailed", Path.GetFileName(sourceModulePath)), exception);
 			}
 		}
 	}
@@ -1982,7 +1982,7 @@ public sealed partial class RecoveredRuntime
 				{
 					string modulePlatform = moduleIs32Bit ? "32-bit" : "64-bit";
 					string processPlatform = processIs32Bit ? "32-bit" : "64-bit";
-					MessageBox.Show(mainForm, "Platform mismatch detected. You are trying to inject a " + modulePlatform + " DLL (" + Path.GetFileName(modulePath) + ") into a " + processPlatform + " process (" + mainForm.selectedProcess.method_2() + ") which is not supported.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(mainForm, UiText.Format("Message.PlatformMismatch", modulePlatform, Path.GetFileName(modulePath), processPlatform, mainForm.selectedProcess.method_2()), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				});
 				result = false;
 				goto IL_072f;
@@ -2328,7 +2328,7 @@ public sealed partial class RecoveredRuntime
 							}
 							catch (Exception exception_)
 							{
-								ShowInjectionError(mainForm, "An error occurred while erasing the PE for \"" + Path.GetFileName(text) + "\"", exception_);
+								ShowInjectionError(mainForm, UiText.Format("Message.ErasePeFailed", Path.GetFileName(text)), exception_);
 							}
 						}
 						if (class14_.HideModule)
@@ -2339,7 +2339,7 @@ public sealed partial class RecoveredRuntime
 							}
 							catch (Exception exception_2)
 							{
-								ShowInjectionError(mainForm, "An error occurred while hiding the module (" + Path.GetFileName(text) + ").", exception_2);
+								ShowInjectionError(mainForm, UiText.Format("Message.HideModuleFailed", Path.GetFileName(text)), exception_2);
 							}
 						}
 					}
@@ -2393,7 +2393,7 @@ public sealed partial class RecoveredRuntime
 							}
 							goto IL_0726;
 							IL_06a6:
-							ShowInjectionError(mainForm, "An error occurred while injecting \"" + Path.GetFileName(text) + "\" into \"" + mainForm.selectedProcess.method_2() + "\".", exception_3);
+							ShowInjectionError(mainForm, UiText.Format("Message.InjectFailed", Path.GetFileName(text), mainForm.selectedProcess.method_2()), exception_3);
 							result = false;
 							num14 = (int)(num2 * 649623379) ^ -1756034482;
 							continue;
@@ -2524,7 +2524,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -316615933) ^ 0x5274D75A;
 					continue;
 				case 37u:
-					form2_0.checkBox_2.Text = "Hide threads from debugger";
+					form2_0.checkBox_2.Text = UiText.Get("ManualMap.HideThreads");
 					form2_0.checkBox_2.UseVisualStyleBackColor = true;
 					form2_0.checkBox_2.CheckedChanged += form2_0.method_0;
 					num = ((int)num2 * -485035542) ^ -804350330;
@@ -2540,7 +2540,7 @@ public sealed partial class RecoveredRuntime
 				case 34u:
 					form2_0.checkBox_1.Size = new Size(140, 17);
 					form2_0.checkBox_1.TabIndex = 0;
-					form2_0.checkBox_1.Text = "Manually map imports";
+					form2_0.checkBox_1.Text = UiText.Get("ManualMap.MapImports");
 					num = ((int)num2 * -832232227) ^ -1423454085;
 					continue;
 				case 33u:
@@ -2554,7 +2554,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 366590973) ^ 0x34B8E0);
 					continue;
 				case 31u:
-					form2_0.checkBox_3.Text = "Disable SEH handler validation";
+					form2_0.checkBox_3.Text = UiText.Get("ManualMap.DisableSehValidation");
 					num = (int)(num2 * 2076113155) ^ -1960891467;
 					continue;
 				case 30u:
@@ -2575,19 +2575,19 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 26u:
 					form2_0.checkBox_0.TabIndex = 1;
-					form2_0.checkBox_0.Text = "Disable exception support";
+					form2_0.checkBox_0.Text = UiText.Get("ManualMap.DisableExceptions");
 					form2_0.checkBox_0.UseVisualStyleBackColor = true;
 					num = (int)(num2 * 918020437) ^ -2118819917;
 					continue;
 				case 25u:
 					form2_0.Name = "AdvancedSettingsForm";
 					form2_0.StartPosition = FormStartPosition.CenterParent;
-					form2_0.Text = "Advanced Settings";
+					form2_0.Text = UiText.Get("ManualMap.Title");
 					num = (int)(num2 * 1465955018) ^ -1411775573;
 					continue;
 				case 24u:
 					form2_0.groupBox_1.TabStop = false;
-					form2_0.groupBox_1.Text = "General";
+					form2_0.groupBox_1.Text = UiText.Get("ManualMap.General");
 					form2_0.checkBox_2.AutoSize = true;
 					form2_0.checkBox_2.Location = new Point(10, 21);
 					num = ((int)num2 * -1357569558) ^ 0x1FD4E4E6;
@@ -2662,7 +2662,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 785730876) ^ 0x107C7CD0);
 					continue;
 				case 7u:
-					form2_0.groupBox_0.Text = "Manual Map Options";
+					form2_0.groupBox_0.Text = UiText.Get("ManualMap.Options");
 					num = ((int)num2 * -954614082) ^ 0x3044D2D3;
 					continue;
 				case 6u:
@@ -2773,14 +2773,14 @@ public sealed partial class RecoveredRuntime
 				case 72u:
 					gform1_0.checkBox_1.Size = new Size(132, 17);
 					gform1_0.checkBox_1.TabIndex = 1;
-					gform1_0.checkBox_1.Text = "Remove useless data";
+					gform1_0.checkBox_1.Text = UiText.Get("Scramble.RemoveUselessData");
 					num = (int)(num2 * 1027668513) ^ -1894667495;
 					continue;
 				case 71u:
 					gform1_0.checkBox_2.Name = "shiftSectionDataCheckBox";
 					gform1_0.checkBox_2.Size = new Size(116, 17);
 					gform1_0.checkBox_2.TabIndex = 1;
-					gform1_0.checkBox_2.Text = "Shift section data";
+					gform1_0.checkBox_2.Text = UiText.Get("Scramble.ShiftSectionData");
 					num = (int)((num2 * 1281399823) ^ 0x1C69A605);
 					continue;
 				case 70u:
@@ -2817,12 +2817,12 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 931311091) ^ -270631796;
 					continue;
 				case 64u:
-					gform1_0.groupBox_0.Text = "Header Options";
+					gform1_0.groupBox_0.Text = UiText.Get("Scramble.HeaderOptions");
 					num = (int)((num2 * 172260938) ^ 0x55803483);
 					continue;
 				case 63u:
 					gform1_0.checkBox_9.TabIndex = 5;
-					gform1_0.checkBox_9.Text = "Create fake debug directory";
+					gform1_0.checkBox_9.Text = UiText.Get("Scramble.FakeDebug");
 					gform1_0.checkBox_9.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -2066208409) ^ 0x1D1BB77F;
 					continue;
@@ -2851,7 +2851,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 58u:
 					gform1_0.checkBox_8.TabIndex = 3;
-					gform1_0.checkBox_8.Text = "Modify import table";
+					gform1_0.checkBox_8.Text = UiText.Get("Scramble.ModifyImports");
 					gform1_0.checkBox_8.UseVisualStyleBackColor = true;
 					gform1_0.checkBox_12.AutoSize = true;
 					gform1_0.checkBox_12.Location = new Point(9, 113);
@@ -2873,7 +2873,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 450366620) ^ -1604948202;
 					continue;
 				case 54u:
-					gform1_0.checkBox_11.Text = "Strip section characteristics";
+					gform1_0.checkBox_11.Text = UiText.Get("Scramble.StripCharacteristics");
 					num = (int)((num2 * 1518420147) ^ 0x45D43D9D);
 					continue;
 				case 53u:
@@ -2882,7 +2882,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 52u:
 					gform1_0.checkBox_3.TabIndex = 0;
-					gform1_0.checkBox_3.Text = "Insert extra sections";
+					gform1_0.checkBox_3.Text = UiText.Get("Scramble.InsertSections");
 					num = ((int)num2 * -176693677) ^ -525561867;
 					continue;
 				case 51u:
@@ -2941,7 +2941,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 1776968976) ^ 0x1EE73E0D);
 					continue;
 				case 39u:
-					gform1_0.checkBox_0.Text = "Scramble header fields";
+					gform1_0.checkBox_0.Text = UiText.Get("Scramble.HeaderFields");
 					gform1_0.checkBox_0.UseVisualStyleBackColor = true;
 					num = (int)((num2 * 589438285) ^ 0x126A6B87);
 					continue;
@@ -2965,7 +2965,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 34u:
 					gform1_0.checkBox_7.TabIndex = 4;
-					gform1_0.checkBox_7.Text = "Move relocation table";
+					gform1_0.checkBox_7.Text = UiText.Get("Scramble.MoveRelocations");
 					num = (int)(num2 * 382154377) ^ -1181653091;
 					continue;
 				case 33u:
@@ -3002,7 +3002,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1205413814) ^ 0x6D41F1FD;
 					continue;
 				case 26u:
-					gform1_0.groupBox_2.Text = "Directory Options";
+					gform1_0.groupBox_2.Text = UiText.Get("Scramble.DirectoryOptions");
 					gform1_0.checkBox_10.AutoSize = true;
 					gform1_0.checkBox_10.Location = new Point(9, 44);
 					num = (int)((num2 * 119579196) ^ 0x20FCBA34);
@@ -3013,13 +3013,13 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1049986877) ^ -1197577751;
 					continue;
 				case 24u:
-					gform1_0.Text = "Advanced Scramble Settings";
+					gform1_0.Text = UiText.Get("Scramble.Title");
 					gform1_0.groupBox_0.ResumeLayout(performLayout: false);
 					num = (int)(num2 * 1960018299) ^ -2026772792;
 					continue;
 				case 23u:
 					gform1_0.checkBox_12.TabIndex = 5;
-					gform1_0.checkBox_12.Text = "Shift section memory";
+					gform1_0.checkBox_12.Text = UiText.Get("Scramble.ShiftMemory");
 					num = ((int)num2 * -572279095) ^ -325043327;
 					continue;
 				case 22u:
@@ -3044,7 +3044,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)((num2 * 286154601) ^ 0x1F5EFD0B);
 					continue;
 				case 18u:
-					gform1_0.checkBox_4.Text = "Modify assembly code";
+					gform1_0.checkBox_4.Text = UiText.Get("Scramble.ModifyCode");
 					num = ((int)num2 * -117621193) ^ -1502094739;
 					continue;
 				case 17u:
@@ -3052,7 +3052,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1388664512) ^ -417446515;
 					continue;
 				case 16u:
-					gform1_0.checkBox_6.Text = "Create new entrypoint";
+					gform1_0.checkBox_6.Text = UiText.Get("Scramble.NewEntryPoint");
 					num = (int)((num2 * 303090442) ^ 0x44932EFA);
 					continue;
 				case 15u:
@@ -3077,7 +3077,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 10u:
 					gform1_0.checkBox_10.TabIndex = 6;
-					gform1_0.checkBox_10.Text = "Remove debug data";
+					gform1_0.checkBox_10.Text = UiText.Get("Scramble.RemoveDebug");
 					gform1_0.checkBox_10.UseVisualStyleBackColor = true;
 					num = (int)(num2 * 477898099) ^ -615185821;
 					continue;
@@ -3096,7 +3096,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1081688659) ^ -1037095281;
 					continue;
 				case 6u:
-					gform1_0.checkBox_5.Text = "Rename sections";
+					gform1_0.checkBox_5.Text = UiText.Get("Scramble.RenameSections");
 					num = ((int)num2 * -1096633799) ^ -1348949827;
 					continue;
 				case 5u:
@@ -3107,7 +3107,7 @@ public sealed partial class RecoveredRuntime
 					gform1_0.groupBox_1.Size = new Size(187, 186);
 					gform1_0.groupBox_1.TabIndex = 1;
 					gform1_0.groupBox_1.TabStop = false;
-					gform1_0.groupBox_1.Text = "Section Options";
+					gform1_0.groupBox_1.Text = UiText.Get("Scramble.SectionOptions");
 					gform1_0.checkBox_6.AutoSize = true;
 					num = (int)(num2 * 636471069) ^ -528562159;
 					continue;

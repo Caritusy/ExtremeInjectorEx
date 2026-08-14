@@ -14,6 +14,7 @@ Extreme Injector Ex 是一个面向 Windows 的 DLL 注入器，基于 Extreme I
 - 设置保存在 `%AppData%\ExtremeInjectorEx\settings.xml`，并兼容迁移旧版程序目录中的设置文件。
 - NuGet 运行时依赖内嵌在主程序中，复制 `Extreme Injector.exe` 即可独立运行。
 - 主窗口及设置、模块选项等窗口采用统一界面风格，并固定为不可调整大小的工具窗口布局。
+- 内置英语和简体中文界面；默认跟随 Windows 显示语言，也可在设置中即时切换并持久保存。
 
 ## 环境要求
 
@@ -49,6 +50,7 @@ out/bin/ExtremeInjector/Release/net48/
 ExtremeInjector/
 ├─ src/ExtremeInjector/
 │  ├─ Application/          程序入口、设置和应用模型
+│  ├─ Localization/         语言选择与本地化资源访问
 │  ├─ UI/                   WinForms 窗口与控件
 │  ├─ Injection/            注入策略、远程进程和 Manual Map
 │  ├─ PortableExecutable/   PE32/PE32+ 数据结构与解析
@@ -61,11 +63,18 @@ ExtremeInjector/
 │  └─ Properties/           程序集元数据
 ├─ res/
 │  ├─ Forms/                WinForms 资源
+│  ├─ Localization/         英语和简体中文文本资源
 │  └─ Embedded/             运行时内嵌二进制资源
 └─ out/                     本地构建输出（不提交）
 ```
 
 `res/Embedded` 中的受保护资源使用可识别的物理文件名，但项目文件保留了旧版运行时依赖的逻辑资源名。修改这些逻辑名称前必须同步检查资源解析代码。
+
+## 语言与本地化
+
+首次运行及旧配置迁移后，界面语言默认为“跟随系统语言”：中文 Windows 使用简体中文，其他系统使用英语。可在“设置 → 外观与语言 → 界面语言”中选择“跟随系统语言”“英语”或“简体中文”；切换会立即生效，并写入 `%AppData%\ExtremeInjectorEx\settings.xml`。
+
+所有项目自有的静态界面文案和通知文本都通过稳定资源键访问。英语与简体中文资源分别位于 `res/Localization/Strings.en.resx` 和 `res/Localization/Strings.zh-CN.resx`，两份资源必须保持完全相同的键集合。进程名、文件名、DLL 名、导出函数名及系统错误详情等外部内容保持原文。两套语言资源均直接嵌入主程序，不会产生需要随 EXE 分发的卫星程序集。
 
 ## 开发说明
 

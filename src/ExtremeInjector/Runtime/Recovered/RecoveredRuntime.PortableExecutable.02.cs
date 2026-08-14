@@ -1887,7 +1887,7 @@ public sealed partial class RecoveredRuntime
 					}
 					break;
 					IL_036b:
-					MessageBox.Show(mainForm, "The file specified (" + Path.GetFileName(string_0) + ") is not a valid DLL.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(mainForm, UiText.Format("Message.InvalidDll", Path.GetFileName(string_0)), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					num7 = (int)((num3 * 1653663462) ^ 0xFD3EC92);
 				}
 			}
