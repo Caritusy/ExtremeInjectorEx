@@ -30,31 +30,31 @@ public sealed partial class RecoveredRuntime
 	{
 		if (PlatformInfo.bool_2)
 		{
-			FileDropMessageFilter.Struct6 @struct = default(FileDropMessageFilter.Struct6);
-			@struct.uint_0 = (uint)Marshal.SizeOf(typeof(FileDropMessageFilter.Struct6));
-			FileDropMessageFilter.Struct6 struct2 = @struct;
-			RecoveredRuntime.ChangeWindowMessageFilterEx(intptr_0, 563u, FileDropMessageFilter.Enum1.const_1, ref struct2);
-			RecoveredRuntime.ChangeWindowMessageFilterEx(intptr_0, 74u, FileDropMessageFilter.Enum1.const_1, ref struct2);
-			RecoveredRuntime.ChangeWindowMessageFilterEx(intptr_0, 73u, FileDropMessageFilter.Enum1.const_1, ref struct2);
+			FileDropMessageFilter.MessageFilterChangeInfo @struct = default(FileDropMessageFilter.MessageFilterChangeInfo);
+			@struct.Size = (uint)Marshal.SizeOf(typeof(FileDropMessageFilter.MessageFilterChangeInfo));
+			FileDropMessageFilter.MessageFilterChangeInfo struct2 = @struct;
+			RecoveredRuntime.ChangeWindowMessageFilterEx(intptr_0, 563u, FileDropMessageFilter.MessageFilterAction.Allow, ref struct2);
+			RecoveredRuntime.ChangeWindowMessageFilterEx(intptr_0, 74u, FileDropMessageFilter.MessageFilterAction.Allow, ref struct2);
+			RecoveredRuntime.ChangeWindowMessageFilterEx(intptr_0, 73u, FileDropMessageFilter.MessageFilterAction.Allow, ref struct2);
 		}
 		else if (PlatformInfo.bool_1)
 		{
-			RecoveredRuntime.ChangeWindowMessageFilter(563u, FileDropMessageFilter.Enum2.const_0);
-			RecoveredRuntime.ChangeWindowMessageFilter(74u, FileDropMessageFilter.Enum2.const_0);
-			RecoveredRuntime.ChangeWindowMessageFilter(73u, FileDropMessageFilter.Enum2.const_0);
+			RecoveredRuntime.ChangeWindowMessageFilter(563u, FileDropMessageFilter.LegacyMessageFilterAction.Add);
+			RecoveredRuntime.ChangeWindowMessageFilter(74u, FileDropMessageFilter.LegacyMessageFilterAction.Add);
+			RecoveredRuntime.ChangeWindowMessageFilter(73u, FileDropMessageFilter.LegacyMessageFilterAction.Add);
 		}
 		RecoveredRuntime.DragAcceptFiles(intptr_0, true);
 	}
 
 	internal static Icon GetFileIcon(string string_0, IconSize enum18_0)
 	{
-		ShellFileInfoNativeTypes.Struct36 @struct = default(ShellFileInfoNativeTypes.Struct36);
-		ShellFileInfoNativeTypes.Enum19 enum19_ = ShellFileInfoNativeTypes.Enum19.flag_0 | ShellFileInfoNativeTypes.Enum19.flag_15 | ((enum18_0 == IconSize.const_0) ? ShellFileInfoNativeTypes.Enum19.flag_11 : ShellFileInfoNativeTypes.Enum19.flag_10);
+		ShellFileInfoNativeTypes.ShellFileInfo @struct = default(ShellFileInfoNativeTypes.ShellFileInfo);
+		ShellFileInfoNativeTypes.ShellFileInfoFlags enum19_ = ShellFileInfoNativeTypes.ShellFileInfoFlags.Icon | ShellFileInfoNativeTypes.ShellFileInfoFlags.UseFileAttributes | ((enum18_0 == IconSize.const_0) ? ShellFileInfoNativeTypes.ShellFileInfoFlags.SmallIcon : ShellFileInfoNativeTypes.ShellFileInfoFlags.LargeIcon);
 		RecoveredRuntime.SHGetFileInfo(string_0, 128u, ref @struct, (uint)Marshal.SizeOf(@struct), enum19_);
 		Icon result;
 		try
 		{
-			using (Icon icon = Icon.FromHandle(@struct.intptr_0))
+			using (Icon icon = Icon.FromHandle(@struct.IconHandle))
 			{
 				result = (Icon)icon.Clone();
 			}
@@ -160,7 +160,7 @@ public sealed partial class RecoveredRuntime
 
 	[DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 	[return: MarshalAs(UnmanagedType.Bool)]
-	internal static extern bool LookupPrivilegeValue(string string_0, string string_1, out TokenPrivilegeNativeTypes.Struct35 struct35_0);
+	internal static extern bool LookupPrivilegeValue(string string_0, string string_1, out TokenPrivilegeNativeTypes.Luid struct35_0);
 
 	[DllImport("kernel32.dll", SetLastError = true)]
 	internal static extern bool VirtualFree(IntPtr intptr_0, UIntPtr uintptr_0, NativeTypes.Enum28 enum28_0);
@@ -199,7 +199,7 @@ public sealed partial class RecoveredRuntime
 
 	[DllImport("user32.dll")]
 	[return: MarshalAs(UnmanagedType.Bool)]
-	internal static extern bool EnumWindows(NativeTypes.Delegate46 delegate46_0, IntPtr intptr_0);
+	internal static extern bool EnumWindows(NativeTypes.WindowEnumerationCallback delegate46_0, IntPtr intptr_0);
 
 	[DllImport("kernel32.dll")]
 	internal static extern uint QueryDosDevice(string string_0, [Out] StringBuilder stringBuilder_0, int int_0);
@@ -209,7 +209,7 @@ public sealed partial class RecoveredRuntime
 
 	[DllImport("advapi32.dll", SetLastError = true)]
 	[return: MarshalAs(UnmanagedType.Bool)]
-	internal static extern bool AdjustTokenPrivileges(IntPtr intptr_0, [MarshalAs(UnmanagedType.Bool)] bool bool_0, ref TokenPrivilegeNativeTypes.Struct34 struct34_0, uint uint_0, IntPtr intptr_1, IntPtr intptr_2);
+	internal static extern bool AdjustTokenPrivileges(IntPtr intptr_0, [MarshalAs(UnmanagedType.Bool)] bool bool_0, ref TokenPrivilegeNativeTypes.TokenPrivileges struct34_0, uint uint_0, IntPtr intptr_1, IntPtr intptr_2);
 
 	[DllImport("kernel32.dll", SetLastError = true)]
 	[return: MarshalAs(UnmanagedType.Bool)]
@@ -410,7 +410,7 @@ public sealed partial class RecoveredRuntime
 
 	[DllImport("user32.dll")]
 	[return: MarshalAs(UnmanagedType.Bool)]
-	internal static extern bool ChangeWindowMessageFilter(uint uint_0, FileDropMessageFilter.Enum2 enum2_0);
+	internal static extern bool ChangeWindowMessageFilter(uint uint_0, FileDropMessageFilter.LegacyMessageFilterAction enum2_0);
 
 	internal static void ReadApiSetSchemaV2(IntPtr intptr_0)
 	{
@@ -464,7 +464,7 @@ public sealed partial class RecoveredRuntime
 	}
 
 	[DllImport("shell32.dll")]
-	internal static extern bool DragQueryPoint(IntPtr intptr_0, out FileDropMessageFilter.Struct5 struct5_0);
+	internal static extern bool DragQueryPoint(IntPtr intptr_0, out FileDropMessageFilter.NativePoint struct5_0);
 
 	[DllImport("kernel32.dll")]
 	internal static extern ulong VerSetConditionMask(ulong ulong_0, uint uint_0, byte byte_0);
@@ -502,7 +502,7 @@ public sealed partial class RecoveredRuntime
 	internal static extern IntPtr GetClassLongPtr(IntPtr intptr_0, int int_0);
 
 	[DllImport("shell32.dll")]
-	internal static extern IntPtr SHGetFileInfo(string string_0, uint uint_0, ref ShellFileInfoNativeTypes.Struct36 struct36_0, uint uint_1, ShellFileInfoNativeTypes.Enum19 enum19_0);
+	internal static extern IntPtr SHGetFileInfo(string string_0, uint uint_0, ref ShellFileInfoNativeTypes.ShellFileInfo struct36_0, uint uint_1, ShellFileInfoNativeTypes.ShellFileInfoFlags enum19_0);
 
 	[DllImport("kernel32.dll", SetLastError = true)]
 	[return: MarshalAs(UnmanagedType.Bool)]
@@ -516,7 +516,7 @@ public sealed partial class RecoveredRuntime
 
 	[DllImport("user32.dll")]
 	[return: MarshalAs(UnmanagedType.Bool)]
-	internal static extern bool ChangeWindowMessageFilterEx(IntPtr intptr_0, uint uint_0, FileDropMessageFilter.Enum1 enum1_0, ref FileDropMessageFilter.Struct6 struct6_0);
+	internal static extern bool ChangeWindowMessageFilterEx(IntPtr intptr_0, uint uint_0, FileDropMessageFilter.MessageFilterAction enum1_0, ref FileDropMessageFilter.MessageFilterChangeInfo struct6_0);
 
 	[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 	internal static extern uint GetWindowsDirectory(StringBuilder stringBuilder_0, int int_0);
@@ -621,7 +621,7 @@ public sealed partial class RecoveredRuntime
 	internal unsafe static extern bool WriteProcessMemoryBuffer(IntPtr intptr_0, IntPtr intptr_1, byte* pByte_0, UIntPtr uintptr_0, UIntPtr* pUintPtr_0);
 
 	[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-	internal static extern IntPtr SendMessageTimeout(IntPtr intptr_0, uint uint_0, UIntPtr uintptr_0, IntPtr intptr_1, NativeTypes.Enum20 enum20_0, uint uint_1, out IntPtr intptr_2);
+	internal static extern IntPtr SendMessageTimeout(IntPtr intptr_0, uint uint_0, UIntPtr uintptr_0, IntPtr intptr_1, NativeTypes.SendMessageTimeoutFlags enum20_0, uint uint_1, out IntPtr intptr_2);
 
 	internal static bool TryInitializePeb32Address(Peb32 class119_0)
 	{
@@ -698,7 +698,7 @@ public sealed partial class RecoveredRuntime
 	internal static extern uint NtSetInformationThread(IntPtr intptr_0, NativeTypes.Enum25 enum25_0, IntPtr intptr_1, int int_0);
 
 	[DllImport("advapi32.dll", SetLastError = true)]
-	internal static extern bool GetTokenInformation(IntPtr intptr_0, TokenPrivilegeNativeTypes.Enum16 enum16_0, out uint uint_0, uint uint_1, out uint uint_2);
+	internal static extern bool GetTokenInformation(IntPtr intptr_0, TokenPrivilegeNativeTypes.TokenInformationClass enum16_0, out uint uint_0, uint uint_1, out uint uint_2);
 
 	internal static IntPtr AssembleRemoteCode(IntPtr intptr_0, AsmJitAssembler class53_0, RemoteCodeExecutorBase class84_0)
 	{

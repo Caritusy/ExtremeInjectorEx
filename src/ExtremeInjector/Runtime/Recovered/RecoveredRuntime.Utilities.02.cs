@@ -48,15 +48,15 @@ public sealed partial class RecoveredRuntime
 
 		try
 		{
-			if (!RecoveredRuntime.LookupPrivilegeValue(null, string_0, out TokenPrivilegeNativeTypes.Struct35 privilegeId))
+			if (!RecoveredRuntime.LookupPrivilegeValue(null, string_0, out TokenPrivilegeNativeTypes.Luid privilegeId))
 			{
 				return false;
 			}
 
-			TokenPrivilegeNativeTypes.Struct34 privileges = default(TokenPrivilegeNativeTypes.Struct34);
-			privileges.uint_0 = 1u;
-			privileges.struct35_0 = privilegeId;
-			privileges.uint_1 = 2u;
+			TokenPrivilegeNativeTypes.TokenPrivileges privileges = default(TokenPrivilegeNativeTypes.TokenPrivileges);
+			privileges.PrivilegeCount = 1u;
+			privileges.PrivilegeLuid = privilegeId;
+			privileges.Attributes = 2u;
 			return RecoveredRuntime.AdjustTokenPrivileges(tokenHandle, false, ref privileges, 0u, IntPtr.Zero, IntPtr.Zero);
 		}
 		finally

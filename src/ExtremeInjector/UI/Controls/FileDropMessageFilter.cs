@@ -5,39 +5,39 @@ using System.Windows.Forms;
 
 public sealed class FileDropMessageFilter : IMessageFilter
 {
-	public struct Struct5
+	public struct NativePoint
 	{
-		public int int_0;
+		public int X;
 
-		public int int_1;
+		public int Y;
 	}
 
-	public enum Enum0 : uint
+	public enum MessageFilterStatus : uint
 	{
-		const_0,
-		const_1,
-		const_2,
-		const_3
+		None,
+		AlreadyAllowedForWindow,
+		AlreadyDisallowedForWindow,
+		AllowedByHigherFilter
 	}
 
-	public enum Enum1 : uint
+	public enum MessageFilterAction : uint
 	{
-		const_0,
-		const_1,
-		const_2
+		Reset,
+		Allow,
+		Disallow
 	}
 
-	public enum Enum2 : uint
+	public enum LegacyMessageFilterAction : uint
 	{
-		const_0 = 1u,
-		const_1
+		Add = 1u,
+		Remove
 	}
 
-	public struct Struct6
+	public struct MessageFilterChangeInfo
 	{
-		public uint uint_0;
+		public uint Size;
 
-		public Enum0 enum0_0;
+		public MessageFilterStatus Status;
 	}
 
 	public static FileDropMessageFilter class10_0 = new FileDropMessageFilter();

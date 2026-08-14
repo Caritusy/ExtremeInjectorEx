@@ -8,27 +8,27 @@ using System.Security;
 public static class NativeTypes
 {
 	[Flags]
-	public enum Enum20 : uint
+	public enum SendMessageTimeoutFlags : uint
 	{
-		flag_0 = 0u,
-		flag_1 = 1u,
-		flag_2 = 2u,
-		flag_3 = 8u
+		Normal = 0u,
+		Block = 1u,
+		AbortIfHung = 2u,
+		NoTimeoutIfNotHung = 8u
 	}
 
-	public delegate bool Delegate46(IntPtr intptr_0, IntPtr intptr_1);
+	public delegate bool WindowEnumerationCallback(IntPtr intptr_0, IntPtr intptr_1);
 
-	public struct Struct37(int int_4, int int_5, int int_6, int int_7)
+	public struct NativeRect(int int_4, int int_5, int int_6, int int_7)
 	{
-		public int int_0 = int_4;
+		public int Left = int_4;
 
-		public int int_1 = int_5;
+		public int Top = int_5;
 
-		public int int_2 = int_6;
+		public int Right = int_6;
 
-		public int int_3 = int_7;
+		public int Bottom = int_7;
 
-		public Struct37(Rectangle rectangle_0)
+		public NativeRect(Rectangle rectangle_0)
 			: this(rectangle_0.Left, rectangle_0.Top, rectangle_0.Right, rectangle_0.Bottom)
 		{
 		}
@@ -36,33 +36,33 @@ public static class NativeTypes
 		[SpecialName]
 		public int GetHeight()
 		{
-			return int_3 - int_1;
+			return Bottom - Top;
 		}
 
 		[SpecialName]
 		public int GetWidth()
 		{
-			return int_2 - int_0;
+			return Right - Left;
 		}
 
 		[SpecialName]
-		public static Rectangle ToRectangle(Struct37 struct37_0)
+		public static Rectangle ToRectangle(NativeRect struct37_0)
 		{
-			return new Rectangle(struct37_0.int_0, struct37_0.int_1, struct37_0.GetWidth(), struct37_0.GetHeight());
+			return new Rectangle(struct37_0.Left, struct37_0.Top, struct37_0.GetWidth(), struct37_0.GetHeight());
 		}
 
-		public bool Equals(Struct37 struct37_0)
+		public bool Equals(NativeRect struct37_0)
 		{
-			return struct37_0.int_0 == this.int_0 && struct37_0.int_1 == this.int_1 && struct37_0.int_2 == this.int_2 && struct37_0.int_3 == this.int_3;
+			return struct37_0.Left == this.Left && struct37_0.Top == this.Top && struct37_0.Right == this.Right && struct37_0.Bottom == this.Bottom;
 		}
 
 		public override bool Equals(object obj)
 		{
-			if (obj is NativeTypes.Struct37)
+			if (obj is NativeTypes.NativeRect)
 			{
-				return this.Equals((NativeTypes.Struct37)obj);
+				return this.Equals((NativeTypes.NativeRect)obj);
 			}
-			return obj is Rectangle && this.Equals(new NativeTypes.Struct37((Rectangle)obj));
+			return obj is Rectangle && this.Equals(new NativeTypes.NativeRect((Rectangle)obj));
 		}
 
 		public override int GetHashCode()
@@ -72,7 +72,7 @@ public static class NativeTypes
 
 		public override string ToString()
 		{
-			return string.Format(CultureInfo.CurrentCulture, "{{Left={0},Top={1},Right={2},Bottom={3}}}", int_0, int_1, int_2, int_3);
+			return string.Format(CultureInfo.CurrentCulture, "{{Left={0},Top={1},Right={2},Bottom={3}}}", Left, Top, Right, Bottom);
 		}
 	}
 

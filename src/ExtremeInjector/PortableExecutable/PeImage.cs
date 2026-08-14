@@ -5,12 +5,12 @@ using System.Runtime.CompilerServices;
 
 public sealed class PeImage : IDisposable
 {
-	public interface Interface3
+	public interface IRvaToFileOffsetMapper
 	{
 		long MapRvaToFileOffset(PeImage class154_0, uint uint_0);
 	}
 
-	public sealed class Class155 : Interface3
+	public sealed class FileLayoutRvaMapper : IRvaToFileOffsetMapper
 	{
 		public long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
 		{
@@ -25,7 +25,7 @@ public sealed class PeImage : IDisposable
 		}
 	}
 
-	public sealed class Class156 : Interface3
+	public sealed class MemoryLayoutRvaMapper : IRvaToFileOffsetMapper
 	{
 		public long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
 		{
@@ -86,7 +86,7 @@ public sealed class PeImage : IDisposable
 
 	internal readonly bool bool_0;
 
-	internal readonly Interface3 interface3_0;
+	internal readonly IRvaToFileOffsetMapper rvaMapper;
 
 	[SpecialName]
 	[CompilerGenerated]
@@ -311,10 +311,10 @@ public sealed class PeImage : IDisposable
 		this.SetStream(stream_1);
 		if (enum39_1 != PeImageLayout.const_0)
 		{
-			this.interface3_0 = new PeImage.Class156();
+			this.rvaMapper = new PeImage.MemoryLayoutRvaMapper();
 			return;
 		}
-		this.interface3_0 = new PeImage.Class155();
+		this.rvaMapper = new PeImage.FileLayoutRvaMapper();
 	}
 
 	public PeImage(Stream stream_1, bool bool_1, PeImageLayout enum39_1)

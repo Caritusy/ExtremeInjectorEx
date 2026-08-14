@@ -3,41 +3,41 @@ using System.Runtime.InteropServices;
 
 public static class ShellFileInfoNativeTypes
 {
-	public struct Struct36
+	public struct ShellFileInfo
 	{
-		public IntPtr intptr_0;
+		public IntPtr IconHandle;
 
-		public int int_0;
+		public int IconIndex;
 
-		public uint uint_0;
+		public uint Attributes;
 
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		public string string_0;
+		public string DisplayName;
 
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-		public string string_1;
+		public string TypeName;
 	}
 
 	[Flags]
-	public enum Enum19 : uint
+	public enum ShellFileInfoFlags : uint
 	{
-		flag_0 = 0x100u,
-		flag_1 = 0x200u,
-		flag_2 = 0x400u,
-		flag_3 = 0x800u,
-		flag_4 = 0x1000u,
-		flag_5 = 0x2000u,
-		flag_6 = 0x4000u,
-		flag_7 = 0x8000u,
-		flag_8 = 0x10000u,
-		flag_9 = 0x20000u,
-		flag_10 = 0u,
-		flag_11 = 1u,
-		flag_12 = 2u,
-		flag_13 = 4u,
-		flag_14 = 8u,
-		flag_15 = 0x10u,
-		flag_16 = 0x20u,
-		flag_17 = 0x40u
+		Icon = 0x100u,
+		DisplayName = 0x200u,
+		TypeName = 0x400u,
+		Attributes = 0x800u,
+		IconLocation = 0x1000u,
+		ExecutableType = 0x2000u,
+		SystemIconIndex = 0x4000u,
+		LinkOverlay = 0x8000u,
+		Selected = 0x10000u,
+		SpecifiedAttributes = 0x20000u,
+		LargeIcon = 0u,
+		SmallIcon = 1u,
+		OpenIcon = 2u,
+		ShellIconSize = 4u,
+		Pidl = 8u,
+		UseFileAttributes = 0x10u,
+		AddOverlays = 0x20u,
+		OverlayIndex = 0x40u
 	}
 }

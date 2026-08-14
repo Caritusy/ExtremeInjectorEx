@@ -644,7 +644,7 @@ public sealed partial class RecoveredRuntime
 	internal static Icon GetWindowIcon(ProcessWindowInfo class77_0)
 	{
 		IntPtr intPtr;
-		RecoveredRuntime.SendMessageTimeout(class77_0.GetHandle(), 127u, (UIntPtr)1UL, IntPtr.Zero, NativeTypes.Enum20.flag_2, 250u, out intPtr);
+		RecoveredRuntime.SendMessageTimeout(class77_0.GetHandle(), 127u, (UIntPtr)1UL, IntPtr.Zero, NativeTypes.SendMessageTimeoutFlags.AbortIfHung, 250u, out intPtr);
 		if (intPtr != IntPtr.Zero)
 		{
 			return Icon.FromHandle(intPtr);

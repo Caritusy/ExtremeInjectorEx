@@ -411,7 +411,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
 	{
-		return class154_0.interface3_0.MapRvaToFileOffset(class154_0, uint_0);
+		return class154_0.rvaMapper.MapRvaToFileOffset(class154_0, uint_0);
 	}
 
 	internal static void WriteCoffHeader(PeImageWriter class165_0)

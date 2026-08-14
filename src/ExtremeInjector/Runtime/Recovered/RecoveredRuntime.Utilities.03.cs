@@ -59,14 +59,14 @@ public sealed partial class RecoveredRuntime
 				list.Add(stringBuilder.ToString());
 			}
 		}
-		FileDropMessageFilter.Struct5 @struct;
+		FileDropMessageFilter.NativePoint @struct;
 		RecoveredRuntime.DragQueryPoint(message_0.WParam, out @struct);
 		RecoveredRuntime.DragFinish(message_0.WParam);
 		FileDropEventArgs eventArgs = new FileDropEventArgs();
 		eventArgs.WindowHandle = message_0.HWnd;
 		eventArgs.Files = list;
-		eventArgs.X = @struct.int_0;
-		eventArgs.Y = @struct.int_1;
+		eventArgs.X = @struct.X;
+		eventArgs.Y = @struct.Y;
 		FileDropEventArgs e = eventArgs;
 		if (class10_0.eventHandler_0 != null)
 		{

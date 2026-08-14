@@ -17,11 +17,11 @@ public sealed class TabControlWindow : NativeWindow
 	{
 		if (message_0.Msg == 4904)
 		{
-			NativeTypes.Struct37 @struct = (NativeTypes.Struct37)message_0.GetLParam(typeof(NativeTypes.Struct37));
-			@struct.int_0 -= 3;
-			@struct.int_2++;
-			@struct.int_1--;
-			@struct.int_3++;
+			NativeTypes.NativeRect @struct = (NativeTypes.NativeRect)message_0.GetLParam(typeof(NativeTypes.NativeRect));
+			@struct.Left -= 3;
+			@struct.Right++;
+			@struct.Top--;
+			@struct.Bottom++;
 			Marshal.StructureToPtr(@struct, message_0.LParam, true);
 		}
 		base.WndProc(ref message_0);
