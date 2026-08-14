@@ -4,10 +4,10 @@ public sealed class LdrListEntry64 : RemoteLdrListEntry
 {
 	static LdrListEntry64()
 	{
-		RemotePlatformStructure.smethod_7<LdrListEntry64>(new RemoteFieldLayout[2]
+		RemotePlatformStructure.Register64BitLayout<LdrListEntry64>(new RemoteFieldLayout[2]
 		{
-			RecoveredRuntime.smethod_316(typeof(IntPtr)),
-			RecoveredRuntime.smethod_316(typeof(IntPtr))
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr))
 		});
 	}
 
@@ -16,41 +16,36 @@ public sealed class LdrListEntry64 : RemoteLdrListEntry
 	{
 	}
 
-	public override RemoteLdrDataTableEntry method_07DF()
+	public override RemoteLdrDataTableEntry GetModuleEntry()
 	{
-		if (!(vmethod_7() != IntPtr.Zero))
+		if (!(GetForwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		LdrDataTableEntry64 @class = new LdrDataTableEntry64(vmethod_7(), method_2());
-		@class.method_7(method_6());
+		LdrDataTableEntry64 @class = new LdrDataTableEntry64(GetForwardLink(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
-	public override RemoteListEntry method_07D2()
+	public override RemoteListEntry GetForwardEntry()
 	{
-		if (!(vmethod_7() != IntPtr.Zero))
+		if (!(GetForwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		ListEntry64 @class = new ListEntry64(vmethod_7(), method_2());
-		@class.method_7(method_6());
+		ListEntry64 @class = new ListEntry64(GetForwardLink(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
-	public override RemoteListEntry method_07D3()
+	public override RemoteListEntry GetBackwardEntry()
 	{
-		if (!(vmethod_9() != IntPtr.Zero))
+		if (!(GetBackwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		ListEntry64 @class = new ListEntry64(vmethod_9(), method_2());
-		@class.method_7(method_6());
+		ListEntry64 @class = new ListEntry64(GetBackwardLink(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
-	}
-
-	internal static Type smethod_11(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
 	}
 }

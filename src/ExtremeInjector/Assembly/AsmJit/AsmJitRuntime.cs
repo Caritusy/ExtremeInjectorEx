@@ -220,7 +220,7 @@ public static class AsmJitRuntime
 
 	static AsmJitRuntime()
 	{
-		AsmJitRuntime.class123_0 = new NativeLibraryImage(AsmJitRuntime.bool_0 ? RecoveredRuntime.smethod_309() : RecoveredRuntime.smethod_292(), true);
-		RecoveredRuntime.smethod_311();
+		AsmJitRuntime.class123_0 = new NativeLibraryImage(AsmJitRuntime.bool_0 ? RecoveredRuntime.GetAsmJitX64Image() : RecoveredRuntime.GetAsmJitX86Image(), true);
+		RecoveredRuntime.InitializeAsmJitRegisters();
 	}
 }

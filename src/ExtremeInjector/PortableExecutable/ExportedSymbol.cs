@@ -19,70 +19,70 @@ public sealed class ExportedSymbol
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_0()
+	public bool GetHasName()
 	{
 		return bool_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(bool bool_1)
+	public void SetHasName(bool bool_1)
 	{
 		bool_0 = bool_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ushort method_2()
+	public ushort GetOrdinal()
 	{
 		return ushort_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(ushort ushort_1)
+	public void SetOrdinal(ushort ushort_1)
 	{
 		ushort_0 = ushort_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_4()
+	public string GetName()
 	{
 		return string_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(string string_1)
+	public void SetName(string string_1)
 	{
 		string_0 = string_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_6()
+	public uint GetAddressRva()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_7(uint uint_1)
+	public void SetAddressRva(uint uint_1)
 	{
 		uint_0 = uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ForwardedExport method_8()
+	public ForwardedExport GetForwarder()
 	{
 		return class153_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_9(ForwardedExport class153_1)
+	public void SetForwarder(ForwardedExport class153_1)
 	{
 		class153_0 = class153_1;
 	}

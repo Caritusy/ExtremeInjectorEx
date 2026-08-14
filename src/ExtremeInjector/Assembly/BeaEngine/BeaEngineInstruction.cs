@@ -29,16 +29,11 @@ public struct BeaEngineInstruction
 	public uint uint_0;
 
 	[SpecialName]
-	public unsafe string method_0()
+	public unsafe string GetMnemonic()
 	{
 		fixed (sbyte* value = &struct28_0.sbyte_0)
 		{
 			return new string(value);
 		}
-	}
-
-	internal unsafe static string smethod_0(sbyte* pSbyte_0)
-	{
-		return new string(pSbyte_0);
 	}
 }

@@ -7,18 +7,18 @@ public sealed class PeImage : IDisposable
 {
 	public interface Interface3
 	{
-		long imethod_0(PeImage class154_0, uint uint_0);
+		long MapRvaToFileOffset(PeImage class154_0, uint uint_0);
 	}
 
 	public sealed class Class155 : Interface3
 	{
-		public long imethod_0(PeImage class154_0, uint uint_0)
+		public long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
 		{
-			foreach (PeSectionHeader gclass in class154_0.method_8())
+			foreach (PeSectionHeader gclass in class154_0.GetSections())
 			{
-				if (uint_0 >= gclass.method_4() && uint_0 < gclass.method_4() + gclass.method_6())
+				if (uint_0 >= gclass.GetVirtualAddress() && uint_0 < gclass.GetVirtualAddress() + gclass.GetSizeOfRawData())
 				{
-					return (long)((ulong)(uint_0 - gclass.method_4() + gclass.method_8()));
+					return (long)((ulong)(uint_0 - gclass.GetVirtualAddress() + gclass.GetPointerToRawData()));
 				}
 			}
 			return -1L;
@@ -27,7 +27,7 @@ public sealed class PeImage : IDisposable
 
 	public sealed class Class156 : Interface3
 	{
-		public long imethod_0(PeImage class154_0, uint uint_0)
+		public long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
 		{
 			return uint_0;
 		}
@@ -90,225 +90,225 @@ public sealed class PeImage : IDisposable
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_0()
+	public string GetFilePath()
 	{
 		return string_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(string string_2)
+	public void SetFilePath(string string_2)
 	{
 		string_0 = string_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_2()
+	public string GetFileName()
 	{
 		return string_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(string string_2)
+	public void SetFileName(string string_2)
 	{
 		string_1 = string_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public DosHeader method_4()
+	public DosHeader GetDosHeader()
 	{
 		return class158_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(DosHeader class158_1)
+	public void SetDosHeader(DosHeader class158_1)
 	{
 		class158_0 = class158_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public PeHeaders method_6()
+	public PeHeaders GetHeaders()
 	{
 		return class161_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_7(PeHeaders class161_1)
+	public void SetHeaders(PeHeaders class161_1)
 	{
 		class161_0 = class161_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public List<PeSectionHeader> method_8()
+	public List<PeSectionHeader> GetSections()
 	{
 		return list_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_9(List<PeSectionHeader> list_1)
+	public void SetSections(List<PeSectionHeader> list_1)
 	{
 		list_0 = list_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ImportDirectory method_10()
+	public ImportDirectory GetImports()
 	{
 		return class148_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_11(ImportDirectory class148_1)
+	public void SetImports(ImportDirectory class148_1)
 	{
 		class148_0 = class148_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public DelayImportDirectory method_12()
+	public DelayImportDirectory GetDelayImports()
 	{
 		return class149_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_13(DelayImportDirectory class149_1)
+	public void SetDelayImports(DelayImportDirectory class149_1)
 	{
 		class149_0 = class149_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ExportDirectory method_14()
+	public ExportDirectory GetExports()
 	{
 		return class151_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_15(ExportDirectory class151_1)
+	public void SetExports(ExportDirectory class151_1)
 	{
 		class151_0 = class151_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public BaseRelocationDirectory method_16()
+	public BaseRelocationDirectory GetBaseRelocations()
 	{
 		return class146_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_17(BaseRelocationDirectory class146_1)
+	public void SetBaseRelocations(BaseRelocationDirectory class146_1)
 	{
 		class146_0 = class146_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public DebugDirectoryEntry method_18()
+	public DebugDirectoryEntry GetDebugDirectory()
 	{
 		return class147_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_19(DebugDirectoryEntry class147_1)
+	public void SetDebugDirectory(DebugDirectoryEntry class147_1)
 	{
 		class147_0 = class147_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public TlsDirectory method_20()
+	public TlsDirectory GetTlsDirectory()
 	{
 		return class167_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_21(TlsDirectory class167_1)
+	public void SetTlsDirectory(TlsDirectory class167_1)
 	{
 		class167_0 = class167_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_22(LoadConfigurationDirectory class143_1)
+	public void SetLoadConfigurationDirectory(LoadConfigurationDirectory class143_1)
 	{
 		class143_0 = class143_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ResourceDirectory method_23()
+	public ResourceDirectory GetResources()
 	{
 		return class166_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_24(ResourceDirectory class166_1)
+	public void SetResources(ResourceDirectory class166_1)
 	{
 		class166_0 = class166_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ExceptionDirectory method_25()
+	public ExceptionDirectory GetExceptionDirectory()
 	{
 		return class141_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_26(ExceptionDirectory class141_1)
+	public void SetExceptionDirectory(ExceptionDirectory class141_1)
 	{
 		class141_0 = class141_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_27(ClrHeader class142_1)
+	public void SetClrHeader(ClrHeader class142_1)
 	{
 		class142_0 = class142_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public Stream method_28()
+	public Stream GetStream()
 	{
 		return stream_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_29(Stream stream_1)
+	internal void SetStream(Stream stream_1)
 	{
 		stream_0 = stream_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_30(PeImageLayout enum39_1)
+	internal void SetLayout(PeImageLayout enum39_1)
 	{
 		enum39_0 = enum39_1;
 	}
 
 	public PeImage(Stream stream_1, PeImageLayout enum39_1)
 	{
-		this.method_30(enum39_1);
-		this.method_29(stream_1);
+		this.SetLayout(enum39_1);
+		this.SetStream(stream_1);
 		if (enum39_1 != PeImageLayout.const_0)
 		{
 			this.interface3_0 = new PeImage.Class156();
@@ -323,30 +323,14 @@ public sealed class PeImage : IDisposable
 		bool_0 = bool_1;
 	}
 
-	~PeImage()
+	public void Dispose()
 	{
-		if (this.bool_0)
+		if (this.bool_0 && this.GetStream() != null)
 		{
-			((IDisposable)this).Dispose();
+			this.GetStream().Dispose();
+			this.SetStream(null);
 		}
-	}
 
-	public void System_002EIDisposable_002EDispose()
-	{
-		((IDisposable)this).Dispose();
-	}
-
-	void IDisposable.Dispose()
-	{
-		if (this.bool_0 && this.method_28() != null)
-		{
-			this.method_28().Dispose();
-			this.method_29(null);
-		}
-	}
-
-	internal static void smethod_0(Stream stream_1)
-	{
-		stream_1.Dispose();
+		GC.SuppressFinalize(this);
 	}
 }

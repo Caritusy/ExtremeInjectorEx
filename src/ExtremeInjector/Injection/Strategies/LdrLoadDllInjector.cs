@@ -10,11 +10,11 @@ public sealed class LdrLoadDllInjector : DllInjector
 	{
 	}
 
-	protected override void method_04C6()
+	protected override void EnsureProcessHandle()
 	{
-		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
+		if (base.GetProcessHandle() == IntPtr.Zero && base.GetProcessId() != -1)
 		{
-			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
+			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.GetProcessId()));
 		}
 	}
 
@@ -26,166 +26,101 @@ public sealed class LdrLoadDllInjector : DllInjector
 		}
 		if (!File.Exists(string_0))
 		{
-			throw new FileNotFoundException(EncodedStringTable.smethod_0(28151) + string_0 + EncodedStringTable.smethod_0(3656));
+			throw new FileNotFoundException(EncodedStringTable.DecodeString(28151) + string_0 + EncodedStringTable.DecodeString(3656));
 		}
-		if (!base.method_8(base.method_19().ProcessId))
+		if (!base.EnsureAttachedToProcess(base.GetRemoteProcess().ProcessId))
 		{
-			throw new UnauthorizedAccessException(EncodedStringTable.smethod_0(12662));
+			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(12662));
 		}
-		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(base.method_19())[EncodedStringTable.smethod_0(8549)];
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess())[EncodedStringTable.DecodeString(8549)];
 		if (gclass == null)
 		{
-			throw new FileNotFoundException(EncodedStringTable.smethod_0(12731));
+			throw new FileNotFoundException(EncodedStringTable.DecodeString(12731));
 		}
-		IntPtr intPtr = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(28220), false);
+		IntPtr intPtr = RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(28220), false);
 		if (intPtr == IntPtr.Zero)
 		{
-			throw new MissingMethodException(EncodedStringTable.smethod_0(28237));
+			throw new MissingMethodException(EncodedStringTable.DecodeString(28237));
 		}
 		int int_;
 		int int_2;
-		IntPtr intPtr2 = this.method_24(intPtr, string_0, out int_, out int_2);
-		IntPtr intPtr3 = RecoveredRuntime.smethod_321(this, intPtr2, IntPtr.Zero);
+		IntPtr intPtr2 = this.BuildLoaderStub(intPtr, string_0, out int_, out int_2);
+		IntPtr intPtr3 = RecoveredRuntime.StartRemoteThread(this, intPtr2, IntPtr.Zero);
 		if (intPtr3 == IntPtr.Zero)
 		{
-			this.vmethod_6(intPtr2);
-			throw new AccessViolationException(EncodedStringTable.smethod_0(12914));
+			this.ReleaseMemory(intPtr2);
+			throw new AccessViolationException(EncodedStringTable.DecodeString(12914));
 		}
-		RecoveredRuntime.smethod_153(this, intPtr3, -1);
-		if (RecoveredRuntime.HasProcessExited(base.method_19()))
+		RecoveredRuntime.WaitForRemoteThread(this, intPtr3, -1);
+		if (RecoveredRuntime.HasProcessExited(base.GetRemoteProcess()))
 		{
-			this.vmethod_6(intPtr2);
-			throw new Exception(EncodedStringTable.smethod_0(28330));
+			this.ReleaseMemory(intPtr2);
+			throw new Exception(EncodedStringTable.DecodeString(28330));
 		}
-		uint num = base.method_11<uint>(intPtr2.smethod_8(int_2));
+		uint num = base.Read<uint>(intPtr2.Add(int_2));
 		if (num != 0u)
 		{
-			this.vmethod_6(intPtr2);
-			throw new Exception(EncodedStringTable.smethod_0(28411) + num.ToString(EncodedStringTable.smethod_0(28492)) + EncodedStringTable.smethod_0(3656), RecoveredRuntime.smethod_213(num, this));
+			this.ReleaseMemory(intPtr2);
+			throw new Exception(EncodedStringTable.DecodeString(28411) + num.ToString(EncodedStringTable.DecodeString(28492)) + EncodedStringTable.DecodeString(3656), RecoveredRuntime.CreateWin32ExceptionFromNtStatus(num, this));
 		}
-		IntPtr result = RecoveredRuntime.smethod_427(base.method_19()) ? ((IntPtr)((long)((ulong)base.method_11<uint>(intPtr2.smethod_8(int_))))) : base.method_11<IntPtr>(intPtr2.smethod_8(int_));
-		this.vmethod_6(intPtr2);
-		RecoveredRuntime.smethod_108(this, intPtr3);
+		IntPtr result = RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()) ? ((IntPtr)((long)((ulong)base.Read<uint>(intPtr2.Add(int_))))) : base.Read<IntPtr>(intPtr2.Add(int_));
+		this.ReleaseMemory(intPtr2);
+		RecoveredRuntime.CloseRemoteHandle(this, intPtr3);
 		return result;
 	}
 
-	internal IntPtr method_24(IntPtr intptr_1, string string_0, out int int_1, out int int_2)
+	internal IntPtr BuildLoaderStub(IntPtr intptr_1, string string_0, out int int_1, out int int_2)
 	{
-		IntPtr intPtr = RecoveredRuntime.smethod_175(this, 4096L, NativeTypes.Enum34.flag_2);
+		IntPtr intPtr = RecoveredRuntime.AllocateRemoteMemory(this, 4096L, NativeTypes.Enum34.flag_2);
 		if (intPtr == IntPtr.Zero)
 		{
-			throw new AccessViolationException(EncodedStringTable.smethod_0(28957));
+			throw new AccessViolationException(EncodedStringTable.DecodeString(28957));
 		}
 		AsmJitAssembler @class = new AsmJitAssembler();
-		RemoteAssembler class2 = new RemoteAssembler(@class, base.method_19());
-		class2.method_1(true);
+		RemoteAssembler class2 = new RemoteAssembler(@class, base.GetRemoteProcess());
+		class2.SetRandomizeArgumentSetup(true);
 		RemoteAssembler class47_ = class2;
-		AsmJitLabel class58_ = RecoveredRuntime.smethod_48(@class);
-		AsmJitLabel class58_2 = RecoveredRuntime.smethod_48(@class);
-		AsmJitLabel class58_3 = RecoveredRuntime.smethod_48(@class);
-		RecoveredRuntime.smethod_15(class47_);
-		RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(intptr_1), CallingConvention.StdCall, new object[]
+		AsmJitLabel class58_ = RecoveredRuntime.CreateLabel(@class);
+		AsmJitLabel class58_2 = RecoveredRuntime.CreateLabel(@class);
+		AsmJitLabel class58_3 = RecoveredRuntime.CreateLabel(@class);
+		RecoveredRuntime.EmitRemoteCallPrologue(class47_);
+		RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(intptr_1), CallingConvention.StdCall, new object[]
 		{
 			IntPtr.Zero,
 			IntPtr.Zero,
-			RecoveredRuntime.smethod_84(class47_, class58_2),
-			RecoveredRuntime.smethod_84(class47_, class58_)
+			RecoveredRuntime.CreateLabelReference(class47_, class58_2),
+			RecoveredRuntime.CreateLabelReference(class47_, class58_)
 		});
-		if (RecoveredRuntime.smethod_427(base.method_19()))
+		if (RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()))
 		{
 			AsmJitAssembler class3 = @class;
 			class3.struct19_0.uint_2 = (class3.struct19_0.uint_2 | 8u);
 		}
-		RecoveredRuntime.smethod_75(@class, RecoveredRuntime.smethod_126(class58_3, 0L), AsmJitRuntime.class63_37);
-		RecoveredRuntime.smethod_226(class47_, -1);
-		RecoveredRuntime.smethod_227(class47_);
-		RecoveredRuntime.smethod_36(@class, class58_);
-		int_1 = RecoveredRuntime.smethod_252(@class);
-		RecoveredRuntime.smethod_336(class47_);
-		RecoveredRuntime.smethod_227(class47_);
-		RecoveredRuntime.smethod_36(@class, class58_3);
-		int_2 = RecoveredRuntime.smethod_252(@class);
-		RecoveredRuntime.smethod_439(@class, 0u);
-		RecoveredRuntime.smethod_227(class47_);
-		IntPtr intptr_2 = intPtr.smethod_8(RecoveredRuntime.smethod_252(@class));
-		byte[] bytes = Encoding.Unicode.GetBytes(string_0 + EncodedStringTable.smethod_0(12219));
-		RecoveredRuntime.smethod_320(@class, bytes);
-		RecoveredRuntime.smethod_227(class47_);
-		RecoveredRuntime.smethod_36(@class, class58_2);
-		RecoveredRuntime.smethod_52(@class, (ushort)(bytes.Length - 2));
-		RecoveredRuntime.smethod_52(@class, (ushort)bytes.Length);
-		RecoveredRuntime.smethod_227(class47_);
-		RecoveredRuntime.smethod_286(class47_, intptr_2);
-		if (!(RecoveredRuntime.smethod_443(intPtr, @class, this) == IntPtr.Zero))
+		RecoveredRuntime.EmitMoveRegisterToMemory(@class, RecoveredRuntime.CreateDwordLabelMemory(class58_3, 0L), AsmJitRuntime.class63_37);
+		RecoveredRuntime.EmitRemoteCallEpilogue(class47_, -1);
+		RecoveredRuntime.AlignRemoteData(class47_);
+		RecoveredRuntime.BindLabel(@class, class58_);
+		int_1 = RecoveredRuntime.GetAssemblerOffset(@class);
+		RecoveredRuntime.EmbedNullPointer(class47_);
+		RecoveredRuntime.AlignRemoteData(class47_);
+		RecoveredRuntime.BindLabel(@class, class58_3);
+		int_2 = RecoveredRuntime.GetAssemblerOffset(@class);
+		RecoveredRuntime.EmbedUInt32(@class, 0u);
+		RecoveredRuntime.AlignRemoteData(class47_);
+		IntPtr intptr_2 = intPtr.Add(RecoveredRuntime.GetAssemblerOffset(@class));
+		byte[] bytes = Encoding.Unicode.GetBytes(string_0 + EncodedStringTable.DecodeString(12219));
+		RecoveredRuntime.EmbedBytes(@class, bytes);
+		RecoveredRuntime.AlignRemoteData(class47_);
+		RecoveredRuntime.BindLabel(@class, class58_2);
+		RecoveredRuntime.EmbedUInt16(@class, (ushort)(bytes.Length - 2));
+		RecoveredRuntime.EmbedUInt16(@class, (ushort)bytes.Length);
+		RecoveredRuntime.AlignRemoteData(class47_);
+		RecoveredRuntime.EmbedPlatformPointer(class47_, intptr_2);
+		if (!(RecoveredRuntime.AssembleRemoteCode(intPtr, @class, this) == IntPtr.Zero))
 		{
 			return intPtr;
 		}
-		this.vmethod_6(intPtr);
-		throw new InvalidOperationException(EncodedStringTable.smethod_0(28571));
-	}
-
-	internal static bool smethod_7(string string_0)
-	{
-		return Path.IsPathRooted(string_0);
-	}
-
-	internal static string smethod_8(string string_0)
-	{
-		return Path.GetFullPath(string_0);
-	}
-
-	internal static bool smethod_9(string string_0)
-	{
-		return File.Exists(string_0);
-	}
-
-	internal static string smethod_10(string string_0, string string_1, string string_2)
-	{
-		return string_0 + string_1 + string_2;
-	}
-
-	internal static FileNotFoundException smethod_11(string string_0)
-	{
-		return new FileNotFoundException(string_0);
-	}
-
-	internal static UnauthorizedAccessException smethod_12(string string_0)
-	{
-		return new UnauthorizedAccessException(string_0);
-	}
-
-	internal static MissingMethodException smethod_13(string string_0)
-	{
-		return new MissingMethodException(string_0);
-	}
-
-	internal static AccessViolationException smethod_14(string string_0)
-	{
-		return new AccessViolationException(string_0);
-	}
-
-	internal static Exception smethod_15(string string_0)
-	{
-		return new Exception(string_0);
-	}
-
-	internal static Encoding smethod_16()
-	{
-		return Encoding.Unicode;
-	}
-
-	internal static string smethod_17(string string_0, string string_1)
-	{
-		return string_0 + string_1;
-	}
-
-	internal static byte[] smethod_18(Encoding encoding_0, string string_0)
-	{
-		return encoding_0.GetBytes(string_0);
-	}
-
-	internal static InvalidOperationException smethod_19(string string_0)
-	{
-		return new InvalidOperationException(string_0);
+		this.ReleaseMemory(intPtr);
+		throw new InvalidOperationException(EncodedStringTable.DecodeString(28571));
 	}
 }

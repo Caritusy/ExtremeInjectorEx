@@ -3,152 +3,152 @@ using System.Runtime.CompilerServices;
 public interface IPeOptionalHeader
 {
 	[SpecialName]
-	ushort imethod_0();
+	ushort GetMagic();
 
 	[SpecialName]
-	byte imethod_1();
+	byte GetMajorLinkerVersion();
 
 	[SpecialName]
-	void imethod_2(byte byte_0);
+	void SetMajorLinkerVersion(byte byte_0);
 
 	[SpecialName]
-	byte imethod_3();
+	byte GetMinorLinkerVersion();
 
 	[SpecialName]
-	void imethod_4(byte byte_0);
+	void SetMinorLinkerVersion(byte byte_0);
 
 	[SpecialName]
-	uint imethod_5();
+	uint GetSizeOfCode();
 
 	[SpecialName]
-	void imethod_6(uint uint_0);
+	void SetSizeOfCode(uint uint_0);
 
 	[SpecialName]
-	uint imethod_7();
+	uint GetSizeOfInitializedData();
 
 	[SpecialName]
-	void imethod_8(uint uint_0);
+	void SetSizeOfInitializedData(uint uint_0);
 
 	[SpecialName]
-	uint imethod_9();
+	uint GetSizeOfUninitializedData();
 
 	[SpecialName]
-	void imethod_10(uint uint_0);
+	void SetSizeOfUninitializedData(uint uint_0);
 
 	[SpecialName]
-	uint imethod_11();
+	uint GetAddressOfEntryPoint();
 
 	[SpecialName]
-	void imethod_12(uint uint_0);
+	void SetAddressOfEntryPoint(uint uint_0);
 
 	[SpecialName]
-	uint imethod_13();
+	uint GetBaseOfCode();
 
 	[SpecialName]
-	void imethod_14(uint uint_0);
+	void SetBaseOfCode(uint uint_0);
 
 	[SpecialName]
-	uint imethod_15();
+	uint GetBaseOfData();
 
 	[SpecialName]
-	void imethod_16(uint uint_0);
+	void SetBaseOfData(uint uint_0);
 
 	[SpecialName]
-	ulong imethod_17();
+	ulong GetImageBase();
 
 	[SpecialName]
-	uint imethod_18();
+	uint GetSectionAlignment();
 
 	[SpecialName]
-	uint imethod_19();
+	uint GetFileAlignment();
 
 	[SpecialName]
-	ushort imethod_20();
+	ushort GetMajorOperatingSystemVersion();
 
 	[SpecialName]
-	ushort imethod_21();
+	ushort GetMinorOperatingSystemVersion();
 
 	[SpecialName]
-	ushort imethod_22();
+	ushort GetMajorImageVersion();
 
 	[SpecialName]
-	void imethod_23(ushort ushort_0);
+	void SetMajorImageVersion(ushort ushort_0);
 
 	[SpecialName]
-	ushort imethod_24();
+	ushort GetMinorImageVersion();
 
 	[SpecialName]
-	void imethod_25(ushort ushort_0);
+	void SetMinorImageVersion(ushort ushort_0);
 
 	[SpecialName]
-	ushort imethod_26();
+	ushort GetMajorSubsystemVersion();
 
 	[SpecialName]
-	ushort imethod_27();
+	ushort GetMinorSubsystemVersion();
 
 	[SpecialName]
-	uint imethod_28();
+	uint GetWin32VersionValue();
 
 	[SpecialName]
-	uint imethod_29();
+	uint GetSizeOfImage();
 
 	[SpecialName]
-	void imethod_30(uint uint_0);
+	void SetSizeOfImage(uint uint_0);
 
 	[SpecialName]
-	uint imethod_31();
+	uint GetSizeOfHeaders();
 
 	[SpecialName]
-	uint imethod_32();
+	uint GetChecksum();
 
 	[SpecialName]
-	void imethod_33(uint uint_0);
+	void SetChecksum(uint uint_0);
 
 	[SpecialName]
-	Subsystem imethod_34();
+	Subsystem GetSubsystem();
 
 	[SpecialName]
-	DllCharacteristics imethod_35();
+	DllCharacteristics GetDllCharacteristics();
 
 	[SpecialName]
-	void imethod_36(DllCharacteristics enum38_0);
+	void SetDllCharacteristics(DllCharacteristics enum38_0);
 
 	[SpecialName]
-	ulong imethod_37();
+	ulong GetSizeOfStackReserve();
 
 	[SpecialName]
-	void imethod_38(ulong ulong_0);
+	void SetSizeOfStackReserve(ulong ulong_0);
 
 	[SpecialName]
-	ulong imethod_39();
+	ulong GetSizeOfStackCommit();
 
 	[SpecialName]
-	void imethod_40(ulong ulong_0);
+	void SetSizeOfStackCommit(ulong ulong_0);
 
 	[SpecialName]
-	ulong imethod_41();
+	ulong GetSizeOfHeapReserve();
 
 	[SpecialName]
-	void imethod_42(ulong ulong_0);
+	void SetSizeOfHeapReserve(ulong ulong_0);
 
 	[SpecialName]
-	ulong imethod_43();
+	ulong GetSizeOfHeapCommit();
 
 	[SpecialName]
-	void imethod_44(ulong ulong_0);
+	void SetSizeOfHeapCommit(ulong ulong_0);
 
 	[SpecialName]
-	uint imethod_45();
+	uint GetLoaderFlags();
 
 	[SpecialName]
-	void imethod_46(uint uint_0);
+	void SetLoaderFlags(uint uint_0);
 
 	[SpecialName]
-	uint imethod_47();
+	uint GetNumberOfRvaAndSizes();
 
 	[SpecialName]
-	void imethod_48(uint uint_0);
+	void SetNumberOfRvaAndSizes(uint uint_0);
 
 	[SpecialName]
-	DataDirectory[] imethod_49();
+	DataDirectory[] GetDataDirectories();
 }

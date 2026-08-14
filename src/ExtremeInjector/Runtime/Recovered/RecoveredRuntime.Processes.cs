@@ -26,48 +26,57 @@ using Microsoft.Win32;
 public sealed partial class RecoveredRuntime
 {
 
-	internal static bool smethod_2(RemoteProcess gclass2_0)
+	internal static bool QueryProcessArchitecture(RemoteProcess gclass2_0)
 	{
 		if (!PlatformInfo.bool_0 || !PlatformInfo.bool_3)
 		{
 			return true;
 		}
-		IntPtr intPtr = RecoveredRuntime.smethod_250(gclass2_0, PlatformInfo.bool_1 ? NativeTypes.Enum32.flag_10 : NativeTypes.Enum32.flag_9, false, gclass2_0.ProcessId);
-		if (intPtr == IntPtr.Zero)
+		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(gclass2_0, PlatformInfo.bool_1 ? NativeTypes.Enum32.flag_10 : NativeTypes.Enum32.flag_9, false, gclass2_0.ProcessId);
+		if (processHandle == IntPtr.Zero)
 		{
 			return false;
 		}
-		bool flag;
-		if (!RecoveredRuntime.IsWow64Process(intPtr, out flag))
+
+		try
 		{
-			RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-			return false;
+			if (!RecoveredRuntime.IsWow64Process(processHandle, out bool isWow64))
+			{
+				return false;
+			}
+
+			gclass2_0.Is64Bit = !isWow64;
+			return true;
 		}
-		gclass2_0.Is64Bit=!flag;
-		RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-		return true;
+		finally
+		{
+			RecoveredRuntime.CloseTransientProcessHandle(gclass2_0, processHandle);
+		}
 	}
 
-	internal static void smethod_25(ProcessSelectorForm form5_0)
+	internal static void PopulateAllProcesses(ProcessSelectorForm form5_0)
 	{
 		form5_0.dataGridView_0.Rows.Clear();
-		foreach (RemoteProcess gclass in RecoveredRuntime.smethod_155())
+		foreach (RemoteProcess gclass in RecoveredRuntime.EnumerateRemoteProcesses())
 		{
-			Icon icon = RecoveredRuntime.smethod_11(gclass.FilePath, IconSize.const_1);
-			Bitmap bitmap = (icon == null) ? new Bitmap(22, 22) : RecoveredRuntime.smethod_100(icon);
+			Icon icon = RecoveredRuntime.GetFileIcon(gclass.FilePath, IconSize.const_1);
+			Bitmap bitmap = (icon == null) ? new Bitmap(22, 22) : RecoveredRuntime.CreateSmallIconBitmap(icon);
 			int index = form5_0.dataGridView_0.Rows.Add(new object[]
 			{
 				bitmap,
-				string.Format(EncodedStringTable.smethod_0(12039), gclass.ProcessId, gclass.Name)
+				string.Format(EncodedStringTable.DecodeString(12039), gclass.ProcessId, gclass.Name)
 			});
 			form5_0.dataGridView_0.Rows[index].Tag = gclass;
 		}
 		bool flag = form5_0.dataGridView_0.Rows.Count > 0;
 		form5_0.button_2.Enabled = flag;
-		form5_0.dataGridView_0.Rows[0].Selected = flag;
+		if (flag)
+		{
+			form5_0.dataGridView_0.Rows[0].Selected = true;
+		}
 	}
 
-	internal static bool smethod_27(RemoteProcess gclass2_0, IntPtr intptr_0)
+	internal static bool CloseTransientProcessHandle(RemoteProcess gclass2_0, IntPtr intptr_0)
 	{
 		if (gclass2_0.Handle != intptr_0)
 		{
@@ -76,13 +85,7 @@ public sealed partial class RecoveredRuntime
 		return true;
 	}
 
-	internal static IntPtr[] smethod_30(RemoteProcess gclass2_0, bool bool_0)
-	{
-		_ = bool_0;
-		return RemoteModuleSnapshotService.EnumerateModuleHandles(gclass2_0);
-	}
-
-	internal static ProcessModuleCollection smethod_42(RemoteProcess gclass2_0)
+	internal static ProcessModuleCollection CaptureProcessModules(RemoteProcess gclass2_0)
 	{
 		return RemoteModuleSnapshotService.Capture(gclass2_0);
 	}
@@ -91,60 +94,66 @@ public sealed partial class RecoveredRuntime
 	{
 		using (ProcessSelectorForm form = new ProcessSelectorForm())
 		{
-			return form.ShowDialog() == DialogResult.OK ? form.method_0() : null;
+			return form.ShowDialog() == DialogResult.OK ? form.SelectedProcess : null;
 		}
 	}
 
-	internal static RemoteProcess smethod_47(int int_0)
+	internal static RemoteProcess OpenRemoteProcessById(int int_0)
 	{
 		RemoteProcess gclass = new RemoteProcess((uint)int_0);
-		if (RecoveredRuntime.smethod_102(gclass))
+		if (RecoveredRuntime.InitializeRemoteProcess(gclass))
 		{
 			return gclass;
 		}
 		return null;
 	}
 
-	internal static IEnumerable<int> smethod_66(RemoteProcess gclass2_0)
+	internal static IEnumerable<int> EnumerateProcessThreadIds(RemoteProcess gclass2_0)
 	{
-		IntPtr intPtr = RecoveredRuntime.CreateToolhelp32Snapshot(NativeTypes.Enum27.flag_2, gclass2_0.ProcessId);
-		if (intPtr == IntPtr.Zero)
+		IntPtr snapshot = RecoveredRuntime.CreateToolhelp32Snapshot(NativeTypes.Enum27.flag_2, gclass2_0.ProcessId);
+		if (snapshot == IntPtr.Zero || snapshot == new IntPtr(-1))
 		{
-			return new int[0];
+			return Array.Empty<int>();
 		}
-		NativeTypes.Struct44 @struct = default(NativeTypes.Struct44);
-		@struct.uint_0 = (uint)typeof(NativeTypes.Struct44).smethod_7();
-		NativeTypes.Struct44 struct2 = @struct;
-		if (RecoveredRuntime.Thread32First(intPtr, ref struct2))
+
+		try
 		{
-			List<int> list = new List<int>();
+			NativeTypes.Struct44 threadEntry = default(NativeTypes.Struct44);
+			threadEntry.uint_0 = (uint)typeof(NativeTypes.Struct44).SizeOf();
+			if (!RecoveredRuntime.Thread32First(snapshot, ref threadEntry))
+			{
+				return Array.Empty<int>();
+			}
+
+			List<int> threadIds = new List<int>();
 			do
 			{
-				if (struct2.uint_3 == (uint)gclass2_0.ProcessId)
+				if (threadEntry.uint_3 == (uint)gclass2_0.ProcessId)
 				{
-					list.Add((int)struct2.uint_2);
+					threadIds.Add((int)threadEntry.uint_2);
 				}
 			}
-			while (RecoveredRuntime.Thread32Next(intPtr, ref struct2));
-			RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-			return list.ToArray();
+			while (RecoveredRuntime.Thread32Next(snapshot, ref threadEntry));
+			return threadIds.ToArray();
 		}
-		RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-		return new int[0];
+		finally
+		{
+			RecoveredRuntime.CloseHandle(snapshot);
+		}
 	}
 
-	internal static int smethod_73(RemoteProcess gclass2_0)
+	internal static int GetRemotePointerSize(RemoteProcess gclass2_0)
 	{
-		if (!smethod_427(gclass2_0))
+		if (!Is32BitProcess(gclass2_0))
 		{
 			return 8;
 		}
 		return 4;
 	}
 
-	internal static bool smethod_74(ProcessThreadInfo class75_0)
+	internal static bool TerminateProcessThread(ProcessThreadInfo class75_0)
 	{
-		IntPtr intPtr = RecoveredRuntime.OpenThread(NativeTypes.Enum31.flag_0, false, class75_0.method_0());
+		IntPtr intPtr = RecoveredRuntime.OpenThread(NativeTypes.Enum31.flag_0, false, class75_0.GetThreadId());
 		if (!(intPtr == IntPtr.Zero))
 		{
 			bool result = RecoveredRuntime.TerminateThread(intPtr, 0);
@@ -154,67 +163,63 @@ public sealed partial class RecoveredRuntime
 		return false;
 	}
 
-	internal static bool smethod_87(RemoteProcess gclass2_0)
+	internal static bool QueryProcessIdentity(RemoteProcess gclass2_0)
 	{
-		if (PlatformInfo.bool_1)
+		NativeTypes.Enum32 access = PlatformInfo.bool_1 ? NativeTypes.Enum32.flag_10 : NativeTypes.Enum32.flag_9;
+		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(gclass2_0, access, false, gclass2_0.ProcessId);
+		if (processHandle == IntPtr.Zero)
 		{
-			IntPtr intPtr = RecoveredRuntime.smethod_250(gclass2_0, NativeTypes.Enum32.flag_10, false, gclass2_0.ProcessId);
-			if (intPtr == IntPtr.Zero)
-			{
-				return false;
-			}
-			StringBuilder stringBuilder = new StringBuilder(255);
-			int capacity = stringBuilder.Capacity;
-			if (!RecoveredRuntime.QueryFullProcessImageName(intPtr, 0, stringBuilder, ref capacity))
-			{
-				RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-				return false;
-			}
-			gclass2_0.FilePath=stringBuilder.ToString();
-			gclass2_0.Name=Path.GetFileName(gclass2_0.FilePath);
-			RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-			return true;
-		}
-		else
-		{
-			IntPtr intPtr2 = RecoveredRuntime.smethod_250(gclass2_0, NativeTypes.Enum32.flag_9, false, gclass2_0.ProcessId);
-			if (intPtr2 == IntPtr.Zero)
-			{
-				return false;
-			}
-			StringBuilder stringBuilder2 = new StringBuilder(255);
-			if (RecoveredRuntime.GetProcessImageFileName(intPtr2, stringBuilder2, (uint)stringBuilder2.Capacity) == 0u)
-			{
-				RecoveredRuntime.smethod_27(gclass2_0, intPtr2);
-				return false;
-			}
-			string text = PlatformInfo.smethod_0(stringBuilder2.ToString());
-			if (!string.IsNullOrEmpty(text))
-			{
-				gclass2_0.FilePath=text;
-				gclass2_0.Name=Path.GetFileName(gclass2_0.FilePath);
-				RecoveredRuntime.smethod_27(gclass2_0, intPtr2);
-				return true;
-			}
-			RecoveredRuntime.smethod_27(gclass2_0, intPtr2);
 			return false;
 		}
+
+		try
+		{
+			StringBuilder pathBuilder = new StringBuilder(255);
+			if (PlatformInfo.bool_1)
+			{
+				int capacity = pathBuilder.Capacity;
+				if (!RecoveredRuntime.QueryFullProcessImageName(processHandle, 0, pathBuilder, ref capacity))
+				{
+					return false;
+				}
+			}
+			else if (RecoveredRuntime.GetProcessImageFileName(processHandle, pathBuilder, (uint)pathBuilder.Capacity) == 0u)
+			{
+				return false;
+			}
+
+			string processPath = PlatformInfo.bool_1
+				? pathBuilder.ToString()
+				: PlatformInfo.ConvertDevicePathToDosPath(pathBuilder.ToString());
+			if (string.IsNullOrEmpty(processPath))
+			{
+				return false;
+			}
+
+			gclass2_0.FilePath = processPath;
+			gclass2_0.Name = Path.GetFileName(processPath);
+			return true;
+		}
+		finally
+		{
+			RecoveredRuntime.CloseTransientProcessHandle(gclass2_0, processHandle);
+		}
 	}
 
-	internal static void smethod_88(ProcessInspectorForm form4_0)
+	internal static void UpdateThreadActionText(ProcessInspectorForm form4_0)
 	{
-		NativeThreadInfo @class = ((ProcessThreadInfo)form4_0.dataGridView_1.SelectedRows[0].Tag).method_9();
+		NativeThreadInfo @class = ((ProcessThreadInfo)form4_0.dataGridView_1.SelectedRows[0].Tag).GetNativeInfo();
 		if (@class.struct40_0.uint_3 == 5u && @class.struct40_0.enum23_0 == NativeTypes.Enum23.const_5)
 		{
-			form4_0.button_3.Text = EncodedStringTable.smethod_0(2546);
+			form4_0.button_3.Text = EncodedStringTable.DecodeString(2546);
 			return;
 		}
-		form4_0.button_3.Text = EncodedStringTable.smethod_0(12632);
+		form4_0.button_3.Text = EncodedStringTable.DecodeString(12632);
 	}
 
-	internal static bool smethod_97(ProcessThreadInfo class75_0)
+	internal static bool ResumeProcessThread(ProcessThreadInfo class75_0)
 	{
-		IntPtr intPtr = OpenThread(NativeTypes.Enum31.flag_1, bool_0: false, class75_0.method_0());
+		IntPtr intPtr = OpenThread(NativeTypes.Enum31.flag_1, bool_0: false, class75_0.GetThreadId());
 		if (intPtr == IntPtr.Zero)
 		{
 			return false;
@@ -224,92 +229,86 @@ public sealed partial class RecoveredRuntime
 		return num != -1;
 	}
 
-	internal static bool smethod_102(RemoteProcess gclass2_0)
+	internal static bool InitializeRemoteProcess(RemoteProcess gclass2_0)
 	{
-		return RecoveredRuntime.smethod_87(gclass2_0) && RecoveredRuntime.smethod_2(gclass2_0) && RecoveredRuntime.smethod_260(gclass2_0);
+		return RecoveredRuntime.QueryProcessIdentity(gclass2_0) && RecoveredRuntime.QueryProcessArchitecture(gclass2_0) && RecoveredRuntime.QueryDepPolicy(gclass2_0);
 	}
 
-	internal static bool smethod_103(ProcessModuleInfo gclass1_0, RemoteModuleManager class93_0)
+	internal static bool UnloadProcessModule(ProcessModuleInfo gclass1_0, RemoteModuleManager class93_0)
 	{
 		RemoteModuleManager.ModuleMatchContext @class = new RemoteModuleManager.ModuleMatchContext();
 		@class.gclass1_0 = gclass1_0;
-		if (RecoveredRuntime.smethod_385(class93_0, @class.gclass1_0) <= 0)
+		if (RecoveredRuntime.GetModuleReferenceCount(class93_0, @class.gclass1_0) <= 0)
 		{
 			return false;
 		}
-		if (!class93_0.method_8(class93_0.method_19().ProcessId))
+		if (!class93_0.EnsureAttachedToProcess(class93_0.GetRemoteProcess().ProcessId))
 		{
-			throw new UnauthorizedAccessException(EncodedStringTable.smethod_0(12662));
+			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(12662));
 		}
-		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(class93_0.method_19()).FirstOrDefault(new Func<ProcessModuleInfo, bool>(@class.method_0));
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(class93_0.GetRemoteProcess()).FirstOrDefault(new Func<ProcessModuleInfo, bool>(@class.MatchesArchitectureNtdll));
 		if (gclass == null)
 		{
-			throw new FileNotFoundException(EncodedStringTable.smethod_0(12731));
+			throw new FileNotFoundException(EncodedStringTable.DecodeString(12731));
 		}
-		IntPtr intPtr = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(12800), false);
+		IntPtr intPtr = RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(12800), false);
 		if (intPtr == IntPtr.Zero)
 		{
-			throw new MissingMethodException(EncodedStringTable.smethod_0(12817));
+			throw new MissingMethodException(EncodedStringTable.DecodeString(12817));
 		}
-		IntPtr intPtr2 = RecoveredRuntime.smethod_321(class93_0, intPtr, @class.gclass1_0.method_0());
+		IntPtr intPtr2 = RecoveredRuntime.StartRemoteThread(class93_0, intPtr, @class.gclass1_0.GetModuleBase());
 		if (!(intPtr2 == IntPtr.Zero))
 		{
-			RecoveredRuntime.smethod_153(class93_0, intPtr2, -1);
+			RecoveredRuntime.WaitForRemoteThread(class93_0, intPtr2, -1);
 			uint num;
 			RecoveredRuntime.GetExitCodeThread(intPtr2, out num);
-			RecoveredRuntime.smethod_108(class93_0, intPtr2);
-			return num == 0u && RecoveredRuntime.smethod_42(class93_0.method_19()).All(new Func<ProcessModuleInfo, bool>(@class.method_1));
+			RecoveredRuntime.CloseRemoteHandle(class93_0, intPtr2);
+			return num == 0u && RecoveredRuntime.CaptureProcessModules(class93_0.GetRemoteProcess()).All(new Func<ProcessModuleInfo, bool>(@class.IsDifferentModule));
 		}
-		throw new AccessViolationException(EncodedStringTable.smethod_0(12914));
+		throw new AccessViolationException(EncodedStringTable.DecodeString(12914));
 	}
 
-	internal static void smethod_108(RemoteProcessComponent class83_0, IntPtr intptr_0)
+	internal static void CloseRemoteHandle(RemoteProcessComponent class83_0, IntPtr intptr_0)
 	{
 		CloseHandle(intptr_0);
 	}
 
-	internal static bool smethod_109(ProcessModuleInfo gclass1_0)
-	{
-		return !gclass1_0.method_10();
-	}
-
-	internal static ThreadWaitReason smethod_122(NativeThreadInfo class76_0)
-	{
-		return (ThreadWaitReason)class76_0.struct40_0.enum23_0;
-	}
-
-	internal static void smethod_145(ProcessSelectorForm form5_0)
+	internal static void PopulateWindowedProcesses(ProcessSelectorForm form5_0)
 	{
 		form5_0.dataGridView_0.Rows.Clear();
-		foreach (ProcessWindowInfo @class in RecoveredRuntime.smethod_413())
+		foreach (ProcessWindowInfo window in RecoveredRuntime.EnumerateTopLevelWindows())
 		{
-			string text = RecoveredRuntime.smethod_331(@class);
-			if (RecoveredRuntime.smethod_287(@class) && text.Length != 0)
+			string title = RecoveredRuntime.GetWindowTitle(window);
+			if (!RecoveredRuntime.IsProcessWindowVisible(window) || title.Length == 0)
 			{
-				RemoteProcess gclass = RecoveredRuntime.smethod_47(@class.method_2());
-				if (gclass != null)
-				{
-					Icon icon = RecoveredRuntime.smethod_274(@class);
-					Bitmap bitmap = (icon == null) ? new Bitmap(22, 22) : RecoveredRuntime.smethod_100(icon);
-					int index = form5_0.dataGridView_0.Rows.Add(new object[]
-					{
-						bitmap,
-						string.Format(EncodedStringTable.smethod_0(12039), @class.method_2(), text)
-					});
-					form5_0.dataGridView_0.Rows[index].Tag = gclass;
-				}
+				continue;
 			}
+
+			RemoteProcess process = RecoveredRuntime.OpenRemoteProcessById(window.GetProcessId());
+			if (process == null)
+			{
+				continue;
+			}
+
+			Icon icon = RecoveredRuntime.GetWindowIcon(window);
+			Bitmap bitmap = icon == null ? new Bitmap(22, 22) : RecoveredRuntime.CreateSmallIconBitmap(icon);
+			int index = form5_0.dataGridView_0.Rows.Add(new object[]
+			{
+				bitmap,
+				string.Format(EncodedStringTable.DecodeString(12039), window.GetProcessId(), title)
+			});
+			form5_0.dataGridView_0.Rows[index].Tag = process;
 		}
 	}
 
-	internal static IntPtr smethod_146(IntPtr intptr_0, IntPtr intptr_1, bool bool_0, RemoteProcessComponent class83_0)
+	internal static IntPtr CreateRemoteThreadHandle(IntPtr intptr_0, IntPtr intptr_1, bool bool_0, RemoteProcessComponent class83_0)
 	{
 		IntPtr threadHandle;
 		if (PlatformInfo.bool_1 && NtCreateThreadEx(
 			out threadHandle,
 			2097151u,
 			IntPtr.Zero,
-			class83_0.method_2(),
+			class83_0.GetProcessHandle(),
 			intptr_1,
 			intptr_0,
 			bool_0 ? 4u : 0u,
@@ -323,10 +322,10 @@ public sealed partial class RecoveredRuntime
 
 		if (!bool_0)
 		{
-			return CreateRemoteThread(class83_0.method_2(), IntPtr.Zero, UIntPtr.Zero, intptr_1, intptr_0, 0u, IntPtr.Zero);
+			return CreateRemoteThread(class83_0.GetProcessHandle(), IntPtr.Zero, UIntPtr.Zero, intptr_1, intptr_0, 0u, IntPtr.Zero);
 		}
 
-		threadHandle = CreateRemoteThread(class83_0.method_2(), IntPtr.Zero, UIntPtr.Zero, intptr_1, intptr_0, 4u, IntPtr.Zero);
+		threadHandle = CreateRemoteThread(class83_0.GetProcessHandle(), IntPtr.Zero, UIntPtr.Zero, intptr_1, intptr_0, 4u, IntPtr.Zero);
 		if (threadHandle != IntPtr.Zero)
 		{
 			if (PlatformInfo.bool_3)
@@ -339,13 +338,13 @@ public sealed partial class RecoveredRuntime
 		return threadHandle;
 	}
 
-	internal static RemoteProcess[] smethod_148(string string_0, bool bool_0)
+	internal static RemoteProcess[] FindProcessesByName(string string_0, bool bool_0)
 	{
 		List<RemoteProcess> list = new List<RemoteProcess>();
-		foreach (RemoteProcess gclass in RecoveredRuntime.smethod_155())
+		foreach (RemoteProcess gclass in RecoveredRuntime.EnumerateRemoteProcesses())
 		{
 			string text = gclass.Name;
-			if (!bool_0 && text.EndsWith(EncodedStringTable.smethod_0(93), StringComparison.OrdinalIgnoreCase))
+			if (!bool_0 && text.EndsWith(EncodedStringTable.DecodeString(93), StringComparison.OrdinalIgnoreCase))
 			{
 				text = text.Substring(0, text.Length - 4);
 			}
@@ -357,24 +356,24 @@ public sealed partial class RecoveredRuntime
 		return list.ToArray();
 	}
 
-	internal static bool smethod_151(ProcessWindowInfo class77_0)
+	internal static bool PopulateWindowIdentifiers(ProcessWindowInfo class77_0)
 	{
-		if (!(class77_0.method_0() == IntPtr.Zero) && RecoveredRuntime.IsWindow(class77_0.method_0()))
+		if (!(class77_0.GetHandle() == IntPtr.Zero) && RecoveredRuntime.IsWindow(class77_0.GetHandle()))
 		{
 			int int_;
-			class77_0.method_4(RecoveredRuntime.GetWindowThreadProcessId(class77_0.method_0(), out int_));
-			class77_0.method_3(int_);
+			class77_0.SetThreadId(RecoveredRuntime.GetWindowThreadProcessId(class77_0.GetHandle(), out int_));
+			class77_0.SetProcessId(int_);
 			return true;
 		}
 		return false;
 	}
 
-	internal static bool smethod_153(RemoteProcessComponent class83_0, IntPtr intptr_0, int int_0)
+	internal static bool WaitForRemoteThread(RemoteProcessComponent class83_0, IntPtr intptr_0, int int_0)
 	{
 		return WaitForSingleObject(intptr_0, (int_0 == -1) ? uint.MaxValue : ((uint)int_0)) == 0;
 	}
 
-	internal static RemoteProcess[] smethod_155()
+	internal static RemoteProcess[] EnumerateRemoteProcesses()
 	{
 		uint num = 0u;
 		uint num2 = 0u;
@@ -394,7 +393,7 @@ public sealed partial class RecoveredRuntime
 			for (uint num5 = num - 1024u; num5 < num4; num5 += 1u)
 			{
 				RemoteProcess gclass = new RemoteProcess(array[(int)num5]);
-				if (RecoveredRuntime.smethod_102(gclass))
+				if (RecoveredRuntime.InitializeRemoteProcess(gclass))
 				{
 					list.Add(gclass);
 				}
@@ -404,7 +403,7 @@ public sealed partial class RecoveredRuntime
 		return list.ToArray();
 	}
 
-	internal static void smethod_156(ProcessMemoryStream stream0_0)
+	internal static void EnsureStreamOpen(ProcessMemoryStream stream0_0)
 	{
 		if (!stream0_0.bool_0)
 		{
@@ -412,13 +411,13 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static List<ProcessThreadInfo> smethod_179(RemoteProcess gclass2_0)
+	internal static List<ProcessThreadInfo> EnumerateProcessThreads(RemoteProcess gclass2_0)
 	{
 		List<ProcessThreadInfo> list = new List<ProcessThreadInfo>();
-		foreach (int int_ in RecoveredRuntime.smethod_66(gclass2_0))
+		foreach (int int_ in RecoveredRuntime.EnumerateProcessThreadIds(gclass2_0))
 		{
 			ProcessThreadInfo @class = new ProcessThreadInfo(gclass2_0, int_);
-			if (RecoveredRuntime.smethod_70(@class))
+			if (RecoveredRuntime.PopulateThreadInformation(@class))
 			{
 				list.Add(@class);
 			}
@@ -426,38 +425,38 @@ public sealed partial class RecoveredRuntime
 		return list;
 	}
 
-	internal static RemoteProcess smethod_183(IntPtr intptr_0, int int_0)
+	internal static RemoteProcess CreateRemoteProcess(IntPtr intptr_0, int int_0)
 	{
 		RemoteProcess gclass = new RemoteProcess((uint)int_0);
 		gclass.Handle=intptr_0;
 		RemoteProcess gclass2 = gclass;
-		if (RecoveredRuntime.smethod_102(gclass2))
+		if (RecoveredRuntime.InitializeRemoteProcess(gclass2))
 		{
 			return gclass2;
 		}
 		return null;
 	}
 
-	internal static ProcessModuleInfo smethod_196(ProcessModuleCollection class69_0, IntPtr intptr_0)
+	internal static ProcessModuleInfo FindModuleByBaseAddress(ProcessModuleCollection class69_0, IntPtr intptr_0)
 	{
 		ProcessModuleCollection.Class71 @class = new ProcessModuleCollection.Class71();
 		@class.intptr_0 = intptr_0;
-		return class69_0.Find(@class.method_0);
+		return class69_0.Find(@class.MatchesModuleBase);
 	}
 
-	internal unsafe static IntPtr smethod_197(LdrLoadDllStubInjector class86_0, IntPtr intptr_0, ProcessModuleInfo gclass1_0)
+	internal unsafe static IntPtr LocateLdrpLoadDll32(LdrLoadDllStubInjector class86_0, IntPtr intptr_0, ProcessModuleInfo gclass1_0)
 	{
-		byte[] array = class86_0.method_10<byte>(intptr_0, 512);
-		int num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(13703), 0);
+		byte[] array = class86_0.ReadArray<byte>(intptr_0, 512);
+		int num = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(13703), 0);
 		if (num == -1)
 		{
-			throw new InvalidOperationException(EncodedStringTable.smethod_0(13712));
+			throw new InvalidOperationException(EncodedStringTable.DecodeString(13712));
 		}
 		Array.Resize<byte>(ref array, num);
-		num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(13769), 0);
+		num = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(13769), 0);
 		if (num == -1)
 		{
-			throw new InvalidOperationException(EncodedStringTable.smethod_0(13774));
+			throw new InvalidOperationException(EncodedStringTable.DecodeString(13774));
 		}
 		fixed (byte* ptr = array)
 		{
@@ -466,9 +465,9 @@ public sealed partial class RecoveredRuntime
 			disassembly.pByte_0 = ptr + num;
 			byte* end = ptr + array.Length;
 			int instructionLength;
-			while (disassembly.pByte_0 < end && (instructionLength = RecoveredRuntime.smethod_224(ref disassembly)) > 0)
+			while (disassembly.pByte_0 < end && (instructionLength = RecoveredRuntime.DisassembleInstruction(ref disassembly)) > 0)
 			{
-				if (disassembly.struct27_0.method_0() == EncodedStringTable.smethod_0(13835))
+				if (disassembly.struct27_0.GetMnemonic() == EncodedStringTable.DecodeString(13835))
 				{
 					num = (int)(disassembly.pByte_0 - ptr);
 					break;
@@ -479,98 +478,94 @@ public sealed partial class RecoveredRuntime
 		}
 		if (num == -1)
 		{
-			throw new MissingMethodException(EncodedStringTable.smethod_0(13844));
+			throw new MissingMethodException(EncodedStringTable.DecodeString(13844));
 		}
 		int num3 = BitConverter.ToInt32(array, num + 1);
-		IntPtr intPtr = intptr_0.smethod_8(num + 5 + num3);
-		long moduleBase = gclass1_0.method_0().ToInt64();
-		long moduleEnd = checked(moduleBase + gclass1_0.method_4());
+		IntPtr intPtr = intptr_0.Add(num + 5 + num3);
+		long moduleBase = gclass1_0.GetModuleBase().ToInt64();
+		long moduleEnd = checked(moduleBase + gclass1_0.GetImageSize());
 		long targetAddress = intPtr.ToInt64();
 		if (targetAddress >= moduleBase && targetAddress < moduleEnd)
 		{
-			array = class86_0.method_10<byte>(intPtr, 15);
+			array = class86_0.ReadArray<byte>(intPtr, 15);
 			if (!PlatformInfo.bool_7)
 			{
-				string string_ = EncodedStringTable.smethod_0(14010);
-				string string_2 = EncodedStringTable.smethod_0(14027);
-				if (!RecoveredRuntime.smethod_40(0, string_, array, string_2))
+				string string_ = EncodedStringTable.DecodeString(14010);
+				string string_2 = EncodedStringTable.DecodeString(14027);
+				if (!RecoveredRuntime.MatchesMaskedBytePattern(0, string_, array, string_2))
 				{
-					throw new MissingMethodException(EncodedStringTable.smethod_0(14044));
+					throw new MissingMethodException(EncodedStringTable.DecodeString(14044));
 				}
 			}
 			return intPtr;
 		}
-		throw new MissingMethodException(EncodedStringTable.smethod_0(13929));
+		throw new MissingMethodException(EncodedStringTable.DecodeString(13929));
 	}
 
-	internal static RemoteProcess smethod_211()
+	internal static RemoteProcess GetCurrentRemoteProcess()
 	{
-		return smethod_183(GetCurrentProcess(), (int)GetCurrentProcessId());
+		return CreateRemoteProcess(GetCurrentProcess(), (int)GetCurrentProcessId());
 	}
 
 	internal static void ShowProcessInspector(RemoteProcess gclass2_0)
 	{
 		ProcessInspectorForm form = new ProcessInspectorForm();
-		form.method_1(gclass2_0);
+		form.SelectedProcess = gclass2_0;
 		form.ShowDialog();
 	}
 
-	internal static IntPtr smethod_225(ProcessModuleInfo gclass1_0, string string_0, bool bool_0)
+	internal static IntPtr ResolveExportByName(ProcessModuleInfo gclass1_0, string string_0, bool bool_0)
 	{
-		return gclass1_0.method_14(string_0, bool_0);
+		return gclass1_0.GetExportAddress(string_0, bool_0);
 	}
 
-	internal static bool smethod_229(RemoteModuleUnlinker class129_0, ProcessModuleInfo gclass1_0)
+	internal static bool UnlinkProcessModule(RemoteModuleUnlinker class129_0, ProcessModuleInfo gclass1_0)
 	{
-		return smethod_133(class129_0, gclass1_0.method_10() ? ((RemotePeb)smethod_255(class129_0.method_0())) : ((RemotePeb)smethod_369(class129_0.method_0())), gclass1_0.method_0());
+		return UnlinkModuleFromPebLists(class129_0, gclass1_0.GetIs32Bit() ? ((RemotePeb)GetPeb32(class129_0.GetRemoteProcess())) : ((RemotePeb)GetPeb64(class129_0.GetRemoteProcess())), gclass1_0.GetModuleBase());
 	}
 
-	internal static ProcessModuleInfo smethod_231(ProcessModuleInfo gclass1_0, string string_0)
+	internal static ProcessModuleInfo LoadForwardedExportModule(ProcessModuleInfo gclass1_0, string string_0)
 	{
-		string text = RecoveredRuntime.smethod_440(string_0, null, null, DependencySearchFlags.flag_2 | (RecoveredRuntime.smethod_379(gclass1_0.gclass2_0) ? DependencySearchFlags.flag_4 : DependencySearchFlags.flag_0), 0, IntPtr.Zero);
+		string text = RecoveredRuntime.ResolveDependencyPath(string_0, null, null, DependencySearchFlags.flag_2 | (RecoveredRuntime.IsWow64RemoteProcess(gclass1_0.gclass2_0) ? DependencySearchFlags.flag_4 : DependencySearchFlags.flag_0), 0, IntPtr.Zero);
 		if (string.IsNullOrEmpty(text))
 		{
 			return null;
 		}
-		ProcessModuleInfo result;
 		try
 		{
-			if (!(FileVersionInfo.GetVersionInfo(text).CompanyName != EncodedStringTable.smethod_0(14624)))
+			if (FileVersionInfo.GetVersionInfo(text).CompanyName != EncodedStringTable.DecodeString(14624))
 			{
-				using (LoadLibraryInjector @class = new LoadLibraryInjector(gclass1_0.gclass2_0))
-				{
-					IntPtr intPtr = @class.Inject(text);
-					return (!(intPtr == IntPtr.Zero)) ? RecoveredRuntime.smethod_196(RecoveredRuntime.smethod_42(gclass1_0.gclass2_0), intPtr) : null;
-				}
+				return null;
 			}
-			result = null;
+
+			using (LoadLibraryInjector injector = new LoadLibraryInjector(gclass1_0.gclass2_0))
+			{
+				IntPtr moduleBase = injector.Inject(text);
+				return moduleBase == IntPtr.Zero
+					? null
+					: RecoveredRuntime.FindModuleByBaseAddress(RecoveredRuntime.CaptureProcessModules(gclass1_0.gclass2_0), moduleBase);
+			}
 		}
 		catch
 		{
-			result = null;
+			return null;
 		}
-		return result;
 	}
 
 	internal static void ShowSettings(RemoteProcess gclass2_0)
 	{
 		SettingsForm gForm = new SettingsForm();
-		gForm.method_1(gclass2_0);
+		gForm.SelectedProcess = gclass2_0;
 		gForm.button_6.Enabled = gclass2_0 != null;
 		gForm.ShowDialog();
 	}
 
-	internal static bool smethod_246(ProcessModuleInfo gclass1_0)
+	internal static IntPtr ResolveExportByOrdinal(ProcessModuleInfo gclass1_0, ushort ushort_0, bool bool_0)
 	{
-		return RemoteModuleSnapshotService.TryPopulate(gclass1_0);
+		return gclass1_0.GetExportAddress(ushort_0, bool_0);
 	}
 
-	internal static IntPtr smethod_248(ProcessModuleInfo gclass1_0, ushort ushort_0, bool bool_0)
-	{
-		return gclass1_0.method_14(ushort_0, bool_0);
-	}
-
-	internal static IntPtr smethod_250(RemoteProcess gclass2_0, NativeTypes.Enum32 enum32_0, bool bool_0, int int_0)
+	internal static IntPtr OpenOrReuseProcessHandle(RemoteProcess gclass2_0, NativeTypes.Enum32 enum32_0, bool bool_0, int int_0)
 	{
 		if (gclass2_0.Handle != IntPtr.Zero)
 		{
@@ -579,7 +574,7 @@ public sealed partial class RecoveredRuntime
 		return OpenProcess(enum32_0, bool_0, int_0);
 	}
 
-	internal static IntPtr smethod_253(int int_0, ProcessMemoryAccess enum15_0)
+	internal static IntPtr OpenProcessMemoryHandle(int int_0, ProcessMemoryAccess enum15_0)
 	{
 		NativeTypes.Enum32 @enum;
 		if (enum15_0 == ProcessMemoryAccess.const_0)
@@ -598,21 +593,21 @@ public sealed partial class RecoveredRuntime
 		return RecoveredRuntime.OpenProcess(@enum, false, int_0);
 	}
 
-	internal static Peb32 smethod_255(RemoteProcess gclass2_0)
+	internal static Peb32 GetPeb32(RemoteProcess gclass2_0)
 	{
 		if (PlatformInfo.bool_0 && gclass2_0.Is64Bit)
 		{
 			return null;
 		}
 		Peb32 @class = (gclass2_0.Handle != IntPtr.Zero) ? new Peb32(gclass2_0, gclass2_0.Handle) : new Peb32(gclass2_0);
-		if (!RecoveredRuntime.smethod_409(@class) || !(RecoveredRuntime.smethod_270(@class) != IntPtr.Zero))
+		if (!RecoveredRuntime.TryInitializePeb32Address(@class) || !(RecoveredRuntime.GetPebAddress(@class) != IntPtr.Zero))
 		{
 			return null;
 		}
 		return gclass2_0.TrackResource(@class);
 	}
 
-	internal static bool smethod_260(RemoteProcess gclass2_0)
+	internal static bool QueryDepPolicy(RemoteProcess gclass2_0)
 	{
 		if (PlatformInfo.bool_0 && gclass2_0.Is64Bit)
 		{
@@ -624,32 +619,37 @@ public sealed partial class RecoveredRuntime
 			gclass2_0.IsDepEnabled=false;
 			return true;
 		}
-		IntPtr intPtr = RecoveredRuntime.smethod_250(gclass2_0, NativeTypes.Enum32.flag_9, false, gclass2_0.ProcessId);
-		if (intPtr == IntPtr.Zero)
+		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(gclass2_0, NativeTypes.Enum32.flag_9, false, gclass2_0.ProcessId);
+		if (processHandle == IntPtr.Zero)
 		{
 			return false;
 		}
-		uint num;
-		bool flag;
-		if (!RecoveredRuntime.GetProcessDEPPolicy(intPtr, out num, out flag))
+
+		try
 		{
-			RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-			return false;
+			if (!RecoveredRuntime.GetProcessDEPPolicy(processHandle, out uint flags, out _))
+			{
+				return false;
+			}
+
+			gclass2_0.IsDepEnabled = (flags & 1u) != 0u;
+			return true;
 		}
-		gclass2_0.IsDepEnabled=(num & 1u) > 0u;
-		RecoveredRuntime.smethod_27(gclass2_0, intPtr);
-		return true;
+		finally
+		{
+			RecoveredRuntime.CloseTransientProcessHandle(gclass2_0, processHandle);
+		}
 	}
 
-	internal static Icon smethod_274(ProcessWindowInfo class77_0)
+	internal static Icon GetWindowIcon(ProcessWindowInfo class77_0)
 	{
 		IntPtr intPtr;
-		RecoveredRuntime.SendMessageTimeout(class77_0.method_0(), 127u, (UIntPtr)1UL, IntPtr.Zero, NativeTypes.Enum20.flag_2, 250u, out intPtr);
+		RecoveredRuntime.SendMessageTimeout(class77_0.GetHandle(), 127u, (UIntPtr)1UL, IntPtr.Zero, NativeTypes.Enum20.flag_2, 250u, out intPtr);
 		if (intPtr != IntPtr.Zero)
 		{
 			return Icon.FromHandle(intPtr);
 		}
-		intPtr = RecoveredRuntime.smethod_445(class77_0.method_0(), -14);
+		intPtr = RecoveredRuntime.GetWindowClassLongPtr(class77_0.GetHandle(), -14);
 		if (!(intPtr != IntPtr.Zero))
 		{
 			return null;
@@ -657,11 +657,11 @@ public sealed partial class RecoveredRuntime
 		return Icon.FromHandle(intPtr);
 	}
 
-	internal static void smethod_283(IntPtr intptr_0, ProcessModuleCollection class69_0)
+	internal static void RemoveManualMappedModuleRecord(IntPtr intptr_0, ProcessModuleCollection class69_0)
 	{
 		for (int i = class69_0.gclass2_0.list_1.Count - 1; i >= 0; i--)
 		{
-			if (class69_0.gclass2_0.list_1[i].method_0() == intptr_0)
+			if (class69_0.gclass2_0.list_1[i].GetModuleBase() == intptr_0)
 			{
 				class69_0.gclass2_0.list_1.RemoveAt(i);
 				return;
@@ -669,19 +669,19 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static NativeLoaderHooks smethod_285(RemoteProcess gclass2_0)
+	internal static NativeLoaderHooks GetNativeLoaderHooks(RemoteProcess gclass2_0)
 	{
 		return gclass2_0.gclass3_0 ?? (gclass2_0.gclass3_0 = new NativeLoaderHooks(gclass2_0));
 	}
 
-	internal static bool smethod_287(ProcessWindowInfo class77_0)
+	internal static bool IsProcessWindowVisible(ProcessWindowInfo class77_0)
 	{
-		return IsWindowVisible(class77_0.method_0());
+		return IsWindowVisible(class77_0.GetHandle());
 	}
 
-	internal static bool smethod_300(ProcessThreadInfo class75_0)
+	internal static bool SuspendProcessThread(ProcessThreadInfo class75_0)
 	{
-		IntPtr intPtr = RecoveredRuntime.OpenThread(NativeTypes.Enum31.flag_1, false, class75_0.method_0());
+		IntPtr intPtr = RecoveredRuntime.OpenThread(NativeTypes.Enum31.flag_1, false, class75_0.GetThreadId());
 		if (intPtr == IntPtr.Zero)
 		{
 			return false;
@@ -700,18 +700,18 @@ public sealed partial class RecoveredRuntime
 
 		if (!gclass2_0.bool_4)
 		{
-			IntPtr waitHandle = smethod_250(gclass2_0, NativeTypes.Enum32.flag_11, bool_0: false, gclass2_0.ProcessId);
+			IntPtr waitHandle = OpenOrReuseProcessHandle(gclass2_0, NativeTypes.Enum32.flag_11, bool_0: false, gclass2_0.ProcessId);
 			if (waitHandle == IntPtr.Zero)
 			{
 				return true;
 			}
 
 			uint waitResult = WaitForSingleObject(waitHandle, 0u);
-			smethod_27(gclass2_0, waitHandle);
+			CloseTransientProcessHandle(gclass2_0, waitHandle);
 			return waitResult != 258u;
 		}
 
-		IntPtr queryHandle = smethod_250(
+		IntPtr queryHandle = OpenOrReuseProcessHandle(
 			gclass2_0,
 			PlatformInfo.bool_1 ? NativeTypes.Enum32.flag_10 : NativeTypes.Enum32.flag_9,
 			bool_0: false,
@@ -722,51 +722,51 @@ public sealed partial class RecoveredRuntime
 		}
 
 		bool queried = GetExitCodeProcess(queryHandle, out uint exitCode);
-		smethod_27(gclass2_0, queryHandle);
+		CloseTransientProcessHandle(gclass2_0, queryHandle);
 		return !queried || exitCode != 259u;
 	}
 
-	internal static void smethod_313(string string_0, string string_1, IntPtr intptr_0, ProcessModuleInfo gclass1_0, uint uint_0)
+	internal static void SetProcessModuleMetadata(string string_0, string string_1, IntPtr intptr_0, ProcessModuleInfo gclass1_0, uint uint_0)
 	{
-		gclass1_0.method_7(string_0);
-		gclass1_0.method_9(string_1);
-		gclass1_0.method_3(intptr_0);
-		gclass1_0.method_5(uint_0);
+		gclass1_0.SetModuleName(string_0);
+		gclass1_0.SetFilePath(string_1);
+		gclass1_0.SetEntryPoint(intptr_0);
+		gclass1_0.SetImageSize(uint_0);
 	}
 
-	internal static IntPtr smethod_321(RemoteProcessComponent class83_0, IntPtr intptr_0, IntPtr intptr_1)
+	internal static IntPtr StartRemoteThread(RemoteProcessComponent class83_0, IntPtr intptr_0, IntPtr intptr_1)
 	{
-		return smethod_146(intptr_1, intptr_0, class83_0.method_17(), class83_0);
+		return CreateRemoteThreadHandle(intptr_1, intptr_0, class83_0.GetHideRemoteThreadFromDebugger(), class83_0);
 	}
 
-	internal static bool smethod_327(RemoteModuleUnlinker class129_0, IntPtr intptr_0)
+	internal static bool UnlinkModuleByBaseAddress(RemoteModuleUnlinker class129_0, IntPtr intptr_0)
 	{
 		RemoteModuleUnlinker.Class130 @class = new RemoteModuleUnlinker.Class130();
 		@class.intptr_0 = intptr_0;
-		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(class129_0.method_0()).FirstOrDefault(new Func<ProcessModuleInfo, bool>(@class.method_0));
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(class129_0.GetRemoteProcess()).FirstOrDefault(new Func<ProcessModuleInfo, bool>(@class.MatchesModuleBase));
 		if (gclass != null)
 		{
-			return RecoveredRuntime.smethod_229(class129_0, gclass);
+			return RecoveredRuntime.UnlinkProcessModule(class129_0, gclass);
 		}
-		throw new InvalidOperationException(EncodedStringTable.smethod_0(23435));
+		throw new InvalidOperationException(EncodedStringTable.DecodeString(23435));
 	}
 
-	internal static string smethod_331(ProcessWindowInfo class77_0)
+	internal static string GetWindowTitle(ProcessWindowInfo class77_0)
 	{
-		int windowTextLength = RecoveredRuntime.GetWindowTextLength(class77_0.method_0());
+		int windowTextLength = RecoveredRuntime.GetWindowTextLength(class77_0.GetHandle());
 		if (windowTextLength == 0)
 		{
 			return string.Empty;
 		}
 		StringBuilder stringBuilder = new StringBuilder(windowTextLength + 1);
-		if (RecoveredRuntime.GetWindowText(class77_0.method_0(), stringBuilder, stringBuilder.Capacity) == 0)
+		if (RecoveredRuntime.GetWindowText(class77_0.GetHandle(), stringBuilder, stringBuilder.Capacity) == 0)
 		{
 			return string.Empty;
 		}
 		return stringBuilder.ToString();
 	}
 
-	internal static void smethod_334(ProcessSelectorForm form5_0)
+	internal static void InitializeProcessSelectorForm(ProcessSelectorForm form5_0)
 	{
 		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(ProcessSelectorForm));
 		form5_0.dataGridView_0 = new DataGridView();
@@ -794,7 +794,7 @@ public sealed partial class RecoveredRuntime
 		form5_0.dataGridView_0.EditMode = DataGridViewEditMode.EditProgrammatically;
 		form5_0.dataGridView_0.Location = new Point(11, 13);
 		form5_0.dataGridView_0.MultiSelect = false;
-		form5_0.dataGridView_0.Name = EncodedStringTable.smethod_0(23504);
+		form5_0.dataGridView_0.Name = EncodedStringTable.DecodeString(23504);
 		form5_0.dataGridView_0.ReadOnly = true;
 		form5_0.dataGridView_0.RowHeadersVisible = false;
 		form5_0.dataGridView_0.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
@@ -802,44 +802,44 @@ public sealed partial class RecoveredRuntime
 		form5_0.dataGridView_0.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 		form5_0.dataGridView_0.Size = new Size(248, 204);
 		form5_0.dataGridView_0.TabIndex = 0;
-		form5_0.dataGridView_0.CellContentDoubleClick += form5_0.method_5;
+		form5_0.dataGridView_0.CellContentDoubleClick += form5_0.OnProcessDoubleClick;
 		form5_0.dataGridViewImageColumn_0.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-		form5_0.dataGridViewImageColumn_0.HeaderText = EncodedStringTable.smethod_0(394);
-		form5_0.dataGridViewImageColumn_0.Name = EncodedStringTable.smethod_0(23541);
+		form5_0.dataGridViewImageColumn_0.HeaderText = EncodedStringTable.DecodeString(394);
+		form5_0.dataGridViewImageColumn_0.Name = EncodedStringTable.DecodeString(23541);
 		form5_0.dataGridViewImageColumn_0.ReadOnly = true;
 		form5_0.dataGridViewImageColumn_0.Width = 32;
 		form5_0.dataGridViewTextBoxColumn_0.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-		form5_0.dataGridViewTextBoxColumn_0.HeaderText = EncodedStringTable.smethod_0(394);
-		form5_0.dataGridViewTextBoxColumn_0.Name = EncodedStringTable.smethod_0(23566);
+		form5_0.dataGridViewTextBoxColumn_0.HeaderText = EncodedStringTable.DecodeString(394);
+		form5_0.dataGridViewTextBoxColumn_0.Name = EncodedStringTable.DecodeString(23566);
 		form5_0.dataGridViewTextBoxColumn_0.ReadOnly = true;
 		form5_0.button_0.Location = new Point(10, 223);
-		form5_0.button_0.Name = EncodedStringTable.smethod_0(23591);
+		form5_0.button_0.Name = EncodedStringTable.DecodeString(23591);
 		form5_0.button_0.Size = new Size(122, 23);
 		form5_0.button_0.TabIndex = 1;
-		form5_0.button_0.Text = EncodedStringTable.smethod_0(23616);
+		form5_0.button_0.Text = EncodedStringTable.DecodeString(23616);
 		form5_0.button_0.UseVisualStyleBackColor = true;
-		form5_0.button_0.Click += form5_0.method_4;
+		form5_0.button_0.Click += form5_0.OnAllProcessesClick;
 		form5_0.button_1.Location = new Point(138, 223);
-		form5_0.button_1.Name = EncodedStringTable.smethod_0(23633);
+		form5_0.button_1.Name = EncodedStringTable.DecodeString(23633);
 		form5_0.button_1.Size = new Size(122, 23);
 		form5_0.button_1.TabIndex = 2;
-		form5_0.button_1.Text = EncodedStringTable.smethod_0(23658);
+		form5_0.button_1.Text = EncodedStringTable.DecodeString(23658);
 		form5_0.button_1.UseVisualStyleBackColor = true;
-		form5_0.button_1.Click += form5_0.method_6;
+		form5_0.button_1.Click += form5_0.OnWindowedProcessesClick;
 		form5_0.button_2.Location = new Point(10, 252);
-		form5_0.button_2.Name = EncodedStringTable.smethod_0(23675);
+		form5_0.button_2.Name = EncodedStringTable.DecodeString(23675);
 		form5_0.button_2.Size = new Size(122, 23);
 		form5_0.button_2.TabIndex = 3;
-		form5_0.button_2.Text = EncodedStringTable.smethod_0(23692);
+		form5_0.button_2.Text = EncodedStringTable.DecodeString(23692);
 		form5_0.button_2.UseVisualStyleBackColor = true;
-		form5_0.button_2.Click += form5_0.method_3;
+		form5_0.button_2.Click += form5_0.OnSelectClick;
 		form5_0.button_3.Location = new Point(138, 252);
-		form5_0.button_3.Name = EncodedStringTable.smethod_0(23701);
+		form5_0.button_3.Name = EncodedStringTable.DecodeString(23701);
 		form5_0.button_3.Size = new Size(122, 23);
 		form5_0.button_3.TabIndex = 4;
-		form5_0.button_3.Text = EncodedStringTable.smethod_0(23718);
+		form5_0.button_3.Text = EncodedStringTable.DecodeString(23718);
 		form5_0.button_3.UseVisualStyleBackColor = true;
-		form5_0.button_3.Click += form5_0.method_2;
+		form5_0.button_3.Click += form5_0.OnCancelClick;
 		form5_0.AutoScaleDimensions = new SizeF(96f, 96f);
 		form5_0.AutoScaleMode = AutoScaleMode.Dpi;
 		form5_0.ClientSize = new Size(270, 283);
@@ -848,28 +848,28 @@ public sealed partial class RecoveredRuntime
 		form5_0.Controls.Add(form5_0.button_1);
 		form5_0.Controls.Add(form5_0.button_0);
 		form5_0.Controls.Add(form5_0.dataGridView_0);
-		form5_0.Font = new Font(EncodedStringTable.smethod_0(11956), 8.25f);
+		form5_0.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
 		form5_0.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-		form5_0.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.smethod_0(13062));
+		form5_0.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
 		form5_0.MaximizeBox = false;
 		form5_0.MinimizeBox = false;
-		form5_0.Name = EncodedStringTable.smethod_0(23727);
-		form5_0.Text = EncodedStringTable.smethod_0(23616);
+		form5_0.Name = EncodedStringTable.DecodeString(23727);
+		form5_0.Text = EncodedStringTable.DecodeString(23616);
 		((ISupportInitialize)form5_0.dataGridView_0).EndInit();
 		form5_0.ResumeLayout(false);
 	}
 
-	internal unsafe static IntPtr smethod_335(IntPtr intptr_0, LdrLoadDllStubInjector class86_0, ProcessModuleInfo gclass1_0)
+	internal unsafe static IntPtr LocateLdrpLoadDll64(IntPtr intptr_0, LdrLoadDllStubInjector class86_0, ProcessModuleInfo gclass1_0)
 	{
-		byte[] array = class86_0.method_10<byte>(intptr_0, 512);
-		int num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(23752), 0);
+		byte[] array = class86_0.ReadArray<byte>(intptr_0, 512);
+		int num = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(23752), 0);
 		if (num == -1)
 		{
-			num = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(23761), EncodedStringTable.smethod_0(23770), 0);
+			num = RecoveredRuntime.FindMaskedPattern(array, EncodedStringTable.DecodeString(23761), EncodedStringTable.DecodeString(23770), 0);
 		}
 		if (num == -1)
 		{
-			throw new InvalidOperationException(EncodedStringTable.smethod_0(23779));
+			throw new InvalidOperationException(EncodedStringTable.DecodeString(23779));
 		}
 		fixed (byte* ptr = array)
 		{
@@ -879,9 +879,9 @@ public sealed partial class RecoveredRuntime
 			BeaEngineDisasm struct2 = @struct;
 			byte* ptr2 = ptr + array.Length;
 			int num2;
-			while (struct2.pByte_0 < ptr2 && (num2 = RecoveredRuntime.smethod_224(ref struct2)) > 0)
+			while (struct2.pByte_0 < ptr2 && (num2 = RecoveredRuntime.DisassembleInstruction(ref struct2)) > 0)
 			{
-				if (struct2.struct27_0.method_0() == EncodedStringTable.smethod_0(13835))
+				if (struct2.struct27_0.GetMnemonic() == EncodedStringTable.DecodeString(13835))
 				{
 					num = (int)((long)(struct2.pByte_0 - ptr));
 					break;
@@ -891,43 +891,43 @@ public sealed partial class RecoveredRuntime
 		}
 		if (num == -1)
 		{
-			throw new MissingMethodException(EncodedStringTable.smethod_0(13844));
+			throw new MissingMethodException(EncodedStringTable.DecodeString(13844));
 		}
 		int num3 = BitConverter.ToInt32(array, num + 1);
-		IntPtr intPtr = intptr_0.smethod_8(num + 5 + num3);
-		long moduleBase = gclass1_0.method_0().ToInt64();
-		long moduleEnd = checked(moduleBase + gclass1_0.method_4());
+		IntPtr intPtr = intptr_0.Add(num + 5 + num3);
+		long moduleBase = gclass1_0.GetModuleBase().ToInt64();
+		long moduleEnd = checked(moduleBase + gclass1_0.GetImageSize());
 		long targetAddress = intPtr.ToInt64();
 		if (targetAddress < moduleBase || targetAddress >= moduleEnd)
 		{
-			throw new MissingMethodException(EncodedStringTable.smethod_0(13929));
+			throw new MissingMethodException(EncodedStringTable.DecodeString(13929));
 		}
-		array = class86_0.method_10<byte>(intPtr, 48);
-		num = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(23836), EncodedStringTable.smethod_0(23869), 0);
+		array = class86_0.ReadArray<byte>(intPtr, 48);
+		num = RecoveredRuntime.FindMaskedPattern(array, EncodedStringTable.DecodeString(23836), EncodedStringTable.DecodeString(23869), 0);
 		if (PlatformInfo.bool_7 || num != -1)
 		{
 			return intPtr;
 		}
-		throw new MissingMethodException(EncodedStringTable.smethod_0(14044));
+		throw new MissingMethodException(EncodedStringTable.DecodeString(14044));
 	}
 
-	internal static Peb64 smethod_369(RemoteProcess gclass2_0)
+	internal static Peb64 GetPeb64(RemoteProcess gclass2_0)
 	{
-		if (!PlatformInfo.bool_0 && RecoveredRuntime.smethod_427(gclass2_0))
+		if (!PlatformInfo.bool_0 && RecoveredRuntime.Is32BitProcess(gclass2_0))
 		{
 			return null;
 		}
 		Peb64 @class = (gclass2_0.Handle != IntPtr.Zero) ? new Peb64(gclass2_0, gclass2_0.Handle) : new Peb64(gclass2_0);
-		if (!RecoveredRuntime.smethod_281(@class) || !(RecoveredRuntime.smethod_270(@class) != IntPtr.Zero))
+		if (!RecoveredRuntime.TryInitializePeb64Address(@class) || !(RecoveredRuntime.GetPebAddress(@class) != IntPtr.Zero))
 		{
 			return null;
 		}
 		return gclass2_0.TrackResource(@class);
 	}
 
-	internal static bool smethod_379(RemoteProcess gclass2_0)
+	internal static bool IsWow64RemoteProcess(RemoteProcess gclass2_0)
 	{
-		if (smethod_427(gclass2_0))
+		if (Is32BitProcess(gclass2_0))
 		{
 			return PlatformInfo.bool_0;
 		}
@@ -985,7 +985,7 @@ public sealed partial class RecoveredRuntime
 	{
 		try
 		{
-			using (Icon icon = smethod_11(process.FilePath, IconSize.const_1))
+			using (Icon icon = GetFileIcon(process.FilePath, IconSize.const_1))
 			{
 				return icon?.ToBitmap();
 			}
@@ -1016,65 +1016,59 @@ public sealed partial class RecoveredRuntime
 			: description;
 	}
 
-	internal static int smethod_385(RemoteModuleManager class93_0, ProcessModuleInfo gclass1_0)
+	internal static int GetModuleReferenceCount(RemoteModuleManager class93_0, ProcessModuleInfo gclass1_0)
 	{
-		if (gclass1_0.method_10())
+		if (gclass1_0.GetIs32Bit())
 		{
-			return smethod_129(class93_0, smethod_255(class93_0.method_19()), gclass1_0.method_0());
+			return GetLoaderModuleReferenceCount(class93_0, GetPeb32(class93_0.GetRemoteProcess()), gclass1_0.GetModuleBase());
 		}
-		return smethod_129(class93_0, smethod_369(class93_0.method_19()), gclass1_0.method_0());
+		return GetLoaderModuleReferenceCount(class93_0, GetPeb64(class93_0.GetRemoteProcess()), gclass1_0.GetModuleBase());
 	}
 
-	internal static bool smethod_399(RemoteProcess gclass2_0)
+	internal static long CalculateProcessMemoryLength(ProcessMemoryStream stream0_0, IntPtr intptr_0)
 	{
-		return gclass2_0.bool_2;
-	}
-
-	internal static ThreadState smethod_402(NativeThreadInfo class76_0)
-	{
-		return (ThreadState)class76_0.struct40_0.uint_3;
-	}
-
-	internal static long smethod_407(ProcessMemoryStream stream0_0, IntPtr intptr_0)
-	{
-		long num = 0L;
-		IntPtr intptr_ = intptr_0;
-		NativeTypes.Struct47 @struct;
-		while (NativeTypes.VirtualQueryEx(stream0_0.intptr_0, intptr_, out @struct, (uint)NativeTypes.int_0) == 0 && ((@struct.enum34_1 & NativeTypes.Enum34.flag_5) != (NativeTypes.Enum34)0u || (@struct.enum34_1 & NativeTypes.Enum34.flag_6) != (NativeTypes.Enum34)0u || (@struct.enum34_1 & NativeTypes.Enum34.flag_2) != (NativeTypes.Enum34)0u || (@struct.enum34_1 & NativeTypes.Enum34.flag_1) != (NativeTypes.Enum34)0u))
+		long length = 0L;
+		IntPtr currentAddress = intptr_0;
+		NativeTypes.Struct47 region;
+		while (NativeTypes.VirtualQueryEx(stream0_0.intptr_0, currentAddress, out region, (uint)NativeTypes.int_0) != 0 &&
+			((region.enum34_1 & NativeTypes.Enum34.flag_5) != (NativeTypes.Enum34)0 ||
+			 (region.enum34_1 & NativeTypes.Enum34.flag_6) != (NativeTypes.Enum34)0 ||
+			 (region.enum34_1 & NativeTypes.Enum34.flag_2) != (NativeTypes.Enum34)0 ||
+			 (region.enum34_1 & NativeTypes.Enum34.flag_1) != (NativeTypes.Enum34)0))
 		{
-			num += @struct.intptr_2.ToInt64();
-			intptr_ = @struct.intptr_0.smethod_10(@struct.intptr_2);
+			length += region.intptr_2.ToInt64();
+			currentAddress = region.intptr_0.Add(region.intptr_2);
 		}
-		return num;
+		return length;
 	}
 
-	internal static void smethod_411(RemoteProcess gclass2_0)
+	internal static void TerminateRemoteProcess(RemoteProcess gclass2_0)
 	{
-		IntPtr intPtr = RecoveredRuntime.smethod_250(gclass2_0, NativeTypes.Enum32.flag_1, false, gclass2_0.ProcessId);
+		IntPtr intPtr = RecoveredRuntime.OpenOrReuseProcessHandle(gclass2_0, NativeTypes.Enum32.flag_1, false, gclass2_0.ProcessId);
 		if (intPtr == IntPtr.Zero)
 		{
-			throw new InvalidOperationException(EncodedStringTable.smethod_0(27572));
+			throw new InvalidOperationException(EncodedStringTable.DecodeString(27572));
 		}
 		bool flag = RecoveredRuntime.TerminateProcess(intPtr, -1);
-		RecoveredRuntime.smethod_27(gclass2_0, intPtr);
+		RecoveredRuntime.CloseTransientProcessHandle(gclass2_0, intPtr);
 		if (flag)
 		{
 			return;
 		}
-		throw new Win32Exception(EncodedStringTable.smethod_0(27609));
+		throw new Win32Exception(EncodedStringTable.DecodeString(27609));
 	}
 
-	internal static ProcessWindowInfo[] smethod_413()
+	internal static ProcessWindowInfo[] EnumerateTopLevelWindows()
 	{
 		ProcessWindowInfo.Class78 obj = new ProcessWindowInfo.Class78
 		{
 			list_0 = new List<ProcessWindowInfo>()
 		};
-		EnumWindows(obj.method_0, IntPtr.Zero);
+		EnumWindows(obj.CollectWindow, IntPtr.Zero);
 		return obj.list_0.ToArray();
 	}
 
-	internal static bool smethod_427(RemoteProcess gclass2_0)
+	internal static bool Is32BitProcess(RemoteProcess gclass2_0)
 	{
 		return !gclass2_0.Is64Bit;
 	}
@@ -1088,7 +1082,7 @@ public sealed partial class RecoveredRuntime
 			return;
 		}
 
-		RemoteProcess process = smethod_148(processName, bool_0: true).FirstOrDefault();
+		RemoteProcess process = FindProcessesByName(processName, bool_0: true).FirstOrDefault();
 		SetSelectedProcess(mainForm, process);
 	}
 }

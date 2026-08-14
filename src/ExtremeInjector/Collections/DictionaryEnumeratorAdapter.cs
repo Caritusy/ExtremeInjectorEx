@@ -23,7 +23,7 @@ public sealed class DictionaryEnumeratorAdapter<T, U> : IDisposable, IEnumerator
 
 	void IDisposable.Dispose()
 	{
-		smethod_0(ienumerator_0);
+		ienumerator_0.Dispose();
 	}
 
 	public DictionaryEnumeratorAdapter(IEnumerable<KeyValuePair<T, U>> ienumerable_0)
@@ -33,26 +33,11 @@ public sealed class DictionaryEnumeratorAdapter<T, U> : IDisposable, IEnumerator
 
 	void IEnumerator.Reset()
 	{
-		smethod_1(ienumerator_0);
+		ienumerator_0.Reset();
 	}
 
 	bool IEnumerator.MoveNext()
 	{
-		return smethod_2(ienumerator_0);
-	}
-
-	internal static void smethod_0(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
-	}
-
-	internal static void smethod_1(IEnumerator ienumerator_1)
-	{
-		ienumerator_1.Reset();
-	}
-
-	internal static bool smethod_2(IEnumerator ienumerator_1)
-	{
-		return ienumerator_1.MoveNext();
+		return ienumerator_0.MoveNext();
 	}
 }

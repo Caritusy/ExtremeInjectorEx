@@ -4,12 +4,12 @@ public abstract class LzmaCodecConstants
 	{
 		public uint uint_0;
 
-		public void method_0()
+		public void Initialize()
 		{
 			uint_0 = 0u;
 		}
 
-		public void method_1()
+		public void UpdateLiteral()
 		{
 			if (uint_0 < 4)
 			{
@@ -25,22 +25,22 @@ public abstract class LzmaCodecConstants
 			}
 		}
 
-		public void method_2()
+		public void UpdateMatch()
 		{
 			uint_0 = ((uint_0 < 7) ? 7u : 10u);
 		}
 
-		public void method_3()
+		public void UpdateRepeatedMatch()
 		{
 			uint_0 = ((uint_0 < 7) ? 8u : 11u);
 		}
 
-		public void method_4()
+		public void UpdateShortRepeatedMatch()
 		{
 			uint_0 = ((uint_0 < 7) ? 9u : 11u);
 		}
 
-		public bool method_5()
+		public bool IsLiteralState()
 		{
 			return uint_0 < 7;
 		}
@@ -92,7 +92,7 @@ public abstract class LzmaCodecConstants
 
 	public const uint uint_14 = default(uint);
 
-	public static uint smethod_0(uint uint_15)
+	public static uint GetLengthToPositionState(uint uint_15)
 	{
 		uint_15 -= 2;
 		if (uint_15 < 4)

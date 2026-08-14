@@ -27,78 +27,78 @@ public sealed class ProcessThreadInfo
 
 	[SpecialName]
 	[CompilerGenerated]
-	public int method_0()
+	public int GetThreadId()
 	{
 		return int_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(int int_3)
+	internal void SetThreadId(int int_3)
 	{
 		int_0 = int_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public IntPtr method_2()
+	public IntPtr GetStartAddress()
 	{
 		return intptr_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_3(IntPtr intptr_2)
+	internal void SetStartAddress(IntPtr intptr_2)
 	{
 		intptr_0 = intptr_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_4(int int_3)
+	internal void SetBasePriority(int int_3)
 	{
 		int_1 = int_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_5(int int_3)
+	internal void SetCurrentPriority(int int_3)
 	{
 		int_2 = int_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_6(IntPtr intptr_2)
+	internal void SetTebAddress(IntPtr intptr_2)
 	{
 		intptr_1 = intptr_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ThreadPriorityLevel method_7()
+	public ThreadPriorityLevel GetPriorityLevel()
 	{
 		return threadPriorityLevel_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_8(ThreadPriorityLevel threadPriorityLevel_1)
+	internal void SetPriorityLevel(ThreadPriorityLevel threadPriorityLevel_1)
 	{
 		threadPriorityLevel_0 = threadPriorityLevel_1;
 	}
 
 	[SpecialName]
-	public NativeThreadInfo method_9()
+	public NativeThreadInfo GetNativeInfo()
 	{
-		foreach (NativeProcessInfo @class in RecoveredRuntime.smethod_21())
+		foreach (NativeProcessInfo @class in RecoveredRuntime.EnumerateSystemProcesses())
 		{
-			if (@class.method_0().intptr_0.ToInt64() == this.gclass2_0.ProcessId)
+			if (@class.GetProcessRecord().intptr_0.ToInt64() == this.gclass2_0.ProcessId)
 			{
-				foreach (NativeTypes.Struct40 @struct in @class.method_2())
+				foreach (NativeTypes.Struct40 @struct in @class.GetThreads())
 				{
 					IntPtr intPtr = @struct.struct48_0.intptr_1;
-					if (intPtr.ToInt64() == (long)this.method_0())
+					if (intPtr.ToInt64() == (long)this.GetThreadId())
 					{
 						return new NativeThreadInfo(@struct);
 					}
@@ -111,6 +111,6 @@ public sealed class ProcessThreadInfo
 	internal ProcessThreadInfo(RemoteProcess gclass2_1, int int_3)
 	{
 		gclass2_0 = gclass2_1;
-		method_1(int_3);
+		SetThreadId(int_3);
 	}
 }

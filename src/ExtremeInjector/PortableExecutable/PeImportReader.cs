@@ -7,15 +7,15 @@ public sealed class PeImportReader : PeImageReader
 	{
 	}
 
-	protected override void method_0040()
+	protected override void ReadDirectories()
 	{
-		class154_0.method_11(RecoveredRuntime.smethod_24(class154_0, this));
+		class154_0.SetImports(RecoveredRuntime.ReadImportDirectory(class154_0, this));
 	}
 
-	public static PeImage smethod_13(Stream stream_0, string string_0, bool bool_0, PeImageLayout enum39_0)
+	public static PeImage ReadImports(Stream stream_0, string string_0, bool bool_0, PeImageLayout enum39_0)
 	{
 		PeImportReader @class = new PeImportReader(stream_0, string_0, bool_0, enum39_0);
-		if (!@class.vmethod_0())
+		if (!@class.TryRead())
 		{
 			return null;
 		}

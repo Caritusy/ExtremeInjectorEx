@@ -29,105 +29,105 @@ public sealed class ImportDescriptor
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_0()
+	public uint GetOriginalFirstThunk()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(uint uint_5)
+	public void SetOriginalFirstThunk(uint uint_5)
 	{
 		uint_0 = uint_5;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_2(uint uint_5)
+	public void SetTimeDateStamp(uint uint_5)
 	{
 		uint_1 = uint_5;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(uint uint_5)
+	public void SetForwarderChain(uint uint_5)
 	{
 		uint_2 = uint_5;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_4()
+	public uint GetNameRva()
 	{
 		return uint_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(uint uint_5)
+	public void SetNameRva(uint uint_5)
 	{
 		uint_3 = uint_5;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_6()
+	public uint GetFirstThunk()
 	{
 		return uint_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_7(uint uint_5)
+	public void SetFirstThunk(uint uint_5)
 	{
 		uint_4 = uint_5;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public List<ImportedSymbol> method_8()
+	public List<ImportedSymbol> GetOriginalThunkSymbols()
 	{
 		return list_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_9(List<ImportedSymbol> list_2)
+	public void SetOriginalThunkSymbols(List<ImportedSymbol> list_2)
 	{
 		list_0 = list_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public List<ImportedSymbol> method_10()
+	public List<ImportedSymbol> GetFirstThunkSymbols()
 	{
 		return list_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_11(List<ImportedSymbol> list_2)
+	public void SetFirstThunkSymbols(List<ImportedSymbol> list_2)
 	{
 		list_1 = list_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_12()
+	public string GetModuleName()
 	{
 		return string_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_13(string string_1)
+	public void SetModuleName(string string_1)
 	{
 		string_0 = string_1;
 	}
 
 	public ImportDescriptor()
 	{
-		this.method_9(new List<ImportedSymbol>());
-		this.method_11(new List<ImportedSymbol>());
+		this.SetOriginalThunkSymbols(new List<ImportedSymbol>());
+		this.SetFirstThunkSymbols(new List<ImportedSymbol>());
 	}
 }

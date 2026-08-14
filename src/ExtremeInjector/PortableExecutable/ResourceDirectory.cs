@@ -13,14 +13,14 @@ public sealed class ResourceDirectory
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ResourceDirectoryNode method_0()
+	public ResourceDirectoryNode GetRoot()
 	{
 		return class138_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(ResourceDirectoryNode class138_1)
+	public void SetRoot(ResourceDirectoryNode class138_1)
 	{
 		class138_0 = class138_1;
 	}
@@ -30,6 +30,6 @@ public sealed class ResourceDirectory
 		class5_0 = class5_1;
 		long_0 = long_1;
 		uint_0 = uint_1;
-		method_1(new ResourceDirectoryNode("root", this, (long_0 <= 0L) ? (-1) : 0));
+		SetRoot(new ResourceDirectoryNode("root", this, (long_0 <= 0L) ? (-1) : 0));
 	}
 }

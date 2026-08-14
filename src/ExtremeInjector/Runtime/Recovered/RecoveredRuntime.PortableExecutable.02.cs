@@ -26,21 +26,21 @@ using Microsoft.Win32;
 public sealed partial class RecoveredRuntime
 {
 
-	internal static void smethod_284(PeScrambler gclass4_0, PeSectionHeader gclass5_0)
+	internal static void CreateDecoyEntryPoint(PeScrambler gclass4_0, PeSectionHeader gclass5_0)
 	{
-		gclass5_0.method_19((SectionCharacteristics)3758096384u);
-		gclass4_0.class154_0.method_28().Position = (long)((ulong)gclass5_0.method_8());
-		long position = gclass4_0.class154_0.method_28().Position;
+		gclass5_0.SetCharacteristics((SectionCharacteristics)3758096384u);
+		gclass4_0.class154_0.GetStream().Position = (long)((ulong)gclass5_0.GetPointerToRawData());
+		long position = gclass4_0.class154_0.GetStream().Position;
 		gclass4_0.binaryWriter_0.Write(233);
 		gclass4_0.binaryWriter_0.Write(0);
-		int num = gclass4_0.random_0.Next((int)(gclass5_0.method_2() / 50u), (int)(gclass5_0.method_2() / 25u));
+		int num = gclass4_0.random_0.Next((int)(gclass5_0.GetVirtualSize() / 50u), (int)(gclass5_0.GetVirtualSize() / 25u));
 		byte[] buffer = new byte[num];
 		gclass4_0.random_0.NextBytes(buffer);
 		gclass4_0.binaryWriter_0.Write(buffer);
 		int num2 = -1;
-		for (int i = 0; i < gclass4_0.random_0.Next((int)(gclass5_0.method_2() / 10u), (int)(gclass5_0.method_2() / 8u)); i++)
+		for (int i = 0; i < gclass4_0.random_0.Next((int)(gclass5_0.GetVirtualSize() / 10u), (int)(gclass5_0.GetVirtualSize() / 8u)); i++)
 		{
-			int num3 = PeScrambler.smethod_0<int>(num2, () => gclass4_0.random_0.Next(53));
+			int num3 = PeScrambler.GenerateDifferentValue<int>(num2, () => gclass4_0.random_0.Next(53));
 			while (num2 != -1 && ((num3 >= 15 && num3 <= 30) || (num3 >= 39 && num3 <= 45)) && num2 >= 15 && num2 <= 30)
 			{
 				num3 = gclass4_0.random_0.Next(53);
@@ -49,7 +49,7 @@ public sealed partial class RecoveredRuntime
 			{
 				num3 = gclass4_0.random_0.Next(15, 31);
 			}
-			long position2 = gclass4_0.class154_0.method_28().Position;
+			long position2 = gclass4_0.class154_0.GetStream().Position;
 			switch (num3)
 			{
 			case 0:
@@ -57,31 +57,31 @@ public sealed partial class RecoveredRuntime
 				break;
 			case 1:
 				gclass4_0.binaryWriter_0.Write(184);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 2:
 				gclass4_0.binaryWriter_0.Write(185);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 3:
 				gclass4_0.binaryWriter_0.Write(186);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 4:
 				gclass4_0.binaryWriter_0.Write(187);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 5:
 				gclass4_0.binaryWriter_0.Write(189);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 6:
 				gclass4_0.binaryWriter_0.Write(190);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 7:
 				gclass4_0.binaryWriter_0.Write(191);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 8:
 				gclass4_0.binaryWriter_0.Write(new byte[]
@@ -343,7 +343,7 @@ public sealed partial class RecoveredRuntime
 				break;
 			case 46:
 				gclass4_0.binaryWriter_0.Write(5);
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 47:
 				gclass4_0.binaryWriter_0.Write(new byte[]
@@ -351,7 +351,7 @@ public sealed partial class RecoveredRuntime
 					129,
 					193
 				});
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 48:
 				gclass4_0.binaryWriter_0.Write(new byte[]
@@ -359,7 +359,7 @@ public sealed partial class RecoveredRuntime
 					129,
 					194
 				});
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 49:
 				gclass4_0.binaryWriter_0.Write(new byte[]
@@ -367,7 +367,7 @@ public sealed partial class RecoveredRuntime
 					129,
 					195
 				});
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 50:
 				gclass4_0.binaryWriter_0.Write(new byte[]
@@ -375,7 +375,7 @@ public sealed partial class RecoveredRuntime
 					129,
 					197
 				});
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 51:
 				gclass4_0.binaryWriter_0.Write(new byte[]
@@ -383,7 +383,7 @@ public sealed partial class RecoveredRuntime
 					129,
 					198
 				});
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			case 52:
 				gclass4_0.binaryWriter_0.Write(new byte[]
@@ -391,20 +391,20 @@ public sealed partial class RecoveredRuntime
 					129,
 					199
 				});
-				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.smethod_0());
+				gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
 				break;
 			}
-			long num4 = gclass4_0.class154_0.method_28().Position - position2;
+			long num4 = gclass4_0.class154_0.GetStream().Position - position2;
 			if (num2 >= 15 && num2 <= 30)
 			{
-				gclass4_0.class154_0.method_28().Position -= num4 + 1L;
+				gclass4_0.class154_0.GetStream().Position -= num4 + 1L;
 				gclass4_0.binaryWriter_0.Write((byte)num4);
-				gclass4_0.class154_0.method_28().Position += num4;
+				gclass4_0.class154_0.GetStream().Position += num4;
 			}
 			num2 = num3;
 		}
 		gclass4_0.binaryWriter_0.Write(233);
-		int num5 = (int)(gclass4_0.class154_0.method_28().Position - position - 30L);
+		int num5 = (int)(gclass4_0.class154_0.GetStream().Position - position - 30L);
 		if (num5 < 0)
 		{
 			num5 = 2;
@@ -419,16 +419,16 @@ public sealed partial class RecoveredRuntime
 		{
 		case 0:
 		{
-			uint num7 = gclass4_0.random_0.smethod_0();
+			uint num7 = gclass4_0.random_0.NextUInt32();
 			gclass4_0.binaryWriter_0.Write(184);
 			gclass4_0.binaryWriter_0.Write(num7);
 			gclass4_0.binaryWriter_0.Write(61);
-			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.smethod_0<uint>(num7, () => gclass4_0.random_0.smethod_0()) : num7);
+			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.GenerateDifferentValue<uint>(num7, () => gclass4_0.random_0.NextUInt32()) : num7);
 			break;
 		}
 		case 1:
 		{
-			uint num7 = gclass4_0.random_0.smethod_0();
+			uint num7 = gclass4_0.random_0.NextUInt32();
 			gclass4_0.binaryWriter_0.Write(185);
 			gclass4_0.binaryWriter_0.Write(num7);
 			gclass4_0.binaryWriter_0.Write(new byte[]
@@ -436,12 +436,12 @@ public sealed partial class RecoveredRuntime
 				129,
 				249
 			});
-			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.smethod_0<uint>(num7, () => gclass4_0.random_0.smethod_0()) : num7);
+			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.GenerateDifferentValue<uint>(num7, () => gclass4_0.random_0.NextUInt32()) : num7);
 			break;
 		}
 		case 2:
 		{
-			uint num7 = gclass4_0.random_0.smethod_0();
+			uint num7 = gclass4_0.random_0.NextUInt32();
 			gclass4_0.binaryWriter_0.Write(186);
 			gclass4_0.binaryWriter_0.Write(num7);
 			gclass4_0.binaryWriter_0.Write(new byte[]
@@ -449,12 +449,12 @@ public sealed partial class RecoveredRuntime
 				129,
 				250
 			});
-			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.smethod_0<uint>(num7, () => gclass4_0.random_0.smethod_0()) : num7);
+			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.GenerateDifferentValue<uint>(num7, () => gclass4_0.random_0.NextUInt32()) : num7);
 			break;
 		}
 		case 3:
 		{
-			uint num7 = gclass4_0.random_0.smethod_0();
+			uint num7 = gclass4_0.random_0.NextUInt32();
 			gclass4_0.binaryWriter_0.Write(187);
 			gclass4_0.binaryWriter_0.Write(num7);
 			gclass4_0.binaryWriter_0.Write(new byte[]
@@ -462,12 +462,12 @@ public sealed partial class RecoveredRuntime
 				129,
 				251
 			});
-			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.smethod_0<uint>(num7, () => gclass4_0.random_0.smethod_0()) : num7);
+			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.GenerateDifferentValue<uint>(num7, () => gclass4_0.random_0.NextUInt32()) : num7);
 			break;
 		}
 		case 4:
 		{
-			uint num7 = gclass4_0.random_0.smethod_0();
+			uint num7 = gclass4_0.random_0.NextUInt32();
 			gclass4_0.binaryWriter_0.Write(189);
 			gclass4_0.binaryWriter_0.Write(num7);
 			gclass4_0.binaryWriter_0.Write(new byte[]
@@ -475,12 +475,12 @@ public sealed partial class RecoveredRuntime
 				129,
 				253
 			});
-			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.smethod_0<uint>(num7, () => gclass4_0.random_0.smethod_0()) : num7);
+			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.GenerateDifferentValue<uint>(num7, () => gclass4_0.random_0.NextUInt32()) : num7);
 			break;
 		}
 		case 5:
 		{
-			uint num7 = gclass4_0.random_0.smethod_0();
+			uint num7 = gclass4_0.random_0.NextUInt32();
 			gclass4_0.binaryWriter_0.Write(190);
 			gclass4_0.binaryWriter_0.Write(num7);
 			gclass4_0.binaryWriter_0.Write(new byte[]
@@ -488,12 +488,12 @@ public sealed partial class RecoveredRuntime
 				129,
 				254
 			});
-			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.smethod_0<uint>(num7, () => gclass4_0.random_0.smethod_0()) : num7);
+			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.GenerateDifferentValue<uint>(num7, () => gclass4_0.random_0.NextUInt32()) : num7);
 			break;
 		}
 		case 6:
 		{
-			uint num7 = gclass4_0.random_0.smethod_0();
+			uint num7 = gclass4_0.random_0.NextUInt32();
 			gclass4_0.binaryWriter_0.Write(191);
 			gclass4_0.binaryWriter_0.Write(num7);
 			gclass4_0.binaryWriter_0.Write(new byte[]
@@ -501,7 +501,7 @@ public sealed partial class RecoveredRuntime
 				129,
 				byte.MaxValue
 			});
-			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.smethod_0<uint>(num7, () => gclass4_0.random_0.smethod_0()) : num7);
+			gclass4_0.binaryWriter_0.Write(flag ? PeScrambler.GenerateDifferentValue<uint>(num7, () => gclass4_0.random_0.NextUInt32()) : num7);
 			break;
 		}
 		}
@@ -515,16 +515,16 @@ public sealed partial class RecoveredRuntime
 		}
 		gclass4_0.binaryWriter_0.Write((byte)gclass4_0.random_0.Next(2, 128));
 		gclass4_0.binaryWriter_0.Write(97);
-		int num8 = (int)(gclass4_0.class154_0.method_28().Position - position);
+		int num8 = (int)(gclass4_0.class154_0.GetStream().Position - position);
 		gclass4_0.binaryWriter_0.Write(233);
-		gclass4_0.binaryWriter_0.Write((int)((ulong)(gclass4_0.class154_0.method_6().method_3().imethod_11() - gclass5_0.method_4() - 5u) - (ulong)((long)num8)));
-		num5 = (int)((ulong)gclass5_0.method_2() - (ulong)(gclass4_0.class154_0.method_28().Position - position) - 30UL);
+		gclass4_0.binaryWriter_0.Write((int)((ulong)(gclass4_0.class154_0.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint() - gclass5_0.GetVirtualAddress() - 5u) - (ulong)((long)num8)));
+		num5 = (int)((ulong)gclass5_0.GetVirtualSize() - (ulong)(gclass4_0.class154_0.GetStream().Position - position) - 30UL);
 		num6 = ((num5 < 0) ? 0 : gclass4_0.random_0.Next(1, num5));
 		buffer = new byte[num6];
 		gclass4_0.random_0.NextBytes(buffer);
 		gclass4_0.binaryWriter_0.Write(buffer);
-		long num9 = gclass4_0.class154_0.method_28().Position - (long)((ulong)gclass5_0.method_8());
-		int num10 = gclass4_0.random_0.Next(18, (int)((ulong)gclass5_0.method_2() - (ulong)num9 + 18UL));
+		long num9 = gclass4_0.class154_0.GetStream().Position - (long)((ulong)gclass5_0.GetPointerToRawData());
+		int num10 = gclass4_0.random_0.Next(18, (int)((ulong)gclass5_0.GetVirtualSize() - (ulong)num9 + 18UL));
 		gclass4_0.binaryWriter_0.Write(232);
 		gclass4_0.binaryWriter_0.Write(num10);
 		int num11 = gclass4_0.random_0.Next(5);
@@ -543,7 +543,7 @@ public sealed partial class RecoveredRuntime
 				0,
 				96
 			});
-			gclass4_0.binaryWriter_0.Write(PeScrambler.smethod_0<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.smethod_166)));
+			gclass4_0.binaryWriter_0.Write(PeScrambler.GenerateDifferentValue<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.GenerateSafeRandomInstructionByte)));
 			gclass4_0.binaryWriter_0.Write(new byte[]
 			{
 				131,
@@ -570,7 +570,7 @@ public sealed partial class RecoveredRuntime
 				1,
 				96
 			});
-			gclass4_0.binaryWriter_0.Write(PeScrambler.smethod_0<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.smethod_166)));
+			gclass4_0.binaryWriter_0.Write(PeScrambler.GenerateDifferentValue<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.GenerateSafeRandomInstructionByte)));
 			gclass4_0.binaryWriter_0.Write(new byte[]
 			{
 				131,
@@ -597,7 +597,7 @@ public sealed partial class RecoveredRuntime
 				2,
 				96
 			});
-			gclass4_0.binaryWriter_0.Write(PeScrambler.smethod_0<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.smethod_166)));
+			gclass4_0.binaryWriter_0.Write(PeScrambler.GenerateDifferentValue<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.GenerateSafeRandomInstructionByte)));
 			gclass4_0.binaryWriter_0.Write(new byte[]
 			{
 				131,
@@ -624,7 +624,7 @@ public sealed partial class RecoveredRuntime
 				3,
 				96
 			});
-			gclass4_0.binaryWriter_0.Write(PeScrambler.smethod_0<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.smethod_166)));
+			gclass4_0.binaryWriter_0.Write(PeScrambler.GenerateDifferentValue<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.GenerateSafeRandomInstructionByte)));
 			gclass4_0.binaryWriter_0.Write(new byte[]
 			{
 				131,
@@ -651,7 +651,7 @@ public sealed partial class RecoveredRuntime
 				7,
 				96
 			});
-			gclass4_0.binaryWriter_0.Write(PeScrambler.smethod_0<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.smethod_166)));
+			gclass4_0.binaryWriter_0.Write(PeScrambler.GenerateDifferentValue<byte>(96, new PeScrambler.Delegate48<byte>(RecoveredRuntime.GenerateSafeRandomInstructionByte)));
 			gclass4_0.binaryWriter_0.Write(new byte[]
 			{
 				131,
@@ -666,10 +666,10 @@ public sealed partial class RecoveredRuntime
 			});
 			break;
 		}
-		num8 = (int)(gclass4_0.class154_0.method_28().Position - position);
-		gclass4_0.binaryWriter_0.Write(PeScrambler.smethod_0<byte>(233, new PeScrambler.Delegate48<byte>(RecoveredRuntime.smethod_166)));
-		gclass4_0.binaryWriter_0.Write((int)((ulong)(gclass5_0.method_4() + 5u) + (ulong)((long)num) - ((ulong)gclass5_0.method_4() + (ulong)((long)num8) + 5UL)));
-		gclass4_0.class154_0.method_28().Position += (long)(num10 - 18);
+		num8 = (int)(gclass4_0.class154_0.GetStream().Position - position);
+		gclass4_0.binaryWriter_0.Write(PeScrambler.GenerateDifferentValue<byte>(233, new PeScrambler.Delegate48<byte>(RecoveredRuntime.GenerateSafeRandomInstructionByte)));
+		gclass4_0.binaryWriter_0.Write((int)((ulong)(gclass5_0.GetVirtualAddress() + 5u) + (ulong)((long)num) - ((ulong)gclass5_0.GetVirtualAddress() + (ulong)((long)num8) + 5UL)));
+		gclass4_0.class154_0.GetStream().Position += (long)(num10 - 18);
 		switch (num11)
 		{
 		case 0:
@@ -718,145 +718,145 @@ public sealed partial class RecoveredRuntime
 			gclass4_0.binaryWriter_0.Write(195);
 			break;
 		}
-		gclass4_0.class154_0.method_28().Position = position + 1L;
+		gclass4_0.class154_0.GetStream().Position = position + 1L;
 		gclass4_0.binaryWriter_0.Write(num8 - 23);
-		gclass4_0.class154_0.method_6().method_3().imethod_12(gclass5_0.method_4());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetAddressOfEntryPoint(gclass5_0.GetVirtualAddress());
 	}
 
-	internal static DelayImportDirectory smethod_293(BoundsCheckedBinaryReader class5_0, PeImage class154_0)
+	internal static DelayImportDirectory ReadDelayImportDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0)
 	{
-		DataDirectory @class = class154_0.method_6().method_3().imethod_49()[13];
-		if (@class.method_0() == 0u || @class.method_2() == 0u)
+		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[13];
+		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.smethod_135(class154_0, @class.method_0());
-		if (num == -1L || !class5_0.imethod_0(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
+		if (num == -1L || !class5_0.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (class5_0.imethod_0(num + (long)((ulong)@class.method_2())))
+		if (class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
-			RecoveredRuntime.smethod_157(class5_0, num);
+			RecoveredRuntime.SeekReader(class5_0, num);
 			return new DelayImportDirectory(class5_0, class154_0);
 		}
 		return null;
 	}
 
-	internal static void smethod_299(string string_0, PeImage class154_0)
+	internal static void SavePeImage(string string_0, PeImage class154_0)
 	{
 		using (FileStream fileStream = File.OpenWrite(string_0))
 		{
 			fileStream.SetLength(0L);
-			RecoveredRuntime.smethod_315(fileStream, class154_0);
+			RecoveredRuntime.WritePeImage(fileStream, class154_0);
 		}
 	}
 
-	internal static ExceptionDirectory smethod_303(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static ExceptionDirectory ReadExceptionDirectory(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
 	{
-		DataDirectory @class = class154_0.method_6().method_3().imethod_49()[3];
-		if (@class.method_0() == 0u || @class.method_2() == 0u)
+		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[3];
+		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.smethod_135(class154_0, @class.method_0());
-		if (num == -1L || !class5_0.imethod_0(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
+		if (num == -1L || !class5_0.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (class5_0.imethod_0(num + (long)((ulong)@class.method_2())))
+		if (class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
-			RecoveredRuntime.smethod_157(class5_0, num);
+			RecoveredRuntime.SeekReader(class5_0, num);
 			return new ExceptionDirectory(class5_0, @class);
 		}
 		return null;
 	}
 
-	internal static void smethod_304(PeScrambler gclass4_0, PeSectionHeader gclass5_0)
+	internal static void MoveBaseRelocationDirectory(PeScrambler gclass4_0, PeSectionHeader gclass5_0)
 	{
-		DataDirectory @class = gclass4_0.class154_0.method_6().method_3().imethod_49()[5];
-		long num = RecoveredRuntime.smethod_135(gclass4_0.class154_0, @class.method_0());
+		DataDirectory @class = gclass4_0.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[5];
+		long num = RecoveredRuntime.MapRvaToFileOffset(gclass4_0.class154_0, @class.GetVirtualAddress());
 		if (num == -1L)
 		{
 			return;
 		}
-		if (gclass5_0.method_2() < @class.method_2())
+		if (gclass5_0.GetVirtualSize() < @class.GetSize())
 		{
-			gclass5_0.method_3(@class.method_2());
+			gclass5_0.SetVirtualSize(@class.GetSize());
 		}
-		if (gclass5_0.method_6() < @class.method_2())
+		if (gclass5_0.GetSizeOfRawData() < @class.GetSize())
 		{
 			return;
 		}
 		byte[] buffer;
-		using (Stream stream = RecoveredRuntime.smethod_264(gclass4_0.class154_0, num, (int)@class.method_2()))
+		using (Stream stream = RecoveredRuntime.CopyImageRange(gclass4_0.class154_0, num, (int)@class.GetSize()))
 		{
 			using (BinaryReader binaryReader = new BinaryReader(stream))
 			{
-				buffer = binaryReader.ReadBytes((int)@class.method_2());
+				buffer = binaryReader.ReadBytes((int)@class.GetSize());
 			}
 		}
-		RecoveredRuntime.smethod_437(gclass4_0, num, (long)((ulong)@class.method_2()));
-		gclass4_0.class154_0.method_28().Position = (long)((ulong)gclass5_0.method_8());
+		RecoveredRuntime.FillImageRangeWithRandomBytes(gclass4_0, num, (long)((ulong)@class.GetSize()));
+		gclass4_0.class154_0.GetStream().Position = (long)((ulong)gclass5_0.GetPointerToRawData());
 		gclass4_0.binaryWriter_0.Write(buffer);
-		@class.method_1(gclass5_0.method_4());
+		@class.SetVirtualAddress(gclass5_0.GetVirtualAddress());
 	}
 
-	internal static ClrHeader smethod_312(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static ClrHeader ReadClrHeader(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
 	{
-		DataDirectory @class = class154_0.method_6().method_3().imethod_49()[14];
-		if (@class.method_0() == 0u || @class.method_2() == 0u)
+		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[14];
+		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.smethod_135(class154_0, @class.method_0());
-		if (num == -1L || !class5_0.imethod_0(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
+		if (num == -1L || !class5_0.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (!class5_0.imethod_0(num + (long)((ulong)@class.method_2())))
+		if (!class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
 			return null;
 		}
-		RecoveredRuntime.smethod_157(class5_0, num);
+		RecoveredRuntime.SeekReader(class5_0, num);
 		ClrHeader class2 = new ClrHeader(class5_0);
-		if (class2.method_0() < 72u)
+		if (class2.GetHeaderSize() < 72u)
 		{
 			return null;
 		}
 		return class2;
 	}
 
-	internal static void smethod_315(Stream stream_0, PeImage class154_0)
+	internal static void WritePeImage(Stream stream_0, PeImage class154_0)
 	{
-		smethod_76(stream_0, new PeImageWriter(class154_0));
+		WritePeImage(stream_0, new PeImageWriter(class154_0));
 	}
 
 	internal static void ScrambleModule(string sourcePath, string destinationPath)
 	{
 		InjectorScrambleOptions options = ApplicationSettings.Current.Options.Scramble;
 		PeScrambleOptions transformOptions = new PeScrambleOptions();
-		transformOptions.method_21(options.CreateNewEntryPoint);
-		transformOptions.method_3(options.InsertExtraSections);
-		transformOptions.method_11(options.ModifyAssemblyCode);
-		transformOptions.method_1(options.ScrambleHeaderFields);
-		transformOptions.method_19(options.ModifyImportTable);
-		transformOptions.method_17(options.RenameSections);
-		transformOptions.method_15(options.MoveRelocationTable);
-		transformOptions.method_5(options.RemoveDebugData);
-		transformOptions.method_9(options.ShiftSectionData);
-		transformOptions.method_13(options.RemoveUselessData);
-		transformOptions.method_7(options.CreateFakeDebugDirectory);
-		transformOptions.method_24(options.ShiftSectionMemory);
-		transformOptions.method_26(options.StripSectionCharacteristics);
+		transformOptions.CreateNewEntryPoint = options.CreateNewEntryPoint;
+		transformOptions.InsertExtraSections = options.InsertExtraSections;
+		transformOptions.ModifyAssemblyCode = options.ModifyAssemblyCode;
+		transformOptions.ScrambleHeaderFields = options.ScrambleHeaderFields;
+		transformOptions.ModifyImportTable = options.ModifyImportTable;
+		transformOptions.RenameSections = options.RenameSections;
+		transformOptions.MoveRelocationTable = options.MoveRelocationTable;
+		transformOptions.RemoveDebugData = options.RemoveDebugData;
+		transformOptions.ShiftSectionData = options.ShiftSectionData;
+		transformOptions.RemoveUselessData = options.RemoveUselessData;
+		transformOptions.CreateFakeDebugDirectory = options.CreateFakeDebugDirectory;
+		transformOptions.ShiftSectionMemory = options.ShiftSectionMemory;
+		transformOptions.StripSectionCharacteristics = options.StripSectionCharacteristics;
 
 		try
 		{
-			using (PeImage module = smethod_81(PeImageLayout.const_0, sourcePath))
+			using (PeImage module = LoadPeImageFromFile(PeImageLayout.const_0, sourcePath))
 			using (PeScrambler scrambler = new PeScrambler(module, transformOptions))
 			{
-				smethod_95(scrambler);
-				smethod_367(destinationPath, scrambler);
+				ScramblePeImage(scrambler);
+				SaveScrambledImage(destinationPath, scrambler);
 			}
 		}
 		catch
@@ -865,7 +865,7 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void smethod_330(SettingsForm gform2_0)
+	internal static void SaveSettingsFromForm(SettingsForm gform2_0)
 	{
 		InjectionOptions class14_ = ApplicationSettings.Current.Options;
 		class14_.Method = (InjectionMethod)gform2_0.comboBox_0.SelectedIndex;
@@ -882,10 +882,10 @@ public sealed partial class RecoveredRuntime
 		ApplicationSettings.Save();
 	}
 
-	internal static void smethod_333(PeImageWriter class165_0)
+	internal static void WriteDosHeaderPeOffset(PeImageWriter class165_0)
 	{
 		class165_0.stream_0.Position = 60L;
-		class165_0.binaryWriter_0.Write(class165_0.class154_0.method_4().method_0());
+		class165_0.binaryWriter_0.Write(class165_0.class154_0.GetDosHeader().GetPeHeaderOffset());
 	}
 
 	internal static void AddModuleToGrid(bool bool_0, ModuleEntry class16_0, bool bool_1, MainForm mainForm, string string_0)
@@ -907,16 +907,16 @@ public sealed partial class RecoveredRuntime
 			}
 
 			using (FileStream fileStream = new FileStream(string_0, FileMode.Open, FileAccess.Read, FileShare.Read))
-			using (PeImage image = PeImportReader.smethod_13(fileStream, string_0, bool_0: false, PeImageLayout.const_0))
+			using (PeImage image = PeImportReader.ReadImports(fileStream, string_0, bool_0: false, PeImageLayout.const_0))
 			{
-				if (image == null || (image.method_6().method_1().method_12() & CoffCharacteristics.flag_12) == 0)
+				if (image == null || (image.GetHeaders().GetCoffHeader().GetCharacteristics() & CoffCharacteristics.flag_12) == 0)
 				{
 					throw new Exception();
 				}
 
 				try
 				{
-					smethod_261(image, mainForm);
+					CheckImportedDependencies(image, mainForm);
 				}
 				catch
 				{
@@ -945,13 +945,13 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void smethod_351(PeImage class154_0, string string_0, MainForm mainForm)
+	internal static void HandleLegacyManagedDependency(PeImage class154_0, string string_0, MainForm mainForm)
 	{
-		if (!string_0.StartsWith(EncodedStringTable.smethod_0(24517), StringComparison.OrdinalIgnoreCase))
+		if (!string_0.StartsWith(EncodedStringTable.DecodeString(24517), StringComparison.OrdinalIgnoreCase))
 		{
 			return;
 		}
-		string text = RecoveredRuntime.smethod_353(class154_0, string_0);
+		string text = RecoveredRuntime.ResolveImageDependencyPath(class154_0, string_0);
 		bool flag = false;
 		if (!string.IsNullOrEmpty(text))
 		{
@@ -959,8 +959,8 @@ public sealed partial class RecoveredRuntime
 			{
 				try
 				{
-					PeImage @class = PeImportReader.smethod_13(fileStream, text, false, PeImageLayout.const_0);
-					if (@class != null && RecoveredRuntime.smethod_19(@class) != RecoveredRuntime.smethod_19(class154_0))
+					PeImage @class = PeImportReader.ReadImports(fileStream, text, false, PeImageLayout.const_0);
+					if (@class != null && RecoveredRuntime.Is32BitImage(@class) != RecoveredRuntime.Is32BitImage(class154_0))
 					{
 						flag = true;
 					}
@@ -974,67 +974,65 @@ public sealed partial class RecoveredRuntime
 				return;
 			}
 		}
-		if (RecoveredRuntime.smethod_337(mainForm, class154_0.method_2(), string_0, text, false, EncodedStringTable.smethod_0(24526)))
+		if (RecoveredRuntime.ConfirmDependencyInstallation(mainForm, class154_0.GetFileName(), string_0, text, false, EncodedStringTable.DecodeString(24526)))
 		{
 			DependencyInstallerForm form = new DependencyInstallerForm();
-			RecoveredRuntime.smethod_29(form, EncodedStringTable.smethod_0(24551), null, EncodedStringTable.smethod_0(24624));
+			RecoveredRuntime.ConfigureInstallerDownload(form, EncodedStringTable.DecodeString(24551), null, EncodedStringTable.DecodeString(24624));
 			form.ShowDialog();
 		}
 	}
 
-	internal static string smethod_353(PeImage class154_0, string string_0)
+	internal static string ResolveImageDependencyPath(PeImage class154_0, string string_0)
 	{
 		DependencySearchFlags @enum = DependencySearchFlags.flag_2;
-		if (PlatformInfo.bool_0 && RecoveredRuntime.smethod_19(class154_0))
+		if (PlatformInfo.bool_0 && RecoveredRuntime.Is32BitImage(class154_0))
 		{
 			@enum |= DependencySearchFlags.flag_4;
 		}
-		return RecoveredRuntime.smethod_440(string_0, class154_0.method_0(), Path.GetDirectoryName(class154_0.method_0()), @enum, 0, NativeTypes.intptr_0);
+		return RecoveredRuntime.ResolveDependencyPath(string_0, class154_0.GetFilePath(), Path.GetDirectoryName(class154_0.GetFilePath()), @enum, 0, NativeTypes.intptr_0);
 	}
 
-	internal static ExportDirectory smethod_355(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static ExportDirectory ReadExportDirectory(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
 	{
-		DataDirectory @class = class154_0.method_6().method_3().imethod_49()[0];
-		if (@class.method_0() == 0u || @class.method_2() == 0u)
+		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[0];
+		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.smethod_135(class154_0, @class.method_0());
-		if (num == -1L || !class5_0.imethod_0(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
+		if (num == -1L || !class5_0.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (!class5_0.imethod_0(num + (long)((ulong)@class.method_2())))
+		if (!class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
 			return null;
 		}
-		RecoveredRuntime.smethod_157(class5_0, num);
+		RecoveredRuntime.SeekReader(class5_0, num);
 		return new ExportDirectory(class5_0, class154_0, @class);
 	}
 
-	internal static PeImage smethod_356(byte[] byte_0, PeImageLayout enum39_0)
+	internal static PeImage LoadPeImageFromBytes(byte[] byte_0, PeImageLayout enum39_0)
 	{
-		MemoryStream memoryStream = new MemoryStream();
-		memoryStream.Write(byte_0, 0, byte_0.Length);
-		memoryStream.Position = 0L;
-		return PeImageReader.smethod_4(memoryStream, bool_0: true, enum39_0);
+		MemoryStream memoryStream = new MemoryStream(byte_0, writable: false);
+		return PeImageReader.ReadFullImage(memoryStream, bool_0: true, enum39_0);
 	}
 
-	internal static void smethod_357(NativeLoaderHooks gclass3_0)
+	internal static void LocateNativeLoaderHooks(NativeLoaderHooks gclass3_0)
 	{
-		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(gclass3_0.method_19())[EncodedStringTable.smethod_0(8549)];
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(gclass3_0.GetRemoteProcess())[EncodedStringTable.DecodeString(8549)];
 		if (gclass == null)
 		{
-			throw new FileNotFoundException(EncodedStringTable.smethod_0(12731));
+			throw new FileNotFoundException(EncodedStringTable.DecodeString(12731));
 		}
-		PeSectionHeader gclass2 = RecoveredRuntime.smethod_215(gclass).method_8().FirstOrDefault(new Func<PeSectionHeader, bool>(NativeLoaderHooks.Class81._003C_003E9.method_0));
+		PeSectionHeader gclass2 = RecoveredRuntime.ReadRemoteModuleImage(gclass).GetSections().FirstOrDefault(new Func<PeSectionHeader, bool>(NativeLoaderHooks.Class81._003C_003E9.IsTextSection));
 		if (gclass2 == null)
 		{
-			throw new InvalidOperationException(EncodedStringTable.smethod_0(24645));
+			throw new InvalidOperationException(EncodedStringTable.DecodeString(24645));
 		}
-		IntPtr intPtr = gclass.method_0().smethod_9((long)((ulong)gclass2.method_4()));
-		byte[] array = gclass3_0.method_10<byte>(intPtr, (int)gclass2.method_2());
-		if (RecoveredRuntime.smethod_427(gclass3_0.method_19()))
+		IntPtr intPtr = gclass.GetModuleBase().Add((long)((ulong)gclass2.GetVirtualAddress()));
+		byte[] array = gclass3_0.ReadArray<byte>(intPtr, (int)gclass2.GetVirtualSize());
+		if (RecoveredRuntime.Is32BitProcess(gclass3_0.GetRemoteProcess()))
 		{
 			if (!PlatformInfo.bool_10)
 			{
@@ -1042,42 +1040,42 @@ public sealed partial class RecoveredRuntime
 				{
 					if (PlatformInfo.bool_6)
 					{
-						int num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24804), 0);
+						int num = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24804), 0);
 						if (num == -1)
 						{
-							num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24821), 0);
+							num = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24821), 0);
 							if (num != -1)
 							{
-								gclass3_0.method_25(intPtr.smethod_8(num - 11));
-								gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num + 29));
+								gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num - 11));
+								gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num + 29));
 							}
 						}
 						else
 						{
-							gclass3_0.method_25(intPtr.smethod_8(num - 11));
+							gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num - 11));
 							if (!PlatformInfo.bool_7)
 							{
-								gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num + 35));
+								gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num + 35));
 							}
 							else
 							{
-								gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num + 34));
+								gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num + 34));
 							}
 						}
-						num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24846), 0);
+						num = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24846), 0);
 						if (num != -1)
 						{
-							gclass3_0.method_29(intPtr.smethod_8(num - 18));
+							gclass3_0.SetRemoveInvertedFunctionTableAddress(intPtr.Add(num - 18));
 							return;
 						}
 					}
 					else if (PlatformInfo.bool_5)
 					{
-						int num2 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24859), 0);
+						int num2 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24859), 0);
 						if (num2 != -1)
 						{
-							gclass3_0.method_25(intPtr.smethod_8(num2));
-							gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num2 + 38));
+							gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num2));
+							gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num2 + 38));
 							return;
 						}
 					}
@@ -1085,145 +1083,146 @@ public sealed partial class RecoveredRuntime
 					{
 						if (PlatformInfo.bool_3 && PlatformInfo.bool_0)
 						{
-							int num3 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24947), 0);
+							int num3 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24947), 0);
 							if (num3 != -1)
 							{
-								gclass3_0.method_25(intPtr.smethod_8(num3));
+								gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num3));
 							}
-							num3 = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(24909), EncodedStringTable.smethod_0(24930), 0);
+							num3 = RecoveredRuntime.FindMaskedPattern(array, EncodedStringTable.DecodeString(24909), EncodedStringTable.DecodeString(24930), 0);
 							if (num3 != -1)
 							{
-								gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num3 + 7));
+								gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num3 + 7));
 							}
 						}
 					}
 					else
 					{
-						int num4 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24892), 0);
+						int num4 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24892), 0);
 						if (num4 != -1)
 						{
-							gclass3_0.method_25(intPtr.smethod_8(num4));
+							gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num4));
 						}
-						num4 = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(24909), EncodedStringTable.smethod_0(24930), 0);
+						num4 = RecoveredRuntime.FindMaskedPattern(array, EncodedStringTable.DecodeString(24909), EncodedStringTable.DecodeString(24930), 0);
 						if (num4 != -1)
 						{
-							gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num4 + 7));
+							gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num4 + 7));
 							return;
 						}
 					}
 				}
 				else
 				{
-					int num5 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24745), 0);
+					int num5 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24745), 0);
 					if (num5 != -1)
 					{
-						gclass3_0.method_25(intPtr.smethod_8(num5 - 11));
-						gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num5 + 76));
+						gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num5 - 11));
+						gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num5 + 76));
 					}
-					else if ((num5 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24770), 0)) != -1)
+					else if ((num5 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24770), 0)) != -1)
 					{
-						int num6 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24783), 0);
+						int num6 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24783), 0);
 						if (num6 != -1)
 						{
-							gclass3_0.method_25(intPtr.smethod_8(num6 - 33));
-							gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num5 - 27));
+							gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num6 - 33));
+							gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num5 - 27));
 						}
 					}
-					num5 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24732), 0);
+					num5 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24732), 0);
 					if (num5 != -1)
 					{
-						gclass3_0.method_29(intPtr.smethod_8(num5 - 28));
+						gclass3_0.SetRemoveInvertedFunctionTableAddress(intPtr.Add(num5 - 28));
 						return;
 					}
 				}
 			}
 			else
 			{
-				int num7 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24702), 0);
+				int num7 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24702), 0);
 				if (num7 != -1)
 				{
-					gclass3_0.method_25(intPtr.smethod_8(num7 - 8));
+					gclass3_0.SetInsertInvertedFunctionTableAddress(intPtr.Add(num7 - 8));
 				}
-				num7 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24719), 0);
+				num7 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24719), 0);
 				if (num7 != -1)
 				{
-					gclass3_0.method_27((IntPtr)BitConverter.ToInt32(array, num7 - 27));
+					gclass3_0.SetInvertedFunctionTableAddress((IntPtr)BitConverter.ToInt32(array, num7 - 27));
 				}
-				num7 = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(24732), 0);
+				num7 = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(24732), 0);
 				if (num7 != -1)
 				{
-					gclass3_0.method_29(intPtr.smethod_8(num7 - 28));
+					gclass3_0.SetRemoveInvertedFunctionTableAddress(intPtr.Add(num7 - 28));
 					return;
 				}
 			}
 		}
 	}
 
-	internal static void smethod_368(ManualMapInjector.Class172 class172_0)
+	internal static void DisposeManualMapContext(ManualMapInjector.Class172 class172_0)
 	{
-		if (class172_0.method_0() != null)
+		PeImage image = class172_0.GetImage();
+		if (image != null)
 		{
-			((IDisposable)class172_0.method_0()).Dispose();
-			class172_0.method_1(null);
+			image.Dispose();
+			class172_0.SetImage(null);
 		}
-		if (class172_0.method_10() != NativeTypes.intptr_0)
+
+		IntPtr activationContextHandle = class172_0.GetActivationContextHandle();
+		if (activationContextHandle != NativeTypes.intptr_0)
 		{
-			RecoveredRuntime.ReleaseActCtx(class172_0.method_10());
-			class172_0.method_11(NativeTypes.intptr_0);
+			RecoveredRuntime.ReleaseActCtx(activationContextHandle);
+			class172_0.SetActivationContextHandle(NativeTypes.intptr_0);
 		}
 	}
 
-	internal static void smethod_376(PeScrambler gclass4_0)
+	internal static void NormalizeSectionVirtualSizes(PeScrambler gclass4_0)
 	{
-		List<PeSectionHeader> list = gclass4_0.class154_0.method_8();
-		for (int i = 0; i < list.Count; i++)
+		List<PeSectionHeader> sections = gclass4_0.class154_0.GetSections();
+		uint sectionAlignment = gclass4_0.class154_0.GetHeaders().GetOptionalHeader().GetSectionAlignment();
+		for (int index = 0; index < sections.Count; index++)
 		{
-			PeSectionHeader gclass = list[i];
-			PeSectionHeader gclass2 = gclass;
-			uint uint_ = gclass.method_2();
-			uint uint_2 = gclass4_0.class154_0.method_6().method_3().imethod_18();
-			gclass2.method_3(RecoveredRuntime.smethod_201(uint_2, uint_));
-			if (i < list.Count - 1 && gclass.method_4() + gclass.method_2() > list[i + 1].method_4())
+			PeSectionHeader section = sections[index];
+			section.SetVirtualSize(RecoveredRuntime.AlignUp(sectionAlignment, section.GetVirtualSize()));
+			if (index < sections.Count - 1 && section.GetVirtualAddress() + section.GetVirtualSize() > sections[index + 1].GetVirtualAddress())
 			{
-				gclass.method_3(list[i + 1].method_4() - gclass.method_4());
+				section.SetVirtualSize(sections[index + 1].GetVirtualAddress() - section.GetVirtualAddress());
 			}
 		}
 	}
 
-	internal static void smethod_382(PeScrambler gclass4_0)
+	internal static void ScramblePeHeaderFields(PeScrambler gclass4_0)
 	{
-		RecoveredRuntime.smethod_437(gclass4_0, 2L, 58L);
-		gclass4_0.class154_0.method_6().method_1().method_7(gclass4_0.random_0.smethod_0());
-		gclass4_0.class154_0.method_6().method_1().method_9(gclass4_0.random_0.smethod_0());
-		CoffHeader @class = gclass4_0.class154_0.method_6().method_1();
-		@class.method_13(@class.method_12() | (CoffCharacteristics.flag_4 | CoffCharacteristics.flag_6 | CoffCharacteristics.flag_14));
-		gclass4_0.class154_0.method_6().method_3().imethod_2(0);
-		gclass4_0.class154_0.method_6().method_3().imethod_4(0);
-		gclass4_0.class154_0.method_6().method_3().imethod_23(gclass4_0.random_0.smethod_2());
-		gclass4_0.class154_0.method_6().method_3().imethod_25(gclass4_0.random_0.smethod_2());
-		gclass4_0.class154_0.method_6().method_3().imethod_6(gclass4_0.random_0.smethod_0());
-		gclass4_0.class154_0.method_6().method_3().imethod_8(gclass4_0.random_0.smethod_0());
-		gclass4_0.class154_0.method_6().method_3().imethod_10(gclass4_0.random_0.smethod_0());
-		gclass4_0.class154_0.method_6().method_3().imethod_14(gclass4_0.random_0.smethod_0());
-		gclass4_0.class154_0.method_6().method_3().imethod_16(gclass4_0.random_0.smethod_0());
-		gclass4_0.class154_0.method_6().method_3().imethod_46(gclass4_0.random_0.smethod_0());
-		gclass4_0.class154_0.method_6().method_1().method_5(gclass4_0.random_0.smethod_0());
-		if ((gclass4_0.class154_0.method_6().method_1().method_12() & CoffCharacteristics.flag_12) == CoffCharacteristics.flag_12)
+		RecoveredRuntime.FillImageRangeWithRandomBytes(gclass4_0, 2L, 58L);
+		gclass4_0.class154_0.GetHeaders().GetCoffHeader().SetPointerToSymbolTable(gclass4_0.random_0.NextUInt32());
+		gclass4_0.class154_0.GetHeaders().GetCoffHeader().SetNumberOfSymbols(gclass4_0.random_0.NextUInt32());
+		CoffHeader @class = gclass4_0.class154_0.GetHeaders().GetCoffHeader();
+		@class.SetCharacteristics(@class.GetCharacteristics() | (CoffCharacteristics.flag_4 | CoffCharacteristics.flag_6 | CoffCharacteristics.flag_14));
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetMajorLinkerVersion(0);
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetMinorLinkerVersion(0);
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetMajorImageVersion(gclass4_0.random_0.NextUInt16());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetMinorImageVersion(gclass4_0.random_0.NextUInt16());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfCode(gclass4_0.random_0.NextUInt32());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfInitializedData(gclass4_0.random_0.NextUInt32());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfUninitializedData(gclass4_0.random_0.NextUInt32());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetBaseOfCode(gclass4_0.random_0.NextUInt32());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetBaseOfData(gclass4_0.random_0.NextUInt32());
+		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetLoaderFlags(gclass4_0.random_0.NextUInt32());
+		gclass4_0.class154_0.GetHeaders().GetCoffHeader().SetTimeDateStamp(gclass4_0.random_0.NextUInt32());
+		if ((gclass4_0.class154_0.GetHeaders().GetCoffHeader().GetCharacteristics() & CoffCharacteristics.flag_12) == CoffCharacteristics.flag_12)
 		{
-			gclass4_0.class154_0.method_6().method_3().imethod_40((ulong)gclass4_0.random_0.smethod_0());
-			gclass4_0.class154_0.method_6().method_3().imethod_38((ulong)gclass4_0.random_0.smethod_0());
-			gclass4_0.class154_0.method_6().method_3().imethod_44((ulong)gclass4_0.random_0.smethod_0());
-			gclass4_0.class154_0.method_6().method_3().imethod_42((ulong)gclass4_0.random_0.smethod_0());
+			gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfStackCommit((ulong)gclass4_0.random_0.NextUInt32());
+			gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfStackReserve((ulong)gclass4_0.random_0.NextUInt32());
+			gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfHeapCommit((ulong)gclass4_0.random_0.NextUInt32());
+			gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfHeapReserve((ulong)gclass4_0.random_0.NextUInt32());
 		}
-		if (RecoveredRuntime.smethod_235(gclass4_0))
+		if (RecoveredRuntime.CanScrambleDataDirectoryCount(gclass4_0))
 		{
-			if (RecoveredRuntime.smethod_19(gclass4_0.class154_0) && gclass4_0.class154_0.method_6().method_1().method_10() == 224)
+			if (RecoveredRuntime.Is32BitImage(gclass4_0.class154_0) && gclass4_0.class154_0.GetHeaders().GetCoffHeader().GetSizeOfOptionalHeader() == 224)
 			{
-				gclass4_0.class154_0.method_6().method_3().imethod_48(gclass4_0.random_0.smethod_1(10u, 17u));
+				gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetNumberOfRvaAndSizes(gclass4_0.random_0.NextUInt32(10u, 17u));
 			}
-			else if (!RecoveredRuntime.smethod_19(gclass4_0.class154_0) && gclass4_0.class154_0.method_6().method_1().method_10() == 240)
+			else if (!RecoveredRuntime.Is32BitImage(gclass4_0.class154_0) && gclass4_0.class154_0.GetHeaders().GetCoffHeader().GetSizeOfOptionalHeader() == 240)
 			{
-				gclass4_0.class154_0.method_6().method_3().imethod_48(15u);
+				gclass4_0.class154_0.GetHeaders().GetOptionalHeader().SetNumberOfRvaAndSizes(15u);
 			}
 		}
 		uint[] array = new uint[]
@@ -1237,10 +1236,10 @@ public sealed partial class RecoveredRuntime
 		for (int i = 0; i < gclass4_0.random_0.Next(1, array.Length); i++)
 		{
 			uint num = array[gclass4_0.random_0.Next(array.Length)];
-			if ((gclass4_0.class154_0.method_6().method_3().imethod_35() & (DllCharacteristics)num) != (DllCharacteristics)num)
+			if ((gclass4_0.class154_0.GetHeaders().GetOptionalHeader().GetDllCharacteristics() & (DllCharacteristics)num) != (DllCharacteristics)num)
 			{
-				IPeOptionalHeader @interface = gclass4_0.class154_0.method_6().method_3();
-				@interface.imethod_36(@interface.imethod_35() | (DllCharacteristics)num);
+				IPeOptionalHeader @interface = gclass4_0.class154_0.GetHeaders().GetOptionalHeader();
+				@interface.SetDllCharacteristics(@interface.GetDllCharacteristics() | (DllCharacteristics)num);
 			}
 			else
 			{
@@ -1249,26 +1248,26 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static ResourceDirectory smethod_389(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static ResourceDirectory ReadResourceDirectory(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
 	{
-		DataDirectory @class = class154_0.method_6().method_3().imethod_49()[2];
-		if (@class.method_0() == 0u || @class.method_2() == 0u)
+		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[2];
+		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.smethod_135(class154_0, @class.method_0());
-		if (num == -1L || !class5_0.imethod_0(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
+		if (num == -1L || !class5_0.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (!class5_0.imethod_0(num))
+		if (!class5_0.IsValidOffset(num))
 		{
 			return null;
 		}
-		return new ResourceDirectory(class5_0, num, @class.method_2());
+		return new ResourceDirectory(class5_0, num, @class.GetSize());
 	}
 
-	internal static bool smethod_398(BoundsCheckedBinaryReader class5_0, uint uint_0, out Pe64OptionalHeader class163_0)
+	internal static bool TryReadPe64OptionalHeader(BoundsCheckedBinaryReader class5_0, uint uint_0, out Pe64OptionalHeader class163_0)
 	{
 		class163_0 = null;
 		const uint fixedHeaderSize = 112;
@@ -1279,44 +1278,44 @@ public sealed partial class RecoveredRuntime
 		}
 
 		var header = new Pe64OptionalHeader();
-		header.vmethod_0(class5_0.ReadUInt16());
-		if (header.imethod_0() != 0x020B)
+		header.SetMagic(class5_0.ReadUInt16());
+		if (header.GetMagic() != 0x020B)
 		{
 			return false;
 		}
 
-		header.imethod_2(class5_0.ReadByte());
-		header.imethod_4(class5_0.ReadByte());
-		header.imethod_6(class5_0.ReadUInt32());
-		header.imethod_8(class5_0.ReadUInt32());
-		header.imethod_10(class5_0.ReadUInt32());
-		header.imethod_12(class5_0.ReadUInt32());
-		header.imethod_14(class5_0.ReadUInt32());
-		header.vmethod_1(class5_0.ReadUInt64());
-		header.vmethod_2(class5_0.ReadUInt32());
-		header.vmethod_3(class5_0.ReadUInt32());
-		header.vmethod_4(class5_0.ReadUInt16());
-		header.vmethod_5(class5_0.ReadUInt16());
-		header.imethod_23(class5_0.ReadUInt16());
-		header.imethod_25(class5_0.ReadUInt16());
-		header.vmethod_6(class5_0.ReadUInt16());
-		header.vmethod_7(class5_0.ReadUInt16());
-		header.vmethod_8(class5_0.ReadUInt32());
-		header.imethod_30(class5_0.ReadUInt32());
-		header.vmethod_9(class5_0.ReadUInt32());
-		header.imethod_33(class5_0.ReadUInt32());
-		header.vmethod_10((Subsystem)class5_0.ReadUInt16());
-		header.imethod_36((DllCharacteristics)class5_0.ReadUInt16());
-		header.imethod_38(class5_0.ReadUInt64());
-		header.imethod_40(class5_0.ReadUInt64());
-		header.imethod_42(class5_0.ReadUInt64());
-		header.imethod_44(class5_0.ReadUInt64());
-		header.imethod_46(class5_0.ReadUInt32());
-		header.imethod_48(class5_0.ReadUInt32());
+		header.SetMajorLinkerVersion(class5_0.ReadByte());
+		header.SetMinorLinkerVersion(class5_0.ReadByte());
+		header.SetSizeOfCode(class5_0.ReadUInt32());
+		header.SetSizeOfInitializedData(class5_0.ReadUInt32());
+		header.SetSizeOfUninitializedData(class5_0.ReadUInt32());
+		header.SetAddressOfEntryPoint(class5_0.ReadUInt32());
+		header.SetBaseOfCode(class5_0.ReadUInt32());
+		header.SetImageBase(class5_0.ReadUInt64());
+		header.SetSectionAlignment(class5_0.ReadUInt32());
+		header.SetFileAlignment(class5_0.ReadUInt32());
+		header.SetMajorOperatingSystemVersion(class5_0.ReadUInt16());
+		header.SetMinorOperatingSystemVersion(class5_0.ReadUInt16());
+		header.SetMajorImageVersion(class5_0.ReadUInt16());
+		header.SetMinorImageVersion(class5_0.ReadUInt16());
+		header.SetMajorSubsystemVersion(class5_0.ReadUInt16());
+		header.SetMinorSubsystemVersion(class5_0.ReadUInt16());
+		header.SetWin32VersionValue(class5_0.ReadUInt32());
+		header.SetSizeOfImage(class5_0.ReadUInt32());
+		header.SetSizeOfHeaders(class5_0.ReadUInt32());
+		header.SetChecksum(class5_0.ReadUInt32());
+		header.SetSubsystem((Subsystem)class5_0.ReadUInt16());
+		header.SetDllCharacteristics((DllCharacteristics)class5_0.ReadUInt16());
+		header.SetSizeOfStackReserve(class5_0.ReadUInt64());
+		header.SetSizeOfStackCommit(class5_0.ReadUInt64());
+		header.SetSizeOfHeapReserve(class5_0.ReadUInt64());
+		header.SetSizeOfHeapCommit(class5_0.ReadUInt64());
+		header.SetLoaderFlags(class5_0.ReadUInt32());
+		header.SetNumberOfRvaAndSizes(class5_0.ReadUInt32());
 
-		DataDirectory[] directories = header.imethod_49();
+		DataDirectory[] directories = header.GetDataDirectories();
 		uint availableDirectoryCount = (uint_0 - fixedHeaderSize) / 8U;
-		int directoryCount = (int)Math.Min((uint)directories.Length, Math.Min(header.imethod_47(), availableDirectoryCount));
+		int directoryCount = (int)Math.Min((uint)directories.Length, Math.Min(header.GetNumberOfRvaAndSizes(), availableDirectoryCount));
 		for (int index = 0; index < directories.Length; index++)
 		{
 			directories[index] = index < directoryCount ? new DataDirectory(class5_0) : new DataDirectory();
@@ -1327,7 +1326,7 @@ public sealed partial class RecoveredRuntime
 		return true;
 	}
 
-	internal static IEnumerable<string> smethod_412(string string_0, IEnumerable<ImportedSymbol> ienumerable_0, ImportDirectory class148_0)
+	internal static IEnumerable<string> EnumerateImportedSymbolNames(string string_0, IEnumerable<ImportedSymbol> ienumerable_0, ImportDirectory class148_0)
 	{
 		return new ImportDirectory.Class150(-2)
 		{
@@ -1336,71 +1335,71 @@ public sealed partial class RecoveredRuntime
 		};
 	}
 
-	internal static void smethod_415(PeScrambler gclass4_0)
+	internal static void RemoveDebugDirectory(PeScrambler gclass4_0)
 	{
-		if (gclass4_0.class154_0.method_18() == null)
+		if (gclass4_0.class154_0.GetDebugDirectory() == null)
 		{
 			return;
 		}
-		long num = RecoveredRuntime.smethod_135(gclass4_0.class154_0, gclass4_0.class154_0.method_18().method_7());
+		long num = RecoveredRuntime.MapRvaToFileOffset(gclass4_0.class154_0, gclass4_0.class154_0.GetDebugDirectory().GetAddressOfRawData());
 		if (num == -1L)
 		{
 			return;
 		}
-		RecoveredRuntime.smethod_437(gclass4_0, num, (long)((ulong)gclass4_0.class154_0.method_18().method_5()));
-		DataDirectory @class = gclass4_0.class154_0.method_6().method_3().imethod_49()[6];
-		long long_ = RecoveredRuntime.smethod_135(gclass4_0.class154_0, @class.method_0());
-		RecoveredRuntime.smethod_437(gclass4_0, long_, 28L);
-		@class.method_1(0u);
-		@class.method_3(0u);
+		RecoveredRuntime.FillImageRangeWithRandomBytes(gclass4_0, num, (long)((ulong)gclass4_0.class154_0.GetDebugDirectory().GetSizeOfData()));
+		DataDirectory @class = gclass4_0.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[6];
+		long long_ = RecoveredRuntime.MapRvaToFileOffset(gclass4_0.class154_0, @class.GetVirtualAddress());
+		RecoveredRuntime.FillImageRangeWithRandomBytes(gclass4_0, long_, 28L);
+		@class.SetVirtualAddress(0u);
+		@class.SetSize(0u);
 	}
 
-	internal static void smethod_420(List<PeScrambler.Class132> list_0, PeScrambler gclass4_0)
+	internal static void ApplySectionRemap(List<PeScrambler.Class132> list_0, PeScrambler gclass4_0)
 	{
-		IPeOptionalHeader @interface = gclass4_0.class154_0.method_6().method_3();
-		if (@interface.imethod_13() != 0u)
+		IPeOptionalHeader @interface = gclass4_0.class154_0.GetHeaders().GetOptionalHeader();
+		if (@interface.GetBaseOfCode() != 0u)
 		{
-			@interface.imethod_14(RecoveredRuntime.smethod_33(list_0, @interface.imethod_13()));
+			@interface.SetBaseOfCode(RecoveredRuntime.RemapRva(list_0, @interface.GetBaseOfCode()));
 		}
-		if (@interface.imethod_15() != 0u)
+		if (@interface.GetBaseOfData() != 0u)
 		{
-			@interface.imethod_16(RecoveredRuntime.smethod_33(list_0, @interface.imethod_15()));
+			@interface.SetBaseOfData(RecoveredRuntime.RemapRva(list_0, @interface.GetBaseOfData()));
 		}
-		if (@interface.imethod_11() != 0u)
+		if (@interface.GetAddressOfEntryPoint() != 0u)
 		{
-			@interface.imethod_12(RecoveredRuntime.smethod_33(list_0, @interface.imethod_11()));
+			@interface.SetAddressOfEntryPoint(RecoveredRuntime.RemapRva(list_0, @interface.GetAddressOfEntryPoint()));
 		}
 		PeScrambler.Class132 @class = list_0.Last<PeScrambler.Class132>();
 		IPeOptionalHeader interface2 = @interface;
-		uint uint_ = @class.method_3().method_4() + @class.method_3().method_2();
-		uint uint_2 = @interface.imethod_18();
-		interface2.imethod_30(RecoveredRuntime.smethod_201(uint_2, uint_));
-		foreach (DataDirectory class2 in @interface.imethod_49())
+		uint uint_ = @class.GetModifiedSection().GetVirtualAddress() + @class.GetModifiedSection().GetVirtualSize();
+		uint uint_2 = @interface.GetSectionAlignment();
+		interface2.SetSizeOfImage(RecoveredRuntime.AlignUp(uint_2, uint_));
+		foreach (DataDirectory class2 in @interface.GetDataDirectories())
 		{
-			if (class2.method_0() != 0u)
+			if (class2.GetVirtualAddress() != 0u)
 			{
-				class2.method_1(RecoveredRuntime.smethod_33(list_0, class2.method_0()));
+				class2.SetVirtualAddress(RecoveredRuntime.RemapRva(list_0, class2.GetVirtualAddress()));
 			}
 		}
-		gclass4_0.class154_0.method_28().SetLength((long)((ulong)(@class.method_3().method_8() + @class.method_3().method_6())));
-		BinaryWriter binaryWriter = new BinaryWriter(gclass4_0.class154_0.method_28());
+		gclass4_0.class154_0.GetStream().SetLength((long)((ulong)(@class.GetModifiedSection().GetPointerToRawData() + @class.GetModifiedSection().GetSizeOfRawData())));
+		BinaryWriter binaryWriter = new BinaryWriter(gclass4_0.class154_0.GetStream());
 		for (int j = list_0.Count - 1; j >= 0; j--)
 		{
 			PeScrambler.Class132 class3 = list_0[j];
-			if (class3.method_5().method_6() != 0u)
+			if (class3.GetOriginalSection().GetSizeOfRawData() != 0u)
 			{
 				PeImage class154_ = gclass4_0.class154_0;
-				long long_ = (long)((ulong)class3.method_5().method_8());
-				long long_2 = (long)((ulong)class3.method_5().method_6());
-				byte[] buffer = RecoveredRuntime.smethod_8(long_2, class154_, long_);
-				gclass4_0.class154_0.method_28().Position = (long)((ulong)class3.method_5().method_8());
-				byte[] buffer2 = new byte[class3.method_5().method_6()];
+				long long_ = (long)((ulong)class3.GetOriginalSection().GetPointerToRawData());
+				long long_2 = (long)((ulong)class3.GetOriginalSection().GetSizeOfRawData());
+				byte[] buffer = RecoveredRuntime.ReadImageBytes(long_2, class154_, long_);
+				gclass4_0.class154_0.GetStream().Position = (long)((ulong)class3.GetOriginalSection().GetPointerToRawData());
+				byte[] buffer2 = new byte[class3.GetOriginalSection().GetSizeOfRawData()];
 				gclass4_0.random_0.NextBytes(buffer2);
 				binaryWriter.Write(buffer2);
-				gclass4_0.class154_0.method_28().Position = (long)((ulong)(class3.method_3().method_8() + class3.method_0()));
+				gclass4_0.class154_0.GetStream().Position = (long)((ulong)(class3.GetModifiedSection().GetPointerToRawData() + class3.GetContentOffset()));
 				binaryWriter.Write(buffer);
 			}
 		}
-		gclass4_0.class154_0.method_9(list_0.Select(new Func<PeScrambler.Class132, PeSectionHeader>(PeScrambler.Class135._003C_003E9.method_1)).ToList<PeSectionHeader>());
+		gclass4_0.class154_0.SetSections(list_0.Select(new Func<PeScrambler.Class132, PeSectionHeader>(PeScrambler.Class135._003C_003E9.GetModifiedSection)).ToList<PeSectionHeader>());
 	}
 }

@@ -42,7 +42,7 @@ public sealed class AdvancedScrambleSettingsForm : Form
 
 	public AdvancedScrambleSettingsForm()
 	{
-		RecoveredRuntime.smethod_234(this);
+		RecoveredRuntime.InitializeAdvancedScrambleSettingsForm(this);
 		ModernUi.ApplyLegacyFormTheme(this);
 		FormBorderStyle = FormBorderStyle.FixedDialog;
 		MaximizeBox = false;
@@ -51,7 +51,7 @@ public sealed class AdvancedScrambleSettingsForm : Form
 		SizeGripStyle = SizeGripStyle.Hide;
 		checkBox_3.CheckedChanged += delegate
 		{
-			RecoveredRuntime.smethod_237(this);
+			RecoveredRuntime.UpdateScrambleOptionAvailability(this);
 		};
 		BindOption(checkBox_0, options => options.ScrambleHeaderFields, (options, value) => options.ScrambleHeaderFields = value);
 		BindOption(checkBox_1, options => options.RemoveUselessData, (options, value) => options.RemoveUselessData = value);
@@ -66,7 +66,7 @@ public sealed class AdvancedScrambleSettingsForm : Form
 		BindOption(checkBox_9, options => options.CreateFakeDebugDirectory, (options, value) => options.CreateFakeDebugDirectory = value);
 		BindOption(checkBox_12, options => options.ShiftSectionMemory, (options, value) => options.ShiftSectionMemory = value);
 		BindOption(checkBox_11, options => options.StripSectionCharacteristics, (options, value) => options.StripSectionCharacteristics = value);
-		RecoveredRuntime.smethod_237(this);
+		RecoveredRuntime.UpdateScrambleOptionAvailability(this);
 	}
 
 	private static void BindOption(CheckBox checkBox, Func<InjectorScrambleOptions, bool> read, Action<InjectorScrambleOptions, bool> write)
@@ -91,16 +91,6 @@ public sealed class AdvancedScrambleSettingsForm : Form
 	[CompilerGenerated]
 	internal void checkBox_3_CheckedChanged(object sender, EventArgs e)
 	{
-		RecoveredRuntime.smethod_237(this);
-	}
-
-	internal static void smethod_0(CheckBox checkBox_13, EventHandler eventHandler_0)
-	{
-		checkBox_13.CheckedChanged += eventHandler_0;
-	}
-
-	internal static void smethod_1(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
+		RecoveredRuntime.UpdateScrambleOptionAvailability(this);
 	}
 }

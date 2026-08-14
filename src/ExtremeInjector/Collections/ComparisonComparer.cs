@@ -9,7 +9,7 @@ public sealed class ComparisonComparer<T> : Comparer<T>
 	{
 		if (comparison_1 == null)
 		{
-			throw smethod_0("comparison");
+			throw new ArgumentNullException("comparison");
 		}
 		comparison_0 = comparison_1;
 	}
@@ -17,10 +17,5 @@ public sealed class ComparisonComparer<T> : Comparer<T>
 	public override int Compare(T gparam_0, T gparam_1)
 	{
 		return comparison_0(gparam_0, gparam_1);
-	}
-
-	internal static ArgumentNullException smethod_0(string string_0)
-	{
-		return new ArgumentNullException(string_0);
 	}
 }

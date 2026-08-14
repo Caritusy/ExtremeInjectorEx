@@ -33,7 +33,7 @@ public sealed class DependencyInstallerForm : Form
 
 	public DependencyInstallerForm()
 	{
-		RecoveredRuntime.smethod_114(this);
+		RecoveredRuntime.InitializeDependencyInstallerForm(this);
 		ModernUi.ApplyLegacyFormTheme(this);
 		FormBorderStyle = FormBorderStyle.FixedDialog;
 		MaximizeBox = false;
@@ -50,9 +50,9 @@ public sealed class DependencyInstallerForm : Form
 		{
 			this.progressBar_0.Value = e.ProgressPercentage;
 			string text = null;
-			if (this.class20_0.ResponseHeaders[EncodedStringTable.smethod_0(3814)] != null)
+			if (this.class20_0.ResponseHeaders[EncodedStringTable.DecodeString(3814)] != null)
 			{
-				text = new ContentDisposition(this.class20_0.ResponseHeaders[EncodedStringTable.smethod_0(3814)]).FileName;
+				text = new ContentDisposition(this.class20_0.ResponseHeaders[EncodedStringTable.DecodeString(3814)]).FileName;
 			}
 			if (string.IsNullOrEmpty(text))
 			{
@@ -64,13 +64,13 @@ public sealed class DependencyInstallerForm : Form
 			}
 			this.label_0.Text = string.Concat(new string[]
 			{
-				EncodedStringTable.smethod_0(3843),
+				EncodedStringTable.DecodeString(3843),
 				text,
-				EncodedStringTable.smethod_0(3860),
-				RecoveredRuntime.smethod_442(e.BytesReceived),
-				EncodedStringTable.smethod_0(3869),
-				RecoveredRuntime.smethod_442(e.TotalBytesToReceive),
-				EncodedStringTable.smethod_0(3874)
+				EncodedStringTable.DecodeString(3860),
+				RecoveredRuntime.FormatByteSize(e.BytesReceived),
+				EncodedStringTable.DecodeString(3869),
+				RecoveredRuntime.FormatByteSize(e.TotalBytesToReceive),
+				EncodedStringTable.DecodeString(3874)
 			});
 		}));
 	}
@@ -81,7 +81,7 @@ public sealed class DependencyInstallerForm : Form
 		{
 			if (e.Error != null)
 			{
-				MessageBox.Show(this, EncodedStringTable.smethod_0(3879) + e.Error.Message, EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(this, EncodedStringTable.DecodeString(3879) + e.Error.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				this.Close();
 				return;
 			}
@@ -101,7 +101,7 @@ public sealed class DependencyInstallerForm : Form
 		{
 			this.Invoke(new MethodInvoker(delegate
 			{
-				this.label_0.Text = EncodedStringTable.smethod_0(1869);
+				this.label_0.Text = EncodedStringTable.DecodeString(1869);
 			}));
 			using (MemoryStream memoryStream = new MemoryStream(downloadedData))
 			using (ZipFile zipFile = ZipFile.Read(memoryStream))
@@ -122,7 +122,7 @@ public sealed class DependencyInstallerForm : Form
 		{
 			this.Invoke(new MethodInvoker(delegate
 			{
-				this.label_0.Text = EncodedStringTable.smethod_0(1847) + this.string_2 + EncodedStringTable.smethod_0(1864);
+				this.label_0.Text = EncodedStringTable.DecodeString(1847) + this.string_2 + EncodedStringTable.DecodeString(1864);
 			}));
 			try
 			{
@@ -136,7 +136,7 @@ public sealed class DependencyInstallerForm : Form
 					process.WaitForExit();
 					if (process.ExitCode != 0)
 					{
-						throw new Exception(EncodedStringTable.smethod_0(3956) + process.ExitCode);
+						throw new Exception(EncodedStringTable.DecodeString(3956) + process.ExitCode);
 					}
 					Thread.Sleep(100);
 					File.Delete(installerPath);
@@ -144,19 +144,19 @@ public sealed class DependencyInstallerForm : Form
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(EncodedStringTable.smethod_0(4029) + ex.Message, EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(EncodedStringTable.DecodeString(4029) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				succeeded = false;
 			}
 		}
 
 		if (succeeded)
 		{
-			MessageBox.Show(EncodedStringTable.smethod_0(4102), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show(EncodedStringTable.DecodeString(4102), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
 		this.Invoke(new MethodInvoker(this.Close));
 	}
 
-	internal void method_0(object sender, EventArgs e)
+	internal void OnFormLoad(object sender, EventArgs e)
 	{
 		ThreadPool.QueueUserWorkItem(delegate(object object_0)
 		{
@@ -165,12 +165,12 @@ public sealed class DependencyInstallerForm : Form
 				bool flag = false;
 				try
 				{
-					string address = this.string_0.Replace(EncodedStringTable.smethod_0(1902), EncodedStringTable.smethod_0(1915));
-					IEnumerator enumerator = Regex.Matches(this.class20_0.DownloadString(address), EncodedStringTable.smethod_0(1936)).GetEnumerator();
+					string address = this.string_0.Replace(EncodedStringTable.DecodeString(1902), EncodedStringTable.DecodeString(1915));
+					IEnumerator enumerator = Regex.Matches(this.class20_0.DownloadString(address), EncodedStringTable.DecodeString(1936)).GetEnumerator();
 					{
 						while (enumerator.MoveNext())
 						{
-							string value = ((Match)enumerator.Current).Groups[EncodedStringTable.smethod_0(1969)].Value;
+							string value = ((Match)enumerator.Current).Groups[EncodedStringTable.DecodeString(1969)].Value;
 							if (value.IndexOf(this.string_2, StringComparison.OrdinalIgnoreCase) != -1)
 							{
 								flag = true;
@@ -185,7 +185,7 @@ public sealed class DependencyInstallerForm : Form
 				}
 				if (!flag)
 				{
-					MessageBox.Show(EncodedStringTable.smethod_0(1978) + this.string_2 + EncodedStringTable.smethod_0(2023), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show(EncodedStringTable.DecodeString(1978) + this.string_2 + EncodedStringTable.DecodeString(2023), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					Process.Start(this.string_0);
 					return;
 				}
@@ -197,7 +197,7 @@ public sealed class DependencyInstallerForm : Form
 		});
 	}
 
-	internal void method_1(object sender, FormClosingEventArgs e)
+	internal void OnFormClosing(object sender, FormClosingEventArgs e)
 	{
 		class20_0.CancelAsync();
 	}
@@ -209,166 +209,5 @@ public sealed class DependencyInstallerForm : Form
 			this.icontainer_0.Dispose();
 		}
 		base.Dispose(disposing);
-	}
-
-	[CompilerGenerated]
-	internal void method_2()
-	{
-		label_0.Text = UiText.Format("Dependency.Installing", string_2);
-	}
-
-	[CompilerGenerated]
-	internal void method_3()
-	{
-		label_0.Text = UiText.Get("Dependency.Extracting");
-	}
-
-	[CompilerGenerated]
-	internal void method_4(object object_0)
-	{
-		if (this.bool_0)
-		{
-			bool flag = false;
-			try
-			{
-				string address = this.string_0.Replace(EncodedStringTable.smethod_0(1902), EncodedStringTable.smethod_0(1915));
-				IEnumerator enumerator = Regex.Matches(this.class20_0.DownloadString(address), EncodedStringTable.smethod_0(1936)).GetEnumerator();
-				{
-					while (enumerator.MoveNext())
-					{
-						string value = ((Match)enumerator.Current).Groups[EncodedStringTable.smethod_0(1969)].Value;
-						if (value.IndexOf(this.string_2, StringComparison.OrdinalIgnoreCase) != -1)
-						{
-							flag = true;
-							this.class20_0.DownloadDataAsync(new Uri(value));
-							break;
-						}
-					}
-				}
-			}
-			catch
-			{
-			}
-			if (!flag)
-			{
-				MessageBox.Show(EncodedStringTable.smethod_0(1978) + this.string_2 + EncodedStringTable.smethod_0(2023), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-				Process.Start(this.string_0);
-				return;
-			}
-		}
-		else
-		{
-			this.class20_0.DownloadDataAsync(new Uri(this.string_0));
-		}
-	}
-
-	internal static void smethod_0(WebClient webClient_0, DownloadDataCompletedEventHandler downloadDataCompletedEventHandler_0)
-	{
-		webClient_0.DownloadDataCompleted += downloadDataCompletedEventHandler_0;
-	}
-
-	internal static void smethod_1(WebClient webClient_0, DownloadProgressChangedEventHandler downloadProgressChangedEventHandler_0)
-	{
-		webClient_0.DownloadProgressChanged += downloadProgressChangedEventHandler_0;
-	}
-
-	internal static object smethod_2(Control control_0, Delegate delegate_0)
-	{
-		return control_0.Invoke(delegate_0);
-	}
-
-	internal static bool smethod_3(WaitCallback waitCallback_0)
-	{
-		return ThreadPool.QueueUserWorkItem(waitCallback_0);
-	}
-
-	internal static void smethod_4(WebClient webClient_0)
-	{
-		webClient_0.CancelAsync();
-	}
-
-	internal static void smethod_5(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
-	}
-
-	internal static string smethod_6(string string_3, string string_4, string string_5)
-	{
-		return string_3 + string_4 + string_5;
-	}
-
-	internal static void smethod_7(Control control_0, string string_3)
-	{
-		control_0.Text = string_3;
-	}
-
-	internal static string smethod_8(string string_3, string string_4, string string_5)
-	{
-		return string_3.Replace(string_4, string_5);
-	}
-
-	internal static string smethod_9(WebClient webClient_0, string string_3)
-	{
-		return webClient_0.DownloadString(string_3);
-	}
-
-	internal static MatchCollection smethod_10(string string_3, string string_4)
-	{
-		return Regex.Matches(string_3, string_4);
-	}
-
-	internal static IEnumerator smethod_11(MatchCollection matchCollection_0)
-	{
-		return matchCollection_0.GetEnumerator();
-	}
-
-	internal static object smethod_12(IEnumerator ienumerator_0)
-	{
-		return ienumerator_0.Current;
-	}
-
-	internal static GroupCollection smethod_13(Match match_0)
-	{
-		return match_0.Groups;
-	}
-
-	internal static Group smethod_14(GroupCollection groupCollection_0, string string_3)
-	{
-		return groupCollection_0[string_3];
-	}
-
-	internal static string smethod_15(Capture capture_0)
-	{
-		return capture_0.Value;
-	}
-
-	internal static int smethod_16(string string_3, string string_4, StringComparison stringComparison_0)
-	{
-		return string_3.IndexOf(string_4, stringComparison_0);
-	}
-
-	internal static Uri smethod_17(string string_3)
-	{
-		return new Uri(string_3);
-	}
-
-	internal static void smethod_18(WebClient webClient_0, Uri uri_0)
-	{
-		webClient_0.DownloadDataAsync(uri_0);
-	}
-
-	internal static bool smethod_19(IEnumerator ienumerator_0)
-	{
-		return ienumerator_0.MoveNext();
-	}
-
-	internal static DialogResult smethod_20(string string_3, string string_4, MessageBoxButtons messageBoxButtons_0, MessageBoxIcon messageBoxIcon_0)
-	{
-		return MessageBox.Show(string_3, string_4, messageBoxButtons_0, messageBoxIcon_0);
-	}
-
-	internal static Process smethod_21(string string_3)
-	{
-		return Process.Start(string_3);
 	}
 }

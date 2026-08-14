@@ -10,21 +10,21 @@ public sealed class RemoteAssembler
 
 		[SpecialName]
 		[CompilerGenerated]
-		public AsmJitLabel method_0()
+		public AsmJitLabel GetLabel()
 		{
 			return class58_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_1(AsmJitLabel class58_1)
+		public void SetLabel(AsmJitLabel class58_1)
 		{
 			class58_0 = class58_1;
 		}
 
 		public Class48(AsmJitLabel class58_1)
 		{
-			this.method_1(class58_1);
+			this.SetLabel(class58_1);
 		}
 	}
 
@@ -55,28 +55,28 @@ public sealed class RemoteAssembler
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_0()
+	public bool GetRandomizeArgumentSetup()
 	{
 		return bool_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(bool bool_3)
+	public void SetRandomizeArgumentSetup(bool bool_3)
 	{
 		bool_2 = bool_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public int method_2()
+	public int GetResultOffset()
 	{
 		return int_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_3(int int_2)
+	internal void SetResultOffset(int int_2)
 	{
 		int_1 = int_2;
 	}
@@ -84,45 +84,35 @@ public sealed class RemoteAssembler
 	public RemoteAssembler(AsmJitAssembler class53_1, RemoteProcess gclass2_0)
 	{
 		class53_0 = class53_1;
-		bool_0 = RecoveredRuntime.smethod_427(gclass2_0);
+		bool_0 = RecoveredRuntime.Is32BitProcess(gclass2_0);
 		bool_1 = gclass2_0.bool_2;
 	}
 
-	public void method_4<T>()
+	public void CaptureReturnValue<T>()
 	{
-		this.class58_0 = RecoveredRuntime.smethod_48(this.class53_0);
-		this.int_0 = PlatformInfo.smethod_1<T>();
+		this.class58_0 = RecoveredRuntime.CreateLabel(this.class53_0);
+		this.int_0 = PlatformInfo.SizeOf<T>();
 		if (typeof(T) == typeof(IntPtr) || typeof(T) == typeof(UIntPtr))
 		{
-			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_221(this, this.class58_0, 0L), this.bool_0 ? AsmJitRuntime.class63_37 : AsmJitRuntime.class63_53);
+			RecoveredRuntime.EmitMoveRegisterToMemory(this.class53_0, RecoveredRuntime.CreatePointerLabelMemory(this, this.class58_0, 0L), this.bool_0 ? AsmJitRuntime.class63_37 : AsmJitRuntime.class63_53);
 			this.int_0 = (this.bool_0 ? 4 : 8);
 			return;
 		}
 		if (this.int_0 == 4)
 		{
-			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_80(0L, this, this.class58_0), AsmJitRuntime.class63_37);
+			RecoveredRuntime.EmitMoveRegisterToMemory(this.class53_0, RecoveredRuntime.CreateDwordLabelMemoryForProcess(0L, this, this.class58_0), AsmJitRuntime.class63_37);
 			return;
 		}
 		if (this.int_0 == 2)
 		{
-			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_116(this.class58_0, 0L, this), AsmJitRuntime.class63_21);
+			RecoveredRuntime.EmitMoveRegisterToMemory(this.class53_0, RecoveredRuntime.CreateWordLabelMemoryForProcess(this.class58_0, 0L, this), AsmJitRuntime.class63_21);
 			return;
 		}
 		if (this.int_0 == 1)
 		{
-			RecoveredRuntime.smethod_75(this.class53_0, RecoveredRuntime.smethod_290(this.class58_0, 0L, this), AsmJitRuntime.class63_37);
+			RecoveredRuntime.EmitMoveRegisterToMemory(this.class53_0, RecoveredRuntime.CreateByteLabelMemoryForProcess(this.class58_0, 0L, this), AsmJitRuntime.class63_37);
 			return;
 		}
-		throw new InvalidOperationException(EncodedStringTable.smethod_0(4473));
-	}
-
-	internal static Type smethod_0(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
-	}
-
-	internal static InvalidOperationException smethod_1(string string_0)
-	{
-		return new InvalidOperationException(string_0);
+		throw new InvalidOperationException(EncodedStringTable.DecodeString(4473));
 	}
 }

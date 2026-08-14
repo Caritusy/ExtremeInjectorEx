@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 public sealed class ProcessInspectorForm : Form
 {
-	[CompilerGenerated]
-	internal RemoteProcess gclass2_0;
+	internal RemoteProcess SelectedProcess { get; set; }
 
 	internal IContainer icontainer_0;
 
@@ -52,23 +50,9 @@ public sealed class ProcessInspectorForm : Form
 
 	internal Button button_4;
 
-	[SpecialName]
-	[CompilerGenerated]
-	internal RemoteProcess method_0()
-	{
-		return gclass2_0;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	internal void method_1(RemoteProcess gclass2_1)
-	{
-		gclass2_0 = gclass2_1;
-	}
-
 	public ProcessInspectorForm()
 	{
-		RecoveredRuntime.smethod_406(this);
+		RecoveredRuntime.InitializeProcessInspectorForm(this);
 		ModernUi.ApplyLegacyFormTheme(this);
 		ApplyModernLayout();
 		ModernUi.StyleDangerButton(button_0);
@@ -196,14 +180,14 @@ public sealed class ProcessInspectorForm : Form
 		page.Controls.Add(layout);
 	}
 
-	internal void method_2()
+	internal void RefreshProcessDetails()
 	{
 		this.dataGridView_0.Rows.Clear();
 		this.dataGridView_1.Rows.Clear();
-		ProcessModuleCollection @class = RecoveredRuntime.smethod_42(this.method_0());
+		ProcessModuleCollection @class = RecoveredRuntime.CaptureProcessModules(SelectedProcess);
 		foreach (ProcessModuleInfo gclass in @class)
 		{
-			if (!gclass.method_12())
+			if (!gclass.GetIsManualMapped())
 			{
 				DataGridViewRow dataGridViewRow = new DataGridViewRow
 				{
@@ -211,35 +195,35 @@ public sealed class ProcessInspectorForm : Form
 				};
 				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
 				{
-					Value = gclass.method_8(),
-					Tag = gclass.method_8()
+					Value = gclass.GetFilePath(),
+					Tag = gclass.GetFilePath()
 				});
 				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
 				{
-					Value = EncodedStringTable.smethod_0(2072) + gclass.method_0().ToString(EncodedStringTable.smethod_0(2077)),
-					Tag = gclass.method_0().ToInt64()
+					Value = EncodedStringTable.DecodeString(2072) + gclass.GetModuleBase().ToString(EncodedStringTable.DecodeString(2077)),
+					Tag = gclass.GetModuleBase().ToInt64()
 				});
 				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
 				{
-					Value = RecoveredRuntime.smethod_442((long)((ulong)gclass.method_4())),
-					Tag = gclass.method_4()
+					Value = RecoveredRuntime.FormatByteSize((long)((ulong)gclass.GetImageSize())),
+					Tag = gclass.GetImageSize()
 				});
 				this.dataGridView_0.Rows.Add(dataGridViewRow);
 			}
 		}
-		using (Icon icon = RecoveredRuntime.smethod_11(this.method_0().FilePath, IconSize.const_1))
+		using (Icon icon = RecoveredRuntime.GetFileIcon(SelectedProcess.FilePath, IconSize.const_1))
 		{
 			this.pictureBox_0.BackgroundImage = ((icon == null) ? null : icon.ToBitmap());
 		}
-		this.label_0.Text = string.Format(EncodedStringTable.smethod_0(2082), new object[]
+		this.label_0.Text = string.Format(EncodedStringTable.DecodeString(2082), new object[]
 		{
-			this.method_0().Name,
-			this.method_0().FilePath,
-			this.method_0().ProcessId,
-			RecoveredRuntime.smethod_42(this.method_0()).Count,
-			RecoveredRuntime.smethod_179(this.method_0()).Count
+			SelectedProcess.Name,
+			SelectedProcess.FilePath,
+			SelectedProcess.ProcessId,
+			RecoveredRuntime.CaptureProcessModules(SelectedProcess).Count,
+			RecoveredRuntime.EnumerateProcessThreads(SelectedProcess).Count
 		});
-		foreach (ProcessThreadInfo class2 in RecoveredRuntime.smethod_179(this.method_0()))
+		foreach (ProcessThreadInfo class2 in RecoveredRuntime.EnumerateProcessThreads(SelectedProcess))
 		{
 			DataGridViewRow dataGridViewRow2 = new DataGridViewRow
 			{
@@ -247,78 +231,78 @@ public sealed class ProcessInspectorForm : Form
 			};
 			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = class2.method_0().ToString(),
-				Tag = class2.method_0()
+				Value = class2.GetThreadId().ToString(),
+				Tag = class2.GetThreadId()
 			});
 			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = ProcessInspectorForm.smethod_0(@class, class2.method_2()),
-				Tag = class2.method_2()
+				Value = ProcessInspectorForm.FormatAddress(@class, class2.GetStartAddress()),
+				Tag = class2.GetStartAddress()
 			});
 			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = RecoveredRuntime.smethod_182(class2.method_7()),
-				Tag = class2.method_7()
+				Value = RecoveredRuntime.FormatThreadPriority(class2.GetPriorityLevel()),
+				Tag = class2.GetPriorityLevel()
 			});
 			this.dataGridView_1.Rows.Add(dataGridViewRow2);
 		}
 	}
 
-	internal static string smethod_0(IEnumerable<ProcessModuleInfo> ienumerable_0, IntPtr intptr_0)
+	internal static string FormatAddress(IEnumerable<ProcessModuleInfo> ienumerable_0, IntPtr intptr_0)
 	{
 		foreach (ProcessModuleInfo gclass in ienumerable_0)
 		{
-			if ((long)intptr_0 >= (long)gclass.method_0() && (long)intptr_0 <= (long)gclass.method_0() + (long)((ulong)gclass.method_4()))
+			if ((long)intptr_0 >= (long)gclass.GetModuleBase() && (long)intptr_0 <= (long)gclass.GetModuleBase() + (long)((ulong)gclass.GetImageSize()))
 			{
-				List<ExportedSymbol> list = RecoveredRuntime.smethod_131(gclass);
-				uint num = (uint)((long)intptr_0 - (long)gclass.method_0());
+				List<ExportedSymbol> list = RecoveredRuntime.GetRemoteModuleExports(gclass);
+				uint num = (uint)((long)intptr_0 - (long)gclass.GetModuleBase());
 				ExportedSymbol @class = null;
 				foreach (ExportedSymbol class2 in list)
 				{
-					if (num > class2.method_6() && (@class == null || class2.method_6() > @class.method_6()))
+					if (num > class2.GetAddressRva() && (@class == null || class2.GetAddressRva() > @class.GetAddressRva()))
 					{
 						@class = class2;
 					}
 				}
 				if (@class != null)
 				{
-					uint num2 = num - @class.method_6();
+					uint num2 = num - @class.GetAddressRva();
 					return string.Concat(new string[]
 					{
-						gclass.method_8(),
-						EncodedStringTable.smethod_0(2176),
-						(!@class.method_0()) ? @class.method_2().ToString() : @class.method_4(),
-						EncodedStringTable.smethod_0(2171),
-						num2.ToString(EncodedStringTable.smethod_0(2077))
+						gclass.GetFilePath(),
+						EncodedStringTable.DecodeString(2176),
+						(!@class.GetHasName()) ? @class.GetOrdinal().ToString() : @class.GetName(),
+						EncodedStringTable.DecodeString(2171),
+						num2.ToString(EncodedStringTable.DecodeString(2077))
 					});
 				}
-				return gclass.method_8() + EncodedStringTable.smethod_0(2171) + num.ToString(EncodedStringTable.smethod_0(2077));
+				return gclass.GetFilePath() + EncodedStringTable.DecodeString(2171) + num.ToString(EncodedStringTable.DecodeString(2077));
 			}
 		}
-		return EncodedStringTable.smethod_0(2072) + intptr_0.ToString(EncodedStringTable.smethod_0(2077));
+		return EncodedStringTable.DecodeString(2072) + intptr_0.ToString(EncodedStringTable.DecodeString(2077));
 	}
 
-	internal void method_3(object sender, EventArgs e)
+	internal void OnCloseClick(object sender, EventArgs e)
 	{
 		Close();
 	}
 
-	internal void method_4(object sender, EventArgs e)
+	internal void OnTerminateProcessClick(object sender, EventArgs e)
 	{
 		try
 		{
-			RecoveredRuntime.smethod_411(this.method_0());
-			MessageBox.Show(EncodedStringTable.smethod_0(2181), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			RecoveredRuntime.TerminateRemoteProcess(SelectedProcess);
+			MessageBox.Show(EncodedStringTable.DecodeString(2181), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
 		catch (Exception)
 		{
-			MessageBox.Show(EncodedStringTable.smethod_0(2242), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(EncodedStringTable.DecodeString(2242), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
-	internal void method_5(object sender, EventArgs e)
+	internal void OnProcessExitTimerTick(object sender, EventArgs e)
 	{
-		if (!RecoveredRuntime.HasProcessExited(this.method_0()))
+		if (!RecoveredRuntime.HasProcessExited(SelectedProcess))
 		{
 			return;
 		}
@@ -332,12 +316,12 @@ public sealed class ProcessInspectorForm : Form
 		control.Enabled = false;
 	}
 
-	internal void method_6(object sender, EventArgs e)
+	internal void OnModuleSelectionChanged(object sender, EventArgs e)
 	{
 		button_1.Enabled = timer_0.Enabled;
 	}
 
-	internal void method_7(object sender, DataGridViewSortCompareEventArgs e)
+	internal void OnGridSortCompare(object sender, DataGridViewSortCompareEventArgs e)
 	{
 		DataGridView dataGridView = (DataGridView)sender;
 		DataGridViewCell dataGridViewCell = dataGridView[e.Column.Index, e.RowIndex1];
@@ -350,65 +334,65 @@ public sealed class ProcessInspectorForm : Form
 		}
 	}
 
-	internal void method_8(object sender, EventArgs e)
+	internal void OnFormLoad(object sender, EventArgs e)
 	{
-		method_2();
+		RefreshProcessDetails();
 		timer_0.Start();
 	}
 
-	internal void method_9(object sender, EventArgs e)
+	internal void OnUnloadModuleClick(object sender, EventArgs e)
 	{
 		try
 		{
 			ProcessModuleInfo gclass = (ProcessModuleInfo)this.dataGridView_0.SelectedRows[0].Tag;
-			if (RecoveredRuntime.smethod_103(gclass, new RemoteModuleManager(this.method_0())))
+			if (RecoveredRuntime.UnloadProcessModule(gclass, new RemoteModuleManager(SelectedProcess)))
 			{
-				this.method_2();
-				MessageBox.Show(gclass.method_8() + EncodedStringTable.smethod_0(2327), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				this.RefreshProcessDetails();
+				MessageBox.Show(gclass.GetFilePath() + EncodedStringTable.DecodeString(2327), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 			}
 			else
 			{
-				MessageBox.Show(gclass.method_8() + EncodedStringTable.smethod_0(2396), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(gclass.GetFilePath() + EncodedStringTable.DecodeString(2396), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 		catch (Exception ex)
 		{
-			MessageBox.Show(EncodedStringTable.smethod_0(2453) + ex.Message, EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(EncodedStringTable.DecodeString(2453) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
-	internal void method_10(object sender, EventArgs e)
+	internal void OnThreadSelectionChanged(object sender, EventArgs e)
 	{
 		this.button_3.Enabled = (this.button_4.Enabled = this.timer_0.Enabled);
 		if (this.timer_0.Enabled)
 		{
-			RecoveredRuntime.smethod_88(this);
+			RecoveredRuntime.UpdateThreadActionText(this);
 		}
 	}
 
-	internal void method_11(object sender, EventArgs e)
+	internal void OnToggleThreadSuspensionClick(object sender, EventArgs e)
 	{
 		ProcessThreadInfo class75_ = (ProcessThreadInfo)this.dataGridView_1.SelectedRows[0].Tag;
 		bool flag;
-		if (!((!(flag = (this.button_3.Text == EncodedStringTable.smethod_0(2546)))) ? RecoveredRuntime.smethod_300(class75_) : RecoveredRuntime.smethod_97(class75_)))
+		if (!((!(flag = (this.button_3.Text == EncodedStringTable.DecodeString(2546)))) ? RecoveredRuntime.SuspendProcessThread(class75_) : RecoveredRuntime.ResumeProcessThread(class75_)))
 		{
-			MessageBox.Show(EncodedStringTable.smethod_0(2555) + (flag ? EncodedStringTable.smethod_0(2585) : EncodedStringTable.smethod_0(2572)) + EncodedStringTable.smethod_0(2594), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(EncodedStringTable.DecodeString(2555) + (flag ? EncodedStringTable.DecodeString(2585) : EncodedStringTable.DecodeString(2572)) + EncodedStringTable.DecodeString(2594), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 		else
 		{
-			MessageBox.Show(EncodedStringTable.smethod_0(2623) + ((!flag) ? EncodedStringTable.smethod_0(2664) : EncodedStringTable.smethod_0(2677)) + EncodedStringTable.smethod_0(2690), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show(EncodedStringTable.DecodeString(2623) + ((!flag) ? EncodedStringTable.DecodeString(2664) : EncodedStringTable.DecodeString(2677)) + EncodedStringTable.DecodeString(2690), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
-		RecoveredRuntime.smethod_88(this);
+		RecoveredRuntime.UpdateThreadActionText(this);
 	}
 
-	internal void method_12(object sender, EventArgs e)
+	internal void OnTerminateThreadClick(object sender, EventArgs e)
 	{
-		if (!RecoveredRuntime.smethod_74((ProcessThreadInfo)this.dataGridView_1.SelectedRows[0].Tag))
+		if (!RecoveredRuntime.TerminateProcessThread((ProcessThreadInfo)this.dataGridView_1.SelectedRows[0].Tag))
 		{
-			MessageBox.Show(EncodedStringTable.smethod_0(2711), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(EncodedStringTable.DecodeString(2711), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			return;
 		}
-		MessageBox.Show(EncodedStringTable.smethod_0(2796), EncodedStringTable.smethod_0(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+		MessageBox.Show(EncodedStringTable.DecodeString(2796), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 	}
 
 	protected override void Dispose(bool disposing)
@@ -418,170 +402,5 @@ public sealed class ProcessInspectorForm : Form
 			this.icontainer_0.Dispose();
 		}
 		base.Dispose(disposing);
-	}
-
-	internal static DataGridViewRowCollection smethod_1(DataGridView dataGridView_2)
-	{
-		return dataGridView_2.Rows;
-	}
-
-	internal static void smethod_2(DataGridViewRowCollection dataGridViewRowCollection_0)
-	{
-		dataGridViewRowCollection_0.Clear();
-	}
-
-	internal static DataGridViewRow smethod_3()
-	{
-		return new DataGridViewRow();
-	}
-
-	internal static void smethod_4(DataGridViewBand dataGridViewBand_0, object object_0)
-	{
-		dataGridViewBand_0.Tag = object_0;
-	}
-
-	internal static DataGridViewCellCollection smethod_5(DataGridViewRow dataGridViewRow_0)
-	{
-		return dataGridViewRow_0.Cells;
-	}
-
-	internal static DataGridViewTextBoxCell smethod_6()
-	{
-		return new DataGridViewTextBoxCell();
-	}
-
-	internal static void smethod_7(DataGridViewCell dataGridViewCell_0, object object_0)
-	{
-		dataGridViewCell_0.Value = object_0;
-	}
-
-	internal static void smethod_8(DataGridViewCell dataGridViewCell_0, object object_0)
-	{
-		dataGridViewCell_0.Tag = object_0;
-	}
-
-	internal static int smethod_9(DataGridViewCellCollection dataGridViewCellCollection_0, DataGridViewCell dataGridViewCell_0)
-	{
-		return dataGridViewCellCollection_0.Add(dataGridViewCell_0);
-	}
-
-	internal static void smethod_10(Form form_0)
-	{
-		form_0.Close();
-	}
-
-	internal static DialogResult smethod_11(string string_0, string string_1, MessageBoxButtons messageBoxButtons_0, MessageBoxIcon messageBoxIcon_0)
-	{
-		return MessageBox.Show(string_0, string_1, messageBoxButtons_0, messageBoxIcon_0);
-	}
-
-	internal static void smethod_12(Timer timer_1)
-	{
-		timer_1.Stop();
-	}
-
-	internal static void smethod_13(Control control_0, bool bool_0)
-	{
-		control_0.Enabled = bool_0;
-	}
-
-	internal static bool smethod_14(Timer timer_1)
-	{
-		return timer_1.Enabled;
-	}
-
-	internal static DataGridViewColumn smethod_15(DataGridViewSortCompareEventArgs dataGridViewSortCompareEventArgs_0)
-	{
-		return dataGridViewSortCompareEventArgs_0.Column;
-	}
-
-	internal static int smethod_16(DataGridViewBand dataGridViewBand_0)
-	{
-		return dataGridViewBand_0.Index;
-	}
-
-	internal static int smethod_17(DataGridViewSortCompareEventArgs dataGridViewSortCompareEventArgs_0)
-	{
-		return dataGridViewSortCompareEventArgs_0.RowIndex1;
-	}
-
-	internal static DataGridViewCell smethod_18(DataGridView dataGridView_2, int int_0, int int_1)
-	{
-		return dataGridView_2[int_0, int_1];
-	}
-
-	internal static int smethod_19(DataGridViewSortCompareEventArgs dataGridViewSortCompareEventArgs_0)
-	{
-		return dataGridViewSortCompareEventArgs_0.RowIndex2;
-	}
-
-	internal static object smethod_20(DataGridViewCell dataGridViewCell_0)
-	{
-		return dataGridViewCell_0.Tag;
-	}
-
-	internal static int smethod_21(IComparable icomparable_0, object object_0)
-	{
-		return icomparable_0.CompareTo(object_0);
-	}
-
-	internal static void smethod_22(DataGridViewSortCompareEventArgs dataGridViewSortCompareEventArgs_0, int int_0)
-	{
-		dataGridViewSortCompareEventArgs_0.SortResult = int_0;
-	}
-
-	internal static void smethod_23(HandledEventArgs handledEventArgs_0, bool bool_0)
-	{
-		handledEventArgs_0.Handled = bool_0;
-	}
-
-	internal static void smethod_24(Timer timer_1)
-	{
-		timer_1.Start();
-	}
-
-	internal static DataGridViewSelectedRowCollection smethod_25(DataGridView dataGridView_2)
-	{
-		return dataGridView_2.SelectedRows;
-	}
-
-	internal static DataGridViewRow smethod_26(DataGridViewSelectedRowCollection dataGridViewSelectedRowCollection_0, int int_0)
-	{
-		return dataGridViewSelectedRowCollection_0[int_0];
-	}
-
-	internal static object smethod_27(DataGridViewBand dataGridViewBand_0)
-	{
-		return dataGridViewBand_0.Tag;
-	}
-
-	internal static string smethod_28(string string_0, string string_1)
-	{
-		return string_0 + string_1;
-	}
-
-	internal static string smethod_29(Exception exception_0)
-	{
-		return exception_0.Message;
-	}
-
-	internal static string smethod_30(Control control_0)
-	{
-		return control_0.Text;
-	}
-
-	internal static bool smethod_31(string string_0, string string_1)
-	{
-		return string_0 == string_1;
-	}
-
-	internal static string smethod_32(string string_0, string string_1, string string_2)
-	{
-		return string_0 + string_1 + string_2;
-	}
-
-	internal static void smethod_33(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
 	}
 }

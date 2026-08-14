@@ -2,17 +2,17 @@ using System;
 
 public interface IRemoteMemoryApi
 {
-	IntPtr imethod_0(IntPtr intptr_0, int int_0);
+	IntPtr OpenProcessHandle(IntPtr intptr_0, int int_0);
 
-	void imethod_1(IntPtr intptr_0, IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0, out UIntPtr uintptr_1);
+	void ReadMemory(IntPtr intptr_0, IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0, out UIntPtr uintptr_1);
 
-	bool imethod_2(IntPtr intptr_0, IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0);
+	bool WriteMemory(IntPtr intptr_0, IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0);
 
-	bool imethod_3(IntPtr intptr_0, IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0, out NativeTypes.Enum34 enum34_1);
+	bool ProtectMemory(IntPtr intptr_0, IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0, out NativeTypes.Enum34 enum34_1);
 
-	IntPtr imethod_4(IntPtr intptr_0, IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0);
+	IntPtr AllocateMemory(IntPtr intptr_0, IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0);
 
-	bool imethod_5(IntPtr intptr_0, IntPtr intptr_1, long long_0, NativeTypes.Enum28 enum28_0);
+	bool FreeMemory(IntPtr intptr_0, IntPtr intptr_1, long long_0, NativeTypes.Enum28 enum28_0);
 
-	void imethod_6(IntPtr intptr_0);
+	void CloseHandle(IntPtr intptr_0);
 }

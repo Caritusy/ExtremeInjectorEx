@@ -84,7 +84,7 @@ internal static class CliApplication
 				}
 			}
 
-			RecoveredRuntime.smethod_341();
+			RecoveredRuntime.EnableDebugPrivilege();
 			return InjectModules(process, modules, ApplicationSettings.Current.Options);
 		}
 		catch (CliUsageException exception)
@@ -269,7 +269,7 @@ internal static class CliApplication
 
 	private static RemoteProcess CreateProcessReference(Process nativeProcess)
 	{
-		RemoteProcess process = RecoveredRuntime.smethod_47(nativeProcess.Id);
+		RemoteProcess process = RecoveredRuntime.OpenRemoteProcessById(nativeProcess.Id);
 		if (process != null)
 		{
 			return process;

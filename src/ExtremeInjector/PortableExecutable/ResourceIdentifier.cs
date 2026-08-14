@@ -10,41 +10,41 @@ public abstract class ResourceIdentifier
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_0()
+	public string GetName()
 	{
 		return string_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected void method_1(string string_1)
+	protected void SetName(string string_1)
 	{
 		string_0 = string_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public int method_2()
+	public int GetId()
 	{
 		return int_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected void method_3(int int_1)
+	protected void SetId(int int_1)
 	{
 		int_0 = int_1;
 	}
 
 	protected ResourceIdentifier(int int_1)
 	{
-		this.method_1(null);
-		this.method_3(int_1);
+		this.SetName(null);
+		this.SetId(int_1);
 	}
 
 	protected ResourceIdentifier(string string_1)
 	{
-		method_1(string_1);
-		method_3(-1);
+		SetName(string_1);
+		SetId(-1);
 	}
 }

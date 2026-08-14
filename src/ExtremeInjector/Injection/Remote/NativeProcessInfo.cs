@@ -11,34 +11,34 @@ public sealed class NativeProcessInfo
 
 	[SpecialName]
 	[CompilerGenerated]
-	public NativeTypes.Struct39 method_0()
+	public NativeTypes.Struct39 GetProcessRecord()
 	{
 		return struct39_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(NativeTypes.Struct39 struct39_1)
+	public void SetProcessRecord(NativeTypes.Struct39 struct39_1)
 	{
 		struct39_0 = struct39_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public List<NativeTypes.Struct40> method_2()
+	public List<NativeTypes.Struct40> GetThreads()
 	{
 		return list_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(List<NativeTypes.Struct40> list_1)
+	public void SetThreads(List<NativeTypes.Struct40> list_1)
 	{
 		list_0 = list_1;
 	}
 
 	public NativeProcessInfo()
 	{
-		method_3(new List<NativeTypes.Struct40>());
+		SetThreads(new List<NativeTypes.Struct40>());
 	}
 }

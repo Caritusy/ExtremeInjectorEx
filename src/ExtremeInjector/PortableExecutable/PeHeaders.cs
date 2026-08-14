@@ -13,35 +13,35 @@ public sealed class PeHeaders
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_0(uint uint_1)
+	public void SetSignature(uint uint_1)
 	{
 		uint_0 = uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public CoffHeader method_1()
+	public CoffHeader GetCoffHeader()
 	{
 		return class159_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_2(CoffHeader class159_1)
+	public void SetCoffHeader(CoffHeader class159_1)
 	{
 		class159_0 = class159_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public IPeOptionalHeader method_3()
+	public IPeOptionalHeader GetOptionalHeader()
 	{
 		return interface2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_4(IPeOptionalHeader interface2_1)
+	public void SetOptionalHeader(IPeOptionalHeader interface2_1)
 	{
 		interface2_0 = interface2_1;
 	}

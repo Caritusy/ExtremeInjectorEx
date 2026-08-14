@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using ns0;
 
 internal class _003CModule_003E
 {
@@ -11,12 +10,12 @@ internal class _003CModule_003E
 	{
 		internal uint uint_0;
 
-		internal void method_0()
+		internal void Initialize()
 		{
 			uint_0 = 1024u;
 		}
 
-		internal uint method_1(Class0 class0_0)
+		internal uint Decode(Class0 class0_0)
 		{
 			uint num = (class0_0.uint_1 >> 11) * this.uint_0;
 			if (class0_0.uint_0 >= num)
@@ -54,33 +53,33 @@ internal class _003CModule_003E
 			struct0_0 = new Struct0[1 << int_1];
 		}
 
-		internal void method_0()
+		internal void Initialize()
 		{
 			uint num = 1u;
 			while ((ulong)num < (ulong)(1L << (this.int_0 & 31)))
 			{
-				this.struct0_0[(int)((UIntPtr)num)].method_0();
+				this.struct0_0[(int)((UIntPtr)num)].Initialize();
 				num += 1u;
 			}
 		}
 
-		internal uint method_1(Class0 class0_0)
+		internal uint Decode(Class0 class0_0)
 		{
 			uint num = 1u;
 			for (int i = this.int_0; i > 0; i--)
 			{
-				num = (num << 1) + this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0);
+				num = (num << 1) + this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0);
 			}
 			return num - (1u << this.int_0);
 		}
 
-		internal uint method_2(Class0 class0_0)
+		internal uint ReverseDecode(Class0 class0_0)
 		{
 			uint num = 1u;
 			uint num2 = 0u;
 			for (int i = 0; i < this.int_0; i++)
 			{
-				uint num3 = this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0);
+				uint num3 = this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0);
 				num <<= 1;
 				num += num3;
 				num2 |= num3 << i;
@@ -88,13 +87,13 @@ internal class _003CModule_003E
 			return num2;
 		}
 
-		internal static uint smethod_0(Struct0[] struct0_1, uint uint_0, Class0 class0_0, int int_1)
+		internal static uint ReverseDecode(Struct0[] struct0_1, uint uint_0, Class0 class0_0, int int_1)
 		{
 			uint num = 1u;
 			uint num2 = 0u;
 			for (int i = 0; i < int_1; i++)
 			{
-				uint num3 = struct0_1[(int)((UIntPtr)(uint_0 + num))].method_1(class0_0);
+				uint num3 = struct0_1[(int)((UIntPtr)(uint_0 + num))].Decode(class0_0);
 				num <<= 1;
 				num += num3;
 				num2 |= num3 << i;
@@ -111,7 +110,7 @@ internal class _003CModule_003E
 
 		internal Stream stream_0;
 
-		internal void method_0(Stream stream_1)
+		internal void Initialize(Stream stream_1)
 		{
 			this.stream_0 = stream_1;
 			this.uint_0 = 0u;
@@ -122,12 +121,12 @@ internal class _003CModule_003E
 			}
 		}
 
-		internal void method_1()
+		internal void ReleaseStream()
 		{
 			stream_0 = null;
 		}
 
-		internal void method_2()
+		internal void Normalize()
 		{
 			while (this.uint_1 < 16777216u)
 			{
@@ -136,7 +135,7 @@ internal class _003CModule_003E
 			}
 		}
 
-		internal uint method_3(int int_0)
+		internal uint DecodeDirectBits(int int_0)
 		{
 			uint num = this.uint_1;
 			uint num2 = this.uint_0;
@@ -179,7 +178,7 @@ internal class _003CModule_003E
 
 			internal uint uint_0;
 
-			internal void method_0(uint uint_1)
+			internal void Create(uint uint_1)
 			{
 				for (uint num = this.uint_0; num < uint_1; num += 1u)
 				{
@@ -189,33 +188,33 @@ internal class _003CModule_003E
 				this.uint_0 = uint_1;
 			}
 
-			internal void method_1()
+			internal void Initialize()
 			{
-				this.struct0_0.method_0();
+				this.struct0_0.Initialize();
 				for (uint num = 0u; num < this.uint_0; num += 1u)
 				{
-					this.struct1_0[(int)((UIntPtr)num)].method_0();
-					this.struct1_1[(int)((UIntPtr)num)].method_0();
+					this.struct1_0[(int)((UIntPtr)num)].Initialize();
+					this.struct1_1[(int)((UIntPtr)num)].Initialize();
 				}
-				this.struct0_1.method_0();
-				this.struct1_2.method_0();
+				this.struct0_1.Initialize();
+				this.struct1_2.Initialize();
 			}
 
-			internal uint method_2(Class0 class0_0, uint uint_1)
+			internal uint Decode(Class0 class0_0, uint uint_1)
 			{
-				if (this.struct0_0.method_1(class0_0) == 0u)
+				if (this.struct0_0.Decode(class0_0) == 0u)
 				{
-					return this.struct1_0[(int)((UIntPtr)uint_1)].method_1(class0_0);
+					return this.struct1_0[(int)((UIntPtr)uint_1)].Decode(class0_0);
 				}
 				uint num = 8u;
-				if (this.struct0_1.method_1(class0_0) != 0u)
+				if (this.struct0_1.Decode(class0_0) != 0u)
 				{
 					num += 8u;
-					num += this.struct1_2.method_1(class0_0);
+					num += this.struct1_2.Decode(class0_0);
 				}
 				else
 				{
-					num += this.struct1_1[(int)((UIntPtr)uint_1)].method_1(class0_0);
+					num += this.struct1_1[(int)((UIntPtr)uint_1)].Decode(class0_0);
 				}
 				return num;
 			}
@@ -231,44 +230,44 @@ internal class _003CModule_003E
 			{
 				internal Struct0[] struct0_0;
 
-				internal void method_0()
+				internal void Create()
 				{
 					struct0_0 = new Struct0[768];
 				}
 
-				internal void method_1()
+				internal void Initialize()
 				{
 					for (int i = 0; i < 768; i++)
 					{
-						this.struct0_0[i].method_0();
+						this.struct0_0[i].Initialize();
 					}
 				}
 
-				internal byte method_2(Class0 class0_0)
+				internal byte DecodeNormal(Class0 class0_0)
 				{
 					uint num = 1u;
 					do
 					{
-						num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0));
+						num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0));
 					}
 					while (num < 256u);
 					return (byte)num;
 				}
 
-				internal byte method_3(Class0 class0_0, byte byte_0)
+				internal byte DecodeWithMatchByte(Class0 class0_0, byte byte_0)
 				{
 					uint num = 1u;
 					while (num < 256u)
 					{
 						uint num2 = (uint)(byte_0 >> 7 & 1);
 						byte_0 = (byte)(byte_0 << 1);
-						uint num3 = this.struct0_0[(int)((UIntPtr)((1u + num2 << 8) + num))].method_1(class0_0);
+						uint num3 = this.struct0_0[(int)((UIntPtr)((1u + num2 << 8) + num))].Decode(class0_0);
 						num = (num << 1 | num3);
 						if (num2 != num3)
 						{
 							while (num < 256u)
 							{
-								num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].method_1(class0_0));
+								num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0));
 							}
 							return (byte)num;
 						}
@@ -285,7 +284,7 @@ internal class _003CModule_003E
 
 			internal uint uint_0;
 
-			internal void method_0(int int_2, int int_3)
+			internal void Create(int int_2, int int_3)
 			{
 				if (this.struct2_0 == null || this.int_1 != int_3 || this.int_0 != int_2)
 				{
@@ -296,34 +295,34 @@ internal class _003CModule_003E
 					this.struct2_0 = new _003CModule_003E.Class1.Class3.Struct2[num];
 					for (uint num2 = 0u; num2 < num; num2 += 1u)
 					{
-						this.struct2_0[(int)((UIntPtr)num2)].method_0();
+						this.struct2_0[(int)((UIntPtr)num2)].Create();
 					}
 					return;
 				}
 			}
 
-			internal void method_1()
+			internal void Initialize()
 			{
 				uint num = 1u << this.int_1 + this.int_0;
 				for (uint num2 = 0u; num2 < num; num2 += 1u)
 				{
-					this.struct2_0[(int)((UIntPtr)num2)].method_1();
+					this.struct2_0[(int)((UIntPtr)num2)].Initialize();
 				}
 			}
 
-			internal uint method_2(uint uint_1, byte byte_0)
+			internal uint GetDecoderIndex(uint uint_1, byte byte_0)
 			{
 				return ((uint_1 & uint_0) << int_1) + (uint)(byte_0 >> 8 - int_1);
 			}
 
-			internal byte method_3(Class0 class0_0, uint uint_1, byte byte_0)
+			internal byte DecodeNormal(Class0 class0_0, uint uint_1, byte byte_0)
 			{
-				return struct2_0[method_2(uint_1, byte_0)].method_2(class0_0);
+				return struct2_0[GetDecoderIndex(uint_1, byte_0)].DecodeNormal(class0_0);
 			}
 
-			internal byte method_4(Class0 class0_0, uint uint_1, byte byte_0, byte byte_1)
+			internal byte DecodeWithMatchByte(Class0 class0_0, uint uint_1, byte byte_0, byte byte_1)
 			{
-				return struct2_0[method_2(uint_1, byte_0)].method_3(class0_0, byte_1);
+				return struct2_0[GetDecoderIndex(uint_1, byte_0)].DecodeWithMatchByte(class0_0, byte_1);
 			}
 
 			internal Class3()
@@ -378,66 +377,66 @@ internal class _003CModule_003E
 			}
 		}
 
-		internal void method_0(uint uint_3)
+		internal void SetDictionarySize(uint uint_3)
 		{
 			if (this.uint_0 != uint_3)
 			{
 				this.uint_0 = uint_3;
 				this.uint_1 = Math.Max(this.uint_0, 1u);
 				uint uint_4 = Math.Max(this.uint_1, 4096u);
-				this.class4_0.method_0(uint_4);
+				this.class4_0.Create(uint_4);
 			}
 		}
 
-		internal void method_1(int int_0, int int_1)
+		internal void SetLiteralProperties(int int_0, int int_1)
 		{
-			class3_0.method_0(int_0, int_1);
+			class3_0.Create(int_0, int_1);
 		}
 
-		internal void method_2(int int_0)
+		internal void SetPositionBits(int int_0)
 		{
 			uint num = 1u << int_0;
-			this.class2_0.method_0(num);
-			this.class2_1.method_0(num);
+			this.class2_0.Create(num);
+			this.class2_1.Create(num);
 			this.uint_2 = num - 1u;
 		}
 
-		internal void method_3(Stream stream_0, Stream stream_1)
+		internal void Initialize(Stream stream_0, Stream stream_1)
 		{
-			this.class0_0.method_0(stream_0);
-			this.class4_0.method_1(stream_1, this.bool_0);
+			this.class0_0.Initialize(stream_0);
+			this.class4_0.SetStream(stream_1, this.bool_0);
 			for (uint num = 0u; num < 12u; num += 1u)
 			{
 				for (uint num2 = 0u; num2 <= this.uint_2; num2 += 1u)
 				{
 					uint num3 = (num << 4) + num2;
-					this.struct0_0[(int)((UIntPtr)num3)].method_0();
-					this.struct0_1[(int)((UIntPtr)num3)].method_0();
+					this.struct0_0[(int)((UIntPtr)num3)].Initialize();
+					this.struct0_1[(int)((UIntPtr)num3)].Initialize();
 				}
-				this.struct0_2[(int)((UIntPtr)num)].method_0();
-				this.struct0_3[(int)((UIntPtr)num)].method_0();
-				this.struct0_4[(int)((UIntPtr)num)].method_0();
-				this.struct0_5[(int)((UIntPtr)num)].method_0();
+				this.struct0_2[(int)((UIntPtr)num)].Initialize();
+				this.struct0_3[(int)((UIntPtr)num)].Initialize();
+				this.struct0_4[(int)((UIntPtr)num)].Initialize();
+				this.struct0_5[(int)((UIntPtr)num)].Initialize();
 			}
-			this.class3_0.method_1();
+			this.class3_0.Initialize();
 			for (uint num = 0u; num < 4u; num += 1u)
 			{
-				this.struct1_0[(int)((UIntPtr)num)].method_0();
+				this.struct1_0[(int)((UIntPtr)num)].Initialize();
 			}
 			for (uint num = 0u; num < 114u; num += 1u)
 			{
-				this.struct0_6[(int)((UIntPtr)num)].method_0();
+				this.struct0_6[(int)((UIntPtr)num)].Initialize();
 			}
-			this.class2_0.method_1();
-			this.class2_1.method_1();
-			this.struct1_1.method_0();
+			this.class2_0.Initialize();
+			this.class2_1.Initialize();
+			this.struct1_1.Initialize();
 		}
 
-		internal void method_4(Stream stream_0, Stream stream_1, long long_0, long long_1)
+		internal void Decode(Stream stream_0, Stream stream_1, long long_0, long long_1)
 		{
-			this.method_3(stream_0, stream_1);
+			this.Initialize(stream_0, stream_1);
 			_003CModule_003E.Struct3 @struct = default(_003CModule_003E.Struct3);
-			@struct.method_0();
+			@struct.Initialize();
 			uint num = 0u;
 			uint num2 = 0u;
 			uint num3 = 0u;
@@ -445,26 +444,26 @@ internal class _003CModule_003E
 			ulong num5 = 0UL;
 			if (num5 < (ulong)long_1)
 			{
-				this.struct0_0[(int)((UIntPtr)(@struct.uint_0 << 4))].method_1(this.class0_0);
-				@struct.method_1();
-				byte byte_ = this.class3_0.method_3(this.class0_0, 0u, 0);
-				this.class4_0.method_5(byte_);
+				this.struct0_0[(int)((UIntPtr)(@struct.uint_0 << 4))].Decode(this.class0_0);
+				@struct.UpdateLiteral();
+				byte byte_ = this.class3_0.DecodeNormal(this.class0_0, 0u, 0);
+				this.class4_0.PutByte(byte_);
 				num5 += 1UL;
 			}
 			while (num5 < (ulong)long_1)
 			{
 				uint num6 = (uint)num5 & this.uint_2;
-				if (this.struct0_0[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].method_1(this.class0_0) != 0u)
+				if (this.struct0_0[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].Decode(this.class0_0) != 0u)
 				{
 					uint num7;
-					if (this.struct0_2[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) != 1u)
+					if (this.struct0_2[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) != 1u)
 					{
 						num4 = num3;
 						num3 = num2;
 						num2 = num;
-						num7 = 2u + this.class2_0.method_2(this.class0_0, num6);
-						@struct.method_2();
-						uint num8 = this.struct1_0[(int)((UIntPtr)_003CModule_003E.Class1.smethod_0(num7))].method_1(this.class0_0);
+						num7 = 2u + this.class2_0.Decode(this.class0_0, num6);
+						@struct.UpdateMatch();
+						uint num8 = this.struct1_0[(int)((UIntPtr)_003CModule_003E.Class1.GetLengthToPositionState(num7))].Decode(this.class0_0);
 						if (num8 < 4u)
 						{
 							num = num8;
@@ -475,23 +474,23 @@ internal class _003CModule_003E
 							num = (2u | (num8 & 1u)) << num9;
 							if (num8 < 14u)
 							{
-								num += _003CModule_003E.Struct1.smethod_0(this.struct0_6, num - num8 - 1u, this.class0_0, num9);
+								num += _003CModule_003E.Struct1.ReverseDecode(this.struct0_6, num - num8 - 1u, this.class0_0, num9);
 							}
 							else
 							{
-								num += this.class0_0.method_3(num9 - 4) << 4;
-								num += this.struct1_1.method_2(this.class0_0);
+								num += this.class0_0.DecodeDirectBits(num9 - 4) << 4;
+								num += this.struct1_1.ReverseDecode(this.class0_0);
 							}
 						}
 					}
 					else
 					{
-						if (this.struct0_3[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) == 0u)
+						if (this.struct0_3[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) == 0u)
 						{
-							if (this.struct0_1[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].method_1(this.class0_0) == 0u)
+							if (this.struct0_1[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].Decode(this.class0_0) == 0u)
 							{
-								@struct.method_4();
-								this.class4_0.method_5(this.class4_0.method_6(num));
+								@struct.UpdateShortRepeatedMatch();
+								this.class4_0.PutByte(this.class4_0.GetByte(num));
 								num5 += 1UL;
 								continue;
 							}
@@ -499,9 +498,9 @@ internal class _003CModule_003E
 						else
 						{
 							uint num10;
-							if (this.struct0_4[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) != 0u)
+							if (this.struct0_4[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) != 0u)
 							{
-								if (this.struct0_5[(int)((UIntPtr)@struct.uint_0)].method_1(this.class0_0) != 0u)
+								if (this.struct0_5[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) != 0u)
 								{
 									num10 = num4;
 									num4 = num3;
@@ -519,39 +518,39 @@ internal class _003CModule_003E
 							num2 = num;
 							num = num10;
 						}
-						num7 = this.class2_1.method_2(this.class0_0, num6) + 2u;
-						@struct.method_3();
+						num7 = this.class2_1.Decode(this.class0_0, num6) + 2u;
+						@struct.UpdateRepeatedMatch();
 					}
 					if (((ulong)num >= num5 || num >= this.uint_1) && num == 4294967295u)
 					{
 						break;
 					}
-					this.class4_0.method_4(num, num7);
+					this.class4_0.CopyBlock(num, num7);
 					num5 += (ulong)num7;
 				}
 				else
 				{
-					byte byte_2 = this.class4_0.method_6(0u);
+					byte byte_2 = this.class4_0.GetByte(0u);
 					byte byte_3;
-					if (!@struct.method_5())
+					if (!@struct.IsLiteralState())
 					{
-						byte_3 = this.class3_0.method_4(this.class0_0, (uint)num5, byte_2, this.class4_0.method_6(num));
+						byte_3 = this.class3_0.DecodeWithMatchByte(this.class0_0, (uint)num5, byte_2, this.class4_0.GetByte(num));
 					}
 					else
 					{
-						byte_3 = this.class3_0.method_3(this.class0_0, (uint)num5, byte_2);
+						byte_3 = this.class3_0.DecodeNormal(this.class0_0, (uint)num5, byte_2);
 					}
-					this.class4_0.method_5(byte_3);
-					@struct.method_1();
+					this.class4_0.PutByte(byte_3);
+					@struct.UpdateLiteral();
 					num5 += 1UL;
 				}
 			}
-			this.class4_0.method_3();
-			this.class4_0.method_2();
-			this.class0_0.method_1();
+			this.class4_0.Flush();
+			this.class4_0.ReleaseStream();
+			this.class0_0.ReleaseStream();
 		}
 
-		internal void method_5(byte[] byte_0)
+		internal void SetDecoderProperties(byte[] byte_0)
 		{
 			int int_ = (int)(byte_0[0] % 9);
 			int num = (int)(byte_0[0] / 9);
@@ -562,12 +561,12 @@ internal class _003CModule_003E
 			{
 				num2 += (uint)((uint)byte_0[1 + i] << i * 8);
 			}
-			this.method_0(num2);
-			this.method_1(int_2, int_);
-			this.method_2(int_3);
+			this.SetDictionarySize(num2);
+			this.SetLiteralProperties(int_2, int_);
+			this.SetPositionBits(int_3);
 		}
 
-		internal static uint smethod_0(uint uint_3)
+		internal static uint GetLengthToPositionState(uint uint_3)
 		{
 			uint_3 -= 2;
 			if (uint_3 < 4)
@@ -590,7 +589,7 @@ internal class _003CModule_003E
 
 		internal uint uint_2;
 
-		internal void method_0(uint uint_3)
+		internal void Create(uint uint_3)
 		{
 			if (this.uint_2 != uint_3)
 			{
@@ -601,9 +600,9 @@ internal class _003CModule_003E
 			this.uint_1 = 0u;
 		}
 
-		internal void method_1(Stream stream_1, bool bool_0)
+		internal void SetStream(Stream stream_1, bool bool_0)
 		{
-			this.method_2();
+			this.ReleaseStream();
 			this.stream_0 = stream_1;
 			if (!bool_0)
 			{
@@ -612,14 +611,14 @@ internal class _003CModule_003E
 			}
 		}
 
-		internal void method_2()
+		internal void ReleaseStream()
 		{
-			this.method_3();
+			this.Flush();
 			this.stream_0 = null;
 			Buffer.BlockCopy(new byte[this.byte_0.Length], 0, this.byte_0, 0, this.byte_0.Length);
 		}
 
-		internal void method_3()
+		internal void Flush()
 		{
 			uint num = this.uint_0 - this.uint_1;
 			if (num == 0u)
@@ -634,7 +633,7 @@ internal class _003CModule_003E
 			this.uint_1 = this.uint_0;
 		}
 
-		internal void method_4(uint uint_3, uint uint_4)
+		internal void CopyBlock(uint uint_3, uint uint_4)
 		{
 			uint num = this.uint_0 - uint_3 - 1u;
 			if (num >= this.uint_2)
@@ -650,22 +649,22 @@ internal class _003CModule_003E
 				this.byte_0[(int)((UIntPtr)(this.uint_0++))] = this.byte_0[(int)((UIntPtr)(num++))];
 				if (this.uint_0 >= this.uint_2)
 				{
-					this.method_3();
+					this.Flush();
 				}
 				uint_4 -= 1u;
 			}
 		}
 
-		internal void method_5(byte byte_1)
+		internal void PutByte(byte byte_1)
 		{
 			this.byte_0[(int)((UIntPtr)(this.uint_0++))] = byte_1;
 			if (this.uint_0 >= this.uint_2)
 			{
-				this.method_3();
+				this.Flush();
 			}
 		}
 
-		internal byte method_6(uint uint_3)
+		internal byte GetByte(uint uint_3)
 		{
 			uint num = this.uint_0 - uint_3 - 1u;
 			if (num >= this.uint_2)
@@ -684,12 +683,12 @@ internal class _003CModule_003E
 	{
 		internal uint uint_0;
 
-		internal void method_0()
+		internal void Initialize()
 		{
 			uint_0 = 0u;
 		}
 
-		internal void method_1()
+		internal void UpdateLiteral()
 		{
 			if (this.uint_0 < 4u)
 			{
@@ -704,22 +703,22 @@ internal class _003CModule_003E
 			this.uint_0 -= 6u;
 		}
 
-		internal void method_2()
+		internal void UpdateMatch()
 		{
 			uint_0 = ((uint_0 < 7) ? 7u : 10u);
 		}
 
-		internal void method_3()
+		internal void UpdateRepeatedMatch()
 		{
 			uint_0 = ((uint_0 < 7) ? 8u : 11u);
 		}
 
-		internal void method_4()
+		internal void UpdateShortRepeatedMatch()
 		{
 			uint_0 = ((uint_0 < 7) ? 9u : 11u);
 		}
 
-		internal bool method_5()
+		internal bool IsLiteralState()
 		{
 			return uint_0 < 7;
 		}
@@ -736,19 +735,18 @@ internal class _003CModule_003E
 
 	static _003CModule_003E()
 	{
-		IntegrityBootstrap.smethod_0();
-		_003CModule_003E.smethod_1();
-		RecoveredRuntime.smethod_28();
-		RecoveredRuntime.smethod_192();
+		_003CModule_003E.InitializeConstantTable();
+		RecoveredRuntime.InitializeRuntimeResolvers();
+		RecoveredRuntime.InitializeResourceResolver();
 	}
 
-	internal static byte[] smethod_0(byte[] byte_1)
+	internal static byte[] DecompressLzmaPayload(byte[] byte_1)
 	{
 		MemoryStream memoryStream = new MemoryStream(byte_1);
 		_003CModule_003E.Class1 @class = new _003CModule_003E.Class1();
 		byte[] buffer = new byte[5];
 		memoryStream.Read(buffer, 0, 5);
-		@class.method_5(buffer);
+		@class.SetDecoderProperties(buffer);
 		long num = 0L;
 		for (int i = 0; i < 8; i++)
 		{
@@ -758,11 +756,11 @@ internal class _003CModule_003E
 		byte[] array = new byte[(int)num];
 		MemoryStream stream_ = new MemoryStream(array, true);
 		long long_ = memoryStream.Length - 13L;
-		@class.method_4(memoryStream, stream_, long_, num);
+		@class.Decode(memoryStream, stream_, long_, num);
 		return array;
 	}
 
-	internal static void smethod_1()
+	internal static void InitializeConstantTable()
 	{
 		uint num = 128u;
 		uint[] array = new uint[]
@@ -942,10 +940,10 @@ internal class _003CModule_003E
 			}
 			num3 += 16;
 		}
-		_003CModule_003E.byte_0 = _003CModule_003E.smethod_0(array4);
+		_003CModule_003E.byte_0 = _003CModule_003E.DecompressLzmaPayload(array4);
 	}
 
-	internal static T smethod_2<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyA<T>(uint uint_0)
 	{
 		uint_0 = (uint_0 * 319591615u ^ 1651505086u);
 		uint num = uint_0 >> 30;
@@ -977,7 +975,7 @@ internal class _003CModule_003E
 		return result;
 	}
 
-	internal static T smethod_3<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyB<T>(uint uint_0)
 	{
 		uint_0 = (uint_0 * 119080739u ^ 3110504502u);
 		uint num = uint_0 >> 30;
@@ -1009,7 +1007,7 @@ internal class _003CModule_003E
 		return result;
 	}
 
-	internal static T smethod_4<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyC<T>(uint uint_0)
 	{
 		uint_0 = (uint_0 * 4058603021u ^ 1194576908u);
 		uint num = uint_0 >> 30;
@@ -1044,7 +1042,7 @@ internal class _003CModule_003E
 		return result;
 	}
 
-	internal static T smethod_5<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyD<T>(uint uint_0)
 	{
 		uint_0 = (uint_0 * 938235797u ^ 1796485445u);
 		uint num = uint_0 >> 30;
@@ -1076,7 +1074,7 @@ internal class _003CModule_003E
 		return result;
 	}
 
-	internal static T smethod_6<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyE<T>(uint uint_0)
 	{
 		uint_0 = (uint_0 * 1979878659u ^ 1723123948u);
 		uint num = uint_0 >> 30;

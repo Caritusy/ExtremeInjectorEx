@@ -129,14 +129,9 @@ public static class ApiSetSchema
 	{
 		public string string_0;
 
-		internal bool method_0(KeyValuePair<string, List<string>> keyValuePair_0)
+		internal bool MatchesContract(KeyValuePair<string, List<string>> keyValuePair_0)
 		{
 			return string_0.IndexOf(keyValuePair_0.Key) != -1;
-		}
-
-		internal static int smethod_0(string string_1, string string_2)
-		{
-			return string_1.IndexOf(string_2);
 		}
 	}
 
@@ -148,27 +143,27 @@ public static class ApiSetSchema
 		{
 			if (PlatformInfo.bool_2)
 			{
-				RemoteProcess gclass2_ = RecoveredRuntime.smethod_211();
-				RemotePeb peb = RecoveredRuntime.smethod_427(gclass2_)
-					? (RemotePeb)RecoveredRuntime.smethod_255(gclass2_)
-					: RecoveredRuntime.smethod_369(gclass2_);
-				IntPtr intPtr = peb.method_0822();
-				if (!(intPtr == IntPtr.Zero) && RecoveredRuntime.smethod_184(intPtr))
+				RemoteProcess gclass2_ = RecoveredRuntime.GetCurrentRemoteProcess();
+				RemotePeb peb = RecoveredRuntime.Is32BitProcess(gclass2_)
+					? (RemotePeb)RecoveredRuntime.GetPeb32(gclass2_)
+					: RecoveredRuntime.GetPeb64(gclass2_);
+				IntPtr intPtr = peb.GetApiSetMapAddress();
+				if (!(intPtr == IntPtr.Zero) && RecoveredRuntime.IsReadableMemoryAddress(intPtr))
 				{
 					if (PlatformInfo.bool_7)
 					{
-						RecoveredRuntime.smethod_241(intPtr);
+						RecoveredRuntime.ReadApiSetSchemaV2(intPtr);
 					}
 					else if (!PlatformInfo.bool_6)
 					{
 						if (PlatformInfo.bool_2)
 						{
-							RecoveredRuntime.smethod_120(intPtr);
+							RecoveredRuntime.ReadApiSetSchemaV6(intPtr);
 						}
 					}
 					else
 					{
-						RecoveredRuntime.smethod_346(intPtr);
+						RecoveredRuntime.ReadApiSetSchemaV4(intPtr);
 					}
 				}
 			}
@@ -178,20 +173,20 @@ public static class ApiSetSchema
 		}
 	}
 
-	internal static U[] smethod_0<T, U>(IntPtr intptr_0) where T : struct where U : struct
+	internal static U[] ReadEntries<T, U>(IntPtr intptr_0) where T : struct where U : struct
 	{
-		int num = typeof(T).smethod_7();
-		IntPtr intPtr = intptr_0.smethod_8(num - 4);
-		if (RecoveredRuntime.smethod_184(intPtr))
+		int num = typeof(T).SizeOf();
+		IntPtr intPtr = intptr_0.Add(num - 4);
+		if (RecoveredRuntime.IsReadableMemoryAddress(intPtr))
 		{
 			int num2 = Marshal.ReadInt32(intPtr);
-			intptr_0 = intptr_0.smethod_8(num);
-			int num3 = typeof(U).smethod_7();
+			intptr_0 = intptr_0.Add(num);
+			int num3 = typeof(U).SizeOf();
 			U[] array = new U[num2];
 			for (int i = 0; i < num2; i++)
 			{
-				IntPtr intPtr2 = intptr_0.smethod_8(num3 * i);
-				if (!RecoveredRuntime.smethod_184(intPtr2))
+				IntPtr intPtr2 = intptr_0.Add(num3 * i);
+				if (!RecoveredRuntime.IsReadableMemoryAddress(intPtr2))
 				{
 					return new U[0];
 				}
@@ -200,20 +195,5 @@ public static class ApiSetSchema
 			return array;
 		}
 		return new U[0];
-	}
-
-	internal static Type smethod_1(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
-	}
-
-	internal static int smethod_2(IntPtr intptr_0)
-	{
-		return Marshal.ReadInt32(intptr_0);
-	}
-
-	internal static object smethod_3(IntPtr intptr_0, Type type_0)
-	{
-		return Marshal.PtrToStructure(intptr_0, type_0);
 	}
 }

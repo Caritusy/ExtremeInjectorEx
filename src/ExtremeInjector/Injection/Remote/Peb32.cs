@@ -5,113 +5,108 @@ public sealed class Peb32 : RemotePeb
 {
 	static Peb32()
 	{
-		RemotePlatformStructure.smethod_6<Peb32>(new RemoteFieldLayout[65]
+		RemotePlatformStructure.Register32BitLayout<Peb32>(new RemoteFieldLayout[65]
 		{
-			RecoveredRuntime.smethod_316(typeof(byte)),
-			RecoveredRuntime.smethod_316(typeof(byte)),
-			RecoveredRuntime.smethod_316(typeof(byte)),
-			RecoveredRuntime.smethod_316(typeof(byte)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_194(typeof(uint), 2),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(ulong)),
-			RecoveredRuntime.smethod_316(typeof(long)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(ushort)),
-			RecoveredRuntime.smethod_316(typeof(ushort)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_194(typeof(uint), 34),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_194(typeof(uint), 32),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(ulong)),
-			RecoveredRuntime.smethod_316(typeof(ulong)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(UnicodeString32)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint))
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(byte)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(byte)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(byte)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(byte)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteArrayFieldLayout(typeof(uint), 2),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(ulong)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(long)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(ushort)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(ushort)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteArrayFieldLayout(typeof(uint), 34),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteArrayFieldLayout(typeof(uint), 32),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(ulong)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(ulong)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(UnicodeString32)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint))
 		});
 	}
 
 	public Peb32(RemoteProcess gclass2_1)
 		: base(gclass2_1, bool_2: true)
 	{
-		this.method_04C6();
+		this.EnsureProcessHandle();
 	}
 
 	public Peb32(RemoteProcess gclass2_1, IntPtr intptr_2)
 		: base(gclass2_1, bool_2: true)
 	{
-		method_3(intptr_2);
+		SetProcessHandle(intptr_2);
 	}
 
 	[SpecialName]
-	public override IntPtr method_0821()
+	public override IntPtr GetLoaderDataAddress()
 	{
-		return (IntPtr)method_21<uint>(6);
+		return (IntPtr)ReadField<uint>(6);
 	}
 
 	[SpecialName]
-	public override IntPtr method_0822()
+	public override IntPtr GetApiSetMapAddress()
 	{
-		return (IntPtr)method_21<uint>(17);
+		return (IntPtr)ReadField<uint>(17);
 	}
 
-	public override RemotePebLdrData method_0823()
+	public override RemotePebLdrData GetLoaderData()
 	{
-		if (!(method_0821() != IntPtr.Zero))
+		if (!(GetLoaderDataAddress() != IntPtr.Zero))
 		{
 			return null;
 		}
-		PebLdrData32 @class = new PebLdrData32(method_0821(), method_2());
-		@class.method_7(method_6());
+		PebLdrData32 @class = new PebLdrData32(GetLoaderDataAddress(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
-	}
-
-	internal static Type smethod_11(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
 	}
 }

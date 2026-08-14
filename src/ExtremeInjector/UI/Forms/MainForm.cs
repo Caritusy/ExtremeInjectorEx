@@ -66,10 +66,10 @@ public sealed class MainForm : Form
 			return;
 		}
 
-		RecoveredRuntime.smethod_341();
+		RecoveredRuntime.EnableDebugPrivilege();
 		processRefreshTimer.Start();
-		RecoveredRuntime.smethod_4(FileDropMessageFilter.class10_0, moduleGrid.Handle);
-		FileDropMessageFilter.class10_0.method_0(OnModulesDropped);
+		RecoveredRuntime.EnableFileDropMessages(FileDropMessageFilter.class10_0, moduleGrid.Handle);
+		FileDropMessageFilter.class10_0.SubscribeFilesDropped(OnModulesDropped);
 
 		if (PlatformInfo.bool_1)
 		{
@@ -87,7 +87,7 @@ public sealed class MainForm : Form
 		if (DateTime.Now.Subtract(ApplicationSettings.Current.LastUpdateCheck).TotalDays >= 7.0)
 		{
 			ApplicationSettings.Current.LastUpdateCheck = DateTime.Now;
-			ThreadPool.QueueUserWorkItem(_ => RecoveredRuntime.smethod_408());
+			ThreadPool.QueueUserWorkItem(_ => RecoveredRuntime.CheckForUpdatesAndNotify());
 		}
 
 		UpdateWindowTitle();
@@ -845,7 +845,7 @@ public sealed class MainForm : Form
 
 	internal void OnModulesDropped(object sender, FileDropEventArgs e)
 	{
-		foreach (string modulePath in e.method_1())
+		foreach (string modulePath in e.Files)
 		{
 			RecoveredRuntime.AddModuleToGrid(bool_0: true, null, bool_1: true, this, modulePath);
 		}

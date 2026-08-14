@@ -6,29 +6,29 @@ public abstract class RemoteLdrDataTableEntry : RemotePlatformStructure
 	protected RemoteLdrDataTableEntry(IntPtr intptr_2, IntPtr intptr_3, bool bool_2)
 		: base(intptr_3, bool_2)
 	{
-		method_18(intptr_2);
+		SetAddress(intptr_2);
 	}
 
 	[SpecialName]
-	public abstract RemoteLdrListEntry method_07EE();
+	public abstract RemoteLdrListEntry GetLoadOrderLinks();
 
 	[SpecialName]
-	public abstract RemoteLdrListEntry method_07EF();
+	public abstract RemoteLdrListEntry GetMemoryOrderLinks();
 
 	[SpecialName]
-	public abstract RemoteLdrListEntry method_07F0();
+	public abstract RemoteLdrListEntry GetInitializationOrderLinks();
 
 	[SpecialName]
-	public abstract IntPtr method_07F1();
+	public abstract IntPtr GetModuleBase();
 
 	[SpecialName]
-	public abstract short method_07F2();
+	public abstract short GetLoadCount();
 
 	[SpecialName]
-	public abstract RemoteListEntry method_07F3();
+	public abstract RemoteListEntry GetHashLinks();
 
 	[SpecialName]
-	public abstract IntPtr method_07F4();
+	public abstract IntPtr GetDependencyNodeAddress();
 
-	public abstract RemoteLdrDdagNode method_07F5();
+	public abstract RemoteLdrDdagNode GetDependencyNode();
 }

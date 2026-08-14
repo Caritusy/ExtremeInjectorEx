@@ -25,79 +25,79 @@ public sealed class PeScrambler : IDisposable
 
 		[SpecialName]
 		[CompilerGenerated]
-		public uint method_0()
+		public uint GetContentOffset()
 		{
 			return uint_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_1(uint uint_2)
+		public void SetContentOffset(uint uint_2)
 		{
 			uint_0 = uint_2;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_2(uint uint_2)
+		public void SetVirtualAddressDelta(uint uint_2)
 		{
 			uint_1 = uint_2;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public PeSectionHeader method_3()
+		public PeSectionHeader GetModifiedSection()
 		{
 			return gclass5_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_4(PeSectionHeader gclass5_2)
+		public void SetModifiedSection(PeSectionHeader gclass5_2)
 		{
 			gclass5_0 = gclass5_2;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public PeSectionHeader method_5()
+		public PeSectionHeader GetOriginalSection()
 		{
 			return gclass5_1;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_6(PeSectionHeader gclass5_2)
+		public void SetOriginalSection(PeSectionHeader gclass5_2)
 		{
 			gclass5_1 = gclass5_2;
 		}
 
 		public Class132(PeSectionHeader gclass5_2, uint uint_2, uint uint_3)
 		{
-			this.method_6(gclass5_2);
-			this.method_2(uint_2);
-			this.method_1(uint_3);
+			this.SetOriginalSection(gclass5_2);
+			this.SetVirtualAddressDelta(uint_2);
+			this.SetContentOffset(uint_3);
 			PeSectionHeader gclass = new PeSectionHeader();
-			gclass.method_19(gclass5_2.method_18());
-			gclass.method_1(gclass5_2.method_0());
-			gclass.method_17(gclass5_2.method_16());
-			gclass.method_15(gclass5_2.method_14());
-			gclass.method_13(gclass5_2.method_12());
-			gclass.method_9(gclass5_2.method_8());
-			gclass.method_11(gclass5_2.method_10());
-			gclass.method_7(gclass5_2.method_6());
-			gclass.method_5(gclass5_2.method_4() + uint_2);
-			gclass.method_3(gclass5_2.method_2());
-			this.method_4(gclass);
-			if (this.method_3().method_2() != 0u && this.method_3().method_6() != 0u)
+			gclass.SetCharacteristics(gclass5_2.GetCharacteristics());
+			gclass.SetName(gclass5_2.GetName());
+			gclass.SetNumberOfLineNumbers(gclass5_2.GetNumberOfLineNumbers());
+			gclass.SetNumberOfRelocations(gclass5_2.GetNumberOfRelocations());
+			gclass.SetPointerToLineNumbers(gclass5_2.GetPointerToLineNumbers());
+			gclass.SetPointerToRawData(gclass5_2.GetPointerToRawData());
+			gclass.SetPointerToRelocations(gclass5_2.GetPointerToRelocations());
+			gclass.SetSizeOfRawData(gclass5_2.GetSizeOfRawData());
+			gclass.SetVirtualAddress(gclass5_2.GetVirtualAddress() + uint_2);
+			gclass.SetVirtualSize(gclass5_2.GetVirtualSize());
+			this.SetModifiedSection(gclass);
+			if (this.GetModifiedSection().GetVirtualSize() != 0u && this.GetModifiedSection().GetSizeOfRawData() != 0u)
 			{
-				PeSectionHeader gclass2 = this.method_3();
-				gclass2.method_3(gclass2.method_2() + uint_3);
+				PeSectionHeader gclass2 = this.GetModifiedSection();
+				gclass2.SetVirtualSize(gclass2.GetVirtualSize() + uint_3);
 			}
-			if (this.method_3().method_6() != 0u)
+			if (this.GetModifiedSection().GetSizeOfRawData() != 0u)
 			{
-				PeSectionHeader gclass3 = this.method_3();
-				gclass3.method_7(gclass3.method_6() + uint_3);
+				PeSectionHeader gclass3 = this.GetModifiedSection();
+				gclass3.SetSizeOfRawData(gclass3.GetSizeOfRawData() + uint_3);
 			}
 		}
 	}
@@ -107,14 +107,9 @@ public sealed class PeScrambler : IDisposable
 	{
 		public string string_0;
 
-		internal bool method_0(PeSectionHeader gclass5_0)
+		internal bool MatchesSectionName(PeSectionHeader gclass5_0)
 		{
-			return gclass5_0.method_0() == string_0;
-		}
-
-		internal static bool smethod_0(string string_1, string string_2)
-		{
-			return string_1 == string_2;
+			return gclass5_0.GetName() == string_0;
 		}
 	}
 
@@ -123,14 +118,9 @@ public sealed class PeScrambler : IDisposable
 	{
 		public string string_0;
 
-		internal bool method_0(PeSectionHeader gclass5_0)
+		internal bool MatchesSectionName(PeSectionHeader gclass5_0)
 		{
-			return gclass5_0.method_0() == string_0;
-		}
-
-		internal static bool smethod_0(string string_1, string string_2)
-		{
-			return string_1 == string_2;
+			return gclass5_0.GetName() == string_0;
 		}
 	}
 
@@ -144,14 +134,14 @@ public sealed class PeScrambler : IDisposable
 
 		public static Func<Class132, PeSectionHeader> _003C_003E9__53_0;
 
-		internal uint method_0(ulong ulong_0)
+		internal uint ToUInt32(ulong ulong_0)
 		{
 			return (uint)ulong_0;
 		}
 
-		internal PeSectionHeader method_1(Class132 class132_0)
+		internal PeSectionHeader GetModifiedSection(Class132 class132_0)
 		{
-			return class132_0.method_3();
+			return class132_0.GetModifiedSection();
 		}
 	}
 
@@ -196,7 +186,7 @@ public sealed class PeScrambler : IDisposable
 					return false;
 				}
 				this.int_0 = -1;
-				foreach (ResourceDirectoryNode item in this.class138_3.method_6())
+				foreach (ResourceDirectoryNode item in this.class138_3.GetSubdirectories())
 				{
 					this.stack_0.Push(item);
 				}
@@ -244,21 +234,6 @@ public sealed class PeScrambler : IDisposable
 		{
 			return ((IEnumerable<ResourceDirectoryNode>)this).GetEnumerator();
 		}
-
-		internal static Thread smethod_0()
-		{
-			return Thread.CurrentThread;
-		}
-
-		internal static int smethod_1(Thread thread_0)
-		{
-			return thread_0.ManagedThreadId;
-		}
-
-		internal static NotSupportedException smethod_2()
-		{
-			return new NotSupportedException();
-		}
 	}
 
 	internal readonly PeImage class154_0;
@@ -272,77 +247,77 @@ public sealed class PeScrambler : IDisposable
 	public PeScrambler(PeImage class154_1, PeScrambleOptions class131_1)
 	{
 		MemoryStream memoryStream = new MemoryStream();
-		class154_1.method_28().Position = 0L;
-		class154_1.method_28().smethod_6(memoryStream);
+		class154_1.GetStream().Position = 0L;
+        BinaryExtensions.CopyTo(class154_1.GetStream(), memoryStream);
 		memoryStream.Position = 0L;
-		class154_0 = PeImageReader.smethod_4(memoryStream, bool_0: true, PeImageLayout.const_0);
-		binaryWriter_0 = new BinaryWriter(class154_0.method_28());
+		class154_0 = PeImageReader.ReadFullImage(memoryStream, bool_0: true, PeImageLayout.const_0);
+		binaryWriter_0 = new BinaryWriter(class154_0.GetStream());
 		class131_0 = class131_1;
 	}
 
-	internal void method_0()
+	internal void StripSectionAlignmentFlags()
 	{
-		foreach (PeSectionHeader gclass in this.class154_0.method_8())
+		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
 		{
-			gclass.method_19(gclass.method_18() & ~(SectionCharacteristics.flag_1 | SectionCharacteristics.flag_2 | SectionCharacteristics.flag_3));
+			gclass.SetCharacteristics(gclass.GetCharacteristics() & ~(SectionCharacteristics.flag_1 | SectionCharacteristics.flag_2 | SectionCharacteristics.flag_3));
 		}
 	}
 
-	internal void method_1()
+	internal void RandomizeSectionNames()
 	{
-		RecoveredRuntime.smethod_107(this);
-		foreach (PeSectionHeader gclass in this.class154_0.method_8())
+		RecoveredRuntime.ClearClrIlOnlyFlag(this);
+		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
 		{
-			string string_ = RecoveredRuntime.smethod_273(this);
-			string string_0 = RecoveredRuntime.smethod_273(this);
-			while (this.class154_0.method_8().FindIndex((PeSectionHeader gclass5_0) => gclass5_0.method_0() == string_0) != -1)
+			string string_ = RecoveredRuntime.GenerateRandomSectionName(this);
+			string string_0 = RecoveredRuntime.GenerateRandomSectionName(this);
+			while (this.class154_0.GetSections().FindIndex((PeSectionHeader gclass5_0) => gclass5_0.GetName() == string_0) != -1)
 			{
-				string_0 = RecoveredRuntime.smethod_273(this);
+				string_0 = RecoveredRuntime.GenerateRandomSectionName(this);
 			}
-			gclass.method_1(string_);
+			gclass.SetName(string_);
 		}
 	}
 
-	internal void method_2()
+	internal void InsertHeaderPadding()
 	{
 		uint num = 0u;
-		foreach (PeSectionHeader gclass in this.class154_0.method_8())
+		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
 		{
-			if (gclass.method_8() != 0u)
+			if (gclass.GetPointerToRawData() != 0u)
 			{
 				if (num == 0u)
 				{
 					byte[] buffer;
-					using (Stream stream = RecoveredRuntime.smethod_264(this.class154_0, (long)((ulong)gclass.method_8()), (int)(this.class154_0.method_28().Length - (long)((ulong)gclass.method_8()))))
+					using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, (long)((ulong)gclass.GetPointerToRawData()), (int)(this.class154_0.GetStream().Length - (long)((ulong)gclass.GetPointerToRawData()))))
 					{
 						using (BinaryReader binaryReader = new BinaryReader(stream))
 						{
 							buffer = binaryReader.ReadBytes((int)stream.Length);
 						}
 					}
-					num = this.random_0.smethod_1(5u, 40u) * this.class154_0.method_6().method_3().imethod_19();
-					RecoveredRuntime.smethod_437(this, (long)((ulong)gclass.method_8()), (long)((ulong)num));
-					this.class154_0.method_28().Position = (long)((ulong)(gclass.method_8() + num));
+					num = this.random_0.NextUInt32(5u, 40u) * this.class154_0.GetHeaders().GetOptionalHeader().GetFileAlignment();
+					RecoveredRuntime.FillImageRangeWithRandomBytes(this, (long)((ulong)gclass.GetPointerToRawData()), (long)((ulong)num));
+					this.class154_0.GetStream().Position = (long)((ulong)(gclass.GetPointerToRawData() + num));
 					this.binaryWriter_0.Write(buffer);
 				}
 				PeSectionHeader gclass2 = gclass;
-				gclass2.method_9(gclass2.method_8() + num);
+				gclass2.SetPointerToRawData(gclass2.GetPointerToRawData() + num);
 			}
 		}
 	}
 
-	internal void method_3()
+	internal void RemoveCodePadding()
 	{
-		foreach (PeSectionHeader gclass in this.class154_0.method_8())
+		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
 		{
-			if (gclass.method_8() != 0u && gclass.method_6() != 0u && gclass.method_2() != 0u && (gclass.method_18() & SectionCharacteristics.flag_32) == SectionCharacteristics.flag_32)
+			if (gclass.GetPointerToRawData() != 0u && gclass.GetSizeOfRawData() != 0u && gclass.GetVirtualSize() != 0u && (gclass.GetCharacteristics() & SectionCharacteristics.flag_32) == SectionCharacteristics.flag_32)
 			{
-				using (Stream stream = RecoveredRuntime.smethod_264(this.class154_0, (long)((ulong)gclass.method_8()), (int)gclass.method_6()))
+				using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, (long)((ulong)gclass.GetPointerToRawData()), (int)gclass.GetSizeOfRawData()))
 				{
 					using (BinaryReader binaryReader = new BinaryReader(stream))
 					{
-						this.class154_0.method_28().Position = (long)((ulong)gclass.method_8());
-						byte[] array = binaryReader.ReadBytes((int)gclass.method_6());
+						this.class154_0.GetStream().Position = (long)((ulong)gclass.GetPointerToRawData());
+						byte[] array = binaryReader.ReadBytes((int)gclass.GetSizeOfRawData());
 						int num = 0;
 						Dictionary<long, int> dictionary = new Dictionary<long, int>();
 						for (int i = 0; i < array.Length; i++)
@@ -356,7 +331,7 @@ public sealed class PeScrambler : IDisposable
 								}
 								if (num >= 6 && (i + num) % 16 == 0)
 								{
-									dictionary.Add((long)((ulong)gclass.method_8() + (ulong)((long)i)), num);
+									dictionary.Add((long)((ulong)gclass.GetPointerToRawData() + (ulong)((long)i)), num);
 								}
 								i += num;
 								num = 0;
@@ -364,7 +339,7 @@ public sealed class PeScrambler : IDisposable
 						}
 						foreach (KeyValuePair<long, int> keyValuePair in dictionary)
 						{
-							RecoveredRuntime.smethod_437(this, keyValuePair.Key, (long)keyValuePair.Value);
+							RecoveredRuntime.FillImageRangeWithRandomBytes(this, keyValuePair.Key, (long)keyValuePair.Value);
 						}
 					}
 				}
@@ -375,15 +350,14 @@ public sealed class PeScrambler : IDisposable
 	void IDisposable.Dispose()
 	{
 		binaryWriter_0.Close();
-		class154_0.System_002EIDisposable_002EDispose();
+		class154_0.Dispose();
 	}
 
-	internal void method_4()
+	internal void AddDecoySections()
 	{
-		RecoveredRuntime.smethod_107(this);
-		bool flag = this.class131_0.method_14() && this.class154_0.method_6().method_3().imethod_49()[5].method_0() != 0u && this.class154_0.method_6().method_3().imethod_49()[5].method_2() > 0u;
-		bool flag2 = this.class131_0.method_20() && RecoveredRuntime.smethod_19(this.class154_0) && this.class154_0.method_6().method_3().imethod_11() > 0u;
-		bool flag3 = RecoveredRuntime.smethod_19(this.class154_0) && this.class131_0.method_22();
+		RecoveredRuntime.ClearClrIlOnlyFlag(this);
+		bool flag = this.class131_0.MoveRelocationTable && this.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[5].GetVirtualAddress() != 0u && this.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[5].GetSize() > 0u;
+		bool flag2 = this.class131_0.CreateNewEntryPoint && RecoveredRuntime.Is32BitImage(this.class154_0) && this.class154_0.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint() > 0u;
 		int num = 1;
 		if (flag)
 		{
@@ -393,62 +367,58 @@ public sealed class PeScrambler : IDisposable
 		{
 			num++;
 		}
-		if (flag3)
-		{
-			num++;
-		}
 		int num2 = this.random_0.Next(num, 10);
 		int num3 = num2 * 40;
 		uint num4 = uint.MaxValue;
-		foreach (PeSectionHeader gclass in this.class154_0.method_8())
+		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
 		{
-			if (gclass.method_8() != 0u && gclass.method_8() < num4)
+			if (gclass.GetPointerToRawData() != 0u && gclass.GetPointerToRawData() < num4)
 			{
-				num4 = gclass.method_8();
+				num4 = gclass.GetPointerToRawData();
 			}
 		}
 		if (num4 == 4294967295u)
 		{
 			return;
 		}
-		uint num5 = (uint)((ulong)(this.class154_0.method_4().method_0() + 24u + (uint)this.class154_0.method_6().method_1().method_10()) + (ulong)((long)(this.class154_0.method_8().Count * 40)));
+		uint num5 = (uint)((ulong)(this.class154_0.GetDosHeader().GetPeHeaderOffset() + 24u + (uint)this.class154_0.GetHeaders().GetCoffHeader().GetSizeOfOptionalHeader()) + (ulong)((long)(this.class154_0.GetSections().Count * 40)));
 		uint num6 = num4;
 		uint num7 = num4 - num5;
 		while ((ulong)num7 < (ulong)((long)num3))
 		{
-			num6 += this.class154_0.method_6().method_3().imethod_18();
-			num7 += this.class154_0.method_6().method_3().imethod_18();
+			num6 += this.class154_0.GetHeaders().GetOptionalHeader().GetSectionAlignment();
+			num7 += this.class154_0.GetHeaders().GetOptionalHeader().GetSectionAlignment();
 		}
 		byte[] buffer;
-		using (Stream stream = RecoveredRuntime.smethod_264(this.class154_0, (long)((ulong)num4), (int)(this.class154_0.method_28().Length - (long)((ulong)num4))))
+		using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, (long)((ulong)num4), (int)(this.class154_0.GetStream().Length - (long)((ulong)num4))))
 		{
 			using (BinaryReader binaryReader = new BinaryReader(stream))
 			{
 				buffer = binaryReader.ReadBytes((int)stream.Length);
 			}
 		}
-		RecoveredRuntime.smethod_377(this, (long)((ulong)num5), (long)((ulong)(num6 - num5)));
-		this.class154_0.method_28().Position = (long)((ulong)num6);
+		RecoveredRuntime.ZeroFillImageRange(this, (long)((ulong)num5), (long)((ulong)(num6 - num5)));
+		this.class154_0.GetStream().Position = (long)((ulong)num6);
 		this.binaryWriter_0.Write(buffer);
 		uint num8 = 0u;
 		uint num9 = 0u;
-		foreach (PeSectionHeader gclass2 in this.class154_0.method_8())
+		foreach (PeSectionHeader gclass2 in this.class154_0.GetSections())
 		{
-			if (gclass2.method_8() != 0u)
+			if (gclass2.GetPointerToRawData() != 0u)
 			{
 				PeSectionHeader gclass3 = gclass2;
-				gclass3.method_9(gclass3.method_8() + (num6 - num4));
+				gclass3.SetPointerToRawData(gclass3.GetPointerToRawData() + (num6 - num4));
 			}
-			if (gclass2.method_8() + gclass2.method_6() > num8)
+			if (gclass2.GetPointerToRawData() + gclass2.GetSizeOfRawData() > num8)
 			{
-				num8 = gclass2.method_8() + gclass2.method_6();
-				num9 = gclass2.method_4() + gclass2.method_2();
+				num8 = gclass2.GetPointerToRawData() + gclass2.GetSizeOfRawData();
+				num9 = gclass2.GetVirtualAddress() + gclass2.GetVirtualSize();
 			}
 		}
 		buffer = new byte[0];
-		if ((ulong)num8 < (ulong)this.class154_0.method_28().Length)
+		if ((ulong)num8 < (ulong)this.class154_0.GetStream().Length)
 		{
-			using (Stream stream2 = RecoveredRuntime.smethod_264(this.class154_0, (long)((ulong)num8), (int)(this.class154_0.method_28().Length - (long)((ulong)num8))))
+			using (Stream stream2 = RecoveredRuntime.CopyImageRange(this.class154_0, (long)((ulong)num8), (int)(this.class154_0.GetStream().Length - (long)((ulong)num8))))
 			{
 				using (BinaryReader binaryReader2 = new BinaryReader(stream2))
 				{
@@ -456,8 +426,8 @@ public sealed class PeScrambler : IDisposable
 				}
 			}
 		}
-		uint uint_ = this.class154_0.method_6().method_3().imethod_18();
-		num9 = RecoveredRuntime.smethod_201(uint_, num9);
+		uint uint_ = this.class154_0.GetHeaders().GetOptionalHeader().GetSectionAlignment();
+		num9 = RecoveredRuntime.AlignUp(uint_, num9);
 		int num10 = this.random_0.Next(num2);
 		int num11 = -1;
 		while (flag && (num11 == -1 || num11 == num10))
@@ -469,28 +439,23 @@ public sealed class PeScrambler : IDisposable
 		{
 			num12 = this.random_0.Next(num2);
 		}
-		int num13 = -1;
-		while (flag3 && (num13 == -1 || num13 == num11 || num13 == num10 || num13 == num12))
-		{
-			num13 = this.random_0.Next(num2);
-		}
 		for (int i = 0; i < num2; i++)
 		{
-			string string_0 = RecoveredRuntime.smethod_273(this);
-			while (this.class154_0.method_8().FindIndex((PeSectionHeader gclass5_0) => gclass5_0.method_0() == string_0) != -1)
+			string string_0 = RecoveredRuntime.GenerateRandomSectionName(this);
+			while (this.class154_0.GetSections().FindIndex((PeSectionHeader gclass5_0) => gclass5_0.GetName() == string_0) != -1)
 			{
-				string_0 = RecoveredRuntime.smethod_273(this);
+				string_0 = RecoveredRuntime.GenerateRandomSectionName(this);
 			}
 			PeSectionHeader gclass4 = new PeSectionHeader();
-			gclass4.method_1(string_0);
-			gclass4.method_19(SectionCharacteristics.flag_33);
-			gclass4.method_9(num8);
-			gclass4.method_3(this.random_0.smethod_1(10u, 100u) * 50u);
-			gclass4.method_5(num9);
+			gclass4.SetName(string_0);
+			gclass4.SetCharacteristics(SectionCharacteristics.flag_33);
+			gclass4.SetPointerToRawData(num8);
+			gclass4.SetVirtualSize(this.random_0.NextUInt32(10u, 100u) * 50u);
+			gclass4.SetVirtualAddress(num9);
 			PeSectionHeader gclass5 = gclass4;
-			uint uint_2 = this.class154_0.method_6().method_3().imethod_19();
-			uint num14 = RecoveredRuntime.smethod_201(uint_, gclass5.method_2());
-			gclass5.method_7(RecoveredRuntime.smethod_201(uint_2, num14));
+			uint uint_2 = this.class154_0.GetHeaders().GetOptionalHeader().GetFileAlignment();
+			uint num14 = RecoveredRuntime.AlignUp(uint_, gclass5.GetVirtualSize());
+			gclass5.SetSizeOfRawData(RecoveredRuntime.AlignUp(uint_2, num14));
 			SectionCharacteristics[] array = new SectionCharacteristics[]
 			{
 				(SectionCharacteristics)2147483648u,
@@ -501,81 +466,77 @@ public sealed class PeScrambler : IDisposable
 			for (int j = 0; j < this.random_0.Next(array.Length); j++)
 			{
 				SectionCharacteristics @enum = array[this.random_0.Next(array.Length)];
-				if ((gclass5.method_18() & @enum) == @enum)
+				if ((gclass5.GetCharacteristics() & @enum) == @enum)
 				{
 					j--;
 				}
 				else
 				{
 					PeSectionHeader gclass6 = gclass5;
-					gclass6.method_19(gclass6.method_18() | @enum);
+					gclass6.SetCharacteristics(gclass6.GetCharacteristics() | @enum);
 				}
 			}
-			RecoveredRuntime.smethod_437(this, (long)((ulong)gclass5.method_8()), (long)((ulong)gclass5.method_6()));
-			if (this.class131_0.method_6() && num10 == i)
+			RecoveredRuntime.FillImageRangeWithRandomBytes(this, (long)((ulong)gclass5.GetPointerToRawData()), (long)((ulong)gclass5.GetSizeOfRawData()));
+			if (this.class131_0.CreateFakeDebugDirectory && num10 == i)
 			{
-				RecoveredRuntime.smethod_41(gclass5, this);
+				RecoveredRuntime.WriteFakeDebugDirectory(gclass5, this);
 			}
 			if (flag && num11 == i)
 			{
-				RecoveredRuntime.smethod_304(this, gclass5);
+				RecoveredRuntime.MoveBaseRelocationDirectory(this, gclass5);
 			}
 			if (flag2 && num12 == i)
 			{
-				RecoveredRuntime.smethod_284(this, gclass5);
+				RecoveredRuntime.CreateDecoyEntryPoint(this, gclass5);
 			}
-			if (flag3 && num13 == i)
-			{
-				this.method_5(gclass5);
-			}
-			this.class154_0.method_8().Add(gclass5);
-			num8 += gclass5.method_6();
+			this.class154_0.GetSections().Add(gclass5);
+			num8 += gclass5.GetSizeOfRawData();
 			num9 += num14;
 		}
-		PeSectionHeader gclass7 = this.class154_0.method_8()[this.class154_0.method_8().Count - 1];
-		this.class154_0.method_6().method_3().imethod_30(RecoveredRuntime.smethod_201(uint_, gclass7.method_4() + gclass7.method_2()));
-		this.class154_0.method_6().method_1().method_3((ushort)this.class154_0.method_8().Count);
-		this.class154_0.method_28().Position = (long)((ulong)num8);
+		PeSectionHeader gclass7 = this.class154_0.GetSections()[this.class154_0.GetSections().Count - 1];
+		this.class154_0.GetHeaders().GetOptionalHeader().SetSizeOfImage(RecoveredRuntime.AlignUp(uint_, gclass7.GetVirtualAddress() + gclass7.GetVirtualSize()));
+		this.class154_0.GetHeaders().GetCoffHeader().SetNumberOfSections((ushort)this.class154_0.GetSections().Count);
+		this.class154_0.GetStream().Position = (long)((ulong)num8);
 		this.binaryWriter_0.Write(buffer);
 	}
 
-	internal void method_5(PeSectionHeader gclass5_0)
+	internal void BuildTlsCallbackSection(PeSectionHeader gclass5_0)
 	{
-		gclass5_0.method_19((SectionCharacteristics)3758096384u);
-		RecoveredRuntime.smethod_437(this, (long)((ulong)gclass5_0.method_8()), (long)((ulong)gclass5_0.method_6()));
-		DataDirectory @class = this.class154_0.method_6().method_3().imethod_49()[9];
+		gclass5_0.SetCharacteristics((SectionCharacteristics)3758096384u);
+		RecoveredRuntime.FillImageRangeWithRandomBytes(this, (long)((ulong)gclass5_0.GetPointerToRawData()), (long)((ulong)gclass5_0.GetSizeOfRawData()));
+		DataDirectory @class = this.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[9];
 		List<uint> list = new List<uint>();
-		uint num = (uint)this.class154_0.method_6().method_3().imethod_17();
-		uint num2 = num + gclass5_0.method_4();
+		uint num = (uint)this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase();
+		uint num2 = num + gclass5_0.GetVirtualAddress();
 		uint num3;
 		uint num4;
 		uint num5;
 		uint num6;
 		uint value;
 		uint value2;
-		if (this.class154_0.method_20() == null)
+		if (this.class154_0.GetTlsDirectory() == null)
 		{
-			num3 = num + gclass5_0.method_4() + 24u;
-			num4 = num3 + this.random_0.smethod_1(1u, 5u) * 4u;
-			num5 = num4 + this.random_0.smethod_1(1u, 5u) * 4u;
-			num6 = num5 + this.random_0.smethod_1(1u, 5u) * 4u;
+			num3 = num + gclass5_0.GetVirtualAddress() + 24u;
+			num4 = num3 + this.random_0.NextUInt32(1u, 5u) * 4u;
+			num5 = num4 + this.random_0.NextUInt32(1u, 5u) * 4u;
+			num6 = num5 + this.random_0.NextUInt32(1u, 5u) * 4u;
 			uint num7 = 0u;
 			value = 0u;
 			value2 = num7;
-			num2 = num6 + this.random_0.smethod_1(2u, 5u) * 4u;
+			num2 = num6 + this.random_0.NextUInt32(2u, 5u) * 4u;
 		}
 		else
 		{
-			num3 = (uint)this.class154_0.method_20().method_0();
-			num4 = (uint)this.class154_0.method_20().method_2();
-			num5 = (uint)this.class154_0.method_20().method_4();
-			num6 = num + gclass5_0.method_4() + 24u;
-			value2 = this.class154_0.method_20().method_8();
-			value = this.class154_0.method_20().method_10();
-			list.AddRange(Array.ConvertAll<ulong, uint>(this.class154_0.method_20().list_0.ToArray(), (ulong ulong_0) => (uint)ulong_0));
+			num3 = (uint)this.class154_0.GetTlsDirectory().GetStartAddressOfRawData();
+			num4 = (uint)this.class154_0.GetTlsDirectory().GetEndAddressOfRawData();
+			num5 = (uint)this.class154_0.GetTlsDirectory().GetAddressOfIndex();
+			num6 = num + gclass5_0.GetVirtualAddress() + 24u;
+			value2 = this.class154_0.GetTlsDirectory().GetSizeOfZeroFill();
+			value = this.class154_0.GetTlsDirectory().GetCharacteristics();
+			list.AddRange(Array.ConvertAll<ulong, uint>(this.class154_0.GetTlsDirectory().list_0.ToArray(), (ulong ulong_0) => (uint)ulong_0));
 		}
 		list.Add(num2);
-		this.class154_0.method_28().Position = (long)((ulong)(gclass5_0.method_8() + (num2 - num - gclass5_0.method_4())));
+		this.class154_0.GetStream().Position = (long)((ulong)(gclass5_0.GetPointerToRawData() + (num2 - num - gclass5_0.GetVirtualAddress())));
 		this.binaryWriter_0.Write(new byte[]
 		{
 			144,
@@ -585,16 +546,16 @@ public sealed class PeScrambler : IDisposable
 			12,
 			0
 		});
-		@class.method_1(gclass5_0.method_4());
-		@class.method_3(24u);
-		this.class154_0.method_28().Position = (long)((ulong)gclass5_0.method_8());
+		@class.SetVirtualAddress(gclass5_0.GetVirtualAddress());
+		@class.SetSize(24u);
+		this.class154_0.GetStream().Position = (long)((ulong)gclass5_0.GetPointerToRawData());
 		this.binaryWriter_0.Write(num3);
 		this.binaryWriter_0.Write(num4);
 		this.binaryWriter_0.Write(num5);
 		this.binaryWriter_0.Write(num6);
 		this.binaryWriter_0.Write(value2);
 		this.binaryWriter_0.Write(value);
-		this.class154_0.method_28().Position = (long)((ulong)(gclass5_0.method_8() + (num6 - num - gclass5_0.method_4())));
+		this.class154_0.GetStream().Position = (long)((ulong)(gclass5_0.GetPointerToRawData() + (num6 - num - gclass5_0.GetVirtualAddress())));
 		foreach (uint value3 in list)
 		{
 			this.binaryWriter_0.Write(value3);
@@ -602,7 +563,7 @@ public sealed class PeScrambler : IDisposable
 		this.binaryWriter_0.Write(0);
 	}
 
-	internal static T smethod_0<T>(T gparam_0, Delegate48<T> delegate48_0)
+	internal static T GenerateDifferentValue<T>(T gparam_0, Delegate48<T> delegate48_0)
 	{
 		T result = delegate48_0();
 		while (result.Equals(gparam_0))
@@ -612,25 +573,25 @@ public sealed class PeScrambler : IDisposable
 		return result;
 	}
 
-	internal List<Class132> method_6()
+	internal List<Class132> CreateSectionRemap()
 	{
 		List<PeScrambler.Class132> list = new List<PeScrambler.Class132>();
-		uint num = this.random_0.smethod_1(1u, 10u);
-		uint num2 = num * this.class154_0.method_6().method_3().imethod_18();
-		uint num3 = RecoveredRuntime.smethod_19(this.class154_0) ? (this.random_0.smethod_1(1u, num + 1u) * this.class154_0.method_6().method_3().imethod_19()) : 0u;
+		uint num = this.random_0.NextUInt32(1u, 10u);
+		uint num2 = num * this.class154_0.GetHeaders().GetOptionalHeader().GetSectionAlignment();
+		uint num3 = RecoveredRuntime.Is32BitImage(this.class154_0) ? (this.random_0.NextUInt32(1u, num + 1u) * this.class154_0.GetHeaders().GetOptionalHeader().GetFileAlignment()) : 0u;
 		uint num4 = 0u;
-		uint num5 = this.class154_0.method_8()[0].method_4() + num2;
-		foreach (PeSectionHeader gclass in this.class154_0.method_8())
+		uint num5 = this.class154_0.GetSections()[0].GetVirtualAddress() + num2;
+		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
 		{
 			PeScrambler.Class132 @class = new PeScrambler.Class132(gclass, num2, num3);
-			@class.method_3().method_5(num5);
-			uint uint_ = num5 + @class.method_3().method_2();
-			uint uint_2 = this.class154_0.method_6().method_3().imethod_18();
-			num5 = RecoveredRuntime.smethod_201(uint_2, uint_);
-			if (gclass.method_6() != 0u)
+			@class.GetModifiedSection().SetVirtualAddress(num5);
+			uint uint_ = num5 + @class.GetModifiedSection().GetVirtualSize();
+			uint uint_2 = this.class154_0.GetHeaders().GetOptionalHeader().GetSectionAlignment();
+			num5 = RecoveredRuntime.AlignUp(uint_2, uint_);
+			if (gclass.GetSizeOfRawData() != 0u)
 			{
-				PeSectionHeader gclass2 = @class.method_3();
-				gclass2.method_9(gclass2.method_8() + num4);
+				PeSectionHeader gclass2 = @class.GetModifiedSection();
+				gclass2.SetPointerToRawData(gclass2.GetPointerToRawData() + num4);
 				num4 += num3;
 			}
 			list.Add(@class);
@@ -638,287 +599,145 @@ public sealed class PeScrambler : IDisposable
 		List<PeScrambler.Class132> list2 = list;
 		int index = 0;
 		PeSectionHeader gclass3 = new PeSectionHeader();
-		gclass3.method_19(SectionCharacteristics.flag_33);
-		gclass3.method_5(this.class154_0.method_8()[0].method_4());
-		gclass3.method_3(num2);
-		gclass3.method_1(RecoveredRuntime.smethod_273(this));
+		gclass3.SetCharacteristics(SectionCharacteristics.flag_33);
+		gclass3.SetVirtualAddress(this.class154_0.GetSections()[0].GetVirtualAddress());
+		gclass3.SetVirtualSize(num2);
+		gclass3.SetName(RecoveredRuntime.GenerateRandomSectionName(this));
 		list2.Insert(index, new PeScrambler.Class132(gclass3, 0u, 0u));
 		return list;
 	}
 
-	internal void method_7(List<Class132> list_0)
+	internal void RemapImportDirectory(List<Class132> list_0)
 	{
-		if (this.class154_0.method_10() == null)
+		if (this.class154_0.GetImports() == null)
 		{
 			return;
 		}
-		BinaryWriter binaryWriter = new BinaryWriter(this.class154_0.method_28());
-		this.class154_0.method_28().Position = RecoveredRuntime.smethod_135(this.class154_0, this.class154_0.method_6().method_3().imethod_49()[1].method_0());
-		foreach (ImportDescriptor @class in this.class154_0.method_10().list_0)
+		BinaryWriter binaryWriter = new BinaryWriter(this.class154_0.GetStream());
+		this.class154_0.GetStream().Position = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, this.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[1].GetVirtualAddress());
+		foreach (ImportDescriptor @class in this.class154_0.GetImports().list_0)
 		{
-			binaryWriter.Write(RecoveredRuntime.smethod_33(list_0, @class.method_0()));
-			this.class154_0.method_28().Position += 8L;
-			binaryWriter.Write(RecoveredRuntime.smethod_33(list_0, @class.method_4()));
-			binaryWriter.Write(RecoveredRuntime.smethod_33(list_0, @class.method_6()));
-			long position = this.class154_0.method_28().Position;
-			this.class154_0.method_28().Position = RecoveredRuntime.smethod_135(this.class154_0, @class.method_0());
-			foreach (ImportedSymbol class2 in @class.method_8())
+			binaryWriter.Write(RecoveredRuntime.RemapRva(list_0, @class.GetOriginalFirstThunk()));
+			this.class154_0.GetStream().Position += 8L;
+			binaryWriter.Write(RecoveredRuntime.RemapRva(list_0, @class.GetNameRva()));
+			binaryWriter.Write(RecoveredRuntime.RemapRva(list_0, @class.GetFirstThunk()));
+			long position = this.class154_0.GetStream().Position;
+			this.class154_0.GetStream().Position = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, @class.GetOriginalFirstThunk());
+			foreach (ImportedSymbol class2 in @class.GetOriginalThunkSymbols())
 			{
-				if (!class2.method_7())
+				if (!class2.GetIsOrdinal())
 				{
-					if (!RecoveredRuntime.smethod_19(this.class154_0))
+					if (!RecoveredRuntime.Is32BitImage(this.class154_0))
 					{
 						BinaryWriter binaryWriter2 = binaryWriter;
 						ulong num;
-						class2.method_1(num = (ulong)RecoveredRuntime.smethod_33(list_0, (uint)class2.method_0()));
+						class2.SetThunkValue(num = (ulong)RecoveredRuntime.RemapRva(list_0, (uint)class2.GetThunkValue()));
 						binaryWriter2.Write(num);
 					}
 					else
 					{
 						BinaryWriter binaryWriter3 = binaryWriter;
 						ulong num;
-						class2.method_1(num = (ulong)RecoveredRuntime.smethod_33(list_0, (uint)class2.method_0()));
+						class2.SetThunkValue(num = (ulong)RecoveredRuntime.RemapRva(list_0, (uint)class2.GetThunkValue()));
 						binaryWriter3.Write((uint)num);
 					}
 				}
 				else
 				{
-					this.class154_0.method_28().Position += (RecoveredRuntime.smethod_19(this.class154_0) ? 4L : 8L);
+					this.class154_0.GetStream().Position += (RecoveredRuntime.Is32BitImage(this.class154_0) ? 4L : 8L);
 				}
 			}
-			if (@class.method_6() != @class.method_0())
+			if (@class.GetFirstThunk() != @class.GetOriginalFirstThunk())
 			{
-				this.class154_0.method_28().Position = RecoveredRuntime.smethod_135(this.class154_0, @class.method_6());
-				foreach (ImportedSymbol class3 in @class.method_10())
+				this.class154_0.GetStream().Position = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, @class.GetFirstThunk());
+				foreach (ImportedSymbol class3 in @class.GetFirstThunkSymbols())
 				{
-					if (!class3.method_7())
+					if (!class3.GetIsOrdinal())
 					{
-						if (RecoveredRuntime.smethod_19(this.class154_0))
+						if (RecoveredRuntime.Is32BitImage(this.class154_0))
 						{
 							BinaryWriter binaryWriter4 = binaryWriter;
 							ulong num;
-							class3.method_1(num = (ulong)RecoveredRuntime.smethod_33(list_0, (uint)class3.method_0()));
+							class3.SetThunkValue(num = (ulong)RecoveredRuntime.RemapRva(list_0, (uint)class3.GetThunkValue()));
 							binaryWriter4.Write((uint)num);
 						}
 						else
 						{
 							BinaryWriter binaryWriter5 = binaryWriter;
 							ulong num;
-							class3.method_1(num = (ulong)RecoveredRuntime.smethod_33(list_0, (uint)class3.method_0()));
+							class3.SetThunkValue(num = (ulong)RecoveredRuntime.RemapRva(list_0, (uint)class3.GetThunkValue()));
 							binaryWriter5.Write(num);
 						}
 					}
 					else
 					{
-						this.class154_0.method_28().Position += (RecoveredRuntime.smethod_19(this.class154_0) ? 4L : 8L);
+						this.class154_0.GetStream().Position += (RecoveredRuntime.Is32BitImage(this.class154_0) ? 4L : 8L);
 					}
 				}
 			}
-			@class.method_1(RecoveredRuntime.smethod_33(list_0, @class.method_0()));
-			@class.method_5(RecoveredRuntime.smethod_33(list_0, @class.method_4()));
-			@class.method_7(RecoveredRuntime.smethod_33(list_0, @class.method_6()));
-			this.class154_0.method_28().Position = position;
+			@class.SetOriginalFirstThunk(RecoveredRuntime.RemapRva(list_0, @class.GetOriginalFirstThunk()));
+			@class.SetNameRva(RecoveredRuntime.RemapRva(list_0, @class.GetNameRva()));
+			@class.SetFirstThunk(RecoveredRuntime.RemapRva(list_0, @class.GetFirstThunk()));
+			this.class154_0.GetStream().Position = position;
 		}
 	}
 
-	internal void method_8(List<Class132> list_0)
+	internal void RemapExceptionDirectory(List<Class132> list_0)
 	{
-		if (this.class154_0.method_25() == null)
+		if (this.class154_0.GetExceptionDirectory() == null)
 		{
 			return;
 		}
-		BinaryWriter binaryWriter = new BinaryWriter(this.class154_0.method_28());
-		this.class154_0.method_28().Position = RecoveredRuntime.smethod_135(this.class154_0, this.class154_0.method_6().method_3().imethod_49()[3].method_0());
-		foreach (RuntimeFunctionEntry @class in this.class154_0.method_25().list_0)
+		BinaryWriter binaryWriter = new BinaryWriter(this.class154_0.GetStream());
+		this.class154_0.GetStream().Position = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, this.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[3].GetVirtualAddress());
+		foreach (RuntimeFunctionEntry @class in this.class154_0.GetExceptionDirectory().list_0)
 		{
 			BinaryWriter binaryWriter2 = binaryWriter;
 			uint value;
-			@class.method_1(value = RecoveredRuntime.smethod_33(list_0, @class.method_0()));
+			@class.SetBeginAddress(value = RecoveredRuntime.RemapRva(list_0, @class.GetBeginAddress()));
 			binaryWriter2.Write(value);
 			BinaryWriter binaryWriter3 = binaryWriter;
-			@class.method_3(value = RecoveredRuntime.smethod_33(list_0, @class.method_2()));
+			@class.SetEndAddress(value = RecoveredRuntime.RemapRva(list_0, @class.GetEndAddress()));
 			binaryWriter3.Write(value);
 			BinaryWriter binaryWriter4 = binaryWriter;
-			@class.method_5(value = RecoveredRuntime.smethod_33(list_0, @class.method_4()));
+			@class.SetUnwindInfoAddress(value = RecoveredRuntime.RemapRva(list_0, @class.GetUnwindInfoAddress()));
 			binaryWriter4.Write(value);
 		}
 	}
 
-	internal void method_9(List<Class132> list_0)
+	internal void RemapBaseRelocations(List<Class132> list_0)
 	{
-		if (this.class154_0.method_16() == null)
+		if (this.class154_0.GetBaseRelocations() == null)
 		{
 			return;
 		}
-		BinaryReader binaryReader = new BinaryReader(this.class154_0.method_28());
-		BinaryWriter binaryWriter = new BinaryWriter(this.class154_0.method_28());
-		long num = RecoveredRuntime.smethod_135(this.class154_0, this.class154_0.method_6().method_3().imethod_49()[5].method_0());
-		ulong num2 = this.class154_0.method_6().method_3().imethod_17();
-		foreach (BaseRelocationBlock @class in this.class154_0.method_16().list_0)
+		BinaryReader binaryReader = new BinaryReader(this.class154_0.GetStream());
+		BinaryWriter binaryWriter = new BinaryWriter(this.class154_0.GetStream());
+		long num = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, this.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[5].GetVirtualAddress());
+		ulong num2 = this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase();
+		foreach (BaseRelocationBlock @class in this.class154_0.GetBaseRelocations().list_0)
 		{
-			this.class154_0.method_28().Position = num;
-			binaryWriter.Write(RecoveredRuntime.smethod_33(list_0, @class.method_0()));
+			this.class154_0.GetStream().Position = num;
+			binaryWriter.Write(RecoveredRuntime.RemapRva(list_0, @class.GetPageRva()));
 			foreach (BaseRelocationEntry class2 in @class.list_0)
 			{
-				this.class154_0.method_28().Position = RecoveredRuntime.smethod_135(this.class154_0, @class.method_0() + class2.method_0());
-				if (class2.method_2() == BaseRelocationType.HighLow)
+				this.class154_0.GetStream().Position = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, @class.GetPageRva() + class2.GetOffset());
+				if (class2.GetRelocationType() == BaseRelocationType.HighLow)
 				{
 					uint num3 = binaryReader.ReadUInt32();
-					this.class154_0.method_28().Position -= 4L;
-					binaryWriter.Write((uint)num2 + RecoveredRuntime.smethod_33(list_0, num3 - (uint)num2));
+					this.class154_0.GetStream().Position -= 4L;
+					binaryWriter.Write((uint)num2 + RecoveredRuntime.RemapRva(list_0, num3 - (uint)num2));
 				}
-				else if (class2.method_2() == BaseRelocationType.Dir64)
+				else if (class2.GetRelocationType() == BaseRelocationType.Dir64)
 				{
 					ulong num4 = binaryReader.ReadUInt64();
-					this.class154_0.method_28().Position -= 8L;
-					binaryWriter.Write(num2 + (ulong)RecoveredRuntime.smethod_33(list_0, (uint)(num4 - num2)));
+					this.class154_0.GetStream().Position -= 8L;
+					binaryWriter.Write(num2 + (ulong)RecoveredRuntime.RemapRva(list_0, (uint)(num4 - num2)));
 				}
 			}
-			@class.method_1(RecoveredRuntime.smethod_33(list_0, @class.method_0()));
-			num += (long)((ulong)@class.method_2());
+			@class.SetPageRva(RecoveredRuntime.RemapRva(list_0, @class.GetPageRva()));
+			num += (long)((ulong)@class.GetBlockSize());
 		}
 	}
 
-	[CompilerGenerated]
-	internal int method_10()
-	{
-		return random_0.Next(53);
-	}
-
-	[CompilerGenerated]
-	internal uint method_11()
-	{
-		return random_0.smethod_0();
-	}
-
-	[CompilerGenerated]
-	internal uint method_12()
-	{
-		return random_0.smethod_0();
-	}
-
-	[CompilerGenerated]
-	internal uint method_13()
-	{
-		return random_0.smethod_0();
-	}
-
-	[CompilerGenerated]
-	internal uint method_14()
-	{
-		return random_0.smethod_0();
-	}
-
-	[CompilerGenerated]
-	internal uint method_15()
-	{
-		return random_0.smethod_0();
-	}
-
-	[CompilerGenerated]
-	internal uint method_16()
-	{
-		return random_0.smethod_0();
-	}
-
-	[CompilerGenerated]
-	internal uint method_17()
-	{
-		return random_0.smethod_0();
-	}
-
-	internal static Random smethod_1()
-	{
-		return new Random();
-	}
-
-	internal static MemoryStream smethod_2()
-	{
-		return new MemoryStream();
-	}
-
-	internal static void smethod_3(Stream stream_0, long long_0)
-	{
-		stream_0.Position = long_0;
-	}
-
-	internal static BinaryWriter smethod_4(Stream stream_0)
-	{
-		return new BinaryWriter(stream_0);
-	}
-
-	internal static long smethod_5(Stream stream_0)
-	{
-		return stream_0.Length;
-	}
-
-	internal static BinaryReader smethod_6(Stream stream_0)
-	{
-		return new BinaryReader(stream_0);
-	}
-
-	internal static byte[] smethod_7(BinaryReader binaryReader_0, int int_0)
-	{
-		return binaryReader_0.ReadBytes(int_0);
-	}
-
-	internal static void smethod_8(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
-	}
-
-	internal static void smethod_9(BinaryWriter binaryWriter_1, byte[] byte_0)
-	{
-		binaryWriter_1.Write(byte_0);
-	}
-
-	internal static void smethod_10(BinaryWriter binaryWriter_1)
-	{
-		binaryWriter_1.Close();
-	}
-
-	internal static int smethod_11(Random random_1, int int_0, int int_1)
-	{
-		return random_1.Next(int_0, int_1);
-	}
-
-	internal static int smethod_12(Random random_1, int int_0)
-	{
-		return random_1.Next(int_0);
-	}
-
-	internal static void smethod_13(Array array_0, RuntimeFieldHandle runtimeFieldHandle_0)
-	{
-		RuntimeHelpers.InitializeArray(array_0, runtimeFieldHandle_0);
-	}
-
-	internal static void smethod_14(BinaryWriter binaryWriter_1, uint uint_0)
-	{
-		binaryWriter_1.Write(uint_0);
-	}
-
-	internal static void smethod_15(BinaryWriter binaryWriter_1, int int_0)
-	{
-		binaryWriter_1.Write(int_0);
-	}
-
-	internal static long smethod_16(Stream stream_0)
-	{
-		return stream_0.Position;
-	}
-
-	internal static void smethod_17(BinaryWriter binaryWriter_1, ulong ulong_0)
-	{
-		binaryWriter_1.Write(ulong_0);
-	}
-
-	internal static uint smethod_18(BinaryReader binaryReader_0)
-	{
-		return binaryReader_0.ReadUInt32();
-	}
-
-	internal static ulong smethod_19(BinaryReader binaryReader_0)
-	{
-		return binaryReader_0.ReadUInt64();
-	}
 }

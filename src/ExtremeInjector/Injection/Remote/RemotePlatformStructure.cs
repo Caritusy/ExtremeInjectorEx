@@ -36,17 +36,17 @@ public abstract class RemotePlatformStructure : RemoteStructure
 		int_1 = (bool_2 ? dictionary_0[GetType()] : dictionary_1[GetType()]);
 	}
 
-	protected static void smethod_6<T>(RemoteFieldLayout[] class168_0)
+	protected static void Register32BitLayout<T>(RemoteFieldLayout[] class168_0)
 	{
-		smethod_8<T>(bool_2: true, class168_0);
+		RegisterLayout<T>(bool_2: true, class168_0);
 	}
 
-	protected static void smethod_7<T>(RemoteFieldLayout[] class168_0)
+	protected static void Register64BitLayout<T>(RemoteFieldLayout[] class168_0)
 	{
-		smethod_8<T>(bool_2: false, class168_0);
+		RegisterLayout<T>(bool_2: false, class168_0);
 	}
 
-	internal static void smethod_8<T>(bool bool_2, IList<RemoteFieldLayout> ilist_0)
+	internal static void RegisterLayout<T>(bool bool_2, IList<RemoteFieldLayout> ilist_0)
 	{
 		int[] array = new int[ilist_0.Count + 1];
 		int num = 0;
@@ -81,39 +81,29 @@ public abstract class RemotePlatformStructure : RemoteStructure
 		dictionary[typeof(T)] = array;
 	}
 
-	protected internal T method_21<T>(int int_2)
+	protected internal T ReadField<T>(int int_2)
 	{
 		int num = this.int_1[int_2];
 		if (!this.bool_1 || typeof(T) != typeof(IntPtr))
 		{
-			return base.method_19<T>(num);
+			return base.ReadFieldAtOffset<T>(num);
 		}
-		return (T)((object)((IntPtr)base.method_19<int>(num)));
+		return (T)((object)((IntPtr)base.ReadFieldAtOffset<int>(num)));
 	}
 
-	protected void method_22<T>(int int_2, T gparam_0)
+	protected void WriteField<T>(int int_2, T gparam_0)
 	{
 		int num = this.int_1[int_2];
 		if (this.bool_1 && typeof(T) == typeof(IntPtr))
 		{
-			base.method_20<int>((int)((IntPtr)((object)gparam_0)), num);
+			base.WriteFieldAtOffset<int>((int)((IntPtr)((object)gparam_0)), num);
 			return;
 		}
-		base.method_20<T>(gparam_0, num);
+		base.WriteFieldAtOffset<T>(gparam_0, num);
 	}
 
 	static RemotePlatformStructure()
 	{
 		// Note: this type is marked as 'beforefieldinit'.
-	}
-
-	internal static Type smethod_9(object object_0)
-	{
-		return object_0.GetType();
-	}
-
-	internal static Type smethod_10(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
 	}
 }

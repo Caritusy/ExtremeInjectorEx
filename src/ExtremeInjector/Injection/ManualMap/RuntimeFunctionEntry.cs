@@ -13,42 +13,42 @@ public sealed class RuntimeFunctionEntry
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_0()
+	public uint GetBeginAddress()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(uint uint_3)
+	public void SetBeginAddress(uint uint_3)
 	{
 		uint_0 = uint_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_2()
+	public uint GetEndAddress()
 	{
 		return uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(uint uint_3)
+	public void SetEndAddress(uint uint_3)
 	{
 		uint_1 = uint_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_4()
+	public uint GetUnwindInfoAddress()
 	{
 		return uint_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(uint uint_3)
+	public void SetUnwindInfoAddress(uint uint_3)
 	{
 		uint_2 = uint_3;
 	}

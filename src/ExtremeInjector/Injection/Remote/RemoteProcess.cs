@@ -49,7 +49,7 @@ public sealed class RemoteProcess
 
 	internal T TrackResource<T>(T resource) where T : RemoteMemoryAccessor
 	{
-		if (resource.method_0() == RecoveredRuntime.GetCurrentProcessId())
+		if (resource.GetProcessId() == RecoveredRuntime.GetCurrentProcessId())
 		{
 			return resource;
 		}
@@ -60,7 +60,7 @@ public sealed class RemoteProcess
 			return resource;
 		}
 
-		IntPtr processHandle = RecoveredRuntime.smethod_250(
+		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(
 			this,
 			NativeTypes.Enum32.flag_11,
 			bool_0: false,
@@ -84,7 +84,7 @@ public sealed class RemoteProcess
 	{
 		foreach (RemoteMemoryAccessor resource in list_0)
 		{
-			RecoveredRuntime.smethod_388(resource);
+			RecoveredRuntime.CloseRemoteMemoryAccessor(resource);
 		}
 
 		if (Handle != IntPtr.Zero)

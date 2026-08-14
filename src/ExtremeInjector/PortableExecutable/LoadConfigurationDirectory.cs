@@ -65,203 +65,188 @@ public sealed class LoadConfigurationDirectory
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_0(uint uint_6)
+	public void SetSize(uint uint_6)
 	{
 		uint_0 = uint_6;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(uint uint_6)
+	public void SetTimeDateStamp(uint uint_6)
 	{
 		uint_1 = uint_6;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_2(ushort ushort_4)
+	public void SetMajorVersion(ushort ushort_4)
 	{
 		ushort_0 = ushort_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(ushort ushort_4)
+	public void SetMinorVersion(ushort ushort_4)
 	{
 		ushort_1 = ushort_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_4(uint uint_6)
+	public void SetGlobalFlagsClear(uint uint_6)
 	{
 		uint_2 = uint_6;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(uint uint_6)
+	public void SetGlobalFlagsSet(uint uint_6)
 	{
 		uint_3 = uint_6;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_6(uint uint_6)
+	public void SetCriticalSectionDefaultTimeout(uint uint_6)
 	{
 		uint_4 = uint_6;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_7(ulong ulong_10)
+	public void SetDeCommitFreeBlockThreshold(ulong ulong_10)
 	{
 		ulong_0 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_8(ulong ulong_10)
+	public void SetDeCommitTotalFreeThreshold(ulong ulong_10)
 	{
 		ulong_1 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_9(ulong ulong_10)
+	public void SetLockPrefixTable(ulong ulong_10)
 	{
 		ulong_2 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_10(ulong ulong_10)
+	public void SetMaximumAllocationSize(ulong ulong_10)
 	{
 		ulong_3 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_11(ulong ulong_10)
+	public void SetVirtualMemoryThreshold(ulong ulong_10)
 	{
 		ulong_4 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_12(ulong ulong_10)
+	public void SetProcessAffinityMask(ulong ulong_10)
 	{
 		ulong_5 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_13(uint uint_6)
+	public void SetProcessHeapFlags(uint uint_6)
 	{
 		uint_5 = uint_6;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_14(ushort ushort_4)
+	public void SetCsdVersion(ushort ushort_4)
 	{
 		ushort_2 = ushort_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_15(ushort ushort_4)
+	public void SetDependentLoadFlags(ushort ushort_4)
 	{
 		ushort_3 = ushort_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_16(ulong ulong_10)
+	public void SetEditList(ulong ulong_10)
 	{
 		ulong_6 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_17(ulong ulong_10)
+	public void SetSecurityCookie(ulong ulong_10)
 	{
 		ulong_7 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_18(ulong ulong_10)
+	public void SetSeHandlerTable(ulong ulong_10)
 	{
 		ulong_8 = ulong_10;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_19(ulong ulong_10)
+	public void SetSeHandlerCount(ulong ulong_10)
 	{
 		ulong_9 = ulong_10;
 	}
 
 	internal LoadConfigurationDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0)
 	{
-		method_0(class5_0.ReadUInt32());
-		method_1(class5_0.ReadUInt32());
-		method_2(class5_0.ReadUInt16());
-		method_3(class5_0.ReadUInt16());
-		method_4(class5_0.ReadUInt32());
-		method_5(class5_0.ReadUInt32());
-		method_6(class5_0.ReadUInt32());
-		if (RecoveredRuntime.smethod_19(class154_0))
+		SetSize(class5_0.ReadUInt32());
+		SetTimeDateStamp(class5_0.ReadUInt32());
+		SetMajorVersion(class5_0.ReadUInt16());
+		SetMinorVersion(class5_0.ReadUInt16());
+		SetGlobalFlagsClear(class5_0.ReadUInt32());
+		SetGlobalFlagsSet(class5_0.ReadUInt32());
+		SetCriticalSectionDefaultTimeout(class5_0.ReadUInt32());
+		if (RecoveredRuntime.Is32BitImage(class154_0))
 		{
-			method_7(class5_0.ReadUInt32());
-			method_8(class5_0.ReadUInt32());
-			method_9(class5_0.ReadUInt32());
-			method_10(class5_0.ReadUInt32());
-			method_11(class5_0.ReadUInt32());
-			method_13(class5_0.ReadUInt32());
-			method_12(class5_0.ReadUInt32());
+			SetDeCommitFreeBlockThreshold(class5_0.ReadUInt32());
+			SetDeCommitTotalFreeThreshold(class5_0.ReadUInt32());
+			SetLockPrefixTable(class5_0.ReadUInt32());
+			SetMaximumAllocationSize(class5_0.ReadUInt32());
+			SetVirtualMemoryThreshold(class5_0.ReadUInt32());
+			SetProcessHeapFlags(class5_0.ReadUInt32());
+			SetProcessAffinityMask(class5_0.ReadUInt32());
 		}
 		else
 		{
-			method_7(class5_0.ReadUInt64());
-			method_8(class5_0.ReadUInt64());
-			method_9(class5_0.ReadUInt64());
-			method_10(class5_0.ReadUInt64());
-			method_11(class5_0.ReadUInt64());
-			method_12(class5_0.ReadUInt64());
-			method_13(class5_0.ReadUInt32());
+			SetDeCommitFreeBlockThreshold(class5_0.ReadUInt64());
+			SetDeCommitTotalFreeThreshold(class5_0.ReadUInt64());
+			SetLockPrefixTable(class5_0.ReadUInt64());
+			SetMaximumAllocationSize(class5_0.ReadUInt64());
+			SetVirtualMemoryThreshold(class5_0.ReadUInt64());
+			SetProcessAffinityMask(class5_0.ReadUInt64());
+			SetProcessHeapFlags(class5_0.ReadUInt32());
 		}
-		method_14(class5_0.ReadUInt16());
-		method_15(class5_0.ReadUInt16());
-		if (RecoveredRuntime.smethod_19(class154_0))
+		SetCsdVersion(class5_0.ReadUInt16());
+		SetDependentLoadFlags(class5_0.ReadUInt16());
+		if (RecoveredRuntime.Is32BitImage(class154_0))
 		{
-			method_16(class5_0.ReadUInt32());
-			method_17(class5_0.ReadUInt32());
-			method_18(class5_0.ReadUInt32());
-			method_19(class5_0.ReadUInt32());
+			SetEditList(class5_0.ReadUInt32());
+			SetSecurityCookie(class5_0.ReadUInt32());
+			SetSeHandlerTable(class5_0.ReadUInt32());
+			SetSeHandlerCount(class5_0.ReadUInt32());
 		}
 		else
 		{
-			method_16(class5_0.ReadUInt64());
-			method_17(class5_0.ReadUInt64());
-			method_18(class5_0.ReadUInt64());
-			method_19(class5_0.ReadUInt64());
+			SetEditList(class5_0.ReadUInt64());
+			SetSecurityCookie(class5_0.ReadUInt64());
+			SetSeHandlerTable(class5_0.ReadUInt64());
+			SetSeHandlerCount(class5_0.ReadUInt64());
 		}
-	}
-
-	internal static uint smethod_0(BinaryReader binaryReader_0)
-	{
-		return binaryReader_0.ReadUInt32();
-	}
-
-	internal static ushort smethod_1(BinaryReader binaryReader_0)
-	{
-		return binaryReader_0.ReadUInt16();
-	}
-
-	internal static ulong smethod_2(BinaryReader binaryReader_0)
-	{
-		return binaryReader_0.ReadUInt64();
 	}
 }

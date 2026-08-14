@@ -11,40 +11,40 @@ public abstract class RemoteProcessComponent : RemoteMemoryAccessor, IDisposable
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_17()
+	public bool GetHideRemoteThreadFromDebugger()
 	{
 		return bool_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_18(bool bool_2)
+	public void SetHideRemoteThreadFromDebugger(bool bool_2)
 	{
 		bool_1 = bool_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected internal RemoteProcess method_19()
+	protected internal RemoteProcess GetRemoteProcess()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected internal void method_20(RemoteProcess gclass2_1)
+	protected internal void SetRemoteProcess(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
 
 	protected RemoteProcessComponent(RemoteProcess gclass2_1)
 	{
-		this.method_20(gclass2_1);
-		base.method_5(false);
+		this.SetRemoteProcess(gclass2_1);
+		base.SetAutoProtectMemory(false);
 	}
 
 	void IDisposable.Dispose()
 	{
-		RecoveredRuntime.smethod_388(this);
+		RecoveredRuntime.CloseRemoteMemoryAccessor(this);
 	}
 }

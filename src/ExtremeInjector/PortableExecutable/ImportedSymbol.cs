@@ -19,63 +19,63 @@ public sealed class ImportedSymbol
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ulong method_0()
+	public ulong GetThunkValue()
 	{
 		return ulong_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(ulong ulong_1)
+	public void SetThunkValue(ulong ulong_1)
 	{
 		ulong_0 = ulong_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ushort method_2()
+	public ushort GetOrdinal()
 	{
 		return ushort_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(ushort ushort_2)
+	public void SetOrdinal(ushort ushort_2)
 	{
 		ushort_0 = ushort_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_4()
+	public string GetName()
 	{
 		return string_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(string string_1)
+	public void SetName(string string_1)
 	{
 		string_0 = string_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_6(ushort ushort_2)
+	public void SetHint(ushort ushort_2)
 	{
 		ushort_1 = ushort_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_7()
+	public bool GetIsOrdinal()
 	{
 		return bool_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_8(bool bool_1)
+	public void SetIsOrdinal(bool bool_1)
 	{
 		bool_0 = bool_1;
 	}

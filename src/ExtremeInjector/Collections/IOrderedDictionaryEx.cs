@@ -8,35 +8,35 @@ public interface IOrderedDictionaryEx<T, U> : IDictionary<T, U>, ICollection<Key
 
 	new U this[T key] { get; set; }
 
-	int Int32_0 { get; }
+	int Count { get; }
 
-	ICollection<T> Prop_0 { get; }
+	ICollection<T> Keys { get; }
 
-	ICollection<U> Prop_1 { get; }
+	ICollection<U> Values { get; }
 
-	bool Boolean_0 { get; }
+	bool IsReadOnly { get; }
 
-	void imethod_0(T key, U value);
+	void Add(T key, U value);
 
-	void imethod_1();
+	void Clear();
 
-	void imethod_2(int int_0, T gparam_0, U gparam_1);
+	void Insert(int int_0, T gparam_0, U gparam_1);
 
-	int imethod_3(T gparam_0);
+	int IndexOfKey(T gparam_0);
 
-	bool imethod_4(U gparam_0);
+	bool ContainsValue(U gparam_0);
 
-	bool imethod_5(U gparam_0, IEqualityComparer<U> iequalityComparer_0);
+	bool ContainsValue(U gparam_0, IEqualityComparer<U> iequalityComparer_0);
 
-	bool imethod_6(T key);
+	bool ContainsKey(T key);
 
-	KeyValuePair<T, U> imethod_7(int int_0);
+	KeyValuePair<T, U> GetItemAt(int int_0);
 
-	IEnumerator<KeyValuePair<T, U>> imethod_8();
+	IEnumerator<KeyValuePair<T, U>> GetEnumerator();
 
-	bool imethod_9(T key);
+	bool Remove(T key);
 
-	void imethod_10(int index);
+	void RemoveAt(int index);
 
-	bool imethod_11(T key, out U value);
+	bool TryGetValue(T key, out U value);
 }

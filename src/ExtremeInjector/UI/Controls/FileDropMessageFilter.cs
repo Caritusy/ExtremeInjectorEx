@@ -47,7 +47,7 @@ public sealed class FileDropMessageFilter : IMessageFilter
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_0(EventHandler<FileDropEventArgs> eventHandler_1)
+	public void SubscribeFilesDropped(EventHandler<FileDropEventArgs> eventHandler_1)
 	{
 		EventHandler<FileDropEventArgs> eventHandler = this.eventHandler_0;
 		EventHandler<FileDropEventArgs> eventHandler2;
@@ -69,19 +69,9 @@ public sealed class FileDropMessageFilter : IMessageFilter
 	{
 		if (message_0.Msg == 563L)
 		{
-			RecoveredRuntime.smethod_254(this, message_0);
+			RecoveredRuntime.HandleFileDrop(this, message_0);
 			return true;
 		}
 		return false;
-	}
-
-	internal static Delegate smethod_0(Delegate delegate_0, Delegate delegate_1)
-	{
-		return Delegate.Combine(delegate_0, delegate_1);
-	}
-
-	internal static void smethod_1(IMessageFilter imessageFilter_0)
-	{
-		Application.AddMessageFilter(imessageFilter_0);
 	}
 }

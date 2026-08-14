@@ -12,10 +12,10 @@ public abstract class RemotePeb : RemotePlatformStructure
 	}
 
 	[SpecialName]
-	public abstract IntPtr method_0821();
+	public abstract IntPtr GetLoaderDataAddress();
 
 	[SpecialName]
-	public abstract IntPtr method_0822();
+	public abstract IntPtr GetApiSetMapAddress();
 
-	public abstract RemotePebLdrData method_0823();
+	public abstract RemotePebLdrData GetLoaderData();
 }

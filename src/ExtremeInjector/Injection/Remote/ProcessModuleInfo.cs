@@ -33,98 +33,98 @@ public sealed class ProcessModuleInfo
 
 	[SpecialName]
 	[CompilerGenerated]
-	public IntPtr method_0()
+	public IntPtr GetModuleBase()
 	{
 		return intptr_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(IntPtr intptr_2)
+	internal void SetModuleBase(IntPtr intptr_2)
 	{
 		intptr_0 = intptr_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public IntPtr method_2()
+	public IntPtr GetEntryPoint()
 	{
 		return intptr_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_3(IntPtr intptr_2)
+	internal void SetEntryPoint(IntPtr intptr_2)
 	{
 		intptr_1 = intptr_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_4()
+	public uint GetImageSize()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_5(uint uint_1)
+	internal void SetImageSize(uint uint_1)
 	{
 		uint_0 = uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_6()
+	public string GetModuleName()
 	{
 		return string_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_7(string string_2)
+	internal void SetModuleName(string string_2)
 	{
 		string_0 = string_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public string method_8()
+	public string GetFilePath()
 	{
 		return string_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_9(string string_2)
+	internal void SetFilePath(string string_2)
 	{
 		string_1 = string_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_10()
+	public bool GetIs32Bit()
 	{
 		return bool_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_11(bool bool_2)
+	internal void SetIs32Bit(bool bool_2)
 	{
 		bool_0 = bool_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_12()
+	public bool GetIsManualMapped()
 	{
 		return bool_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_13(bool bool_2)
+	internal void SetIsManualMapped(bool bool_2)
 	{
 		bool_1 = bool_2;
 	}
@@ -136,14 +136,14 @@ public sealed class ProcessModuleInfo
 
 	internal ProcessModuleInfo(RemoteProcess gclass2_1, ProcessModuleCollection class69_1, IntPtr intptr_2, bool bool_2, bool bool_3)
 	{
-		method_1(intptr_2);
-		method_11(bool_2);
-		method_13(bool_3);
+		SetModuleBase(intptr_2);
+		SetIs32Bit(bool_2);
+		SetIsManualMapped(bool_3);
 		gclass2_0 = gclass2_1;
 		class69_0 = class69_1;
 	}
 
-	internal IntPtr method_14(object object_0, bool bool_2)
+	internal IntPtr GetExportAddress(object object_0, bool bool_2)
 	{
 		bool flag;
 		ushort num = (!(flag = (object_0 is ushort))) ? (ushort)0 : ((ushort)object_0);
@@ -152,47 +152,47 @@ public sealed class ProcessModuleInfo
 		{
 			foreach (KeyValuePair<ProcessModuleInfo, List<ExportedSymbol>> keyValuePair in this.gclass2_0.dictionary_0)
 			{
-				if (keyValuePair.Key.method_0() == this.method_0() && keyValuePair.Key.method_4() == this.method_4() && keyValuePair.Key.method_6() == this.method_6() && keyValuePair.Key.method_2() == this.method_2())
+				if (keyValuePair.Key.GetModuleBase() == this.GetModuleBase() && keyValuePair.Key.GetImageSize() == this.GetImageSize() && keyValuePair.Key.GetModuleName() == this.GetModuleName() && keyValuePair.Key.GetEntryPoint() == this.GetEntryPoint())
 				{
 					this.list_0 = keyValuePair.Value;
 					break;
 				}
 			}
 		}
-		if (this.list_0 == null && RecoveredRuntime.smethod_131(this).Count == 0)
+		if (this.list_0 == null && RecoveredRuntime.GetRemoteModuleExports(this).Count == 0)
 		{
 			return IntPtr.Zero;
 		}
 
 		foreach (ExportedSymbol symbol in this.list_0)
 		{
-			if ((flag && symbol.method_2() != num) || (!flag && (!symbol.method_0() || symbol.method_4() != b)))
+			if ((flag && symbol.GetOrdinal() != num) || (!flag && (!symbol.GetHasName() || symbol.GetName() != b)))
 			{
 				continue;
 			}
 
-			if (!RecoveredRuntime.smethod_85(symbol))
+			if (!RecoveredRuntime.IsForwardedExport(symbol))
 			{
-				return this.method_0().smethod_9((long)((ulong)symbol.method_6()));
+				return this.GetModuleBase().Add((long)((ulong)symbol.GetAddressRva()));
 			}
 
 			ProcessModuleCollection modules = this.class69_0 == null || !bool_2
-				? RecoveredRuntime.smethod_42(this.gclass2_0)
+				? RecoveredRuntime.CaptureProcessModules(this.gclass2_0)
 				: this.class69_0;
-			ProcessModuleInfo forwardedModule = modules[symbol.method_8().method_0()];
+			ProcessModuleInfo forwardedModule = modules[symbol.GetForwarder().GetModuleName()];
 			if (forwardedModule == null)
 			{
-				if (symbol.method_8().method_0().IndexOf(EncodedStringTable.smethod_0(8498), StringComparison.OrdinalIgnoreCase) == -1)
+				if (symbol.GetForwarder().GetModuleName().IndexOf(EncodedStringTable.DecodeString(8498), StringComparison.OrdinalIgnoreCase) == -1)
 				{
-					forwardedModule = RecoveredRuntime.smethod_231(this, symbol.method_8().method_0());
+					forwardedModule = RecoveredRuntime.LoadForwardedExportModule(this, symbol.GetForwarder().GetModuleName());
 					if (forwardedModule == null)
 					{
 						return IntPtr.Zero;
 					}
-					return RecoveredRuntime.smethod_225(forwardedModule, symbol.method_8().method_6(), false);
+					return RecoveredRuntime.ResolveExportByName(forwardedModule, symbol.GetForwarder().GetName(), false);
 				}
 
-				string resolvedPath = RecoveredRuntime.smethod_440(symbol.method_8().method_0(), this.method_8(), null, DependencySearchFlags.flag_1, 0, IntPtr.Zero);
+				string resolvedPath = RecoveredRuntime.ResolveDependencyPath(symbol.GetForwarder().GetModuleName(), this.GetFilePath(), null, DependencySearchFlags.flag_1, 0, IntPtr.Zero);
 				if (!string.IsNullOrEmpty(resolvedPath))
 				{
 					forwardedModule = modules[resolvedPath];
@@ -203,31 +203,11 @@ public sealed class ProcessModuleInfo
 				}
 			}
 
-			return symbol.method_8().method_2()
-				? RecoveredRuntime.smethod_225(forwardedModule, symbol.method_8().method_6(), false)
-				: RecoveredRuntime.smethod_248(forwardedModule, symbol.method_8().method_4(), false);
+			return symbol.GetForwarder().GetIsOrdinal()
+				? RecoveredRuntime.ResolveExportByName(forwardedModule, symbol.GetForwarder().GetName(), false)
+				: RecoveredRuntime.ResolveExportByOrdinal(forwardedModule, symbol.GetForwarder().GetOrdinal(), false);
 		}
 
 		return IntPtr.Zero;
-	}
-
-	internal static bool smethod_0(string string_2, string string_3)
-	{
-		return string_2 == string_3;
-	}
-
-	internal static bool smethod_1(string string_2, string string_3)
-	{
-		return string_2 != string_3;
-	}
-
-	internal static int smethod_2(string string_2, string string_3, StringComparison stringComparison_0)
-	{
-		return string_2.IndexOf(string_3, stringComparison_0);
-	}
-
-	internal static bool smethod_3(string string_2)
-	{
-		return string.IsNullOrEmpty(string_2);
 	}
 }

@@ -10,12 +10,7 @@ public static class PlatformInfo
 
 	public static class Class128<T>
 	{
-		public static readonly int int_0 = RecoveredRuntime.smethod_18(smethod_0(typeof(T).TypeHandle));
-
-		internal static Type smethod_0(RuntimeTypeHandle runtimeTypeHandle_0)
-		{
-			return Type.GetTypeFromHandle(runtimeTypeHandle_0);
-		}
+		public static readonly int int_0 = RecoveredRuntime.SizeOfNativeType(typeof(T));
 	}
 
 	public static readonly bool bool_0;
@@ -68,39 +63,39 @@ public static class PlatformInfo
 	{
 	}
 
-	public static string smethod_0(string string_4)
+	public static string ConvertDevicePathToDosPath(string string_4)
 	{
 		StringBuilder stringBuilder = new StringBuilder(255);
 		for (int i = 65; i <= 90; i++)
 		{
-			if (RecoveredRuntime.QueryDosDevice(((char)i).ToString() + EncodedStringTable.smethod_0(9709), stringBuilder, stringBuilder.Capacity) != 0u)
+			if (RecoveredRuntime.QueryDosDevice(((char)i).ToString() + EncodedStringTable.DecodeString(9709), stringBuilder, stringBuilder.Capacity) != 0u)
 			{
 				string text = stringBuilder.ToString();
 				if (string_4.StartsWith(text, StringComparison.OrdinalIgnoreCase))
 				{
-					return ((char)i).ToString() + EncodedStringTable.smethod_0(9709) + string_4.Substring(text.Length, string_4.Length - text.Length);
+					return ((char)i).ToString() + EncodedStringTable.DecodeString(9709) + string_4.Substring(text.Length, string_4.Length - text.Length);
 				}
 			}
 		}
 		return string.Empty;
 	}
 
-	public static int smethod_1<T>()
+	public static int SizeOf<T>()
 	{
 		return Class128<T>.int_0;
 	}
 
-	public static T smethod_2<T>(this T[] gparam_0)
+	public static T GetRandomElement<T>(this T[] gparam_0)
 	{
 		return gparam_0[random_0.Next(gparam_0.Length)];
 	}
 
-	public static int smethod_3<T>(this T[] gparam_0)
+	public static int GetRandomIndex<T>(this T[] gparam_0)
 	{
 		return random_0.Next(gparam_0.Length);
 	}
 
-	public static void smethod_4<T>(this IList<T> ilist_0)
+	public static void Shuffle<T>(this IList<T> ilist_0)
 	{
 		int i = ilist_0.Count;
 		while (i > 1)
@@ -111,25 +106,5 @@ public static class PlatformInfo
 			ilist_0[index] = ilist_0[i];
 			ilist_0[i] = value;
 		}
-	}
-
-	internal static Random smethod_5()
-	{
-		return new Random();
-	}
-
-	internal static string smethod_6(string string_4, string string_5)
-	{
-		return Path.Combine(string_4, string_5);
-	}
-
-	internal static StringBuilder smethod_7(int int_0)
-	{
-		return new StringBuilder(int_0);
-	}
-
-	internal static int smethod_8(Random random_2, int int_0)
-	{
-		return random_2.Next(int_0);
 	}
 }

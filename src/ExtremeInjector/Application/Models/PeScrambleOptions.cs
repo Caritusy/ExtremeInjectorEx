@@ -1,235 +1,28 @@
-using System.Runtime.CompilerServices;
-
 public sealed class PeScrambleOptions
 {
-	[CompilerGenerated]
-	internal bool bool_0;
+	public bool ScrambleHeaderFields { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_1;
+	public bool InsertExtraSections { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_2;
+	public bool RemoveDebugData { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_3;
+	public bool CreateFakeDebugDirectory { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_4;
+	public bool ShiftSectionData { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_5;
+	public bool ModifyAssemblyCode { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_6;
+	public bool RemoveUselessData { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_7;
+	public bool MoveRelocationTable { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_8;
+	public bool RenameSections { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_9;
+	public bool ModifyImportTable { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_10;
+	public bool CreateNewEntryPoint { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_11;
+	public bool ShiftSectionMemory { get; set; }
 
-	[CompilerGenerated]
-	internal bool bool_12;
-
-	[CompilerGenerated]
-	internal bool bool_13;
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_0()
-	{
-		return bool_0;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_1(bool bool_14)
-	{
-		bool_0 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_2()
-	{
-		return bool_1;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_3(bool bool_14)
-	{
-		bool_1 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_4()
-	{
-		return bool_2;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_5(bool bool_14)
-	{
-		bool_2 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_6()
-	{
-		return bool_3;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_7(bool bool_14)
-	{
-		bool_3 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_8()
-	{
-		return bool_4;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_9(bool bool_14)
-	{
-		bool_4 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_10()
-	{
-		return bool_5;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_11(bool bool_14)
-	{
-		bool_5 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_12()
-	{
-		return bool_6;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_13(bool bool_14)
-	{
-		bool_6 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_14()
-	{
-		return bool_7;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_15(bool bool_14)
-	{
-		bool_7 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_16()
-	{
-		return bool_8;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_17(bool bool_14)
-	{
-		bool_8 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_18()
-	{
-		return bool_9;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_19(bool bool_14)
-	{
-		bool_9 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_20()
-	{
-		return bool_10;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_21(bool bool_14)
-	{
-		bool_10 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_22()
-	{
-		return bool_11;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_23()
-	{
-		return bool_12;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_24(bool bool_14)
-	{
-		bool_12 = bool_14;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_25()
-	{
-		return bool_13;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_26(bool bool_14)
-	{
-		bool_13 = bool_14;
-	}
+	public bool StripSectionCharacteristics { get; set; }
 }

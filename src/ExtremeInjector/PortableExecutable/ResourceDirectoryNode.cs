@@ -27,56 +27,56 @@ public sealed class ResourceDirectoryNode : ResourceIdentifier
 
 	[SpecialName]
 	[CompilerGenerated]
-	public List<ResourceDataEntry> method_4()
+	public List<ResourceDataEntry> GetDataEntries()
 	{
 		return list_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_5(List<ResourceDataEntry> list_2)
+	internal void SetDataEntries(List<ResourceDataEntry> list_2)
 	{
 		list_0 = list_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public List<ResourceDirectoryNode> method_6()
+	public List<ResourceDirectoryNode> GetSubdirectories()
 	{
 		return list_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_7(List<ResourceDirectoryNode> list_2)
+	internal void SetSubdirectories(List<ResourceDirectoryNode> list_2)
 	{
 		list_1 = list_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_8(uint uint_2)
+	public void SetCharacteristics(uint uint_2)
 	{
 		uint_0 = uint_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_9(uint uint_2)
+	public void SetTimeDateStamp(uint uint_2)
 	{
 		uint_1 = uint_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_10(ushort ushort_2)
+	public void SetMajorVersion(ushort ushort_2)
 	{
 		ushort_0 = ushort_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_11(ushort ushort_2)
+	public void SetMinorVersion(ushort ushort_2)
 	{
 		ushort_1 = ushort_2;
 	}
@@ -84,12 +84,12 @@ public sealed class ResourceDirectoryNode : ResourceIdentifier
 	public ResourceDirectoryNode(int int_1, ResourceDirectory class166_1, long long_1)
 		: base(int_1)
 	{
-		RecoveredRuntime.smethod_101(long_1, class166_1, this);
+		RecoveredRuntime.InitializeResourceDirectoryNode(long_1, class166_1, this);
 	}
 
 	public ResourceDirectoryNode(string string_1, ResourceDirectory class166_1, long long_1)
 		: base(string_1)
 	{
-		RecoveredRuntime.smethod_101(long_1, class166_1, this);
+		RecoveredRuntime.InitializeResourceDirectoryNode(long_1, class166_1, this);
 	}
 }

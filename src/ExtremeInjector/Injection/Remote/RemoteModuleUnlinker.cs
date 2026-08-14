@@ -8,9 +8,9 @@ public sealed class RemoteModuleUnlinker
 	{
 		public IntPtr intptr_0;
 
-		internal bool method_0(ProcessModuleInfo gclass1_0)
+		internal bool MatchesModuleBase(ProcessModuleInfo gclass1_0)
 		{
-			return gclass1_0.method_0() == intptr_0;
+			return gclass1_0.GetModuleBase() == intptr_0;
 		}
 	}
 
@@ -19,20 +19,20 @@ public sealed class RemoteModuleUnlinker
 
 	[SpecialName]
 	[CompilerGenerated]
-	public RemoteProcess method_0()
+	public RemoteProcess GetRemoteProcess()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(RemoteProcess gclass2_1)
+	public void SetRemoteProcess(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
 
 	public RemoteModuleUnlinker(RemoteProcess gclass2_1)
 	{
-		method_1(gclass2_1);
+		SetRemoteProcess(gclass2_1);
 	}
 }

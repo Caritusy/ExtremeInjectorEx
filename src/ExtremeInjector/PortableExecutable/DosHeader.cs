@@ -7,14 +7,14 @@ public sealed class DosHeader
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_0()
+	public uint GetPeHeaderOffset()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(uint uint_1)
+	public void SetPeHeaderOffset(uint uint_1)
 	{
 		uint_0 = uint_1;
 	}

@@ -21,7 +21,7 @@ public sealed class EncodedStringTable
 
 	internal static readonly int int_0;
 
-	public static string smethod_0(int int_1)
+	public static string DecodeString(int int_1)
 	{
 		int_1 -= EncodedStringTable.int_0;
 		if (EncodedStringTable.bool_0)
@@ -87,101 +87,22 @@ public sealed class EncodedStringTable
 
 	static EncodedStringTable()
 	{
-		if (EncodedStringTable.string_0 == _003CModule_003E.smethod_3<string>(1753162200u))
+		if (EncodedStringTable.string_0 == _003CModule_003E.DecodeConstantWithKeyB<string>(1753162200u))
 		{
 			EncodedStringTable.bool_0 = true;
 			EncodedStringTable.dictionary_0 = new Dictionary<int, string>();
 		}
 		EncodedStringTable.int_0 = Convert.ToInt32(EncodedStringTable.string_1);
 		Assembly executingAssembly = Assembly.GetExecutingAssembly();
-		using (Stream manifestResourceStream = executingAssembly.GetManifestResourceStream(_003CModule_003E.smethod_5<string>(460238251u)))
+		using (Stream manifestResourceStream = executingAssembly.GetManifestResourceStream(_003CModule_003E.DecodeConstantWithKeyD<string>(460238251u)))
 		{
 			int num = Convert.ToInt32(manifestResourceStream.Length);
 			byte[] buffer = new byte[num];
 			manifestResourceStream.Read(buffer, 0, num);
-			EncodedStringTable.byte_0 = RecoveredRuntime.smethod_394(buffer);
+			EncodedStringTable.byte_0 = RecoveredRuntime.DecompressEmbeddedData(buffer);
 			buffer = null;
 			manifestResourceStream.Close();
 		}
 	}
 
-	internal static void smethod_1(object object_1)
-	{
-		Monitor.Enter(object_1);
-	}
-
-	internal static void smethod_2(object object_1)
-	{
-		Monitor.Exit(object_1);
-	}
-
-	internal static Encoding smethod_3()
-	{
-		return Encoding.UTF8;
-	}
-
-	internal static string smethod_4(Encoding encoding_0, byte[] byte_1, int int_1, int int_2)
-	{
-		return encoding_0.GetString(byte_1, int_1, int_2);
-	}
-
-	internal static byte[] smethod_5(string string_2)
-	{
-		return Convert.FromBase64String(string_2);
-	}
-
-	internal static string smethod_6(string string_2)
-	{
-		return string.Intern(string_2);
-	}
-
-	internal static object smethod_7()
-	{
-		return new object();
-	}
-
-	internal static bool smethod_8(string string_2, string string_3)
-	{
-		return string_2 == string_3;
-	}
-
-	internal static int smethod_9(string string_2)
-	{
-		return Convert.ToInt32(string_2);
-	}
-
-	internal static Assembly smethod_10()
-	{
-		return Assembly.GetExecutingAssembly();
-	}
-
-	internal static Stream smethod_11(Assembly assembly_0, string string_2)
-	{
-		return assembly_0.GetManifestResourceStream(string_2);
-	}
-
-	internal static long smethod_12(Stream stream_0)
-	{
-		return stream_0.Length;
-	}
-
-	internal static int smethod_13(long long_0)
-	{
-		return Convert.ToInt32(long_0);
-	}
-
-	internal static int smethod_14(Stream stream_0, byte[] byte_1, int int_1, int int_2)
-	{
-		return stream_0.Read(byte_1, int_1, int_2);
-	}
-
-	internal static void smethod_15(Stream stream_0)
-	{
-		stream_0.Close();
-	}
-
-	internal static void smethod_16(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
-	}
 }

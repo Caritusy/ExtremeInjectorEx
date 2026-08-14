@@ -10,16 +10,6 @@ public static class BeaEngineDisassembler
 
 	static BeaEngineDisassembler()
 	{
-		delegate44_0 = (Delegate44)Marshal.GetDelegateForFunctionPointer(new NativeLibraryImage(PlatformInfo.bool_0 ? RecoveredRuntime.smethod_99() : RecoveredRuntime.smethod_180(), bool_0: true).method_2(PlatformInfo.bool_0 ? "Disasm" : "_Disasm@4"), typeof(Delegate44));
-	}
-
-	internal static Type smethod_0(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
-	}
-
-	internal static Delegate smethod_1(IntPtr intptr_0, Type type_0)
-	{
-		return Marshal.GetDelegateForFunctionPointer(intptr_0, type_0);
+		delegate44_0 = (Delegate44)Marshal.GetDelegateForFunctionPointer(new NativeLibraryImage(PlatformInfo.bool_0 ? RecoveredRuntime.GetBeaEngineX64Image() : RecoveredRuntime.GetBeaEngineX86Image(), bool_0: true).GetExportAddress(PlatformInfo.bool_0 ? "Disasm" : "_Disasm@4"), typeof(Delegate44));
 	}
 }

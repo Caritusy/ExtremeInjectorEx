@@ -69,19 +69,14 @@ public sealed class VectoredExceptionHandlerInstaller : RemoteCodeExecutorBase
 	public VectoredExceptionHandlerInstaller(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
-		method_8(gclass2_1.ProcessId);
+		EnsureAttachedToProcess(gclass2_1.ProcessId);
 	}
 
-	protected override void method_04C6()
+	protected override void EnsureProcessHandle()
 	{
-		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
+		if (base.GetProcessHandle() == IntPtr.Zero && base.GetProcessId() != -1)
 		{
-			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
+			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.GetProcessId()));
 		}
-	}
-
-	internal static void smethod_7(Array array_0, RuntimeFieldHandle runtimeFieldHandle_0)
-	{
-		RuntimeHelpers.InitializeArray(array_0, runtimeFieldHandle_0);
 	}
 }

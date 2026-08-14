@@ -9,5 +9,5 @@ public abstract class RemotePebLdrData : RemotePlatformStructure
 	}
 
 	[SpecialName]
-	public abstract RemoteLdrListEntry method_080D();
+	public abstract RemoteLdrListEntry GetLoadOrderModuleList();
 }

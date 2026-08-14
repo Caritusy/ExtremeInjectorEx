@@ -26,7 +26,7 @@ using Microsoft.Win32;
 public sealed partial class RecoveredRuntime
 {
 
-	internal static void smethod_4(FileDropMessageFilter class10_0, IntPtr intptr_0)
+	internal static void EnableFileDropMessages(FileDropMessageFilter class10_0, IntPtr intptr_0)
 	{
 		if (PlatformInfo.bool_2)
 		{
@@ -46,7 +46,7 @@ public sealed partial class RecoveredRuntime
 		RecoveredRuntime.DragAcceptFiles(intptr_0, true);
 	}
 
-	internal static Icon smethod_11(string string_0, IconSize enum18_0)
+	internal static Icon GetFileIcon(string string_0, IconSize enum18_0)
 	{
 		ShellFileInfoNativeTypes.Struct36 @struct = default(ShellFileInfoNativeTypes.Struct36);
 		ShellFileInfoNativeTypes.Enum19 enum19_ = ShellFileInfoNativeTypes.Enum19.flag_0 | ShellFileInfoNativeTypes.Enum19.flag_15 | ((enum18_0 == IconSize.const_0) ? ShellFileInfoNativeTypes.Enum19.flag_11 : ShellFileInfoNativeTypes.Enum19.flag_10);
@@ -66,15 +66,15 @@ public sealed partial class RecoveredRuntime
 		return result;
 	}
 
-	internal static IntPtr smethod_13(ref NativeTypes.Struct55 struct55_0)
+	internal static IntPtr AllocateAlignedThreadContext(ref NativeTypes.Struct55 struct55_0)
 	{
-		IntPtr intPtr = Marshal.AllocHGlobal(typeof(NativeTypes.Struct55).smethod_7() + 16);
-		intPtr = intPtr.smethod_9(-intPtr.ToInt64() & 15L);
+		IntPtr intPtr = Marshal.AllocHGlobal(typeof(NativeTypes.Struct55).SizeOf() + 16);
+		intPtr = intPtr.Add(-intPtr.ToInt64() & 15L);
 		Marshal.StructureToPtr(struct55_0, intPtr, false);
 		return intPtr;
 	}
 
-	internal static int smethod_18(Type type_0)
+	internal static int SizeOfNativeType(Type type_0)
 	{
 		if (type_0 == typeof(char))
 		{
@@ -90,7 +90,7 @@ public sealed partial class RecoveredRuntime
 	[DllImport("ntdll.dll")]
 	internal static extern uint RtlDosApplyFileIsolationRedirection_Ustr(uint uint_0, ref NativeTypes.Struct43 struct43_0, ref NativeTypes.Struct43 struct43_1, ref NativeTypes.Struct43 struct43_2, ref NativeTypes.Struct43 struct43_3, ref IntPtr intptr_0, IntPtr intptr_1, UIntPtr uintptr_0, UIntPtr uintptr_1);
 
-	internal static List<NativeProcessInfo> smethod_21()
+	internal static List<NativeProcessInfo> EnumerateSystemProcesses()
 	{
 		List<NativeProcessInfo> list = new List<NativeProcessInfo>();
 		int num = 65536;
@@ -112,22 +112,22 @@ public sealed partial class RecoveredRuntime
 		{
 			NativeProcessInfo @class = new NativeProcessInfo();
 			NativeTypes.Struct39 @struct = (NativeTypes.Struct39)Marshal.PtrToStructure(intPtr2, typeof(NativeTypes.Struct39));
-			IntPtr intPtr3 = intPtr2.smethod_8(typeof(NativeTypes.Struct39).smethod_7());
+			IntPtr intPtr3 = intPtr2.Add(typeof(NativeTypes.Struct39).SizeOf());
 			int num4 = 0;
 			while ((long)num4 < (long)((ulong)@struct.uint_1))
 			{
 				NativeTypes.Struct40 item = (NativeTypes.Struct40)Marshal.PtrToStructure(intPtr3, typeof(NativeTypes.Struct40));
-				@class.method_2().Add(item);
-				intPtr3 = intPtr3.smethod_8(typeof(NativeTypes.Struct40).smethod_7());
+				@class.GetThreads().Add(item);
+				intPtr3 = intPtr3.Add(typeof(NativeTypes.Struct40).SizeOf());
 				num4++;
 			}
-			@class.method_1(@struct);
+			@class.SetProcessRecord(@struct);
 			list.Add(@class);
 			if (@struct.uint_0 == 0u)
 			{
 				break;
 			}
-			intPtr2 = intPtr2.smethod_9((long)((ulong)@struct.uint_0));
+			intPtr2 = intPtr2.Add((long)((ulong)@struct.uint_0));
 		}
 		Marshal.FreeHGlobal(intPtr);
 		return list;
@@ -165,28 +165,28 @@ public sealed partial class RecoveredRuntime
 	[DllImport("kernel32.dll", SetLastError = true)]
 	internal static extern bool VirtualFree(IntPtr intptr_0, UIntPtr uintptr_0, NativeTypes.Enum28 enum28_0);
 
-	internal static bool smethod_70(ProcessThreadInfo class75_0)
+	internal static bool PopulateThreadInformation(ProcessThreadInfo class75_0)
 	{
-		IntPtr intPtr = RecoveredRuntime.OpenThread(NativeTypes.Enum31.flag_5, false, class75_0.method_0());
+		IntPtr intPtr = RecoveredRuntime.OpenThread(NativeTypes.Enum31.flag_5, false, class75_0.GetThreadId());
 		if (intPtr == IntPtr.Zero)
 		{
 			return false;
 		}
 		NativeTypes.Struct49 @struct;
 		int num;
-		if (RecoveredRuntime.NtQueryInformationThread(intPtr, NativeTypes.Enum25.const_0, out @struct, typeof(NativeTypes.Struct49).smethod_7(), out num) != 0u)
+		if (RecoveredRuntime.NtQueryInformationThread(intPtr, NativeTypes.Enum25.const_0, out @struct, typeof(NativeTypes.Struct49).SizeOf(), out num) != 0u)
 		{
 			RecoveredRuntime.CloseHandle(intPtr);
 			return false;
 		}
-		class75_0.method_4((int)@struct.uint_2);
-		class75_0.method_5((int)@struct.uint_1);
-		class75_0.method_6(@struct.intptr_0);
+		class75_0.SetBasePriority((int)@struct.uint_2);
+		class75_0.SetCurrentPriority((int)@struct.uint_1);
+		class75_0.SetTebAddress(@struct.intptr_0);
 		IntPtr intptr_;
-		if (RecoveredRuntime.NtQueryInformationThread_1(intPtr, NativeTypes.Enum25.const_9, out intptr_, IntPtr.Size, out num) == 0u)
+		if (RecoveredRuntime.NtQueryInformationThreadPointer(intPtr, NativeTypes.Enum25.const_9, out intptr_, IntPtr.Size, out num) == 0u)
 		{
-			class75_0.method_3(intptr_);
-			class75_0.method_8((ThreadPriorityLevel)RecoveredRuntime.GetThreadPriority(intPtr));
+			class75_0.SetStartAddress(intptr_);
+			class75_0.SetPriorityLevel((ThreadPriorityLevel)RecoveredRuntime.GetThreadPriority(intPtr));
 			RecoveredRuntime.CloseHandle(intPtr);
 			return true;
 		}
@@ -219,7 +219,7 @@ public sealed partial class RecoveredRuntime
 	internal static extern uint GetClassLong(IntPtr intptr_0, int int_0);
 
 	[DllImport("ntdll.dll", EntryPoint = "NtQueryInformationProcess", SetLastError = true)]
-	internal static extern uint NtQueryInformationProcess_1(IntPtr intptr_0, NativeTypes.Enum26 enum26_0, out IntPtr intptr_1, int int_0, out int int_1);
+	internal static extern uint NtQueryInformationProcessPointer(IntPtr intptr_0, NativeTypes.Enum26 enum26_0, out IntPtr intptr_1, int int_0, out int int_1);
 
 	[DllImport("kernel32")]
 	internal static extern bool MoveFileEx(string string_0, string string_1, int int_0);
@@ -244,15 +244,15 @@ public sealed partial class RecoveredRuntime
 	[DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
 	internal static extern bool VirtualFreeEx(IntPtr intptr_0, IntPtr intptr_1, UIntPtr uintptr_0, NativeTypes.Enum28 enum28_0);
 
-	internal static void smethod_120(IntPtr intptr_0)
+	internal static void ReadApiSetSchemaV6(IntPtr intptr_0)
 	{
-		foreach (ApiSetSchema.Struct68 @struct in ApiSetSchema.smethod_0<ApiSetSchema.Struct69, ApiSetSchema.Struct68>(intptr_0))
+		foreach (ApiSetSchema.Struct68 @struct in ApiSetSchema.ReadEntries<ApiSetSchema.Struct69, ApiSetSchema.Struct68>(intptr_0))
 		{
 			List<string> list = new List<string>();
-			string key = Marshal.PtrToStringUni(intptr_0.smethod_9((long)((ulong)@struct.uint_0)), (int)(@struct.uint_1 / 2u)).ToLowerInvariant();
-			foreach (ApiSetSchema.Struct66 struct2 in ApiSetSchema.smethod_0<ApiSetSchema.Struct67, ApiSetSchema.Struct66>(intptr_0.smethod_9((long)((ulong)@struct.uint_2))))
+			string key = Marshal.PtrToStringUni(intptr_0.Add((long)((ulong)@struct.uint_0)), (int)(@struct.uint_1 / 2u)).ToLowerInvariant();
+			foreach (ApiSetSchema.Struct66 struct2 in ApiSetSchema.ReadEntries<ApiSetSchema.Struct67, ApiSetSchema.Struct66>(intptr_0.Add((long)((ulong)@struct.uint_2))))
 			{
-				string text = Marshal.PtrToStringUni(intptr_0.smethod_9((long)((ulong)struct2.uint_2)), (int)(struct2.uint_3 / 2u));
+				string text = Marshal.PtrToStringUni(intptr_0.Add((long)((ulong)struct2.uint_2)), (int)(struct2.uint_3 / 2u));
 				if (!string.IsNullOrEmpty(text))
 				{
 					list.Add(text);
@@ -265,18 +265,18 @@ public sealed partial class RecoveredRuntime
 	[DllImport("psapi.dll", SetLastError = true)]
 	internal static extern bool EnumProcessModulesEx(IntPtr intptr_0, IntPtr[] intptr_1, uint uint_0, out uint uint_1, uint uint_2);
 
-	internal static bool smethod_136(ref string string_0, IntPtr intptr_0)
+	internal static bool ResolveSideBySideDllPath(ref string string_0, IntPtr intptr_0)
 	{
-		if (string_0.EndsWith(EncodedStringTable.smethod_0(10075)))
+		if (string_0.EndsWith(EncodedStringTable.DecodeString(10075)))
 		{
 			string_0 = string_0.Substring(0, string_0.Length - 4);
 		}
 		NativeTypes.Struct43 @struct;
-		RecoveredRuntime.RtlInitUnicodeString(out @struct, EncodedStringTable.smethod_0(10075));
+		RecoveredRuntime.RtlInitUnicodeString(out @struct, EncodedStringTable.DecodeString(10075));
 		NativeTypes.Struct43 struct2;
 		RecoveredRuntime.RtlInitUnicodeString(out struct2, string_0);
 		NativeTypes.Struct43 struct3;
-		RecoveredRuntime.RtlInitUnicodeString(out struct3, EncodedStringTable.smethod_0(394));
+		RecoveredRuntime.RtlInitUnicodeString(out struct3, EncodedStringTable.DecodeString(394));
 		IntPtr intPtr = Marshal.AllocHGlobal(255);
 		NativeTypes.Struct43 struct4 = default(NativeTypes.Struct43);
 		struct4.intptr_0 = intPtr;
@@ -300,7 +300,7 @@ public sealed partial class RecoveredRuntime
 		else
 		{
 			RecoveredRuntime.RtlFreeUnicodeString(ref struct3);
-			string_0 += EncodedStringTable.smethod_0(10075);
+			string_0 += EncodedStringTable.DecodeString(10075);
 		}
 		Marshal.FreeHGlobal(intPtr);
 		return false;
@@ -356,7 +356,7 @@ public sealed partial class RecoveredRuntime
 	internal static extern bool VirtualProtect(IntPtr intptr_0, UIntPtr uintptr_0, NativeTypes.Enum34 enum34_0, out NativeTypes.Enum34 enum34_1);
 
 	[DllImport("kernel32.dll", EntryPoint = "SetThreadContext")]
-	internal static extern bool SetThreadContext_1(IntPtr intptr_0, ref NativeTypes.Struct54 struct54_0);
+	internal static extern bool SetThreadContext32(IntPtr intptr_0, ref NativeTypes.Struct54 struct54_0);
 
 	[DllImport("psapi.dll", SetLastError = true)]
 	internal static extern bool EnumProcesses(uint[] uint_0, uint uint_1, out uint uint_2);
@@ -364,41 +364,41 @@ public sealed partial class RecoveredRuntime
 	[DllImport("shell32.dll")]
 	internal static extern void DragAcceptFiles(IntPtr intptr_0, bool bool_0);
 
-	internal static AsmJitRuntime.Delegate0 smethod_207()
+	internal static AsmJitRuntime.Delegate0 ResolveAsmJitAllocationDelegate()
 	{
-		IntPtr intPtr = Marshal.ReadIntPtr(Marshal.ReadIntPtr(((NativeAsmJitMemoryManager)RecoveredRuntime.smethod_51()).intptr_0), 4 * IntPtr.Size);
+		IntPtr intPtr = Marshal.ReadIntPtr(Marshal.ReadIntPtr(((NativeAsmJitMemoryManager)RecoveredRuntime.CreateAsmJitMemoryManager()).intptr_0), 4 * IntPtr.Size);
 		if (AsmJitRuntime.bool_0)
 		{
 			byte[] array = new byte[100];
 			Marshal.Copy(intPtr, array, 0, array.Length);
-			int num = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(14185), EncodedStringTable.smethod_0(14206), 0);
+			int num = RecoveredRuntime.FindMaskedPattern(array, EncodedStringTable.DecodeString(14185), EncodedStringTable.DecodeString(14206), 0);
 			if (num == -1)
 			{
 				return null;
 			}
 			int num2 = BitConverter.ToInt32(array, num + 1);
-			return (AsmJitRuntime.Delegate0)Marshal.GetDelegateForFunctionPointer(intPtr.smethod_8(num + num2 + 5), typeof(AsmJitRuntime.Delegate0));
+			return (AsmJitRuntime.Delegate0)Marshal.GetDelegateForFunctionPointer(intPtr.Add(num + num2 + 5), typeof(AsmJitRuntime.Delegate0));
 		}
 		else
 		{
 			byte[] array2 = new byte[20];
 			Marshal.Copy(intPtr, array2, 0, array2.Length);
-			int num3 = RecoveredRuntime.smethod_419(array2, EncodedStringTable.smethod_0(14219), EncodedStringTable.smethod_0(14228), 0);
+			int num3 = RecoveredRuntime.FindMaskedPattern(array2, EncodedStringTable.DecodeString(14219), EncodedStringTable.DecodeString(14228), 0);
 			if (num3 == -1)
 			{
 				return null;
 			}
 			int num4 = BitConverter.ToInt32(array2, num3 + 3);
-			IntPtr intPtr2 = intPtr.smethod_8(num3 + 2 + num4 + 5);
+			IntPtr intPtr2 = intPtr.Add(num3 + 2 + num4 + 5);
 			array2 = new byte[100];
 			Marshal.Copy(intPtr2, array2, 0, array2.Length);
-			num3 = RecoveredRuntime.smethod_419(array2, EncodedStringTable.smethod_0(14233), EncodedStringTable.smethod_0(14258), 0);
+			num3 = RecoveredRuntime.FindMaskedPattern(array2, EncodedStringTable.DecodeString(14233), EncodedStringTable.DecodeString(14258), 0);
 			if (num3 == -1)
 			{
 				return null;
 			}
 			num4 = BitConverter.ToInt32(array2, num3 + 1);
-			return (AsmJitRuntime.Delegate0)Marshal.GetDelegateForFunctionPointer(intPtr2.smethod_8(num3 + num4 + 5), typeof(AsmJitRuntime.Delegate0));
+			return (AsmJitRuntime.Delegate0)Marshal.GetDelegateForFunctionPointer(intPtr2.Add(num3 + num4 + 5), typeof(AsmJitRuntime.Delegate0));
 		}
 	}
 
@@ -412,26 +412,26 @@ public sealed partial class RecoveredRuntime
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool ChangeWindowMessageFilter(uint uint_0, FileDropMessageFilter.Enum2 enum2_0);
 
-	internal static void smethod_241(IntPtr intptr_0)
+	internal static void ReadApiSetSchemaV2(IntPtr intptr_0)
 	{
 		ApiSetSchema.Struct61 @struct = (ApiSetSchema.Struct61)Marshal.PtrToStructure(intptr_0, typeof(ApiSetSchema.Struct61));
 		int num = 0;
 		while ((long)num < (long)((ulong)@struct.uint_3))
 		{
-			IntPtr intPtr = intptr_0.smethod_9((long)((ulong)@struct.uint_5 + (ulong)((long)(num * typeof(ApiSetSchema.Struct60).smethod_7()))));
-			if (!RecoveredRuntime.smethod_184(intPtr))
+			IntPtr intPtr = intptr_0.Add((long)((ulong)@struct.uint_5 + (ulong)((long)(num * typeof(ApiSetSchema.Struct60).SizeOf()))));
+			if (!RecoveredRuntime.IsReadableMemoryAddress(intPtr))
 			{
 				return;
 			}
 			ApiSetSchema.Struct60 struct2 = (ApiSetSchema.Struct60)Marshal.PtrToStructure(intPtr, typeof(ApiSetSchema.Struct60));
-			IntPtr ptr = intptr_0.smethod_9((long)((ulong)@struct.uint_4 + (ulong)((long)typeof(ApiSetSchema.Struct59).smethod_7() * (long)((ulong)struct2.uint_1))));
-			if (!RecoveredRuntime.smethod_184(intPtr))
+			IntPtr ptr = intptr_0.Add((long)((ulong)@struct.uint_4 + (ulong)((long)typeof(ApiSetSchema.Struct59).SizeOf() * (long)((ulong)struct2.uint_1))));
+			if (!RecoveredRuntime.IsReadableMemoryAddress(intPtr))
 			{
 				return;
 			}
 			ApiSetSchema.Struct59 struct3 = (ApiSetSchema.Struct59)Marshal.PtrToStructure(ptr, typeof(ApiSetSchema.Struct59));
-			IntPtr intPtr2 = intptr_0.smethod_9((long)((ulong)struct3.uint_1));
-			if (!RecoveredRuntime.smethod_184(intPtr2))
+			IntPtr intPtr2 = intptr_0.Add((long)((ulong)struct3.uint_1));
+			if (!RecoveredRuntime.IsReadableMemoryAddress(intPtr2))
 			{
 				return;
 			}
@@ -440,14 +440,14 @@ public sealed partial class RecoveredRuntime
 			int num2 = 0;
 			while ((long)num2 < (long)((ulong)struct3.uint_5))
 			{
-				IntPtr intPtr3 = intptr_0.smethod_9((long)((ulong)struct3.uint_4 + (ulong)((long)(num2 * typeof(ApiSetSchema.Struct62).smethod_7()))));
-				if (!RecoveredRuntime.smethod_184(intPtr3))
+				IntPtr intPtr3 = intptr_0.Add((long)((ulong)struct3.uint_4 + (ulong)((long)(num2 * typeof(ApiSetSchema.Struct62).SizeOf()))));
+				if (!RecoveredRuntime.IsReadableMemoryAddress(intPtr3))
 				{
 					return;
 				}
 				ApiSetSchema.Struct62 struct4 = (ApiSetSchema.Struct62)Marshal.PtrToStructure(intPtr3, typeof(ApiSetSchema.Struct62));
-				IntPtr intPtr4 = intptr_0.smethod_9((long)((ulong)struct4.uint_3));
-				if (!RecoveredRuntime.smethod_184(intPtr4))
+				IntPtr intPtr4 = intptr_0.Add((long)((ulong)struct4.uint_3));
+				if (!RecoveredRuntime.IsReadableMemoryAddress(intPtr4))
 				{
 					return;
 				}
@@ -475,7 +475,7 @@ public sealed partial class RecoveredRuntime
 	[DllImport("kernel32.dll", SetLastError = true)]
 	internal static extern IntPtr CreateToolhelp32Snapshot(NativeTypes.Enum27 enum27_0, int int_0);
 
-	internal static bool smethod_281(Peb64 class118_0)
+	internal static bool TryInitializePeb64Address(Peb64 class118_0)
 	{
 		if (!PlatformInfo.bool_0)
 		{
@@ -488,12 +488,12 @@ public sealed partial class RecoveredRuntime
 		}
 		NativeTypes.Struct45 @struct;
 		int num;
-		if (RecoveredRuntime.NtQueryInformationProcess(intPtr, NativeTypes.Enum26.const_4, out @struct, typeof(NativeTypes.Struct45).smethod_7(), out num) != 0u)
+		if (RecoveredRuntime.NtQueryInformationProcess(intPtr, NativeTypes.Enum26.const_4, out @struct, typeof(NativeTypes.Struct45).SizeOf(), out num) != 0u)
 		{
 			RecoveredRuntime.CloseHandle(intPtr);
 			return false;
 		}
-		RecoveredRuntime.smethod_86(class118_0, @struct.intptr_1);
+		RecoveredRuntime.SetRemotePebAddress(class118_0, @struct.intptr_1);
 		RecoveredRuntime.CloseHandle(intPtr);
 		return true;
 	}
@@ -552,15 +552,15 @@ public sealed partial class RecoveredRuntime
 	[DllImport("ntdll.dll", SetLastError = true)]
 	internal static extern uint NtQuerySystemInformation(NativeTypes.Enum24 enum24_0, IntPtr intptr_0, int int_0, out int int_1);
 
-	internal static void smethod_346(IntPtr intptr_0)
+	internal static void ReadApiSetSchemaV4(IntPtr intptr_0)
 	{
-		foreach (ApiSetSchema.Struct64 @struct in ApiSetSchema.smethod_0<ApiSetSchema.Struct65, ApiSetSchema.Struct64>(intptr_0))
+		foreach (ApiSetSchema.Struct64 @struct in ApiSetSchema.ReadEntries<ApiSetSchema.Struct65, ApiSetSchema.Struct64>(intptr_0))
 		{
 			List<string> list = new List<string>();
-			string key = Marshal.PtrToStringUni(intptr_0.smethod_9((long)((ulong)@struct.uint_1)), (int)(@struct.uint_2 / 2u)).ToLowerInvariant();
-			foreach (ApiSetSchema.Struct62 struct2 in ApiSetSchema.smethod_0<ApiSetSchema.Struct63, ApiSetSchema.Struct62>(intptr_0.smethod_9((long)((ulong)@struct.uint_5))))
+			string key = Marshal.PtrToStringUni(intptr_0.Add((long)((ulong)@struct.uint_1)), (int)(@struct.uint_2 / 2u)).ToLowerInvariant();
+			foreach (ApiSetSchema.Struct62 struct2 in ApiSetSchema.ReadEntries<ApiSetSchema.Struct63, ApiSetSchema.Struct62>(intptr_0.Add((long)((ulong)@struct.uint_5))))
 			{
-				string text = Marshal.PtrToStringUni(intptr_0.smethod_9((long)((ulong)struct2.uint_3)), (int)(struct2.uint_4 / 2u));
+				string text = Marshal.PtrToStringUni(intptr_0.Add((long)((ulong)struct2.uint_3)), (int)(struct2.uint_4 / 2u));
 				if (!string.IsNullOrEmpty(text))
 				{
 					list.Add(text);
@@ -586,9 +586,9 @@ public sealed partial class RecoveredRuntime
 	[DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
 	internal static extern IntPtr VirtualAllocEx(IntPtr intptr_0, IntPtr intptr_1, UIntPtr uintptr_0, NativeTypes.Enum33 enum33_0, NativeTypes.Enum34 enum34_0);
 
-	internal static bool smethod_373(ref NativeTypes.Struct55 struct55_0, IntPtr intptr_0)
+	internal static bool SetAlignedThreadContext(ref NativeTypes.Struct55 struct55_0, IntPtr intptr_0)
 	{
-		IntPtr intPtr = smethod_13(ref struct55_0);
+		IntPtr intPtr = AllocateAlignedThreadContext(ref struct55_0);
 		bool result = SetThreadContext(intptr_0, intPtr);
 		struct55_0 = (NativeTypes.Struct55)Marshal.PtrToStructure(intPtr, typeof(NativeTypes.Struct55));
 		Marshal.FreeHGlobal(intPtr);
@@ -602,10 +602,10 @@ public sealed partial class RecoveredRuntime
 	[DllImport("kernel32.dll")]
 	internal static extern int GetThreadPriority(IntPtr intptr_0);
 
-	internal static bool smethod_393(ref NativeTypes.Struct55 struct55_0, IntPtr intptr_0)
+	internal static bool GetAlignedThreadContext(ref NativeTypes.Struct55 struct55_0, IntPtr intptr_0)
 	{
-		IntPtr intPtr = smethod_13(ref struct55_0);
-		bool threadContext_ = GetThreadContext_1(intptr_0, intPtr);
+		IntPtr intPtr = AllocateAlignedThreadContext(ref struct55_0);
+		bool threadContext_ = GetThreadContextAligned(intptr_0, intPtr);
 		struct55_0 = (NativeTypes.Struct55)Marshal.PtrToStructure(intPtr, typeof(NativeTypes.Struct55));
 		Marshal.FreeHGlobal(intPtr);
 		return threadContext_;
@@ -615,20 +615,17 @@ public sealed partial class RecoveredRuntime
 	internal static extern int RtlNtStatusToDosError(uint uint_0);
 
 	[DllImport("kernel32.dll", EntryPoint = "GetThreadContext")]
-	internal static extern bool GetThreadContext_1(IntPtr intptr_0, IntPtr intptr_1);
+	internal static extern bool GetThreadContextAligned(IntPtr intptr_0, IntPtr intptr_1);
 
 	[DllImport("kernel32.dll", EntryPoint = "WriteProcessMemory", SetLastError = true)]
-	internal unsafe static extern bool WriteProcessMemory_1(IntPtr intptr_0, IntPtr intptr_1, byte* pByte_0, UIntPtr uintptr_0, UIntPtr* pUintPtr_0);
+	internal unsafe static extern bool WriteProcessMemoryBuffer(IntPtr intptr_0, IntPtr intptr_1, byte* pByte_0, UIntPtr uintptr_0, UIntPtr* pUintPtr_0);
 
 	[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 	internal static extern IntPtr SendMessageTimeout(IntPtr intptr_0, uint uint_0, UIntPtr uintptr_0, IntPtr intptr_1, NativeTypes.Enum20 enum20_0, uint uint_1, out IntPtr intptr_2);
 
-	[DllImport("kernel32.dll", EntryPoint = "GetCurrentProcess")]
-	internal static extern IntPtr GetCurrentProcess_1();
-
-	internal static bool smethod_409(Peb32 class119_0)
+	internal static bool TryInitializePeb32Address(Peb32 class119_0)
 	{
-		if (RecoveredRuntime.smethod_379(class119_0.gclass2_0))
+		if (RecoveredRuntime.IsWow64RemoteProcess(class119_0.gclass2_0))
 		{
 			IntPtr intPtr = RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_9, false, class119_0.gclass2_0.ProcessId);
 			if (intPtr == IntPtr.Zero)
@@ -637,9 +634,9 @@ public sealed partial class RecoveredRuntime
 			}
 			IntPtr intptr_;
 			int num;
-			if (RecoveredRuntime.NtQueryInformationProcess_1(intPtr, NativeTypes.Enum26.const_24, out intptr_, IntPtr.Size, out num) == 0u)
+			if (RecoveredRuntime.NtQueryInformationProcessPointer(intPtr, NativeTypes.Enum26.const_24, out intptr_, IntPtr.Size, out num) == 0u)
 			{
-				RecoveredRuntime.smethod_86(class119_0, intptr_);
+				RecoveredRuntime.SetRemotePebAddress(class119_0, intptr_);
 				RecoveredRuntime.CloseHandle(intPtr);
 				return true;
 			}
@@ -648,7 +645,7 @@ public sealed partial class RecoveredRuntime
 		}
 		else
 		{
-			if (!RecoveredRuntime.smethod_427(class119_0.gclass2_0))
+			if (!RecoveredRuntime.Is32BitProcess(class119_0.gclass2_0))
 			{
 				return false;
 			}
@@ -659,22 +656,22 @@ public sealed partial class RecoveredRuntime
 			}
 			NativeTypes.Struct45 @struct;
 			int num2;
-			if (RecoveredRuntime.NtQueryInformationProcess(intPtr2, NativeTypes.Enum26.const_4, out @struct, typeof(NativeTypes.Struct45).smethod_7(), out num2) != 0u)
+			if (RecoveredRuntime.NtQueryInformationProcess(intPtr2, NativeTypes.Enum26.const_4, out @struct, typeof(NativeTypes.Struct45).SizeOf(), out num2) != 0u)
 			{
 				RecoveredRuntime.CloseHandle(intPtr2);
 				return false;
 			}
-			RecoveredRuntime.smethod_86(class119_0, @struct.intptr_1);
+			RecoveredRuntime.SetRemotePebAddress(class119_0, @struct.intptr_1);
 			RecoveredRuntime.CloseHandle(intPtr2);
 			return true;
 		}
 	}
 
 	[DllImport("kernel32.dll", EntryPoint = "ReadProcessMemory", SetLastError = true)]
-	internal unsafe static extern bool ReadProcessMemory_1(IntPtr intptr_0, IntPtr intptr_1, byte* pByte_0, UIntPtr uintptr_0, UIntPtr* pUintPtr_0);
+	internal unsafe static extern bool ReadProcessMemoryBuffer(IntPtr intptr_0, IntPtr intptr_1, byte* pByte_0, UIntPtr uintptr_0, UIntPtr* pUintPtr_0);
 
 	[DllImport("ntdll.dll", EntryPoint = "NtQueryInformationThread", SetLastError = true)]
-	internal static extern uint NtQueryInformationThread_1(IntPtr intptr_0, NativeTypes.Enum25 enum25_0, out IntPtr intptr_1, int int_0, out int int_1);
+	internal static extern uint NtQueryInformationThreadPointer(IntPtr intptr_0, NativeTypes.Enum25 enum25_0, out IntPtr intptr_1, int int_0, out int int_1);
 
 	[DllImport("Kernel32.dll", SetLastError = true)]
 	[return: MarshalAs(UnmanagedType.Bool)]
@@ -703,77 +700,27 @@ public sealed partial class RecoveredRuntime
 	[DllImport("advapi32.dll", SetLastError = true)]
 	internal static extern bool GetTokenInformation(IntPtr intptr_0, TokenPrivilegeNativeTypes.Enum16 enum16_0, out uint uint_0, uint uint_1, out uint uint_2);
 
-	internal static IntPtr smethod_443(IntPtr intptr_0, AsmJitAssembler class53_0, RemoteCodeExecutorBase class84_0)
+	internal static IntPtr AssembleRemoteCode(IntPtr intptr_0, AsmJitAssembler class53_0, RemoteCodeExecutorBase class84_0)
 	{
-		IntPtr intPtr = RecoveredRuntime.smethod_397(class53_0);
+		IntPtr intPtr = RecoveredRuntime.GetAssemblerCodePointer(class53_0);
 		if (intPtr == IntPtr.Zero)
 		{
 			return IntPtr.Zero;
 		}
 		if (intptr_0 == IntPtr.Zero)
 		{
-			intptr_0 = RecoveredRuntime.smethod_175(class84_0, (long)RecoveredRuntime.smethod_252(class53_0), NativeTypes.Enum34.flag_2);
+			intptr_0 = RecoveredRuntime.AllocateRemoteMemory(class84_0, (long)RecoveredRuntime.GetAssemblerOffset(class53_0), NativeTypes.Enum34.flag_2);
 			if (intptr_0 == IntPtr.Zero)
 			{
 				return IntPtr.Zero;
 			}
 		}
-		int num = RecoveredRuntime.smethod_441(class53_0, intPtr, intptr_0);
+		int num = RecoveredRuntime.RelocateAssemblerCode(class53_0, intPtr, intptr_0);
 		byte[] array = new byte[num];
 		Marshal.Copy(intPtr, array, 0, num);
-		RecoveredRuntime.smethod_51().method_03FF(intPtr);
-		RecoveredRuntime.smethod_115(class53_0);
-		class84_0.method_16<byte>(intptr_0, array);
+		RecoveredRuntime.CreateAsmJitMemoryManager().Release(intPtr);
+		RecoveredRuntime.DisposeAssemblerState(class53_0);
+		class84_0.WriteArray<byte>(intptr_0, array);
 		return intptr_0;
-	}
-
-	internal static int smethod_458(Type type_0)
-	{
-		return Marshal.SizeOf(type_0);
-	}
-
-	internal static int smethod_479(object object_0)
-	{
-		return Marshal.SizeOf(object_0);
-	}
-
-	internal static IntPtr smethod_482(int int_0)
-	{
-		return Marshal.AllocHGlobal(int_0);
-	}
-
-	internal static void smethod_488(IntPtr intptr_0)
-	{
-		Marshal.FreeHGlobal(intptr_0);
-	}
-
-	internal static object smethod_489(IntPtr intptr_0, Type type_0)
-	{
-		return Marshal.PtrToStructure(intptr_0, type_0);
-	}
-
-	internal static string smethod_580(IntPtr intptr_0, int int_0)
-	{
-		return Marshal.PtrToStringUni(intptr_0, int_0);
-	}
-
-	internal static IntPtr smethod_618(IntPtr intptr_0)
-	{
-		return Marshal.ReadIntPtr(intptr_0);
-	}
-
-	internal static IntPtr smethod_619(IntPtr intptr_0, int int_0)
-	{
-		return Marshal.ReadIntPtr(intptr_0, int_0);
-	}
-
-	internal static void smethod_620(IntPtr intptr_0, byte[] byte_0, int int_0, int int_1)
-	{
-		Marshal.Copy(intptr_0, byte_0, int_0, int_1);
-	}
-
-	internal static Delegate smethod_621(IntPtr intptr_0, Type type_0)
-	{
-		return Marshal.GetDelegateForFunctionPointer(intptr_0, type_0);
 	}
 }

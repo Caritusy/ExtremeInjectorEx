@@ -19,7 +19,7 @@ internal static class RemoteModuleSnapshotService
 		foreach (IntPtr moduleBase in EnumerateModuleHandles(process))
 		{
 			var module = new ProcessModuleInfo(process, modules, moduleBase, is32BitProcess);
-			if (TryPopulate(module) && knownBases.Add(module.method_0()))
+			if (TryPopulate(module) && knownBases.Add(module.GetModuleBase()))
 			{
 				modules.Add(module);
 			}
@@ -27,7 +27,7 @@ internal static class RemoteModuleSnapshotService
 
 		foreach (ProcessModuleInfo trackedModule in process.list_1)
 		{
-			if (trackedModule != null && knownBases.Add(trackedModule.method_0()))
+			if (trackedModule != null && knownBases.Add(trackedModule.GetModuleBase()))
 			{
 				modules.Add(trackedModule);
 			}
@@ -43,7 +43,7 @@ internal static class RemoteModuleSnapshotService
 			throw new ArgumentNullException(nameof(process));
 		}
 
-		IntPtr processHandle = RecoveredRuntime.smethod_250(
+		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(
 			process,
 			NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_9,
 			bool_0: false,
@@ -98,7 +98,7 @@ internal static class RemoteModuleSnapshotService
 		}
 		finally
 		{
-			RecoveredRuntime.smethod_27(process, processHandle);
+			RecoveredRuntime.CloseTransientProcessHandle(process, processHandle);
 		}
 	}
 
@@ -110,7 +110,7 @@ internal static class RemoteModuleSnapshotService
 		}
 
 		RemoteProcess process = module.gclass2_0;
-		IntPtr processHandle = RecoveredRuntime.smethod_250(
+		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(
 			process,
 			NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_9,
 			bool_0: false,
@@ -124,9 +124,9 @@ internal static class RemoteModuleSnapshotService
 		{
 			if (!RecoveredRuntime.GetModuleInformation(
 				processHandle,
-				module.method_0(),
+				module.GetModuleBase(),
 				out NativeTypes.Struct46 information,
-				typeof(NativeTypes.Struct46).smethod_7()))
+				typeof(NativeTypes.Struct46).SizeOf()))
 			{
 				return false;
 			}
@@ -134,7 +134,7 @@ internal static class RemoteModuleSnapshotService
 			var modulePath = new StringBuilder(32768);
 			if (RecoveredRuntime.GetModuleFileNameEx(
 				processHandle,
-				module.method_0(),
+				module.GetModuleBase(),
 				modulePath,
 				modulePath.Capacity) == 0)
 			{
@@ -144,23 +144,23 @@ internal static class RemoteModuleSnapshotService
 			var moduleName = new StringBuilder(1024);
 			if (RecoveredRuntime.GetModuleBaseName(
 				processHandle,
-				module.method_0(),
+				module.GetModuleBase(),
 				moduleName,
 				moduleName.Capacity) == 0)
 			{
 				return false;
 			}
 
-			module.method_1(information.intptr_0);
-			module.method_3(information.intptr_1);
-			module.method_5(information.uint_0);
-			module.method_7(modulePath.ToString());
-			module.method_9(moduleName.ToString());
+			module.SetModuleBase(information.intptr_0);
+			module.SetEntryPoint(information.intptr_1);
+			module.SetImageSize(information.uint_0);
+			module.SetModuleName(modulePath.ToString());
+			module.SetFilePath(moduleName.ToString());
 			return true;
 		}
 		finally
 		{
-			RecoveredRuntime.smethod_27(process, processHandle);
+			RecoveredRuntime.CloseTransientProcessHandle(process, processHandle);
 		}
 	}
 }

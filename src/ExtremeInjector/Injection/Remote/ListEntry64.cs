@@ -4,10 +4,10 @@ public sealed class ListEntry64 : RemoteListEntry
 {
 	static ListEntry64()
 	{
-		RemotePlatformStructure.smethod_7<ListEntry64>(new RemoteFieldLayout[2]
+		RemotePlatformStructure.Register64BitLayout<ListEntry64>(new RemoteFieldLayout[2]
 		{
-			RecoveredRuntime.smethod_316(typeof(IntPtr)),
-			RecoveredRuntime.smethod_316(typeof(IntPtr))
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr))
 		});
 	}
 
@@ -16,26 +16,21 @@ public sealed class ListEntry64 : RemoteListEntry
 	{
 	}
 
-	public override RemoteListEntry method_07D2()
+	public override RemoteListEntry GetForwardEntry()
 	{
-		if (!(vmethod_7() != IntPtr.Zero))
+		if (!(GetForwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		return new ListEntry64(vmethod_7(), method_2());
+		return new ListEntry64(GetForwardLink(), GetProcessHandle());
 	}
 
-	public override RemoteListEntry method_07D3()
+	public override RemoteListEntry GetBackwardEntry()
 	{
-		if (!(vmethod_9() != IntPtr.Zero))
+		if (!(GetBackwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		return new ListEntry64(vmethod_9(), method_2());
-	}
-
-	internal static Type smethod_11(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
+		return new ListEntry64(GetBackwardLink(), GetProcessHandle());
 	}
 }

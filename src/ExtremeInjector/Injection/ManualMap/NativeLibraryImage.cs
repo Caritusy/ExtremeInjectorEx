@@ -55,14 +55,14 @@ public sealed class NativeLibraryImage
 
 	[SpecialName]
 	[CompilerGenerated]
-	public IntPtr method_0()
+	public IntPtr GetModuleBase()
 	{
 		return intptr_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(IntPtr intptr_1)
+	internal void SetModuleBase(IntPtr intptr_1)
 	{
 		intptr_0 = intptr_1;
 	}
@@ -74,28 +74,28 @@ public sealed class NativeLibraryImage
 		{
 			throw new BadImageFormatException("The module bytes do not represent a valid portable executable image.");
 		}
-		if ((RecoveredRuntime.smethod_19(class154_0) && IntPtr.Size != 4) || (!RecoveredRuntime.smethod_19(class154_0) && IntPtr.Size != 8))
+		if ((RecoveredRuntime.Is32BitImage(class154_0) && IntPtr.Size != 4) || (!RecoveredRuntime.Is32BitImage(class154_0) && IntPtr.Size != 8))
 		{
 			throw new BadImageFormatException("The image format of the module bytes does not match the process.");
 		}
-		method_3(bool_0);
+		InitializeImage(bool_0);
 	}
 
 	public NativeLibraryImage(byte[] byte_1, bool bool_0)
-		: this(RecoveredRuntime.smethod_356(byte_1, PeImageLayout.const_0), bool_0)
+		: this(RecoveredRuntime.LoadPeImageFromBytes(byte_1, PeImageLayout.const_0), bool_0)
 	{
-		class154_0.System_002EIDisposable_002EDispose();
+		class154_0.Dispose();
 	}
 
-	public IntPtr method_2(string string_0)
+	public IntPtr GetExportAddress(string string_0)
 	{
-		if (this.class154_0.method_14() != null && !(this.method_0() == IntPtr.Zero))
+		if (this.class154_0.GetExports() != null && !(this.GetModuleBase() == IntPtr.Zero))
 		{
-			foreach (ExportedSymbol @class in this.class154_0.method_14().list_1)
+			foreach (ExportedSymbol @class in this.class154_0.GetExports().list_1)
 			{
-				if (@class.method_0() && @class.method_4() == string_0)
+				if (@class.GetHasName() && @class.GetName() == string_0)
 				{
-					return this.method_0().smethod_9((long)((ulong)@class.method_6()));
+					return this.GetModuleBase().Add((long)((ulong)@class.GetAddressRva()));
 				}
 			}
 			return IntPtr.Zero;
@@ -103,72 +103,72 @@ public sealed class NativeLibraryImage
 		return IntPtr.Zero;
 	}
 
-	internal void method_3(bool bool_0)
+	internal void InitializeImage(bool bool_0)
 	{
-		this.method_1(RecoveredRuntime.VirtualAlloc((IntPtr)((long)this.class154_0.method_6().method_3().imethod_17()), (UIntPtr)this.class154_0.method_6().method_3().imethod_29(), NativeTypes.Enum33.flag_0 | NativeTypes.Enum33.flag_1, NativeTypes.Enum34.flag_6));
-		if (this.method_0() == IntPtr.Zero)
+		this.SetModuleBase(RecoveredRuntime.VirtualAlloc((IntPtr)((long)this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase()), (UIntPtr)this.class154_0.GetHeaders().GetOptionalHeader().GetSizeOfImage(), NativeTypes.Enum33.flag_0 | NativeTypes.Enum33.flag_1, NativeTypes.Enum34.flag_6));
+		if (this.GetModuleBase() == IntPtr.Zero)
 		{
-			this.method_1(RecoveredRuntime.VirtualAlloc(IntPtr.Zero, (UIntPtr)this.class154_0.method_6().method_3().imethod_29(), NativeTypes.Enum33.flag_0 | NativeTypes.Enum33.flag_1, NativeTypes.Enum34.flag_6));
+			this.SetModuleBase(RecoveredRuntime.VirtualAlloc(IntPtr.Zero, (UIntPtr)this.class154_0.GetHeaders().GetOptionalHeader().GetSizeOfImage(), NativeTypes.Enum33.flag_0 | NativeTypes.Enum33.flag_1, NativeTypes.Enum34.flag_6));
 		}
 		if (bool_0)
 		{
-			int num = (int)(this.class154_0.method_4().method_0() + this.class154_0.method_6().method_3().imethod_31());
-			using (Stream stream = RecoveredRuntime.smethod_264(this.class154_0, 0L, num))
+			int num = (int)(this.class154_0.GetDosHeader().GetPeHeaderOffset() + this.class154_0.GetHeaders().GetOptionalHeader().GetSizeOfHeaders());
+			using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, 0L, num))
 			{
 				byte[] array = new byte[num];
 				stream.Read(array, 0, num);
-				Marshal.Copy(array, 0, this.method_0(), array.Length);
+				Marshal.Copy(array, 0, this.GetModuleBase(), array.Length);
 			}
 		}
-		this.method_8();
-		if (this.class154_0.method_16() != null)
+		this.MapSections();
+		if (this.class154_0.GetBaseRelocations() != null)
 		{
-			IntPtr intPtr = this.method_0().smethod_11((IntPtr)((long)this.class154_0.method_6().method_3().imethod_17()));
+			IntPtr intPtr = this.GetModuleBase().Subtract((IntPtr)((long)this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase()));
 			if (intPtr != IntPtr.Zero)
 			{
-				this.method_7(intPtr);
+				this.ApplyBaseRelocations(intPtr);
 			}
 		}
-		this.method_5(this.class154_0.method_10());
-		if (this.class154_0.method_12() != null)
+		this.ResolveImports(this.class154_0.GetImports());
+		if (this.class154_0.GetDelayImports() != null)
 		{
-			this.method_5(this.class154_0.method_12());
+			this.ResolveImports(this.class154_0.GetDelayImports());
 		}
-		this.method_4();
-		if (this.class154_0.method_20() != null)
+		this.ApplySectionProtections();
+		if (this.class154_0.GetTlsDirectory() != null)
 		{
-			foreach (ulong num2 in this.class154_0.method_20().list_0)
+			foreach (ulong num2 in this.class154_0.GetTlsDirectory().list_0)
 			{
-				long long_ = (long)(num2 - this.class154_0.method_6().method_3().imethod_17());
-				IntPtr ptr = this.method_0().smethod_9(long_);
+				long long_ = (long)(num2 - this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase());
+				IntPtr ptr = this.GetModuleBase().Add(long_);
 				NativeLibraryImage.Delegate45 @delegate = (NativeLibraryImage.Delegate45)Marshal.GetDelegateForFunctionPointer(ptr, typeof(NativeLibraryImage.Delegate45));
-				if (!@delegate(this.method_0(), 1u, IntPtr.Zero))
+				if (!@delegate(this.GetModuleBase(), 1u, IntPtr.Zero))
 				{
-					throw new Exception(EncodedStringTable.smethod_0(9232) + ptr.ToString(EncodedStringTable.smethod_0(2077)) + EncodedStringTable.smethod_0(9277));
+					throw new Exception(EncodedStringTable.DecodeString(9232) + ptr.ToString(EncodedStringTable.DecodeString(2077)) + EncodedStringTable.DecodeString(9277));
 				}
 				this.list_0.Add(@delegate);
 			}
 		}
-		if (this.class154_0.method_6().method_3().imethod_11() != 0u)
+		if (this.class154_0.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint() != 0u)
 		{
-			IntPtr ptr2 = this.method_0().smethod_9((long)((ulong)this.class154_0.method_6().method_3().imethod_11()));
+			IntPtr ptr2 = this.GetModuleBase().Add((long)((ulong)this.class154_0.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint()));
 			this.delegate45_0 = (NativeLibraryImage.Delegate45)Marshal.GetDelegateForFunctionPointer(ptr2, typeof(NativeLibraryImage.Delegate45));
-			if (!this.delegate45_0(this.method_0(), 1u, IntPtr.Zero))
+			if (!this.delegate45_0(this.GetModuleBase(), 1u, IntPtr.Zero))
 			{
-				throw new Exception(EncodedStringTable.smethod_0(9302));
+				throw new Exception(EncodedStringTable.DecodeString(9302));
 			}
 		}
 	}
 
-	internal void method_4()
+	internal void ApplySectionProtections()
 	{
-		foreach (PeSectionHeader section in class154_0.method_8())
+		foreach (PeSectionHeader section in class154_0.GetSections())
 		{
-			IntPtr address = method_0().smethod_9(section.method_4());
-			SectionCharacteristics characteristics = section.method_18();
+			IntPtr address = GetModuleBase().Add(section.GetVirtualAddress());
+			SectionCharacteristics characteristics = section.GetCharacteristics();
 			if ((characteristics & SectionCharacteristics.flag_28) != 0)
 			{
-				RecoveredRuntime.VirtualFree(address, (UIntPtr)section.method_2(), NativeTypes.Enum28.const_0);
+				RecoveredRuntime.VirtualFree(address, (UIntPtr)section.GetVirtualSize(), NativeTypes.Enum28.const_0);
 				continue;
 			}
 
@@ -181,18 +181,18 @@ public sealed class NativeLibraryImage
 				protection |= NativeTypes.Enum34.flag_9;
 			}
 
-			if (!RecoveredRuntime.VirtualProtect(address, (UIntPtr)section.method_2(), protection, out _))
+			if (!RecoveredRuntime.VirtualProtect(address, (UIntPtr)section.GetVirtualSize(), protection, out _))
 			{
-				throw new AccessViolationException("Unable to change the protection of the section, '" + section.method_0() + "'.");
+				throw new AccessViolationException("Unable to change the protection of the section, '" + section.GetName() + "'.");
 			}
 		}
 	}
 
-	internal void method_5(ImportDirectory class148_0)
+	internal void ResolveImports(ImportDirectory class148_0)
 	{
 		if (this.byte_0 == null)
 		{
-			this.byte_0 = this.method_6();
+			this.byte_0 = this.ExtractManifestResource();
 		}
 		IntPtr value = NativeTypes.intptr_0;
 		IntPtr zero = IntPtr.Zero;
@@ -211,31 +211,31 @@ public sealed class NativeLibraryImage
 		for (int i = 0; i < class148_0.list_0.Count; i++)
 		{
 			ImportDescriptor @class = class148_0.list_0[i];
-			IntPtr ptr = this.method_0().smethod_9((long)((ulong)@class.method_6()));
-			string text = @class.method_12();
+			IntPtr ptr = this.GetModuleBase().Add((long)((ulong)@class.GetFirstThunk()));
+			string text = @class.GetModuleName();
 			IntPtr intPtr = RecoveredRuntime.LoadLibrary(text);
 			if (intPtr == IntPtr.Zero)
 			{
-				throw new DllNotFoundException(EncodedStringTable.smethod_0(9433) + text + EncodedStringTable.smethod_0(9470));
+				throw new DllNotFoundException(EncodedStringTable.DecodeString(9433) + text + EncodedStringTable.DecodeString(9470));
 			}
 			this.list_1.Add(intPtr);
-			foreach (ImportedSymbol class2 in @class.method_8())
+			foreach (ImportedSymbol class2 in @class.GetOriginalThunkSymbols())
 			{
-				string text2 = class2.method_7() ? ((char)class2.method_2()).ToString() : class2.method_4();
+				string text2 = class2.GetIsOrdinal() ? ((char)class2.GetOrdinal()).ToString() : class2.GetName();
 				IntPtr procAddress = RecoveredRuntime.GetProcAddress(intPtr, text2);
-				if (procAddress == IntPtr.Zero && !class2.method_7())
+				if (procAddress == IntPtr.Zero && !class2.GetIsOrdinal())
 				{
 					throw new MissingMethodException(string.Concat(new string[]
 					{
-						EncodedStringTable.smethod_0(9531),
+						EncodedStringTable.DecodeString(9531),
 						text2,
-						EncodedStringTable.smethod_0(9572),
+						EncodedStringTable.DecodeString(9572),
 						text,
-						EncodedStringTable.smethod_0(9428)
+						EncodedStringTable.DecodeString(9428)
 					}));
 				}
 				Marshal.WriteIntPtr(ptr, procAddress);
-				ptr = ptr.smethod_8(IntPtr.Size);
+				ptr = ptr.Add(IntPtr.Size);
 			}
 		}
 		if (value != NativeTypes.intptr_0)
@@ -245,22 +245,22 @@ public sealed class NativeLibraryImage
 		}
 	}
 
-	internal byte[] method_6()
+	internal byte[] ExtractManifestResource()
 	{
-		if (this.class154_0.method_23() == null)
+		if (this.class154_0.GetResources() == null)
 		{
 			return null;
 		}
-		foreach (ResourceDirectoryNode @class in this.class154_0.method_23().method_0().method_6())
+		foreach (ResourceDirectoryNode @class in this.class154_0.GetResources().GetRoot().GetSubdirectories())
 		{
-			if (RecoveredRuntime.smethod_89(@class) && @class.method_2() == 24 && @class.method_6().Count == 1 && @class.method_6()[0].method_4().Count == 1)
+			if (RecoveredRuntime.HasNumericResourceIdentifier(@class) && @class.GetId() == 24 && @class.GetSubdirectories().Count == 1 && @class.GetSubdirectories()[0].GetDataEntries().Count == 1)
 			{
-				ResourceDataEntry class2 = @class.method_6()[0].method_4()[0];
-				long num = RecoveredRuntime.smethod_135(this.class154_0, class2.method_4());
+				ResourceDataEntry class2 = @class.GetSubdirectories()[0].GetDataEntries()[0];
+				long num = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, class2.GetDataRva());
 				if (num != -1L)
 				{
-					byte[] array = new byte[class2.method_6()];
-					using (Stream stream = RecoveredRuntime.smethod_264(this.class154_0, num, (int)class2.method_6()))
+					byte[] array = new byte[class2.GetSize()];
+					using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, num, (int)class2.GetSize()))
 					{
 						stream.Read(array, 0, array.Length);
 					}
@@ -271,33 +271,33 @@ public sealed class NativeLibraryImage
 		return null;
 	}
 
-	internal void method_7(IntPtr intptr_1)
+	internal void ApplyBaseRelocations(IntPtr intptr_1)
 	{
-		foreach (BaseRelocationBlock @class in this.class154_0.method_16().list_0)
+		foreach (BaseRelocationBlock @class in this.class154_0.GetBaseRelocations().list_0)
 		{
 			foreach (BaseRelocationEntry class2 in @class.list_0)
 			{
-				if (class2.method_2() == BaseRelocationType.Dir64 || class2.method_2() == BaseRelocationType.HighLow)
+				if (class2.GetRelocationType() == BaseRelocationType.Dir64 || class2.GetRelocationType() == BaseRelocationType.HighLow)
 				{
-					IntPtr ptr = this.method_0().smethod_9((long)((ulong)(@class.method_0() + class2.method_0())));
+					IntPtr ptr = this.GetModuleBase().Add((long)((ulong)(@class.GetPageRva() + class2.GetOffset())));
 					IntPtr intPtr = Marshal.ReadIntPtr(ptr);
-					Marshal.WriteIntPtr(ptr, intPtr.smethod_10(intptr_1));
+					Marshal.WriteIntPtr(ptr, intPtr.Add(intptr_1));
 				}
 			}
 		}
 	}
 
-	internal void method_8()
+	internal void MapSections()
 	{
-		foreach (PeSectionHeader gclass in this.class154_0.method_8())
+		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
 		{
 			IntPtr intPtr;
-			if (gclass.method_6() != 0u)
+			if (gclass.GetSizeOfRawData() != 0u)
 			{
-				IntPtr destination = RecoveredRuntime.VirtualAlloc(this.method_0().smethod_9((long)((ulong)gclass.method_4())), (UIntPtr)gclass.method_6(), NativeTypes.Enum33.flag_0, NativeTypes.Enum34.flag_6);
-				using (Stream stream = RecoveredRuntime.smethod_264(this.class154_0, (long)((ulong)gclass.method_8()), (int)gclass.method_6()))
+				IntPtr destination = RecoveredRuntime.VirtualAlloc(this.GetModuleBase().Add((long)((ulong)gclass.GetVirtualAddress())), (UIntPtr)gclass.GetSizeOfRawData(), NativeTypes.Enum33.flag_0, NativeTypes.Enum34.flag_6);
+				using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, (long)((ulong)gclass.GetPointerToRawData()), (int)gclass.GetSizeOfRawData()))
 				{
-					byte[] array = new byte[gclass.method_6()];
+					byte[] array = new byte[gclass.GetSizeOfRawData()];
 					stream.Read(array, 0, array.Length);
 					Marshal.Copy(array, 0, destination, array.Length);
 					continue;
@@ -305,90 +305,10 @@ public sealed class NativeLibraryImage
 			}
 			else
 			{
-				intPtr = RecoveredRuntime.VirtualAlloc(this.method_0().smethod_9((long)((ulong)gclass.method_4())), (UIntPtr)gclass.method_2(), NativeTypes.Enum33.flag_0, NativeTypes.Enum34.flag_6);
+				intPtr = RecoveredRuntime.VirtualAlloc(this.GetModuleBase().Add((long)((ulong)gclass.GetVirtualAddress())), (UIntPtr)gclass.GetVirtualSize(), NativeTypes.Enum33.flag_0, NativeTypes.Enum34.flag_6);
 			}
-			long long_ = (long)((ulong)gclass.method_2());
-			RecoveredRuntime.smethod_361(long_, intPtr, 0);
+			long long_ = (long)((ulong)gclass.GetVirtualSize());
+			RecoveredRuntime.ZeroMemory(long_, intPtr, 0);
 		}
-	}
-
-	internal static BadImageFormatException smethod_0(string string_0)
-	{
-		return new BadImageFormatException(string_0);
-	}
-
-	internal static bool smethod_1(string string_0, string string_1)
-	{
-		return string_0 == string_1;
-	}
-
-	internal static int smethod_2(Stream stream_0, byte[] byte_1, int int_0, int int_1)
-	{
-		return stream_0.Read(byte_1, int_0, int_1);
-	}
-
-	internal static void smethod_3(byte[] byte_1, int int_0, IntPtr intptr_1, int int_1)
-	{
-		Marshal.Copy(byte_1, int_0, intptr_1, int_1);
-	}
-
-	internal static void smethod_4(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
-	}
-
-	internal static Type smethod_5(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
-	}
-
-	internal static Delegate smethod_6(IntPtr intptr_1, Type type_0)
-	{
-		return Marshal.GetDelegateForFunctionPointer(intptr_1, type_0);
-	}
-
-	internal static string smethod_7(string string_0, string string_1, string string_2)
-	{
-		return string_0 + string_1 + string_2;
-	}
-
-	internal static AccessViolationException smethod_8(string string_0)
-	{
-		return new AccessViolationException(string_0);
-	}
-
-	internal static string smethod_9()
-	{
-		return Path.GetTempFileName();
-	}
-
-	internal static void smethod_10(string string_0, byte[] byte_1)
-	{
-		File.WriteAllBytes(string_0, byte_1);
-	}
-
-	internal static int smethod_11(Type type_0)
-	{
-		return Marshal.SizeOf(type_0);
-	}
-
-	internal static void smethod_12(string string_0)
-	{
-		File.Delete(string_0);
-	}
-
-	internal static DllNotFoundException smethod_13(string string_0)
-	{
-		return new DllNotFoundException(string_0);
-	}
-
-	internal static IntPtr smethod_14(IntPtr intptr_1)
-	{
-		return Marshal.ReadIntPtr(intptr_1);
-	}
-
-	internal static void smethod_15(IntPtr intptr_1, IntPtr intptr_2)
-	{
-		Marshal.WriteIntPtr(intptr_1, intptr_2);
 	}
 }

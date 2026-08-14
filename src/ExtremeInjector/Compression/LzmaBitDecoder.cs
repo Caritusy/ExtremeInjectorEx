@@ -8,12 +8,12 @@ public struct LzmaBitDecoder
 
 	internal uint uint_1;
 
-	public void method_0()
+	public void Initialize()
 	{
 		uint_1 = 1024u;
 	}
 
-	public uint method_1(LzmaRangeDecoder class190_0)
+	public uint Decode(LzmaRangeDecoder class190_0)
 	{
 		uint num = (class190_0.uint_2 >> 11) * uint_1;
 		if (class190_0.uint_1 < num)

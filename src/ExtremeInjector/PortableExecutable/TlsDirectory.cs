@@ -26,115 +26,105 @@ public sealed class TlsDirectory
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ulong method_0()
+	public ulong GetStartAddressOfRawData()
 	{
 		return ulong_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(ulong ulong_4)
+	public void SetStartAddressOfRawData(ulong ulong_4)
 	{
 		ulong_0 = ulong_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ulong method_2()
+	public ulong GetEndAddressOfRawData()
 	{
 		return ulong_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(ulong ulong_4)
+	public void SetEndAddressOfRawData(ulong ulong_4)
 	{
 		ulong_1 = ulong_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ulong method_4()
+	public ulong GetAddressOfIndex()
 	{
 		return ulong_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(ulong ulong_4)
+	public void SetAddressOfIndex(ulong ulong_4)
 	{
 		ulong_2 = ulong_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public ulong method_6()
+	public ulong GetAddressOfCallbacks()
 	{
 		return ulong_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_7(ulong ulong_4)
+	public void SetAddressOfCallbacks(ulong ulong_4)
 	{
 		ulong_3 = ulong_4;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_8()
+	public uint GetSizeOfZeroFill()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_9(uint uint_2)
+	public void SetSizeOfZeroFill(uint uint_2)
 	{
 		uint_0 = uint_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_10()
+	public uint GetCharacteristics()
 	{
 		return uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_11(uint uint_2)
+	public void SetCharacteristics(uint uint_2)
 	{
 		uint_1 = uint_2;
 	}
 
 	internal TlsDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0)
 	{
-		method_1(RecoveredRuntime.smethod_19(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
-		method_3(RecoveredRuntime.smethod_19(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
-		method_5(RecoveredRuntime.smethod_19(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
-		method_7(RecoveredRuntime.smethod_19(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
-		method_9(class5_0.ReadUInt32());
-		method_11(class5_0.ReadUInt32());
-		long num = RecoveredRuntime.smethod_64(class154_0, method_6());
+		SetStartAddressOfRawData(RecoveredRuntime.Is32BitImage(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
+		SetEndAddressOfRawData(RecoveredRuntime.Is32BitImage(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
+		SetAddressOfIndex(RecoveredRuntime.Is32BitImage(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
+		SetAddressOfCallbacks(RecoveredRuntime.Is32BitImage(class154_0) ? class5_0.ReadUInt32() : class5_0.ReadUInt64());
+		SetSizeOfZeroFill(class5_0.ReadUInt32());
+		SetCharacteristics(class5_0.ReadUInt32());
+		long num = RecoveredRuntime.MapVirtualAddressToFileOffset(class154_0, GetAddressOfCallbacks());
 		if (num != -1L)
 		{
-			RecoveredRuntime.smethod_157(class5_0, num);
+			RecoveredRuntime.SeekReader(class5_0, num);
 			ulong item;
-			while ((item = ((!RecoveredRuntime.smethod_19(class154_0)) ? class5_0.ReadUInt64() : class5_0.ReadUInt32())) != 0L)
+			while ((item = ((!RecoveredRuntime.Is32BitImage(class154_0)) ? class5_0.ReadUInt64() : class5_0.ReadUInt32())) != 0L)
 			{
 				list_0.Add(item);
 			}
 		}
-	}
-
-	internal static ulong smethod_0(BinaryReader binaryReader_0)
-	{
-		return binaryReader_0.ReadUInt64();
-	}
-
-	internal static uint smethod_1(BinaryReader binaryReader_0)
-	{
-		return binaryReader_0.ReadUInt32();
 	}
 }

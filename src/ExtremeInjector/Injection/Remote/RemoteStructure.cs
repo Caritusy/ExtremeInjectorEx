@@ -8,14 +8,14 @@ public abstract class RemoteStructure : RemoteMemoryAccessor
 
 	[SpecialName]
 	[CompilerGenerated]
-	public IntPtr method_17()
+	public IntPtr GetAddress()
 	{
 		return intptr_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected internal void method_18(IntPtr intptr_2)
+	protected internal void SetAddress(IntPtr intptr_2)
 	{
 		intptr_1 = intptr_2;
 	}
@@ -30,13 +30,13 @@ public abstract class RemoteStructure : RemoteMemoryAccessor
 	{
 	}
 
-	protected T method_19<T>(int int_1)
+	protected T ReadFieldAtOffset<T>(int int_1)
 	{
-		return method_11<T>(method_17().smethod_8(int_1));
+		return Read<T>(GetAddress().Add(int_1));
 	}
 
-	protected void method_20<T>(T gparam_0, int int_1)
+	protected void WriteFieldAtOffset<T>(T gparam_0, int int_1)
 	{
-		method_13(method_17().smethod_8(int_1), gparam_0);
+		Write(GetAddress().Add(int_1), gparam_0);
 	}
 }

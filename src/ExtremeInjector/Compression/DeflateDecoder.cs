@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 public static class DeflateDecoder
 {
@@ -61,17 +60,12 @@ public static class DeflateDecoder
 			class181_0 = new Class181();
 			class182_0 = new Class182();
 			int_4 = 2;
-			RecoveredRuntime.smethod_251(byte_0.Length, byte_0, 0, class181_0);
+			RecoveredRuntime.SetDeflateInput(byte_0.Length, byte_0, 0, class181_0);
 		}
 
 		static Class180()
 		{
 			// Note: this type is marked as 'beforefieldinit'.
-		}
-
-		internal static void smethod_0(Array array_0, RuntimeFieldHandle runtimeFieldHandle_0)
-		{
-			RuntimeHelpers.InitializeArray(array_0, runtimeFieldHandle_0);
 		}
 	}
 
@@ -137,7 +131,7 @@ public static class DeflateDecoder
 
 		public Class183(byte[] byte_0)
 		{
-			RecoveredRuntime.smethod_249(byte_0, this);
+			RecoveredRuntime.BuildDeflateHuffmanTree(byte_0, this);
 		}
 	}
 
@@ -174,11 +168,6 @@ public static class DeflateDecoder
 			16, 17, 18, 0, 8, 7, 9, 6, 10, 5,
 			11, 4, 12, 3, 13, 2, 14, 1, 15
 		};
-
-		internal static void smethod_0(Array array_0, RuntimeFieldHandle runtimeFieldHandle_0)
-		{
-			RuntimeHelpers.InitializeArray(array_0, runtimeFieldHandle_0);
-		}
 	}
 
 	public sealed class Class185
@@ -208,36 +197,31 @@ public static class DeflateDecoder
 			int i = 0;
 			while (i < 144)
 			{
-				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.smethod_322(48 + i << 8);
+				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.ReverseDeflateBits(48 + i << 8);
 				DeflateDecoder.Class185.byte_1[i++] = 8;
 			}
 			while (i < 256)
 			{
-				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.smethod_322(256 + i << 7);
+				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.ReverseDeflateBits(256 + i << 7);
 				DeflateDecoder.Class185.byte_1[i++] = 9;
 			}
 			while (i < 280)
 			{
-				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.smethod_322(-256 + i << 9);
+				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.ReverseDeflateBits(-256 + i << 9);
 				DeflateDecoder.Class185.byte_1[i++] = 7;
 			}
 			while (i < 286)
 			{
-				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.smethod_322(-88 + i << 8);
+				DeflateDecoder.Class185.short_0[i] = RecoveredRuntime.ReverseDeflateBits(-88 + i << 8);
 				DeflateDecoder.Class185.byte_1[i++] = 8;
 			}
 			DeflateDecoder.Class185.short_1 = new short[30];
 			DeflateDecoder.Class185.byte_2 = new byte[30];
 			for (i = 0; i < 30; i++)
 			{
-				DeflateDecoder.Class185.short_1[i] = RecoveredRuntime.smethod_322(i << 11);
+				DeflateDecoder.Class185.short_1[i] = RecoveredRuntime.ReverseDeflateBits(i << 11);
 				DeflateDecoder.Class185.byte_2[i] = 5;
 			}
-		}
-
-		internal static void smethod_0(Array array_0, RuntimeFieldHandle runtimeFieldHandle_0)
-		{
-			RuntimeHelpers.InitializeArray(array_0, runtimeFieldHandle_0);
 		}
 	}
 

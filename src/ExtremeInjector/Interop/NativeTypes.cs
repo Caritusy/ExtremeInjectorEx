@@ -34,24 +34,24 @@ public static class NativeTypes
 		}
 
 		[SpecialName]
-		public int method_0()
+		public int GetHeight()
 		{
 			return int_3 - int_1;
 		}
 
 		[SpecialName]
-		public int method_1()
+		public int GetWidth()
 		{
 			return int_2 - int_0;
 		}
 
 		[SpecialName]
-		public static Rectangle smethod_0(Struct37 struct37_0)
+		public static Rectangle ToRectangle(Struct37 struct37_0)
 		{
-			return new Rectangle(struct37_0.int_0, struct37_0.int_1, struct37_0.method_1(), struct37_0.method_0());
+			return new Rectangle(struct37_0.int_0, struct37_0.int_1, struct37_0.GetWidth(), struct37_0.GetHeight());
 		}
 
-		public bool method_2(Struct37 struct37_0)
+		public bool Equals(Struct37 struct37_0)
 		{
 			return struct37_0.int_0 == this.int_0 && struct37_0.int_1 == this.int_1 && struct37_0.int_2 == this.int_2 && struct37_0.int_3 == this.int_3;
 		}
@@ -60,29 +60,19 @@ public static class NativeTypes
 		{
 			if (obj is NativeTypes.Struct37)
 			{
-				return this.method_2((NativeTypes.Struct37)obj);
+				return this.Equals((NativeTypes.Struct37)obj);
 			}
-			return obj is Rectangle && this.method_2(new NativeTypes.Struct37((Rectangle)obj));
+			return obj is Rectangle && this.Equals(new NativeTypes.Struct37((Rectangle)obj));
 		}
 
 		public override int GetHashCode()
 		{
-			return smethod_0(this).GetHashCode();
+			return ToRectangle(this).GetHashCode();
 		}
 
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "{{Left={0},Top={1},Right={2},Bottom={3}}}", int_0, int_1, int_2, int_3);
-		}
-
-		internal static CultureInfo smethod_1()
-		{
-			return CultureInfo.CurrentCulture;
-		}
-
-		internal static string smethod_2(IFormatProvider iformatProvider_0, string string_0, object[] object_0)
-		{
-			return string.Format(iformatProvider_0, string_0, object_0);
 		}
 	}
 
@@ -224,11 +214,6 @@ public static class NativeTypes
 		public override string ToString()
 		{
 			return Marshal.PtrToStringUni(intptr_0, ushort_0 / 2);
-		}
-
-		internal static string smethod_0(IntPtr intptr_1, int int_0)
-		{
-			return Marshal.PtrToStringUni(intptr_1, int_0);
 		}
 	}
 
@@ -920,14 +905,4 @@ public static class NativeTypes
 	[DllImport("kernel32.dll")]
 	[SuppressUnmanagedCodeSecurity]
 	public static extern int VirtualQueryEx(IntPtr intptr_1, IntPtr intptr_2, out Struct47 struct47_0, uint uint_0);
-
-	internal static Type smethod_0(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
-	}
-
-	internal static int smethod_1(Type type_0)
-	{
-		return Marshal.SizeOf(type_0);
-	}
 }

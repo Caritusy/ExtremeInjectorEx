@@ -4,10 +4,10 @@ public sealed class LdrListEntry32 : RemoteLdrListEntry
 {
 	static LdrListEntry32()
 	{
-		RemotePlatformStructure.smethod_6<LdrListEntry32>(new RemoteFieldLayout[2]
+		RemotePlatformStructure.Register32BitLayout<LdrListEntry32>(new RemoteFieldLayout[2]
 		{
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(uint))
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint))
 		});
 	}
 
@@ -16,41 +16,36 @@ public sealed class LdrListEntry32 : RemoteLdrListEntry
 	{
 	}
 
-	public override RemoteLdrDataTableEntry method_07DF()
+	public override RemoteLdrDataTableEntry GetModuleEntry()
 	{
-		if (!(vmethod_7() != IntPtr.Zero))
+		if (!(GetForwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		LdrDataTableEntry32 @class = new LdrDataTableEntry32(vmethod_7(), method_2());
-		@class.method_7(method_6());
+		LdrDataTableEntry32 @class = new LdrDataTableEntry32(GetForwardLink(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
-	public override RemoteListEntry method_07D2()
+	public override RemoteListEntry GetForwardEntry()
 	{
-		if (!(vmethod_7() != IntPtr.Zero))
+		if (!(GetForwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		ListEntry32 @class = new ListEntry32(vmethod_7(), method_2());
-		@class.method_7(method_6());
+		ListEntry32 @class = new ListEntry32(GetForwardLink(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
-	public override RemoteListEntry method_07D3()
+	public override RemoteListEntry GetBackwardEntry()
 	{
-		if (!(vmethod_9() != IntPtr.Zero))
+		if (!(GetBackwardLink() != IntPtr.Zero))
 		{
 			return null;
 		}
-		ListEntry32 @class = new ListEntry32(vmethod_9(), method_2());
-		@class.method_7(method_6());
+		ListEntry32 @class = new ListEntry32(GetBackwardLink(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
-	}
-
-	internal static Type smethod_11(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
 	}
 }

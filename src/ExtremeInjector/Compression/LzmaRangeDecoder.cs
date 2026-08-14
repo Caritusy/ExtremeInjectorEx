@@ -10,7 +10,7 @@ public class LzmaRangeDecoder
 
 	public Stream stream_0;
 
-	public void method_0(Stream stream_1)
+	public void Initialize(Stream stream_1)
 	{
 		stream_0 = stream_1;
 		uint_1 = 0u;
@@ -21,12 +21,12 @@ public class LzmaRangeDecoder
 		}
 	}
 
-	public void method_1()
+	public void ReleaseStream()
 	{
 		stream_0 = null;
 	}
 
-	public uint method_2(int int_0)
+	public uint DecodeDirectBits(int int_0)
 	{
 		uint num = uint_2;
 		uint num2 = uint_1;

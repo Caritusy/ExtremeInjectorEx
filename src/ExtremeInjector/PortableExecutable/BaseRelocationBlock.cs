@@ -13,28 +13,28 @@ public sealed class BaseRelocationBlock
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_0()
+	public uint GetPageRva()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(uint uint_2)
+	public void SetPageRva(uint uint_2)
 	{
 		uint_0 = uint_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_2()
+	public uint GetBlockSize()
 	{
 		return uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(uint uint_2)
+	public void SetBlockSize(uint uint_2)
 	{
 		uint_1 = uint_2;
 	}

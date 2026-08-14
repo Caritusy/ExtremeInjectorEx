@@ -10,19 +10,14 @@ public sealed class ProcessModuleCollection : List<ProcessModuleInfo>
 	{
 		public string string_0;
 
-		internal bool method_0(ProcessModuleInfo gclass1_0)
+		internal bool MatchesModuleName(ProcessModuleInfo gclass1_0)
 		{
-			return gclass1_0.method_6().Equals(string_0, StringComparison.OrdinalIgnoreCase);
+			return gclass1_0.GetModuleName().Equals(string_0, StringComparison.OrdinalIgnoreCase);
 		}
 
-		internal bool method_1(ProcessModuleInfo gclass1_0)
+		internal bool MatchesFilePath(ProcessModuleInfo gclass1_0)
 		{
-			return gclass1_0.method_8().Equals(string_0, StringComparison.OrdinalIgnoreCase);
-		}
-
-		internal static bool smethod_0(string string_1, string string_2, StringComparison stringComparison_0)
-		{
-			return string_1.Equals(string_2, stringComparison_0);
+			return gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase);
 		}
 	}
 
@@ -31,9 +26,9 @@ public sealed class ProcessModuleCollection : List<ProcessModuleInfo>
 	{
 		public IntPtr intptr_0;
 
-		internal bool method_0(ProcessModuleInfo gclass1_0)
+		internal bool MatchesModuleBase(ProcessModuleInfo gclass1_0)
 		{
-			return gclass1_0.method_0() == intptr_0;
+			return gclass1_0.GetModuleBase() == intptr_0;
 		}
 	}
 
@@ -42,46 +37,36 @@ public sealed class ProcessModuleCollection : List<ProcessModuleInfo>
 	{
 		public string string_0;
 
-		internal bool method_0(ProcessModuleInfo gclass1_0)
+		internal bool MatchesFilePath(ProcessModuleInfo gclass1_0)
 		{
-			return gclass1_0.method_8().Equals(string_0, StringComparison.OrdinalIgnoreCase);
-		}
-
-		internal static bool smethod_0(string string_1, string string_2, StringComparison stringComparison_0)
-		{
-			return string_1.Equals(string_2, stringComparison_0);
+			return gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase);
 		}
 	}
 
 	internal RemoteProcess gclass2_0;
 
-	public ProcessModuleInfo this[string string_0] => Find((ProcessModuleInfo gclass1_0) => gclass1_0.method_8().Equals(string_0, StringComparison.OrdinalIgnoreCase));
+	public ProcessModuleInfo this[string string_0] => Find((ProcessModuleInfo gclass1_0) => gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase));
 
 	public ProcessModuleCollection(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
 
-	public IntPtr method_0(string string_0)
+	public IntPtr GetModuleBase(string string_0)
 	{
 		int num;
 		if (!Path.IsPathRooted(string_0))
 		{
-			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.method_8().Equals(string_0, StringComparison.OrdinalIgnoreCase));
+			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase));
 		}
 		else
 		{
-			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.method_6().Equals(string_0, StringComparison.OrdinalIgnoreCase));
+			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.GetModuleName().Equals(string_0, StringComparison.OrdinalIgnoreCase));
 		}
 		if (num < 0)
 		{
 			return IntPtr.Zero;
 		}
-		return base[num].method_0();
-	}
-
-	internal static bool smethod_0(string string_0)
-	{
-		return Path.IsPathRooted(string_0);
+		return base[num].GetModuleBase();
 	}
 }

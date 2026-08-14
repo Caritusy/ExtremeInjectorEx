@@ -6,12 +6,12 @@ public abstract class RemoteLdrDdagNode : RemotePlatformStructure
 	protected RemoteLdrDdagNode(IntPtr intptr_2, IntPtr intptr_3, bool bool_2)
 		: base(intptr_3, bool_2)
 	{
-		method_18(intptr_2);
+		SetAddress(intptr_2);
 	}
 
 	[SpecialName]
-	public virtual uint vmethod_7()
+	public virtual uint GetLoadCount()
 	{
-		return method_21<uint>(2);
+		return ReadField<uint>(2);
 	}
 }

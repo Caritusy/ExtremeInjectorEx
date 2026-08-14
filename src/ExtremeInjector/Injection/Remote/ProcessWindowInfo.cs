@@ -9,10 +9,10 @@ public sealed class ProcessWindowInfo
 	{
 		public List<ProcessWindowInfo> list_0;
 
-		internal bool method_0(IntPtr intptr_0, IntPtr intptr_1)
+		internal bool CollectWindow(IntPtr intptr_0, IntPtr intptr_1)
 		{
 			ProcessWindowInfo @class = new ProcessWindowInfo(intptr_0);
-			if (RecoveredRuntime.smethod_151(@class))
+			if (RecoveredRuntime.PopulateWindowIdentifiers(@class))
 			{
 				this.list_0.Add(@class);
 			}
@@ -31,41 +31,41 @@ public sealed class ProcessWindowInfo
 
 	[SpecialName]
 	[CompilerGenerated]
-	public IntPtr method_0()
+	public IntPtr GetHandle()
 	{
 		return intptr_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(IntPtr intptr_1)
+	internal void SetHandle(IntPtr intptr_1)
 	{
 		intptr_0 = intptr_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public int method_2()
+	public int GetProcessId()
 	{
 		return int_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_3(int int_2)
+	internal void SetProcessId(int int_2)
 	{
 		int_0 = int_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_4(int int_2)
+	internal void SetThreadId(int int_2)
 	{
 		int_1 = int_2;
 	}
 
 	internal ProcessWindowInfo(IntPtr intptr_1)
 	{
-		method_1(intptr_1);
+		SetHandle(intptr_1);
 	}
 }

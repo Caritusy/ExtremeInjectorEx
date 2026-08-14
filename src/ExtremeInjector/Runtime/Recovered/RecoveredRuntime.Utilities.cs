@@ -92,35 +92,35 @@ public sealed partial class RecoveredRuntime
 		return -1;
 	}
 
-	internal static long smethod_1(PeScrambler gclass4_0, byte[] byte_0, long long_0)
+	internal static long FindPatternOffset(PeScrambler gclass4_0, byte[] byte_0, long long_0)
 	{
-		gclass4_0.class154_0.method_28().Position = long_0;
-		long num = gclass4_0.class154_0.method_28().Length - (long)byte_0.Length;
+		gclass4_0.class154_0.GetStream().Position = long_0;
+		long num = gclass4_0.class154_0.GetStream().Length - (long)byte_0.Length;
 		int num2 = 1048576;
-		BinaryReader binaryReader = new BinaryReader(gclass4_0.class154_0.method_28());
-		while (gclass4_0.class154_0.method_28().Position < num)
+		BinaryReader binaryReader = new BinaryReader(gclass4_0.class154_0.GetStream());
+		while (gclass4_0.class154_0.GetStream().Position < num)
 		{
-			if (gclass4_0.class154_0.method_28().Position + (long)num2 >= gclass4_0.class154_0.method_28().Length)
+			if (gclass4_0.class154_0.GetStream().Position + (long)num2 >= gclass4_0.class154_0.GetStream().Length)
 			{
-				num2 = (int)(gclass4_0.class154_0.method_28().Length - gclass4_0.class154_0.method_28().Position);
+				num2 = (int)(gclass4_0.class154_0.GetStream().Length - gclass4_0.class154_0.GetStream().Position);
 			}
-			int num3 = RecoveredRuntime.smethod_123(binaryReader.ReadBytes(num2), byte_0, 0);
+			int num3 = RecoveredRuntime.FindByteSequenceOptimized(binaryReader.ReadBytes(num2), byte_0, 0);
 			if (num3 != -1)
 			{
-				return gclass4_0.class154_0.method_28().Position - (long)num2 + (long)num3;
+				return gclass4_0.class154_0.GetStream().Position - (long)num2 + (long)num3;
 			}
-			gclass4_0.class154_0.method_28().Position -= (long)(byte_0.Length - 1);
+			gclass4_0.class154_0.GetStream().Position -= (long)(byte_0.Length - 1);
 		}
 		return -1L;
 	}
 
 	internal static void EditModuleOptions(MainForm.ModuleRow class21_0)
 	{
-		smethod_172(class21_0.Entry);
+		ShowModuleOptions(class21_0.Entry);
 		ApplicationSettings.Save();
 	}
 
-	internal static IEnumerable<ResourceDirectoryNode> smethod_9(ResourceDirectoryNode class138_0)
+	internal static IEnumerable<ResourceDirectoryNode> EnumerateResourceNodes(ResourceDirectoryNode class138_0)
 	{
 		return new PeScrambler.Class136(-2)
 		{
@@ -128,26 +128,26 @@ public sealed partial class RecoveredRuntime
 		};
 	}
 
-	internal unsafe static int smethod_12(byte[] byte_0, byte[] byte_1, int int_0)
+	internal unsafe static int FindByteSequence(byte[] byte_0, byte[] byte_1, int int_0)
 	{
 		return IndexOfBytes(byte_0, byte_1, int_0);
 }
 
-	internal static int smethod_14(DeflateDecoder.Class182 class182_0)
+	internal static int GetAvailableDeflateWindowBytes(DeflateDecoder.Class182 class182_0)
 	{
 		return 32768 - class182_0.int_1;
 	}
 
-	internal unsafe static int smethod_17(int int_0, string string_0, string string_1, byte[] byte_0)
+	internal unsafe static int FindMaskedByteSequence(int int_0, string string_0, string string_1, byte[] byte_0)
 	{
 		return IndexOfMaskedByteString(byte_0, string_0, string_1, int_0);
 }
 
-	internal static void smethod_28()
+	internal static void InitializeRuntimeResolvers()
 	{
 		try
 		{
-			smethod_326();
+			InitializeEmbeddedAssemblyResolver();
 		}
 		catch (Exception)
 		{

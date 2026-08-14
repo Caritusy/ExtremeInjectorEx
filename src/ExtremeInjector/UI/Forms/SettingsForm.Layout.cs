@@ -61,7 +61,7 @@ public sealed partial class SettingsForm
 		Controls.Add(settingsRootLayout);
 
 		AcceptButton = button_3;
-		FormClosing += method_9;
+		FormClosing += OnFormClosing;
 		ResumeLayout(performLayout: true);
 	}
 
@@ -159,7 +159,7 @@ public sealed partial class SettingsForm
 		});
 
 		button_0 = CreateSecondaryButton("advancedInjectOptions", UiText.Get("Settings.Advanced"));
-		button_0.Click += method_4;
+		button_0.Click += OnManualMapOptionsClick;
 
 		var row = new TableLayoutPanel
 		{
@@ -192,7 +192,7 @@ public sealed partial class SettingsForm
 		checkBox_2 = CreateCheckBox("autoInjectCheckBox", UiText.Get("Settings.AutoInject"));
 		checkBox_1 = CreateCheckBox("closeOnInjectCheckBox", UiText.Get("Settings.CloseOnInject"));
 		checkBox_0 = CreateCheckBox("stealthInjectCheckBox", UiText.Get("Settings.StealthInject"));
-		checkBox_2.CheckedChanged += method_2;
+		checkBox_2.CheckedChanged += OnAutoInjectChanged;
 
 		label_1 = CreateFieldLabel(UiText.Get("Settings.DelayBefore"));
 		label_1.Name = "injectDelayLabel";
@@ -235,9 +235,9 @@ public sealed partial class SettingsForm
 		groupBox_2 = CreateCard(UiText.Get("Settings.Scrambling"));
 		comboBox_1 = CreateComboBox("scramblePresetCheckBox");
 		comboBox_1.Items.AddRange(GetScramblePresetLabels());
-		comboBox_1.SelectedIndexChanged += method_6;
+		comboBox_1.SelectedIndexChanged += OnScramblePresetChanged;
 		button_1 = CreateSecondaryButton("advancedScramblingOptions", UiText.Get("Settings.Advanced"));
-		button_1.Click += method_3;
+		button_1.Click += OnAdvancedScrambleSettingsClick;
 
 		var layout = new TableLayoutPanel
 		{
@@ -293,9 +293,9 @@ public sealed partial class SettingsForm
 		label_3.Name = "backgroundColor1Label";
 		label_2 = CreateFieldLabel(UiText.Get("Settings.SecondaryAccent"));
 		label_2.Name = "backgroundColor2Label";
-		panel_2 = CreateColorSwatch("textColorBox", method_13);
-		panel_1 = CreateColorSwatch("backgroundColor1Box", method_14);
-		panel_0 = CreateColorSwatch("backgroundColor2Box", method_15);
+		panel_2 = CreateColorSwatch("textColorBox", OnTextColorClick);
+		panel_1 = CreateColorSwatch("backgroundColor1Box", OnPrimaryColorClick);
+		panel_0 = CreateColorSwatch("backgroundColor2Box", OnSecondaryColorClick);
 		languageLabel = CreateFieldLabel(UiText.Get("Settings.Language"));
 		languageComboBox = CreateComboBox("languageComboBox");
 		languageComboBox.Items.AddRange(GetLanguageLabels());
@@ -340,9 +340,9 @@ public sealed partial class SettingsForm
 		button_4 = CreateSecondaryButton("startInSecureModeButton", UiText.Get("Settings.SecureMode"));
 		button_5 = CreateSecondaryButton("scrambleDLLButton", UiText.Get("Settings.ScrambleDll"));
 		button_6 = CreateSecondaryButton("viewProcessInformationButton", UiText.Get("Settings.ProcessInfo"));
-		button_4.Click += method_12;
-		button_5.Click += method_11;
-		button_6.Click += method_10;
+		button_4.Click += OnRestartSafeModeClick;
+		button_5.Click += OnScrambleDllClick;
+		button_6.Click += OnInspectProcessClick;
 
 		cliHintLabel = new Label
 		{
@@ -390,9 +390,9 @@ public sealed partial class SettingsForm
 	private Control CreateSettingsFooter()
 	{
 		button_2 = CreateSecondaryButton("resetButton", UiText.Get("Settings.Reset"));
-		button_2.Click += method_7;
+		button_2.Click += OnResetSettingsClick;
 		button_3 = new Button { Name = "okButton", Text = UiText.Get("Settings.SaveClose") };
-		button_3.Click += method_8;
+		button_3.Click += OnCloseClick;
 
 		var footer = new FlowLayoutPanel
 		{
@@ -460,9 +460,9 @@ public sealed partial class SettingsForm
 		button_3.Text = UiText.Get("Settings.SaveClose");
 
 		ReplaceComboItems(comboBox_0, GetInjectionMethodLabels());
-		comboBox_1.SelectedIndexChanged -= method_6;
+		comboBox_1.SelectedIndexChanged -= OnScramblePresetChanged;
 		ReplaceComboItems(comboBox_1, GetScramblePresetLabels());
-		comboBox_1.SelectedIndexChanged += method_6;
+		comboBox_1.SelectedIndexChanged += OnScramblePresetChanged;
 		languageComboBox.SelectedIndexChanged -= OnLanguageSelectionChanged;
 		ReplaceComboItems(languageComboBox, GetLanguageLabels());
 		languageComboBox.SelectedIndexChanged += OnLanguageSelectionChanged;

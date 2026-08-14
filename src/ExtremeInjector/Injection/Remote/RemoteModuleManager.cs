@@ -8,23 +8,18 @@ public sealed class RemoteModuleManager : RemoteProcessComponent
 	{
 		public ProcessModuleInfo gclass1_0;
 
-		internal bool method_0(ProcessModuleInfo gclass1_1)
+		internal bool MatchesArchitectureNtdll(ProcessModuleInfo gclass1_1)
 		{
-			if (gclass1_1.method_8().Equals("ntdll.dll", StringComparison.OrdinalIgnoreCase))
+			if (gclass1_1.GetFilePath().Equals("ntdll.dll", StringComparison.OrdinalIgnoreCase))
 			{
-				return gclass1_1.method_10() == gclass1_0.method_10();
+				return gclass1_1.GetIs32Bit() == gclass1_0.GetIs32Bit();
 			}
 			return false;
 		}
 
-		internal bool method_1(ProcessModuleInfo gclass1_1)
+		internal bool IsDifferentModule(ProcessModuleInfo gclass1_1)
 		{
-			return gclass1_1.method_0() != gclass1_0.method_0();
-		}
-
-		internal static bool smethod_0(string string_0, string string_1, StringComparison stringComparison_0)
-		{
-			return string_0.Equals(string_1, stringComparison_0);
+			return gclass1_1.GetModuleBase() != gclass1_0.GetModuleBase();
 		}
 	}
 
@@ -33,11 +28,11 @@ public sealed class RemoteModuleManager : RemoteProcessComponent
 	{
 	}
 
-	protected override void method_04C6()
+	protected override void EnsureProcessHandle()
 	{
-		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
+		if (base.GetProcessHandle() == IntPtr.Zero && base.GetProcessId() != -1)
 		{
-			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
+			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.GetProcessId()));
 		}
 	}
 }

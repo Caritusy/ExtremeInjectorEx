@@ -9,31 +9,31 @@ public sealed class ResourceAssemblyResolver
 
 	internal static string[] string_0 = new string[0];
 
-	internal static void smethod_0()
+	internal static void Initialize()
 	{
 		try
 		{
-			AppDomain.CurrentDomain.ResourceResolve += smethod_1;
+			AppDomain.CurrentDomain.ResourceResolve += ResolveResourceAssembly;
 		}
 		catch (Exception)
 		{
 		}
 	}
 
-	internal static Assembly smethod_1(object object_0, ResolveEventArgs resolveEventArgs_0)
+	internal static Assembly ResolveResourceAssembly(object sender, ResolveEventArgs eventArgs)
 	{
 		if (ResourceAssemblyResolver.assembly_0 == null)
 		{
 			lock (ResourceAssemblyResolver.string_0)
 			{
-				ResourceAssemblyResolver.assembly_0 = Assembly.Load(_003CModule_003E.smethod_2<string>(3928278315u));
+				ResourceAssemblyResolver.assembly_0 = Assembly.Load(_003CModule_003E.DecodeConstantWithKeyA<string>(3928278315u));
 				if (ResourceAssemblyResolver.assembly_0 != null)
 				{
 					ResourceAssemblyResolver.string_0 = ResourceAssemblyResolver.assembly_0.GetManifestResourceNames();
 				}
 			}
 		}
-		string name = resolveEventArgs_0.Name;
+		string name = eventArgs.Name;
 		int i = 0;
 		while (i < ResourceAssemblyResolver.string_0.Length)
 		{
@@ -43,7 +43,7 @@ public sealed class ResourceAssemblyResolver
 			}
 			else
 			{
-				if (ResourceAssemblyResolver.smethod_2())
+				if (ResourceAssemblyResolver.IsRequestFromExecutingAssembly())
 				{
 					return ResourceAssemblyResolver.assembly_0;
 				}
@@ -53,7 +53,7 @@ public sealed class ResourceAssemblyResolver
 		return null;
 	}
 
-	internal static bool smethod_2()
+	internal static bool IsRequestFromExecutingAssembly()
 	{
 		bool result;
 		try
@@ -76,73 +76,4 @@ public sealed class ResourceAssemblyResolver
 		return result;
 	}
 
-	internal static AppDomain smethod_3()
-	{
-		return AppDomain.CurrentDomain;
-	}
-
-	internal static void smethod_4(AppDomain appDomain_0, ResolveEventHandler resolveEventHandler_0)
-	{
-		appDomain_0.ResourceResolve += resolveEventHandler_0;
-	}
-
-	internal static void smethod_5(object object_0)
-	{
-		Monitor.Enter(object_0);
-	}
-
-	internal static Assembly smethod_6(string string_1)
-	{
-		return Assembly.Load(string_1);
-	}
-
-	internal static string[] smethod_7(Assembly assembly_1)
-	{
-		return assembly_1.GetManifestResourceNames();
-	}
-
-	internal static void smethod_8(object object_0)
-	{
-		Monitor.Exit(object_0);
-	}
-
-	internal static string smethod_9(ResolveEventArgs resolveEventArgs_0)
-	{
-		return resolveEventArgs_0.Name;
-	}
-
-	internal static bool smethod_10(string string_1, string string_2)
-	{
-		return string_1 == string_2;
-	}
-
-	internal static StackTrace smethod_11()
-	{
-		return new StackTrace();
-	}
-
-	internal static StackFrame[] smethod_12(StackTrace stackTrace_0)
-	{
-		return stackTrace_0.GetFrames();
-	}
-
-	internal static MethodBase smethod_13(StackFrame stackFrame_0)
-	{
-		return stackFrame_0.GetMethod();
-	}
-
-	internal static Module smethod_14(MemberInfo memberInfo_0)
-	{
-		return memberInfo_0.Module;
-	}
-
-	internal static Assembly smethod_15(Module module_0)
-	{
-		return module_0.Assembly;
-	}
-
-	internal static Assembly smethod_16()
-	{
-		return Assembly.GetExecutingAssembly();
-	}
 }

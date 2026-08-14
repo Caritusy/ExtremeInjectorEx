@@ -16,34 +16,34 @@ public sealed class LoadLibraryInjector : DllInjector
 	{
 	}
 
-	protected override void method_04C6()
+	protected override void EnsureProcessHandle()
 	{
-		if (method_2() != IntPtr.Zero || method_0() == -1)
+		if (GetProcessHandle() != IntPtr.Zero || GetProcessId() == -1)
 		{
 			return;
 		}
 
-		method_3(RecoveredRuntime.OpenProcess(InjectionProcessAccess, bool_0: false, method_0()));
+		SetProcessHandle(RecoveredRuntime.OpenProcess(InjectionProcessAccess, bool_0: false, GetProcessId()));
 	}
 
 	public override IntPtr Inject(string modulePath)
 	{
-		RemoteProcess process = method_19();
-		if (!method_8(process.ProcessId))
+		RemoteProcess process = GetRemoteProcess();
+		if (!EnsureAttachedToProcess(process.ProcessId))
 		{
 			throw new UnauthorizedAccessException("Unable to open the specified process for injection.");
 		}
 
-		ProcessModuleInfo kernel32 = RecoveredRuntime.smethod_42(process)["kernel32.dll"]
+		ProcessModuleInfo kernel32 = RecoveredRuntime.CaptureProcessModules(process)["kernel32.dll"]
 			?? throw new FileNotFoundException("Unable to find kernel32.dll in the specified process.");
-		IntPtr loadLibraryAddress = RecoveredRuntime.smethod_225(kernel32, "LoadLibraryW", bool_0: false);
+		IntPtr loadLibraryAddress = RecoveredRuntime.ResolveExportByName(kernel32, "LoadLibraryW", bool_0: false);
 		if (loadLibraryAddress == IntPtr.Zero)
 		{
 			throw new MissingMethodException("Unable to find the LoadLibraryW function inside the specified process.");
 		}
 
 		byte[] encodedPath = Encoding.Unicode.GetBytes(modulePath + "\0");
-		IntPtr remotePath = RecoveredRuntime.smethod_175(this, encodedPath.Length, NativeTypes.Enum34.flag_6);
+		IntPtr remotePath = RecoveredRuntime.AllocateRemoteMemory(this, encodedPath.Length, NativeTypes.Enum34.flag_6);
 		if (remotePath == IntPtr.Zero)
 		{
 			throw new AccessViolationException("Unable to allocate memory for the injection path.");
@@ -51,12 +51,12 @@ public sealed class LoadLibraryInjector : DllInjector
 
 		try
 		{
-			if (!method_16(remotePath, encodedPath))
+			if (!WriteArray(remotePath, encodedPath))
 			{
 				throw new AccessViolationException("Unable to write memory for the injection path.");
 			}
 
-			IntPtr remoteThread = RecoveredRuntime.smethod_321(this, loadLibraryAddress, remotePath);
+			IntPtr remoteThread = RecoveredRuntime.StartRemoteThread(this, loadLibraryAddress, remotePath);
 			if (remoteThread == IntPtr.Zero)
 			{
 				throw new AccessViolationException("Unable to create thread in the specified process.");
@@ -64,18 +64,18 @@ public sealed class LoadLibraryInjector : DllInjector
 
 			try
 			{
-				RecoveredRuntime.smethod_153(this, remoteThread, -1);
+				RecoveredRuntime.WaitForRemoteThread(this, remoteThread, -1);
 			}
 			finally
 			{
-				RecoveredRuntime.smethod_108(this, remoteThread);
+				RecoveredRuntime.CloseRemoteHandle(this, remoteThread);
 			}
 		}
 		finally
 		{
-			vmethod_6(remotePath);
+			ReleaseMemory(remotePath);
 		}
 
-		return RecoveredRuntime.smethod_42(process).method_0(Path.GetFileName(modulePath));
+		return RecoveredRuntime.CaptureProcessModules(process).GetModuleBase(Path.GetFileName(modulePath));
 	}
 }

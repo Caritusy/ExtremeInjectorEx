@@ -12,20 +12,20 @@ public sealed class PeExportReader : PeImageReader
 	{
 	}
 
-	protected override void method_0040()
+	protected override void ReadDirectories()
 	{
-		class154_0.method_15(RecoveredRuntime.smethod_355(class154_0, this));
+		class154_0.SetExports(RecoveredRuntime.ReadExportDirectory(class154_0, this));
 	}
 
-	public static PeImage Read(Stream stream, bool ownsStream, PeImageLayout layout)
+	public static PeImage ReadExports(Stream stream, bool ownsStream, PeImageLayout layout)
 	{
 		var reader = new PeExportReader(stream, ownsStream, layout);
-		return reader.vmethod_0() ? reader.class154_0 : null;
+		return reader.TryRead() ? reader.class154_0 : null;
 	}
 
-	public static PeImage Read(Stream stream, string path, bool ownsStream, PeImageLayout layout)
+	public static PeImage ReadExports(Stream stream, string path, bool ownsStream, PeImageLayout layout)
 	{
 		var reader = new PeExportReader(stream, path, ownsStream, layout);
-		return reader.vmethod_0() ? reader.class154_0 : null;
+		return reader.TryRead() ? reader.class154_0 : null;
 	}
 }

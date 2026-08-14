@@ -44,7 +44,7 @@ public sealed partial class ModuleOptionsForm
 
 		if (attachRuntimeLoadHandler)
 		{
-			Load += method_4;
+			Load += OnFormLoad;
 		}
 		ApplyModernModuleOptionsTheme();
 		ResumeLayout(performLayout: true);
@@ -97,9 +97,9 @@ public sealed partial class ModuleOptionsForm
 		label_2 = CreateModuleFieldLabel("parametersLabel", UiText.Get("Module.Parameters"));
 
 		comboBox_0 = CreateModuleComboBox("exportFunctionComboBox");
-		comboBox_0.SelectedIndexChanged += method_5;
+		comboBox_0.SelectedIndexChanged += OnExportSelectionChanged;
 		comboBox_1 = CreateModuleComboBox("callingConvComboBox");
-		comboBox_1.SelectedIndexChanged += method_6;
+		comboBox_1.SelectedIndexChanged += OnCallingConventionChanged;
 		comboBox_2 = CreateModuleComboBox("paramTypeComboBox");
 
 		textBox_0 = new TextBox
@@ -116,7 +116,7 @@ public sealed partial class ModuleOptionsForm
 			Name = "addButton",
 			Text = UiText.Get("Module.Add")
 		};
-		button_0.Click += method_7;
+		button_0.Click += OnAddParameterClick;
 		button_0.EnabledChanged += (sender, args) => ApplyModernModuleOptionsTheme();
 
 		dataGridViewTextBoxColumn_0 = new DataGridViewTextBoxColumn
@@ -164,8 +164,8 @@ public sealed partial class ModuleOptionsForm
 			dataGridViewTextBoxColumn_0,
 			dataGridViewTextBoxColumn_1,
 			dataGridViewTextBoxColumn_2);
-		dataGridView_0.RowsAdded += method_8;
-		dataGridView_0.RowsRemoved += method_9;
+		dataGridView_0.RowsAdded += OnParameterRowsAdded;
+		dataGridView_0.RowsRemoved += OnParameterRowsRemoved;
 
 		var layout = new TableLayoutPanel
 		{

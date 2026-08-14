@@ -5,24 +5,24 @@ public sealed class LdrDataTableEntry64 : RemoteLdrDataTableEntry
 {
 	static LdrDataTableEntry64()
 	{
-		RemotePlatformStructure.smethod_7<LdrDataTableEntry64>(new RemoteFieldLayout[16]
+		RemotePlatformStructure.Register64BitLayout<LdrDataTableEntry64>(new RemoteFieldLayout[16]
 		{
-			RecoveredRuntime.smethod_316(typeof(LdrListEntry64)),
-			RecoveredRuntime.smethod_316(typeof(LdrListEntry64)),
-			RecoveredRuntime.smethod_316(typeof(LdrListEntry64)),
-			RecoveredRuntime.smethod_316(typeof(IntPtr)),
-			RecoveredRuntime.smethod_316(typeof(IntPtr)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(UnicodeString64)),
-			RecoveredRuntime.smethod_316(typeof(UnicodeString64)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(short)),
-			RecoveredRuntime.smethod_316(typeof(short)),
-			RecoveredRuntime.smethod_316(typeof(ListEntry64)),
-			RecoveredRuntime.smethod_316(typeof(uint)),
-			RecoveredRuntime.smethod_316(typeof(IntPtr)),
-			RecoveredRuntime.smethod_316(typeof(IntPtr)),
-			RecoveredRuntime.smethod_316(typeof(LdrDdagNode64))
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(LdrListEntry64)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(LdrListEntry64)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(LdrListEntry64)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(UnicodeString64)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(UnicodeString64)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(short)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(short)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(ListEntry64)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(IntPtr)),
+			RecoveredRuntime.CreateRemoteFieldLayout(typeof(LdrDdagNode64))
 		});
 	}
 
@@ -32,64 +32,59 @@ public sealed class LdrDataTableEntry64 : RemoteLdrDataTableEntry
 	}
 
 	[SpecialName]
-	public override RemoteLdrListEntry method_07EE()
+	public override RemoteLdrListEntry GetLoadOrderLinks()
 	{
-		LdrListEntry64 @class = new LdrListEntry64(RecoveredRuntime.smethod_223(this, 0), method_2());
-		@class.method_7(method_6());
+		LdrListEntry64 @class = new LdrListEntry64(RecoveredRuntime.GetRemoteFieldAddress(this, 0), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
 	[SpecialName]
-	public override RemoteLdrListEntry method_07EF()
+	public override RemoteLdrListEntry GetMemoryOrderLinks()
 	{
-		LdrListEntry64 @class = new LdrListEntry64(RecoveredRuntime.smethod_223(this, 1), method_2());
-		@class.method_7(method_6());
+		LdrListEntry64 @class = new LdrListEntry64(RecoveredRuntime.GetRemoteFieldAddress(this, 1), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
 	[SpecialName]
-	public override RemoteLdrListEntry method_07F0()
+	public override RemoteLdrListEntry GetInitializationOrderLinks()
 	{
-		LdrListEntry64 @class = new LdrListEntry64(RecoveredRuntime.smethod_223(this, 2), method_2());
-		@class.method_7(method_6());
+		LdrListEntry64 @class = new LdrListEntry64(RecoveredRuntime.GetRemoteFieldAddress(this, 2), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
 	[SpecialName]
-	public override IntPtr method_07F1()
+	public override IntPtr GetModuleBase()
 	{
-		return method_21<IntPtr>(3);
+		return ReadField<IntPtr>(3);
 	}
 
 	[SpecialName]
-	public override short method_07F2()
+	public override short GetLoadCount()
 	{
-		return method_21<short>(9);
+		return ReadField<short>(9);
 	}
 
 	[SpecialName]
-	public override RemoteListEntry method_07F3()
+	public override RemoteListEntry GetHashLinks()
 	{
-		ListEntry64 @class = new ListEntry64(RecoveredRuntime.smethod_223(this, 11), method_2());
-		@class.method_7(method_6());
+		ListEntry64 @class = new ListEntry64(RecoveredRuntime.GetRemoteFieldAddress(this, 11), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
 	}
 
 	[SpecialName]
-	public override IntPtr method_07F4()
+	public override IntPtr GetDependencyNodeAddress()
 	{
-		return method_21<IntPtr>(15);
+		return ReadField<IntPtr>(15);
 	}
 
-	public override RemoteLdrDdagNode method_07F5()
+	public override RemoteLdrDdagNode GetDependencyNode()
 	{
-		LdrDdagNode64 @class = new LdrDdagNode64(method_07F4(), method_2());
-		@class.method_7(method_6());
+		LdrDdagNode64 @class = new LdrDdagNode64(GetDependencyNodeAddress(), GetProcessHandle());
+		@class.SetMemoryApi(GetMemoryApi());
 		return @class;
-	}
-
-	internal static Type smethod_11(RuntimeTypeHandle runtimeTypeHandle_0)
-	{
-		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
 	}
 }

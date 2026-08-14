@@ -10,28 +10,28 @@ public sealed class BaseRelocationEntry
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_0()
+	public uint GetOffset()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(uint uint_1)
+	public void SetOffset(uint uint_1)
 	{
 		uint_0 = uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public BaseRelocationType method_2()
+	public BaseRelocationType GetRelocationType()
 	{
 		return genum0_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_3(BaseRelocationType genum0_1)
+	public void SetType(BaseRelocationType genum0_1)
 	{
 		genum0_0 = genum0_1;
 	}

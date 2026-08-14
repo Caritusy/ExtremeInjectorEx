@@ -10,8 +10,8 @@ public abstract class AsmJitMemoryManager
 
 	static AsmJitMemoryManager()
 	{
-		delegate41_0 = AsmJitNative.smethod_0<Delegate41>(AsmJitRuntime.bool_0 ? "?getGlobal@MemoryManager@AsmJit@@SAPEAU12@XZ" : "?getGlobal@MemoryManager@AsmJit@@SAPAU12@XZ");
+		delegate41_0 = AsmJitNative.ResolveDelegate<Delegate41>(AsmJitRuntime.bool_0 ? "?getGlobal@MemoryManager@AsmJit@@SAPEAU12@XZ" : "?getGlobal@MemoryManager@AsmJit@@SAPAU12@XZ");
 	}
 
-	public abstract void method_03FF(IntPtr intptr_0);
+	public abstract void Release(IntPtr intptr_0);
 }

@@ -42,7 +42,7 @@ internal sealed class ManualMapProtectionPlan
 			throw new ArgumentNullException(nameof(image));
 		}
 
-		uint imageSize = image.method_6().method_3().imethod_29();
+		uint imageSize = image.GetHeaders().GetOptionalHeader().GetSizeOfImage();
 		if (imageSize == 0)
 		{
 			throw new InvalidDataException("The image has an invalid SizeOfImage value.");
@@ -51,19 +51,19 @@ internal sealed class ManualMapProtectionPlan
 		int pageCount = checked((int)(((ulong)imageSize + PageSize - 1) / PageSize));
 		var retainedCharacteristics = new SectionCharacteristics[pageCount];
 		var hasDiscardableContent = new bool[pageCount];
-		uint headerSize = Math.Min(image.method_6().method_3().imethod_31(), imageSize);
+		uint headerSize = Math.Min(image.GetHeaders().GetOptionalHeader().GetSizeOfHeaders(), imageSize);
 		MarkPages(retainedCharacteristics, 0, headerSize, imageSize, SectionCharacteristics.flag_33);
 
-		foreach (PeSectionHeader section in image.method_8())
+		foreach (PeSectionHeader section in image.GetSections())
 		{
-			uint sectionLength = Math.Max(section.method_2(), section.method_6());
-			if ((section.method_18() & SectionCharacteristics.flag_28) != 0)
+			uint sectionLength = Math.Max(section.GetVirtualSize(), section.GetSizeOfRawData());
+			if ((section.GetCharacteristics() & SectionCharacteristics.flag_28) != 0)
 			{
-				MarkPages(hasDiscardableContent, section.method_4(), sectionLength, imageSize);
+				MarkPages(hasDiscardableContent, section.GetVirtualAddress(), sectionLength, imageSize);
 			}
 			else
 			{
-				MarkPages(retainedCharacteristics, section.method_4(), sectionLength, imageSize, section.method_18());
+				MarkPages(retainedCharacteristics, section.GetVirtualAddress(), sectionLength, imageSize, section.GetCharacteristics());
 			}
 		}
 
@@ -181,10 +181,10 @@ internal static class ManualMapProtectionService
 			throw new ArgumentNullException(nameof(mappedImage));
 		}
 
-		ManualMapProtectionPlan plan = ManualMapProtectionPlan.Create(mappedImage.method_0());
+		ManualMapProtectionPlan plan = ManualMapProtectionPlan.Create(mappedImage.GetImage());
 		foreach (ManualMapProtectionRun run in plan.Runs)
 		{
-			IntPtr address = mappedImage.method_2().smethod_9(run.Offset);
+			IntPtr address = mappedImage.GetModuleBase().Add(run.Offset);
 			bool applied = run.Decommit
 				? injector.DecommitMappedRange(address, run.Length)
 				: injector.ProtectMappedRange(address, run.Length, run.Protection);
@@ -194,7 +194,7 @@ internal static class ManualMapProtectionService
 			}
 		}
 
-		if (!injector.FlushMappedImage(mappedImage.method_2(), plan.ImageSize))
+		if (!injector.FlushMappedImage(mappedImage.GetModuleBase(), plan.ImageSize))
 		{
 			throw new AccessViolationException("Unable to flush the mapped image from the target process instruction cache.");
 		}

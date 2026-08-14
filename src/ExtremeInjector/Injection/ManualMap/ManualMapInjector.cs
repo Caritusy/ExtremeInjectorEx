@@ -47,112 +47,112 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 
 		[SpecialName]
 		[CompilerGenerated]
-		public PeImage method_0()
+		public PeImage GetImage()
 		{
 			return class154_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_1(PeImage class154_1)
+		public void SetImage(PeImage class154_1)
 		{
 			class154_0 = class154_1;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public IntPtr method_2()
+		public IntPtr GetModuleBase()
 		{
 			return intptr_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_3(IntPtr intptr_3)
+		public void SetModuleBase(IntPtr intptr_3)
 		{
 			intptr_0 = intptr_3;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public string method_4()
+		public string GetFilePath()
 		{
 			return string_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_5(string string_2)
+		public void SetFilePath(string string_2)
 		{
 			string_0 = string_2;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public string method_6()
+		public string GetFileName()
 		{
 			return string_1;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_7(string string_2)
+		public void SetFileName(string string_2)
 		{
 			string_1 = string_2;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public Enum44 method_8()
+		public Enum44 GetOptions()
 		{
 			return enum44_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_9(Enum44 enum44_1)
+		public void SetOptions(Enum44 enum44_1)
 		{
 			enum44_0 = enum44_1;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public IntPtr method_10()
+		public IntPtr GetActivationContextHandle()
 		{
 			return intptr_1;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_11(IntPtr intptr_3)
+		public void SetActivationContextHandle(IntPtr intptr_3)
 		{
 			intptr_1 = intptr_3;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public IntPtr method_12()
+		public IntPtr GetRemoteActivationContext()
 		{
 			return intptr_2;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_13(IntPtr intptr_3)
+		public void SetRemoteActivationContext(IntPtr intptr_3)
 		{
 			intptr_2 = intptr_3;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public List<int> method_14()
+		public List<int> GetTlsCallbacks()
 		{
 			return list_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_15(List<int> list_1)
+		public void SetTlsCallbacks(List<int> list_1)
 		{
 			list_0 = list_1;
 		}
@@ -160,9 +160,9 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 		public Class172()
 		{
 			IntPtr intptr_;
-			method_13(intptr_ = NativeTypes.intptr_0);
-			method_11(intptr_);
-			method_15(new List<int>());
+			SetRemoteActivationContext(intptr_ = NativeTypes.intptr_0);
+			SetActivationContextHandle(intptr_);
+			SetTlsCallbacks(new List<int>());
 		}
 	}
 
@@ -171,9 +171,6 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 
 	[CompilerGenerated]
 	internal bool bool_3;
-
-	[CompilerGenerated]
-	internal bool bool_4;
 
 	[CompilerGenerated]
 	internal bool bool_5;
@@ -218,192 +215,178 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_24()
+	public bool GetDisableExceptionSupport()
 	{
 		return bool_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_25(bool bool_7)
+	public void SetDisableExceptionSupport(bool bool_7)
 	{
 		bool_2 = bool_7;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_26()
+	public bool GetErasePeHeaders()
 	{
 		return bool_3;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_27(bool bool_7)
+	public void SetErasePeHeaders(bool bool_7)
 	{
 		bool_3 = bool_7;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_28()
-	{
-		return bool_4;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public void method_29(bool bool_7)
-	{
-		bool_4 = bool_7;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	public bool method_30()
+	public bool GetManualResolveImports()
 	{
 		return bool_5;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_31(bool bool_7)
+	public void SetManualResolveImports(bool bool_7)
 	{
 		bool_5 = bool_7;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public bool method_32()
+	public bool GetDisableSehValidation()
 	{
 		return bool_6;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_33(bool bool_7)
+	public void SetDisableSehValidation(bool bool_7)
 	{
 		bool_6 = bool_7;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public Exception method_34()
+	public Exception GetLastException()
 	{
 		return exception_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_35(Exception exception_1)
+	public void SetLastException(Exception exception_1)
 	{
 		exception_0 = exception_1;
 	}
 
-	protected override void method_04C6()
+	protected override void EnsureProcessHandle()
 	{
-		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
+		if (base.GetProcessHandle() == IntPtr.Zero && base.GetProcessId() != -1)
 		{
-			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
+			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.GetProcessId()));
 		}
 	}
 
 	public override IntPtr Inject(string string_0)
 	{
-		this.method_35(null);
+		this.SetLastException(null);
 		if (!Path.IsPathRooted(string_0))
 		{
 			string_0 = Path.GetFullPath(string_0);
 		}
-		ManualMapInjector.Enum44 enum44_ = RecoveredRuntime.smethod_206(this);
-		return this.method_36(string_0, enum44_);
+		ManualMapInjector.Enum44 enum44_ = RecoveredRuntime.BuildManualMapOptions(this);
+		return this.InjectModule(string_0, enum44_);
 	}
 
-	internal IntPtr method_36(string string_0, Enum44 enum44_0)
+	internal IntPtr InjectModule(string string_0, Enum44 enum44_0)
 	{
 		if (!File.Exists(string_0))
 		{
-			RecoveredRuntime.smethod_259(this);
-			throw new FileNotFoundException(EncodedStringTable.smethod_0(28151) + string_0 + EncodedStringTable.smethod_0(3656));
+			RecoveredRuntime.ResetManualMapOptions(this);
+			throw new FileNotFoundException(EncodedStringTable.DecodeString(28151) + string_0 + EncodedStringTable.DecodeString(3656));
 		}
-		if (!base.method_8(base.method_19().ProcessId))
+		if (!base.EnsureAttachedToProcess(base.GetRemoteProcess().ProcessId))
 		{
-			RecoveredRuntime.smethod_259(this);
-			throw new UnauthorizedAccessException(EncodedStringTable.smethod_0(12662));
+			RecoveredRuntime.ResetManualMapOptions(this);
+			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(12662));
 		}
-		if (!base.method_19().IsDepEnabled)
+		if (!base.GetRemoteProcess().IsDepEnabled)
 		{
 			enum44_0 |= ManualMapInjector.Enum44.flag_1;
 		}
-		IntPtr intPtr = this.method_38(string_0, enum44_0);
+		IntPtr intPtr = this.MapModule(string_0, enum44_0);
 		if (!(intPtr == IntPtr.Zero))
 		{
 			foreach (ManualMapInjector.Class172 @class in this.list_0)
 			{
-				if (!this.method_37(@class, 1u))
+				if (!this.InvokeModuleEntryPoints(@class, 1u))
 				{
-					RecoveredRuntime.smethod_368(@class);
+					RecoveredRuntime.DisposeManualMapContext(@class);
 					return IntPtr.Zero;
 				}
-				if (this.method_26())
+				if (this.GetErasePeHeaders())
 				{
-					uint num = @class.method_0().method_6().method_3().imethod_31();
-					if (!this.vmethod_5(@class.method_2(), (long)((ulong)num), NativeTypes.Enum28.const_1))
+					uint num = @class.GetImage().GetHeaders().GetOptionalHeader().GetSizeOfHeaders();
+					if (!this.FreeMemory(@class.GetModuleBase(), (long)((ulong)num), NativeTypes.Enum28.const_1))
 					{
-						base.method_14(@class.method_2(), (long)((ulong)num), NativeTypes.Enum34.flag_4);
+						base.ProtectMemory(@class.GetModuleBase(), (long)((ulong)num), NativeTypes.Enum34.flag_4);
 					}
-					RecoveredRuntime.smethod_368(@class);
+					RecoveredRuntime.DisposeManualMapContext(@class);
 				}
 				else
 				{
-					RecoveredRuntime.smethod_368(@class);
+					RecoveredRuntime.DisposeManualMapContext(@class);
 				}
 			}
 			this.list_0.Clear();
 			return intPtr;
 		}
-		RecoveredRuntime.smethod_259(this);
+		RecoveredRuntime.ResetManualMapOptions(this);
 		return IntPtr.Zero;
 	}
 
-	internal bool method_37(Class172 class172_0, uint uint_0)
+	internal bool InvokeModuleEntryPoints(Class172 class172_0, uint uint_0)
 	{
-		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(base.method_19())[EncodedStringTable.smethod_0(8549)];
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess())[EncodedStringTable.DecodeString(8549)];
 		if (gclass != null)
 		{
-			IntPtr intptr_ = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(29026), false);
-			IntPtr intptr_2 = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(29067), false);
+			IntPtr intptr_ = RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(29026), false);
+			IntPtr intptr_2 = RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(29067), false);
 			AsmJitAssembler @class = new AsmJitAssembler();
-			RemoteAssembler class47_ = new RemoteAssembler(@class, base.method_19());
-			AsmJitLabel class58_ = RecoveredRuntime.smethod_48(@class);
-			AsmJitGpRegister class2 = RecoveredRuntime.smethod_427(base.method_19()) ? AsmJitRuntime.class63_37 : AsmJitRuntime.class63_53;
-			RecoveredRuntime.smethod_15(class47_);
-			if (class172_0.method_12() != NativeTypes.intptr_0)
+			RemoteAssembler class47_ = new RemoteAssembler(@class, base.GetRemoteProcess());
+			AsmJitLabel class58_ = RecoveredRuntime.CreateLabel(@class);
+			AsmJitGpRegister class2 = RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()) ? AsmJitRuntime.class63_37 : AsmJitRuntime.class63_53;
+			RecoveredRuntime.EmitRemoteCallPrologue(class47_);
+			if (class172_0.GetRemoteActivationContext() != NativeTypes.intptr_0)
 			{
-				RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(intptr_), CallingConvention.StdCall, new object[]
+				RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(intptr_), CallingConvention.StdCall, new object[]
 				{
 					IntPtr.Zero,
-					class172_0.method_12(),
-					RecoveredRuntime.smethod_84(class47_, class58_)
+					class172_0.GetRemoteActivationContext(),
+					RecoveredRuntime.CreateLabelReference(class47_, class58_)
 				});
 			}
-			uint num = class172_0.method_0().method_6().method_3().imethod_11();
+			uint num = class172_0.GetImage().GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint();
 			if (uint_0 != 1u && uint_0 != 2u)
 			{
 				if (num != 0u)
 				{
-					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_9((long)((ulong)num))), CallingConvention.StdCall, new object[]
+					RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(class172_0.GetModuleBase().Add((long)((ulong)num))), CallingConvention.StdCall, new object[]
 					{
-						class172_0.method_2(),
+						class172_0.GetModuleBase(),
 						uint_0,
 						IntPtr.Zero
 					});
 				}
-				foreach (int callback in class172_0.method_14())
+				foreach (int callback in class172_0.GetTlsCallbacks())
 				{
-					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_8(callback)), CallingConvention.StdCall, new object[]
+					RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(class172_0.GetModuleBase().Add(callback)), CallingConvention.StdCall, new object[]
 					{
-						class172_0.method_2(),
+						class172_0.GetModuleBase(),
 						uint_0,
 						IntPtr.Zero
 					});
@@ -411,59 +394,59 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 			}
 			else
 			{
-				foreach (int callback in class172_0.method_14())
+				foreach (int callback in class172_0.GetTlsCallbacks())
 				{
-					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_8(callback)), CallingConvention.StdCall, new object[]
+					RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(class172_0.GetModuleBase().Add(callback)), CallingConvention.StdCall, new object[]
 					{
-						class172_0.method_2(),
+						class172_0.GetModuleBase(),
 						uint_0,
 						IntPtr.Zero
 					});
 				}
 				if (num != 0u)
 				{
-					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_9((long)((ulong)num))), CallingConvention.StdCall, new object[]
+					RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(class172_0.GetModuleBase().Add((long)((ulong)num))), CallingConvention.StdCall, new object[]
 					{
-						class172_0.method_2(),
+						class172_0.GetModuleBase(),
 						uint_0,
 						IntPtr.Zero
 					});
 				}
 			}
-			if (class172_0.method_12() != NativeTypes.intptr_0)
+			if (class172_0.GetRemoteActivationContext() != NativeTypes.intptr_0)
 			{
-				RecoveredRuntime.smethod_429(@class, class2, RecoveredRuntime.smethod_221(class47_, class58_, 0L));
-				RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(intptr_2), CallingConvention.StdCall, new object[]
+				RecoveredRuntime.EmitMoveMemoryToRegister(@class, class2, RecoveredRuntime.CreatePointerLabelMemory(class47_, class58_, 0L));
+				RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(intptr_2), CallingConvention.StdCall, new object[]
 				{
 					IntPtr.Zero,
 					class2
 				});
 			}
-			RecoveredRuntime.smethod_226(class47_, -1);
-			RecoveredRuntime.smethod_227(class47_);
-			RecoveredRuntime.smethod_36(@class, class58_);
-			RecoveredRuntime.smethod_336(class47_);
-			return RecoveredRuntime.smethod_239(@class, this) || RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29108)));
+			RecoveredRuntime.EmitRemoteCallEpilogue(class47_, -1);
+			RecoveredRuntime.AlignRemoteData(class47_);
+			RecoveredRuntime.BindLabel(@class, class58_);
+			RecoveredRuntime.EmbedNullPointer(class47_);
+			return RecoveredRuntime.ExecuteAssemblerThread(@class, this) || RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(29108)));
 		}
-		return RecoveredRuntime.smethod_128(this, new FileNotFoundException(EncodedStringTable.smethod_0(12731)));
+		return RecoveredRuntime.FailManualMap(this, new FileNotFoundException(EncodedStringTable.DecodeString(12731)));
 	}
 
-	internal IntPtr method_38(string string_0, Enum44 enum44_0)
+	internal IntPtr MapModule(string string_0, Enum44 enum44_0)
 	{
 		ManualMapInjector.Class172 @class = new ManualMapInjector.Class172();
-		@class.method_5(string_0);
-		@class.method_7(Path.GetFileName(string_0));
-		@class.method_9(enum44_0);
-		@class.method_3(RecoveredRuntime.smethod_42(base.method_19()).method_0(string_0));
+		@class.SetFilePath(string_0);
+		@class.SetFileName(Path.GetFileName(string_0));
+		@class.SetOptions(enum44_0);
+		@class.SetModuleBase(RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess()).GetModuleBase(string_0));
 		ManualMapInjector.Class172 class2 = @class;
-		if (class2.method_2() != IntPtr.Zero)
+		if (class2.GetModuleBase() != IntPtr.Zero)
 		{
-			return class2.method_2();
+			return class2.GetModuleBase();
 		}
 		try
 		{
-			class2.method_1(RecoveredRuntime.smethod_81(PeImageLayout.const_0, string_0));
-			if (class2.method_0() == null)
+			class2.SetImage(RecoveredRuntime.LoadPeImageFromFile(PeImageLayout.const_0, string_0));
+			if (class2.GetImage() == null)
 			{
 				return IntPtr.Zero;
 			}
@@ -472,125 +455,125 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 		{
 			return IntPtr.Zero;
 		}
-		class2.method_3(base.method_15((IntPtr)((long)class2.method_0().method_6().method_3().imethod_17()), (long)((ulong)class2.method_0().method_6().method_3().imethod_29()), NativeTypes.Enum34.flag_2));
-		if (class2.method_2() == IntPtr.Zero)
+		class2.SetModuleBase(base.AllocateMemory((IntPtr)((long)class2.GetImage().GetHeaders().GetOptionalHeader().GetImageBase()), (long)((ulong)class2.GetImage().GetHeaders().GetOptionalHeader().GetSizeOfImage()), NativeTypes.Enum34.flag_2));
+		if (class2.GetModuleBase() == IntPtr.Zero)
 		{
 			return IntPtr.Zero;
 		}
-		PeImage class3 = class2.method_0();
-		IntPtr intptr_ = class2.method_2();
-		RecoveredRuntime.smethod_242(this, class2);
-		if ((enum44_0 & ManualMapInjector.Enum44.flag_6) == (ManualMapInjector.Enum44)0 && !RecoveredRuntime.smethod_26(this, class2))
+		PeImage class3 = class2.GetImage();
+		IntPtr intptr_ = class2.GetModuleBase();
+		RecoveredRuntime.CreateActivationContextFromManifest(this, class2);
+		if ((enum44_0 & ManualMapInjector.Enum44.flag_6) == (ManualMapInjector.Enum44)0 && !RecoveredRuntime.CreateRemoteActivationContext(this, class2))
 		{
-			RecoveredRuntime.smethod_368(class2);
-			this.vmethod_6(class2.method_2());
+			RecoveredRuntime.DisposeManualMapContext(class2);
+			this.ReleaseMemory(class2.GetModuleBase());
 			return IntPtr.Zero;
 		}
-		if (!this.method_44(class2) || !this.method_43(class2))
+		if (!this.WriteImageToTarget(class2) || !this.ApplyBaseRelocations(class2))
 		{
-			RecoveredRuntime.smethod_368(class2);
-			this.vmethod_6(class2.method_2());
+			RecoveredRuntime.DisposeManualMapContext(class2);
+			this.ReleaseMemory(class2.GetModuleBase());
 			return IntPtr.Zero;
 		}
-		RecoveredRuntime.smethod_266(RecoveredRuntime.smethod_42(base.method_19()), class3, intptr_, RecoveredRuntime.smethod_427(base.method_19()));
-		if (!this.method_42(class2, class3.method_10()))
+		RecoveredRuntime.RegisterManualMappedModule(RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess()), class3, intptr_, RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()));
+		if (!this.ResolveImports(class2, class3.GetImports()))
 		{
-			RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
-			RecoveredRuntime.smethod_368(class2);
-			this.vmethod_6(class2.method_2());
+			RecoveredRuntime.RemoveManualMappedModuleRecord(intptr_, RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess()));
+			RecoveredRuntime.DisposeManualMapContext(class2);
+			this.ReleaseMemory(class2.GetModuleBase());
 			return IntPtr.Zero;
 		}
-		if ((enum44_0 & ManualMapInjector.Enum44.flag_7) == (ManualMapInjector.Enum44)0 && class3.method_12() != null && !this.method_42(class2, class3.method_12()))
+		if ((enum44_0 & ManualMapInjector.Enum44.flag_7) == (ManualMapInjector.Enum44)0 && class3.GetDelayImports() != null && !this.ResolveImports(class2, class3.GetDelayImports()))
 		{
-			RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
-			RecoveredRuntime.smethod_368(class2);
-			this.vmethod_6(class2.method_2());
+			RecoveredRuntime.RemoveManualMappedModuleRecord(intptr_, RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess()));
+			RecoveredRuntime.DisposeManualMapContext(class2);
+			this.ReleaseMemory(class2.GetModuleBase());
 			return IntPtr.Zero;
 		}
-		if (!this.method_41(class2))
+		if (!this.ApplyImageProtections(class2))
 		{
-			RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
-			RecoveredRuntime.smethod_368(class2);
-			this.vmethod_6(class2.method_2());
+			RecoveredRuntime.RemoveManualMappedModuleRecord(intptr_, RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess()));
+			RecoveredRuntime.DisposeManualMapContext(class2);
+			this.ReleaseMemory(class2.GetModuleBase());
 			return IntPtr.Zero;
 		}
-		if ((enum44_0 & ManualMapInjector.Enum44.flag_1) != (ManualMapInjector.Enum44)0 || RecoveredRuntime.smethod_424(this, class2))
+		if ((enum44_0 & ManualMapInjector.Enum44.flag_1) != (ManualMapInjector.Enum44)0 || RecoveredRuntime.ConfigureExceptionSupport(this, class2))
 		{
-			this.method_39(class2);
+			this.CollectTlsCallbacks(class2);
 			this.list_0.Add(class2);
-			return class2.method_2();
+			return class2.GetModuleBase();
 		}
-		RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
-		RecoveredRuntime.smethod_368(class2);
-		this.vmethod_6(class2.method_2());
+		RecoveredRuntime.RemoveManualMappedModuleRecord(intptr_, RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess()));
+		RecoveredRuntime.DisposeManualMapContext(class2);
+		this.ReleaseMemory(class2.GetModuleBase());
 		return IntPtr.Zero;
 	}
 
-	internal void method_39(Class172 class172_0)
+	internal void CollectTlsCallbacks(Class172 class172_0)
 	{
-		if (class172_0.method_0().method_20() == null)
+		if (class172_0.GetImage().GetTlsDirectory() == null)
 		{
 			return;
 		}
-		using (List<ulong>.Enumerator enumerator = class172_0.method_0().method_20().list_0.GetEnumerator())
+		using (List<ulong>.Enumerator enumerator = class172_0.GetImage().GetTlsDirectory().list_0.GetEnumerator())
 		{
 			while (enumerator.MoveNext())
 			{
-				int item = (int)(enumerator.Current - class172_0.method_0().method_6().method_3().imethod_17());
-				class172_0.method_14().Add(item);
+				int item = (int)(enumerator.Current - class172_0.GetImage().GetHeaders().GetOptionalHeader().GetImageBase());
+				class172_0.GetTlsCallbacks().Add(item);
 			}
 		}
 	}
 
-	internal bool method_40()
+	internal bool PatchSehValidation()
 	{
 		if (!PlatformInfo.bool_1)
 		{
 			return true;
 		}
-		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(base.method_19())[EncodedStringTable.smethod_0(8549)];
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess())[EncodedStringTable.DecodeString(8549)];
 		if (gclass == null)
 		{
-			return RecoveredRuntime.smethod_128(this, new FileNotFoundException(EncodedStringTable.smethod_0(12731)));
+			return RecoveredRuntime.FailManualMap(this, new FileNotFoundException(EncodedStringTable.DecodeString(12731)));
 		}
-		IntPtr intPtr = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(29169), false);
+		IntPtr intPtr = RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(29169), false);
 		if (intPtr == IntPtr.Zero)
 		{
-			return RecoveredRuntime.smethod_128(this, new MissingMethodException(EncodedStringTable.smethod_0(29182)));
+			return RecoveredRuntime.FailManualMap(this, new MissingMethodException(EncodedStringTable.DecodeString(29182)));
 		}
-		byte[] array = base.method_10<byte>(intPtr, 300);
-		int num = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(29239), EncodedStringTable.smethod_0(29260), 0);
+		byte[] array = base.ReadArray<byte>(intPtr, 300);
+		int num = RecoveredRuntime.FindMaskedPattern(array, EncodedStringTable.DecodeString(29239), EncodedStringTable.DecodeString(29260), 0);
 		if (num == -1)
 		{
-			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29277)));
+			return RecoveredRuntime.FailManualMap(this, new InvalidOperationException(EncodedStringTable.DecodeString(29277)));
 		}
 		num += 2;
-		int num2 = base.method_11<int>(intPtr.smethod_8(num));
-		IntPtr intPtr2 = intPtr.smethod_8(num + num2 + 4);
-		array = base.method_10<byte>(intPtr2, 2);
-		if (!RecoveredRuntime.smethod_340(EncodedStringTable.smethod_0(29350), 0, array))
+		int num2 = base.Read<int>(intPtr.Add(num));
+		IntPtr intPtr2 = intPtr.Add(num + num2 + 4);
+		array = base.ReadArray<byte>(intPtr2, 2);
+		if (!RecoveredRuntime.MatchesAsciiAt(EncodedStringTable.DecodeString(29350), 0, array))
 		{
-			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29359)));
+			return RecoveredRuntime.FailManualMap(this, new InvalidOperationException(EncodedStringTable.DecodeString(29359)));
 		}
-		array = base.method_10<byte>(intPtr2, 200);
-		if ((num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(29424), 0)) == -1)
+		array = base.ReadArray<byte>(intPtr2, 200);
+		if ((num = RecoveredRuntime.FindAsciiPattern(array, EncodedStringTable.DecodeString(29424), 0)) == -1)
 		{
-			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29359)));
+			return RecoveredRuntime.FailManualMap(this, new InvalidOperationException(EncodedStringTable.DecodeString(29359)));
 		}
 		if (num == 0)
 		{
 			return true;
 		}
-		array = base.method_10<byte>(intPtr2.smethod_8(num), 50);
-		if ((num = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(29429), EncodedStringTable.smethod_0(29438), 0)) == -1)
+		array = base.ReadArray<byte>(intPtr2.Add(num), 50);
+		if ((num = RecoveredRuntime.FindMaskedPattern(array, EncodedStringTable.DecodeString(29429), EncodedStringTable.DecodeString(29438), 0)) == -1)
 		{
-			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29443)));
+			return RecoveredRuntime.FailManualMap(this, new InvalidOperationException(EncodedStringTable.DecodeString(29443)));
 		}
 		ushort value = BitConverter.ToUInt16(array, num + 1);
 		NativeTypes.Enum34 @enum;
-		if (!this.vmethod_3(intPtr2, 5L, NativeTypes.Enum34.flag_2, out @enum))
+		if (!this.ProtectMemoryCore(intPtr2, 5L, NativeTypes.Enum34.flag_2, out @enum))
 		{
-			return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29512)));
+			return RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(29512)));
 		}
 		byte[] array2 = new byte[]
 		{
@@ -601,11 +584,11 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 			0
 		};
 		Array.Copy(BitConverter.GetBytes(value), 0, array2, 3, 2);
-		bool flag = base.method_16<byte>(intPtr2, array2);
-		return base.method_14(intPtr2, 5L, @enum) || !flag || RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29589)));
+		bool flag = base.WriteArray<byte>(intPtr2, array2);
+		return base.ProtectMemory(intPtr2, 5L, @enum) || !flag || RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(29589)));
 	}
 
-	internal bool method_41(Class172 class172_0)
+	internal bool ApplyImageProtections(Class172 class172_0)
 	{
 		try
 		{
@@ -614,26 +597,26 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 		}
 		catch (Exception exception)
 		{
-			return RecoveredRuntime.smethod_128(this, exception);
+			return RecoveredRuntime.FailManualMap(this, exception);
 		}
 	}
 
 	internal bool ProtectMappedRange(IntPtr address, long length, NativeTypes.Enum34 protection)
 	{
-		return method_14(address, length, protection);
+		return ProtectMemory(address, length, protection);
 	}
 
 	internal bool DecommitMappedRange(IntPtr address, long length)
 	{
-		return vmethod_5(address, length, NativeTypes.Enum28.const_0);
+		return FreeMemory(address, length, NativeTypes.Enum28.const_0);
 	}
 
 	internal bool FlushMappedImage(IntPtr imageBase, uint imageSize)
 	{
-		return RecoveredRuntime.FlushInstructionCache(method_2(), imageBase, (UIntPtr)imageSize);
+		return RecoveredRuntime.FlushInstructionCache(GetProcessHandle(), imageBase, (UIntPtr)imageSize);
 	}
 
-	internal bool method_42(Class172 class172_0, ImportDirectory class148_0)
+	internal bool ResolveImports(Class172 class172_0, ImportDirectory class148_0)
 	{
 		if (class148_0 == null)
 		{
@@ -643,77 +626,77 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 		while (i < class148_0.list_0.Count)
 		{
 			ImportDescriptor @class = class148_0.list_0[i];
-			string text = @class.method_12();
-			IntPtr intPtr = RecoveredRuntime.smethod_67(class172_0, this, text);
+			string text = @class.GetModuleName();
+			IntPtr intPtr = RecoveredRuntime.ResolveOrLoadDependency(class172_0, this, text);
 			if (intPtr == IntPtr.Zero)
 			{
 				return false;
 			}
-			ProcessModuleInfo gclass = RecoveredRuntime.smethod_196(RecoveredRuntime.smethod_42(base.method_19()), intPtr);
+			ProcessModuleInfo gclass = RecoveredRuntime.FindModuleByBaseAddress(RecoveredRuntime.CaptureProcessModules(base.GetRemoteProcess()), intPtr);
 			if (gclass != null)
 			{
-				IntPtr intPtr2 = class172_0.method_2().smethod_9((long)((ulong)@class.method_6()));
-				foreach (ImportedSymbol class2 in @class.method_8())
+				IntPtr intPtr2 = class172_0.GetModuleBase().Add((long)((ulong)@class.GetFirstThunk()));
+				foreach (ImportedSymbol class2 in @class.GetOriginalThunkSymbols())
 				{
-					IntPtr intPtr3 = class2.method_7() ? RecoveredRuntime.smethod_248(gclass, class2.method_2(), false) : RecoveredRuntime.smethod_225(gclass, class2.method_4(), false);
+					IntPtr intPtr3 = class2.GetIsOrdinal() ? RecoveredRuntime.ResolveExportByOrdinal(gclass, class2.GetOrdinal(), false) : RecoveredRuntime.ResolveExportByName(gclass, class2.GetName(), false);
 					if (intPtr3 == IntPtr.Zero)
 					{
-						return RecoveredRuntime.smethod_128(this, new MissingMethodException(EncodedStringTable.smethod_0(29808) + (class2.method_7() ? class2.method_2().ToString() : class2.method_4()) + EncodedStringTable.smethod_0(29853) + text));
+						return RecoveredRuntime.FailManualMap(this, new MissingMethodException(EncodedStringTable.DecodeString(29808) + (class2.GetIsOrdinal() ? class2.GetOrdinal().ToString() : class2.GetName()) + EncodedStringTable.DecodeString(29853) + text));
 					}
-					if (!(RecoveredRuntime.smethod_427(base.method_19()) ? base.method_13<uint>(intPtr2, (uint)((int)intPtr3)) : base.method_13<IntPtr>(intPtr2, intPtr3)))
+					if (!(RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()) ? base.Write<uint>(intPtr2, (uint)((int)intPtr3)) : base.Write<IntPtr>(intPtr2, intPtr3)))
 					{
-						return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29882)));
+						return RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(29882)));
 					}
-					intPtr2 = intPtr2.smethod_8(RecoveredRuntime.smethod_73(base.method_19()));
+					intPtr2 = intPtr2.Add(RecoveredRuntime.GetRemotePointerSize(base.GetRemoteProcess()));
 				}
 				i++;
 				continue;
 			}
-			return RecoveredRuntime.smethod_128(this, new Exception(EncodedStringTable.smethod_0(29755) + text));
+			return RecoveredRuntime.FailManualMap(this, new Exception(EncodedStringTable.DecodeString(29755) + text));
 		}
 		return true;
 	}
 
-	internal bool method_43(Class172 class172_0)
+	internal bool ApplyBaseRelocations(Class172 class172_0)
 	{
-		PeImage @class = class172_0.method_0();
-		IntPtr intPtr = class172_0.method_2();
-		long num = intPtr.ToInt64() - (long)@class.method_6().method_3().imethod_17();
+		PeImage @class = class172_0.GetImage();
+		IntPtr intPtr = class172_0.GetModuleBase();
+		long num = intPtr.ToInt64() - (long)@class.GetHeaders().GetOptionalHeader().GetImageBase();
 		if (num == 0L)
 		{
 			return true;
 		}
-		if (@class.method_16() == null && (IntPtr)((long)class172_0.method_0().method_6().method_3().imethod_17()) != intPtr)
+		if (@class.GetBaseRelocations() == null && (IntPtr)((long)class172_0.GetImage().GetHeaders().GetOptionalHeader().GetImageBase()) != intPtr)
 		{
-			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29963) + class172_0.method_6()));
+			return RecoveredRuntime.FailManualMap(this, new InvalidOperationException(EncodedStringTable.DecodeString(29963) + class172_0.GetFileName()));
 		}
-		if (@class.method_16() != null)
+		if (@class.GetBaseRelocations() != null)
 		{
-			foreach (BaseRelocationBlock class2 in @class.method_16().list_0)
+			foreach (BaseRelocationBlock class2 in @class.GetBaseRelocations().list_0)
 			{
 				foreach (BaseRelocationEntry class3 in class2.list_0)
 				{
-					if (class3.method_2() != BaseRelocationType.Absolute)
+					if (class3.GetRelocationType() != BaseRelocationType.Absolute)
 					{
-						IntPtr intptr_ = intPtr.smethod_9((long)((ulong)(class2.method_0() + class3.method_0())));
-						if (class3.method_2() != BaseRelocationType.HighLow)
+						IntPtr intptr_ = intPtr.Add((long)((ulong)(class2.GetPageRva() + class3.GetOffset())));
+						if (class3.GetRelocationType() != BaseRelocationType.HighLow)
 						{
-							if (class3.method_2() != BaseRelocationType.Dir64)
+							if (class3.GetRelocationType() != BaseRelocationType.Dir64)
 							{
-								return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(30129) + class3.method_2()));
+								return RecoveredRuntime.FailManualMap(this, new InvalidOperationException(EncodedStringTable.DecodeString(30129) + class3.GetRelocationType()));
 							}
-							IntPtr intptr_2 = base.method_11<IntPtr>(intptr_);
-							if (!base.method_13<IntPtr>(intptr_, intptr_2.smethod_9(num)))
+							IntPtr intptr_2 = base.Read<IntPtr>(intptr_);
+							if (!base.Write<IntPtr>(intptr_, intptr_2.Add(num)))
 							{
-								return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30068)));
+								return RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(30068)));
 							}
 						}
 						else
 						{
-							uint num2 = base.method_11<uint>(intptr_);
-							if (!base.method_13<uint>(intptr_, (uint)((ulong)num2 + (ulong)num)))
+							uint num2 = base.Read<uint>(intptr_);
+							if (!base.Write<uint>(intptr_, (uint)((ulong)num2 + (ulong)num)))
 							{
-								return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30068)));
+								return RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(30068)));
 							}
 						}
 					}
@@ -724,50 +707,50 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 		return true;
 	}
 
-	internal bool method_44(Class172 class172_0)
+	internal bool WriteImageToTarget(Class172 class172_0)
 	{
-		IntPtr intPtr = class172_0.method_2();
-		PeImage @class = class172_0.method_0();
-		if (!base.method_16<byte>(intPtr, RecoveredRuntime.smethod_8((long)((ulong)@class.method_6().method_3().imethod_31()), @class, 0L)))
+		IntPtr intPtr = class172_0.GetModuleBase();
+		PeImage @class = class172_0.GetImage();
+		if (!base.WriteArray<byte>(intPtr, RecoveredRuntime.ReadImageBytes((long)((ulong)@class.GetHeaders().GetOptionalHeader().GetSizeOfHeaders()), @class, 0L)))
 		{
-			return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30194)));
+			return RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(30194)));
 		}
-		if (!base.method_14(intPtr, (long)((ulong)@class.method_6().method_3().imethod_31()), NativeTypes.Enum34.flag_5))
+		if (!base.ProtectMemory(intPtr, (long)((ulong)@class.GetHeaders().GetOptionalHeader().GetSizeOfHeaders()), NativeTypes.Enum34.flag_5))
 		{
-			return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30255)));
+			return RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(30255)));
 		}
-		foreach (PeSectionHeader gclass in @class.method_8())
+		foreach (PeSectionHeader gclass in @class.GetSections())
 		{
-			if ((gclass.method_18() & (SectionCharacteristics)3758096384u) != (SectionCharacteristics)0u && (gclass.method_18() & SectionCharacteristics.flag_28) == (SectionCharacteristics)0u)
+			if ((gclass.GetCharacteristics() & (SectionCharacteristics)3758096384u) != (SectionCharacteristics)0u && (gclass.GetCharacteristics() & SectionCharacteristics.flag_28) == (SectionCharacteristics)0u)
 			{
-				IntPtr intptr_ = intPtr.smethod_9((long)((ulong)gclass.method_4()));
-				long long_ = (long)((ulong)gclass.method_8());
-				long long_2 = (long)((ulong)gclass.method_6());
-				if (!base.method_16<byte>(intptr_, RecoveredRuntime.smethod_8(long_2, @class, long_)))
+				IntPtr intptr_ = intPtr.Add((long)((ulong)gclass.GetVirtualAddress()));
+				long long_ = (long)((ulong)gclass.GetPointerToRawData());
+				long long_2 = (long)((ulong)gclass.GetSizeOfRawData());
+				if (!base.WriteArray<byte>(intptr_, RecoveredRuntime.ReadImageBytes(long_2, @class, long_)))
 				{
-					return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30316)));
+					return RecoveredRuntime.FailManualMap(this, new AccessViolationException(EncodedStringTable.DecodeString(30316)));
 				}
 			}
 		}
 		return true;
 	}
 
-	internal static byte[] smethod_7(PeImage class154_0)
+	internal static byte[] ExtractManifestResource(PeImage class154_0)
 	{
-		if (class154_0.method_23() == null)
+		if (class154_0.GetResources() == null)
 		{
 			return null;
 		}
-		foreach (ResourceDirectoryNode @class in class154_0.method_23().method_0().method_6())
+		foreach (ResourceDirectoryNode @class in class154_0.GetResources().GetRoot().GetSubdirectories())
 		{
-			if (RecoveredRuntime.smethod_89(@class) && @class.method_2() == 24 && @class.method_6().Count == 1 && @class.method_6()[0].method_4().Count == 1)
+			if (RecoveredRuntime.HasNumericResourceIdentifier(@class) && @class.GetId() == 24 && @class.GetSubdirectories().Count == 1 && @class.GetSubdirectories()[0].GetDataEntries().Count == 1)
 			{
-				ResourceDataEntry class2 = @class.method_6()[0].method_4()[0];
-				long num = RecoveredRuntime.smethod_135(class154_0, class2.method_4());
+				ResourceDataEntry class2 = @class.GetSubdirectories()[0].GetDataEntries()[0];
+				long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, class2.GetDataRva());
 				if (num != -1L)
 				{
-					byte[] array = new byte[class2.method_6()];
-					using (Stream stream = RecoveredRuntime.smethod_264(class154_0, num, (int)class2.method_6()))
+					byte[] array = new byte[class2.GetSize()];
+					using (Stream stream = RecoveredRuntime.CopyImageRange(class154_0, num, (int)class2.GetSize()))
 					{
 						stream.Read(array, 0, array.Length);
 					}
@@ -776,95 +759,5 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 			}
 		}
 		return null;
-	}
-
-	internal static bool smethod_8(string string_0)
-	{
-		return Path.IsPathRooted(string_0);
-	}
-
-	internal static string smethod_9(string string_0)
-	{
-		return Path.GetFullPath(string_0);
-	}
-
-	internal static bool smethod_10(string string_0)
-	{
-		return File.Exists(string_0);
-	}
-
-	internal static string smethod_11(string string_0, string string_1, string string_2)
-	{
-		return string_0 + string_1 + string_2;
-	}
-
-	internal static FileNotFoundException smethod_12(string string_0)
-	{
-		return new FileNotFoundException(string_0);
-	}
-
-	internal static UnauthorizedAccessException smethod_13(string string_0)
-	{
-		return new UnauthorizedAccessException(string_0);
-	}
-
-	internal static AccessViolationException smethod_14(string string_0)
-	{
-		return new AccessViolationException(string_0);
-	}
-
-	internal static string smethod_15(string string_0)
-	{
-		return Path.GetFileName(string_0);
-	}
-
-	internal static MissingMethodException smethod_16(string string_0)
-	{
-		return new MissingMethodException(string_0);
-	}
-
-	internal static InvalidOperationException smethod_17(string string_0)
-	{
-		return new InvalidOperationException(string_0);
-	}
-
-	internal static ushort smethod_18(byte[] byte_0, int int_1)
-	{
-		return BitConverter.ToUInt16(byte_0, int_1);
-	}
-
-	internal static void smethod_19(Array array_0, RuntimeFieldHandle runtimeFieldHandle_0)
-	{
-		RuntimeHelpers.InitializeArray(array_0, runtimeFieldHandle_0);
-	}
-
-	internal static byte[] smethod_20(ushort ushort_0)
-	{
-		return BitConverter.GetBytes(ushort_0);
-	}
-
-	internal static void smethod_21(Array array_0, int int_1, Array array_1, int int_2, int int_3)
-	{
-		Array.Copy(array_0, int_1, array_1, int_2, int_3);
-	}
-
-	internal static string smethod_22(string string_0, string string_1)
-	{
-		return string_0 + string_1;
-	}
-
-	internal static Exception smethod_23(string string_0)
-	{
-		return new Exception(string_0);
-	}
-
-	internal static int smethod_24(Stream stream_0, byte[] byte_0, int int_1, int int_2)
-	{
-		return stream_0.Read(byte_0, int_1, int_2);
-	}
-
-	internal static void smethod_25(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
 	}
 }

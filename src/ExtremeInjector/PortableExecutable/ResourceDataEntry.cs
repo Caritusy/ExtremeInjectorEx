@@ -10,28 +10,28 @@ public sealed class ResourceDataEntry : ResourceIdentifier
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_4()
+	public uint GetDataRva()
 	{
 		return uint_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_5(uint uint_2)
+	public void SetDataRva(uint uint_2)
 	{
 		uint_0 = uint_2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public uint method_6()
+	public uint GetSize()
 	{
 		return uint_1;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_7(uint uint_2)
+	public void SetSize(uint uint_2)
 	{
 		uint_1 = uint_2;
 	}
@@ -39,14 +39,14 @@ public sealed class ResourceDataEntry : ResourceIdentifier
 	public ResourceDataEntry(int int_1, uint uint_2, uint uint_3)
 		: base(int_1)
 	{
-		method_5(uint_2);
-		method_7(uint_3);
+		SetDataRva(uint_2);
+		SetSize(uint_3);
 	}
 
 	public ResourceDataEntry(string string_1, uint uint_2, uint uint_3)
 		: base(string_1)
 	{
-		method_5(uint_2);
-		method_7(uint_3);
+		SetDataRva(uint_2);
+		SetSize(uint_3);
 	}
 }

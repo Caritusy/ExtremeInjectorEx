@@ -2,17 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 public sealed partial class ModuleOptionsForm : Form
 {
-	[CompilerGenerated]
-	internal ModuleEntry class16_0;
+	internal ModuleEntry Module { get; set; }
 
-	[CompilerGenerated]
-	internal PeImage class154_0;
+	internal PeImage Image { get; set; }
 
 	internal IContainer icontainer_0;
 
@@ -42,34 +39,6 @@ public sealed partial class ModuleOptionsForm : Form
 
 	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_2;
 
-	[SpecialName]
-	[CompilerGenerated]
-	internal ModuleEntry method_0()
-	{
-		return class16_0;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	internal void method_1(ModuleEntry class16_1)
-	{
-		class16_0 = class16_1;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	internal PeImage method_2()
-	{
-		return class154_0;
-	}
-
-	[SpecialName]
-	[CompilerGenerated]
-	internal void method_3(PeImage class154_1)
-	{
-		class154_0 = class154_1;
-	}
-
 	public ModuleOptionsForm()
 		: this(attachRuntimeLoadHandler: true)
 	{
@@ -80,18 +49,18 @@ public sealed partial class ModuleOptionsForm : Form
 		InitializeModernModuleOptionsForm(attachRuntimeLoadHandler);
 	}
 
-	internal void method_4(object sender, EventArgs e)
+	internal void OnFormLoad(object sender, EventArgs e)
 	{
-		this.comboBox_0.Items.Add(EncodedStringTable.smethod_0(394));
+		this.comboBox_0.Items.Add(EncodedStringTable.DecodeString(394));
 		int selectedIndex = 0;
-		if (this.method_2().method_14() != null)
+		if (Image.GetExports() != null)
 		{
-			foreach (ExportedSymbol @class in this.method_2().method_14().list_1)
+			foreach (ExportedSymbol @class in Image.GetExports().list_1)
 			{
-				if (@class.method_0())
+				if (@class.GetHasName())
 				{
-					this.comboBox_0.Items.Add(@class.method_4());
-					if (@class.method_4() == this.method_0().ExportName)
+					this.comboBox_0.Items.Add(@class.GetName());
+					if (@class.GetName() == Module.ExportName)
 					{
 						selectedIndex = this.comboBox_0.Items.Count - 1;
 					}
@@ -99,20 +68,20 @@ public sealed partial class ModuleOptionsForm : Form
 			}
 		}
 		this.comboBox_0.SelectedIndex = selectedIndex;
-		this.comboBox_1.Items.Add(EncodedStringTable.smethod_0(395));
-		this.comboBox_1.Items.Add(EncodedStringTable.smethod_0(408));
-		this.comboBox_1.Items.Add(EncodedStringTable.smethod_0(417));
-		if (this.method_0().CallingConvention != (CallingConvention)0)
+		this.comboBox_1.Items.Add(EncodedStringTable.DecodeString(395));
+		this.comboBox_1.Items.Add(EncodedStringTable.DecodeString(408));
+		this.comboBox_1.Items.Add(EncodedStringTable.DecodeString(417));
+		if (Module.CallingConvention != (CallingConvention)0)
 		{
-			if (this.method_0().CallingConvention == CallingConvention.StdCall)
+			if (Module.CallingConvention == CallingConvention.StdCall)
 			{
 				this.comboBox_1.SelectedIndex = 0;
 			}
-			else if (this.method_0().CallingConvention == CallingConvention.Cdecl)
+			else if (Module.CallingConvention == CallingConvention.Cdecl)
 			{
 				this.comboBox_1.SelectedIndex = 1;
 			}
-			else if (this.method_0().CallingConvention == CallingConvention.FastCall)
+			else if (Module.CallingConvention == CallingConvention.FastCall)
 			{
 				this.comboBox_1.SelectedIndex = 2;
 			}
@@ -121,24 +90,24 @@ public sealed partial class ModuleOptionsForm : Form
 		{
 			this.comboBox_1.SelectedIndex = 0;
 		}
-		this.comboBox_2.Items.Add(EncodedStringTable.smethod_0(430));
-		this.comboBox_2.Items.Add(EncodedStringTable.smethod_0(439));
-		this.comboBox_2.Items.Add(EncodedStringTable.smethod_0(452));
-		this.comboBox_2.Items.Add(EncodedStringTable.smethod_0(461));
-		this.comboBox_2.Items.Add(EncodedStringTable.smethod_0(470));
-		this.comboBox_2.Items.Add(EncodedStringTable.smethod_0(479));
-		this.comboBox_2.Items.Add(EncodedStringTable.smethod_0(488));
-		if (this.method_0().Parameters == null)
+		this.comboBox_2.Items.Add(EncodedStringTable.DecodeString(430));
+		this.comboBox_2.Items.Add(EncodedStringTable.DecodeString(439));
+		this.comboBox_2.Items.Add(EncodedStringTable.DecodeString(452));
+		this.comboBox_2.Items.Add(EncodedStringTable.DecodeString(461));
+		this.comboBox_2.Items.Add(EncodedStringTable.DecodeString(470));
+		this.comboBox_2.Items.Add(EncodedStringTable.DecodeString(479));
+		this.comboBox_2.Items.Add(EncodedStringTable.DecodeString(488));
+		if (Module.Parameters == null)
 		{
 			return;
 		}
-		foreach (ExportParameter class2 in this.method_0().Parameters)
+		foreach (ExportParameter class2 in Module.Parameters)
 		{
-			RecoveredRuntime.smethod_342(this, class2.Value, class2.Type, false);
+			RecoveredRuntime.TryAddExportParameter(this, class2.Value, class2.Type, false);
 		}
 	}
 
-	internal void method_5(object sender, EventArgs e)
+	internal void OnExportSelectionChanged(object sender, EventArgs e)
 	{
 		bool flag = comboBox_0.SelectedIndex != 0;
 		ComboBox comboBox = comboBox_1;
@@ -150,40 +119,40 @@ public sealed partial class ModuleOptionsForm : Form
 		bool flag6 = (comboBox2.Enabled = flag4);
 		bool enabled = (dataGridView.Enabled = flag6);
 		comboBox.Enabled = enabled;
-		method_0().ExportName = ((comboBox_0.SelectedIndex != 0) ? comboBox_0.SelectedItem.ToString() : string.Empty);
+		Module.ExportName = ((comboBox_0.SelectedIndex != 0) ? comboBox_0.SelectedItem.ToString() : string.Empty);
 	}
 
-	internal void method_6(object sender, EventArgs e)
+	internal void OnCallingConventionChanged(object sender, EventArgs e)
 	{
 		if (this.comboBox_1.SelectedIndex == 0)
 		{
-			this.method_0().CallingConvention = CallingConvention.StdCall;
+			Module.CallingConvention = CallingConvention.StdCall;
 			return;
 		}
 		if (this.comboBox_1.SelectedIndex == 1)
 		{
-			this.method_0().CallingConvention = CallingConvention.Cdecl;
+			Module.CallingConvention = CallingConvention.Cdecl;
 			return;
 		}
 		if (this.comboBox_1.SelectedIndex == 2)
 		{
-			this.method_0().CallingConvention = CallingConvention.FastCall;
+			Module.CallingConvention = CallingConvention.FastCall;
 		}
 	}
 
-	internal void method_7(object sender, EventArgs e)
+	internal void OnAddParameterClick(object sender, EventArgs e)
 	{
 		if (this.comboBox_2.SelectedIndex == -1)
 		{
 			return;
 		}
-		if (RecoveredRuntime.smethod_342(this, this.textBox_0.Text, (ExportParameterType)this.comboBox_2.SelectedIndex, true))
+		if (RecoveredRuntime.TryAddExportParameter(this, this.textBox_0.Text, (ExportParameterType)this.comboBox_2.SelectedIndex, true))
 		{
 			this.textBox_0.ResetText();
 		}
 	}
 
-	internal void method_8(object sender, DataGridViewRowsAddedEventArgs e)
+	internal void OnParameterRowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 	{
 		int num = 0;
 		foreach (object obj in ((IEnumerable)this.dataGridView_0.Rows))
@@ -195,9 +164,9 @@ public sealed partial class ModuleOptionsForm : Form
 		}
 	}
 
-	internal void method_9(object sender, DataGridViewRowsRemovedEventArgs e)
+	internal void OnParameterRowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
 	{
-		this.method_0().Parameters.RemoveAt(e.RowIndex);
+		Module.Parameters.RemoveAt(e.RowIndex);
 		int num = 0;
 		foreach (DataGridViewRow row in this.dataGridView_0.Rows)
 		{
@@ -215,95 +184,5 @@ public sealed partial class ModuleOptionsForm : Form
 			this.icontainer_0.Dispose();
 		}
 		base.Dispose(disposing);
-	}
-
-	internal static ComboBox.ObjectCollection smethod_0(ComboBox comboBox_3)
-	{
-		return comboBox_3.Items;
-	}
-
-	internal static int smethod_1(ComboBox.ObjectCollection objectCollection_0, object object_0)
-	{
-		return objectCollection_0.Add(object_0);
-	}
-
-	internal static bool smethod_2(string string_0, string string_1)
-	{
-		return string_0 == string_1;
-	}
-
-	internal static int smethod_3(ComboBox.ObjectCollection objectCollection_0)
-	{
-		return objectCollection_0.Count;
-	}
-
-	internal static void smethod_4(ListControl listControl_0, int int_0)
-	{
-		listControl_0.SelectedIndex = int_0;
-	}
-
-	internal static int smethod_5(ListControl listControl_0)
-	{
-		return listControl_0.SelectedIndex;
-	}
-
-	internal static void smethod_6(Control control_0, bool bool_0)
-	{
-		control_0.Enabled = bool_0;
-	}
-
-	internal static object smethod_7(ComboBox comboBox_3)
-	{
-		return comboBox_3.SelectedItem;
-	}
-
-	internal static string smethod_8(object object_0)
-	{
-		return object_0.ToString();
-	}
-
-	internal static string smethod_9(Control control_0)
-	{
-		return control_0.Text;
-	}
-
-	internal static void smethod_10(Control control_0)
-	{
-		control_0.ResetText();
-	}
-
-	internal static DataGridViewRowCollection smethod_11(DataGridView dataGridView_1)
-	{
-		return dataGridView_1.Rows;
-	}
-
-	internal static IEnumerator smethod_12(IEnumerable ienumerable_0)
-	{
-		return ienumerable_0.GetEnumerator();
-	}
-
-	internal static object smethod_13(IEnumerator ienumerator_0)
-	{
-		return ienumerator_0.Current;
-	}
-
-	internal static DataGridViewCellCollection smethod_14(DataGridViewRow dataGridViewRow_0)
-	{
-		return dataGridViewRow_0.Cells;
-	}
-
-	internal static DataGridViewCell smethod_15(DataGridViewCellCollection dataGridViewCellCollection_0, int int_0)
-	{
-		return dataGridViewCellCollection_0[int_0];
-	}
-
-	internal static int smethod_16(DataGridViewRowsRemovedEventArgs dataGridViewRowsRemovedEventArgs_0)
-	{
-		return dataGridViewRowsRemovedEventArgs_0.RowIndex;
-	}
-
-	internal static void smethod_17(IDisposable idisposable_0)
-	{
-		idisposable_0.Dispose();
 	}
 }
