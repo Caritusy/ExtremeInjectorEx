@@ -11,6 +11,7 @@ public sealed partial class SettingsForm
 	private Label scramblePresetLabel;
 	private Label languageLabel;
 	internal ComboBox languageComboBox;
+	internal CheckBox randomizeWindowTitleCheckBox;
 
 	private void InitializeModernSettingsForm()
 	{
@@ -297,6 +298,9 @@ public sealed partial class SettingsForm
 		languageLabel = CreateFieldLabel(UiText.Get("Settings.Language"));
 		languageComboBox = CreateComboBox("languageComboBox");
 		languageComboBox.Items.AddRange(GetLanguageLabels());
+		randomizeWindowTitleCheckBox = CreateCheckBox(
+			"randomizeWindowTitleCheckBox",
+			UiText.Get("Settings.RandomizeWindowTitle"));
 
 		var layout = new TableLayoutPanel
 		{
@@ -304,13 +308,13 @@ public sealed partial class SettingsForm
 			Dock = DockStyle.Fill,
 			Margin = Padding.Empty,
 			Padding = new Padding(0, 5, 0, 0),
-			RowCount = 4
+			RowCount = 5
 		};
 		layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 		layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 142f));
-		for (int index = 0; index < 4; index++)
+		for (int index = 0; index < 5; index++)
 		{
-			layout.RowStyles.Add(new RowStyle(SizeType.Percent, 25f));
+			layout.RowStyles.Add(new RowStyle(SizeType.Percent, 20f));
 		}
 		layout.Controls.Add(label_4, 0, 0);
 		layout.Controls.Add(panel_2, 1, 0);
@@ -322,6 +326,8 @@ public sealed partial class SettingsForm
 		languageComboBox.Dock = DockStyle.Fill;
 		languageComboBox.Margin = new Padding(6, 2, 0, 2);
 		layout.Controls.Add(languageComboBox, 1, 3);
+		layout.Controls.Add(randomizeWindowTitleCheckBox, 0, 4);
+		layout.SetColumnSpan(randomizeWindowTitleCheckBox, 2);
 		groupBox_4.Controls.Add(layout);
 		return groupBox_4;
 	}
@@ -418,6 +424,7 @@ public sealed partial class SettingsForm
 		label_3.Text = UiText.Get("Settings.PrimaryAccent");
 		label_2.Text = UiText.Get("Settings.SecondaryAccent");
 		languageLabel.Text = UiText.Get("Settings.Language");
+		randomizeWindowTitleCheckBox.Text = UiText.Get("Settings.RandomizeWindowTitle");
 		groupBox_5.Text = UiText.Get("Settings.Tools");
 		button_4.Text = UiText.Get("Settings.SecureMode");
 		button_5.Text = UiText.Get("Settings.ScrambleDll");

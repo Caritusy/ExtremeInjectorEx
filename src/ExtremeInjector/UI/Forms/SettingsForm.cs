@@ -115,6 +115,7 @@ public sealed partial class SettingsForm : Form
 		InitializeModernSettingsForm();
 		button_4.Enabled = !string.IsNullOrEmpty(Assembly.GetExecutingAssembly().Location);
 		RecoveredRuntime.smethod_258(this);
+		randomizeWindowTitleCheckBox.Checked = ApplicationSettings.Current.RandomizeWindowTitle;
 		InitializeLanguageSelection();
 	}
 
@@ -179,6 +180,7 @@ public sealed partial class SettingsForm : Form
 		UiText.Configure(LanguagePreference.System);
 		ApplicationSettings.Save();
 		RecoveredRuntime.smethod_258(this);
+		randomizeWindowTitleCheckBox.Checked = ApplicationSettings.Current.RandomizeWindowTitle;
 		SetLanguageSelection(LanguagePreference.System);
 		ApplyLocalizedText();
 		PerformLayout();
@@ -192,6 +194,7 @@ public sealed partial class SettingsForm : Form
 	internal void method_9(object sender, FormClosingEventArgs e)
 	{
 		ApplicationSettings.Current.Language = GetSelectedLanguage();
+		ApplicationSettings.Current.RandomizeWindowTitle = randomizeWindowTitleCheckBox.Checked;
 		UiText.Configure(ApplicationSettings.Current.Language);
 		RecoveredRuntime.smethod_330(this);
 	}

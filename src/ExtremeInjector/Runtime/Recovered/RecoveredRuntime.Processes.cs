@@ -2834,36 +2834,71 @@ public sealed partial class RecoveredRuntime
 	internal static void SetSelectedProcess(MainForm mainForm, RemoteProcess gclass2_0)
 	{
 		Image previousImage = mainForm.processIconPictureBox.BackgroundImage;
-		mainForm.processIconPictureBox.BackgroundImage = null;
-		previousImage?.Dispose();
+		Image nextImage = null;
+		Cursor nextCursor = Cursors.Default;
+		string nextDescription = UiText.Get("Main.NoProcessSelected");
+		bool injectEnabled = false;
+		bool isSameProcess = gclass2_0 != null &&
+			mainForm.selectedProcess != null &&
+			mainForm.selectedProcess.ProcessId == gclass2_0.ProcessId;
 
-		mainForm.selectedProcess = gclass2_0;
-		mainForm.processDescriptionLabel.Text = UiText.Get("Main.NoProcessSelected");
-
-		if (gclass2_0 == null)
+		if (gclass2_0 != null)
 		{
-			mainForm.processIconPictureBox.Cursor = Cursors.Default;
-			mainForm.injectButton.Enabled = false;
-			return;
+			nextCursor = Cursors.Hand;
+			nextImage = isSameProcess ? previousImage : LoadProcessIcon(gclass2_0);
+			string description = LoadProcessDescription(gclass2_0);
+			nextDescription = UiText.Format("Main.ProcessDetails", description, gclass2_0.ProcessId);
+			injectEnabled = !ApplicationSettings.Current.Options.AutoInject;
 		}
 
-		mainForm.processIconPictureBox.Cursor = Cursors.Hand;
+		mainForm.processSurface.SuspendLayout();
 		try
 		{
-			using (Icon icon = smethod_11(gclass2_0.FilePath, IconSize.const_1))
+			mainForm.selectedProcess = gclass2_0;
+			mainForm.processIconPictureBox.BackgroundImage = nextImage;
+			mainForm.processIconPictureBox.Cursor = nextCursor;
+			mainForm.processDescriptionLabel.Text = nextDescription;
+			mainForm.injectButton.Enabled = injectEnabled;
+		}
+		finally
+		{
+			mainForm.processSurface.ResumeLayout(performLayout: false);
+			mainForm.processSurface.Invalidate(invalidateChildren: true);
+		}
+
+		if (!ReferenceEquals(previousImage, nextImage))
+		{
+			previousImage?.Dispose();
+		}
+
+		if (gclass2_0 != null)
+		{
+			ApplicationSettings.Current.ProcessName = mainForm.processNameTextBox.Text;
+			ApplicationSettings.Save();
+		}
+	}
+
+	private static Image LoadProcessIcon(RemoteProcess process)
+	{
+		try
+		{
+			using (Icon icon = smethod_11(process.FilePath, IconSize.const_1))
 			{
-				mainForm.processIconPictureBox.BackgroundImage = icon?.ToBitmap();
+				return icon?.ToBitmap();
 			}
 		}
 		catch
 		{
-			mainForm.processIconPictureBox.BackgroundImage = null;
+			return null;
 		}
+	}
 
+	private static string LoadProcessDescription(RemoteProcess process)
+	{
 		string description = UiText.Get("Main.NoDescription");
 		try
 		{
-			FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(gclass2_0.FilePath);
+			FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(process.FilePath);
 			if (!string.IsNullOrEmpty(versionInfo.FileDescription))
 			{
 				description = versionInfo.FileDescription;
@@ -2873,15 +2908,9 @@ public sealed partial class RecoveredRuntime
 		{
 		}
 
-		if (description.Length > 50)
-		{
-			description = description.Substring(0, 50) + "...";
-		}
-
-		mainForm.processDescriptionLabel.Text = UiText.Format("Main.ProcessDetails", description, gclass2_0.ProcessId);
-		ApplicationSettings.Current.ProcessName = mainForm.processNameTextBox.Text;
-		ApplicationSettings.Save();
-		mainForm.injectButton.Enabled = !ApplicationSettings.Current.Options.AutoInject;
+		return description.Length > 50
+			? description.Substring(0, 50) + "..."
+			: description;
 	}
 
 	internal static int smethod_385(RemoteModuleManager class93_0, ProcessModuleInfo gclass1_0)

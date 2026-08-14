@@ -49,6 +49,9 @@ public sealed class ApplicationSettings
 	[DataMember(Name = "Language")]
 	public LanguagePreference Language { get; set; }
 
+	[DataMember(Name = "RandomizeWindowTitle")]
+	public bool RandomizeWindowTitle { get; set; }
+
 	public static ApplicationSettings Current { get; set; }
 
 	static ApplicationSettings()
@@ -216,6 +219,7 @@ public sealed class ApplicationSettings
 		Modules = new List<ModuleEntry>();
 		Warnings = new WarningPreferences();
 		Options = new InjectionOptions();
+		RandomizeWindowTitle = true;
 	}
 
 	private static void NormalizeLegacyContractNames(XDocument document)

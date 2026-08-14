@@ -17,7 +17,7 @@
   <data name="Main.Select" xml:space="preserve"><value>Select</value></data>
   <data name="Main.DllList" xml:space="preserve"><value>DLL list</value></data>
   <data name="Main.AddDll" xml:space="preserve"><value>Add DLL</value></data>
-  <data name="Main.Toggle" xml:space="preserve"><value>Enable/disable</value></data>
+  <data name="Main.Toggle" xml:space="preserve"><value>Enable / Disable</value></data>
   <data name="Main.Remove" xml:space="preserve"><value>Remove</value></data>
   <data name="Main.Clear" xml:space="preserve"><value>Clear</value></data>
   <data name="Main.DllColumn" xml:space="preserve"><value>DLL</value></data>
@@ -35,7 +35,7 @@
   <data name="Main.NoProcessEntered" xml:space="preserve"><value>No target process has been selected or entered.</value></data>
   <data name="Main.ProcessNotRunning" xml:space="preserve"><value>The selected or entered target process is not currently running.</value></data>
   <data name="Settings.Title" xml:space="preserve"><value>Settings</value></data>
-  <data name="Settings.Description" xml:space="preserve"><value>Configure injection behavior, appearance, language, and maintenance tools.</value></data>
+  <data name="Settings.Description" xml:space="preserve"><value>Configure injection, automation, appearance, language, and utilities.</value></data>
   <data name="Settings.InjectionMethod" xml:space="preserve"><value>Injection method</value></data>
   <data name="Settings.InjectionBackend" xml:space="preserve"><value>Injection backend</value></data>
   <data name="Settings.Method.Standard" xml:space="preserve"><value>Standard injection</value></data>
@@ -47,7 +47,7 @@
   <data name="Settings.InjectionBehavior" xml:space="preserve"><value>Injection behavior</value></data>
   <data name="Settings.AutoInject" xml:space="preserve"><value>Inject automatically when the process starts</value></data>
   <data name="Settings.CloseOnInject" xml:space="preserve"><value>Close after a successful injection</value></data>
-  <data name="Settings.StealthInject" xml:space="preserve"><value>Use stealth injection</value></data>
+  <data name="Settings.StealthInject" xml:space="preserve"><value>Enable stealth injection</value></data>
   <data name="Settings.DelayBefore" xml:space="preserve"><value>Delay before injection (ms)</value></data>
   <data name="Settings.DelayBetween" xml:space="preserve"><value>Delay between modules (ms)</value></data>
   <data name="Settings.Scrambling" xml:space="preserve"><value>DLL scrambling</value></data>
@@ -58,14 +58,15 @@
   <data name="Settings.Preset.Extreme" xml:space="preserve"><value>Extreme</value></data>
   <data name="Settings.Preset.Custom" xml:space="preserve"><value>Custom</value></data>
   <data name="Settings.PostInjection" xml:space="preserve"><value>Post-injection</value></data>
-  <data name="Settings.HideModule" xml:space="preserve"><value>Hide the module from loader lists</value></data>
-  <data name="Settings.ErasePe" xml:space="preserve"><value>Erase PE headers</value></data>
+  <data name="Settings.HideModule" xml:space="preserve"><value>Hide the module after injection</value></data>
+  <data name="Settings.ErasePe" xml:space="preserve"><value>Erase PE headers after injection</value></data>
   <data name="Settings.Appearance" xml:space="preserve"><value>Appearance and language</value></data>
   <data name="Settings.TextColor" xml:space="preserve"><value>Text color</value></data>
   <data name="Settings.PrimaryAccent" xml:space="preserve"><value>Primary accent</value></data>
   <data name="Settings.SecondaryAccent" xml:space="preserve"><value>Secondary accent</value></data>
   <data name="Settings.Language" xml:space="preserve"><value>Interface language</value></data>
-  <data name="Settings.Tools" xml:space="preserve"><value>Tools</value></data>
+  <data name="Settings.RandomizeWindowTitle" xml:space="preserve"><value>Use a different window title on each launch</value></data>
+  <data name="Settings.Tools" xml:space="preserve"><value>Utilities</value></data>
   <data name="Settings.SecureMode" xml:space="preserve"><value>Start in secure mode</value></data>
   <data name="Settings.ScrambleDll" xml:space="preserve"><value>Scramble a DLL</value></data>
   <data name="Settings.ProcessInfo" xml:space="preserve"><value>View process information</value></data>

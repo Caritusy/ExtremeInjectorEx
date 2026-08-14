@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -25,6 +26,8 @@ public sealed class MainForm : Form
 
 	internal RemoteProcess selectedProcess;
 	private int? lastAutoInjectedProcessId;
+	private bool suppressProcessNameResolution;
+	private string randomizedWindowTitle;
 
 	internal static readonly Dictionary<InjectionMethod, Func<RemoteProcess, DllInjector>> InjectorBackendFactories = new Dictionary<InjectionMethod, Func<RemoteProcess, DllInjector>>
 	{
@@ -54,7 +57,7 @@ public sealed class MainForm : Form
 	internal DataGridViewCheckBoxColumn enabledColumn;
 	internal DataGridViewTextBoxColumn dllNameColumn;
 	internal DataGridViewButtonColumn exportOptionsColumn;
-	private Panel processSurface;
+	internal Panel processSurface;
 	private Panel processNameFrame;
 
 	public MainForm()
@@ -468,6 +471,11 @@ public sealed class MainForm : Form
 		ModernUi.StyleSecondaryButton(removeButton, accent);
 		ModernUi.StyleQuietButton(clearButton, accent);
 		ModernUi.StylePrimaryButton(injectButton, accent, hoverAccent);
+		Padding commandPadding = ScalePadding(6, 0, 6, 0);
+		addDllButton.Padding = commandPadding;
+		toggleButton.Padding = commandPadding;
+		removeButton.Padding = commandPadding;
+		clearButton.Padding = commandPadding;
 
 		moduleGrid.BackgroundColor = ModernUi.Surface;
 		moduleGrid.DefaultCellStyle.BackColor = ModernUi.Surface;
@@ -509,8 +517,39 @@ public sealed class MainForm : Form
 
 	private void UpdateWindowTitle()
 	{
+		if (ApplicationSettings.Current.RandomizeWindowTitle)
+		{
+			if (string.IsNullOrEmpty(randomizedWindowTitle))
+			{
+				randomizedWindowTitle = CreateRandomWindowTitle();
+			}
+
+			Text = randomizedWindowTitle;
+			return;
+		}
+
 		Version version = Assembly.GetExecutingAssembly().GetName().Version;
 		Text = UiText.Format("Main.WindowTitle", version.Major, version.Minor, version.Build);
+	}
+
+	private static string CreateRandomWindowTitle()
+	{
+		const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		byte[] lengthSeed = new byte[1];
+		using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+		{
+			random.GetBytes(lengthSeed);
+			int length = 12 + lengthSeed[0] % 13;
+			byte[] randomBytes = new byte[length];
+			random.GetBytes(randomBytes);
+			char[] title = new char[length];
+			for (int index = 0; index < title.Length; index++)
+			{
+				title[index] = alphabet[randomBytes[index] % alphabet.Length];
+			}
+
+			return new string(title);
+		}
 	}
 
 	private void OnModuleSelectionChanged(object sender, EventArgs e)
@@ -599,12 +638,31 @@ public sealed class MainForm : Form
 			return;
 		}
 
-		processNameTextBox.Text = process.Name;
+		ApplySelectedProcess(process);
+	}
+
+	internal void ApplySelectedProcess(RemoteProcess process)
+	{
+		suppressProcessNameResolution = true;
+		try
+		{
+			processNameTextBox.Text = process.Name;
+		}
+		finally
+		{
+			suppressProcessNameResolution = false;
+		}
+
 		RecoveredRuntime.SetSelectedProcess(this, process);
 	}
 
 	internal void OnProcessNameChanged(object sender, EventArgs e)
 	{
+		if (suppressProcessNameResolution)
+		{
+			return;
+		}
+
 		RecoveredRuntime.ResolveSelectedProcess(this);
 	}
 
@@ -758,10 +816,7 @@ public sealed class MainForm : Form
 		ApplyModernTheme();
 		UpdateLayoutMetrics();
 		PerformLayout();
-		if (Program.UsesExternalSettings)
-		{
-			Text = RecoveredRuntime.smethod_275(PlatformInfo.random_0.Next(10, 25));
-		}
+		UpdateWindowTitle();
 	}
 
 	internal void OnMouseUp(object sender, MouseEventArgs e)

@@ -14,6 +14,7 @@ Extreme Injector Ex 是一个面向 Windows 的 DLL 注入器，基于 Extreme I
 - 设置保存在 `%AppData%\ExtremeInjectorEx\settings.xml`，并兼容迁移旧版程序目录中的设置文件。
 - NuGet 运行时依赖内嵌在主程序中，复制 `Extreme Injector.exe` 即可独立运行。
 - 主窗口及设置、模块选项等窗口采用统一界面风格，并固定为不可调整大小的工具窗口布局。
+- 默认在每次启动时生成新的随机窗口标题；可在设置中关闭并恢复标准产品标题。
 - 内置英语和简体中文界面；默认跟随 Windows 显示语言，也可在设置中即时切换并持久保存。
 
 ## 环境要求

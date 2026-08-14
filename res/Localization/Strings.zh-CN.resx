@@ -11,9 +11,9 @@
   <data name="Language.SimplifiedChinese" xml:space="preserve"><value>简体中文</value></data>
   <data name="Main.WindowTitle" xml:space="preserve"><value>Extreme Injector Ex {0}.{1}.{2}</value></data>
   <data name="Main.TargetProcess" xml:space="preserve"><value>目标进程</value></data>
-  <data name="Main.NoProcessSelected" xml:space="preserve"><value>尚未选择进程</value></data>
+  <data name="Main.NoProcessSelected" xml:space="preserve"><value>未选择进程</value></data>
   <data name="Main.ProcessDetails" xml:space="preserve"><value>{0}&#xA;进程 ID：0x{1:X}（{1}）</value></data>
-  <data name="Main.NoDescription" xml:space="preserve"><value>无可用描述</value></data>
+  <data name="Main.NoDescription" xml:space="preserve"><value>未提供进程描述</value></data>
   <data name="Main.Select" xml:space="preserve"><value>选择</value></data>
   <data name="Main.DllList" xml:space="preserve"><value>DLL 列表</value></data>
   <data name="Main.AddDll" xml:space="preserve"><value>添加 DLL</value></data>
@@ -25,7 +25,7 @@
   <data name="Main.About" xml:space="preserve"><value>关于</value></data>
   <data name="Main.Settings" xml:space="preserve"><value>设置</value></data>
   <data name="Main.Inject" xml:space="preserve"><value>注入</value></data>
-  <data name="Main.EmptyDllList" xml:space="preserve"><value>尚未添加 DLL</value></data>
+  <data name="Main.EmptyDllList" xml:space="preserve"><value>未添加 DLL</value></data>
   <data name="Main.Status.Injecting" xml:space="preserve"><value>正在注入 {0}…</value></data>
   <data name="Main.Status.WaitBefore" xml:space="preserve"><value>将在 {0} 秒后开始注入…</value></data>
   <data name="Main.Status.RunningExport" xml:space="preserve"><value>正在调用导出函数…（{0}）</value></data>
@@ -35,9 +35,9 @@
   <data name="Main.NoProcessEntered" xml:space="preserve"><value>尚未选择或输入目标进程。</value></data>
   <data name="Main.ProcessNotRunning" xml:space="preserve"><value>所选或输入的目标进程当前未运行。</value></data>
   <data name="Settings.Title" xml:space="preserve"><value>设置</value></data>
-  <data name="Settings.Description" xml:space="preserve"><value>配置注入行为、外观、语言和维护工具。</value></data>
+  <data name="Settings.Description" xml:space="preserve"><value>配置注入方式、自动化行为、界面外观、语言和实用工具。</value></data>
   <data name="Settings.InjectionMethod" xml:space="preserve"><value>注入方式</value></data>
-  <data name="Settings.InjectionBackend" xml:space="preserve"><value>注入后端</value></data>
+  <data name="Settings.InjectionBackend" xml:space="preserve"><value>选择注入方式</value></data>
   <data name="Settings.Method.Standard" xml:space="preserve"><value>标准注入</value></data>
   <data name="Settings.Method.ThreadHijacking" xml:space="preserve"><value>线程劫持</value></data>
   <data name="Settings.Method.LdrLoadDllStub" xml:space="preserve"><value>LdrLoadDll 存根</value></data>
@@ -47,7 +47,7 @@
   <data name="Settings.InjectionBehavior" xml:space="preserve"><value>注入行为</value></data>
   <data name="Settings.AutoInject" xml:space="preserve"><value>目标进程启动后自动注入</value></data>
   <data name="Settings.CloseOnInject" xml:space="preserve"><value>注入成功后关闭程序</value></data>
-  <data name="Settings.StealthInject" xml:space="preserve"><value>使用隐蔽注入</value></data>
+  <data name="Settings.StealthInject" xml:space="preserve"><value>启用隐蔽注入</value></data>
   <data name="Settings.DelayBefore" xml:space="preserve"><value>注入前延迟（毫秒）</value></data>
   <data name="Settings.DelayBetween" xml:space="preserve"><value>模块间注入延迟（毫秒）</value></data>
   <data name="Settings.Scrambling" xml:space="preserve"><value>DLL 混淆</value></data>
@@ -58,22 +58,23 @@
   <data name="Settings.Preset.Extreme" xml:space="preserve"><value>极限</value></data>
   <data name="Settings.Preset.Custom" xml:space="preserve"><value>自定义</value></data>
   <data name="Settings.PostInjection" xml:space="preserve"><value>注入后处理</value></data>
-  <data name="Settings.HideModule" xml:space="preserve"><value>从加载器链表中隐藏模块</value></data>
-  <data name="Settings.ErasePe" xml:space="preserve"><value>擦除 PE 头</value></data>
+  <data name="Settings.HideModule" xml:space="preserve"><value>注入后隐藏模块</value></data>
+  <data name="Settings.ErasePe" xml:space="preserve"><value>注入后擦除 PE 头</value></data>
   <data name="Settings.Appearance" xml:space="preserve"><value>外观与语言</value></data>
   <data name="Settings.TextColor" xml:space="preserve"><value>文本颜色</value></data>
-  <data name="Settings.PrimaryAccent" xml:space="preserve"><value>主强调色</value></data>
-  <data name="Settings.SecondaryAccent" xml:space="preserve"><value>次强调色</value></data>
+  <data name="Settings.PrimaryAccent" xml:space="preserve"><value>主色</value></data>
+  <data name="Settings.SecondaryAccent" xml:space="preserve"><value>辅助色</value></data>
   <data name="Settings.Language" xml:space="preserve"><value>界面语言</value></data>
-  <data name="Settings.Tools" xml:space="preserve"><value>工具</value></data>
-  <data name="Settings.SecureMode" xml:space="preserve"><value>以安全模式启动</value></data>
+  <data name="Settings.RandomizeWindowTitle" xml:space="preserve"><value>每次启动使用不同的窗口标题</value></data>
+  <data name="Settings.Tools" xml:space="preserve"><value>实用工具</value></data>
+  <data name="Settings.SecureMode" xml:space="preserve"><value>使用安全模式重新启动</value></data>
   <data name="Settings.ScrambleDll" xml:space="preserve"><value>混淆 DLL</value></data>
   <data name="Settings.ProcessInfo" xml:space="preserve"><value>查看进程信息</value></data>
   <data name="Settings.Reset" xml:space="preserve"><value>重置设置</value></data>
   <data name="Settings.SaveClose" xml:space="preserve"><value>保存并关闭</value></data>
   <data name="Module.Title" xml:space="preserve"><value>高级模块选项</value></data>
   <data name="Module.Heading" xml:space="preserve"><value>调用导出函数</value></data>
-  <data name="Module.Description" xml:space="preserve"><value>可选择在模块注入后调用它导出的函数。</value></data>
+  <data name="Module.Description" xml:space="preserve"><value>如 DLL 导出了初始化函数，可在注入完成后调用它。</value></data>
   <data name="Module.ExportOptions" xml:space="preserve"><value>导出函数选项</value></data>
   <data name="Module.ExportFunction" xml:space="preserve"><value>导出函数</value></data>
   <data name="Module.CallingConvention" xml:space="preserve"><value>调用约定</value></data>
@@ -96,7 +97,7 @@
   <data name="About.Title" xml:space="preserve"><value>关于 Extreme Injector Ex</value></data>
   <data name="About.Product" xml:space="preserve"><value>Extreme Injector Ex</value></data>
   <data name="About.Initials" xml:space="preserve"><value>T. R. L. S.</value></data>
-  <data name="About.OriginalCredit" xml:space="preserve"><value>原版 Extreme Injector 由 master131 开发。保留所有反向权利。</value></data>
+  <data name="About.OriginalCredit" xml:space="preserve"><value>原版 Extreme Injector 由 master131 开发，原作者保留全部权利。</value></data>
   <data name="About.MaintainerCredit" xml:space="preserve"><value>Extreme Injector Ex 由 HaleonMaerion1337 维护。</value></data>
   <data name="About.ProjectLink" xml:space="preserve"><value>在 GitHub 上查看项目</value></data>
   <data name="Common.Close" xml:space="preserve"><value>关闭</value></data>
@@ -105,7 +106,7 @@
   <data name="ManualMap.Options" xml:space="preserve"><value>手动映射选项</value></data>
   <data name="ManualMap.General" xml:space="preserve"><value>常规</value></data>
   <data name="ManualMap.DisableExceptions" xml:space="preserve"><value>禁用异常支持</value></data>
-  <data name="ManualMap.MapImports" xml:space="preserve"><value>手动解析导入表</value></data>
+  <data name="ManualMap.MapImports" xml:space="preserve"><value>解析导入表</value></data>
   <data name="ManualMap.HideThreads" xml:space="preserve"><value>向调试器隐藏线程</value></data>
   <data name="ManualMap.DisableSehValidation" xml:space="preserve"><value>禁用 SEH 处理程序校验</value></data>
   <data name="Scramble.Title" xml:space="preserve"><value>高级混淆设置</value></data>
@@ -145,7 +146,7 @@
   <data name="ProcessInfo.Suspend" xml:space="preserve"><value>挂起</value></data>
   <data name="ProcessInfo.Resume" xml:space="preserve"><value>恢复</value></data>
   <data name="ProcessInfo.KillThread" xml:space="preserve"><value>终止</value></data>
-  <data name="Dependency.Title" xml:space="preserve"><value>依赖项安装程序</value></data>
+  <data name="Dependency.Title" xml:space="preserve"><value>安装依赖项</value></data>
   <data name="Dependency.Connecting" xml:space="preserve"><value>正在连接下载服务器…</value></data>
   <data name="Dependency.Downloading" xml:space="preserve"><value>正在下载 {0}… [{1}/{2}]</value></data>
   <data name="Dependency.Extracting" xml:space="preserve"><value>正在解压文件…</value></data>
