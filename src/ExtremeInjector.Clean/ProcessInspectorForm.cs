@@ -485,7 +485,7 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void method_5(object sender, EventArgs e)
 	{
-		if (!Class171.smethod_302(method_0()))
+		if (!Class171.HasProcessExited(method_0()))
 		{
 			goto IL_000d;
 		}

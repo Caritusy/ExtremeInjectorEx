@@ -159,7 +159,7 @@ public sealed class Class86 : Class85
 				return result;
 			}
 			Class171.smethod_153(this, intPtr2, -1);
-			num = ((!Class171.smethod_302(method_19())) ? 1950611446 : 52706250);
+			num = ((!Class171.HasProcessExited(method_19())) ? 1950611446 : 52706250);
 			continue;
 			IL_01d0:
 			gClass = Class171.smethod_42(method_19())["ntdll.dll"];

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
-public sealed class Form5 : Form
+public sealed class ProcessSelectorForm : Form
 {
 	[CompilerGenerated]
 	internal GClass2 gclass2_0;
@@ -38,7 +38,7 @@ public sealed class Form5 : Form
 		gclass2_0 = gclass2_1;
 	}
 
-	public Form5()
+	public ProcessSelectorForm()
 	{
 		Class171.smethod_334(this);
 		Class171.smethod_25(this);

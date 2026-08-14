@@ -597,9 +597,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_6(MainForm.Class21 class21_0)
+	internal static void EditModuleOptions(MainForm.ModuleRow class21_0)
 	{
-		smethod_172(class21_0.method_0());
+		smethod_172(class21_0.Entry);
 		ApplicationSettings.Save();
 	}
 
@@ -788,98 +788,50 @@ public sealed class Class171
 		};
 	}
 
-	internal static void smethod_10(MainForm gform0_0)
+	internal static void BeginInjection(MainForm mainForm)
 	{
-		MainForm.Class24 @class = new MainForm.Class24();
-		@class.gform0_0 = gform0_0;
-		InjectionMethod enum4_ = default(InjectionMethod);
-		WarningPreferences class15_ = default(WarningPreferences);
-		while (true)
+		MainForm.ModuleRow[] modules = GetEnabledModuleRows(mainForm);
+		if (modules.Length == 0)
 		{
-			int num = -1343463675;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -2044575916)) % 21)
-				{
-				case 20u:
-					MessageBox.Show(gform0_0, "It appears it's the first time you have used the scrambling feature. Sometimes scrambling may cause a DLL to stop working. If this happens, try lowering the scrambling preset (eg. Extreme -> Basic) or turn scrambling off completely.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					num = ((int)num2 * -994046648) ^ 0x24CB22CD;
-					continue;
-				case 19u:
-					enum4_ = ApplicationSettings.Current.Options.Method;
-					num = (int)((num2 * 1462702194) ^ 0x4D14EF34);
-					continue;
-				case 18u:
-					num = (int)(num2 * 269330954) ^ -546612266;
-					continue;
-				case 17u:
-					gform0_0.button_7.Enabled = false;
-					num = (int)((num2 * 1586997919) ^ 0x283CE583);
-					continue;
-				case 16u:
-					@class.enum3_0 = ApplicationSettings.Current.Options.Scramble.Detect();
-					num = -844229546;
-					continue;
-				case 14u:
-					num = ((enum4_ != InjectionMethod.LdrpLoadDllStub) ? 884106562 : 781853476) ^ ((int)num2 * -1888504819);
-					continue;
-				case 13u:
-					MessageBox.Show(gform0_0, "It appears you are using a version of Windows that has not been properly tested with the LdrpLoadDll injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					class15_.LdrpLoadDllAcknowledged = true;
-					num = ((int)num2 * -1362656191) ^ 0x7D549429;
-					continue;
-				case 12u:
-					num = ((enum4_ != InjectionMethod.ManualMap) ? (-303152124) : (-1377231110));
-					continue;
-				case 11u:
-					num = ((@class.enum3_0 == ScramblePreset.None) ? (-2049946800) : (-1681409826)) ^ (int)(num2 * 1477936238);
-					continue;
-				case 10u:
-					MessageBox.Show(gform0_0, "It appears you are using a version of Windows that has not been properly tested with the manual map injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me. If it crashes, you may want to try ticking \"Disable SEH handler validation\" under Injection Method's Advanced settings.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					num = ((int)num2 * -232927014) ^ 0x62C0A2AE;
-					continue;
-				case 9u:
-					class15_ = ApplicationSettings.Current.Warnings;
-					num = (Class127.bool_11 ? (-1741877174) : (-1085754137)) ^ (int)(num2 * 1062009333);
-					continue;
-				case 8u:
-					num = (class15_.ScrambleAcknowledged ? (-660348292) : (-1700305939)) ^ ((int)num2 * -552992280);
-					continue;
-				case 6u:
-					num = ((!class15_.ManualMapAcknowledged) ? 305443209 : 1051399956) ^ ((int)num2 * -1452471880);
-					continue;
-				case 5u:
-					num = (class15_.LdrpLoadDllAcknowledged ? 90808096 : 1002178716) ^ (int)(num2 * 271899536);
-					continue;
-				case 4u:
-					gform0_0.timer_0.Stop();
-					gform0_0.button_5.Enabled = false;
-					num = -2119713228;
-					continue;
-				case 2u:
-					class15_.ScrambleAcknowledged = true;
-					num = (int)(num2 * 943538954) ^ -499727834;
-					continue;
-				case 1u:
-					@class.class21_0 = smethod_154(gform0_0);
-					num = ((@class.class21_0.Length != 0) ? (-360183429) : (-233523157)) ^ ((int)num2 * -962541727);
-					continue;
-				case 0u:
-					class15_.ManualMapAcknowledged = true;
-					num = (int)(num2 * 2000419613) ^ -725509940;
-					continue;
-				case 7u:
-					break;
-				default:
-					ThreadPool.QueueUserWorkItem(@class.method_0);
-					return;
-				case 15u:
-					return;
-				}
-				break;
-			}
+			return;
 		}
+
+		InjectionOptions options = ApplicationSettings.Current.Options;
+		WarningPreferences warnings = ApplicationSettings.Current.Warnings;
+		ScramblePreset scramblePreset = options.Scramble.Detect();
+		bool warningsChanged = false;
+
+		if (!Class127.bool_11 && options.Method == InjectionMethod.ManualMap && !warnings.ManualMapAcknowledged)
+		{
+			MessageBox.Show(mainForm, "It appears you are using a version of Windows that has not been properly tested with the manual map injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me. If it crashes, you may want to try ticking \"Disable SEH handler validation\" under Injection Method's Advanced settings.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			warnings.ManualMapAcknowledged = true;
+			warningsChanged = true;
+		}
+
+		bool usesLdrpLoadDll = options.Method == InjectionMethod.LdrpLoadDll || options.Method == InjectionMethod.LdrpLoadDllStub;
+		if (!Class127.bool_11 && usesLdrpLoadDll && !warnings.LdrpLoadDllAcknowledged)
+		{
+			MessageBox.Show(mainForm, "It appears you are using a version of Windows that has not been properly tested with the LdrpLoadDll injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			warnings.LdrpLoadDllAcknowledged = true;
+			warningsChanged = true;
+		}
+
+		if (scramblePreset != ScramblePreset.None && !warnings.ScrambleAcknowledged)
+		{
+			MessageBox.Show(mainForm, "It appears it's the first time you have used the scrambling feature. Sometimes scrambling may cause a DLL to stop working. If this happens, try lowering the scrambling preset (eg. Extreme -> Basic) or turn scrambling off completely.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			warnings.ScrambleAcknowledged = true;
+			warningsChanged = true;
+		}
+
+		if (warningsChanged)
+		{
+			ApplicationSettings.Save();
+		}
+
+		mainForm.processRefreshTimer.Stop();
+		mainForm.injectButton.Enabled = false;
+		mainForm.settingsButton.Enabled = false;
+		mainForm.QueueInjectionWorkflow(modules, scramblePreset);
 	}
 
 	internal static Icon smethod_11(string string_0, Enum18 enum18_0)
@@ -5279,7 +5231,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_22(Form0 form0_0)
+	internal static void smethod_22(ModuleOptionsForm form0_0)
 	{
 		form0_0.groupBox_0 = new GroupBox();
 		while (true)
@@ -5695,7 +5647,7 @@ public sealed class Class171
 		return null;
 	}
 
-	internal static void smethod_25(Form5 form5_0)
+	internal static void smethod_25(ProcessSelectorForm form5_0)
 	{
 		form5_0.dataGridView_0.Rows.Clear();
 		GClass2[] array = smethod_155();
@@ -6832,9 +6784,8 @@ public sealed class Class171
 		goto IL_002e;
 	}
 
-	internal static bool smethod_37(MainForm.Class21 class21_0, IntPtr intptr_0, MainForm gform0_0)
+	internal static bool InvokeExport(MainForm.ModuleRow class21_0, IntPtr intptr_0, MainForm mainForm)
 	{
-		MainForm.Class22 @class = new MainForm.Class22();
 		Class152 class3 = default(Class152);
 		int num9 = default(int);
 		object[] array = default(object[]);
@@ -6855,11 +6806,10 @@ public sealed class Class171
 				switch ((num2 = (uint)(num ^ 0x460EA75B)) % 5)
 				{
 				case 4u:
-					@class.class21_0 = class21_0;
 					num = ((int)num2 * -1740599076) ^ -1619867697;
 					continue;
 				case 3u:
-					num = ((!smethod_302(gform0_0.gclass2_0)) ? 1796612693 : 423241358) ^ ((int)num2 * -1062268972);
+					num = ((!HasProcessExited(mainForm.selectedProcess)) ? 1796612693 : 423241358) ^ ((int)num2 * -1062268972);
 					continue;
 				case 2u:
 					break;
@@ -6867,10 +6817,10 @@ public sealed class Class171
 					throw new InvalidOperationException("The target process is no longer active.");
 				default:
 				{
-					FileStream fileStream = new FileStream(smethod_243(@class.class21_0), FileMode.Open, FileAccess.Read, FileShare.Read);
+					FileStream fileStream = new FileStream(GetModulePath(class21_0), FileMode.Open, FileAccess.Read, FileShare.Read);
 					try
 					{
-						Class154 class2 = Class6.smethod_3<Class8>(fileStream, smethod_243(@class.class21_0), bool_0: false, Enum39.const_0);
+						Class154 class2 = Class6.smethod_3<Class8>(fileStream, GetModulePath(class21_0), bool_0: false, Enum39.const_0);
 						try
 						{
 							if (class2.method_14() == null)
@@ -6891,7 +6841,7 @@ public sealed class Class171
 							case 1u:
 								goto IL_0103;
 							case 0u:
-								throw new MissingMethodException("Unable to find the exported routine, '" + @class.class21_0.method_0().ExportName + "'.");
+								throw new MissingMethodException("Unable to find the exported routine, '" + class21_0.Entry.ExportName + "'.");
 							case 4u:
 								throw new MissingFieldException("Unable to detect export directory in the specified module.");
 							case 2u:
@@ -6899,7 +6849,7 @@ public sealed class Class171
 							}
 							goto IL_00cc;
 							IL_0103:
-							class3 = class2.method_14().list_1.FirstOrDefault(@class.method_0);
+							class3 = class2.method_14().list_1.FirstOrDefault(export => export.method_4() == class21_0.Entry.ExportName);
 							num3 = ((class3 != null) ? 1875164677 : 2096044763);
 							goto IL_00d1;
 							end_IL_00b4:;
@@ -7003,7 +6953,7 @@ public sealed class Class171
 								num6 = 23605831;
 								continue;
 							case 27u:
-								num6 = ((@class.class21_0.method_0().Parameters != null) ? 277257009 : 458827322) ^ (int)(num2 * 1073412424);
+								num6 = ((class21_0.Entry.Parameters != null) ? 277257009 : 458827322) ^ (int)(num2 * 1073412424);
 								continue;
 							case 26u:
 								num6 = ((text == null) ? (-737539902) : (-781970105)) ^ (int)(num2 * 1280621455);
@@ -7013,7 +6963,7 @@ public sealed class Class171
 								num6 = ((int)num2 * -2031373568) ^ 0x3ADEFA02;
 								continue;
 							case 24u:
-								smethod_54(class47_, new Class57(intptr_1), @class.class21_0.method_0().CallingConvention, list.ToArray());
+								smethod_54(class47_, new Class57(intptr_1), class21_0.Entry.CallingConvention, list.ToArray());
 								num6 = ((int)num2 * -833880767) ^ -355695803;
 								continue;
 							case 23u:
@@ -7021,12 +6971,12 @@ public sealed class Class171
 								num6 = 207993883;
 								continue;
 							case 22u:
-								class47_ = new Class47(class5, gform0_0.gclass2_0);
+								class47_ = new Class47(class5, mainForm.selectedProcess);
 								list2 = new List<Class58>();
 								num6 = (int)(num2 * 1666297250) ^ -1722348554;
 								continue;
 							case 21u:
-								array = @class.class21_0.method_0().Parameters.Select(smethod_138).ToArray();
+								array = class21_0.Entry.Parameters.Select(smethod_138).ToArray();
 								class5 = new Class53();
 								num6 = 361321445;
 								continue;
@@ -7055,7 +7005,7 @@ public sealed class Class171
 								continue;
 							case 12u:
 								smethod_36(class5, list2[num11++]);
-								num6 = ((@class.class21_0.method_0().Parameters[num9].Type != Enum5.LPCSTR) ? 603531166 : 1483483870) ^ ((int)num2 * -612483973);
+								num6 = ((class21_0.Entry.Parameters[num9].Type != Enum5.LPCSTR) ? 603531166 : 1483483870) ^ ((int)num2 * -612483973);
 								continue;
 							case 11u:
 								num11 = 0;
@@ -7067,16 +7017,16 @@ public sealed class Class171
 								num6 = 1806823426;
 								continue;
 							case 9u:
-								num6 = ((@class.class21_0.method_0().Parameters[num8].Type != Enum5.QWORD) ? 999067885 : 24045617) ^ ((int)num2 * -1483361820);
+								num6 = ((class21_0.Entry.Parameters[num8].Type != Enum5.QWORD) ? 999067885 : 24045617) ^ ((int)num2 * -1483361820);
 								continue;
 							case 8u:
-								num6 = (smethod_427(gform0_0.gclass2_0) ? 1596134350 : 1875134809);
+								num6 = (smethod_427(mainForm.selectedProcess) ? 1596134350 : 1875134809);
 								continue;
 							case 7u:
 								num6 = ((int)num2 * -1199280702) ^ 0x4B2314FA;
 								continue;
 							case 6u:
-								@class.class21_0.method_0().Parameters = new List<ExportParameter>();
+								class21_0.Entry.Parameters = new List<ExportParameter>();
 								num6 = (int)(num2 * 932447528) ^ -163800271;
 								continue;
 							case 5u:
@@ -7106,7 +7056,7 @@ public sealed class Class171
 								break;
 							default:
 							{
-								Class91 class4 = new Class91(gform0_0.gclass2_0);
+								Class91 class4 = new Class91(mainForm.selectedProcess);
 								try
 								{
 									return smethod_140(class4, class5);
@@ -7656,9 +7606,9 @@ public sealed class Class171
 	[DllImport("kernel32.dll", SetLastError = true)]
 	internal static extern bool WriteProcessMemory(IntPtr intptr_0, IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0, out UIntPtr uintptr_1);
 
-	internal static GClass2 smethod_45()
+	internal static GClass2 SelectProcess()
 	{
-		Form5 form = new Form5();
+		ProcessSelectorForm form = new ProcessSelectorForm();
 		while (true)
 		{
 			int num = -1184526344;
@@ -8856,7 +8806,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_79(MainForm gform0_0)
+	internal static void smethod_79(MainForm mainForm)
 	{
 		StringBuilder stringBuilder = new StringBuilder("Extreme Injector v");
 		Version version = typeof(MainForm).Assembly.GetName().Version;
@@ -8874,7 +8824,7 @@ public sealed class Class171
 					continue;
 				case 1u:
 					stringBuilder.Append(" by master131");
-					gform0_0.Text = stringBuilder.ToString();
+					mainForm.Text = stringBuilder.ToString();
 					num = -419022673;
 					continue;
 				case 0u:
@@ -9949,47 +9899,18 @@ public sealed class Class171
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool GetExitCodeProcess(IntPtr intptr_0, out uint uint_0);
 
-	internal static void smethod_111(MainForm gform0_0, int int_0)
+	internal static void ToggleModuleEnabled(MainForm mainForm, int int_0)
 	{
-		if (int_0 == -1)
+		if (int_0 < 0 || int_0 >= mainForm.moduleGrid.Rows.Count)
 		{
-			goto IL_0004;
+			return;
 		}
-		goto IL_0042;
-		IL_0004:
-		int num = 1127826920;
-		goto IL_001d;
-		IL_001d:
-		while (true)
-		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ 0x6935AB74)) % 5)
-			{
-			case 4u:
-				break;
-			case 2u:
-				ApplicationSettings.Save();
-				num = (int)(num2 * 170104945) ^ -1189759056;
-				continue;
-			default:
-				return;
-			case 1u:
-				goto IL_0042;
-			case 0u:
-				return;
-			case 3u:
-				return;
-			}
-			break;
-		}
-		goto IL_0004;
-		IL_0042:
-		DataGridViewRow dataGridViewRow = gform0_0.dataGridView_0.Rows[int_0];
-		bool flag = !(bool)dataGridViewRow.Cells[0].Value;
-		dataGridViewRow.Cells[0].Value = flag;
-		((MainForm.Class21)dataGridViewRow.Tag).method_0().Enabled = flag;
-		num = 2078513177;
-		goto IL_001d;
+
+		DataGridViewRow row = mainForm.moduleGrid.Rows[int_0];
+		bool enabled = !(bool)row.Cells[0].Value;
+		row.Cells[0].Value = enabled;
+		((MainForm.ModuleRow)row.Tag).Entry.Enabled = enabled;
+		ApplicationSettings.Save();
 	}
 
 	internal static void smethod_112(Class47.Enum6 enum6_0, Class57 class57_0, Class47 class47_0)
@@ -11182,7 +11103,7 @@ public sealed class Class171
 	[DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
 	internal static extern IntPtr LoadLibrary(string string_0);
 
-	internal static bool smethod_139(ref string string_0, [Out] Form0 form0_0, string string_1)
+	internal static bool smethod_139(ref string string_0, [Out] ModuleOptionsForm form0_0, string string_1)
 	{
 		if (!string_1.StartsWith("0x"))
 		{
@@ -11461,7 +11382,7 @@ public sealed class Class171
 		return class166_0.class5_0.ReadBytes(int_0);
 	}
 
-	internal static void smethod_145(Form5 form5_0)
+	internal static void smethod_145(ProcessSelectorForm form5_0)
 	{
 		form5_0.dataGridView_0.Rows.Clear();
 		GClass2 gClass = default(GClass2);
@@ -12569,9 +12490,12 @@ public sealed class Class171
 	[DllImport("shell32.dll")]
 	internal static extern uint DragQueryFile(IntPtr intptr_0, uint uint_0, [Out] StringBuilder stringBuilder_0, uint uint_1);
 
-	internal static MainForm.Class21[] smethod_154(MainForm gform0_0)
+	internal static MainForm.ModuleRow[] GetEnabledModuleRows(MainForm mainForm)
 	{
-		return gform0_0.dataGridView_0.Rows.Cast<DataGridViewRow>().Select(MainForm.Class23._003C_003E9.method_1).Where(MainForm.Class23._003C_003E9.method_2)
+		return mainForm.moduleGrid.Rows
+			.Cast<DataGridViewRow>()
+			.Select(row => (MainForm.ModuleRow)row.Tag)
+			.Where(module => module.Entry.Enabled)
 			.ToArray();
 	}
 
@@ -12673,38 +12597,17 @@ public sealed class Class171
 		class5_0.BaseStream.Position = long_0;
 	}
 
-	internal static void smethod_158(MainForm gform0_0, string string_0, Exception exception_0)
+	internal static void ShowInjectionError(MainForm mainForm, string message, Exception exception)
 	{
-		MainForm.Class31 @class = new MainForm.Class31();
-		while (true)
+		mainForm.Invoke((MethodInvoker)delegate
 		{
-			int num = 604669233;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x6D5693FD)) % 5)
-				{
-				case 4u:
-					@class.exception_0 = exception_0;
-					num = (int)((num2 * 464521796) ^ 0x5C584EE9);
-					continue;
-				case 2u:
-					@class.string_0 = string_0;
-					num = ((int)num2 * -880062078) ^ 0x74FD0E01;
-					continue;
-				case 1u:
-					@class.gform0_0 = gform0_0;
-					num = (int)((num2 * 1287871548) ^ 0x235F3829);
-					continue;
-				case 0u:
-					break;
-				default:
-					gform0_0.Invoke(new MethodInvoker(@class.method_0));
-					return;
-				}
-				break;
-			}
-		}
+			MessageBox.Show(
+				mainForm,
+				smethod_345(message, exception, bool_0: true),
+				"Extreme Injector v3",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Exclamation);
+		});
 	}
 
 	[DllImport("kernel32.dll", SetLastError = true)]
@@ -13657,7 +13560,7 @@ public sealed class Class171
 				}
 			}
 		}
-		Form0 form = new Form0();
+		ModuleOptionsForm form = new ModuleOptionsForm();
 		form.method_1(class16_0);
 		form.method_3(@class);
 		form.ShowDialog();
@@ -13767,9 +13670,9 @@ public sealed class Class171
 		return smethod_282(class166_0, (int)(class166_0.class5_0.BaseStream.Position - class166_0.long_0), int_0);
 	}
 
-	internal static void smethod_177(string string_0, MainForm gform0_0, string string_1)
+	internal static void smethod_177(string string_0, MainForm mainForm, string string_1)
 	{
-		MessageBox.Show(gform0_0, "The DLL you have selected, \"" + string_1 + "\" requires \"" + string_0 + "\" in order to work properly, but you are running Windows XP which does not support it. Please notify the creator of the DLL to build in Release mode with XP compatibility.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+		MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_1 + "\" requires \"" + string_0 + "\" in order to work properly, but you are running Windows XP which does not support it. Please notify the creator of the DLL to build in Release mode with XP compatibility.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 	}
 
 	internal static IntPtr smethod_178(Class90 class90_0, IntPtr intptr_0, IntPtr intptr_1, byte[] byte_0, out Class124.Struct55 struct55_0, out int int_0, out int int_1, ref int int_2)
@@ -15087,7 +14990,7 @@ public sealed class Class171
 		class5_0.BaseStream.Position = uint_0;
 	}
 
-	internal static void smethod_203(string string_0, string string_1, string string_2, Class154 class154_0, string string_3, MainForm gform0_0, string string_4, bool bool_0, string string_5, bool bool_1, string string_6)
+	internal static void smethod_203(string string_0, string string_1, string string_2, Class154 class154_0, string string_3, MainForm mainForm, string string_4, bool bool_0, string string_5, bool bool_1, string string_6)
 	{
 		if (bool_0)
 		{
@@ -15122,7 +15025,7 @@ public sealed class Class171
 				text = string_4;
 				goto IL_0086;
 			case 9u:
-				smethod_405(class154_0.method_2(), gform0_0, string_1, string_7, string_2);
+				smethod_405(class154_0.method_2(), mainForm, string_1, string_7, string_2);
 				num = (int)(num2 * 2025920650) ^ -323971473;
 				continue;
 			case 7u:
@@ -15142,7 +15045,7 @@ public sealed class Class171
 			case 2u:
 				return;
 			case 3u:
-				smethod_177(string_2, gform0_0, class154_0.method_2());
+				smethod_177(string_2, mainForm, class154_0.method_2());
 				return;
 			case 6u:
 				return;
@@ -15160,7 +15063,7 @@ public sealed class Class171
 		}
 		goto IL_00f9;
 		IL_014f:
-		num = (smethod_337(gform0_0, class154_0.method_2(), string_2, string_3, bool_1, string.Format("Microsoft Visual C++ {0} Runtime", string_6)) ? (-94053324) : (-627536497));
+		num = (smethod_337(mainForm, class154_0.method_2(), string_2, string_3, bool_1, string.Format("Microsoft Visual C++ {0} Runtime", string_6)) ? (-94053324) : (-627536497));
 		goto IL_00fe;
 	}
 
@@ -15425,65 +15328,16 @@ public sealed class Class171
 		return smethod_183(GetCurrentProcess(), (int)GetCurrentProcessId());
 	}
 
-	internal static void smethod_212(MainForm gform0_0, int int_0, string string_0)
+	internal static void WaitWithStatus(MainForm mainForm, int int_0, string string_0)
 	{
-		MainForm.Class27 @class = new MainForm.Class27();
-		int num3 = default(int);
-		MainForm.Class28 class2 = default(MainForm.Class28);
-		while (true)
+		for (int elapsedMilliseconds = 0; elapsedMilliseconds < int_0; elapsedMilliseconds += 100)
 		{
-			int num = 388441957;
-			while (true)
+			float remainingSeconds = (float)(int_0 - elapsedMilliseconds) / 1000f;
+			mainForm.BeginInvoke((Action)(() =>
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x7CC037E4)) % 11)
-				{
-				case 10u:
-					num = (int)(num2 * 629241722) ^ -615885487;
-					continue;
-				case 9u:
-					num3 = 0;
-					num = (int)((num2 * 2058702056) ^ 0x46BF3515);
-					continue;
-				case 8u:
-					@class.gform0_0 = gform0_0;
-					@class.string_0 = string_0;
-					@class.int_0 = int_0;
-					num = ((int)num2 * -377063937) ^ 0x79B9F256;
-					continue;
-				case 7u:
-					num = ((num3 >= @class.int_0) ? 1326681373 : 270861812);
-					continue;
-				case 6u:
-					class2 = new MainForm.Class28();
-					num = 2060011901;
-					continue;
-				case 5u:
-					gform0_0.BeginInvoke(new Action(class2.method_0));
-					Thread.Sleep(100);
-					num = (int)((num2 * 1172546568) ^ 0x17469EA1);
-					continue;
-				case 4u:
-					class2.class27_0 = @class;
-					num = (int)(num2 * 498357221) ^ -113522119;
-					continue;
-				case 3u:
-					num3 += 100;
-					num = ((int)num2 * -1096222732) ^ -144548673;
-					continue;
-				case 1u:
-					class2.int_0 = num3;
-					num = (int)((num2 * 1395439106) ^ 0x7E673D9C);
-					continue;
-				default:
-					return;
-				case 0u:
-					break;
-				case 2u:
-					return;
-				}
-				break;
-			}
+				mainForm.processDescriptionLabel.Text = string.Format(string_0, remainingSeconds);
+			}));
+			Thread.Sleep(100);
 		}
 	}
 
@@ -15528,7 +15382,7 @@ public sealed class Class171
 		goto IL_0051;
 	}
 
-	internal static void smethod_214(GClass2 gclass2_0)
+	internal static void ShowProcessInspector(GClass2 gclass2_0)
 	{
 		ProcessInspectorForm form = new ProcessInspectorForm();
 		form.method_1(gclass2_0);
@@ -15578,24 +15432,25 @@ public sealed class Class171
 		}
 	}
 
-	internal static bool smethod_216(ref IntPtr intptr_0, MainForm gform0_0, [Out] ScramblePreset enum3_0, string string_0)
+	internal static bool InjectModule(ref IntPtr intptr_0, MainForm mainForm, [Out] ScramblePreset enum3_0, string string_0)
 	{
-		MainForm.Class30 @class = new MainForm.Class30();
-		@class.gform0_0 = gform0_0;
-		@class.string_0 = string_0;
+		string modulePath = string_0;
 		intptr_0 = IntPtr.Zero;
-		FileStream fileStream = new FileStream(@class.string_0, FileMode.Open, FileAccess.Read, FileShare.Read);
+		FileStream fileStream = new FileStream(modulePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 		bool result = default(bool);
 		try
 		{
-			Class154 class154_ = Class7.smethod_13(fileStream, @class.string_0, bool_0: false, Enum39.const_0);
-			if (smethod_19(class154_) != smethod_427(gform0_0.gclass2_0))
+			Class154 class154_ = Class7.smethod_13(fileStream, modulePath, bool_0: false, Enum39.const_0);
+			bool moduleIs32Bit = smethod_19(class154_);
+			bool processIs32Bit = smethod_427(mainForm.selectedProcess);
+			if (moduleIs32Bit != processIs32Bit)
 			{
-				MainForm.Class29 class2 = new MainForm.Class29();
-				class2.class30_0 = @class;
-				class2.string_0 = (smethod_19(class154_) ? "32-bit" : "64-bit");
-				class2.string_1 = (smethod_427(gform0_0.gclass2_0) ? "32-bit" : "64-bit");
-				gform0_0.Invoke(new MethodInvoker(class2.method_0));
+				mainForm.Invoke((MethodInvoker)delegate
+				{
+					string modulePlatform = moduleIs32Bit ? "32-bit" : "64-bit";
+					string processPlatform = processIs32Bit ? "32-bit" : "64-bit";
+					MessageBox.Show(mainForm, "Platform mismatch detected. You are trying to inject a " + modulePlatform + " DLL (" + Path.GetFileName(modulePath) + ") into a " + processPlatform + " process (" + mainForm.selectedProcess.method_2() + ") which is not supported.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				});
 				result = false;
 				goto IL_072f;
 			}
@@ -15647,17 +15502,17 @@ public sealed class Class171
 				switch ((num2 = (uint)(num3 ^ 0x7007E065)) % 8)
 				{
 				case 7u:
-					text2 = Path.Combine(Path.GetDirectoryName(@class.string_0), Path.GetFileNameWithoutExtension(@class.string_0) + "_Scrambled");
+					text2 = Path.Combine(Path.GetDirectoryName(modulePath), Path.GetFileNameWithoutExtension(modulePath) + "_Scrambled");
 					num3 = (int)((num2 * 2095241435) ^ 0x27DE295E);
 					continue;
 				case 5u:
 					break;
 				case 4u:
-					text = @class.string_0;
+					text = modulePath;
 					num3 = ((int)num2 * -646710067) ^ 0x277534FB;
 					continue;
 				case 3u:
-					@class.string_0 = smethod_147(".dll");
+					modulePath = smethod_147(".dll");
 					num3 = ((int)num2 * -1611286360) ^ 0x15D10E84;
 					continue;
 				case 2u:
@@ -15670,18 +15525,18 @@ public sealed class Class171
 				default:
 					goto IL_02a1;
 				}
-				if (text == @class.string_0)
+				if (text == modulePath)
 				{
 					num3 = (int)((num2 * 715549268) ^ 0x27A7E93E);
 					continue;
 				}
 				goto IL_03cd;
 				IL_02a1:
-				string extension = Path.GetExtension(@class.string_0);
-				@class.string_0 = text2 + extension;
+				string extension = Path.GetExtension(modulePath);
+				modulePath = text2 + extension;
 				try
 				{
-					if (File.Exists(@class.string_0))
+					if (File.Exists(modulePath))
 					{
 						while (true)
 						{
@@ -15702,7 +15557,7 @@ public sealed class Class171
 								}
 								goto IL_0303;
 								IL_02cc:
-								File.Delete(@class.string_0);
+								File.Delete(modulePath);
 								num4 = (int)(num2 * 692291241) ^ -638726554;
 								continue;
 								end_IL_02e5:
@@ -15734,7 +15589,7 @@ public sealed class Class171
 								num6 = (int)(num2 * 722033706) ^ -1517094891;
 								continue;
 							case 0u:
-								path = (@class.string_0 = text2 + "_" + num5 + extension);
+								path = (modulePath = text2 + "_" + num5 + extension);
 								num6 = 1608583659;
 								continue;
 							default:
@@ -15761,13 +15616,13 @@ public sealed class Class171
 				}
 				while (true)
 				{
-					int num7 = ((!(text != @class.string_0)) ? 1063043804 : 624167310);
+					int num7 = ((!(text != modulePath)) ? 1063043804 : 624167310);
 					while (true)
 					{
 						switch ((num2 = (uint)(num7 ^ 0x7007E065)) % 4)
 						{
 						case 3u:
-							File.Copy(text, @class.string_0);
+							File.Copy(text, modulePath);
 							num7 = (int)(num2 * 1223685243) ^ -636052171;
 							continue;
 						case 0u:
@@ -15786,7 +15641,7 @@ public sealed class Class171
 				}
 				goto IL_03da;
 				IL_03cd:
-				smethod_325(gform0_0, text, @class.string_0);
+				smethod_325(mainForm, text, modulePath);
 				goto IL_03da;
 				IL_03da:
 				InjectionMethod enum4_ = class14_.Method;
@@ -15795,7 +15650,7 @@ public sealed class Class171
 					if (enum4_ == InjectionMethod.ManualMap)
 					{
 						AdvancedInjectionOptions class13_ = class14_.Advanced;
-						Class89 class3 = new Class89(gform0_0.gclass2_0);
+						Class89 class3 = new Class89(mainForm.selectedProcess);
 						try
 						{
 							class3.method_18(class13_.HideFromDebugger);
@@ -15813,7 +15668,7 @@ public sealed class Class171
 										class3.method_31(class13_.ManualResolveImports);
 										class3.method_27(class14_.ErasePeHeaders);
 										class3.method_33(class13_.DisableSehValidation);
-										intptr_0 = class3.method_0BA6(@class.string_0);
+							intptr_0 = class3.method_0BA6(modulePath);
 										num9 = ((class3.method_34() != null) ? 1628520009 : 932593972);
 										goto IL_0475;
 									default:
@@ -15871,7 +15726,7 @@ public sealed class Class171
 					}
 					else
 					{
-						Class85 class4 = (Class85)Activator.CreateInstance(MainForm.dictionary_0[enum4_], gform0_0.gclass2_0);
+						Class85 class4 = (Class85)Activator.CreateInstance(MainForm.dictionary_0[enum4_], mainForm.selectedProcess);
 						class4.method_18(class14_.Advanced.HideFromDebugger);
 						while (true)
 						{
@@ -15881,7 +15736,7 @@ public sealed class Class171
 								switch ((num2 = (uint)(num11 ^ 0x7007E065)) % 3)
 								{
 								case 2u:
-									intptr_0 = class4.method_0BA6(@class.string_0);
+									intptr_0 = class4.method_0BA6(modulePath);
 									num11 = ((int)num2 * -1040866324) ^ 0x102DE663;
 									continue;
 								case 0u:
@@ -15899,7 +15754,7 @@ public sealed class Class171
 						{
 							try
 							{
-								Class94 class5 = new Class94(gform0_0.gclass2_0);
+								Class94 class5 = new Class94(mainForm.selectedProcess);
 								try
 								{
 									class5.method_19(intptr_0);
@@ -15940,18 +15795,18 @@ public sealed class Class171
 							}
 							catch (Exception exception_)
 							{
-								smethod_158(gform0_0, "An error occurred while erasing the PE for \"" + Path.GetFileName(text) + "\"", exception_);
+								ShowInjectionError(mainForm, "An error occurred while erasing the PE for \"" + Path.GetFileName(text) + "\"", exception_);
 							}
 						}
 						if (class14_.HideModule)
 						{
 							try
 							{
-								smethod_327(new Class129(gform0_0.gclass2_0), intptr_0);
+								smethod_327(new Class129(mainForm.selectedProcess), intptr_0);
 							}
 							catch (Exception exception_2)
 							{
-								smethod_158(gform0_0, "An error occurred while hiding the module (" + Path.GetFileName(text) + ").", exception_2);
+								ShowInjectionError(mainForm, "An error occurred while hiding the module (" + Path.GetFileName(text) + ").", exception_2);
 							}
 						}
 					}
@@ -16005,7 +15860,7 @@ public sealed class Class171
 							}
 							goto IL_0726;
 							IL_06a6:
-							smethod_158(gform0_0, "An error occurred while injecting \"" + Path.GetFileName(text) + "\" into \"" + gform0_0.gclass2_0.method_2() + "\".", exception_3);
+							ShowInjectionError(mainForm, "An error occurred while injecting \"" + Path.GetFileName(text) + "\" into \"" + mainForm.selectedProcess.method_2() + "\".", exception_3);
 							result = false;
 							num14 = (int)(num2 * 649623379) ^ -1756034482;
 							continue;
@@ -17278,7 +17133,7 @@ public sealed class Class171
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool ChangeWindowMessageFilter(uint uint_0, Class10.Enum2 enum2_0);
 
-	internal static void smethod_240(Class154 class154_0, string string_0, MainForm gform0_0)
+	internal static void smethod_240(Class154 class154_0, string string_0, MainForm mainForm)
 	{
 		bool flag2 = false;
 		if (!string_0.StartsWith("msvc", StringComparison.OrdinalIgnoreCase))
@@ -17362,7 +17217,7 @@ public sealed class Class171
 				string_4 = "https://cdn.rawgit.com/master131/ExtremeInjector/398da9b1/VC/Microsoft%20Visual%20C%2B%2B%202012%20x86%20(Debug).zip";
 				string_2 = "https://cdn.rawgit.com/master131/ExtremeInjector/398da9b1/VC/Microsoft%20Visual%20C%2B%2B%202012%20x64%20(Debug).zip";
 				string_3 = "http://www.microsoft.com/download/details.aspx?id=30679";
-				smethod_203(string_3, string_1, string_0, class154_0, text, gform0_0, string_4, flag2, string_2, flag, string_5);
+				smethod_203(string_3, string_1, string_0, class154_0, text, mainForm, string_4, flag2, string_2, flag, string_5);
 				num3 = (int)(num2 * 1229063295) ^ -805821474;
 				continue;
 			case 22u:
@@ -17385,7 +17240,7 @@ public sealed class Class171
 				num3 = (int)((num2 * 536199463) ^ 0x5441B12);
 				continue;
 			case 14u:
-				smethod_203(string_3, string_1, string_0, class154_0, text, gform0_0, string_4, flag2, string_2, flag2, string_5);
+				smethod_203(string_3, string_1, string_0, class154_0, text, mainForm, string_4, flag2, string_2, flag2, string_5);
 				num3 = (int)(num2 * 1294788388) ^ -122959201;
 				continue;
 			case 13u:
@@ -17401,7 +17256,7 @@ public sealed class Class171
 				goto IL_0397;
 			case 9u:
 				string_3 = "http://www.microsoft.com/download/details.aspx?id=40784";
-				smethod_203(string_3, string_1, string_0, class154_0, text, gform0_0, string_4, flag2, string_2, flag, string_5);
+				smethod_203(string_3, string_1, string_0, class154_0, text, mainForm, string_4, flag2, string_2, flag, string_5);
 				num3 = (int)(num2 * 1297993915) ^ -1752498774;
 				continue;
 			case 8u:
@@ -17449,7 +17304,7 @@ public sealed class Class171
 				}
 				IL_05ab:
 				string_6 = text2;
-				smethod_405(class154_0.method_2(), gform0_0, string_1, string_6, string_0);
+				smethod_405(class154_0.method_2(), mainForm, string_1, string_6, string_0);
 				return;
 			}
 			break;
@@ -17466,7 +17321,7 @@ public sealed class Class171
 			num3 = (smethod_434(string_0, "100") ? (-1168170587) : (-849012758));
 			continue;
 			IL_02ac:
-			num3 = (smethod_337(gform0_0, class154_0.method_2(), string_0, text, flag, "Microsoft Visual C++ 2010 Runtime") ? (-1410142964) : (-82041023));
+			num3 = (smethod_337(mainForm, class154_0.method_2(), string_0, text, flag, "Microsoft Visual C++ 2010 Runtime") ? (-1410142964) : (-82041023));
 			continue;
 			IL_0397:
 			num3 = (smethod_19(class154_0) ? (-1233975278) : (-1045191890));
@@ -17733,12 +17588,12 @@ public sealed class Class171
 	[DllImport("kernel32.dll")]
 	internal static extern ulong VerSetConditionMask(ulong ulong_0, uint uint_0, byte byte_0);
 
-	internal static string smethod_243(MainForm.Class21 class21_0)
+	internal static string GetModulePath(MainForm.ModuleRow class21_0)
 	{
-		return class21_0.method_0().Path;
+		return class21_0.Entry.Path;
 	}
 
-	internal static void smethod_244(GClass2 gclass2_0)
+	internal static void ShowSettings(GClass2 gclass2_0)
 	{
 		SettingsForm gForm = new SettingsForm();
 		gForm.method_1(gclass2_0);
@@ -18472,7 +18327,7 @@ public sealed class Class171
 		goto IL_00dd;
 	}
 
-	internal static void smethod_261(Class154 class154_0, MainForm gform0_0)
+	internal static void smethod_261(Class154 class154_0, MainForm mainForm)
 	{
 		if (class154_0.method_10() == null)
 		{
@@ -18494,8 +18349,8 @@ public sealed class Class171
 						num = (string.IsNullOrEmpty(key) ? (-2087396708) : (-745053135)) ^ (int)(num2 * 1219299494);
 						continue;
 					case 3u:
-						smethod_240(class154_0, key, gform0_0);
-						smethod_351(class154_0, key, gform0_0);
+						smethod_240(class154_0, key, mainForm);
+						smethod_351(class154_0, key, mainForm);
 						num = (int)((num2 * 1092998434) ^ 0x63703B8);
 						continue;
 					case 2u:
@@ -20392,7 +20247,7 @@ public sealed class Class171
 		class53_0.struct19_0.uint_2 |= 8u;
 	}
 
-	internal static void smethod_289(MainForm gform0_0)
+	internal static void ApplyMainFormTheme(MainForm mainForm)
 	{
 		Color color_ = ApplicationSettings.Current.Options.TextColor;
 		while (true)
@@ -20404,12 +20259,12 @@ public sealed class Class171
 				switch ((num2 = (uint)(num ^ 0x455D6409)) % 4)
 				{
 				case 1u:
-					gform0_0.label_0.ForeColor = color_;
-					gform0_0.label_1.ForeColor = color_;
+					mainForm.processNameLabel.ForeColor = color_;
+					mainForm.processDescriptionLabel.ForeColor = color_;
 					num = (int)((num2 * 1745266509) ^ 0x4AFF30C8);
 					continue;
 				case 0u:
-					gform0_0.label_2.ForeColor = color_;
+					mainForm.injectionListLabel.ForeColor = color_;
 					num = (int)((num2 * 1814288441) ^ 0x48AB0AB3);
 					continue;
 				default:
@@ -21740,9 +21595,9 @@ public sealed class Class171
 		goto IL_027c;
 	}
 
-	internal static void smethod_296(MainForm.Class21 class21_0, string string_0)
+	internal static void SetModulePath(MainForm.ModuleRow class21_0, string string_0)
 	{
-		class21_0.method_0().Path = string_0;
+		class21_0.Entry.Path = string_0;
 	}
 
 	internal static void smethod_297(Class53 class53_0)
@@ -21871,7 +21726,7 @@ public sealed class Class171
 		return new Class57((IntPtr)(long)(ulong)uintptr_0, bool_0: true);
 	}
 
-	internal static bool smethod_302(GClass2 gclass2_0)
+	internal static bool HasProcessExited(GClass2 gclass2_0)
 	{
 		if (gclass2_0.bool_4)
 		{
@@ -23243,7 +23098,7 @@ public sealed class Class171
 		goto IL_0050;
 	}
 
-	internal static void smethod_325(MainForm gform0_0, string string_0, string string_1)
+	internal static void smethod_325(MainForm mainForm, string string_0, string string_1)
 	{
 		InjectorScrambleOptions injectorScrambleOptions_ = ApplicationSettings.Current.Options.Scramble;
 		Class131 @class = new Class131();
@@ -23548,9 +23403,9 @@ public sealed class Class171
 		class165_0.binaryWriter_0.Write(class165_0.class154_0.method_4().method_0());
 	}
 
-	internal static void smethod_334(Form5 form5_0)
+	internal static void smethod_334(ProcessSelectorForm form5_0)
 	{
-		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(Form5));
+		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(ProcessSelectorForm));
 		while (true)
 		{
 			int num = -2065578591;
@@ -24125,7 +23980,7 @@ public sealed class Class171
 	[DllImport("ntdll.dll", SetLastError = true)]
 	internal static extern uint NtQuerySystemInformation(Class124.Enum24 enum24_0, IntPtr intptr_0, int int_0, out int int_1);
 
-	internal static bool smethod_337(MainForm gform0_0, string string_0, string string_1, string string_2, bool bool_0, string string_3)
+	internal static bool smethod_337(MainForm mainForm, string string_0, string string_1, string string_2, bool bool_0, string string_3)
 	{
 		if (bool_0)
 		{
@@ -24142,7 +23997,7 @@ public sealed class Class171
 			switch ((num2 = (uint)(num ^ 0xCF75D19)) % 6)
 			{
 			case 2u:
-				num = ((MessageBox.Show(gform0_0, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_1 + "\" in order to work properly but it appears you have an incorrect version installed. In order to fix this, you need to delete \"" + string_2 + "\" (check carefully) and then re-install the " + string_3 + ". Would you like to install the " + string_3 + " now?", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? (-972875680) : (-1020958494)) ^ ((int)num2 * -275383844);
+				num = ((MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_1 + "\" in order to work properly but it appears you have an incorrect version installed. In order to fix this, you need to delete \"" + string_2 + "\" (check carefully) and then re-install the " + string_3 + ". Would you like to install the " + string_3 + " now?", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? (-972875680) : (-1020958494)) ^ ((int)num2 * -275383844);
 				continue;
 			case 0u:
 				break;
@@ -24159,7 +24014,7 @@ public sealed class Class171
 		}
 		goto IL_00c5;
 		IL_0102:
-		num = ((MessageBox.Show(gform0_0, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_1 + "\" in order to work properly but it appears you have not installed the required files. Would you like to install the " + string_3 + "?", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? 1866094268 : 1156328842);
+		num = ((MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_1 + "\" in order to work properly but it appears you have not installed the required files. Would you like to install the " + string_3 + "?", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) ? 1866094268 : 1156328842);
 		goto IL_00ca;
 	}
 
@@ -24254,7 +24109,7 @@ public sealed class Class171
 		smethod_34("SeDebugPrivilege");
 	}
 
-	internal static bool smethod_342(Form0 form0_0, string string_0, Enum5 enum5_0, bool bool_0)
+	internal static bool smethod_342(ModuleOptionsForm form0_0, string string_0, Enum5 enum5_0, bool bool_0)
 	{
 		string string_1 = default(string);
 		int num;
@@ -25052,7 +24907,7 @@ public sealed class Class171
 	[DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
 	internal static extern long StrFormatByteSize(long long_0, StringBuilder stringBuilder_0, int int_0);
 
-	internal static void smethod_349(bool bool_0, ModuleEntry class16_0, bool bool_1, MainForm gform0_0, string string_0)
+	internal static void AddModuleToGrid(bool bool_0, ModuleEntry class16_0, bool bool_1, MainForm mainForm, string string_0)
 	{
 		if (!File.Exists(string_0))
 		{
@@ -25061,7 +24916,7 @@ public sealed class Class171
 		try
 		{
 			string_0 = Path.GetFullPath(string_0);
-			IEnumerator enumerator = ((IEnumerable)gform0_0.dataGridView_0.Rows).GetEnumerator();
+			IEnumerator enumerator = ((IEnumerable)mainForm.moduleGrid.Rows).GetEnumerator();
 			try
 			{
 				while (true)
@@ -25073,7 +24928,7 @@ public sealed class Class171
 						switch ((uint)(num ^ 0x866414E) % 5u)
 						{
 						case 4u:
-							num = ((!smethod_243((MainForm.Class21)((DataGridViewRow)enumerator.Current).Tag).Equals(string_0, StringComparison.OrdinalIgnoreCase)) ? 799792168 : 2026028820);
+							num = ((!GetModulePath((MainForm.ModuleRow)((DataGridViewRow)enumerator.Current).Tag).Equals(string_0, StringComparison.OrdinalIgnoreCase)) ? 799792168 : 2026028820);
 							continue;
 						case 2u:
 							num = 1770609057;
@@ -25153,15 +25008,15 @@ public sealed class Class171
 						{
 							try
 							{
-								smethod_261(@class, gform0_0);
+								smethod_261(@class, mainForm);
 							}
 							catch
 							{
 							}
-							int index = gform0_0.dataGridView_0.Rows.Add(bool_0, Path.GetFileName(string_0));
-							MainForm.Class21 class2 = new MainForm.Class21(class16_0);
-							smethod_296(class2, string_0);
-							MainForm.Class21 class3 = class2;
+							int index = mainForm.moduleGrid.Rows.Add(bool_0, Path.GetFileName(string_0));
+							MainForm.ModuleRow class2 = new MainForm.ModuleRow(class16_0);
+							SetModulePath(class2, string_0);
+							MainForm.ModuleRow class3 = class2;
 							while (true)
 							{
 								int num5 = 1051019898;
@@ -25170,19 +25025,19 @@ public sealed class Class171
 									switch ((num3 = (uint)(num5 ^ 0x866414E)) % 7)
 									{
 									case 6u:
-										ApplicationSettings.Current.Modules.Add(class3.method_0());
+									ApplicationSettings.Current.Modules.Add(class3.Entry);
 										num5 = (int)(num3 * 215100400) ^ -1017146116;
 										continue;
 									case 4u:
-										gform0_0.dataGridView_0.Rows[index].Cells[1].ToolTipText = string_0;
+										mainForm.moduleGrid.Rows[index].Cells[1].ToolTipText = string_0;
 										num5 = ((int)num3 * -2092943264) ^ 0x6D42C324;
 										continue;
 									case 2u:
-										gform0_0.dataGridView_0.Rows[index].Cells[2].ToolTipText = "Advanced Options";
+										mainForm.moduleGrid.Rows[index].Cells[2].ToolTipText = "Advanced Options";
 										num5 = (int)(num3 * 1574833161) ^ -1295596495;
 										continue;
 									case 1u:
-										gform0_0.dataGridView_0.Rows[index].Tag = class3;
+										mainForm.moduleGrid.Rows[index].Tag = class3;
 										num5 = ((int)num3 * -582582098) ^ -1659388458;
 										continue;
 									case 0u:
@@ -25266,81 +25121,37 @@ public sealed class Class171
 					}
 					break;
 					IL_036b:
-					MessageBox.Show(gform0_0, "The file specified (" + Path.GetFileName(string_0) + ") is not a valid DLL.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(mainForm, "The file specified (" + Path.GetFileName(string_0) + ") is not a valid DLL.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					num7 = (int)((num3 * 1653663462) ^ 0xFD3EC92);
 				}
 			}
 		}
 	}
 
-	internal static void smethod_350(bool bool_0, MainForm gform0_0)
+	internal static void CompleteInjection(bool bool_0, MainForm mainForm)
 	{
-		if (!ApplicationSettings.Current.Options.CloseOnInject)
+		if (ApplicationSettings.Current.Options.CloseOnInject)
 		{
-			goto IL_0063;
+			mainForm.Close();
+			return;
 		}
-		goto IL_0152;
-		IL_0063:
-		int num = 762008457;
-		goto IL_0110;
-		IL_0110:
-		GClass2 gclass2_ = default(GClass2);
-		while (true)
+
+		if (bool_0)
 		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ 0x128C8D03)) % 12)
-			{
-			case 11u:
-				gform0_0.button_7.Enabled = true;
-				num = (int)(num2 * 42692672) ^ -1604344489;
-				continue;
-			case 9u:
-				MessageBox.Show("Injection has completed successfully!", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-				num = ((int)num2 * -1509263805) ^ 0xC5019BF;
-				continue;
-			case 8u:
-				break;
-			case 7u:
-				gclass2_ = gform0_0.gclass2_0;
-				num = 841678329;
-				continue;
-			case 6u:
-				num = ((!ApplicationSettings.Current.Options.AutoInject) ? (-1810448472) : (-1107754714)) ^ (int)(num2 * 1240776510);
-				continue;
-			case 5u:
-				smethod_380(gform0_0, gclass2_);
-				num = (int)((num2 * 1643999674) ^ 0x53B3AD11);
-				continue;
-			case 4u:
-				gform0_0.timer_0.Start();
-				num = (int)((num2 * 124468888) ^ 0x4B8CFB38);
-				continue;
-			case 3u:
-				goto IL_00e0;
-			case 2u:
-				smethod_380(gform0_0, null);
-				num = (int)((num2 * 885764979) ^ 0x425522DC);
-				continue;
-			case 1u:
-				goto IL_0152;
-			default:
-				gform0_0.button_5.Enabled = true;
-				return;
-			case 10u:
-				return;
-			}
-			break;
-			IL_00e0:
-			num = ((!bool_0) ? 1809550048 : 2100125622);
+			MessageBox.Show("Injection has completed successfully!", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 		}
-		goto IL_0063;
-		IL_0152:
-		gform0_0.Close();
-		num = 1004454857;
-		goto IL_0110;
+
+		if (mainForm.selectedProcess != null && HasProcessExited(mainForm.selectedProcess))
+		{
+			SetSelectedProcess(mainForm, null);
+		}
+
+		mainForm.settingsButton.Enabled = true;
+		mainForm.injectButton.Enabled = mainForm.selectedProcess != null && !ApplicationSettings.Current.Options.AutoInject;
+		mainForm.processRefreshTimer.Start();
 	}
 
-	internal static void smethod_351(Class154 class154_0, string string_0, MainForm gform0_0)
+	internal static void smethod_351(Class154 class154_0, string string_0, MainForm mainForm)
 	{
 		if (!string_0.StartsWith("d3dx9_", StringComparison.OrdinalIgnoreCase))
 		{
@@ -25485,7 +25296,7 @@ public sealed class Class171
 				num5 = 1385465660;
 				goto IL_017d;
 				IL_01af:
-				num5 = ((!smethod_337(gform0_0, class154_0.method_2(), string_0, text, bool_0: false, "DirectX 9 Runtime")) ? 48219170 : 313244286);
+				num5 = ((!smethod_337(mainForm, class154_0.method_2(), string_0, text, bool_0: false, "DirectX 9 Runtime")) ? 48219170 : 313244286);
 				goto IL_017d;
 			}
 			break;
@@ -26769,173 +26580,57 @@ public sealed class Class171
 		return false;
 	}
 
-	internal static void smethod_380(MainForm gform0_0, GClass2 gclass2_0)
+	internal static void SetSelectedProcess(MainForm mainForm, GClass2 gclass2_0)
 	{
-		if (gform0_0.pictureBox_0.BackgroundImage != null)
+		Image previousImage = mainForm.processIconPictureBox.BackgroundImage;
+		mainForm.processIconPictureBox.BackgroundImage = null;
+		previousImage?.Dispose();
+
+		mainForm.selectedProcess = gclass2_0;
+		mainForm.processDescriptionLabel.ResetText();
+
+		if (gclass2_0 == null)
 		{
-			goto IL_0084;
+			mainForm.processIconPictureBox.Cursor = Cursors.Default;
+			mainForm.injectButton.Enabled = false;
+			return;
 		}
-		goto IL_00c5;
-		IL_0084:
-		int num = 1503004594;
-		goto IL_0089;
-		IL_0089:
-		while (true)
+
+		mainForm.processIconPictureBox.Cursor = Cursors.Hand;
+		try
 		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ 0x16FE6775)) % 7)
+			using (Icon icon = smethod_11(gclass2_0.method_4(), Enum18.const_1))
 			{
-			case 5u:
-				gform0_0.button_5.Enabled = false;
-				num = (int)(num2 * 1040618621) ^ -1187483482;
-				continue;
-			case 4u:
-				gform0_0.pictureBox_0.Cursor = Cursors.Default;
-				num = (int)(num2 * 53860036) ^ -1391006413;
-				continue;
-			case 2u:
-			{
-				Image backgroundImage = gform0_0.pictureBox_0.BackgroundImage;
-				gform0_0.pictureBox_0.BackgroundImage = null;
-				backgroundImage.Dispose();
-				num = ((int)num2 * -1453679781) ^ -2098358397;
-				continue;
+				mainForm.processIconPictureBox.BackgroundImage = icon?.ToBitmap();
 			}
-			case 0u:
-				break;
-			case 6u:
-				goto IL_00c5;
-			default:
-			{
-				gform0_0.pictureBox_0.Cursor = Cursors.Hand;
-				Icon icon = smethod_11(gclass2_0.method_4(), Enum18.const_1);
-				try
-				{
-					gform0_0.pictureBox_0.BackgroundImage = icon?.ToBitmap();
-				}
-				finally
-				{
-					if (icon != null)
-					{
-						while (true)
-						{
-							IL_014a:
-							int num3 = 509919140;
-							while (true)
-							{
-								switch ((num2 = (uint)(num3 ^ 0x16FE6775)) % 3)
-								{
-								case 2u:
-									goto IL_011a;
-								default:
-									goto end_IL_012d;
-								case 0u:
-									break;
-								case 1u:
-									goto end_IL_012d;
-								}
-								goto IL_014a;
-								IL_011a:
-								((IDisposable)icon).Dispose();
-								num3 = (int)(num2 * 999572684) ^ -1460820608;
-								continue;
-								end_IL_012d:
-								break;
-							}
-							break;
-						}
-					}
-				}
-				string text = "No description";
-				try
-				{
-					FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(gclass2_0.method_4());
-					if (!string.IsNullOrEmpty(versionInfo.FileDescription))
-					{
-						goto IL_01c6;
-					}
-					goto IL_01fc;
-					IL_01c6:
-					int num4 = 1799701787;
-					goto IL_01cb;
-					IL_01cb:
-					while (true)
-					{
-						switch ((num2 = (uint)(num4 ^ 0x16FE6775)) % 5)
-						{
-						case 2u:
-							text = text.Substring(0, 50) + "...";
-							num4 = (int)((num2 * 69148220) ^ 0x505A5881);
-							continue;
-						case 1u:
-							text = versionInfo.FileDescription;
-							num4 = ((int)num2 * -634388970) ^ 0x58CC5F8D;
-							continue;
-						case 0u:
-							break;
-						default:
-							goto end_IL_015d;
-						case 3u:
-							goto IL_01fc;
-						case 4u:
-							goto end_IL_015d;
-						}
-						break;
-					}
-					goto IL_01c6;
-					IL_01fc:
-					num4 = ((text.Length <= 50) ? 86053509 : 95706010);
-					goto IL_01cb;
-					end_IL_015d:;
-				}
-				catch
-				{
-				}
-				gform0_0.label_1.Text = string.Format("{0}\nProcess ID: 0x{1:X} ({1})", text, gclass2_0.method_0());
-				while (true)
-				{
-					int num5 = 570325186;
-					while (true)
-					{
-						switch ((num2 = (uint)(num5 ^ 0x16FE6775)) % 6)
-						{
-						case 5u:
-							ApplicationSettings.Current.ProcessName = gform0_0.textBox_0.Text;
-							num5 = ((int)num2 * -256342931) ^ -598566268;
-							continue;
-						case 4u:
-							ApplicationSettings.Save();
-							num5 = (int)(num2 * 1096574868) ^ -806517515;
-							continue;
-						case 3u:
-							gform0_0.button_5.Enabled = true;
-							num5 = (int)((num2 * 316077633) ^ 0x16407D15);
-							continue;
-						case 0u:
-							num5 = ((!ApplicationSettings.Current.Options.AutoInject) ? (-14799428) : (-223502948)) ^ ((int)num2 * -1715865287);
-							continue;
-						default:
-							return;
-						case 2u:
-							break;
-						case 1u:
-							return;
-						}
-						break;
-					}
-				}
-			}
-			case 3u:
-				return;
-			}
-			break;
 		}
-		goto IL_0084;
-		IL_00c5:
-		gform0_0.label_1.ResetText();
-		gform0_0.gclass2_0 = gclass2_0;
-		num = ((gclass2_0 != null) ? 248201642 : 1921796266);
-		goto IL_0089;
+		catch
+		{
+			mainForm.processIconPictureBox.BackgroundImage = null;
+		}
+
+		string description = "No description";
+		try
+		{
+			FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(gclass2_0.method_4());
+			if (!string.IsNullOrEmpty(versionInfo.FileDescription))
+			{
+				description = versionInfo.FileDescription;
+			}
+		}
+		catch
+		{
+		}
+
+		if (description.Length > 50)
+		{
+			description = description.Substring(0, 50) + "...";
+		}
+
+		mainForm.processDescriptionLabel.Text = string.Format("{0}\nProcess ID: 0x{1:X} ({1})", description, gclass2_0.method_0());
+		ApplicationSettings.Current.ProcessName = mainForm.processNameTextBox.Text;
+		ApplicationSettings.Save();
+		mainForm.injectButton.Enabled = !ApplicationSettings.Current.Options.AutoInject;
 	}
 
 	internal static void smethod_381(Class56.Struct13 struct13_0, Class56 class56_0)
@@ -27092,9 +26787,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_383(MainForm gform0_0)
+	internal static void InitializeMainFormComponents(MainForm mainForm)
 	{
-		gform0_0.icontainer_0 = new Container();
+		mainForm.icontainer_0 = new Container();
 		ComponentResourceManager componentResourceManager = default(ComponentResourceManager);
 		DataGridViewCellStyle dataGridViewCellStyle = default(DataGridViewCellStyle);
 		while (true)
@@ -27106,389 +26801,389 @@ public sealed class Class171
 				switch ((num2 = (uint)(num ^ -487753370)) % 125)
 				{
 				case 124u:
-					gform0_0.textBox_0.TextChanged += gform0_0.method_1;
-					gform0_0.button_0.BackColor = Color.Transparent;
-					gform0_0.button_0.Location = new Point(281, 25);
+					mainForm.processNameTextBox.TextChanged += mainForm.OnProcessNameChanged;
+					mainForm.selectProcessButton.BackColor = Color.Transparent;
+					mainForm.selectProcessButton.Location = new Point(281, 25);
 					num = (int)((num2 * 1169526931) ^ 0x7AAB1BE5);
 					continue;
 				case 123u:
-					gform0_0.dataGridView_0.TabIndex = 4;
+					mainForm.moduleGrid.TabIndex = 4;
 					num = ((int)num2 * -337538765) ^ 0x3C5AA310;
 					continue;
 				case 122u:
-					gform0_0.panel_0 = new Panel();
+					mainForm.mainPanel = new Panel();
 					num = (int)((num2 * 1636137315) ^ 0x36EDAB8);
 					continue;
 				case 121u:
-					gform0_0.Name = "MainForm";
+					mainForm.Name = "MainForm";
 					num = (int)((num2 * 118520750) ^ 0x4E60BF24);
 					continue;
 				case 120u:
-					gform0_0.panel_0.Name = "mainPanel";
+					mainForm.mainPanel.Name = "mainPanel";
 					num = (int)(num2 * 1702526366) ^ -1361416995;
 					continue;
 				case 119u:
-					gform0_0.dataGridViewButtonColumn_0 = new DataGridViewButtonColumn();
+					mainForm.exportOptionsColumn = new DataGridViewButtonColumn();
 					num = ((int)num2 * -1530116333) ^ 0x27B8A11F;
 					continue;
 				case 118u:
-					gform0_0.button_0.Name = "selectProcessButton";
+					mainForm.selectProcessButton.Name = "selectProcessButton";
 					num = (int)(num2 * 536041281) ^ -334805787;
 					continue;
 				case 117u:
-					gform0_0.label_2.Location = new Point(20, 82);
+					mainForm.injectionListLabel.Location = new Point(20, 82);
 					num = (int)(num2 * 1558443897) ^ -1419661379;
 					continue;
 				case 116u:
-					gform0_0.dataGridViewCheckBoxColumn_0.Name = "enableColumn";
+					mainForm.enabledColumn.Name = "enableColumn";
 					num = ((int)num2 * -1814186898) ^ 0x410C0C6D;
 					continue;
 				case 115u:
-					gform0_0.dataGridView_0.Name = "injectDataGridView";
+					mainForm.moduleGrid.Name = "injectDataGridView";
 					num = (int)((num2 * 336482190) ^ 0x51D57DF9);
 					continue;
 				case 114u:
-					gform0_0.dataGridView_0.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+					mainForm.moduleGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 					num = ((int)num2 * -224278721) ^ -1898663764;
 					continue;
 				case 113u:
-					gform0_0.button_0.Text = "Select";
+					mainForm.selectProcessButton.Text = "Select";
 					num = ((int)num2 * -449972781) ^ 0x4CB6A29;
 					continue;
 				case 112u:
-					gform0_0.button_4 = new Button();
+					mainForm.addDllButton = new Button();
 					num = (int)(num2 * 1238264043) ^ -489936994;
 					continue;
 				case 111u:
-					gform0_0.button_4.Text = "Add DLL";
-					gform0_0.button_4.UseVisualStyleBackColor = true;
-					gform0_0.button_4.Click += gform0_0.method_7;
-					gform0_0.label_2.AutoSize = true;
-					gform0_0.label_2.BackColor = Color.Transparent;
+					mainForm.addDllButton.Text = "Add DLL";
+					mainForm.addDllButton.UseVisualStyleBackColor = true;
+					mainForm.addDllButton.Click += mainForm.OnAddDllClicked;
+					mainForm.injectionListLabel.AutoSize = true;
+					mainForm.injectionListLabel.BackColor = Color.Transparent;
 					num = (int)(num2 * 1636686051) ^ -2021245646;
 					continue;
 				case 110u:
-					gform0_0.button_3.Size = new Size(98, 22);
-					gform0_0.button_3.TabIndex = 1;
-					gform0_0.button_3.Text = "Enable/Disable";
+					mainForm.toggleButton.Size = new Size(98, 22);
+					mainForm.toggleButton.TabIndex = 1;
+					mainForm.toggleButton.Text = "Enable/Disable";
 					num = ((int)num2 * -1309309817) ^ 0x1952E8EA;
 					continue;
 				case 109u:
-					gform0_0.button_5.Click += gform0_0.method_13;
-					gform0_0.button_6.Location = new Point(11, 221);
+					mainForm.injectButton.Click += mainForm.OnInjectClicked;
+					mainForm.aboutButton.Location = new Point(11, 221);
 					num = ((int)num2 * -1759659640) ^ 0x25B80A4F;
 					continue;
 				case 108u:
-					gform0_0.FormBorderStyle = FormBorderStyle.FixedSingle;
+					mainForm.FormBorderStyle = FormBorderStyle.FixedSingle;
 					num = (int)(num2 * 1334129414) ^ -702505184;
 					continue;
 				case 107u:
-					((ISupportInitialize)gform0_0.dataGridView_0).EndInit();
-					gform0_0.ResumeLayout(performLayout: false);
+					((ISupportInitialize)mainForm.moduleGrid).EndInit();
+					mainForm.ResumeLayout(performLayout: false);
 					num = (int)(num2 * 1971276451) ^ -1366413249;
 					continue;
 				case 106u:
-					gform0_0.label_0.Size = new Size(80, 13);
+					mainForm.processNameLabel.Size = new Size(80, 13);
 					num = (int)((num2 * 1017727412) ^ 0x694CC432);
 					continue;
 				case 105u:
-					gform0_0.label_1.Location = new Point(50, 51);
+					mainForm.processDescriptionLabel.Location = new Point(50, 51);
 					num = ((int)num2 * -1041617983) ^ 0x3EAF2233;
 					continue;
 				case 104u:
-					gform0_0.label_1.Size = new Size(300, 30);
+					mainForm.processDescriptionLabel.Size = new Size(300, 30);
 					num = (int)((num2 * 543612945) ^ 0x27377957);
 					continue;
 				case 103u:
-					gform0_0.Resize += gform0_0.method_10;
+					mainForm.Resize += mainForm.OnResize;
 					num = (int)(num2 * 69849576) ^ -150696988;
 					continue;
 				case 102u:
-					gform0_0.Paint += gform0_0.method_3;
-					gform0_0.MouseUp += gform0_0.method_15;
+					mainForm.Paint += mainForm.OnBackgroundPaint;
+					mainForm.MouseUp += mainForm.OnMouseUp;
 					num = (int)((num2 * 1878504212) ^ 0x71E41140);
 					continue;
 				case 101u:
-					gform0_0.timer_0.Interval = 250;
-					gform0_0.timer_0.Tick += gform0_0.method_2;
+					mainForm.processRefreshTimer.Interval = 250;
+					mainForm.processRefreshTimer.Tick += mainForm.OnProcessRefreshTick;
 					num = (int)(num2 * 877144372) ^ -395416859;
 					continue;
 				case 100u:
-					((ISupportInitialize)gform0_0.pictureBox_0).EndInit();
+					((ISupportInitialize)mainForm.processIconPictureBox).EndInit();
 					num = (int)((num2 * 286574111) ^ 0x79895100);
 					continue;
 				case 99u:
-					gform0_0.button_0.TabIndex = 2;
+					mainForm.selectProcessButton.TabIndex = 2;
 					num = ((int)num2 * -1197925703) ^ 0x408D3887;
 					continue;
 				case 98u:
-					gform0_0.dataGridViewTextBoxColumn_0.ReadOnly = true;
-					gform0_0.dataGridViewTextBoxColumn_0.Resizable = DataGridViewTriState.True;
+					mainForm.dllNameColumn.ReadOnly = true;
+					mainForm.dllNameColumn.Resizable = DataGridViewTriState.True;
 					num = (int)((num2 * 281090728) ^ 0x236D4BD5);
 					continue;
 				case 97u:
-					gform0_0.button_7.Text = "Settings";
+					mainForm.settingsButton.Text = "Settings";
 					num = (int)(num2 * 104557800) ^ -579189757;
 					continue;
 				case 96u:
-					gform0_0.button_7.UseVisualStyleBackColor = true;
+					mainForm.settingsButton.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -1172967689) ^ -1876549448;
 					continue;
 				case 95u:
-					gform0_0.AutoScaleDimensions = new SizeF(96f, 96f);
+					mainForm.AutoScaleDimensions = new SizeF(96f, 96f);
 					num = (int)((num2 * 1810803090) ^ 0x379F72DE);
 					continue;
 				case 94u:
-					gform0_0.Font = new Font("Segoe UI", 8.25f);
+					mainForm.Font = new Font("Segoe UI", 8.25f);
 					num = (int)(num2 * 1185142676) ^ -99868280;
 					continue;
 				case 93u:
-					gform0_0.label_0.Text = "Process Name:";
+					mainForm.processNameLabel.Text = "Process Name:";
 					num = ((int)num2 * -266080850) ^ -1966587284;
 					continue;
 				case 92u:
-					gform0_0.button_3.UseVisualStyleBackColor = true;
+					mainForm.toggleButton.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -836644726) ^ -676596960;
 					continue;
 				case 91u:
-					gform0_0.button_1.Text = "Clear";
-					gform0_0.button_1.UseVisualStyleBackColor = true;
+					mainForm.clearButton.Text = "Clear";
+					mainForm.clearButton.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -649768545) ^ -352538409;
 					continue;
 				case 90u:
-					gform0_0.dataGridViewButtonColumn_0.Name = "ExportOptions";
+					mainForm.exportOptionsColumn.Name = "ExportOptions";
 					num = ((int)num2 * -1241442092) ^ 0x1202E48;
 					continue;
 				case 89u:
-					gform0_0.MaximizeBox = false;
+					mainForm.MaximizeBox = false;
 					num = ((int)num2 * -1142072064) ^ -1506149057;
 					continue;
 				case 88u:
-					gform0_0.label_1.BackColor = Color.Transparent;
-					gform0_0.label_1.Font = new Font("Segoe UI", 8.25f, FontStyle.Italic, GraphicsUnit.Point, 0);
+					mainForm.processDescriptionLabel.BackColor = Color.Transparent;
+					mainForm.processDescriptionLabel.Font = new Font("Segoe UI", 8.25f, FontStyle.Italic, GraphicsUnit.Point, 0);
 					num = (int)((num2 * 1521513386) ^ 0x412AB872);
 					continue;
 				case 87u:
-					gform0_0.dataGridViewButtonColumn_0.HeaderText = "";
+					mainForm.exportOptionsColumn.HeaderText = "";
 					num = (int)(num2 * 751653332) ^ -1524278533;
 					continue;
 				case 86u:
-					gform0_0.button_0.UseVisualStyleBackColor = false;
+					mainForm.selectProcessButton.UseVisualStyleBackColor = false;
 					num = (int)(num2 * 159244853) ^ -1053628369;
 					continue;
 				case 85u:
-					gform0_0.label_1.TabIndex = 4;
+					mainForm.processDescriptionLabel.TabIndex = 4;
 					num = ((int)num2 * -49461798) ^ -1251843324;
 					continue;
 				case 84u:
-					gform0_0.dataGridViewCheckBoxColumn_0.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+					mainForm.enabledColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 					num = (int)((num2 * 222543055) ^ 0x7830A661);
 					continue;
 				case 83u:
-					gform0_0.button_3.Click += gform0_0.method_6;
+					mainForm.toggleButton.Click += mainForm.OnToggleModuleClicked;
 					num = ((int)num2 * -46025346) ^ -1904582948;
 					continue;
 				case 82u:
-					gform0_0.dataGridView_0 = new DataGridView();
-					gform0_0.dataGridViewCheckBoxColumn_0 = new DataGridViewCheckBoxColumn();
+					mainForm.moduleGrid = new DataGridView();
+					mainForm.enabledColumn = new DataGridViewCheckBoxColumn();
 					num = ((int)num2 * -1989388591) ^ 0x12F22F0D;
 					continue;
 				case 81u:
-					gform0_0.dataGridViewCheckBoxColumn_0.HeaderText = "";
+					mainForm.enabledColumn.HeaderText = "";
 					num = (int)((num2 * 1711939356) ^ 0x355A262C);
 					continue;
 				case 80u:
-					gform0_0.Icon = (Icon)componentResourceManager.GetObject("$this.Icon");
+					mainForm.Icon = (Icon)componentResourceManager.GetObject("$this.Icon");
 					num = ((int)num2 * -2106505726) ^ 0x641E64C;
 					continue;
 				case 78u:
-					gform0_0.panel_0.ResumeLayout(performLayout: false);
+					mainForm.mainPanel.ResumeLayout(performLayout: false);
 					num = (int)((num2 * 1377260926) ^ 0xC8267CD);
 					continue;
 				case 77u:
-					gform0_0.dataGridView_0.EditMode = DataGridViewEditMode.EditProgrammatically;
-					gform0_0.dataGridView_0.Location = new Point(119, 9);
-					gform0_0.dataGridView_0.MultiSelect = false;
+					mainForm.moduleGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+					mainForm.moduleGrid.Location = new Point(119, 9);
+					mainForm.moduleGrid.MultiSelect = false;
 					num = (int)(num2 * 1894785235) ^ -242957968;
 					continue;
 				case 76u:
-					gform0_0.button_2.Click += gform0_0.method_5;
+					mainForm.removeButton.Click += mainForm.OnRemoveModuleClicked;
 					num = ((int)num2 * -2024800412) ^ -1816474049;
 					continue;
 				case 75u:
-					gform0_0.dataGridViewTextBoxColumn_0.HeaderText = "DLL Name";
+					mainForm.dllNameColumn.HeaderText = "DLL Name";
 					num = (int)((num2 * 537448966) ^ 0x2A6E261E);
 					continue;
 				case 74u:
-					gform0_0.dataGridView_0.ColumnHeadersHeight = 22;
+					mainForm.moduleGrid.ColumnHeadersHeight = 22;
 					num = (int)(num2 * 1290642526) ^ -2081961831;
 					continue;
 				case 73u:
-					gform0_0.button_1.Location = new Point(11, 93);
+					mainForm.clearButton.Location = new Point(11, 93);
 					num = ((int)num2 * -220739375) ^ -2079783493;
 					continue;
 				case 72u:
-					gform0_0.label_1 = new System.Windows.Forms.Label();
-					gform0_0.timer_0 = new System.Windows.Forms.Timer(gform0_0.icontainer_0);
+					mainForm.processDescriptionLabel = new System.Windows.Forms.Label();
+					mainForm.processRefreshTimer = new System.Windows.Forms.Timer(mainForm.icontainer_0);
 					num = (int)(num2 * 339032192) ^ -819606509;
 					continue;
 				case 71u:
-					gform0_0.label_0.TabIndex = 0;
+					mainForm.processNameLabel.TabIndex = 0;
 					num = ((int)num2 * -429640179) ^ 0x1AD3822B;
 					continue;
 				case 70u:
-					gform0_0.button_3.Name = "toggleButton";
+					mainForm.toggleButton.Name = "toggleButton";
 					num = (int)(num2 * 61620285) ^ -459257672;
 					continue;
 				case 69u:
-					gform0_0.button_4.Location = new Point(11, 9);
-					gform0_0.button_4.Name = "addDLLButton";
-					gform0_0.button_4.Size = new Size(98, 22);
+					mainForm.addDllButton.Location = new Point(11, 9);
+					mainForm.addDllButton.Name = "addDLLButton";
+					mainForm.addDllButton.Size = new Size(98, 22);
 					num = (int)((num2 * 1250992992) ^ 0x5D530741);
 					continue;
 				case 68u:
-					gform0_0.button_6.Text = "About";
-					gform0_0.button_6.UseVisualStyleBackColor = true;
-					gform0_0.button_6.Click += gform0_0.method_11;
+					mainForm.aboutButton.Text = "About";
+					mainForm.aboutButton.UseVisualStyleBackColor = true;
+					mainForm.aboutButton.Click += mainForm.OnAboutClicked;
 					num = (int)((num2 * 826312611) ^ 0x49D43F52);
 					continue;
 				case 67u:
-					gform0_0.label_0.Name = "processNameLabel";
+					mainForm.processNameLabel.Name = "processNameLabel";
 					num = (int)((num2 * 1210373950) ^ 0x33D7471D);
 					continue;
 				case 66u:
-					gform0_0.dataGridView_0.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-					gform0_0.dataGridView_0.Columns.AddRange(gform0_0.dataGridViewCheckBoxColumn_0, gform0_0.dataGridViewTextBoxColumn_0, gform0_0.dataGridViewButtonColumn_0);
+					mainForm.moduleGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+					mainForm.moduleGrid.Columns.AddRange(mainForm.enabledColumn, mainForm.dllNameColumn, mainForm.exportOptionsColumn);
 					num = ((int)num2 * -636549150) ^ 0x2F5A9022;
 					continue;
 				case 65u:
-					gform0_0.dataGridViewTextBoxColumn_0.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+					mainForm.dllNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 					num = ((int)num2 * -1875909539) ^ -512448777;
 					continue;
 				case 64u:
-					gform0_0.button_7.Name = "settingsButton";
+					mainForm.settingsButton.Name = "settingsButton";
 					num = ((int)num2 * -1325099373) ^ 0x2F0FB988;
 					continue;
 				case 63u:
-					gform0_0.Controls.Add(gform0_0.button_0);
+					mainForm.Controls.Add(mainForm.selectProcessButton);
 					num = (int)((num2 * 2038003765) ^ 0x342AE98A);
 					continue;
 				case 62u:
-					gform0_0.dataGridView_0.RowHeadersVisible = false;
+					mainForm.moduleGrid.RowHeadersVisible = false;
 					num = (int)((num2 * 495800954) ^ 0x16365F21);
 					continue;
 				case 61u:
-					gform0_0.pictureBox_0.BackgroundImageLayout = ImageLayout.Zoom;
-					gform0_0.pictureBox_0.Location = new Point(11, 16);
+					mainForm.processIconPictureBox.BackgroundImageLayout = ImageLayout.Zoom;
+					mainForm.processIconPictureBox.Location = new Point(11, 16);
 					num = ((int)num2 * -1126656535) ^ 0x74DA8AEC;
 					continue;
 				case 60u:
-					gform0_0.button_7.Location = new Point(131, 221);
+					mainForm.settingsButton.Location = new Point(131, 221);
 					num = (int)((num2 * 2109780093) ^ 0x4A56445);
 					continue;
 				case 59u:
-					gform0_0.dataGridViewCheckBoxColumn_0.Resizable = DataGridViewTriState.False;
+					mainForm.enabledColumn.Resizable = DataGridViewTriState.False;
 					num = (int)((num2 * 1723399399) ^ 0x37852BC9);
 					continue;
 				case 58u:
-					gform0_0.panel_0.Controls.Add(gform0_0.dataGridView_0);
+					mainForm.mainPanel.Controls.Add(mainForm.moduleGrid);
 					num = (int)(num2 * 1705364264) ^ -1682926174;
 					continue;
 				case 57u:
-					gform0_0.button_1.Name = "clearButton";
+					mainForm.clearButton.Name = "clearButton";
 					num = ((int)num2 * -110341248) ^ -805913985;
 					continue;
 				case 56u:
-					gform0_0.textBox_0.TabIndex = 1;
+					mainForm.processNameTextBox.TabIndex = 1;
 					num = ((int)num2 * -1951217459) ^ 0x22C280B9;
 					continue;
 				case 55u:
-					gform0_0.button_1.Size = new Size(98, 22);
+					mainForm.clearButton.Size = new Size(98, 22);
 					num = (int)((num2 * 433137900) ^ 0x6A077DF6);
 					continue;
 				case 54u:
-					gform0_0.label_1.Name = "processDescriptionLabel";
+					mainForm.processDescriptionLabel.Name = "processDescriptionLabel";
 					num = (int)(num2 * 1060800260) ^ -545659172;
 					continue;
 				case 53u:
-					gform0_0.panel_0.Size = new Size(340, 125);
-					gform0_0.panel_0.TabIndex = 5;
-					gform0_0.dataGridView_0.AllowUserToAddRows = false;
+					mainForm.mainPanel.Size = new Size(340, 125);
+					mainForm.mainPanel.TabIndex = 5;
+					mainForm.moduleGrid.AllowUserToAddRows = false;
 					num = (int)((num2 * 887031043) ^ 0x77A0D135);
 					continue;
 				case 52u:
-					gform0_0.dataGridViewButtonColumn_0.Text = "";
-					gform0_0.dataGridViewButtonColumn_0.Width = 20;
+					mainForm.exportOptionsColumn.Text = "";
+					mainForm.exportOptionsColumn.Width = 20;
 					num = ((int)num2 * -1437773533) ^ 0x244A0A4F;
 					continue;
 				case 51u:
-					gform0_0.textBox_0.Location = new Point(53, 26);
-					gform0_0.textBox_0.Name = "processNameTextBox";
-					gform0_0.textBox_0.Size = new Size(223, 22);
+					mainForm.processNameTextBox.Location = new Point(53, 26);
+					mainForm.processNameTextBox.Name = "processNameTextBox";
+					mainForm.processNameTextBox.Size = new Size(223, 22);
 					num = (int)(num2 * 1926685097) ^ -1288261024;
 					continue;
 				case 50u:
-					gform0_0.button_1.TabIndex = 3;
+					mainForm.clearButton.TabIndex = 3;
 					num = (int)(num2 * 240719639) ^ -1596572797;
 					continue;
 				case 49u:
-					gform0_0.Controls.Add(gform0_0.label_2);
+					mainForm.Controls.Add(mainForm.injectionListLabel);
 					num = (int)(num2 * 279691398) ^ -211899105;
 					continue;
 				case 48u:
-					gform0_0.button_0.Size = new Size(71, 24);
+					mainForm.selectProcessButton.Size = new Size(71, 24);
 					num = (int)(num2 * 717372729) ^ -133262046;
 					continue;
 				case 47u:
-					gform0_0.label_2.Name = "injectListLabel";
-					gform0_0.label_2.Size = new Size(55, 13);
+					mainForm.injectionListLabel.Name = "injectListLabel";
+					mainForm.injectionListLabel.Size = new Size(55, 13);
 					num = (int)(num2 * 1250769651) ^ -1427032670;
 					continue;
 				case 46u:
 					componentResourceManager = new ComponentResourceManager(typeof(MainForm));
-					gform0_0.label_0 = new System.Windows.Forms.Label();
-					gform0_0.textBox_0 = new TextBox();
+					mainForm.processNameLabel = new System.Windows.Forms.Label();
+					mainForm.processNameTextBox = new TextBox();
 					num = ((int)num2 * -799717845) ^ -1093906566;
 					continue;
 				case 44u:
-					gform0_0.Text = "Extreme Injector by master131";
+					mainForm.Text = "Extreme Injector by master131";
 					num = (int)(num2 * 1742251337) ^ -1258516507;
 					continue;
 				case 43u:
-					gform0_0.button_2.Size = new Size(98, 22);
-					gform0_0.button_2.TabIndex = 2;
-					gform0_0.button_2.Text = "Remove";
-					gform0_0.button_2.UseVisualStyleBackColor = true;
+					mainForm.removeButton.Size = new Size(98, 22);
+					mainForm.removeButton.TabIndex = 2;
+					mainForm.removeButton.Text = "Remove";
+					mainForm.removeButton.UseVisualStyleBackColor = true;
 					num = ((int)num2 * -778116563) ^ 0x10C68A57;
 					continue;
 				case 42u:
-					gform0_0.button_1.Click += gform0_0.method_4;
+					mainForm.clearButton.Click += mainForm.OnClearModulesClicked;
 					num = (int)((num2 * 517360911) ^ 0x6F3D9ED0);
 					continue;
 				case 41u:
-					gform0_0.Load += gform0_0.method_14;
+					mainForm.Load += mainForm.OnLoad;
 					num = ((int)num2 * -1910028124) ^ -189451995;
 					continue;
 				case 40u:
-					gform0_0.Controls.Add(gform0_0.textBox_0);
-					gform0_0.Controls.Add(gform0_0.label_0);
+					mainForm.Controls.Add(mainForm.processNameTextBox);
+					mainForm.Controls.Add(mainForm.processNameLabel);
 					num = ((int)num2 * -2006877740) ^ -635111888;
 					continue;
 				case 39u:
-					gform0_0.label_2 = new System.Windows.Forms.Label();
-					gform0_0.button_5 = new Button();
-					gform0_0.button_6 = new Button();
+					mainForm.injectionListLabel = new System.Windows.Forms.Label();
+					mainForm.injectButton = new Button();
+					mainForm.aboutButton = new Button();
 					num = (int)((num2 * 952216241) ^ 0x781818F9);
 					continue;
 				case 38u:
-					gform0_0.label_2.TabIndex = 6;
+					mainForm.injectionListLabel.TabIndex = 6;
 					num = (int)((num2 * 943615260) ^ 0x452DBD58);
 					continue;
 				case 37u:
-					gform0_0.AutoScaleMode = AutoScaleMode.Dpi;
-					gform0_0.ClientSize = new Size(364, 252);
-					gform0_0.Controls.Add(gform0_0.button_7);
-					gform0_0.Controls.Add(gform0_0.button_6);
+					mainForm.AutoScaleMode = AutoScaleMode.Dpi;
+					mainForm.ClientSize = new Size(364, 252);
+					mainForm.Controls.Add(mainForm.settingsButton);
+					mainForm.Controls.Add(mainForm.aboutButton);
 					num = (int)(num2 * 1071131732) ^ -1770215914;
 					continue;
 				case 36u:
@@ -27496,33 +27191,33 @@ public sealed class Class171
 					num = ((int)num2 * -871050817) ^ 0x2925C755;
 					continue;
 				case 35u:
-					gform0_0.button_7.Click += gform0_0.method_12;
+					mainForm.settingsButton.Click += mainForm.OnSettingsClicked;
 					num = ((int)num2 * -873032880) ^ 0x57B47107;
 					continue;
 				case 34u:
-					gform0_0.button_0.Click += gform0_0.method_0;
-					gform0_0.pictureBox_0.BackColor = Color.Transparent;
+					mainForm.selectProcessButton.Click += mainForm.OnSelectProcessClicked;
+					mainForm.processIconPictureBox.BackColor = Color.Transparent;
 					num = (int)(num2 * 984849266) ^ -1211573368;
 					continue;
 				case 33u:
-					gform0_0.SuspendLayout();
-					gform0_0.label_0.AutoSize = true;
-					gform0_0.label_0.BackColor = Color.Transparent;
-					gform0_0.label_0.Location = new Point(50, 10);
+					mainForm.SuspendLayout();
+					mainForm.processNameLabel.AutoSize = true;
+					mainForm.processNameLabel.BackColor = Color.Transparent;
+					mainForm.processNameLabel.Location = new Point(50, 10);
 					num = (int)(num2 * 1647120472) ^ -317389358;
 					continue;
 				case 32u:
-					gform0_0.button_2.Location = new Point(11, 65);
-					gform0_0.button_2.Name = "removeButton";
+					mainForm.removeButton.Location = new Point(11, 65);
+					mainForm.removeButton.Name = "removeButton";
 					num = ((int)num2 * -1394985991) ^ 0x700C0B72;
 					continue;
 				case 31u:
 					dataGridViewCellStyle.NullValue = "...";
-					gform0_0.dataGridViewButtonColumn_0.DefaultCellStyle = dataGridViewCellStyle;
+					mainForm.exportOptionsColumn.DefaultCellStyle = dataGridViewCellStyle;
 					num = ((int)num2 * -403142616) ^ -1747671080;
 					continue;
 				case 30u:
-					gform0_0.dataGridView_0.CellMouseUp += gform0_0.method_8;
+					mainForm.moduleGrid.CellMouseUp += mainForm.OnModuleGridCellMouseUp;
 					num = ((int)num2 * -2049060302) ^ 0x1814BDF2;
 					continue;
 				case 29u:
@@ -27530,144 +27225,144 @@ public sealed class Class171
 					num = (int)((num2 * 1428776072) ^ 0x1CDB6A71);
 					continue;
 				case 28u:
-					gform0_0.panel_0.Location = new Point(11, 90);
+					mainForm.mainPanel.Location = new Point(11, 90);
 					num = (int)((num2 * 1049078316) ^ 0x592DDA91);
 					continue;
 				case 27u:
-					gform0_0.dataGridView_0.AllowUserToResizeRows = false;
+					mainForm.moduleGrid.AllowUserToResizeRows = false;
 					num = ((int)num2 * -853181404) ^ 0x586BCA1;
 					continue;
 				case 26u:
-					gform0_0.panel_0.SuspendLayout();
-					((ISupportInitialize)gform0_0.dataGridView_0).BeginInit();
+					mainForm.mainPanel.SuspendLayout();
+					((ISupportInitialize)mainForm.moduleGrid).BeginInit();
 					num = (int)((num2 * 1394959317) ^ 0x30BA2A3);
 					continue;
 				case 25u:
-					gform0_0.button_6.Name = "aboutButton";
-					gform0_0.button_6.Size = new Size(98, 22);
+					mainForm.aboutButton.Name = "aboutButton";
+					mainForm.aboutButton.Size = new Size(98, 22);
 					num = (int)(num2 * 1185907387) ^ -1832533828;
 					continue;
 				case 24u:
-					gform0_0.dataGridViewTextBoxColumn_0.Name = "dllNameColumn";
+					mainForm.dllNameColumn.Name = "dllNameColumn";
 					num = ((int)num2 * -209981007) ^ -1669725918;
 					continue;
 				case 23u:
-					gform0_0.dataGridView_0.Size = new Size(211, 106);
+					mainForm.moduleGrid.Size = new Size(211, 106);
 					num = ((int)num2 * -1346110853) ^ 0x267DF98F;
 					continue;
 				case 22u:
-					gform0_0.dataGridView_0.AllowUserToResizeColumns = false;
+					mainForm.moduleGrid.AllowUserToResizeColumns = false;
 					num = ((int)num2 * -649631206) ^ -69605369;
 					continue;
 				case 21u:
-					gform0_0.button_7.TabIndex = 9;
+					mainForm.settingsButton.TabIndex = 9;
 					num = (int)((num2 * 256320581) ^ 0x4C128465);
 					continue;
 				case 20u:
-					gform0_0.button_7 = new Button();
-					((ISupportInitialize)gform0_0.pictureBox_0).BeginInit();
+					mainForm.settingsButton = new Button();
+					((ISupportInitialize)mainForm.processIconPictureBox).BeginInit();
 					num = (int)(num2 * 350471039) ^ -1004869829;
 					continue;
 				case 19u:
-					gform0_0.button_0 = new Button();
-					gform0_0.pictureBox_0 = new PictureBox();
+					mainForm.selectProcessButton = new Button();
+					mainForm.processIconPictureBox = new PictureBox();
 					num = ((int)num2 * -2005377218) ^ 0x464B473C;
 					continue;
 				case 18u:
-					gform0_0.button_5.Location = new Point(252, 221);
-					gform0_0.button_5.Name = "injectButton";
-					gform0_0.button_5.Size = new Size(98, 22);
-					gform0_0.button_5.TabIndex = 7;
-					gform0_0.button_5.Text = "Inject";
-					gform0_0.button_5.UseVisualStyleBackColor = true;
+					mainForm.injectButton.Location = new Point(252, 221);
+					mainForm.injectButton.Name = "injectButton";
+					mainForm.injectButton.Size = new Size(98, 22);
+					mainForm.injectButton.TabIndex = 7;
+					mainForm.injectButton.Text = "Inject";
+					mainForm.injectButton.UseVisualStyleBackColor = true;
 					num = (int)(num2 * 1984263502) ^ -344618080;
 					continue;
 				case 17u:
-					gform0_0.button_3.Location = new Point(11, 37);
+					mainForm.toggleButton.Location = new Point(11, 37);
 					num = (int)(num2 * 696365457) ^ -1217799413;
 					continue;
 				case 16u:
-					gform0_0.panel_0.Controls.Add(gform0_0.button_3);
-					gform0_0.panel_0.Controls.Add(gform0_0.button_4);
+					mainForm.mainPanel.Controls.Add(mainForm.toggleButton);
+					mainForm.mainPanel.Controls.Add(mainForm.addDllButton);
 					num = (int)(num2 * 129786574) ^ -1326733635;
 					continue;
 				case 15u:
-					gform0_0.panel_0.Controls.Add(gform0_0.button_1);
-					gform0_0.panel_0.Controls.Add(gform0_0.button_2);
+					mainForm.mainPanel.Controls.Add(mainForm.clearButton);
+					mainForm.mainPanel.Controls.Add(mainForm.removeButton);
 					num = ((int)num2 * -1428873082) ^ -1705136680;
 					continue;
 				case 14u:
-					gform0_0.button_7.Size = new Size(98, 22);
+					mainForm.settingsButton.Size = new Size(98, 22);
 					num = (int)(num2 * 418635406) ^ -1965366387;
 					continue;
 				case 13u:
-					gform0_0.pictureBox_0.TabStop = false;
-					gform0_0.pictureBox_0.Click += gform0_0.method_9;
+					mainForm.processIconPictureBox.TabStop = false;
+					mainForm.processIconPictureBox.Click += mainForm.OnProcessIconClicked;
 					num = ((int)num2 * -952180804) ^ 0x70F0B458;
 					continue;
 				case 12u:
-					gform0_0.Controls.Add(gform0_0.button_5);
+					mainForm.Controls.Add(mainForm.injectButton);
 					num = (int)(num2 * 1729769580) ^ -1741575655;
 					continue;
 				case 11u:
-					gform0_0.label_2.Text = "Inject List";
+					mainForm.injectionListLabel.Text = "Inject List";
 					num = (int)(num2 * 880623451) ^ -1747488314;
 					continue;
 				case 10u:
-					gform0_0.dataGridViewCheckBoxColumn_0.Width = 25;
+					mainForm.enabledColumn.Width = 25;
 					num = ((int)num2 * -160419026) ^ -98625526;
 					continue;
 				case 9u:
-					gform0_0.button_5.Enabled = false;
+					mainForm.injectButton.Enabled = false;
 					num = (int)(num2 * 122884449) ^ -383463268;
 					continue;
 				case 8u:
-					gform0_0.dataGridView_0.BackgroundColor = Color.White;
+					mainForm.moduleGrid.BackgroundColor = Color.White;
 					num = ((int)num2 * -1572573105) ^ 0x6C118803;
 					continue;
 				case 7u:
-					gform0_0.button_1 = new Button();
-					gform0_0.button_2 = new Button();
-					gform0_0.button_3 = new Button();
+					mainForm.clearButton = new Button();
+					mainForm.removeButton = new Button();
+					mainForm.toggleButton = new Button();
 					num = (int)(num2 * 1492730795) ^ -1934313241;
 					continue;
 				case 6u:
-					gform0_0.button_6.TabIndex = 8;
+					mainForm.aboutButton.TabIndex = 8;
 					num = (int)((num2 * 911259770) ^ 0x612A369B);
 					continue;
 				case 5u:
-					gform0_0.dataGridViewTextBoxColumn_0 = new DataGridViewTextBoxColumn();
+					mainForm.dllNameColumn = new DataGridViewTextBoxColumn();
 					num = (int)((num2 * 164256153) ^ 0x3CC32369);
 					continue;
 				case 4u:
-					gform0_0.Controls.Add(gform0_0.panel_0);
-					gform0_0.Controls.Add(gform0_0.label_1);
-					gform0_0.Controls.Add(gform0_0.pictureBox_0);
+					mainForm.Controls.Add(mainForm.mainPanel);
+					mainForm.Controls.Add(mainForm.processDescriptionLabel);
+					mainForm.Controls.Add(mainForm.processIconPictureBox);
 					num = ((int)num2 * -724676943) ^ 0xBA080AA;
 					continue;
 				case 3u:
-					gform0_0.dataGridView_0.CellBorderStyle = DataGridViewCellBorderStyle.None;
+					mainForm.moduleGrid.CellBorderStyle = DataGridViewCellBorderStyle.None;
 					num = (int)(num2 * 750328631) ^ -1387328543;
 					continue;
 				case 2u:
-					gform0_0.pictureBox_0.Name = "processIconPictureBox";
-					gform0_0.pictureBox_0.Size = new Size(32, 32);
-					gform0_0.pictureBox_0.TabIndex = 3;
+					mainForm.processIconPictureBox.Name = "processIconPictureBox";
+					mainForm.processIconPictureBox.Size = new Size(32, 32);
+					mainForm.processIconPictureBox.TabIndex = 3;
 					num = (int)(num2 * 710830107) ^ -1010093594;
 					continue;
 				case 1u:
-					gform0_0.panel_0.BackColor = Color.Transparent;
-					gform0_0.panel_0.BorderStyle = BorderStyle.FixedSingle;
+					mainForm.mainPanel.BackColor = Color.Transparent;
+					mainForm.mainPanel.BorderStyle = BorderStyle.FixedSingle;
 					num = (int)((num2 * 2018472647) ^ 0x19439367);
 					continue;
 				case 0u:
-					gform0_0.button_4.TabIndex = 0;
+					mainForm.addDllButton.TabIndex = 0;
 					num = (int)((num2 * 1010534171) ^ 0x1AD0F955);
 					continue;
 				case 79u:
 					break;
 				default:
-					gform0_0.PerformLayout();
+					mainForm.PerformLayout();
 					return;
 				}
 				break;
@@ -28443,9 +28138,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_405(string string_0, MainForm gform0_0, string string_1, string string_2, string string_3)
+	internal static void smethod_405(string string_0, MainForm mainForm, string string_1, string string_2, string string_3)
 	{
-		DialogResult dialogResult = MessageBox.Show(gform0_0, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_3 + "\" in order to work properly, but it appears you do not have this file on the system or have installed it incorrectly. Extreme Injector can download this file automatically for you. Click 'Yes' to do it automatically, 'No' to do it manually or 'Cancel' to ignore.", "Extreme Injector v3", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+		DialogResult dialogResult = MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_3 + "\" in order to work properly, but it appears you do not have this file on the system or have installed it incorrectly. Extreme Injector can download this file automatically for you. Click 'Yes' to do it automatically, 'No' to do it manually or 'Cancel' to ignore.", "Extreme Injector v3", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
 		if (dialogResult == DialogResult.Yes)
 		{
 			goto IL_00bf;
@@ -28461,7 +28156,7 @@ public sealed class Class171
 			switch ((num2 = (uint)(num ^ -1204839189)) % 9)
 			{
 			case 8u:
-				MessageBox.Show(gform0_0, "When the page appears, download and extract the DLL files inside the ZIP file to \"" + string_1 + "\" (look at the path carefully).", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show(mainForm, "When the page appears, download and extract the DLL files inside the ZIP file to \"" + string_1 + "\" (look at the path carefully).", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 				num = ((int)num2 * -1180998039) ^ -766772100;
 				continue;
 			case 7u:
@@ -28488,7 +28183,7 @@ public sealed class Class171
 			case 0u:
 				return;
 			case 3u:
-				MessageBox.Show(gform0_0, "You must restart Extreme Injector as an administrator in order to do this otherwise it will not be able to save the files properly.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(mainForm, "You must restart Extreme Injector as an administrator in order to do this otherwise it will not be able to save the files properly.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				return;
 			case 4u:
 				return;
@@ -30847,41 +30542,17 @@ public sealed class Class171
 		smethod_137(class53_0, Enum7.const_266, class63_0, class59_0);
 	}
 
-	internal static void smethod_430(MainForm gform0_0)
+	internal static void ResolveSelectedProcess(MainForm mainForm)
 	{
-		if (gform0_0.textBox_0.Text.Contains("."))
+		string processName = mainForm.processNameTextBox.Text;
+		if (!processName.Contains("."))
 		{
-			GClass2[] array = default(GClass2[]);
-			while (true)
-			{
-				int num = 88522503;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x594B62B5)) % 5)
-					{
-					case 4u:
-						num = (((array = smethod_148(gform0_0.textBox_0.Text, bool_0: true)).Length == 0) ? 1081842328 : 127588851) ^ (int)(num2 * 1570187780);
-						continue;
-					case 0u:
-						smethod_380(gform0_0, array[0]);
-						num = ((int)num2 * -584085201) ^ 0x10B3CD0C;
-						continue;
-					case 2u:
-						break;
-					case 3u:
-						return;
-					default:
-						goto end_IL_0090;
-					}
-					break;
-				}
-				continue;
-				end_IL_0090:
-				break;
-			}
+			SetSelectedProcess(mainForm, null);
+			return;
 		}
-		smethod_380(gform0_0, null);
+
+		GClass2 process = smethod_148(processName, bool_0: true).FirstOrDefault();
+		SetSelectedProcess(mainForm, process);
 	}
 
 	[DllImport("ntdll.dll")]

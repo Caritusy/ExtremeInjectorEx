@@ -88,7 +88,7 @@ public sealed class Class88 : Class85
 				num = (int)(num2 * 1198042357) ^ -2129308134;
 				continue;
 			case 14u:
-				num = (Class171.smethod_302(method_19()) ? 1085827942 : 102433601) ^ (int)(num2 * 124969340);
+				num = (Class171.HasProcessExited(method_19()) ? 1085827942 : 102433601) ^ (int)(num2 * 124969340);
 				continue;
 			case 10u:
 				string_0 = Path.GetFullPath(string_0);

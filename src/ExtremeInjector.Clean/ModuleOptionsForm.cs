@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-public sealed class Form0 : Form
+public sealed class ModuleOptionsForm : Form
 {
 	[CompilerGenerated]
 	internal ModuleEntry class16_0;
@@ -70,7 +70,7 @@ public sealed class Form0 : Form
 		class154_0 = class154_1;
 	}
 
-	public Form0()
+	public ModuleOptionsForm()
 	{
 		Class171.smethod_22(this);
 	}

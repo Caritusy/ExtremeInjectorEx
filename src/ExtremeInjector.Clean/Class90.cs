@@ -205,7 +205,7 @@ public sealed class Class90 : Class85
 			}
 			throw new InvalidOperationException("There are no valid threads to hijack.");
 			IL_03dc:
-			num = ((!(flag = Class171.smethod_302(method_19()))) ? 1162097541 : 400719038);
+			num = ((!(flag = Class171.HasProcessExited(method_19()))) ? 1162097541 : 400719038);
 			continue;
 			IL_01fc:
 			num = ((!File.Exists(string_0)) ? 838312434 : 1456769755);

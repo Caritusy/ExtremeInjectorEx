@@ -231,7 +231,7 @@ public sealed class SettingsForm : Form
 
 	internal void method_10(object sender, EventArgs e)
 	{
-		Class171.smethod_214(method_0());
+		Class171.ShowProcessInspector(method_0());
 	}
 
 	internal void method_11(object sender, EventArgs e)
