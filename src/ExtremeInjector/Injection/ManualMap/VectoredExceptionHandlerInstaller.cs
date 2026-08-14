@@ -74,34 +74,9 @@ public sealed class VectoredExceptionHandlerInstaller : RemoteCodeExecutorBase
 
 	protected override void method_04C6()
 	{
-		if (!(method_2() == IntPtr.Zero))
+		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
 		{
-			return;
-		}
-		while (true)
-		{
-			int num = -1876519163;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -151200860)) % 4)
-				{
-				case 3u:
-					method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, bool_0: false, method_0()));
-					num = (int)((num2 * 772016731) ^ 0x7E68C41);
-					continue;
-				case 1u:
-					num = ((method_0() != -1) ? 1840783373 : 208631226) ^ ((int)num2 * -1554595510);
-					continue;
-				default:
-					return;
-				case 2u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-			}
+			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
 		}
 	}
 

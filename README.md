@@ -23,6 +23,7 @@ Extreme Injector Ex is a maintained Windows DLL injector based on the recoverabl
 - One GUI instance per Windows user; later launches restore and foreground the existing window.
 - Complete CLI access through `-c` or `--cli`, including every persisted application setting.
 - Embedded runtime dependencies and localization resources: the built EXE can be copied and run on its own.
+- Structurally deobfuscated source: no opaque predicates, XOR/modulo switch dispatchers, or decompiler-generated `goto` graphs remain under `src`.
 
 ## Requirements
 
@@ -200,6 +201,7 @@ ExtremeInjectorEx/
 
 ## Development notes
 
+- Read [ARCHITECTURE.md](./ARCHITECTURE.md) before changing application startup, presentation state, injection services, PE parsing, or recovered compatibility code. New code keeps entry points thin, system behavior in focused services, and source free of control-flow obfuscation.
 - The application currently targets .NET Framework 4.8; it is not a NativeAOT application.
 - Normal application paths use typed factories and bindings instead of reflection-based construction. The recovered compatibility runtime still depends on dynamic IL, dynamic assembly loading, and metadata-token resolution.
 - Because of those runtime requirements, WinFormsComInterop, trimming, and NativeAOT cannot be adopted as drop-in changes. A modern .NET migration must replace the dynamic runtime chain first and validate WinForms/COM behavior separately.

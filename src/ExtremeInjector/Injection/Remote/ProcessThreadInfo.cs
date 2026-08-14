@@ -91,87 +91,17 @@ public sealed class ProcessThreadInfo
 	[SpecialName]
 	public NativeThreadInfo method_9()
 	{
-		using (List<NativeProcessInfo>.Enumerator enumerator = RecoveredRuntime.smethod_21().GetEnumerator())
+		foreach (NativeProcessInfo @class in RecoveredRuntime.smethod_21())
 		{
-			NativeThreadInfo result = default(NativeThreadInfo);
-			NativeTypes.Struct40 current2 = default(NativeTypes.Struct40);
-			while (enumerator.MoveNext())
+			if (@class.method_0().intptr_0.ToInt64() == this.gclass2_0.ProcessId)
 			{
-				while (true)
+				foreach (NativeTypes.Struct40 @struct in @class.method_2())
 				{
-					NativeProcessInfo current = enumerator.Current;
-					int num = 780617579;
-					while (true)
+					IntPtr intPtr = @struct.struct48_0.intptr_1;
+					if (intPtr.ToInt64() == (long)this.method_0())
 					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ 0x5E082B33)) % 4)
-						{
-						case 2u:
-							num = 469388930;
-							continue;
-						case 0u:
-							break;
-						case 1u:
-							goto end_IL_004a;
-						default:
-							goto IL_007b;
-						}
-						if (current.method_0().intptr_0.ToInt64() != gclass2_0.ProcessId)
-						{
-							goto end_IL_006c;
-						}
-						num = ((int)num2 * -1692459396) ^ -1198049984;
-						continue;
-						IL_007b:
-						using (List<NativeTypes.Struct40>.Enumerator enumerator2 = current.method_2().GetEnumerator())
-						{
-							while (true)
-							{
-								IL_0145:
-								int num3 = (enumerator2.MoveNext() ? 1901714577 : 2125654612);
-								while (true)
-								{
-									switch ((num2 = (uint)(num3 ^ 0x5E082B33)) % 7)
-									{
-									case 6u:
-										result = new NativeThreadInfo(current2);
-										num3 = ((int)num2 * -277804953) ^ 0x6D45C9BD;
-										continue;
-									case 2u:
-										num3 = ((current2.struct48_0.intptr_1.ToInt64() != method_0()) ? (-1436264980) : (-1997841906)) ^ ((int)num2 * -1655082334);
-										continue;
-									case 1u:
-										current2 = enumerator2.Current;
-										num3 = 1031407247;
-										continue;
-									case 0u:
-										num3 = 1901714577;
-										continue;
-									default:
-										goto end_IL_0108;
-									case 3u:
-										break;
-									case 5u:
-										goto end_IL_0108;
-									case 4u:
-										return result;
-									}
-									goto IL_0145;
-									continue;
-									end_IL_0108:
-									break;
-								}
-								break;
-							}
-						}
-						goto end_IL_006c;
-						continue;
-						end_IL_004a:
-						break;
+						return new NativeThreadInfo(@struct);
 					}
-					continue;
-					end_IL_006c:
-					break;
 				}
 			}
 		}

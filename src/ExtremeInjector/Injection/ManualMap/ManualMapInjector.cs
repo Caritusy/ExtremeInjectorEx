@@ -302,705 +302,228 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 
 	protected override void method_04C6()
 	{
-		if (!(method_2() == IntPtr.Zero))
+		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
 		{
-			return;
-		}
-		while (true)
-		{
-			int num = -1718859445;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1742126974)) % 4)
-				{
-				case 2u:
-					method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, bool_0: false, method_0()));
-					num = ((int)num2 * -682151606) ^ 0x8AE777D;
-					continue;
-				case 1u:
-					num = ((method_0() == -1) ? (-800075002) : (-1583252809)) ^ ((int)num2 * -144452505);
-					continue;
-				default:
-					return;
-				case 0u:
-					break;
-				case 3u:
-					return;
-				}
-				break;
-			}
+			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
 		}
 	}
 
 	public override IntPtr Inject(string string_0)
 	{
-		method_35(null);
-		while (true)
+		this.method_35(null);
+		if (!Path.IsPathRooted(string_0))
 		{
-			int num = 1556468339;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x62904270)) % 4)
-				{
-				case 3u:
-					num = (Path.IsPathRooted(string_0) ? 1136735320 : 1076402313) ^ ((int)num2 * -619153625);
-					continue;
-				case 0u:
-					string_0 = Path.GetFullPath(string_0);
-					num = (int)(num2 * 5249066) ^ -1613509163;
-					continue;
-				case 2u:
-					break;
-				default:
-				{
-					Enum44 enum44_ = RecoveredRuntime.smethod_206(this);
-					return method_36(string_0, enum44_);
-				}
-				}
-				break;
-			}
+			string_0 = Path.GetFullPath(string_0);
 		}
+		ManualMapInjector.Enum44 enum44_ = RecoveredRuntime.smethod_206(this);
+		return this.method_36(string_0, enum44_);
 	}
 
 	internal IntPtr method_36(string string_0, Enum44 enum44_0)
 	{
 		if (!File.Exists(string_0))
 		{
-			goto IL_00c9;
+			RecoveredRuntime.smethod_259(this);
+			throw new FileNotFoundException(EncodedStringTable.smethod_0(28151) + string_0 + EncodedStringTable.smethod_0(3656));
 		}
-		goto IL_0120;
-		IL_00c9:
-		int num = 159227120;
-		goto IL_00ce;
-		IL_00ce:
-		IntPtr intPtr = default(IntPtr);
-		Class172 current = default(Class172);
-		uint num4 = default(uint);
-		while (true)
+		if (!base.method_8(base.method_19().ProcessId))
 		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ 0x4BDDCD23)) % 12)
-			{
-			case 11u:
-				RecoveredRuntime.smethod_259(this);
-				num = ((int)num2 * -485448136) ^ -354350331;
-				continue;
-			case 9u:
-				num = ((intPtr == IntPtr.Zero) ? (-1380293248) : (-802413571)) ^ ((int)num2 * -1096632156);
-				continue;
-			case 8u:
-				break;
-			case 5u:
-				enum44_0 |= Enum44.flag_1;
-				num = (int)(num2 * 1631966601) ^ -639238880;
-				continue;
-			case 3u:
-				RecoveredRuntime.smethod_259(this);
-				num = ((int)num2 * -641618709) ^ 0x4D8416C1;
-				continue;
-			case 2u:
-				intPtr = method_38(string_0, enum44_0);
-				num = 2019553606;
-				continue;
-			case 0u:
-				goto end_IL_00ce;
-			case 1u:
-				goto IL_0120;
-			case 4u:
-				RecoveredRuntime.smethod_259(this);
-				throw new UnauthorizedAccessException("Unable to open the specified process for injection.");
-			case 6u:
-				throw new FileNotFoundException("Unable to find the specified file for injection. (" + string_0 + ")");
-			case 7u:
-				return IntPtr.Zero;
-			default:
-			{
-				using (List<Class172>.Enumerator enumerator = list_0.GetEnumerator())
-				{
-					while (true)
-					{
-						IL_0309:
-						int num3 = ((!enumerator.MoveNext()) ? 1602783565 : 833894598);
-						while (true)
-						{
-							switch ((num2 = (uint)(num3 ^ 0x4BDDCD23)) % 13)
-							{
-							case 12u:
-								RecoveredRuntime.smethod_368(current);
-								num3 = 1447037803;
-								continue;
-							case 11u:
-								current = enumerator.Current;
-								num3 = (method_37(current, 1u) ? 919052904 : 567051229);
-								continue;
-							case 10u:
-								num4 = current.method_0().method_6().method_3()
-									.imethod_31();
-								num3 = 1374071572;
-								continue;
-							case 8u:
-								RecoveredRuntime.smethod_368(current);
-								num3 = (int)((num2 * 795551140) ^ 0x7F0D433D);
-								continue;
-							case 7u:
-								RecoveredRuntime.smethod_368(current);
-								num3 = ((int)num2 * -1215610200) ^ 0x593997CF;
-								continue;
-							case 6u:
-								num3 = ((!vmethod_5(current.method_2(), num4, NativeTypes.Enum28.const_1)) ? 2064366254 : 1391529703) ^ ((int)num2 * -1196381893);
-								continue;
-							case 5u:
-								num3 = ((int)num2 * -1670466838) ^ -1807908653;
-								continue;
-							case 3u:
-								num3 = ((!method_26()) ? 1941739171 : 2019983947);
-								continue;
-							case 2u:
-								method_14(current.method_2(), num4, NativeTypes.Enum34.flag_4);
-								num3 = (int)(num2 * 1381193347) ^ -529916630;
-								continue;
-							case 0u:
-								num3 = 833894598;
-								continue;
-							default:
-								goto end_IL_02b3;
-							case 1u:
-								break;
-							case 4u:
-								return IntPtr.Zero;
-							case 9u:
-								goto end_IL_02b3;
-							}
-							goto IL_0309;
-							continue;
-							end_IL_02b3:
-							break;
-						}
-						break;
-					}
-				}
-				list_0.Clear();
-				return intPtr;
-			}
-			}
-			num = ((!method_19().IsDepEnabled) ? 1530193526 : 693834845);
-			continue;
-			end_IL_00ce:
-			break;
+			RecoveredRuntime.smethod_259(this);
+			throw new UnauthorizedAccessException(EncodedStringTable.smethod_0(12662));
 		}
-		goto IL_00c9;
-		IL_0120:
-		num = ((!method_8(method_19().ProcessId)) ? 470025023 : 1798152687);
-		goto IL_00ce;
+		if (!base.method_19().IsDepEnabled)
+		{
+			enum44_0 |= ManualMapInjector.Enum44.flag_1;
+		}
+		IntPtr intPtr = this.method_38(string_0, enum44_0);
+		if (!(intPtr == IntPtr.Zero))
+		{
+			foreach (ManualMapInjector.Class172 @class in this.list_0)
+			{
+				if (!this.method_37(@class, 1u))
+				{
+					RecoveredRuntime.smethod_368(@class);
+					return IntPtr.Zero;
+				}
+				if (this.method_26())
+				{
+					uint num = @class.method_0().method_6().method_3().imethod_31();
+					if (!this.vmethod_5(@class.method_2(), (long)((ulong)num), NativeTypes.Enum28.const_1))
+					{
+						base.method_14(@class.method_2(), (long)((ulong)num), NativeTypes.Enum34.flag_4);
+					}
+					RecoveredRuntime.smethod_368(@class);
+				}
+				else
+				{
+					RecoveredRuntime.smethod_368(@class);
+				}
+			}
+			this.list_0.Clear();
+			return intPtr;
+		}
+		RecoveredRuntime.smethod_259(this);
+		return IntPtr.Zero;
 	}
 
 	internal bool method_37(Class172 class172_0, uint uint_0)
 	{
-		ProcessModuleInfo gClass = RecoveredRuntime.smethod_42(method_19())["ntdll.dll"];
-		RemoteAssembler class47_ = default(RemoteAssembler);
-		AsmJitAssembler class2 = default(AsmJitAssembler);
-		IntPtr intPtr = default(IntPtr);
-		IntPtr intPtr2 = default(IntPtr);
-		uint num4 = default(uint);
-		AsmJitLabel class58_ = default(AsmJitLabel);
-		int current = default(int);
-		int current2 = default(int);
-		AsmJitGpRegister class3 = default(AsmJitGpRegister);
-		while (true)
+		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(base.method_19())[EncodedStringTable.smethod_0(8549)];
+		if (gclass != null)
 		{
-			int num = 1467190173;
-			while (true)
+			IntPtr intptr_ = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(29026), false);
+			IntPtr intptr_2 = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(29067), false);
+			AsmJitAssembler @class = new AsmJitAssembler();
+			RemoteAssembler class47_ = new RemoteAssembler(@class, base.method_19());
+			AsmJitLabel class58_ = RecoveredRuntime.smethod_48(@class);
+			AsmJitGpRegister class2 = RecoveredRuntime.smethod_427(base.method_19()) ? AsmJitRuntime.class63_37 : AsmJitRuntime.class63_53;
+			RecoveredRuntime.smethod_15(class47_);
+			if (class172_0.method_12() != NativeTypes.intptr_0)
 			{
-				AsmJitGpRegister @class;
-				int num5;
-				uint num2;
-				int num7;
-				switch ((num2 = (uint)(num ^ 0x4108F07C)) % 14)
+				RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(intptr_), CallingConvention.StdCall, new object[]
 				{
-				case 13u:
-					class47_ = new RemoteAssembler(class2, method_19());
-					num = (int)((num2 * 1734046344) ^ 0x1C973897);
-					continue;
-				case 12u:
-					intPtr = RecoveredRuntime.smethod_225(gClass, "RtlActivateActivationContext", bool_0: false);
-					num = 1163373165;
-					continue;
-				case 11u:
-					intPtr2 = RecoveredRuntime.smethod_225(gClass, "RtlDeactivateActivationContext", bool_0: false);
-					class2 = new AsmJitAssembler();
-					num = ((int)num2 * -573522026) ^ -1894090325;
-					continue;
-				case 9u:
-					num4 = class172_0.method_0().method_6().method_3()
-						.imethod_11();
-					num = 296884208;
-					continue;
-				case 8u:
-					if (uint_0 == 2)
-					{
-						num = ((int)num2 * -1444732430) ^ -1253944123;
-						continue;
-					}
-					goto IL_03c6;
-				case 7u:
-					class58_ = RecoveredRuntime.smethod_48(class2);
-					if (!RecoveredRuntime.smethod_427(method_19()))
-					{
-						num = (int)((num2 * 1091060793) ^ 0x499A9CE5);
-						continue;
-					}
-					@class = AsmJitRuntime.class63_37;
-					goto IL_00f0;
-				case 5u:
-					num = ((gClass == null) ? (-1747203964) : (-1249210998)) ^ (int)(num2 * 461281686);
-					continue;
-				case 4u:
-					num = ((uint_0 != 1) ? (-1721532012) : (-620834003)) ^ ((int)num2 * -1444748226);
-					continue;
-				case 2u:
-					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(intPtr), CallingConvention.StdCall, new object[3]
-					{
-						IntPtr.Zero,
-						class172_0.method_12(),
-						RecoveredRuntime.smethod_84(class47_, class58_)
-					});
-					num = (int)((num2 * 193503655) ^ 0x4910069D);
-					continue;
-				case 1u:
-					RecoveredRuntime.smethod_15(class47_);
-					num = ((!(class172_0.method_12() != NativeTypes.intptr_0)) ? 713740719 : 1450307234) ^ ((int)num2 * -1710996980);
-					continue;
-				case 0u:
-					@class = AsmJitRuntime.class63_53;
-					goto IL_00f0;
-				case 10u:
-					break;
-				default:
+					IntPtr.Zero,
+					class172_0.method_12(),
+					RecoveredRuntime.smethod_84(class47_, class58_)
+				});
+			}
+			uint num = class172_0.method_0().method_6().method_3().imethod_11();
+			if (uint_0 != 1u && uint_0 != 2u)
+			{
+				if (num != 0u)
 				{
-					using (List<int>.Enumerator enumerator = class172_0.method_14().GetEnumerator())
-					{
-						while (true)
-						{
-							IL_02ed:
-							int num3 = (enumerator.MoveNext() ? 837571851 : 954437792);
-							while (true)
-							{
-								switch ((num2 = (uint)(num3 ^ 0x4108F07C)) % 5)
-								{
-								case 4u:
-									current = enumerator.Current;
-									num3 = 588730324;
-									continue;
-								case 3u:
-									RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_8(current)), CallingConvention.StdCall, new object[3]
-									{
-										class172_0.method_2(),
-										uint_0,
-										IntPtr.Zero
-									});
-									num3 = (int)(num2 * 725443593) ^ -1814478149;
-									continue;
-								case 0u:
-									num3 = 837571851;
-									continue;
-								default:
-									goto end_IL_02b8;
-								case 1u:
-									break;
-								case 2u:
-									goto end_IL_02b8;
-								}
-								goto IL_02ed;
-								continue;
-								end_IL_02b8:
-								break;
-							}
-							break;
-						}
-					}
-					if (num4 != 0)
-					{
-						goto IL_038c;
-					}
-					goto IL_04f0;
-				}
-				case 6u:
-					{
-						return RecoveredRuntime.smethod_128(this, new FileNotFoundException("Unable to find ntdll.dll in the specified process."));
-					}
-					IL_03c6:
-					num5 = ((num4 == 0) ? 1856381312 : 93345072);
-					goto IL_0391;
-					IL_0391:
-					while (true)
-					{
-						switch ((num2 = (uint)(num5 ^ 0x4108F07C)) % 5)
-						{
-						case 1u:
-							RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_9(num4)), CallingConvention.StdCall, new object[3]
-							{
-								class172_0.method_2(),
-								uint_0,
-								IntPtr.Zero
-							});
-							num5 = (int)((num2 * 1851157704) ^ 0x422312E0);
-							continue;
-						case 0u:
-							break;
-						case 3u:
-							goto IL_03c6;
-						default:
-							goto IL_03cf;
-						case 4u:
-							goto IL_04ab;
-						}
-						break;
-					}
-					goto IL_038c;
-					IL_03cf:
-					using (List<int>.Enumerator enumerator = class172_0.method_14().GetEnumerator())
-					{
-						while (true)
-						{
-							IL_048d:
-							int num6 = ((!enumerator.MoveNext()) ? 1947439343 : 2030320853);
-							while (true)
-							{
-								switch ((num2 = (uint)(num6 ^ 0x4108F07C)) % 5)
-								{
-								case 2u:
-									RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_8(current2)), CallingConvention.StdCall, new object[3]
-									{
-										class172_0.method_2(),
-										uint_0,
-										IntPtr.Zero
-									});
-									num6 = ((int)num2 * -2068500670) ^ 0x6E57551D;
-									continue;
-								case 1u:
-									current2 = enumerator.Current;
-									num6 = 1755597929;
-									continue;
-								case 0u:
-									num6 = 2030320853;
-									continue;
-								default:
-									goto end_IL_0458;
-								case 4u:
-									break;
-								case 3u:
-									goto end_IL_0458;
-								}
-								goto IL_048d;
-								continue;
-								end_IL_0458:
-								break;
-							}
-							break;
-						}
-					}
-					goto IL_04f0;
-					IL_04f0:
-					if (class172_0.method_12() != NativeTypes.intptr_0)
-					{
-						goto IL_0539;
-					}
-					goto IL_05cc;
-					IL_04ab:
-					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_9(num4)), CallingConvention.StdCall, new object[3]
+					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_9((long)((ulong)num))), CallingConvention.StdCall, new object[]
 					{
 						class172_0.method_2(),
 						uint_0,
 						IntPtr.Zero
 					});
-					goto IL_04f0;
-					IL_059e:
-					while (true)
-					{
-						switch ((num2 = (uint)(num7 ^ 0x4108F07C)) % 7)
-						{
-						case 3u:
-							RecoveredRuntime.smethod_336(class47_);
-							num7 = (RecoveredRuntime.smethod_239(class2, this) ? (-1088384881) : (-828128323)) ^ (int)(num2 * 1699594358);
-							continue;
-						case 2u:
-							break;
-						case 1u:
-							RecoveredRuntime.smethod_429(class2, class3, RecoveredRuntime.smethod_221(class47_, class58_, 0L));
-							num7 = (int)(num2 * 362296245) ^ -749364924;
-							continue;
-						case 0u:
-							RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(intPtr2), CallingConvention.StdCall, new object[2]
-							{
-								IntPtr.Zero,
-								class3
-							});
-							num7 = (int)(num2 * 1776136150) ^ -329999452;
-							continue;
-						case 4u:
-							goto IL_05cc;
-						case 5u:
-							return RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to call the entrypoint(s) of the DLL."));
-						default:
-							return true;
-						}
-						break;
-					}
-					goto IL_0539;
-					IL_0539:
-					num7 = 1258566350;
-					goto IL_059e;
-					IL_05cc:
-					RecoveredRuntime.smethod_226(class47_, -1);
-					RecoveredRuntime.smethod_227(class47_);
-					RecoveredRuntime.smethod_36(class2, class58_);
-					num7 = 193420669;
-					goto IL_059e;
-					IL_038c:
-					num5 = 130058957;
-					goto IL_0391;
-					IL_00f0:
-					class3 = @class;
-					num = 821399327;
-					continue;
 				}
-				break;
+				foreach (int callback in class172_0.method_14())
+				{
+					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_8(callback)), CallingConvention.StdCall, new object[]
+					{
+						class172_0.method_2(),
+						uint_0,
+						IntPtr.Zero
+					});
+				}
 			}
+			else
+			{
+				foreach (int callback in class172_0.method_14())
+				{
+					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_8(callback)), CallingConvention.StdCall, new object[]
+					{
+						class172_0.method_2(),
+						uint_0,
+						IntPtr.Zero
+					});
+				}
+				if (num != 0u)
+				{
+					RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(class172_0.method_2().smethod_9((long)((ulong)num))), CallingConvention.StdCall, new object[]
+					{
+						class172_0.method_2(),
+						uint_0,
+						IntPtr.Zero
+					});
+				}
+			}
+			if (class172_0.method_12() != NativeTypes.intptr_0)
+			{
+				RecoveredRuntime.smethod_429(@class, class2, RecoveredRuntime.smethod_221(class47_, class58_, 0L));
+				RecoveredRuntime.smethod_54(class47_, new AsmJitImmediate(intptr_2), CallingConvention.StdCall, new object[]
+				{
+					IntPtr.Zero,
+					class2
+				});
+			}
+			RecoveredRuntime.smethod_226(class47_, -1);
+			RecoveredRuntime.smethod_227(class47_);
+			RecoveredRuntime.smethod_36(@class, class58_);
+			RecoveredRuntime.smethod_336(class47_);
+			return RecoveredRuntime.smethod_239(@class, this) || RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29108)));
 		}
+		return RecoveredRuntime.smethod_128(this, new FileNotFoundException(EncodedStringTable.smethod_0(12731)));
 	}
 
 	internal IntPtr method_38(string string_0, Enum44 enum44_0)
 	{
-		Class172 @class = new Class172();
+		ManualMapInjector.Class172 @class = new ManualMapInjector.Class172();
 		@class.method_5(string_0);
 		@class.method_7(Path.GetFileName(string_0));
 		@class.method_9(enum44_0);
-		@class.method_3(RecoveredRuntime.smethod_42(method_19()).method_0(string_0));
-		Class172 class2 = @class;
+		@class.method_3(RecoveredRuntime.smethod_42(base.method_19()).method_0(string_0));
+		ManualMapInjector.Class172 class2 = @class;
 		if (class2.method_2() != IntPtr.Zero)
 		{
 			return class2.method_2();
 		}
-		IntPtr zero = default(IntPtr);
 		try
 		{
 			class2.method_1(RecoveredRuntime.smethod_81(PeImageLayout.const_0, string_0));
 			if (class2.method_0() == null)
 			{
-				while (true)
-				{
-					IL_00a5:
-					int num = -33347235;
-					while (true)
-					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ -1042987440)) % 4)
-						{
-						case 1u:
-							goto IL_006f;
-						default:
-							goto end_IL_0083;
-						case 2u:
-							break;
-						case 3u:
-							goto end_IL_0083;
-						case 0u:
-							goto IL_05b9;
-						}
-						goto IL_00a5;
-						IL_006f:
-						zero = IntPtr.Zero;
-						num = ((int)num2 * -1711130483) ^ 0x5ECEE9C5;
-						continue;
-						end_IL_0083:
-						break;
-					}
-					break;
-				}
+				return IntPtr.Zero;
 			}
 		}
 		catch (Exception)
 		{
-			while (true)
-			{
-				IL_00e8:
-				int num3 = -551019599;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num3 ^ -1042987440)) % 3)
-					{
-					case 1u:
-						goto IL_00b6;
-					case 0u:
-						break;
-					default:
-						goto end_IL_00ca;
-					}
-					goto IL_00e8;
-					IL_00b6:
-					zero = IntPtr.Zero;
-					num3 = (int)((num2 * 579371985) ^ 0x9DBEF8);
-					continue;
-					end_IL_00ca:
-					break;
-				}
-				break;
-			}
-			goto IL_05b9;
+			return IntPtr.Zero;
 		}
-		class2.method_3(method_15((IntPtr)(long)class2.method_0().method_6().method_3()
-			.imethod_17(), class2.method_0().method_6().method_3()
-			.imethod_29(), NativeTypes.Enum34.flag_2));
-		PeImage class3 = null;
+		class2.method_3(base.method_15((IntPtr)((long)class2.method_0().method_6().method_3().imethod_17()), (long)((ulong)class2.method_0().method_6().method_3().imethod_29()), NativeTypes.Enum34.flag_2));
 		if (class2.method_2() == IntPtr.Zero)
 		{
-			goto IL_02bf;
+			return IntPtr.Zero;
 		}
-		goto IL_055d;
-		IL_055d:
-		class3 = class2.method_0();
-		int num4 = -229771868;
-		goto IL_04c2;
-		IL_05b9:
-		return zero;
-		IL_02bf:
-		num4 = -851680982;
-		goto IL_04c2;
-		IL_04c2:
-		IntPtr intPtr = default(IntPtr);
-		while (true)
+		PeImage class3 = class2.method_0();
+		IntPtr intptr_ = class2.method_2();
+		RecoveredRuntime.smethod_242(this, class2);
+		if ((enum44_0 & ManualMapInjector.Enum44.flag_6) == (ManualMapInjector.Enum44)0 && !RecoveredRuntime.smethod_26(this, class2))
 		{
-			uint num2;
-			switch ((num2 = (uint)(num4 ^ -1042987440)) % 34)
-			{
-			case 33u:
-				RecoveredRuntime.smethod_368(class2);
-				vmethod_6(class2.method_2());
-				num4 = (int)((num2 * 2143295290) ^ 0x563DDFD9);
-				continue;
-			case 31u:
-				vmethod_6(class2.method_2());
-				num4 = ((int)num2 * -1935166305) ^ -641905839;
-				continue;
-			case 29u:
-				num4 = ((!method_42(class2, class3.method_12())) ? (-250230122) : (-1664068696)) ^ (int)(num2 * 610485445);
-				continue;
-			case 26u:
-				RecoveredRuntime.smethod_283(intPtr, RecoveredRuntime.smethod_42(method_19()));
-				RecoveredRuntime.smethod_368(class2);
-				vmethod_6(class2.method_2());
-				num4 = ((int)num2 * -1018561785) ^ 0x331B61D8;
-				continue;
-			case 25u:
-				RecoveredRuntime.smethod_283(intPtr, RecoveredRuntime.smethod_42(method_19()));
-				num4 = (int)((num2 * 1945491709) ^ 0x4A07FCF2);
-				continue;
-			case 23u:
-				RecoveredRuntime.smethod_283(intPtr, RecoveredRuntime.smethod_42(method_19()));
-				RecoveredRuntime.smethod_368(class2);
-				num4 = ((int)num2 * -1393160223) ^ -1225184593;
-				continue;
-			case 22u:
-				num4 = ((!RecoveredRuntime.smethod_424(this, class2)) ? 1923964314 : 479293003) ^ ((int)num2 * -60552625);
-				continue;
-			case 21u:
-				RecoveredRuntime.smethod_368(class2);
-				num4 = ((int)num2 * -285758260) ^ -458700207;
-				continue;
-			case 18u:
-				num4 = ((class3.method_12() == null) ? 893049727 : 745627659) ^ (int)(num2 * 1208724829);
-				continue;
-			case 17u:
-				break;
-			case 16u:
-				RecoveredRuntime.smethod_368(class2);
-				vmethod_6(class2.method_2());
-				num4 = ((int)num2 * -960094940) ^ 0x42186934;
-				continue;
-			case 15u:
-				method_39(class2);
-				list_0.Add(class2);
-				num4 = -760983283;
-				continue;
-			case 14u:
-				intPtr = class2.method_2();
-				num4 = (int)(num2 * 1849695286) ^ -1959872038;
-				continue;
-			case 13u:
-				goto IL_0326;
-			case 12u:
-				goto IL_034b;
-			case 11u:
-				num4 = (method_43(class2) ? 1848864948 : 802325481) ^ (int)(num2 * 2102417716);
-				continue;
-			case 10u:
-				num4 = (((enum44_0 & Enum44.flag_6) != 0) ? (-244097158) : (-1516150211)) ^ (int)(num2 * 593095829);
-				continue;
-			case 9u:
-				goto IL_03c9;
-			case 8u:
-				goto IL_03ee;
-			case 5u:
-				num4 = ((!RecoveredRuntime.smethod_26(this, class2)) ? (-814727356) : (-2100527148)) ^ ((int)num2 * -378999848);
-				continue;
-			case 4u:
-				RecoveredRuntime.smethod_242(this, class2);
-				num4 = ((int)num2 * -988759986) ^ -1107812318;
-				continue;
-			case 3u:
-				RecoveredRuntime.smethod_368(class2);
-				num4 = -1701709923;
-				continue;
-			case 2u:
-				RecoveredRuntime.smethod_283(intPtr, RecoveredRuntime.smethod_42(method_19()));
-				num4 = (int)(num2 * 748845492) ^ -818542019;
-				continue;
-			case 1u:
-				goto IL_04a6;
-			case 20u:
-				goto IL_055d;
-			case 0u:
-				return IntPtr.Zero;
-			case 6u:
-				return IntPtr.Zero;
-			case 7u:
-				vmethod_6(class2.method_2());
-				return IntPtr.Zero;
-			case 19u:
-				return IntPtr.Zero;
-			case 24u:
-				vmethod_6(class2.method_2());
-				return IntPtr.Zero;
-			case 27u:
-				return class2.method_2();
-			case 28u:
-				return IntPtr.Zero;
-			case 32u:
-				return IntPtr.Zero;
-			default:
-				goto IL_05b9;
-			}
-			break;
-			IL_04a6:
-			num4 = (((enum44_0 & Enum44.flag_1) != 0) ? (-475672097) : (-963272580));
-			continue;
-			IL_0326:
-			num4 = (method_41(class2) ? (-357767959) : (-99976598));
-			continue;
-			IL_03c9:
-			num4 = (((enum44_0 & Enum44.flag_7) == 0) ? (-52254786) : (-1827786231));
-			continue;
-			IL_03ee:
-			RecoveredRuntime.smethod_266(RecoveredRuntime.smethod_42(method_19()), class3, intPtr, RecoveredRuntime.smethod_427(method_19()));
-			num4 = ((!method_42(class2, class3.method_10())) ? (-2042553665) : (-1620842279));
-			continue;
-			IL_034b:
-			num4 = ((!method_44(class2)) ? (-1229863331) : (-1691864591));
+			RecoveredRuntime.smethod_368(class2);
+			this.vmethod_6(class2.method_2());
+			return IntPtr.Zero;
 		}
-		goto IL_02bf;
+		if (!this.method_44(class2) || !this.method_43(class2))
+		{
+			RecoveredRuntime.smethod_368(class2);
+			this.vmethod_6(class2.method_2());
+			return IntPtr.Zero;
+		}
+		RecoveredRuntime.smethod_266(RecoveredRuntime.smethod_42(base.method_19()), class3, intptr_, RecoveredRuntime.smethod_427(base.method_19()));
+		if (!this.method_42(class2, class3.method_10()))
+		{
+			RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
+			RecoveredRuntime.smethod_368(class2);
+			this.vmethod_6(class2.method_2());
+			return IntPtr.Zero;
+		}
+		if ((enum44_0 & ManualMapInjector.Enum44.flag_7) == (ManualMapInjector.Enum44)0 && class3.method_12() != null && !this.method_42(class2, class3.method_12()))
+		{
+			RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
+			RecoveredRuntime.smethod_368(class2);
+			this.vmethod_6(class2.method_2());
+			return IntPtr.Zero;
+		}
+		if (!this.method_41(class2))
+		{
+			RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
+			RecoveredRuntime.smethod_368(class2);
+			this.vmethod_6(class2.method_2());
+			return IntPtr.Zero;
+		}
+		if ((enum44_0 & ManualMapInjector.Enum44.flag_1) != (ManualMapInjector.Enum44)0 || RecoveredRuntime.smethod_424(this, class2))
+		{
+			this.method_39(class2);
+			this.list_0.Add(class2);
+			return class2.method_2();
+		}
+		RecoveredRuntime.smethod_283(intptr_, RecoveredRuntime.smethod_42(base.method_19()));
+		RecoveredRuntime.smethod_368(class2);
+		this.vmethod_6(class2.method_2());
+		return IntPtr.Zero;
 	}
 
 	internal void method_39(Class172 class172_0)
@@ -1009,36 +532,12 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 		{
 			return;
 		}
-		using List<ulong>.Enumerator enumerator = class172_0.method_0().method_20().list_0.GetEnumerator();
-		int item = default(int);
-		while (true)
+		using (List<ulong>.Enumerator enumerator = class172_0.method_0().method_20().list_0.GetEnumerator())
 		{
-			int num = (enumerator.MoveNext() ? (-1107799974) : (-861787138));
-			while (true)
+			while (enumerator.MoveNext())
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1427845750)) % 5)
-				{
-				case 2u:
-					class172_0.method_14().Add(item);
-					num = (int)((num2 * 537995965) ^ 0x15E8D45E);
-					continue;
-				case 1u:
-					item = (int)(enumerator.Current - class172_0.method_0().method_6().method_3()
-						.imethod_17());
-					num = -1162206898;
-					continue;
-				case 0u:
-					num = -1107799974;
-					continue;
-				default:
-					return;
-				case 4u:
-					break;
-				case 3u:
-					return;
-				}
-				break;
+				int item = (int)(enumerator.Current - class172_0.method_0().method_6().method_3().imethod_17());
+				class172_0.method_14().Add(item);
 			}
 		}
 	}
@@ -1047,643 +546,210 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 	{
 		if (!PlatformInfo.bool_1)
 		{
-			goto IL_0090;
+			return true;
 		}
-		goto IL_039c;
-		IL_0090:
-		int num = -756889607;
-		goto IL_030a;
-		IL_030a:
-		byte[] array = default(byte[]);
-		IntPtr intPtr = default(IntPtr);
-		int num3 = default(int);
-		IntPtr intptr_ = default(IntPtr);
-		ProcessModuleInfo gClass = default(ProcessModuleInfo);
-		ushort value = default(ushort);
-		byte[] array2 = default(byte[]);
-		bool flag = default(bool);
-		NativeTypes.Enum34 enum34_ = default(NativeTypes.Enum34);
-		while (true)
+		ProcessModuleInfo gclass = RecoveredRuntime.smethod_42(base.method_19())[EncodedStringTable.smethod_0(8549)];
+		if (gclass == null)
 		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ -413377720)) % 31)
-			{
-			case 30u:
-				num = ((!RecoveredRuntime.smethod_340("\u008Bÿ", 0, array)) ? (-95892414) : (-469689408)) ^ (int)(num2 * 1775755729);
-				continue;
-			case 29u:
-				num = ((!(intPtr == IntPtr.Zero)) ? 790992114 : 695052357) ^ (int)(num2 * 466392648);
-				continue;
-			case 27u:
-				array = method_10<byte>(intPtr, 300);
-				num = -1539153528;
-				continue;
-			case 26u:
-				break;
-			case 25u:
-				num = (((num3 = RecoveredRuntime.smethod_419(array, "Â\0\0", "x?x", 0)) != -1) ? (-214482323) : (-2119293287)) ^ ((int)num2 * -149492349);
-				continue;
-			case 23u:
-			{
-				int num4 = method_11<int>(intPtr.smethod_8(num3));
-				intptr_ = intPtr.smethod_8(num3 + num4 + 4);
-				num = ((int)num2 * -1268288535) ^ 0x6247E9E4;
-				continue;
-			}
-			case 22u:
-				intPtr = RecoveredRuntime.smethod_225(gClass, "RtlUnwind", bool_0: false);
-				num = -1345636675;
-				continue;
-			case 21u:
-				num3 = RecoveredRuntime.smethod_419(array, "Pè\0\0\0\0\u0084À\u000F\u0084", "xx????xxxx", 0);
-				num = ((num3 == -1) ? (-1974539873) : (-1657666647)) ^ ((int)num2 * -731399899);
-				continue;
-			case 20u:
-				goto IL_0170;
-			case 19u:
-				array = method_10<byte>(intptr_.smethod_8(num3), 50);
-				num = -81188416;
-				continue;
-			case 15u:
-				array = method_10<byte>(intptr_, 2);
-				num = (int)(num2 * 123420433) ^ -455294339;
-				continue;
-			case 14u:
-				Array.Copy(BitConverter.GetBytes(value), 0, array2, 3, 2);
-				flag = method_16(intptr_, array2);
-				num = (int)(num2 * 790971697) ^ -1875299524;
-				continue;
-			case 13u:
-				num = ((!method_14(intptr_, 5L, enum34_) & flag) ? 432312116 : 1879349564) ^ ((int)num2 * -1510845786);
-				continue;
-			case 11u:
-				goto IL_0237;
-			case 9u:
-				num = ((gClass == null) ? (-558937600) : (-225454318)) ^ ((int)num2 * -66484376);
-				continue;
-			case 8u:
-				array2 = new byte[5] { 176, 1, 194, 0, 0 };
-				num = -237273941;
-				continue;
-			case 5u:
-				num = (vmethod_3(intptr_, 5L, NativeTypes.Enum34.flag_2, out enum34_) ? (-823306021) : (-511304162)) ^ ((int)num2 * -803023544);
-				continue;
-			case 3u:
-				value = BitConverter.ToUInt16(array, num3 + 1);
-				num = -78619695;
-				continue;
-			case 2u:
-				num3 += 2;
-				num = -1930905534;
-				continue;
-			case 10u:
-				goto IL_039c;
-			case 0u:
-				return RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to unprotect the code required to disable SafeSEH."));
-			case 1u:
-				return RecoveredRuntime.smethod_128(this, new FileNotFoundException("Unable to find ntdll.dll in the specified process."));
-			case 4u:
-				return RecoveredRuntime.smethod_128(this, new InvalidOperationException("Unable to find return size when patching SafeSEH."));
-			case 6u:
-				return RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to write or protect the code required to disable SafeSEH."));
-			case 7u:
-				return RecoveredRuntime.smethod_128(this, new InvalidOperationException("Incorrect method detected when patching SafeSEH."));
-			default:
-				return true;
-			case 16u:
-				return RecoveredRuntime.smethod_128(this, new InvalidOperationException("Incorrect method detected when patching SafeSEH."));
-			case 17u:
-				return true;
-			case 18u:
-				return true;
-			case 24u:
-				return RecoveredRuntime.smethod_128(this, new InvalidOperationException("Unable to find the pattern required to patch SafeSEH."));
-			case 28u:
-				return RecoveredRuntime.smethod_128(this, new MissingMethodException("Unable to find RtlUnwind inside ntdll.dll."));
-			}
-			break;
-			IL_0237:
-			array = method_10<byte>(intptr_, 200);
-			num = (((num3 = RecoveredRuntime.smethod_378(array, "°\u0001", 0)) == -1) ? (-1443517686) : (-1486477485));
-			continue;
-			IL_0170:
-			num = ((num3 != 0) ? (-887351136) : (-856657273));
+			return RecoveredRuntime.smethod_128(this, new FileNotFoundException(EncodedStringTable.smethod_0(12731)));
 		}
-		goto IL_0090;
-		IL_039c:
-		gClass = RecoveredRuntime.smethod_42(method_19())["ntdll.dll"];
-		num = -2098262684;
-		goto IL_030a;
+		IntPtr intPtr = RecoveredRuntime.smethod_225(gclass, EncodedStringTable.smethod_0(29169), false);
+		if (intPtr == IntPtr.Zero)
+		{
+			return RecoveredRuntime.smethod_128(this, new MissingMethodException(EncodedStringTable.smethod_0(29182)));
+		}
+		byte[] array = base.method_10<byte>(intPtr, 300);
+		int num = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(29239), EncodedStringTable.smethod_0(29260), 0);
+		if (num == -1)
+		{
+			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29277)));
+		}
+		num += 2;
+		int num2 = base.method_11<int>(intPtr.smethod_8(num));
+		IntPtr intPtr2 = intPtr.smethod_8(num + num2 + 4);
+		array = base.method_10<byte>(intPtr2, 2);
+		if (!RecoveredRuntime.smethod_340(EncodedStringTable.smethod_0(29350), 0, array))
+		{
+			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29359)));
+		}
+		array = base.method_10<byte>(intPtr2, 200);
+		if ((num = RecoveredRuntime.smethod_378(array, EncodedStringTable.smethod_0(29424), 0)) == -1)
+		{
+			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29359)));
+		}
+		if (num == 0)
+		{
+			return true;
+		}
+		array = base.method_10<byte>(intPtr2.smethod_8(num), 50);
+		if ((num = RecoveredRuntime.smethod_419(array, EncodedStringTable.smethod_0(29429), EncodedStringTable.smethod_0(29438), 0)) == -1)
+		{
+			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29443)));
+		}
+		ushort value = BitConverter.ToUInt16(array, num + 1);
+		NativeTypes.Enum34 @enum;
+		if (!this.vmethod_3(intPtr2, 5L, NativeTypes.Enum34.flag_2, out @enum))
+		{
+			return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29512)));
+		}
+		byte[] array2 = new byte[]
+		{
+			176,
+			1,
+			194,
+			0,
+			0
+		};
+		Array.Copy(BitConverter.GetBytes(value), 0, array2, 3, 2);
+		bool flag = base.method_16<byte>(intPtr2, array2);
+		return base.method_14(intPtr2, 5L, @enum) || !flag || RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29589)));
 	}
 
 	internal bool method_41(Class172 class172_0)
 	{
-		using (List<PeSectionHeader>.Enumerator enumerator = class172_0.method_0().method_8().GetEnumerator())
+		try
 		{
-			bool flag2 = default(bool);
-			PeSectionHeader current = default(PeSectionHeader);
-			IntPtr intptr_ = default(IntPtr);
-			bool flag = default(bool);
-			NativeTypes.Enum34 @enum = default(NativeTypes.Enum34);
-			bool flag3 = default(bool);
-			bool result = default(bool);
-			while (true)
-			{
-				IL_0262:
-				int num = ((!enumerator.MoveNext()) ? (-925910286) : (-1741969559));
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -8459342)) % 16)
-					{
-					case 15u:
-						flag2 = (current.method_18() & SectionCharacteristics.flag_33) == SectionCharacteristics.flag_33;
-						num = (int)(num2 * 807694239) ^ -1016930706;
-						continue;
-					case 14u:
-						vmethod_5(intptr_, current.method_2(), NativeTypes.Enum28.const_0);
-						num = (int)((num2 * 906952057) ^ 0x10297798);
-						continue;
-					case 13u:
-						flag = (current.method_18() & SectionCharacteristics.flag_32) == SectionCharacteristics.flag_32;
-						num = (int)(num2 * 1134934001) ^ -633157044;
-						continue;
-					case 12u:
-						num = (((current.method_18() & SectionCharacteristics.flag_29) == SectionCharacteristics.flag_29) ? 574515112 : 847916211) ^ (int)(num2 * 355543068);
-						continue;
-					case 11u:
-						current = enumerator.Current;
-						num = -849530780;
-						continue;
-					case 10u:
-						@enum |= NativeTypes.Enum34.flag_9;
-						num = ((int)num2 * -1237545686) ^ -675191161;
-						continue;
-					case 9u:
-						num = (((current.method_18() & SectionCharacteristics.flag_28) != SectionCharacteristics.flag_28) ? (-1604231813) : (-655357699)) ^ (int)(num2 * 520874985);
-						continue;
-					case 8u:
-						flag3 = ((uint)current.method_18() & 0x80000000u) == 2147483648u;
-						num = -1629580627;
-						continue;
-					case 7u:
-						num = -1741969559;
-						continue;
-					case 6u:
-						intptr_ = class172_0.method_2().smethod_9(current.method_4());
-						num = (int)(num2 * 1217916844) ^ -398216861;
-						continue;
-					case 5u:
-						result = RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to apply proper protection to the image sections."));
-						num = ((int)num2 * -584472487) ^ -1127142435;
-						continue;
-					case 3u:
-						@enum = enum34_0[flag ? 1 : 0][flag2 ? 1 : 0][flag3 ? 1 : 0];
-						num = -1134878834;
-						continue;
-					case 1u:
-						num = ((!method_14(intptr_, current.method_2(), @enum)) ? (-1777807385) : (-1193518202));
-						continue;
-					default:
-						goto end_IL_0200;
-					case 4u:
-						break;
-					case 0u:
-						goto end_IL_0200;
-					case 2u:
-						return result;
-					}
-					goto IL_0262;
-					continue;
-					end_IL_0200:
-					break;
-				}
-				break;
-			}
+			ManualMapProtectionService.Apply(this, class172_0);
+			return true;
 		}
-		return true;
+		catch (Exception exception)
+		{
+			return RecoveredRuntime.smethod_128(this, exception);
+		}
+	}
+
+	internal bool ProtectMappedRange(IntPtr address, long length, NativeTypes.Enum34 protection)
+	{
+		return method_14(address, length, protection);
+	}
+
+	internal bool DecommitMappedRange(IntPtr address, long length)
+	{
+		return vmethod_5(address, length, NativeTypes.Enum28.const_0);
+	}
+
+	internal bool FlushMappedImage(IntPtr imageBase, uint imageSize)
+	{
+		return RecoveredRuntime.FlushInstructionCache(method_2(), imageBase, (UIntPtr)imageSize);
 	}
 
 	internal bool method_42(Class172 class172_0, ImportDirectory class148_0)
 	{
 		if (class148_0 == null)
 		{
-			goto IL_0025;
+			return true;
 		}
-		goto IL_036f;
-		IL_0025:
-		int num = -1131034367;
-		goto IL_0325;
-		IL_0325:
-		ProcessModuleInfo gClass = default(ProcessModuleInfo);
-		IntPtr intPtr = default(IntPtr);
-		string text = default(string);
-		ImportDescriptor @class = default(ImportDescriptor);
-		int num6 = default(int);
-		ImportedSymbol current = default(ImportedSymbol);
-		IntPtr intPtr3 = default(IntPtr);
-		bool result = default(bool);
-		while (true)
+		int i = 0;
+		while (i < class148_0.list_0.Count)
 		{
-			uint num2;
-			int num3;
-			switch ((num2 = (uint)(num ^ -699919528)) % 13)
+			ImportDescriptor @class = class148_0.list_0[i];
+			string text = @class.method_12();
+			IntPtr intPtr = RecoveredRuntime.smethod_67(class172_0, this, text);
+			if (intPtr == IntPtr.Zero)
 			{
-			case 10u:
-				gClass = RecoveredRuntime.smethod_196(RecoveredRuntime.smethod_42(method_19()), intPtr);
-				num = -492946928;
-				continue;
-			case 8u:
-				break;
-			case 7u:
-				text = @class.method_12();
-				num = (int)(num2 * 165718756) ^ -15078399;
-				continue;
-			case 6u:
-				intPtr = RecoveredRuntime.smethod_67(class172_0, this, text);
-				num = ((int)num2 * -1452842132) ^ 0x67314A7A;
-				continue;
-			case 4u:
-				num = ((gClass == null) ? 1228331751 : 151565714) ^ (int)(num2 * 1941633808);
-				continue;
-			case 3u:
-				goto IL_00bf;
-			case 0u:
-				@class = class148_0.list_0[num6];
-				num = -376020530;
-				continue;
-			default:
-			{
-				IntPtr intptr_ = class172_0.method_2().smethod_9(@class.method_6());
-				using (List<ImportedSymbol>.Enumerator enumerator = @class.method_8().GetEnumerator())
-				{
-					while (true)
-					{
-						IL_02c7:
-						int num4 = (enumerator.MoveNext() ? (-873746203) : (-1605664243));
-						while (true)
-						{
-							IntPtr intPtr2;
-							bool num5;
-							switch ((num2 = (uint)(num4 ^ -699919528)) % 13)
-							{
-							case 12u:
-								intPtr2 = RecoveredRuntime.smethod_225(gClass, current.method_4(), bool_0: false);
-								goto IL_012a;
-							case 11u:
-								if (!RecoveredRuntime.smethod_427(method_19()))
-								{
-									num4 = -2016572106;
-									continue;
-								}
-								num5 = method_13(intptr_, (uint)(int)intPtr3);
-								goto IL_017c;
-							case 4u:
-								intptr_ = intptr_.smethod_8(RecoveredRuntime.smethod_73(method_19()));
-								num4 = -1860770309;
-								continue;
-							case 10u:
-								num5 = method_13(intptr_, intPtr3);
-								goto IL_017c;
-							case 8u:
-								if (!current.method_7())
-								{
-									num4 = (int)((num2 * 2956953) ^ 0x50267163);
-									continue;
-								}
-								intPtr2 = RecoveredRuntime.smethod_248(gClass, current.method_2(), bool_0: false);
-								goto IL_012a;
-							case 7u:
-								num4 = -873746203;
-								continue;
-							case 5u:
-								result = RecoveredRuntime.smethod_128(this, new MissingMethodException("Unable to resolve the function '" + (current.method_7() ? current.method_2().ToString() : current.method_4()) + "' inside the module: " + text));
-								num4 = -1311108833;
-								continue;
-							case 3u:
-								current = enumerator.Current;
-								num4 = -819663490;
-								continue;
-							case 2u:
-								result = RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to write the address into the import address table."));
-								num4 = (int)(num2 * 1135360424) ^ -14813825;
-								continue;
-							default:
-								goto end_IL_0271;
-							case 0u:
-								break;
-							case 9u:
-								goto end_IL_0271;
-							case 1u:
-							case 6u:
-								goto IL_0378;
-								IL_017c:
-								if (!num5)
-								{
-									num4 = -2092823376;
-									continue;
-								}
-								goto case 4u;
-								IL_012a:
-								intPtr3 = intPtr2;
-								num4 = ((!(intPtr3 == IntPtr.Zero)) ? (-1993952888) : (-1613958869));
-								continue;
-							}
-							goto IL_02c7;
-							continue;
-							end_IL_0271:
-							break;
-						}
-						break;
-					}
-				}
-				num6++;
-				goto IL_0095;
-			}
-			case 1u:
-				num = ((intPtr == IntPtr.Zero) ? (-239331803) : (-699387568)) ^ ((int)num2 * -684956771);
-				continue;
-			case 11u:
-				goto IL_036f;
-			case 5u:
-				return RecoveredRuntime.smethod_128(this, new Exception("Unable to find the specified module: " + text));
-			case 9u:
 				return false;
-			case 12u:
-				{
-					return true;
-				}
-				IL_0095:
-				num3 = -154102922;
-				goto IL_009a;
-				IL_00bf:
-				if (num6 >= class148_0.list_0.Count)
-				{
-					num3 = -315626311;
-					goto IL_009a;
-				}
-				goto case 0u;
-				IL_009a:
-				switch ((uint)(num3 ^ -699919528) % 4u)
-				{
-				case 3u:
-					break;
-				case 2u:
-					goto IL_00bf;
-				default:
-					goto IL_0378;
-				case 1u:
-					return true;
-				}
-				goto IL_0095;
-				IL_0378:
-				return result;
 			}
-			break;
+			ProcessModuleInfo gclass = RecoveredRuntime.smethod_196(RecoveredRuntime.smethod_42(base.method_19()), intPtr);
+			if (gclass != null)
+			{
+				IntPtr intPtr2 = class172_0.method_2().smethod_9((long)((ulong)@class.method_6()));
+				foreach (ImportedSymbol class2 in @class.method_8())
+				{
+					IntPtr intPtr3 = class2.method_7() ? RecoveredRuntime.smethod_248(gclass, class2.method_2(), false) : RecoveredRuntime.smethod_225(gclass, class2.method_4(), false);
+					if (intPtr3 == IntPtr.Zero)
+					{
+						return RecoveredRuntime.smethod_128(this, new MissingMethodException(EncodedStringTable.smethod_0(29808) + (class2.method_7() ? class2.method_2().ToString() : class2.method_4()) + EncodedStringTable.smethod_0(29853) + text));
+					}
+					if (!(RecoveredRuntime.smethod_427(base.method_19()) ? base.method_13<uint>(intPtr2, (uint)((int)intPtr3)) : base.method_13<IntPtr>(intPtr2, intPtr3)))
+					{
+						return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(29882)));
+					}
+					intPtr2 = intPtr2.smethod_8(RecoveredRuntime.smethod_73(base.method_19()));
+				}
+				i++;
+				continue;
+			}
+			return RecoveredRuntime.smethod_128(this, new Exception(EncodedStringTable.smethod_0(29755) + text));
 		}
-		goto IL_0025;
-		IL_036f:
-		num6 = 0;
-		num = -632994727;
-		goto IL_0325;
+		return true;
 	}
 
 	internal bool method_43(Class172 class172_0)
 	{
 		PeImage @class = class172_0.method_0();
-		IntPtr intPtr = default(IntPtr);
-		long num6 = default(long);
-		BaseRelocationEntry current2 = default(BaseRelocationEntry);
-		bool result = default(bool);
-		IntPtr intptr_ = default(IntPtr);
-		uint num5 = default(uint);
-		IntPtr intPtr2 = default(IntPtr);
-		while (true)
+		IntPtr intPtr = class172_0.method_2();
+		long num = intPtr.ToInt64() - (long)@class.method_6().method_3().imethod_17();
+		if (num == 0L)
 		{
-			int num = -543966768;
-			while (true)
+			return true;
+		}
+		if (@class.method_16() == null && (IntPtr)((long)class172_0.method_0().method_6().method_3().imethod_17()) != intPtr)
+		{
+			return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(29963) + class172_0.method_6()));
+		}
+		if (@class.method_16() != null)
+		{
+			foreach (BaseRelocationBlock class2 in @class.method_16().list_0)
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -165970232)) % 9)
+				foreach (BaseRelocationEntry class3 in class2.list_0)
 				{
-				case 7u:
-					num = ((@class.method_16() == null) ? (-1784093735) : (-754724018));
-					continue;
-				case 4u:
-					intPtr = class172_0.method_2();
-					num6 = intPtr.ToInt64() - (long)@class.method_6().method_3().imethod_17();
-					num = ((num6 != 0L) ? 760597766 : 725627249) ^ ((int)num2 * -2076648213);
-					continue;
-				case 3u:
-					num = ((@class.method_16() == null) ? (-1478719464) : (-1881604087));
-					continue;
-				case 2u:
-					num = ((!((IntPtr)(long)class172_0.method_0().method_6().method_3()
-						.imethod_17() != intPtr)) ? (-906947383) : (-498164345)) ^ ((int)num2 * -1032578308);
-					continue;
-				case 6u:
-					break;
-				case 0u:
-					return RecoveredRuntime.smethod_128(this, new InvalidOperationException("Unable to relocate image because base relocation directory is not present in: " + class172_0.method_6()));
-				case 1u:
-					return true;
-				default:
-				{
-					using (List<BaseRelocationBlock>.Enumerator enumerator = @class.method_16().list_0.GetEnumerator())
+					if (class3.method_2() != BaseRelocationType.Absolute)
 					{
-						while (enumerator.MoveNext())
+						IntPtr intptr_ = intPtr.smethod_9((long)((ulong)(class2.method_0() + class3.method_0())));
+						if (class3.method_2() != BaseRelocationType.HighLow)
 						{
-							BaseRelocationBlock current;
-							while (true)
+							if (class3.method_2() != BaseRelocationType.Dir64)
 							{
-								current = enumerator.Current;
-								int num3 = -4293042;
-								while (true)
-								{
-									switch ((uint)(num3 ^ -165970232) % 3u)
-									{
-									case 0u:
-										num3 = -970555263;
-										continue;
-									case 1u:
-										break;
-									default:
-										goto end_IL_0173;
-									}
-									break;
-								}
-								continue;
-								end_IL_0173:
-								break;
+								return RecoveredRuntime.smethod_128(this, new InvalidOperationException(EncodedStringTable.smethod_0(30129) + class3.method_2()));
 							}
-							using List<BaseRelocationEntry>.Enumerator enumerator2 = current.list_0.GetEnumerator();
-							while (true)
+							IntPtr intptr_2 = base.method_11<IntPtr>(intptr_);
+							if (!base.method_13<IntPtr>(intptr_, intptr_2.smethod_9(num)))
 							{
-								IL_03cd:
-								int num4 = (enumerator2.MoveNext() ? (-2064236879) : (-1810788980));
-								while (true)
-								{
-									switch ((num2 = (uint)(num4 ^ -165970232)) % 17)
-									{
-									case 16u:
-										num4 = -2064236879;
-										continue;
-									case 15u:
-										num4 = ((current2.method_2() == BaseRelocationType.HighLow) ? (-34732558) : (-688749705)) ^ ((int)num2 * -281585318);
-										continue;
-									case 14u:
-										result = RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to write memory for relocated block."));
-										num4 = (int)((num2 * 1905284176) ^ 0x14A17FAC);
-										continue;
-									case 13u:
-										num4 = (method_13(intptr_, (uint)(num5 + num6)) ? (-1129834661) : (-642660513)) ^ (int)(num2 * 1601362693);
-										continue;
-									case 12u:
-										intPtr2 = method_11<IntPtr>(intptr_);
-										num4 = ((int)num2 * -1503781881) ^ 0x5B994C6;
-										continue;
-									case 10u:
-										result = RecoveredRuntime.smethod_128(this, new InvalidOperationException("Unrecognised base relocation type encountered: " + current2.method_2()));
-										num4 = -411687850;
-										continue;
-									case 9u:
-										current2 = enumerator2.Current;
-										num4 = -258372151;
-										continue;
-									case 8u:
-										num4 = (method_13(intptr_, intPtr2.smethod_9(num6)) ? (-1680210709) : (-1446101933)) ^ (int)(num2 * 1900833731);
-										continue;
-									case 7u:
-										num4 = ((current2.method_2() != BaseRelocationType.Dir64) ? (-1539028563) : (-1778240592));
-										continue;
-									case 6u:
-										num4 = ((current2.method_2() != BaseRelocationType.Absolute) ? 1220837657 : 1766826656) ^ (int)(num2 * 998742553);
-										continue;
-									case 4u:
-										num5 = method_11<uint>(intptr_);
-										num4 = ((int)num2 * -415314055) ^ -1652361318;
-										continue;
-									case 3u:
-										intptr_ = intPtr.smethod_9(current.method_0() + current2.method_0());
-										num4 = (int)((num2 * 2126337800) ^ 0x3A894025);
-										continue;
-									default:
-										goto end_IL_0367;
-									case 5u:
-										break;
-									case 1u:
-										result = RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to write memory for relocated block."));
-										goto IL_0426;
-									case 11u:
-										goto end_IL_0367;
-									case 0u:
-									case 2u:
-										goto IL_0426;
-									}
-									goto IL_03cd;
-									continue;
-									end_IL_0367:
-									break;
-								}
-								break;
+								return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30068)));
+							}
+						}
+						else
+						{
+							uint num2 = base.method_11<uint>(intptr_);
+							if (!base.method_13<uint>(intptr_, (uint)((ulong)num2 + (ulong)num)))
+							{
+								return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30068)));
 							}
 						}
 					}
-					return true;
 				}
-				case 8u:
-					{
-						return true;
-					}
-					IL_0426:
-					return result;
-				}
-				break;
 			}
+			return true;
 		}
+		return true;
 	}
 
 	internal bool method_44(Class172 class172_0)
 	{
-		IntPtr intptr_ = class172_0.method_2();
+		IntPtr intPtr = class172_0.method_2();
 		PeImage @class = class172_0.method_0();
-		PeSectionHeader current = default(PeSectionHeader);
-		while (true)
+		if (!base.method_16<byte>(intPtr, RecoveredRuntime.smethod_8((long)((ulong)@class.method_6().method_3().imethod_31()), @class, 0L)))
 		{
-			int num = 960955484;
-			while (true)
+			return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30194)));
+		}
+		if (!base.method_14(intPtr, (long)((ulong)@class.method_6().method_3().imethod_31()), NativeTypes.Enum34.flag_5))
+		{
+			return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30255)));
+		}
+		foreach (PeSectionHeader gclass in @class.method_8())
+		{
+			if ((gclass.method_18() & (SectionCharacteristics)3758096384u) != (SectionCharacteristics)0u && (gclass.method_18() & SectionCharacteristics.flag_28) == (SectionCharacteristics)0u)
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x46521905)) % 6)
+				IntPtr intptr_ = intPtr.smethod_9((long)((ulong)gclass.method_4()));
+				long long_ = (long)((ulong)gclass.method_8());
+				long long_2 = (long)((ulong)gclass.method_6());
+				if (!base.method_16<byte>(intptr_, RecoveredRuntime.smethod_8(long_2, @class, long_)))
 				{
-				case 5u:
-					num = (method_16(intptr_, RecoveredRuntime.smethod_8(@class.method_6().method_3().imethod_31(), @class, 0L)) ? 1705303002 : 1492710215) ^ ((int)num2 * -1485933316);
-					continue;
-				case 1u:
-					num = (method_14(intptr_, @class.method_6().method_3().imethod_31(), NativeTypes.Enum34.flag_5) ? 2123527904 : 358399375);
-					continue;
-				case 4u:
-					break;
-				case 0u:
-					return RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to set protection for the PE header."));
-				case 2u:
-					return RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to write the PE header to the process."));
-				default:
-				{
-					using (List<PeSectionHeader>.Enumerator enumerator = @class.method_8().GetEnumerator())
-					{
-						while (true)
-						{
-							IL_021a:
-							int num3 = ((!enumerator.MoveNext()) ? 232625301 : 361259423);
-							while (true)
-							{
-								switch ((num2 = (uint)(num3 ^ 0x46521905)) % 8)
-								{
-								case 7u:
-									num3 = 361259423;
-									continue;
-								case 6u:
-								{
-									IntPtr intptr_2 = intptr_.smethod_9(current.method_4());
-									long long_ = current.method_8();
-									long long_2 = current.method_6();
-									num3 = ((!method_16(intptr_2, RecoveredRuntime.smethod_8(long_2, @class, long_))) ? (-1180333206) : (-2068298885)) ^ ((int)num2 * -395549553);
-									continue;
-								}
-								case 3u:
-									num3 = ((((uint)current.method_18() & 0xE0000000u) == 0) ? (-248082589) : (-1552759242)) ^ ((int)num2 * -1108527810);
-									continue;
-								case 2u:
-									current = enumerator.Current;
-									num3 = 1687962814;
-									continue;
-								case 1u:
-									num3 = (((current.method_18() & SectionCharacteristics.flag_28) != 0) ? (-201570668) : (-1533146314)) ^ (int)(num2 * 617325413);
-									continue;
-								default:
-									goto end_IL_01d9;
-								case 4u:
-									break;
-								case 0u:
-									goto end_IL_01d9;
-								case 5u:
-									return RecoveredRuntime.smethod_128(this, new AccessViolationException("Unable to write memory for the PE section."));
-								}
-								goto IL_021a;
-								continue;
-								end_IL_01d9:
-								break;
-							}
-							break;
-						}
-					}
-					return true;
+					return RecoveredRuntime.smethod_128(this, new AccessViolationException(EncodedStringTable.smethod_0(30316)));
 				}
-				}
-				break;
 			}
 		}
+		return true;
 	}
 
 	internal static byte[] smethod_7(PeImage class154_0)
@@ -1692,161 +758,21 @@ public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gcl
 		{
 			return null;
 		}
-		using (List<ResourceDirectoryNode>.Enumerator enumerator = class154_0.method_23().method_0().method_6()
-			.GetEnumerator())
+		foreach (ResourceDirectoryNode @class in class154_0.method_23().method_0().method_6())
 		{
-			byte[] array = default(byte[]);
-			ResourceDataEntry @class = default(ResourceDataEntry);
-			long num3 = default(long);
-			byte[] result = default(byte[]);
-			while (true)
+			if (RecoveredRuntime.smethod_89(@class) && @class.method_2() == 24 && @class.method_6().Count == 1 && @class.method_6()[0].method_4().Count == 1)
 			{
-				IL_0211:
-				if (enumerator.MoveNext())
+				ResourceDataEntry class2 = @class.method_6()[0].method_4()[0];
+				long num = RecoveredRuntime.smethod_135(class154_0, class2.method_4());
+				if (num != -1L)
 				{
-					while (true)
-					{
-						ResourceDirectoryNode current = enumerator.Current;
-						int num = 502567489;
-						while (true)
-						{
-							uint num2;
-							switch ((num2 = (uint)(num ^ 0xA11363C)) % 10)
-							{
-							case 8u:
-								break;
-							case 7u:
-								array = new byte[@class.method_6()];
-								num = (int)((num2 * 1415951716) ^ 0x32EEE12F);
-								continue;
-							case 6u:
-								goto IL_006f;
-							case 4u:
-								num = 538610373;
-								continue;
-							case 3u:
-								@class = current.method_6()[0].method_4()[0];
-								num3 = RecoveredRuntime.smethod_135(class154_0, @class.method_4());
-								num = (int)(num2 * 1828265339) ^ -261597633;
-								continue;
-							case 2u:
-								goto IL_00dd;
-							case 1u:
-								goto IL_00fa;
-							case 0u:
-								goto IL_0115;
-							case 5u:
-								goto end_IL_0134;
-							default:
-								goto end_IL_016f;
-							}
-							if (num3 != -1L)
-							{
-								num = ((int)num2 * -424429248) ^ 0xEDB09DF;
-								continue;
-							}
-							goto IL_0211;
-							IL_0115:
-							if (current.method_6().Count == 1)
-							{
-								num = (int)((num2 * 1451034283) ^ 0x64B717E6);
-								continue;
-							}
-							goto IL_0211;
-							IL_006f:
-							if (current.method_6()[0].method_4().Count == 1)
-							{
-								num = ((int)num2 * -1399707217) ^ 0x3C57A683;
-								continue;
-							}
-							goto IL_0211;
-							IL_00fa:
-							if (RecoveredRuntime.smethod_89(current))
-							{
-								num = ((int)num2 * -389736534) ^ 0x7318E2BA;
-								continue;
-							}
-							goto IL_0211;
-							IL_00dd:
-							if (current.method_2() == 24)
-							{
-								num = ((int)num2 * -529200830) ^ -1001006262;
-								continue;
-							}
-							goto IL_0211;
-							continue;
-							end_IL_0134:
-							break;
-						}
-						continue;
-						end_IL_016f:
-						break;
-					}
-					Stream stream = RecoveredRuntime.smethod_264(class154_0, num3, (int)@class.method_6());
-					try
+					byte[] array = new byte[class2.method_6()];
+					using (Stream stream = RecoveredRuntime.smethod_264(class154_0, num, (int)class2.method_6()))
 					{
 						stream.Read(array, 0, array.Length);
 					}
-					finally
-					{
-						if (stream != null)
-						{
-							while (true)
-							{
-								IL_01d7:
-								int num4 = 1718788360;
-								while (true)
-								{
-									uint num2;
-									switch ((num2 = (uint)(num4 ^ 0xA11363C)) % 3)
-									{
-									case 2u:
-										goto IL_01a4;
-									default:
-										goto end_IL_01b9;
-									case 0u:
-										break;
-									case 1u:
-										goto end_IL_01b9;
-									}
-									goto IL_01d7;
-									IL_01a4:
-									((IDisposable)stream).Dispose();
-									num4 = ((int)num2 * -572982365) ^ 0x50FA2AF1;
-									continue;
-									end_IL_01b9:
-									break;
-								}
-								break;
-							}
-						}
-					}
-					result = array;
-					goto IL_01e3;
+					return array;
 				}
-				int num5 = 523135499;
-				goto IL_01e8;
-				IL_01e3:
-				num5 = 1437810170;
-				goto IL_01e8;
-				IL_01e8:
-				switch ((uint)(num5 ^ 0xA11363C) % 4u)
-				{
-				case 0u:
-					break;
-				default:
-					goto end_IL_0211;
-				case 1u:
-					continue;
-				case 3u:
-					goto end_IL_0211;
-				case 2u:
-					return result;
-				}
-				goto IL_01e3;
-				continue;
-				end_IL_0211:
-				break;
 			}
 		}
 		return null;

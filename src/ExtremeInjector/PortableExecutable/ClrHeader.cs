@@ -136,60 +136,18 @@ public sealed class ClrHeader
 
 	internal ClrHeader(BoundsCheckedBinaryReader class5_0)
 	{
-		while (true)
-		{
-			int num = -1363839455;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -953142585)) % 10)
-				{
-				case 8u:
-					method_6(class5_0.ReadUInt32());
-					method_7(new DataDirectory(class5_0));
-					num = ((int)num2 * -790790398) ^ 0x6CC2B342;
-					continue;
-				case 7u:
-					method_12(new DataDirectory(class5_0));
-					num = (int)(num2 * 1828547557) ^ -1436956789;
-					continue;
-				case 6u:
-					method_1(class5_0.ReadUInt32());
-					method_2(class5_0.ReadUInt16());
-					method_3(class5_0.ReadUInt16());
-					num = (int)((num2 * 829679713) ^ 0x4655FCA9);
-					continue;
-				case 5u:
-					method_11(new DataDirectory(class5_0));
-					num = ((int)num2 * -2091150749) ^ -1615402381;
-					continue;
-				case 4u:
-					method_9(new DataDirectory(class5_0));
-					method_10(new DataDirectory(class5_0));
-					num = (int)(num2 * 1646589260) ^ -1988171420;
-					continue;
-				case 2u:
-					method_5((CorFlags)class5_0.ReadUInt32());
-					num = ((int)num2 * -508397412) ^ 0x18899665;
-					continue;
-				case 1u:
-					method_8(new DataDirectory(class5_0));
-					num = ((int)num2 * -1136784375) ^ 0x38BD8EE8;
-					continue;
-				case 0u:
-					method_4(new DataDirectory(class5_0));
-					num = ((int)num2 * -1599784309) ^ -1811821037;
-					continue;
-				default:
-					return;
-				case 9u:
-					break;
-				case 3u:
-					return;
-				}
-				break;
-			}
-		}
+		this.method_1(class5_0.ReadUInt32());
+		this.method_2(class5_0.ReadUInt16());
+		this.method_3(class5_0.ReadUInt16());
+		this.method_4(new DataDirectory(class5_0));
+		this.method_5((CorFlags)class5_0.ReadUInt32());
+		this.method_6(class5_0.ReadUInt32());
+		this.method_7(new DataDirectory(class5_0));
+		this.method_8(new DataDirectory(class5_0));
+		this.method_9(new DataDirectory(class5_0));
+		this.method_10(new DataDirectory(class5_0));
+		this.method_11(new DataDirectory(class5_0));
+		this.method_12(new DataDirectory(class5_0));
 	}
 
 	internal static uint smethod_0(BinaryReader binaryReader_0)

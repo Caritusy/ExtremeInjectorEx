@@ -220,52 +220,7 @@ public static class AsmJitRuntime
 
 	static AsmJitRuntime()
 	{
-		bool_0 = IntPtr.Size == 8;
-		while (true)
-		{
-			int num = -338111611;
-			while (true)
-			{
-				uint num2;
-				byte[] byte_;
-				switch ((num2 = (uint)(num ^ -1610115625)) % 7)
-				{
-				case 6u:
-					byte_ = RecoveredRuntime.smethod_292();
-					goto IL_0017;
-				case 4u:
-					RecoveredRuntime.smethod_311();
-					num = (int)((num2 * 1454651786) ^ 0x430F2AEF);
-					continue;
-				case 3u:
-					if (!bool_0)
-					{
-						num = ((int)num2 * -583088004) ^ 0x1E9B8A37;
-						continue;
-					}
-					byte_ = RecoveredRuntime.smethod_309();
-					goto IL_0017;
-				case 2u:
-					uint_0 = uint.MaxValue;
-					num = (int)(num2 * 1573111401) ^ -1559793364;
-					continue;
-				case 1u:
-					struct20_0 = default(AsmJitUninitializedOperandTag);
-					num = ((int)num2 * -1589860852) ^ -1054105514;
-					continue;
-				default:
-					return;
-				case 5u:
-					break;
-				case 0u:
-					return;
-					IL_0017:
-					class123_0 = new NativeLibraryImage(byte_, bool_0: true);
-					num = -426189986;
-					continue;
-				}
-				break;
-			}
-		}
+		AsmJitRuntime.class123_0 = new NativeLibraryImage(AsmJitRuntime.bool_0 ? RecoveredRuntime.smethod_309() : RecoveredRuntime.smethod_292(), true);
+		RecoveredRuntime.smethod_311();
 	}
 }

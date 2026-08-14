@@ -78,29 +78,7 @@ public sealed class Peb32 : RemotePeb
 	public Peb32(RemoteProcess gclass2_1)
 		: base(gclass2_1, bool_2: true)
 	{
-		while (true)
-		{
-			int num = 898515389;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x585DEA23)) % 3)
-				{
-				case 1u:
-					goto IL_000a;
-				default:
-					return;
-				case 2u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-				IL_000a:
-				method_04C6();
-				num = ((int)num2 * -7703666) ^ -759674467;
-			}
-		}
+		this.method_04C6();
 	}
 
 	public Peb32(RemoteProcess gclass2_1, IntPtr intptr_2)

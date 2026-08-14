@@ -35,34 +35,9 @@ public sealed class RemoteModuleManager : RemoteProcessComponent
 
 	protected override void method_04C6()
 	{
-		if (!(method_2() == IntPtr.Zero))
+		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
 		{
-			return;
-		}
-		while (true)
-		{
-			int num = -720526839;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -860400977)) % 4)
-				{
-				case 2u:
-					num = ((method_0() == -1) ? (-723716906) : (-1067356984)) ^ (int)(num2 * 928770381);
-					continue;
-				case 1u:
-					method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, bool_0: false, method_0()));
-					num = (int)((num2 * 669194560) ^ 0x4F644078);
-					continue;
-				default:
-					return;
-				case 0u:
-					break;
-				case 3u:
-					return;
-				}
-				break;
-			}
+			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
 		}
 	}
 }

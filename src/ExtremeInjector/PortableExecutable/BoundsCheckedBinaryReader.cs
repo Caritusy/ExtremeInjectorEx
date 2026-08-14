@@ -7,59 +7,16 @@ public class BoundsCheckedBinaryReader : BinaryReader, ILengthValidator
 	public BoundsCheckedBinaryReader(Stream stream_0)
 		: base(stream_0)
 	{
-		while (true)
-		{
-			int num = 259667659;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x1CF5A68C)) % 3)
-				{
-				case 2u:
-					goto IL_0009;
-				default:
-					return;
-				case 0u:
-					break;
-				case 1u:
-					return;
-				}
-				break;
-				IL_0009:
-				interface0_0 = stream_0 as ILengthValidator;
-				num = (int)(num2 * 1058010569) ^ -32902973;
-			}
-		}
+		this.interface0_0 = (stream_0 as ILengthValidator);
 	}
 
 	public bool imethod_0(long long_0)
 	{
-		if (interface0_0 != null)
+		if (this.interface0_0 != null)
 		{
-			goto IL_0017;
+			return this.interface0_0.imethod_0(long_0);
 		}
-		goto IL_004b;
-		IL_0017:
-		int num = 877420216;
-		goto IL_001c;
-		IL_001c:
-		switch ((uint)(num ^ 0x74ADA358) % 5u)
-		{
-		case 0u:
-			break;
-		case 3u:
-			goto IL_004b;
-		case 1u:
-			return interface0_0.imethod_0(long_0);
-		case 2u:
-			return long_0 <= BaseStream.Length;
-		default:
-			return false;
-		}
-		goto IL_0017;
-		IL_004b:
-		num = ((long_0 <= 0L) ? 1118593172 : 1911113395);
-		goto IL_001c;
+		return long_0 > 0L && long_0 <= this.BaseStream.Length;
 	}
 
 	internal static Stream smethod_0(BinaryReader binaryReader_0)

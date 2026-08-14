@@ -23,6 +23,7 @@ Extreme Injector Ex 是一个持续维护的 Windows DLL 注入器，基于 Extr
 - 每个 Windows 用户只运行一个 GUI 实例；再次启动会恢复并前置现有窗口。
 - 通过 `-c` 或 `--cli` 提供完整命令行功能，覆盖所有可持久化设置。
 - 运行时依赖和本地化资源均嵌入主程序，构建出的 EXE 可单独复制运行。
+- `src` 已完成结构化去混淆：不再包含不透明谓词、XOR／取模 `switch` 分发器或反编译生成的 `goto` 控制流图。
 
 ## 环境要求
 
@@ -200,6 +201,7 @@ ExtremeInjectorEx/
 
 ## 开发说明
 
+- 修改应用入口、界面状态、注入服务、PE 解析或恢复代码兼容层前，请先阅读 [ARCHITECTURE.md](./ARCHITECTURE.md)。新增代码必须保持入口轻量、功能服务独立，并禁止源代码级控制流混淆。
 - 当前目标框架为 .NET Framework 4.8，并非 NativeAOT 应用。
 - 普通应用路径已使用强类型工厂和绑定，避免通过反射构造核心对象；恢复代码兼容层仍依赖动态 IL、动态程序集加载和元数据令牌解析。
 - 由于上述运行时要求，目前不能把 WinFormsComInterop、trimming 或 NativeAOT 当作直接替换方案。迁移到现代 .NET 前，需要先替换动态运行时链，再单独验证 WinForms 与 COM 行为。

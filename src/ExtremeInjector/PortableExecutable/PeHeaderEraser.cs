@@ -27,98 +27,38 @@ public sealed class PeHeaderEraser : RemoteMemoryAccessor, IDisposable
 
 	protected override void method_04C6()
 	{
-		if (!(method_2() == IntPtr.Zero))
+		if (base.method_2() == IntPtr.Zero && base.method_0() != -1)
 		{
-			return;
-		}
-		while (true)
-		{
-			int num = 764915726;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x50EC3E33)) % 4)
-				{
-				case 3u:
-					method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, bool_0: false, method_0()));
-					num = (int)((num2 * 2085512465) ^ 0x414CF626);
-					continue;
-				case 1u:
-					num = ((method_0() != -1) ? 1784714201 : 197703356) ^ ((int)num2 * -1495590799);
-					continue;
-				default:
-					return;
-				case 0u:
-					break;
-				case 2u:
-					return;
-				}
-				break;
-			}
+			base.method_3(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.method_0()));
 		}
 	}
 
 	public void method_19(IntPtr intptr_1)
 	{
-		if (!method_8(method_17().ProcessId))
+		if (!base.method_8(this.method_17().ProcessId))
 		{
-			goto IL_0028;
+			throw new UnauthorizedAccessException(EncodedStringTable.smethod_0(9714));
 		}
-		goto IL_0134;
-		IL_0028:
-		int num = -1673395766;
-		goto IL_00e3;
-		IL_00e3:
-		byte[] array = default(byte[]);
-		NativeTypes.Struct47 struct47_ = default(NativeTypes.Struct47);
-		NativeTypes.Enum34 enum34_ = default(NativeTypes.Enum34);
-		while (true)
+		NativeTypes.Struct47 @struct;
+		if (NativeTypes.VirtualQueryEx(base.method_2(), intptr_1, out @struct, (uint)NativeTypes.int_0) == 0)
 		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ -1200711924)) % 12)
-			{
-			case 11u:
-				break;
-			case 9u:
-				num = ((!method_16(intptr_1, array)) ? 773293450 : 1046269784) ^ (int)(num2 * 1431763197);
-				continue;
-			case 8u:
-				goto IL_0060;
-			case 5u:
-				array = new byte[struct47_.intptr_2.ToInt64()];
-				PlatformInfo.random_0.NextBytes(array);
-				num = -269411495;
-				continue;
-			case 1u:
-				goto IL_00b6;
-			default:
-				return;
-			case 7u:
-				goto IL_0134;
-			case 0u:
-				throw new AccessViolationException("Unable to query the memory for the module in order to hide it.");
-			case 2u:
-				throw new UnauthorizedAccessException("Unable to open the specified process for module hiding.");
-			case 3u:
-				throw new AccessViolationException("Unable to write the new PE header.");
-			case 6u:
-				throw new AccessViolationException("Unable to restore the memory protection for the module.");
-			case 10u:
-				throw new AccessViolationException("Unable to change the memory protection for the module.");
-			case 4u:
-				return;
-			}
-			break;
-			IL_00b6:
-			num = (method_14(intptr_1, struct47_.intptr_2.ToInt64(), enum34_) ? (-2142069128) : (-1669067430));
-			continue;
-			IL_0060:
-			num = ((!vmethod_3(intptr_1, struct47_.intptr_2.ToInt64(), NativeTypes.Enum34.flag_6, out enum34_)) ? (-1673415234) : (-86638083));
+			throw new AccessViolationException(EncodedStringTable.smethod_0(9791));
 		}
-		goto IL_0028;
-		IL_0134:
-		num = ((NativeTypes.VirtualQueryEx(method_2(), intptr_1, out struct47_, (uint)NativeTypes.int_0) == 0) ? (-651772932) : (-1944830856));
-		goto IL_00e3;
+		NativeTypes.Enum34 enum34_;
+		if (!this.vmethod_3(intptr_1, @struct.intptr_2.ToInt64(), NativeTypes.Enum34.flag_6, out enum34_))
+		{
+			throw new AccessViolationException(EncodedStringTable.smethod_0(9876));
+		}
+		byte[] array = new byte[@struct.intptr_2.ToInt64()];
+		PlatformInfo.random_0.NextBytes(array);
+		if (!base.method_16<byte>(intptr_1, array))
+		{
+			throw new AccessViolationException(EncodedStringTable.smethod_0(9949));
+		}
+		if (!base.method_14(intptr_1, @struct.intptr_2.ToInt64(), enum34_))
+		{
+			throw new AccessViolationException(EncodedStringTable.smethod_0(9998));
+		}
 	}
 
 	void IDisposable.Dispose()

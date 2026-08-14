@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -28,14 +27,6 @@ public sealed class MainForm : Form
 	private int? lastAutoInjectedProcessId;
 	private bool suppressProcessNameResolution;
 	private string randomizedWindowTitle;
-
-	internal static readonly Dictionary<InjectionMethod, Func<RemoteProcess, DllInjector>> InjectorBackendFactories = new Dictionary<InjectionMethod, Func<RemoteProcess, DllInjector>>
-	{
-		{ InjectionMethod.StandardInjection, process => new LoadLibraryInjector(process) },
-		{ InjectionMethod.LdrpLoadDll, process => new LdrLoadDllInjector(process) },
-		{ InjectionMethod.LdrpLoadDllStub, process => new LdrLoadDllStubInjector(process) },
-		{ InjectionMethod.ThreadHijacking, process => new ThreadHijackInjector(process) }
-	};
 
 	internal IContainer icontainer_0;
 	internal Label processNameLabel;

@@ -11,39 +11,13 @@ public struct AsmJitZone
 
 	public void method_0()
 	{
-		IntPtr intPtr = intptr_0;
-		intptr_0 = (intptr_1 = IntPtr.Zero);
-		while (true)
+		IntPtr intPtr = this.intptr_0;
+		this.intptr_0 = (this.intptr_1 = IntPtr.Zero);
+		while (intPtr != IntPtr.Zero)
 		{
-			int num = -1542306736;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1394241239)) % 5)
-				{
-				case 4u:
-					num = (int)((num2 * 1000345364) ^ 0x32038619);
-					continue;
-				case 2u:
-				{
-					IntPtr intPtr2 = ((AsmJitZoneChunk)Marshal.PtrToStructure(intPtr, typeof(AsmJitZoneChunk))).intptr_0;
-					RecoveredRuntime.smethod_189(intPtr);
-					intPtr = intPtr2;
-					num = -1250082195;
-					continue;
-				}
-				case 1u:
-					num = ((intPtr != IntPtr.Zero) ? (-1533576378) : (-1809871864));
-					continue;
-				default:
-					return;
-				case 0u:
-					break;
-				case 3u:
-					return;
-				}
-				break;
-			}
+			IntPtr intPtr2 = ((AsmJitZoneChunk)Marshal.PtrToStructure(intPtr, typeof(AsmJitZoneChunk))).intptr_0;
+			RecoveredRuntime.smethod_189(intPtr);
+			intPtr = intPtr2;
 		}
 	}
 

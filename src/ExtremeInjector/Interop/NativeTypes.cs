@@ -53,67 +53,16 @@ public static class NativeTypes
 
 		public bool method_2(Struct37 struct37_0)
 		{
-			if (struct37_0.int_0 == int_0)
-			{
-				while (true)
-				{
-					int num = -1945785622;
-					while (true)
-					{
-						uint num2;
-						switch ((num2 = (uint)(num ^ -74350438)) % 5)
-						{
-						case 4u:
-							num = ((struct37_0.int_2 == int_2) ? (-1112347804) : (-948725576)) ^ (int)(num2 * 1503376939);
-							continue;
-						case 1u:
-							num = ((struct37_0.int_1 == int_1) ? 1564629800 : 1685639838) ^ ((int)num2 * -416148990);
-							continue;
-						case 3u:
-							break;
-						case 2u:
-							return struct37_0.int_3 == int_3;
-						default:
-							goto end_IL_0097;
-						}
-						break;
-					}
-					continue;
-					end_IL_0097:
-					break;
-				}
-			}
-			return false;
+			return struct37_0.int_0 == this.int_0 && struct37_0.int_1 == this.int_1 && struct37_0.int_2 == this.int_2 && struct37_0.int_3 == this.int_3;
 		}
 
 		public override bool Equals(object obj)
 		{
-			if (obj is Struct37)
+			if (obj is NativeTypes.Struct37)
 			{
-				goto IL_0017;
+				return this.method_2((NativeTypes.Struct37)obj);
 			}
-			goto IL_004b;
-			IL_0017:
-			int num = 693705274;
-			goto IL_001c;
-			IL_001c:
-			switch ((uint)(num ^ 0x48F58E83) % 5u)
-			{
-			case 4u:
-				break;
-			case 1u:
-				goto IL_004b;
-			case 0u:
-				return method_2(new Struct37((Rectangle)obj));
-			case 2u:
-				return method_2((Struct37)obj);
-			default:
-				return false;
-			}
-			goto IL_0017;
-			IL_004b:
-			num = ((obj is Rectangle) ? 94785859 : 1646166766);
-			goto IL_001c;
+			return obj is Rectangle && this.method_2(new NativeTypes.Struct37((Rectangle)obj));
 		}
 
 		public override int GetHashCode()

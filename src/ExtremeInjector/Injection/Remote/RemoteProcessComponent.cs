@@ -39,30 +39,8 @@ public abstract class RemoteProcessComponent : RemoteMemoryAccessor, IDisposable
 
 	protected RemoteProcessComponent(RemoteProcess gclass2_1)
 	{
-		while (true)
-		{
-			int num = -1882158127;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1591041248)) % 3)
-				{
-				case 1u:
-					goto IL_0008;
-				default:
-					return;
-				case 2u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-				IL_0008:
-				method_20(gclass2_1);
-				method_5(bool_1: false);
-				num = ((int)num2 * -513153544) ^ 0x489575DD;
-			}
-		}
+		this.method_20(gclass2_1);
+		base.method_5(false);
 	}
 
 	void IDisposable.Dispose()

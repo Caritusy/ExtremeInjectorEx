@@ -162,275 +162,88 @@ public sealed class ExportDirectory
 
 	internal ExportDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0, DataDirectory class157_0)
 	{
-		int num13 = default(int);
-		string text3 = default(string);
-		uint num6 = default(uint);
-		ForwardedExport @class = default(ForwardedExport);
-		long num10 = default(long);
-		long num11 = default(long);
-		long num7 = default(long);
-		bool[] array = default(bool[]);
-		ushort num12 = default(ushort);
-		string text = default(string);
-		long num4 = default(long);
-		long num9 = default(long);
-		string text2 = default(string);
-		uint num3 = default(uint);
-		uint num5 = default(uint);
-		ExportedSymbol item2 = default(ExportedSymbol);
-		long long_ = default(long);
-		uint num8 = default(uint);
-		ExportedSymbol item = default(ExportedSymbol);
-		while (true)
+		this.method_0(class5_0.ReadUInt32());
+		this.method_1(class5_0.ReadUInt32());
+		this.method_2(class5_0.ReadUInt16());
+		this.method_3(class5_0.ReadUInt16());
+		this.method_4(class5_0.ReadUInt32());
+		this.method_6(class5_0.ReadUInt32());
+		this.method_8(class5_0.ReadUInt32());
+		this.method_10(class5_0.ReadUInt32());
+		this.method_12(class5_0.ReadUInt32());
+		this.method_14(class5_0.ReadUInt32());
+		this.method_16(class5_0.ReadUInt32());
+		long num = RecoveredRuntime.smethod_135(class154_0, this.method_13());
+		long num2 = RecoveredRuntime.smethod_135(class154_0, this.method_15());
+		long num3 = RecoveredRuntime.smethod_135(class154_0, this.method_11());
+		if (num != -1L && num2 != -1L && num3 != -1L && class5_0.imethod_0(num) && class5_0.imethod_0(num2) && class5_0.imethod_0(num3))
 		{
-			int num = 255503366;
-			while (true)
+			RecoveredRuntime.smethod_157(class5_0, num);
+			bool[] array = new bool[this.method_7()];
+			for (uint num4 = 0u; num4 < this.method_9(); num4 += 1u)
 			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0xA379D7)) % 59)
+				RecoveredRuntime.smethod_157(class5_0, num + (long)((ulong)(num4 * 4u)));
+				long num5 = RecoveredRuntime.smethod_135(class154_0, class5_0.ReadUInt32());
+				if (num5 != -1L && class5_0.imethod_0(num5))
 				{
-				case 58u:
-					num13 = text3.LastIndexOf('.') + 1;
-					num = ((int)num2 * -1851555165) ^ 0x748AF5F5;
-					continue;
-				case 57u:
-					num = ((num6 < method_9()) ? 844698861 : 1801866697);
-					continue;
-				case 56u:
-					@class = null;
-					num = (int)(num2 * 1084883849) ^ -811356252;
-					continue;
-				case 55u:
-					method_0(class5_0.ReadUInt32());
-					method_1(class5_0.ReadUInt32());
-					num = (int)((num2 * 1468603754) ^ 0x7FDE13CF);
-					continue;
-				case 54u:
-					num = (class5_0.imethod_0(num10) ? (-1862792740) : (-302900630)) ^ (int)(num2 * 493332928);
-					continue;
-				case 53u:
-					num11 = RecoveredRuntime.smethod_135(class154_0, method_15());
-					num7 = RecoveredRuntime.smethod_135(class154_0, method_11());
-					num = ((num10 != -1L) ? (-1990944052) : (-673574106)) ^ ((int)num2 * -2013534076);
-					continue;
-				case 52u:
-					array[num12] = true;
-					num = 1130532984;
-					continue;
-				case 51u:
-					@class.method_7(text);
-					num = 408952588;
-					continue;
-				case 50u:
-					method_12(class5_0.ReadUInt32());
-					num = (int)((num2 * 1799389817) ^ 0x3AF40D72);
-					continue;
-				case 49u:
-					num = ((num4 == -1L) ? 1602736585 : 1065360768);
-					continue;
-				case 48u:
-					num = (int)((num2 * 1543587768) ^ 0x152025F6);
-					continue;
-				case 47u:
-					num = ((!class5_0.imethod_0(num9)) ? (-1778858022) : (-928349288)) ^ ((int)num2 * -1429504649);
-					continue;
-				case 46u:
-					list_0.Add(text2);
-					num = ((int)num2 * -766641487) ^ -588230156;
-					continue;
-				case 45u:
-					num = ((!class5_0.imethod_0(num11)) ? 1848133725 : 1850692169) ^ (int)(num2 * 631233797);
-					continue;
-				case 44u:
-					num = (int)(num2 * 1702757662) ^ -1045313065;
-					continue;
-				case 43u:
-					method_10(class5_0.ReadUInt32());
-					num = (int)(num2 * 2113862109) ^ -1104952687;
-					continue;
-				case 42u:
-					num6 = 0u;
-					num = (int)(num2 * 660715701) ^ -1629523149;
-					continue;
-				case 41u:
-					@class.method_5(ushort.Parse(text.Substring(1)));
-					num = ((int)num2 * -1677583861) ^ -316277218;
-					continue;
-				case 40u:
-					num6++;
-					num = 174367232;
-					continue;
-				case 39u:
-					num = ((num3 >= class157_0.method_0()) ? 1776723304 : 154684103) ^ ((int)num2 * -1629126224);
-					continue;
-				case 38u:
-					num = ((!class5_0.imethod_0(num7)) ? (-1494311038) : (-1780826172)) ^ (int)(num2 * 1609665512);
-					continue;
-				case 37u:
-					num4 = class5_0.BaseStream.Position;
-					num = (int)((num2 * 18888473) ^ 0x1E425A0C);
-					continue;
-				case 36u:
-					array = new bool[method_7()];
-					num = (int)(num2 * 763012768) ^ -1201685040;
-					continue;
-				case 35u:
-					num = ((num5 < method_7()) ? 121780747 : 1528011056);
-					continue;
-				case 34u:
-					num5++;
-					num = 1574714582;
-					continue;
-				case 33u:
-					@class.method_3(bool_1: true);
-					num = ((int)num2 * -138747548) ^ 0x43050D0B;
-					continue;
-				case 32u:
-					num4 = -1L;
-					num = (int)((num2 * 512695652) ^ 0xF4ADBEF);
-					continue;
-				case 31u:
-					text = text3.Substring(num13, text3.Length - num13);
-					num = (int)((num2 * 1699360221) ^ 0x65454847);
-					continue;
-				case 30u:
-					RecoveredRuntime.smethod_157(class5_0, num10 + num6 * 4);
-					num = 295853607;
-					continue;
-				case 29u:
-					RecoveredRuntime.smethod_157(class5_0, num9);
-					num = (int)((num2 * 193589867) ^ 0x4083DE3D);
-					continue;
-				case 28u:
-					@class = new ForwardedExport();
-					num = (int)(num2 * 606786723) ^ -297846382;
-					continue;
-				case 27u:
-					num10 = RecoveredRuntime.smethod_135(class154_0, method_13());
-					num = ((int)num2 * -1230186500) ^ 0x16B8CA40;
-					continue;
-				case 26u:
-					num = ((num11 != -1L) ? 1231529321 : 503263398) ^ ((int)num2 * -181689132);
-					continue;
-				case 25u:
-					RecoveredRuntime.smethod_157(class5_0, num7 + num12 * 4);
-					num3 = class5_0.ReadUInt32();
-					num = ((int)num2 * -2733984) ^ -97888507;
-					continue;
-				case 24u:
-					text2 = RecoveredRuntime.smethod_404(class5_0);
-					num = ((int)num2 * -298301661) ^ 0x59BC5550;
-					continue;
-				case 23u:
-					list_1.Add(item2);
-					num = ((int)num2 * -1697332924) ^ -1047263469;
-					continue;
-				case 22u:
-					long_ = RecoveredRuntime.smethod_135(class154_0, num3);
-					num = (int)((num2 * 63215318) ^ 0x1DC708BA);
-					continue;
-				case 21u:
-					text3 = RecoveredRuntime.smethod_404(class5_0);
-					@class.method_1(text3.Substring(0, text3.LastIndexOf('.')) + ".dll");
-					num = ((int)num2 * -547476598) ^ 0x6995A900;
-					continue;
-				case 20u:
-					method_14(class5_0.ReadUInt32());
-					method_16(class5_0.ReadUInt32());
-					num = (int)((num2 * 371947818) ^ 0x11DA36E);
-					continue;
-				case 19u:
-					num = ((num7 != -1L) ? 2024338844 : 1774996584) ^ (int)(num2 * 174631753);
-					continue;
-				case 17u:
-				{
-					ExportedSymbol class3 = new ExportedSymbol();
-					class3.method_3((ushort)(num5 + method_5()));
-					class3.method_7(num8);
-					item = class3;
-					num = (int)(num2 * 1073930070) ^ -398166257;
-					continue;
-				}
-				case 15u:
-					num = ((!text3.Contains("#")) ? (-99001967) : (-22124378)) ^ (int)(num2 * 1145718522);
-					continue;
-				case 14u:
-					method_2(class5_0.ReadUInt16());
-					method_3(class5_0.ReadUInt16());
-					method_4(class5_0.ReadUInt32());
-					method_6(class5_0.ReadUInt32());
-					num = (int)(num2 * 2108923786) ^ -753756334;
-					continue;
-				case 13u:
-					method_8(class5_0.ReadUInt32());
-					num = (int)(num2 * 1652773412) ^ -580936675;
-					continue;
-				case 12u:
-					num5 = 0u;
-					num = (int)((num2 * 573513350) ^ 0x64D3E29F);
-					continue;
-				case 11u:
-					RecoveredRuntime.smethod_157(class5_0, num10);
-					num = 829137285;
-					continue;
-				case 10u:
-				{
+					RecoveredRuntime.smethod_157(class5_0, num5);
+					string text = RecoveredRuntime.smethod_404(class5_0);
+					this.list_0.Add(text);
+					RecoveredRuntime.smethod_157(class5_0, num2 + (long)((ulong)(num4 * 2u)));
+					ushort num6 = class5_0.ReadUInt16();
+					RecoveredRuntime.smethod_157(class5_0, num3 + (long)(num6 * 4));
+					uint num7 = class5_0.ReadUInt32();
+					ForwardedExport @class = null;
+					long num8 = -1L;
+					if (num7 >= class157_0.method_0() && num7 < class157_0.method_0() + class157_0.method_2())
+					{
+						num8 = class5_0.BaseStream.Position;
+						long long_ = RecoveredRuntime.smethod_135(class154_0, num7);
+						RecoveredRuntime.smethod_157(class5_0, long_);
+						@class = new ForwardedExport();
+						string text2 = RecoveredRuntime.smethod_404(class5_0);
+						@class.method_1(text2.Substring(0, text2.LastIndexOf('.')) + EncodedStringTable.smethod_0(10075));
+						int num9 = text2.LastIndexOf('.') + 1;
+						string text3 = text2.Substring(num9, text2.Length - num9);
+						if (text2.Contains(EncodedStringTable.smethod_0(10084)))
+						{
+							@class.method_5(ushort.Parse(text3.Substring(1)));
+						}
+						else
+						{
+							@class.method_7(text3);
+							@class.method_3(true);
+						}
+					}
+					if (num8 != -1L)
+					{
+						RecoveredRuntime.smethod_157(class5_0, num8);
+					}
+					array[(int)num6] = true;
 					ExportedSymbol class2 = new ExportedSymbol();
-					class2.method_1(bool_1: true);
-					class2.method_5(text2);
-					class2.method_3((ushort)(num12 + method_5()));
-					class2.method_7(num3);
+					class2.method_1(true);
+					class2.method_5(text);
+					class2.method_3((ushort)((uint)num6 + this.method_5()));
+					class2.method_7(num7);
 					class2.method_9(@class);
-					item2 = class2;
-					num = ((int)num2 * -2003142035) ^ -1862510854;
-					continue;
+					ExportedSymbol item = class2;
+					this.list_1.Add(item);
 				}
-				case 9u:
-					num9 = RecoveredRuntime.smethod_135(class154_0, class5_0.ReadUInt32());
-					num = ((int)num2 * -1903879760) ^ -1586713091;
-					continue;
-				case 8u:
-					RecoveredRuntime.smethod_157(class5_0, num11 + num6 * 2);
-					num12 = class5_0.ReadUInt16();
-					num = (int)(num2 * 2020359647) ^ -2014153250;
-					continue;
-				case 7u:
-					list_1.Add(item);
-					num = ((int)num2 * -1702789682) ^ 0x1CBDD3C7;
-					continue;
-				case 6u:
-					num = ((num9 != -1L) ? 2050275606 : 778275133) ^ ((int)num2 * -1528340705);
-					continue;
-				case 5u:
-					RecoveredRuntime.smethod_157(class5_0, long_);
-					num = (int)((num2 * 576154416) ^ 0x757910D5);
-					continue;
-				case 4u:
-					RecoveredRuntime.smethod_157(class5_0, num7 + num5 * 4);
-					num8 = class5_0.ReadUInt32();
-					num = (int)(num2 * 2035430827) ^ -211863213;
-					continue;
-				case 2u:
-					RecoveredRuntime.smethod_157(class5_0, num4);
-					num = (int)((num2 * 1117096725) ^ 0x6582A9EA);
-					continue;
-				case 1u:
-					num = (array[num5] ? 1022670295 : 1983741035);
-					continue;
-				case 0u:
-					num = ((num3 < class157_0.method_0() + class157_0.method_2()) ? (-564642098) : (-1113420664)) ^ ((int)num2 * -1235629327);
-					continue;
-				default:
-					return;
-				case 18u:
-					break;
-				case 3u:
-					return;
-				case 16u:
-					return;
-				}
-				break;
 			}
+			for (uint num10 = 0u; num10 < this.method_7(); num10 += 1u)
+			{
+				if (!array[(int)num10])
+				{
+					RecoveredRuntime.smethod_157(class5_0, num3 + (long)((ulong)(num10 * 4u)));
+					uint num11 = class5_0.ReadUInt32();
+					ExportedSymbol class3 = new ExportedSymbol();
+					class3.method_3((ushort)(num10 + this.method_5()));
+					class3.method_7(num11);
+					ExportedSymbol item2 = class3;
+					this.list_1.Add(item2);
+				}
+			}
+			return;
 		}
 	}
 

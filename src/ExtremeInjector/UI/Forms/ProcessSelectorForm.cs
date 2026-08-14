@@ -64,33 +64,9 @@ public sealed class ProcessSelectorForm : Form
 
 	internal void method_3(object sender, EventArgs e)
 	{
-		method_1((RemoteProcess)dataGridView_0.SelectedRows[0].Tag);
-		while (true)
-		{
-			int num = 1639599028;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x2F9F55B9)) % 4)
-				{
-				case 3u:
-					Close();
-					num = ((int)num2 * -986175172) ^ -505557011;
-					continue;
-				case 1u:
-					base.DialogResult = DialogResult.OK;
-					num = ((int)num2 * -1999319415) ^ 0x55997C23;
-					continue;
-				default:
-					return;
-				case 2u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-			}
-		}
+		this.method_1((RemoteProcess)this.dataGridView_0.SelectedRows[0].Tag);
+		base.DialogResult = DialogResult.OK;
+		base.Close();
 	}
 
 	internal void method_4(object sender, EventArgs e)
@@ -110,34 +86,9 @@ public sealed class ProcessSelectorForm : Form
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing)
+		if (disposing && this.icontainer_0 != null)
 		{
-			while (true)
-			{
-				int num = -2101637148;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ -1282380733)) % 4)
-					{
-					case 3u:
-						num = ((icontainer_0 != null) ? (-1089892645) : (-1344030044)) ^ (int)(num2 * 1004543543);
-						continue;
-					case 1u:
-						icontainer_0.Dispose();
-						num = (int)(num2 * 1132356999) ^ -1045633910;
-						continue;
-					case 0u:
-						break;
-					default:
-						goto end_IL_0067;
-					}
-					break;
-				}
-				continue;
-				end_IL_0067:
-				break;
-			}
+			this.icontainer_0.Dispose();
 		}
 		base.Dispose(disposing);
 	}

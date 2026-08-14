@@ -54,27 +54,8 @@ public sealed class CookieAwareWebClient : WebClient
 	protected override WebResponse GetWebResponse(WebRequest request)
 	{
 		WebResponse webResponse = base.GetWebResponse(request);
-		while (true)
-		{
-			int num = -1361806636;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -598079579)) % 3)
-				{
-				case 2u:
-					goto IL_000a;
-				case 0u:
-					break;
-				default:
-					return webResponse;
-				}
-				break;
-				IL_000a:
-				RecoveredRuntime.smethod_339(this, webResponse);
-				num = (int)(num2 * 1089463280) ^ -1510167112;
-			}
-		}
+		RecoveredRuntime.smethod_339(this, webResponse);
+		return webResponse;
 	}
 
 	internal static CookieContainer smethod_0()

@@ -43,28 +43,8 @@ public sealed class DataDirectory
 
 	public DataDirectory(BinaryReader binaryReader_0)
 	{
-		while (true)
-		{
-			int num = 2090940269;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ 0x248C4727)) % 3)
-				{
-				case 1u:
-					goto IL_0008;
-				case 2u:
-					break;
-				default:
-					method_3(binaryReader_0.ReadUInt32());
-					return;
-				}
-				break;
-				IL_0008:
-				method_1(binaryReader_0.ReadUInt32());
-				num = ((int)num2 * -364552290) ^ 0x3562F45B;
-			}
-		}
+		this.method_1(binaryReader_0.ReadUInt32());
+		this.method_3(binaryReader_0.ReadUInt32());
 	}
 
 	internal static uint smethod_0(BinaryReader binaryReader_0)

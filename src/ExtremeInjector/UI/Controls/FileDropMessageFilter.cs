@@ -49,66 +49,20 @@ public sealed class FileDropMessageFilter : IMessageFilter
 	[CompilerGenerated]
 	public void method_0(EventHandler<FileDropEventArgs> eventHandler_1)
 	{
-		EventHandler<FileDropEventArgs> eventHandler = eventHandler_0;
-		EventHandler<FileDropEventArgs> eventHandler2 = default(EventHandler<FileDropEventArgs>);
-		EventHandler<FileDropEventArgs> value = default(EventHandler<FileDropEventArgs>);
-		while (true)
+		EventHandler<FileDropEventArgs> eventHandler = this.eventHandler_0;
+		EventHandler<FileDropEventArgs> eventHandler2;
+		do
 		{
-			int num = -76136891;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -1715277265)) % 5)
-				{
-				case 3u:
-					eventHandler2 = eventHandler;
-					num = -545239564;
-					continue;
-				case 2u:
-					eventHandler = Interlocked.CompareExchange(ref eventHandler_0, value, eventHandler2);
-					num = (((object)eventHandler != eventHandler2) ? (-1360049409) : (-1234848759)) ^ (int)(num2 * 654397325);
-					continue;
-				case 1u:
-					value = (EventHandler<FileDropEventArgs>)Delegate.Combine(eventHandler2, eventHandler_1);
-					num = (int)((num2 * 167735514) ^ 0x1F0BB673);
-					continue;
-				default:
-					return;
-				case 4u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-			}
+			eventHandler2 = eventHandler;
+			EventHandler<FileDropEventArgs> value = (EventHandler<FileDropEventArgs>)Delegate.Combine(eventHandler2, eventHandler_1);
+			eventHandler = Interlocked.CompareExchange<EventHandler<FileDropEventArgs>>(ref this.eventHandler_0, value, eventHandler2);
 		}
+		while (eventHandler != eventHandler2);
 	}
 
 	protected FileDropMessageFilter()
 	{
-		while (true)
-		{
-			int num = -534400790;
-			while (true)
-			{
-				uint num2;
-				switch ((num2 = (uint)(num ^ -176378217)) % 3)
-				{
-				case 1u:
-					goto IL_0008;
-				default:
-					return;
-				case 2u:
-					break;
-				case 0u:
-					return;
-				}
-				break;
-				IL_0008:
-				Application.AddMessageFilter(this);
-				num = ((int)num2 * -1327696686) ^ 0x69FC16FF;
-			}
-		}
+		Application.AddMessageFilter(this);
 	}
 
 	bool IMessageFilter.PreFilterMessage(ref Message message_0)
