@@ -1861,8 +1861,9 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	private static bool ModuleMatchesProcessArchitecture(MainForm mainForm, string modulePath)
+	private static bool ModuleMatchesProcessArchitecture(RemoteProcess process, string modulePath, out string mismatchMessage)
 	{
+		mismatchMessage = null;
 		bool moduleIs32Bit;
 		using (FileStream stream = new FileStream(modulePath, FileMode.Open, FileAccess.Read, FileShare.Read))
 		using (PeImage module = PeImportReader.smethod_13(stream, modulePath, bool_0: false, PeImageLayout.const_0))
@@ -1870,35 +1871,37 @@ public sealed partial class RecoveredRuntime
 			moduleIs32Bit = smethod_19(module);
 		}
 
-		bool processIs32Bit = smethod_427(mainForm.selectedProcess);
+		bool processIs32Bit = smethod_427(process);
 		if (moduleIs32Bit == processIs32Bit)
 		{
 			return true;
 		}
 
-		mainForm.Invoke((MethodInvoker)delegate
-		{
-			string modulePlatform = moduleIs32Bit ? "32-bit" : "64-bit";
-			string processPlatform = processIs32Bit ? "32-bit" : "64-bit";
-			MessageBox.Show(
-				mainForm,
-				UiText.Format("Message.PlatformMismatch", modulePlatform, Path.GetFileName(modulePath), processPlatform, mainForm.selectedProcess.Name),
-				UiText.Get("App.Title"),
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Exclamation);
-		});
+		string modulePlatform = moduleIs32Bit ? "32-bit" : "64-bit";
+		string processPlatform = processIs32Bit ? "32-bit" : "64-bit";
+		mismatchMessage = UiText.Format(
+			"Message.PlatformMismatch",
+			modulePlatform,
+			Path.GetFileName(modulePath),
+			processPlatform,
+			process.Name);
 		return false;
 	}
 
-	private static IntPtr InjectWithConfiguredBackend(MainForm mainForm, string modulePath, string sourceModulePath, InjectionOptions options)
+	private static IntPtr InjectWithConfiguredBackend(
+		RemoteProcess process,
+		string modulePath,
+		string sourceModulePath,
+		InjectionOptions options,
+		Action<string, Exception> reportError)
 	{
 		if (options.Method == InjectionMethod.ManualMap)
 		{
-			return InjectWithManualMap(mainForm.selectedProcess, modulePath, options);
+			return InjectWithManualMap(process, modulePath, options);
 		}
 
 		IntPtr moduleBase;
-		using (DllInjector injector = MainForm.InjectorBackendFactories[options.Method](mainForm.selectedProcess))
+		using (DllInjector injector = MainForm.InjectorBackendFactories[options.Method](process))
 		{
 			injector.method_18(options.Advanced.HideFromDebugger);
 			moduleBase = injector.Inject(modulePath);
@@ -1909,7 +1912,7 @@ public sealed partial class RecoveredRuntime
 			return IntPtr.Zero;
 		}
 
-		ApplyPostInjectionOptions(mainForm, moduleBase, sourceModulePath, options);
+		ApplyPostInjectionOptions(process, moduleBase, sourceModulePath, options, reportError);
 		return moduleBase;
 	}
 
@@ -1933,20 +1936,25 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	private static void ApplyPostInjectionOptions(MainForm mainForm, IntPtr moduleBase, string sourceModulePath, InjectionOptions options)
+	private static void ApplyPostInjectionOptions(
+		RemoteProcess process,
+		IntPtr moduleBase,
+		string sourceModulePath,
+		InjectionOptions options,
+		Action<string, Exception> reportError)
 	{
 		if (options.ErasePeHeaders)
 		{
 			try
 			{
-				using (PeHeaderEraser moduleEditor = new PeHeaderEraser(mainForm.selectedProcess))
+				using (PeHeaderEraser moduleEditor = new PeHeaderEraser(process))
 				{
 					moduleEditor.method_19(moduleBase);
 				}
 			}
 			catch (Exception exception)
 			{
-				ShowInjectionError(mainForm, UiText.Format("Message.ErasePeFailed", Path.GetFileName(sourceModulePath)), exception);
+				reportError?.Invoke(UiText.Format("Message.ErasePeFailed", Path.GetFileName(sourceModulePath)), exception);
 			}
 		}
 
@@ -1954,11 +1962,11 @@ public sealed partial class RecoveredRuntime
 		{
 			try
 			{
-				smethod_327(new RemoteModuleUnlinker(mainForm.selectedProcess), moduleBase);
+				smethod_327(new RemoteModuleUnlinker(process), moduleBase);
 			}
 			catch (Exception exception)
 			{
-				ShowInjectionError(mainForm, UiText.Format("Message.HideModuleFailed", Path.GetFileName(sourceModulePath)), exception);
+				reportError?.Invoke(UiText.Format("Message.HideModuleFailed", Path.GetFileName(sourceModulePath)), exception);
 			}
 		}
 	}
@@ -2666,11 +2674,11 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -954614082) ^ 0x3044D2D3;
 					continue;
 				case 6u:
-					form2_0.groupBox_1 = new GroupBox();
+					form2_0.groupBox_1 = new ModernGroupBox();
 					num = (int)(num2 * 1835330303) ^ -1831319753;
 					continue;
 				case 5u:
-					form2_0.groupBox_0 = new GroupBox();
+					form2_0.groupBox_0 = new ModernGroupBox();
 					num = ((int)num2 * -1246417789) ^ -731880736;
 					continue;
 				case 4u:
@@ -2860,7 +2868,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1731256801) ^ -61465073;
 					continue;
 				case 57u:
-					gform1_0.groupBox_0 = new GroupBox();
+					gform1_0.groupBox_0 = new ModernGroupBox();
 					gform1_0.checkBox_1 = new CheckBox();
 					num = ((int)num2 * -1426794440) ^ 0x1CD319DD;
 					continue;
@@ -2909,7 +2917,7 @@ public sealed partial class RecoveredRuntime
 					gform1_0.checkBox_4 = new CheckBox();
 					gform1_0.checkBox_2 = new CheckBox();
 					gform1_0.checkBox_3 = new CheckBox();
-					gform1_0.groupBox_2 = new GroupBox();
+					gform1_0.groupBox_2 = new ModernGroupBox();
 					gform1_0.checkBox_10 = new CheckBox();
 					num = ((int)num2 * -400900666) ^ 0x45EDF053;
 					continue;
@@ -2959,7 +2967,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 35u:
 					gform1_0.checkBox_0 = new CheckBox();
-					gform1_0.groupBox_1 = new GroupBox();
+					gform1_0.groupBox_1 = new ModernGroupBox();
 					gform1_0.checkBox_6 = new CheckBox();
 					num = ((int)num2 * -2069691687) ^ -1689728988;
 					continue;

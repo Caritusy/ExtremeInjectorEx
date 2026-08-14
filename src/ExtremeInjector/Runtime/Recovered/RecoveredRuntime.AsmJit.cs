@@ -361,7 +361,7 @@ public sealed partial class RecoveredRuntime
 		goto IL_002e;
 	}
 
-	internal static bool InvokeExport(MainForm.ModuleRow class21_0, IntPtr intptr_0, MainForm mainForm)
+	internal static bool InvokeExport(ModuleEntry module, IntPtr intptr_0, RemoteProcess process)
 	{
 		ExportedSymbol class3 = default(ExportedSymbol);
 		int num9 = default(int);
@@ -386,18 +386,18 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1740599076) ^ -1619867697;
 					continue;
 				case 3u:
-					num = ((!HasProcessExited(mainForm.selectedProcess)) ? 1796612693 : 423241358) ^ ((int)num2 * -1062268972);
+					num = ((!HasProcessExited(process)) ? 1796612693 : 423241358) ^ ((int)num2 * -1062268972);
 					continue;
 				case 2u:
 					break;
 				case 0u:
-					throw new InvalidOperationException("The target process is no longer active.");
+					throw new InvalidOperationException(UiText.Get("Message.TargetNoLongerActive"));
 				default:
 				{
-					FileStream fileStream = new FileStream(GetModulePath(class21_0), FileMode.Open, FileAccess.Read, FileShare.Read);
+					FileStream fileStream = new FileStream(module.Path, FileMode.Open, FileAccess.Read, FileShare.Read);
 					try
 					{
-						PeImage class2 = PeExportReader.Read(fileStream, GetModulePath(class21_0), ownsStream: false, layout: PeImageLayout.const_0);
+						PeImage class2 = PeExportReader.Read(fileStream, module.Path, ownsStream: false, layout: PeImageLayout.const_0);
 						try
 						{
 							if (class2.method_14() == null)
@@ -418,15 +418,15 @@ public sealed partial class RecoveredRuntime
 							case 1u:
 								goto IL_0103;
 							case 0u:
-								throw new MissingMethodException("Unable to find the exported routine, '" + class21_0.Entry.ExportName + "'.");
+								throw new MissingMethodException(UiText.Format("Message.ExportNotFound", module.ExportName));
 							case 4u:
-								throw new MissingFieldException("Unable to detect export directory in the specified module.");
+								throw new MissingFieldException(UiText.Get("Message.ExportDirectoryMissing"));
 							case 2u:
 								goto end_IL_00b4;
 							}
 							goto IL_00cc;
 							IL_0103:
-							class3 = class2.method_14().list_1.FirstOrDefault(export => export.method_4() == class21_0.Entry.ExportName);
+							class3 = class2.method_14().list_1.FirstOrDefault(export => export.method_4() == module.ExportName);
 							num3 = ((class3 != null) ? 1875164677 : 2096044763);
 							goto IL_00d1;
 							end_IL_00b4:;
@@ -530,7 +530,7 @@ public sealed partial class RecoveredRuntime
 								num6 = 23605831;
 								continue;
 							case 27u:
-								num6 = ((class21_0.Entry.Parameters != null) ? 277257009 : 458827322) ^ (int)(num2 * 1073412424);
+								num6 = ((module.Parameters != null) ? 277257009 : 458827322) ^ (int)(num2 * 1073412424);
 								continue;
 							case 26u:
 								num6 = ((text == null) ? (-737539902) : (-781970105)) ^ (int)(num2 * 1280621455);
@@ -540,7 +540,7 @@ public sealed partial class RecoveredRuntime
 								num6 = ((int)num2 * -2031373568) ^ 0x3ADEFA02;
 								continue;
 							case 24u:
-								smethod_54(class47_, new AsmJitImmediate(intptr_1), class21_0.Entry.CallingConvention, list.ToArray());
+								smethod_54(class47_, new AsmJitImmediate(intptr_1), module.CallingConvention, list.ToArray());
 								num6 = ((int)num2 * -833880767) ^ -355695803;
 								continue;
 							case 23u:
@@ -548,12 +548,12 @@ public sealed partial class RecoveredRuntime
 								num6 = 207993883;
 								continue;
 							case 22u:
-								class47_ = new RemoteAssembler(class5, mainForm.selectedProcess);
+								class47_ = new RemoteAssembler(class5, process);
 								list2 = new List<AsmJitLabel>();
 								num6 = (int)(num2 * 1666297250) ^ -1722348554;
 								continue;
 							case 21u:
-								array = class21_0.Entry.Parameters.Select(smethod_138).ToArray();
+								array = module.Parameters.Select(smethod_138).ToArray();
 								class5 = new AsmJitAssembler();
 								num6 = 361321445;
 								continue;
@@ -582,7 +582,7 @@ public sealed partial class RecoveredRuntime
 								continue;
 							case 12u:
 								smethod_36(class5, list2[num11++]);
-								num6 = ((class21_0.Entry.Parameters[num9].Type != ExportParameterType.AnsiString) ? 603531166 : 1483483870) ^ ((int)num2 * -612483973);
+								num6 = ((module.Parameters[num9].Type != ExportParameterType.AnsiString) ? 603531166 : 1483483870) ^ ((int)num2 * -612483973);
 								continue;
 							case 11u:
 								num11 = 0;
@@ -594,16 +594,16 @@ public sealed partial class RecoveredRuntime
 								num6 = 1806823426;
 								continue;
 							case 9u:
-								num6 = ((class21_0.Entry.Parameters[num8].Type != ExportParameterType.UInt64) ? 999067885 : 24045617) ^ ((int)num2 * -1483361820);
+								num6 = ((module.Parameters[num8].Type != ExportParameterType.UInt64) ? 999067885 : 24045617) ^ ((int)num2 * -1483361820);
 								continue;
 							case 8u:
-								num6 = (smethod_427(mainForm.selectedProcess) ? 1596134350 : 1875134809);
+								num6 = (smethod_427(process) ? 1596134350 : 1875134809);
 								continue;
 							case 7u:
 								num6 = ((int)num2 * -1199280702) ^ 0x4B2314FA;
 								continue;
 							case 6u:
-								class21_0.Entry.Parameters = new List<ExportParameter>();
+								module.Parameters = new List<ExportParameter>();
 								num6 = (int)(num2 * 932447528) ^ -163800271;
 								continue;
 							case 5u:
@@ -633,7 +633,7 @@ public sealed partial class RecoveredRuntime
 								break;
 							default:
 							{
-								RemoteCodeExecutor class4 = new RemoteCodeExecutor(mainForm.selectedProcess);
+								RemoteCodeExecutor class4 = new RemoteCodeExecutor(process);
 								try
 								{
 									return smethod_140(class4, class5);

@@ -69,7 +69,131 @@ public sealed class ProcessInspectorForm : Form
 	public ProcessInspectorForm()
 	{
 		RecoveredRuntime.smethod_406(this);
-		new TabControlWindow(tabControl_0);
+		ModernUi.ApplyLegacyFormTheme(this);
+		ApplyModernLayout();
+		ModernUi.StyleDangerButton(button_0);
+		ModernUi.StyleDangerButton(button_1);
+		ModernUi.StyleDangerButton(button_4);
+	}
+
+	private void ApplyModernLayout()
+	{
+		SuspendLayout();
+		FormBorderStyle = FormBorderStyle.Sizable;
+		ClientSize = new Size(560, 650);
+		MinimumSize = new Size(500, 590);
+		SizeGripStyle = SizeGripStyle.Show;
+
+		var root = new TableLayoutPanel
+		{
+			BackColor = ModernUi.Window,
+			ColumnCount = 1,
+			Dock = DockStyle.Fill,
+			Margin = Padding.Empty,
+			Padding = new Padding(16),
+			RowCount = 3
+		};
+		root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+		root.RowStyles.Add(new RowStyle(SizeType.Absolute, 200f));
+		root.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+		root.RowStyles.Add(new RowStyle(SizeType.Absolute, 42f));
+
+		groupBox_0.Dock = DockStyle.Fill;
+		groupBox_0.Margin = new Padding(0, 0, 0, 12);
+		pictureBox_0.Size = new Size(48, 48);
+		pictureBox_0.BackgroundImageLayout = ImageLayout.Zoom;
+		pictureBox_0.Anchor = AnchorStyles.Top;
+		pictureBox_0.Margin = Padding.Empty;
+		label_0.AutoSize = false;
+		label_0.AutoEllipsis = true;
+		label_0.Dock = DockStyle.Fill;
+		label_0.Margin = new Padding(10, 0, 0, 0);
+		var summaryLayout = new TableLayoutPanel
+		{
+			BackColor = ModernUi.Surface,
+			ColumnCount = 2,
+			Dock = DockStyle.Fill,
+			Margin = Padding.Empty,
+			Padding = new Padding(14, 28, 14, 10),
+			RowCount = 1
+		};
+		summaryLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 52f));
+		summaryLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+		summaryLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+		summaryLayout.Controls.Add(pictureBox_0, 0, 0);
+		summaryLayout.Controls.Add(label_0, 1, 0);
+		groupBox_0.Controls.Clear();
+		groupBox_0.Controls.Add(summaryLayout);
+
+		tabControl_0.Dock = DockStyle.Fill;
+		tabControl_0.Margin = new Padding(0, 0, 0, 10);
+		ConfigureTabPage(tabPage_0, dataGridView_0, button_1, null);
+		ConfigureTabPage(tabPage_1, dataGridView_1, button_4, button_3);
+
+		var footer = new FlowLayoutPanel
+		{
+			BackColor = ModernUi.Window,
+			Dock = DockStyle.Fill,
+			FlowDirection = FlowDirection.RightToLeft,
+			Margin = Padding.Empty,
+			Padding = new Padding(0, 6, 0, 0),
+			WrapContents = false
+		};
+		button_2.Margin = Padding.Empty;
+		button_0.Margin = new Padding(0, 0, 8, 0);
+		footer.Controls.Add(button_2);
+		footer.Controls.Add(button_0);
+
+		Controls.Clear();
+		root.Controls.Add(groupBox_0, 0, 0);
+		root.Controls.Add(tabControl_0, 0, 1);
+		root.Controls.Add(footer, 0, 2);
+		Controls.Add(root);
+		ResumeLayout(performLayout: true);
+	}
+
+	private static void ConfigureTabPage(
+		TabPage page,
+		DataGridView grid,
+		Button rightButton,
+		Button secondaryButton)
+	{
+		var layout = new TableLayoutPanel
+		{
+			BackColor = ModernUi.Surface,
+			ColumnCount = 1,
+			Dock = DockStyle.Fill,
+			Margin = Padding.Empty,
+			Padding = new Padding(10),
+			RowCount = 2
+		};
+		layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+		layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 42f));
+
+		grid.Dock = DockStyle.Fill;
+		grid.Margin = Padding.Empty;
+		var actions = new FlowLayoutPanel
+		{
+			BackColor = ModernUi.Surface,
+			Dock = DockStyle.Fill,
+			FlowDirection = FlowDirection.RightToLeft,
+			Margin = Padding.Empty,
+			Padding = new Padding(0, 6, 0, 0),
+			WrapContents = false
+		};
+		rightButton.Margin = Padding.Empty;
+		actions.Controls.Add(rightButton);
+		if (secondaryButton != null)
+		{
+			secondaryButton.Margin = new Padding(0, 0, 8, 0);
+			actions.Controls.Add(secondaryButton);
+		}
+
+		page.Controls.Clear();
+		layout.Controls.Add(grid, 0, 0);
+		layout.Controls.Add(actions, 0, 1);
+		page.Controls.Add(layout);
 	}
 
 	internal void method_2()

@@ -607,7 +607,7 @@ public sealed class MainForm : Form
 				SetProcessStatus(UiText.Format("Main.Status.RunningExport", moduleName));
 				try
 				{
-					moduleSucceeded = RecoveredRuntime.InvokeExport(module, moduleBase, this);
+					moduleSucceeded = RecoveredRuntime.InvokeExport(module.Entry, moduleBase, selectedProcess);
 				}
 				catch (Exception exception)
 				{

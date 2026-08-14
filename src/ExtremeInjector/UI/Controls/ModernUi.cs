@@ -1,6 +1,206 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+
+internal sealed class ModernCard : Panel
+{
+	private const int LogicalHeaderHeight = 32;
+
+	internal ModernCard()
+	{
+		SetStyle(
+			ControlStyles.AllPaintingInWmPaint |
+			ControlStyles.OptimizedDoubleBuffer |
+			ControlStyles.ResizeRedraw |
+			ControlStyles.UserPaint,
+			true);
+		AccessibleRole = AccessibleRole.Grouping;
+		BorderStyle = BorderStyle.None;
+	}
+
+	public override Rectangle DisplayRectangle
+	{
+		get
+		{
+			int headerHeight = ScaleLogical(LogicalHeaderHeight);
+			return new Rectangle(
+				Padding.Left,
+				headerHeight,
+				Math.Max(0, ClientSize.Width - Padding.Horizontal),
+				Math.Max(0, ClientSize.Height - headerHeight - Padding.Bottom));
+		}
+	}
+
+	protected override void OnTextChanged(EventArgs e)
+	{
+		base.OnTextChanged(e);
+		Invalidate();
+	}
+
+	protected override void OnPaintBackground(PaintEventArgs e)
+	{
+		e.Graphics.Clear(Parent?.BackColor ?? ModernUi.Window);
+	}
+
+	protected override void OnPaint(PaintEventArgs e)
+	{
+		base.OnPaint(e);
+		if (ClientSize.Width <= 1 || ClientSize.Height <= 1)
+		{
+			return;
+		}
+
+		e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+		Rectangle bounds = new Rectangle(0, 0, ClientSize.Width - 1, ClientSize.Height - 1);
+		using (GraphicsPath outline = CreateRoundedRectangle(bounds, ScaleLogical(6)))
+		using (var background = new SolidBrush(ModernUi.Surface))
+		using (var border = new Pen(ModernUi.Border))
+		{
+			e.Graphics.FillPath(background, outline);
+			e.Graphics.DrawPath(border, outline);
+		}
+
+		int headerHeight = ScaleLogical(LogicalHeaderHeight);
+		Rectangle titleBounds = new Rectangle(
+			Padding.Left,
+			0,
+			Math.Max(0, ClientSize.Width - Padding.Horizontal),
+			headerHeight);
+		TextRenderer.DrawText(
+			e.Graphics,
+			Text,
+			Font,
+			titleBounds,
+			ForeColor,
+			TextFormatFlags.Left |
+			TextFormatFlags.VerticalCenter |
+			TextFormatFlags.EndEllipsis |
+			TextFormatFlags.NoPrefix);
+	}
+
+	private int ScaleLogical(int value)
+	{
+		return (int)Math.Round(value * Math.Max(1f, DeviceDpi / 96f));
+	}
+
+	private static GraphicsPath CreateRoundedRectangle(Rectangle bounds, int radius)
+	{
+		int diameter = Math.Max(2, radius * 2);
+		var path = new GraphicsPath();
+		path.AddArc(bounds.Left, bounds.Top, diameter, diameter, 180f, 90f);
+		path.AddArc(bounds.Right - diameter, bounds.Top, diameter, diameter, 270f, 90f);
+		path.AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0f, 90f);
+		path.AddArc(bounds.Left, bounds.Bottom - diameter, diameter, diameter, 90f, 90f);
+		path.CloseFigure();
+		return path;
+	}
+}
+
+internal sealed class ModernGroupBox : GroupBox
+{
+	internal ModernGroupBox()
+	{
+		SetStyle(
+			ControlStyles.AllPaintingInWmPaint |
+			ControlStyles.OptimizedDoubleBuffer |
+			ControlStyles.ResizeRedraw |
+			ControlStyles.UserPaint,
+			true);
+		BackColor = ModernUi.Surface;
+		ForeColor = ModernUi.TextPrimary;
+	}
+
+	protected override void OnPaintBackground(PaintEventArgs e)
+	{
+		e.Graphics.Clear(Parent?.BackColor ?? ModernUi.Window);
+	}
+
+	protected override void OnPaint(PaintEventArgs e)
+	{
+		if (ClientSize.Width <= 1 || ClientSize.Height <= 1)
+		{
+			return;
+		}
+
+		e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+		Rectangle bounds = new Rectangle(0, 0, ClientSize.Width - 1, ClientSize.Height - 1);
+		using (GraphicsPath outline = ModernUi.CreateRoundedRectangle(bounds, ScaleLogical(6)))
+		using (var background = new SolidBrush(ModernUi.Surface))
+		using (var border = new Pen(ModernUi.Border))
+		{
+			e.Graphics.FillPath(background, outline);
+			e.Graphics.DrawPath(border, outline);
+		}
+
+		Rectangle titleBounds = new Rectangle(
+			ScaleLogical(10),
+			ScaleLogical(3),
+			Math.Max(0, ClientSize.Width - ScaleLogical(20)),
+			ScaleLogical(17));
+		TextRenderer.DrawText(
+			e.Graphics,
+			Text,
+			Font,
+			titleBounds,
+			ForeColor,
+			TextFormatFlags.Left |
+			TextFormatFlags.VerticalCenter |
+			TextFormatFlags.EndEllipsis |
+			TextFormatFlags.NoPrefix);
+	}
+
+	private int ScaleLogical(int value)
+	{
+		return (int)Math.Round(value * Math.Max(1f, DeviceDpi / 96f));
+	}
+}
+
+internal sealed class ModernTabControl : TabControl
+{
+	internal ModernTabControl()
+	{
+		DrawMode = TabDrawMode.OwnerDrawFixed;
+		ItemSize = new Size(96, 28);
+		Padding = new Point(12, 4);
+		SizeMode = TabSizeMode.Fixed;
+	}
+
+	protected override void OnDrawItem(DrawItemEventArgs e)
+	{
+		if (e.Index < 0 || e.Index >= TabPages.Count)
+		{
+			return;
+		}
+
+		bool selected = e.Index == SelectedIndex;
+		Rectangle bounds = GetTabRect(e.Index);
+		using (var background = new SolidBrush(selected ? ModernUi.Surface : ModernUi.SurfaceMuted))
+		{
+			e.Graphics.FillRectangle(background, bounds);
+		}
+
+		if (selected)
+		{
+			Color accent = ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1);
+			using (var indicator = new SolidBrush(accent))
+			{
+				e.Graphics.FillRectangle(indicator, bounds.Left + 8, bounds.Bottom - 3, Math.Max(0, bounds.Width - 16), 3);
+			}
+		}
+
+		TextRenderer.DrawText(
+			e.Graphics,
+			TabPages[e.Index].Text,
+			Font,
+			bounds,
+			selected ? ModernUi.TextPrimary : ModernUi.TextSecondary,
+			TextFormatFlags.HorizontalCenter |
+			TextFormatFlags.VerticalCenter |
+			TextFormatFlags.EndEllipsis |
+			TextFormatFlags.NoPrefix);
+	}
+}
 
 internal static class ModernUi
 {
@@ -54,14 +254,39 @@ internal static class ModernUi
 		button.FlatAppearance.MouseDownBackColor = Blend(SurfaceMuted, accent, 0.12f);
 	}
 
-	internal static void StyleCard(GroupBox groupBox)
+	internal static void StyleCard(ModernCard card)
 	{
-		groupBox.BackColor = Surface;
-		groupBox.FlatStyle = FlatStyle.Flat;
-		groupBox.Font = new Font("Segoe UI Semibold", 9f, FontStyle.Bold, GraphicsUnit.Point);
-		groupBox.ForeColor = TextPrimary;
-		groupBox.Padding = new Padding(12, 12, 12, 12);
-		groupBox.TabStop = false;
+		card.BackColor = Surface;
+		card.Font = new Font("Segoe UI Semibold", 9f, FontStyle.Bold, GraphicsUnit.Point);
+		card.ForeColor = TextPrimary;
+		card.Padding = new Padding(12);
+		card.TabStop = false;
+	}
+
+	internal static void ApplyLegacyFormTheme(Form form)
+	{
+		if (form == null)
+		{
+			throw new ArgumentNullException(nameof(form));
+		}
+
+		form.AutoScaleDimensions = new SizeF(96f, 96f);
+		form.AutoScaleMode = AutoScaleMode.Dpi;
+		form.BackColor = Window;
+		form.Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
+		form.SizeGripStyle = SizeGripStyle.Hide;
+		ApplyLegacyControlTheme(form);
+	}
+
+	internal static void StyleDangerButton(Button button)
+	{
+		StyleButtonBase(button);
+		button.BackColor = Surface;
+		button.ForeColor = Danger;
+		button.FlatAppearance.BorderColor = Blend(Danger, Color.White, 0.55f);
+		button.FlatAppearance.BorderSize = 1;
+		button.FlatAppearance.MouseOverBackColor = Blend(Danger, Color.White, 0.90f);
+		button.FlatAppearance.MouseDownBackColor = Blend(Danger, Color.White, 0.82f);
 	}
 
 	internal static void StyleFieldLabel(Label label)
@@ -197,6 +422,92 @@ internal static class ModernUi
 			(int)Math.Round(first.R + ((second.R - first.R) * amount)),
 			(int)Math.Round(first.G + ((second.G - first.G) * amount)),
 			(int)Math.Round(first.B + ((second.B - first.B) * amount)));
+	}
+
+	private static void ApplyLegacyControlTheme(Control parent)
+	{
+		Color accent = NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1);
+		foreach (Control control in parent.Controls)
+		{
+			if (control is ModernGroupBox groupBox)
+			{
+				groupBox.BackColor = Surface;
+				groupBox.ForeColor = TextPrimary;
+				groupBox.Font = new Font("Segoe UI Semibold", 9f, FontStyle.Bold, GraphicsUnit.Point);
+			}
+			else if (control is Button button)
+			{
+				Size originalSize = button.Size;
+				StyleSecondaryButton(button, accent);
+				button.AutoSize = false;
+				button.AutoSizeMode = AutoSizeMode.GrowOnly;
+				button.MinimumSize = Size.Empty;
+				button.Padding = Padding.Empty;
+				button.Size = originalSize;
+			}
+			else if (control is CheckBox checkBox)
+			{
+				StyleCheckBox(checkBox);
+			}
+			else if (control is ComboBox comboBox)
+			{
+				StyleComboBox(comboBox);
+			}
+			else if (control is TextBox textBox)
+			{
+				StyleTextBox(textBox);
+			}
+			else if (control is NumericUpDown numericUpDown)
+			{
+				StyleNumericUpDown(numericUpDown);
+			}
+			else if (control is DataGridView grid)
+			{
+				StyleDataGridView(grid, accent);
+			}
+			else if (control is Label label)
+			{
+				label.BackColor = Color.Transparent;
+				label.Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
+				label.ForeColor = TextSecondary;
+			}
+			else if (control is TabPage tabPage)
+			{
+				tabPage.BackColor = Surface;
+				tabPage.ForeColor = TextPrimary;
+				UseSurfaceBackground(tabPage);
+			}
+			else if (control is ProgressBar progressBar)
+			{
+				progressBar.Style = ProgressBarStyle.Continuous;
+			}
+			else if (control is Panel || control is TableLayoutPanel || control is FlowLayoutPanel)
+			{
+				UseSurfaceBackground(control);
+			}
+
+			if (control.HasChildren)
+			{
+				ApplyLegacyControlTheme(control);
+			}
+		}
+	}
+
+	private static void UseSurfaceBackground(Control control)
+	{
+		control.BackColor = control.Parent is Form ? Window : Surface;
+	}
+
+	internal static GraphicsPath CreateRoundedRectangle(Rectangle bounds, int radius)
+	{
+		int diameter = Math.Max(2, Math.Min(Math.Min(bounds.Width, bounds.Height), radius * 2));
+		var path = new GraphicsPath();
+		path.AddArc(bounds.Left, bounds.Top, diameter, diameter, 180f, 90f);
+		path.AddArc(bounds.Right - diameter, bounds.Top, diameter, diameter, 270f, 90f);
+		path.AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0f, 90f);
+		path.AddArc(bounds.Left, bounds.Bottom - diameter, diameter, diameter, 90f, 90f);
+		path.CloseFigure();
+		return path;
 	}
 
 	private static void StyleButtonBase(Button button)

@@ -3147,7 +3147,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static GroupBox smethod_490()
 	{
-		return new GroupBox();
+		return new ModernGroupBox();
 	}
 
 	internal static Button smethod_491()

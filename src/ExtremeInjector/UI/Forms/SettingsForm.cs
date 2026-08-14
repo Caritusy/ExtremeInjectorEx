@@ -47,13 +47,13 @@ public sealed partial class SettingsForm : Form
 
 	internal IContainer icontainer_0;
 
-	internal GroupBox groupBox_0;
+	internal ModernCard groupBox_0;
 
 	internal ComboBox comboBox_0;
 
 	internal Button button_0;
 
-	internal GroupBox groupBox_1;
+	internal ModernCard groupBox_1;
 
 	internal CheckBox checkBox_0;
 
@@ -61,7 +61,7 @@ public sealed partial class SettingsForm : Form
 
 	internal CheckBox checkBox_2;
 
-	internal GroupBox groupBox_2;
+	internal ModernCard groupBox_2;
 
 	internal Button button_1;
 
@@ -75,13 +75,13 @@ public sealed partial class SettingsForm : Form
 
 	internal System.Windows.Forms.Label label_1;
 
-	internal GroupBox groupBox_3;
+	internal ModernCard groupBox_3;
 
 	internal CheckBox checkBox_3;
 
 	internal CheckBox checkBox_4;
 
-	internal GroupBox groupBox_4;
+	internal ModernCard groupBox_4;
 
 	internal System.Windows.Forms.Label label_2;
 
@@ -99,7 +99,7 @@ public sealed partial class SettingsForm : Form
 
 	internal Button button_3;
 
-	internal GroupBox groupBox_5;
+	internal ModernCard groupBox_5;
 
 	internal Button button_4;
 

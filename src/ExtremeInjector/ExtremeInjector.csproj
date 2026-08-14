@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>Extreme Injector</AssemblyName>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <UseWindowsForms>True</UseWindowsForms>
     <TargetFramework>net48</TargetFramework>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>

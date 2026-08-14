@@ -28,7 +28,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static void smethod_22(ModuleOptionsForm form0_0)
 	{
-		form0_0.groupBox_0 = new GroupBox();
+		form0_0.groupBox_0 = new ModernCard();
 		while (true)
 		{
 			int num = -438807568;
@@ -737,30 +737,57 @@ public sealed partial class RecoveredRuntime
 
 	internal static bool InjectModule(ref IntPtr moduleBase, MainForm mainForm, ScramblePreset scramblePreset, string sourceModulePath)
 	{
+		return InjectModule(
+			ref moduleBase,
+			mainForm.selectedProcess,
+			ApplicationSettings.Current.Options,
+			scramblePreset,
+			sourceModulePath,
+			message => mainForm.Invoke((MethodInvoker)delegate
+			{
+				MessageBox.Show(
+					mainForm,
+					message,
+					UiText.Get("App.Title"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}),
+			(message, exception) => ShowInjectionError(mainForm, message, exception));
+	}
+
+	internal static bool InjectModule(
+		ref IntPtr moduleBase,
+		RemoteProcess process,
+		InjectionOptions options,
+		ScramblePreset scramblePreset,
+		string sourceModulePath,
+		Action<string> reportMessage,
+		Action<string, Exception> reportError)
+	{
 		moduleBase = IntPtr.Zero;
 		string workingModulePath = sourceModulePath;
-		InjectionOptions options = ApplicationSettings.Current.Options;
 
 		try
 		{
-			if (!ModuleMatchesProcessArchitecture(mainForm, sourceModulePath))
+			if (!ModuleMatchesProcessArchitecture(process, sourceModulePath, out string mismatchMessage))
 			{
+				reportMessage?.Invoke(mismatchMessage);
 				return false;
 			}
 
 			workingModulePath = PrepareModuleForInjection(sourceModulePath, options, scramblePreset);
-			moduleBase = InjectWithConfiguredBackend(mainForm, workingModulePath, sourceModulePath, options);
+			moduleBase = InjectWithConfiguredBackend(process, workingModulePath, sourceModulePath, options, reportError);
 			if (moduleBase == IntPtr.Zero)
 			{
-				throw new InvalidOperationException("The injection method returned NULL (injection failed).");
+				throw new InvalidOperationException(UiText.Get("Message.InjectionReturnedNull"));
 			}
 
 			return true;
 		}
 		catch (Exception exception)
 		{
-			string processName = mainForm.selectedProcess?.Name ?? "unknown process";
-			ShowInjectionError(mainForm, UiText.Format("Message.InjectFailed", Path.GetFileName(sourceModulePath), processName), exception);
+			string processName = process?.Name ?? UiText.Get("Common.UnknownProcess");
+			reportError?.Invoke(UiText.Format("Message.InjectFailed", Path.GetFileName(sourceModulePath), processName), exception);
 			return false;
 		}
 		finally
@@ -872,7 +899,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 169u:
 					gform2_0.comboBox_1 = new ComboBox();
-					gform2_0.groupBox_3 = new GroupBox();
+					gform2_0.groupBox_3 = new ModernCard();
 					num = ((int)num2 * -1860990723) ^ -1332269552;
 					continue;
 				case 168u:
@@ -897,7 +924,7 @@ public sealed partial class RecoveredRuntime
 					num = (int)(num2 * 1918017406) ^ -27597368;
 					continue;
 				case 163u:
-					gform2_0.groupBox_1 = new GroupBox();
+					gform2_0.groupBox_1 = new ModernCard();
 					num = (int)((num2 * 1900349460) ^ 0x6DDA9455);
 					continue;
 				case 162u:
@@ -1109,7 +1136,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 119u:
 					gform2_0.checkBox_2 = new CheckBox();
-					gform2_0.groupBox_2 = new GroupBox();
+					gform2_0.groupBox_2 = new ModernCard();
 					num = (int)((num2 * 764274511) ^ 0x510C3D12);
 					continue;
 				case 118u:
@@ -1242,7 +1269,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -1189043289) ^ 0x100D4DAE;
 					continue;
 				case 89u:
-					gform2_0.groupBox_5 = new GroupBox();
+					gform2_0.groupBox_5 = new ModernCard();
 					gform2_0.button_4 = new Button();
 					gform2_0.button_5 = new Button();
 					num = ((int)num2 * -1771542883) ^ -1402056416;
@@ -1383,7 +1410,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -732654394) ^ -1442463994;
 					continue;
 				case 59u:
-					gform2_0.groupBox_0 = new GroupBox();
+					gform2_0.groupBox_0 = new ModernCard();
 					num = ((int)num2 * -858001066) ^ 0x6641E9B3;
 					continue;
 				case 58u:
@@ -1612,7 +1639,7 @@ public sealed partial class RecoveredRuntime
 				case 8u:
 					gform2_0.checkBox_3 = new CheckBox();
 					gform2_0.checkBox_4 = new CheckBox();
-					gform2_0.groupBox_4 = new GroupBox();
+					gform2_0.groupBox_4 = new ModernCard();
 					num = (int)((num2 * 1797852206) ^ 0x861229C);
 					continue;
 				case 7u:
@@ -2232,7 +2259,7 @@ public sealed partial class RecoveredRuntime
 					num = ((int)num2 * -950236462) ^ 0x7833970B;
 					continue;
 				case 52u:
-					form4_0.tabControl_0 = new TabControl();
+					form4_0.tabControl_0 = new ModernTabControl();
 					form4_0.tabPage_0 = new TabPage();
 					num = (int)((num2 * 1578810192) ^ 0x681D1D9E);
 					continue;
@@ -2360,7 +2387,7 @@ public sealed partial class RecoveredRuntime
 					continue;
 				case 24u:
 					form4_0.dataGridViewTextBoxColumn_2 = new DataGridViewTextBoxColumn();
-					form4_0.groupBox_0 = new GroupBox();
+					form4_0.groupBox_0 = new ModernGroupBox();
 					num = (int)(num2 * 1644058102) ^ -726715906;
 					continue;
 				case 23u:
@@ -2924,7 +2951,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static TabControl smethod_733()
 	{
-		return new TabControl();
+		return new ModernTabControl();
 	}
 
 	internal static void smethod_735(Control control_0, AnchorStyles anchorStyles_0)

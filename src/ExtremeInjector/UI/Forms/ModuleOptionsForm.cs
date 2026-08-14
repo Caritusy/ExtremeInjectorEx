@@ -16,7 +16,7 @@ public sealed partial class ModuleOptionsForm : Form
 
 	internal IContainer icontainer_0;
 
-	internal GroupBox groupBox_0;
+	internal ModernCard groupBox_0;
 
 	internal ComboBox comboBox_0;
 

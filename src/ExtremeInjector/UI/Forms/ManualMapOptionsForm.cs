@@ -30,6 +30,12 @@ public sealed class ManualMapOptionsForm : Form
 				{
 				case 1u:
 					RecoveredRuntime.smethod_233(this);
+					ModernUi.ApplyLegacyFormTheme(this);
+					FormBorderStyle = FormBorderStyle.FixedDialog;
+					MaximizeBox = false;
+					MinimizeBox = false;
+					ShowInTaskbar = false;
+					SizeGripStyle = SizeGripStyle.Hide;
 					checkBox_2.Checked = ApplicationSettings.Current.Options.Advanced.HideFromDebugger;
 					checkBox_1.Checked = ApplicationSettings.Current.Options.Advanced.ManualResolveImports;
 					checkBox_0.Checked = ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport;

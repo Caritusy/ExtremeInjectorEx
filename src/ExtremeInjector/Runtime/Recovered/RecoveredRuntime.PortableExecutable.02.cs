@@ -1799,7 +1799,7 @@ public sealed partial class RecoveredRuntime
 										num5 = ((int)num3 * -2092943264) ^ 0x6D42C324;
 										continue;
 									case 2u:
-										mainForm.moduleGrid.Rows[index].Cells[2].ToolTipText = "Advanced Options";
+										mainForm.moduleGrid.Rows[index].Cells[2].ToolTipText = UiText.Get("Main.AdvancedOptionsTooltip");
 										num5 = (int)(num3 * 1574833161) ^ -1295596495;
 										continue;
 									case 1u:

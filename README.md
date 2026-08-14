@@ -13,7 +13,9 @@ Extreme Injector Ex 是一个面向 Windows 的 DLL 注入器，基于 Extreme I
 - 支持配置导出函数、调用约定和参数。
 - 设置保存在 `%AppData%\ExtremeInjectorEx\settings.xml`，并兼容迁移旧版程序目录中的设置文件。
 - NuGet 运行时依赖内嵌在主程序中，复制 `Extreme Injector.exe` 即可独立运行。
-- 主窗口及设置、模块选项等窗口采用统一界面风格，并固定为不可调整大小的工具窗口布局。
+- 主窗口及设置、模块选项、进程选择、进程信息和高级选项窗口采用统一的现代界面；仅需要展示大量进程数据的“进程信息”窗口允许调整大小。
+- GUI 按当前 Windows 用户保持全局单实例。重复启动只会恢复并前置已经打开的主窗口，避免多个进程同时覆盖同一份设置。
+- 同一个 EXE 同时提供 CLI 模式，可按 PID 或进程名注入，并可配置 GUI 中的全部用户设置。
 - 默认在每次启动时生成新的随机窗口标题；可在设置中关闭并恢复标准产品标题。
 - 内置英语和简体中文界面；默认跟随 Windows 显示语言，也可在设置中即时切换并持久保存。
 
@@ -44,6 +46,63 @@ out/bin/ExtremeInjector/Release/net48/
 所有中间文件位于 `out/obj/`。`out/` 已被 Git 忽略，不会再把 `bin`、`obj` 或本地运行产物混入源码目录。
 
 发布或随身携带时只需要 `Extreme Injector.exe`；`.config` 和 `.pdb` 是构建辅助文件，不是运行依赖。
+
+## 命令行模式
+
+使用 `-c` 或 `--cli` 启用命令行模式。查看当前版本的完整参数表：
+
+```powershell
+& '.\Extreme Injector.exe' --cli --help
+```
+
+按 PID 注入一个 DLL：
+
+```powershell
+& '.\Extreme Injector.exe' --cli --pid 1234 --dll 'D:\Modules\Example.dll'
+```
+
+按进程名等待目标启动，并使用手动映射注入：
+
+```powershell
+& '.\Extreme Injector.exe' -c --process Game.exe --auto-inject --wait-timeout 60 `
+  --dll 'D:\Modules\Example.dll' --method manual-map
+```
+
+`--dll` 可重复使用；紧随其后的 `--export`、`--calling-convention` 和 `--arg` 只作用于最近添加的 DLL：
+
+```powershell
+& '.\Extreme Injector.exe' --cli --pid 1234 `
+  --dll 'D:\Modules\First.dll' --export Initialize --calling-convention stdcall --arg uint32:1 `
+  --dll 'D:\Modules\Second.dll'
+```
+
+进程名必须唯一。如果匹配到多个进程，CLI 不会猜测目标，而是以退出码 3 失败并提供可重新指定的 PID：
+
+```text
+[0] First window title (1234)
+[1] Second window title (5678)
+```
+
+注入方式、自动注入、关闭行为、隐蔽注入、延迟、注入后处理、Manual Map 高级选项、所有 DLL 混淆开关、界面语言、三种界面颜色、随机窗口标题、警告确认状态以及 DLL 列表均有对应参数。参数只影响本次进程；加入 `--save-settings` 才会持久保存。可使用 `--settings <路径>` 读取并写回独立设置文件，便于脚本隔离：
+
+```powershell
+& '.\Extreme Injector.exe' --cli --settings '.\automation.xml' `
+  --reset-settings --language zh-CN --no-random-title --save-settings
+```
+
+帮助和设置写入可在普通终端中使用；真正执行注入时需要管理员权限。CLI 退出码如下：
+
+| 退出码 | 含义 |
+| ---: | --- |
+| 0 | 操作成功 |
+| 1 | 参数无效 |
+| 2 | 未找到目标进程 |
+| 3 | 进程名匹配到多个目标 |
+| 4 | DLL 缺失或无可用 DLL |
+| 5 | 需要管理员权限 |
+| 6 | 注入失败 |
+| 7 | 另一实例正在使用设置 |
+| 8 | 等待过程被取消 |
 
 ## 项目结构
 
@@ -76,6 +135,10 @@ ExtremeInjector/
 首次运行及旧配置迁移后，界面语言默认为“跟随系统语言”：中文 Windows 使用简体中文，其他系统使用英语。可在“设置 → 外观与语言 → 界面语言”中选择“跟随系统语言”“英语”或“简体中文”；切换会立即生效，并写入 `%AppData%\ExtremeInjectorEx\settings.xml`。
 
 所有项目自有的静态界面文案和通知文本都通过稳定资源键访问。英语与简体中文资源分别位于 `res/Localization/Strings.en.resx` 和 `res/Localization/Strings.zh-CN.resx`，两份资源必须保持完全相同的键集合。进程名、文件名、DLL 名、导出函数名及系统错误详情等外部内容保持原文。两套语言资源均直接嵌入主程序，不会产生需要随 EXE 分发的卫星程序集。
+
+## 设置与单实例
+
+默认设置文件位于 `%AppData%\ExtremeInjectorEx\settings.xml`，写入时使用同目录临时文件和原子替换。GUI 使用“当前用户全局互斥体 + 当前会话激活事件”：同一用户再次启动时不会创建第二个设置写入者，而是恢复最小化窗口并将其带到前台。CLI 注入可以独立运行；CLI 只有在显式使用 `--save-settings` 时才请求设置写入权，如果 GUI 正在使用默认设置，则以退出码 7 拒绝写入。
 
 ## 开发说明
 

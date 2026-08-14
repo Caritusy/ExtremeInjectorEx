@@ -43,6 +43,12 @@ public sealed class AdvancedScrambleSettingsForm : Form
 	public AdvancedScrambleSettingsForm()
 	{
 		RecoveredRuntime.smethod_234(this);
+		ModernUi.ApplyLegacyFormTheme(this);
+		FormBorderStyle = FormBorderStyle.FixedDialog;
+		MaximizeBox = false;
+		MinimizeBox = false;
+		ShowInTaskbar = false;
+		SizeGripStyle = SizeGripStyle.Hide;
 		checkBox_3.CheckedChanged += delegate
 		{
 			RecoveredRuntime.smethod_237(this);

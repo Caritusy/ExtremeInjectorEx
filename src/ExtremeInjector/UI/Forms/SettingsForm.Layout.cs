@@ -10,6 +10,7 @@ public sealed partial class SettingsForm
 	private Label injectionBackendLabel;
 	private Label scramblePresetLabel;
 	private Label languageLabel;
+	private Label cliHintLabel;
 	internal ComboBox languageComboBox;
 	internal CheckBox randomizeWindowTitleCheckBox;
 
@@ -50,7 +51,7 @@ public sealed partial class SettingsForm
 		settingsRootLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 		settingsRootLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 62f));
 		settingsRootLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
-		settingsRootLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 94f));
+		settingsRootLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 100f));
 		settingsRootLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 44f));
 
 		settingsRootLayout.Controls.Add(CreateSettingsHeader(), 0, 0);
@@ -144,7 +145,7 @@ public sealed partial class SettingsForm
 		return content;
 	}
 
-	private GroupBox CreateInjectionMethodCard()
+	private ModernCard CreateInjectionMethodCard()
 	{
 		groupBox_0 = CreateCard(UiText.Get("Settings.InjectionMethod"));
 		comboBox_0 = CreateComboBox("injectionMethodComboBox");
@@ -185,7 +186,7 @@ public sealed partial class SettingsForm
 		return groupBox_0;
 	}
 
-	private GroupBox CreateInjectionBehaviorCard()
+	private ModernCard CreateInjectionBehaviorCard()
 	{
 		groupBox_1 = CreateCard(UiText.Get("Settings.InjectionBehavior"));
 		checkBox_2 = CreateCheckBox("autoInjectCheckBox", UiText.Get("Settings.AutoInject"));
@@ -229,7 +230,7 @@ public sealed partial class SettingsForm
 		return groupBox_1;
 	}
 
-	private GroupBox CreateScramblingCard()
+	private ModernCard CreateScramblingCard()
 	{
 		groupBox_2 = CreateCard(UiText.Get("Settings.Scrambling"));
 		comboBox_1 = CreateComboBox("scramblePresetCheckBox");
@@ -263,7 +264,7 @@ public sealed partial class SettingsForm
 		return groupBox_2;
 	}
 
-	private GroupBox CreatePostInjectionCard()
+	private ModernCard CreatePostInjectionCard()
 	{
 		groupBox_3 = CreateCard(UiText.Get("Settings.PostInjection"));
 		checkBox_3 = CreateCheckBox("hideModuleCheckBox", UiText.Get("Settings.HideModule"));
@@ -283,7 +284,7 @@ public sealed partial class SettingsForm
 		return groupBox_3;
 	}
 
-	private GroupBox CreateAppearanceCard()
+	private ModernCard CreateAppearanceCard()
 	{
 		groupBox_4 = CreateCard(UiText.Get("Settings.Appearance"));
 		label_4 = CreateFieldLabel(UiText.Get("Settings.TextColor"));
@@ -332,7 +333,7 @@ public sealed partial class SettingsForm
 		return groupBox_4;
 	}
 
-	private GroupBox CreateToolsCard()
+	private ModernCard CreateToolsCard()
 	{
 		groupBox_5 = CreateCard(UiText.Get("Settings.Tools"));
 		groupBox_5.Margin = new Padding(0, 0, 0, 8);
@@ -343,12 +344,23 @@ public sealed partial class SettingsForm
 		button_5.Click += method_11;
 		button_6.Click += method_10;
 
+		cliHintLabel = new Label
+		{
+			AutoEllipsis = true,
+			Dock = DockStyle.Fill,
+			Font = new Font("Segoe UI", 8.5f, FontStyle.Regular, GraphicsUnit.Point),
+			ForeColor = ModernUi.TextSecondary,
+			Margin = Padding.Empty,
+			Text = UiText.Get("Settings.CliHint"),
+			TextAlign = ContentAlignment.MiddleLeft
+		};
+
 		var tools = new FlowLayoutPanel
 		{
 			Dock = DockStyle.Fill,
 			FlowDirection = FlowDirection.LeftToRight,
 			Margin = Padding.Empty,
-			Padding = new Padding(0, 7, 0, 0),
+			Padding = Padding.Empty,
 			WrapContents = false
 		};
 		button_4.Margin = new Padding(0, 0, 8, 0);
@@ -357,7 +369,21 @@ public sealed partial class SettingsForm
 		tools.Controls.Add(button_4);
 		tools.Controls.Add(button_5);
 		tools.Controls.Add(button_6);
-		groupBox_5.Controls.Add(tools);
+
+		var layout = new TableLayoutPanel
+		{
+			BackColor = ModernUi.Surface,
+			ColumnCount = 1,
+			Dock = DockStyle.Fill,
+			Margin = Padding.Empty,
+			RowCount = 2
+		};
+		layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20f));
+		layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+		layout.Controls.Add(cliHintLabel, 0, 0);
+		layout.Controls.Add(tools, 0, 1);
+		groupBox_5.Controls.Add(layout);
 		return groupBox_5;
 	}
 
@@ -426,6 +452,7 @@ public sealed partial class SettingsForm
 		languageLabel.Text = UiText.Get("Settings.Language");
 		randomizeWindowTitleCheckBox.Text = UiText.Get("Settings.RandomizeWindowTitle");
 		groupBox_5.Text = UiText.Get("Settings.Tools");
+		cliHintLabel.Text = UiText.Get("Settings.CliHint");
 		button_4.Text = UiText.Get("Settings.SecureMode");
 		button_5.Text = UiText.Get("Settings.ScrambleDll");
 		button_6.Text = UiText.Get("Settings.ProcessInfo");
@@ -493,9 +520,9 @@ public sealed partial class SettingsForm
 		}
 	}
 
-	private static GroupBox CreateCard(string text)
+	private static ModernCard CreateCard(string text)
 	{
-		var card = new GroupBox
+		var card = new ModernCard
 		{
 			Dock = DockStyle.Fill,
 			Margin = new Padding(0, 0, 0, 10),

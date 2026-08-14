@@ -81,9 +81,9 @@ public sealed partial class ModuleOptionsForm
 		return header;
 	}
 
-	private GroupBox CreateExportOptionsCard()
+	private ModernCard CreateExportOptionsCard()
 	{
-		groupBox_0 = new GroupBox
+		groupBox_0 = new ModernCard
 		{
 			Dock = DockStyle.Fill,
 			Margin = new Padding(0, 0, 0, 8),

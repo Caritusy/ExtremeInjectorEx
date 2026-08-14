@@ -41,6 +41,18 @@ public sealed class ProcessSelectorForm : Form
 	public ProcessSelectorForm()
 	{
 		RecoveredRuntime.smethod_334(this);
+		ModernUi.ApplyLegacyFormTheme(this);
+		FormBorderStyle = FormBorderStyle.FixedDialog;
+		ShowInTaskbar = false;
+		ModernUi.StylePrimaryButton(
+			button_2,
+			ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1),
+			ModernUi.HarmonizeInteractiveColor(
+				ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1),
+				ApplicationSettings.Current.Options.BackgroundColor2));
+		button_2.AutoSize = false;
+		button_2.MinimumSize = System.Drawing.Size.Empty;
+		button_2.Padding = Padding.Empty;
 		RecoveredRuntime.smethod_25(this);
 	}
 

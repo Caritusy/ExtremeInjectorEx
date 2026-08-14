@@ -950,6 +950,12 @@ public sealed class DependencyInstallerForm : Form
 	public DependencyInstallerForm()
 	{
 		RecoveredRuntime.smethod_114(this);
+		ModernUi.ApplyLegacyFormTheme(this);
+		FormBorderStyle = FormBorderStyle.FixedDialog;
+		MaximizeBox = false;
+		MinimizeBox = false;
+		ShowInTaskbar = false;
+		SizeGripStyle = SizeGripStyle.Hide;
 		class20_0.DownloadDataCompleted += class20_0_DownloadDataCompleted;
 		class20_0.DownloadProgressChanged += class20_0_DownloadProgressChanged;
 	}

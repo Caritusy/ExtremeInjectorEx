@@ -22,6 +22,7 @@
   <data name="Main.Clear" xml:space="preserve"><value>Clear</value></data>
   <data name="Main.DllColumn" xml:space="preserve"><value>DLL</value></data>
   <data name="Main.Options" xml:space="preserve"><value>Options</value></data>
+  <data name="Main.AdvancedOptionsTooltip" xml:space="preserve"><value>Advanced module options</value></data>
   <data name="Main.About" xml:space="preserve"><value>About</value></data>
   <data name="Main.Settings" xml:space="preserve"><value>Settings</value></data>
   <data name="Main.Inject" xml:space="preserve"><value>Inject</value></data>
@@ -66,6 +67,7 @@
   <data name="Settings.SecondaryAccent" xml:space="preserve"><value>Secondary accent</value></data>
   <data name="Settings.Language" xml:space="preserve"><value>Interface language</value></data>
   <data name="Settings.RandomizeWindowTitle" xml:space="preserve"><value>Use a different window title on each launch</value></data>
+  <data name="Settings.CliHint" xml:space="preserve"><value>Command line: Extreme Injector.exe --cli --help</value></data>
   <data name="Settings.Tools" xml:space="preserve"><value>Utilities</value></data>
   <data name="Settings.SecureMode" xml:space="preserve"><value>Start in secure mode</value></data>
   <data name="Settings.ScrambleDll" xml:space="preserve"><value>Scramble a DLL</value></data>
@@ -132,7 +134,7 @@
   <data name="ProcessList.Select" xml:space="preserve"><value>Select</value></data>
   <data name="ProcessInfo.Title" xml:space="preserve"><value>Process information</value></data>
   <data name="ProcessInfo.Process" xml:space="preserve"><value>Process</value></data>
-  <data name="ProcessInfo.Summary" xml:space="preserve"><value>{0}&#xA;&#xA;{1}&#xA;&#xA;Process ID: 0x{2:X} ({2})&#xA;&#xA;Modules: {3}    Threads: {4}</value></data>
+  <data name="ProcessInfo.Summary" xml:space="preserve"><value>{0}&#xA;{1}&#xA;Process ID: 0x{2:X} ({2})&#xA;Modules: {3}    Threads: {4}</value></data>
   <data name="ProcessInfo.Modules" xml:space="preserve"><value>Modules</value></data>
   <data name="ProcessInfo.ModuleName" xml:space="preserve"><value>Module name</value></data>
   <data name="ProcessInfo.ModuleBase" xml:space="preserve"><value>Module base</value></data>
@@ -176,6 +178,10 @@
   <data name="Message.InvalidDll" xml:space="preserve"><value>“{0}” is not a valid DLL.</value></data>
   <data name="Message.PlatformMismatch" xml:space="preserve"><value>Architecture mismatch: the {0} DLL “{1}” cannot be injected into the {2} process “{3}”.</value></data>
   <data name="Message.InjectFailed" xml:space="preserve"><value>An error occurred while injecting “{0}” into “{1}”.</value></data>
+  <data name="Message.InjectionReturnedNull" xml:space="preserve"><value>The selected injection method did not return a module address.</value></data>
+  <data name="Message.TargetNoLongerActive" xml:space="preserve"><value>The target process is no longer running.</value></data>
+  <data name="Message.ExportNotFound" xml:space="preserve"><value>The DLL does not export a routine named “{0}”.</value></data>
+  <data name="Message.ExportDirectoryMissing" xml:space="preserve"><value>The DLL does not contain an export directory.</value></data>
   <data name="Message.ErasePeFailed" xml:space="preserve"><value>An error occurred while erasing the PE headers of “{0}”.</value></data>
   <data name="Message.HideModuleFailed" xml:space="preserve"><value>An error occurred while hiding the module “{0}”.</value></data>
   <data name="Message.Dependency.UnsupportedXp" xml:space="preserve"><value>The DLL “{0}” requires “{1}”, which is not supported on Windows XP. Ask the DLL author to produce an XP-compatible Release build.</value></data>
@@ -190,4 +196,43 @@
   <data name="Message.Dependency.Completed" xml:space="preserve"><value>The dependency was installed successfully.</value></data>
   <data name="Message.Dependency.ManualInstall" xml:space="preserve"><value>When the page opens, download and install “{0}” before starting injection.</value></data>
   <data name="Message.NewVersion" xml:space="preserve"><value>Extreme Injector Ex {0} is available.&#xA;&#xA;Download it from GitHub:&#xA;&#xA;https://github.com/Caritusy/ExtremeInjectorEx</value></data>
+  <data name="Cli.Help" xml:space="preserve"><value>Extreme Injector Ex command line&#xA;&#xA;Usage:&#xA;  Extreme Injector.exe --cli (--pid &lt;id&gt; | --process &lt;name&gt;) [options]&#xA;  Extreme Injector.exe -c --help&#xA;&#xA;Target selection:&#xA;  --pid &lt;id&gt;                         Select one process by PID.&#xA;  --process &lt;name&gt;                   Select one process by executable name.&#xA;  --auto-inject / --no-auto-inject   Wait / do not wait for a named process.&#xA;  --wait-timeout &lt;seconds&gt;           Stop waiting after this duration; 0 waits indefinitely.&#xA;  If a name matches multiple processes, the command fails and lists [index] window title (PID).&#xA;&#xA;DLLs and exported routines:&#xA;  --dll &lt;path&gt;                       Add a DLL; repeat for multiple DLLs.&#xA;  --clear-dlls                       Clear the saved DLL list.&#xA;  --enable-dll / --disable-dll       Enable / disable the most recently added DLL.&#xA;  --export &lt;name&gt;                   Invoke an export from the most recent DLL.&#xA;  --calling-convention &lt;value&gt;      stdcall | fastcall | cdecl.&#xA;  --arg &lt;type:value&gt;                Add an export argument. Types: ansi, unicode, byte, uint16, uint32, uint64, float.&#xA;&#xA;Injection:&#xA;  --method &lt;value&gt;                  standard | thread-hijacking | ldrp-load-dll | ldrp-load-dll-stub | manual-map.&#xA;  --close-on-inject / --no-close-on-inject&#xA;  --stealth / --no-stealth&#xA;  --delay-before &lt;ms&gt;               Delay before each injection.&#xA;  --delay-between &lt;ms&gt;              Delay between DLLs.&#xA;  --erase-pe / --no-erase-pe&#xA;  --hide-module / --no-hide-module&#xA;  --hide-from-debugger / --no-hide-from-debugger&#xA;  --resolve-imports / --no-resolve-imports&#xA;  --disable-exceptions / --enable-exceptions&#xA;  --disable-seh-validation / --enable-seh-validation&#xA;&#xA;DLL scrambling:&#xA;  --scramble &lt;none|basic|standard|extreme|custom&gt;&#xA;  --scramble-header-fields / --no-scramble-header-fields&#xA;  --remove-useless-data / --keep-useless-data&#xA;  --insert-sections / --no-insert-sections&#xA;  --shift-section-data / --no-shift-section-data&#xA;  --modify-code / --no-modify-code&#xA;  --rename-sections / --no-rename-sections&#xA;  --new-entry-point / --no-new-entry-point&#xA;  --modify-imports / --no-modify-imports&#xA;  --remove-debug-data / --keep-debug-data&#xA;  --move-relocations / --no-move-relocations&#xA;  --fake-debug-directory / --no-fake-debug-directory&#xA;  --strip-section-flags / --keep-section-flags&#xA;  --shift-section-memory / --no-shift-section-memory&#xA;&#xA;Interface and persistence:&#xA;  --language &lt;system|en|zh-CN&gt;&#xA;  --random-title / --no-random-title&#xA;  --primary-color &lt;#RRGGBB&gt; --secondary-color &lt;#RRGGBB&gt; --text-color &lt;#RRGGBB&gt;&#xA;  --reset-settings                   Restore every setting to its default in memory.&#xA;  --save-settings                    Save supplied settings; may be used without a target.&#xA;  --reset-warnings&#xA;  --ack-ldrp-warning / --unack-ldrp-warning&#xA;  --ack-manual-map-warning / --unack-manual-map-warning&#xA;  --ack-scramble-warning / --unack-scramble-warning&#xA;  -h, --help                         Show this help.</value></data>
+  <data name="Cli.Error.TargetRequired" xml:space="preserve"><value>Select a target with --pid &lt;id&gt; or --process &lt;name&gt;.</value></data>
+  <data name="Cli.Error.AdminRequired" xml:space="preserve"><value>Injection requires an elevated command prompt. Restart the terminal as an administrator.</value></data>
+  <data name="Cli.Error.DllRequired" xml:space="preserve"><value>No enabled DLL is available. Add one with --dll &lt;path&gt; or enable one in the saved settings.</value></data>
+  <data name="Cli.Error.DllNotFound" xml:space="preserve"><value>DLL not found: {0}</value></data>
+  <data name="Cli.Error.PidNotFound" xml:space="preserve"><value>No running process has PID {0}.</value></data>
+  <data name="Cli.Error.ProcessNotFound" xml:space="preserve"><value>No running process matches “{0}”.</value></data>
+  <data name="Cli.Error.AmbiguousProcess" xml:space="preserve"><value>More than one process matches “{0}”:</value></data>
+  <data name="Cli.Error.UsePid" xml:space="preserve"><value>Run the command again with --pid &lt;id&gt; to select exactly one process.</value></data>
+  <data name="Cli.Error.WaitTimedOut" xml:space="preserve"><value>Timed out while waiting for “{0}”.</value></data>
+  <data name="Cli.Canceled" xml:space="preserve"><value>Operation canceled.</value></data>
+  <data name="Cli.WaitingForProcess" xml:space="preserve"><value>Waiting for process “{0}”… Press Ctrl+C to cancel.</value></data>
+  <data name="Cli.SelectedProcess" xml:space="preserve"><value>Target: {0} ({1})</value></data>
+  <data name="Cli.Injecting" xml:space="preserve"><value>Injecting {0}…</value></data>
+  <data name="Cli.ExportInvoked" xml:space="preserve"><value>Invoked export: {0}</value></data>
+  <data name="Cli.Injected" xml:space="preserve"><value>Injected {0} at 0x{1}.</value></data>
+  <data name="Cli.Error.Export" xml:space="preserve"><value>Could not invoke export “{0}”: {1}</value></data>
+  <data name="Cli.Error.InjectionFailed" xml:space="preserve"><value>Injection failed for {0}.</value></data>
+  <data name="Cli.Completed" xml:space="preserve"><value>Injection completed successfully.</value></data>
+  <data name="Cli.CompletedWithErrors" xml:space="preserve"><value>Injection completed with errors.</value></data>
+  <data name="Cli.SettingsSaved" xml:space="preserve"><value>Settings saved.</value></data>
+  <data name="Cli.Error.SettingsInUse" xml:space="preserve"><value>Settings are in use by another Extreme Injector Ex instance. Close it before saving from the command line.</value></data>
+  <data name="Cli.Error.Argument" xml:space="preserve"><value>Invalid command line: {0}</value></data>
+  <data name="Cli.Error.Unexpected" xml:space="preserve"><value>Unexpected error: {0}</value></data>
+  <data name="Cli.Error.UnknownOption" xml:space="preserve"><value>Unknown option: {0}</value></data>
+  <data name="Cli.Error.TargetMutuallyExclusive" xml:space="preserve"><value>Use either --pid or --process, not both.</value></data>
+  <data name="Cli.Error.OptionRequiresDll" xml:space="preserve"><value>{0} must follow a --dll option.</value></data>
+  <data name="Cli.Error.MissingValue" xml:space="preserve"><value>{0} requires a value.</value></data>
+  <data name="Cli.Error.PositiveInteger" xml:space="preserve"><value>{0} requires a positive integer.</value></data>
+  <data name="Cli.Error.NonNegativeInteger" xml:space="preserve"><value>{0} requires a non-negative integer.</value></data>
+  <data name="Cli.Error.InvalidMethod" xml:space="preserve"><value>Unknown injection method: {0}</value></data>
+  <data name="Cli.Error.InvalidScramble" xml:space="preserve"><value>Unknown scrambling preset: {0}</value></data>
+  <data name="Cli.Error.InvalidLanguage" xml:space="preserve"><value>Unknown language: {0}</value></data>
+  <data name="Cli.Error.InvalidConvention" xml:space="preserve"><value>Unknown calling convention: {0}</value></data>
+  <data name="Cli.Error.InvalidArgumentValue" xml:space="preserve"><value>An export argument must use type:value format.</value></data>
+  <data name="Cli.Error.InvalidArgumentType" xml:space="preserve"><value>Unknown export argument type: {0}</value></data>
+  <data name="Cli.Error.InvalidColor" xml:space="preserve"><value>{0} does not accept the color “{1}”. Use an HTML color such as #1E90FF.</value></data>
+  <data name="Common.UnknownProcess" xml:space="preserve"><value>unknown process</value></data>
+  <data name="Cli.SettingsPathHelp" xml:space="preserve"><value>  --settings &lt;path&gt;                  Load settings from this file and save changes back to it.</value></data>
 </root>
