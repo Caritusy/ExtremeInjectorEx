@@ -11537,43 +11537,18 @@ public sealed class Class171
 	[DllImport("user32.dll", SetLastError = true)]
 	internal static extern int GetWindowThreadProcessId(IntPtr intptr_0, out int int_0);
 
-	internal static string smethod_147(string string_0)
+	internal static string CreateUniqueTemporaryPath(string extension)
 	{
-		string path = default(string);
+		string temporaryDirectory = Path.GetTempPath();
 		while (true)
 		{
-			string text = Path.GetTempPath();
-			Guid guid = Guid.NewGuid();
-			while (true)
+			string fileName = Guid.NewGuid()
+				.ToString("N")
+				.Substring(0, Class127.random_0.Next(5, 10)) + extension;
+			string candidatePath = Path.Combine(temporaryDirectory, fileName);
+			if (!File.Exists(candidatePath))
 			{
-				int num = 1511678773;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num ^ 0x76B67B7C)) % 4)
-					{
-					case 3u:
-						goto IL_0006;
-					case 1u:
-						path = guid.ToString().Replace("-", "").Substring(0, Class127.random_0.Next(5, 10)) + string_0;
-						num = ((int)num2 * -881411269) ^ 0x66511EA0;
-						continue;
-					case 2u:
-						break;
-					default:
-						return text;
-					}
-					break;
-					IL_0006:
-					if (File.Exists(text = Path.Combine(text, path)))
-					{
-						goto end_IL_0096;
-					}
-					num = (int)(num2 * 1223951643) ^ -1475314967;
-				}
-				continue;
-				end_IL_0096:
-				break;
+				return candidatePath;
 			}
 		}
 	}
@@ -15432,7 +15407,209 @@ public sealed class Class171
 		}
 	}
 
-	internal static bool InjectModule(ref IntPtr intptr_0, MainForm mainForm, [Out] ScramblePreset enum3_0, string string_0)
+	internal static bool InjectModule(ref IntPtr moduleBase, MainForm mainForm, ScramblePreset scramblePreset, string sourceModulePath)
+	{
+		moduleBase = IntPtr.Zero;
+		string workingModulePath = sourceModulePath;
+		InjectionOptions options = ApplicationSettings.Current.Options;
+
+		try
+		{
+			if (!ModuleMatchesProcessArchitecture(mainForm, sourceModulePath))
+			{
+				return false;
+			}
+
+			workingModulePath = PrepareModuleForInjection(sourceModulePath, options, scramblePreset);
+			moduleBase = InjectWithConfiguredBackend(mainForm, workingModulePath, sourceModulePath, options);
+			if (moduleBase == IntPtr.Zero)
+			{
+				throw new InvalidOperationException("The injection method returned NULL (injection failed).");
+			}
+
+			return true;
+		}
+		catch (Exception exception)
+		{
+			string processName = mainForm.selectedProcess?.method_2() ?? "unknown process";
+			ShowInjectionError(mainForm, "An error occurred while injecting \"" + Path.GetFileName(sourceModulePath) + "\" into \"" + processName + "\".", exception);
+			return false;
+		}
+		finally
+		{
+			if (options.StealthInject && !string.Equals(workingModulePath, sourceModulePath, StringComparison.OrdinalIgnoreCase))
+			{
+				try
+				{
+					if (File.Exists(workingModulePath))
+					{
+						File.Delete(workingModulePath);
+					}
+				}
+				catch
+				{
+				}
+			}
+		}
+	}
+
+	private static bool ModuleMatchesProcessArchitecture(MainForm mainForm, string modulePath)
+	{
+		bool moduleIs32Bit;
+		using (FileStream stream = new FileStream(modulePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+		using (Class154 module = Class7.smethod_13(stream, modulePath, bool_0: false, Enum39.const_0))
+		{
+			moduleIs32Bit = smethod_19(module);
+		}
+
+		bool processIs32Bit = smethod_427(mainForm.selectedProcess);
+		if (moduleIs32Bit == processIs32Bit)
+		{
+			return true;
+		}
+
+		mainForm.Invoke((MethodInvoker)delegate
+		{
+			string modulePlatform = moduleIs32Bit ? "32-bit" : "64-bit";
+			string processPlatform = processIs32Bit ? "32-bit" : "64-bit";
+			MessageBox.Show(
+				mainForm,
+				"Platform mismatch detected. You are trying to inject a " + modulePlatform + " DLL (" + Path.GetFileName(modulePath) + ") into a " + processPlatform + " process (" + mainForm.selectedProcess.method_2() + ") which is not supported.",
+				"Extreme Injector v3",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Exclamation);
+		});
+		return false;
+	}
+
+	private static string PrepareModuleForInjection(string sourcePath, InjectionOptions options, ScramblePreset scramblePreset)
+	{
+		string workingPath = options.StealthInject
+			? CreateUniqueTemporaryPath(".dll")
+			: sourcePath;
+
+		if (scramblePreset != ScramblePreset.None)
+		{
+			if (!options.StealthInject)
+			{
+				workingPath = GetAvailableScrambledModulePath(sourcePath);
+			}
+
+			ScrambleModule(sourcePath, workingPath);
+		}
+		else if (!string.Equals(sourcePath, workingPath, StringComparison.OrdinalIgnoreCase))
+		{
+			File.Copy(sourcePath, workingPath);
+		}
+
+		return workingPath;
+	}
+
+	private static string GetAvailableScrambledModulePath(string sourcePath)
+	{
+		string extension = Path.GetExtension(sourcePath);
+		string basePath = Path.Combine(
+			Path.GetDirectoryName(sourcePath),
+			Path.GetFileNameWithoutExtension(sourcePath) + "_Scrambled");
+		string preferredPath = basePath + extension;
+
+		try
+		{
+			if (File.Exists(preferredPath))
+			{
+				File.Delete(preferredPath);
+			}
+			return preferredPath;
+		}
+		catch
+		{
+			for (int suffix = 1; ; suffix++)
+			{
+				string candidatePath = basePath + "_" + suffix + extension;
+				if (!File.Exists(candidatePath))
+				{
+					return candidatePath;
+				}
+			}
+		}
+	}
+
+	private static IntPtr InjectWithConfiguredBackend(MainForm mainForm, string modulePath, string sourceModulePath, InjectionOptions options)
+	{
+		if (options.Method == InjectionMethod.ManualMap)
+		{
+			return InjectWithManualMap(mainForm.selectedProcess, modulePath, options);
+		}
+
+		IntPtr moduleBase;
+		using (Class85 injector = (Class85)Activator.CreateInstance(MainForm.InjectorBackendTypes[options.Method], mainForm.selectedProcess))
+		{
+			injector.method_18(options.Advanced.HideFromDebugger);
+			moduleBase = injector.method_0BA6(modulePath);
+		}
+
+		if (moduleBase == IntPtr.Zero)
+		{
+			return IntPtr.Zero;
+		}
+
+		ApplyPostInjectionOptions(mainForm, moduleBase, sourceModulePath, options);
+		return moduleBase;
+	}
+
+	private static IntPtr InjectWithManualMap(GClass2 process, string modulePath, InjectionOptions options)
+	{
+		AdvancedInjectionOptions advanced = options.Advanced;
+		using (Class89 injector = new Class89(process))
+		{
+			injector.method_18(advanced.HideFromDebugger);
+			injector.method_25(advanced.DisableExceptionSupport);
+			injector.method_31(advanced.ManualResolveImports);
+			injector.method_27(options.ErasePeHeaders);
+			injector.method_33(advanced.DisableSehValidation);
+
+			IntPtr moduleBase = injector.method_0BA6(modulePath);
+			if (injector.method_34() != null)
+			{
+				throw injector.method_34();
+			}
+			return moduleBase;
+		}
+	}
+
+	private static void ApplyPostInjectionOptions(MainForm mainForm, IntPtr moduleBase, string sourceModulePath, InjectionOptions options)
+	{
+		if (options.ErasePeHeaders)
+		{
+			try
+			{
+				using (Class94 moduleEditor = new Class94(mainForm.selectedProcess))
+				{
+					moduleEditor.method_19(moduleBase);
+				}
+			}
+			catch (Exception exception)
+			{
+				ShowInjectionError(mainForm, "An error occurred while erasing the PE for \"" + Path.GetFileName(sourceModulePath) + "\"", exception);
+			}
+		}
+
+		if (options.HideModule)
+		{
+			try
+			{
+				smethod_327(new Class129(mainForm.selectedProcess), moduleBase);
+			}
+			catch (Exception exception)
+			{
+				ShowInjectionError(mainForm, "An error occurred while hiding the module (" + Path.GetFileName(sourceModulePath) + ").", exception);
+			}
+		}
+	}
+
+	// Raw control-flow-flattened body retained as recovery evidence.
+#if false
+	internal static bool InjectModuleObfuscated(ref IntPtr intptr_0, MainForm mainForm, [Out] ScramblePreset enum3_0, string string_0)
 	{
 		string modulePath = string_0;
 		intptr_0 = IntPtr.Zero;
@@ -15726,7 +15903,7 @@ public sealed class Class171
 					}
 					else
 					{
-						Class85 class4 = (Class85)Activator.CreateInstance(MainForm.dictionary_0[enum4_], mainForm.selectedProcess);
+						Class85 class4 = (Class85)Activator.CreateInstance(MainForm.InjectorBackendTypes[enum4_], mainForm.selectedProcess);
 						class4.method_18(class14_.Advanced.HideFromDebugger);
 						while (true)
 						{
@@ -15883,6 +16060,7 @@ public sealed class Class171
 		IL_072f:
 		return result;
 	}
+#endif
 
 	internal static void smethod_217(Class5 class5_0, int int_0)
 	{
@@ -23098,130 +23276,36 @@ public sealed class Class171
 		goto IL_0050;
 	}
 
-	internal static void smethod_325(MainForm mainForm, string string_0, string string_1)
+	internal static void ScrambleModule(string sourcePath, string destinationPath)
 	{
-		InjectorScrambleOptions injectorScrambleOptions_ = ApplicationSettings.Current.Options.Scramble;
-		Class131 @class = new Class131();
-		@class.method_21(injectorScrambleOptions_.CreateNewEntryPoint);
-		@class.method_3(injectorScrambleOptions_.InsertExtraSections);
-		@class.method_11(injectorScrambleOptions_.ModifyAssemblyCode);
-		@class.method_1(injectorScrambleOptions_.ScrambleHeaderFields);
-		@class.method_19(injectorScrambleOptions_.ModifyImportTable);
-		@class.method_17(injectorScrambleOptions_.RenameSections);
-		@class.method_15(injectorScrambleOptions_.MoveRelocationTable);
-		@class.method_5(injectorScrambleOptions_.RemoveDebugData);
-		@class.method_9(injectorScrambleOptions_.ShiftSectionData);
-		@class.method_13(injectorScrambleOptions_.RemoveUselessData);
-		@class.method_7(injectorScrambleOptions_.CreateFakeDebugDirectory);
-		@class.method_24(injectorScrambleOptions_.ShiftSectionMemory);
-		@class.method_26(injectorScrambleOptions_.StripSectionCharacteristics);
-		Class131 class131_ = @class;
+		InjectorScrambleOptions options = ApplicationSettings.Current.Options.Scramble;
+		Class131 transformOptions = new Class131();
+		transformOptions.method_21(options.CreateNewEntryPoint);
+		transformOptions.method_3(options.InsertExtraSections);
+		transformOptions.method_11(options.ModifyAssemblyCode);
+		transformOptions.method_1(options.ScrambleHeaderFields);
+		transformOptions.method_19(options.ModifyImportTable);
+		transformOptions.method_17(options.RenameSections);
+		transformOptions.method_15(options.MoveRelocationTable);
+		transformOptions.method_5(options.RemoveDebugData);
+		transformOptions.method_9(options.ShiftSectionData);
+		transformOptions.method_13(options.RemoveUselessData);
+		transformOptions.method_7(options.CreateFakeDebugDirectory);
+		transformOptions.method_24(options.ShiftSectionMemory);
+		transformOptions.method_26(options.StripSectionCharacteristics);
+
 		try
 		{
-			Class154 class2 = smethod_81(Enum39.const_0, string_0);
-			try
+			using (Class154 module = smethod_81(Enum39.const_0, sourcePath))
+			using (GClass4 scrambler = new GClass4(module, transformOptions))
 			{
-				GClass4 gClass = new GClass4(class2, class131_);
-				try
-				{
-					smethod_95(gClass);
-					smethod_367(string_1, gClass);
-				}
-				finally
-				{
-					if (gClass != null)
-					{
-						while (true)
-						{
-							IL_0108:
-							int num = -1702995827;
-							while (true)
-							{
-								uint num2;
-								switch ((num2 = (uint)(num ^ -661244873)) % 3)
-								{
-								case 1u:
-									goto IL_00d6;
-								default:
-									goto end_IL_00ea;
-								case 2u:
-									break;
-								case 0u:
-									goto end_IL_00ea;
-								}
-								goto IL_0108;
-								IL_00d6:
-								((IDisposable)gClass).Dispose();
-								num = (int)((num2 * 1123292838) ^ 0xAC1692F);
-								continue;
-								end_IL_00ea:
-								break;
-							}
-							break;
-						}
-					}
-				}
-			}
-			finally
-			{
-				if (class2 != null)
-				{
-					while (true)
-					{
-						IL_0149:
-						int num3 = -1031046145;
-						while (true)
-						{
-							uint num2;
-							switch ((num2 = (uint)(num3 ^ -661244873)) % 3)
-							{
-							case 1u:
-								goto IL_0117;
-							default:
-								goto end_IL_012b;
-							case 2u:
-								break;
-							case 0u:
-								goto end_IL_012b;
-							}
-							goto IL_0149;
-							IL_0117:
-							((IDisposable)class2).Dispose();
-							num3 = (int)((num2 * 1680942954) ^ 0x33F36594);
-							continue;
-							end_IL_012b:
-							break;
-						}
-						break;
-					}
-				}
+				smethod_95(scrambler);
+				smethod_367(destinationPath, scrambler);
 			}
 		}
-		catch (Exception)
+		catch
 		{
-			while (true)
-			{
-				int num4 = -608229753;
-				while (true)
-				{
-					uint num2;
-					switch ((num2 = (uint)(num4 ^ -661244873)) % 3)
-					{
-					case 1u:
-						goto IL_0156;
-					default:
-						return;
-					case 0u:
-						break;
-					case 2u:
-						return;
-					}
-					break;
-					IL_0156:
-					File.Copy(string_0, string_1, overwrite: true);
-					num4 = (int)((num2 * 583417003) ^ 0x74F9F439);
-				}
-			}
+			File.Copy(sourcePath, destinationPath, overwrite: true);
 		}
 	}
 

@@ -591,7 +591,7 @@ public sealed class SettingsForm : Form
 							continue;
 						case 8u:
 							Class171.smethod_185(encoding_, gClass, string_2);
-							text = Class171.smethod_147(".exe");
+							text = Class171.CreateUniqueTemporaryPath(".exe");
 							num = (int)(num2 * 1739945033) ^ -1426810306;
 							continue;
 						case 7u:

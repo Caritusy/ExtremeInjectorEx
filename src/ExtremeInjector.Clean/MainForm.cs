@@ -25,7 +25,7 @@ public sealed class MainForm : Form
 	internal GClass2 selectedProcess;
 	private int? lastAutoInjectedProcessId;
 
-	internal static readonly Dictionary<InjectionMethod, Type> dictionary_0 = new Dictionary<InjectionMethod, Type>
+	internal static readonly Dictionary<InjectionMethod, Type> InjectorBackendTypes = new Dictionary<InjectionMethod, Type>
 	{
 		{ InjectionMethod.StandardInjection, typeof(Class87) },
 		{ InjectionMethod.LdrpLoadDll, typeof(Class88) },

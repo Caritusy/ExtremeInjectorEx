@@ -52,7 +52,7 @@ The metadata normalizer removes fake obfuscator attributes and invalid `MethodIm
 
 Several pointer-heavy methods were decompiled into illegal C# because control-flow jumps crossed pinned regions. Their raw ILSpy bodies remain in the source under `#if false`, while equivalent readable implementations are active for byte-pattern search, masked-pattern search, array marshalling, and process-memory stream reads/writes. This keeps the recovery evidence without preventing compilation.
 
-The clean project also restores the settings contract, scramble presets, form names, main-form controls and events, process-selection state, and the top-level injection workflow. The workflow now explicitly performs per-module file checks, configured delays, architecture validation and injection, optional export invocation, and UI completion. Automatic injection is tracked by process ID so the timer injects once per process instance.
+The clean project also restores the settings contract, scramble presets, form names, main-form controls and events, process-selection state, and the top-level injection workflow. The workflow now explicitly performs per-module file checks, configured delays, architecture validation, working-copy preparation, backend selection, post-injection options, optional export invocation, and UI completion. Automatic injection is tracked by process ID so the timer injects once per process instance. The former flattened single-module wrapper is retained under `#if false` as recovery evidence while the active implementation is sequential.
 
 ## Recovery limits
 
