@@ -1,66 +1,81 @@
-# Extreme Injector Ex 3.7.4
+# Extreme Injector Ex
 
-This repository contains Extreme Injector Ex, a maintained continuation of the recovered Extreme Injector 3.7.3 source. The original recovery was performed by static analysis only; the supplied executable was not launched.
+Extreme Injector Ex 是一个面向 Windows 的 DLL 注入器，基于 Extreme Injector 3.7.3 的可用源码恢复版本继续维护。当前项目重点是保持既有功能兼容，同时逐步改善源码结构、PE 解析、设置存储和高 DPI 下的 WinForms 界面。
 
-## Current status
+> 仅可对你拥有或已获得明确授权的软件进行测试。向第三方进程注入代码可能违反软件许可、安全策略或当地法律。
 
-- Target: .NET Framework 4.8 Windows Forms application
-- Recovered source: 217 C# files and 8 WinForms `.resx` files
-- Recovered resources: application icon, manifest, managed resources, and embedded binary resources
-- Clean development project: `src\ExtremeInjector.Clean\ExtremeInjector.Clean.csproj`
-- Per-monitor V2 UI with content-measured WinForms layouts and a redesigned main/About experience
-- Unified settings: `%AppData%\ExtremeInjectorEx\settings.xml`, with automatic migration from legacy folder-local settings
-- UI/settings smoke checks: `tests\ExtremeInjector.UiSmoke\ExtremeInjector.UiSmoke.csproj`
-- Build status: full solution succeeds with 0 errors
-- Detected protector: Goliath .NET Obfuscator 2.2.0
-- Babel, Dotfuscator, and Xenocode strings in the assembly are decoy markers, not the active protector
+## 功能
 
-Open `ExtremeInjector.Recovered.sln` in Visual Studio 2022, or build from a Developer PowerShell:
+- 支持 Standard / `LoadLibrary`、`LdrLoadDll`、`LdrLoadDll Stub`、线程劫持和 Manual Map 注入方式。
+- 检查目标进程与 DLL 的 x86/x64 架构是否匹配。
+- 解析 PE32 与 PE32+ 映像，包括导入、导出、重定位、TLS、资源和 CLR 目录。
+- 支持自动注入、模块间延迟、PE 头擦除、模块隐藏和注入前加扰选项。
+- 支持配置导出函数、调用约定和参数。
+- 设置保存在 `%AppData%\ExtremeInjectorEx\settings.xml`，并兼容迁移旧版程序目录中的设置文件。
+- NuGet 运行时依赖内嵌在主程序中，复制 `Extreme Injector.exe` 即可独立运行。
+- 主窗口及设置、模块选项等窗口采用统一界面风格，并固定为不可调整大小的工具窗口布局。
+
+## 环境要求
+
+- Windows 10/11 x64
+- Visual Studio 2022 或 Build Tools 2022
+- .NET Framework 4.8 Developer Pack
+- 可构建 SDK 风格 `net48` 项目的 .NET SDK
+
+注入器与目标模块的位数必须匹配；某些目标进程还需要以管理员身份运行注入器。
+
+## 构建
+
+在仓库根目录执行：
 
 ```powershell
-dotnet restore .\ExtremeInjector.Recovered.sln
-dotnet build .\ExtremeInjector.Recovered.sln -c Release
+dotnet restore .\ExtremeInjectorEx.sln
+dotnet build .\ExtremeInjectorEx.sln -c Release
 ```
 
-The application project intended for continued cleanup is:
+Release 输出位于：
 
 ```text
-src\ExtremeInjector.Clean\ExtremeInjector.Clean.csproj
+out/bin/ExtremeInjector/Release/net48/
 ```
 
-## Recovery layout
+所有中间文件位于 `out/obj/`。`out/` 已被 Git 忽略，不会再把 `bin`、`obj` 或本地运行产物混入源码目录。
 
-- `src\ExtremeInjector.Clean`: active, buildable source tree with recovered domain and workflow names
-- `src\ExtremeInjector.KeepInlined`: preserved buildable recovery baseline
-- `artifacts\original`: byte-for-byte preserved input and extracted embedded assemblies
-- `artifacts\deobfuscated`: de4dot variants and normalized managed assemblies
-- `tools\MetadataNormalizer`: reproducible dnlib metadata repair tool
-- `analysis`: compiler logs retained during recovery
+发布或随身携带时只需要 `Extreme Injector.exe`；`.config` 和 `.pdb` 是构建辅助文件，不是运行依赖。
 
-The preserved original has this SHA-256 hash:
+## 项目结构
 
 ```text
-B65F40618F584303CA0BCF9B5F88C233CC4237699C0C4BF40BA8FACBE8195A46
+ExtremeInjector/
+├─ src/ExtremeInjector/
+│  ├─ Application/          程序入口、设置和应用模型
+│  ├─ UI/                   WinForms 窗口与控件
+│  ├─ Injection/            注入策略、远程进程和 Manual Map
+│  ├─ PortableExecutable/   PE32/PE32+ 数据结构与解析
+│  ├─ Assembly/             AsmJit 与 BeaEngine 互操作层
+│  ├─ Compression/          内嵌资源解压支持
+│  ├─ Runtime/              启动、资源加载和恢复运行时
+│  ├─ Interop/              Win32 互操作声明
+│  ├─ Collections/          内部集合实现
+│  ├─ Utilities/            通用辅助代码
+│  └─ Properties/           程序集元数据
+├─ res/
+│  ├─ Forms/                WinForms 资源
+│  └─ Embedded/             运行时内嵌二进制资源
+└─ out/                     本地构建输出（不提交）
 ```
 
-The selected normalized assembly is:
+`res/Embedded` 中的受保护资源使用可识别的物理文件名，但项目文件保留了旧版运行时依赖的逻辑资源名。修改这些逻辑名称前必须同步检查资源解析代码。
 
-```text
-artifacts\deobfuscated\ExtremeInjector-3.7.3.keep-inlined.normalized.dll
-```
+## 开发说明
 
-## What was repaired
+- 项目当前目标框架是 .NET Framework 4.8，而不是 NativeAOT。
+- 普通应用路径已避免使用 `Activator.CreateInstance` 和字段反射进行注入器、PE 读取器及设置绑定；`Runtime` 中仍保留旧版启动保护所需的动态 IL、动态程序集加载和元数据令牌解析。
+- 因此当前不能直接接入 WinFormsComInterop，也不能仅通过开启 trimming 或 NativeAOT 完成迁移。若迁移到现代 .NET，需要先替换 `DynamicMethod` / `Reflection.Emit`、`Assembly.Load*` 和动态方法解析链，再单独验证 COM 与 WinForms 行为。
+- `Runtime/Recovered` 是仍待逐步语义化的兼容层。修改低级 PE、进程或汇编代码后，应至少完成一次 Release 构建，并使用真实的 x86/x64 DLL 做解析和注入前检查。
 
-The metadata normalizer removes fake obfuscator attributes and invalid `MethodImpl` mappings, restores usable member visibility, and assigns stable names to invalid virtual methods and their overrides. The keep-inlined de4dot variant was selected because it preserved required definitions while producing fewer invalid decompiler constructs than the other variants.
+## 来源与版本
 
-Several pointer-heavy methods were decompiled into illegal C# because control-flow jumps crossed pinned regions. Their raw ILSpy bodies remain in the source under `#if false`, while equivalent readable implementations are active for byte-pattern search, masked-pattern search, array marshalling, and process-memory stream reads/writes. This keeps the recovery evidence without preventing compilation.
+当前程序集版本为 3.7.4。原始 Extreme Injector 由 master131 开发；本仓库是其 3.7.3 程序的社区维护源码恢复版本，并不声称能够还原已丢失的原始私有命名、注释或工程布局。
 
-The clean project also restores the settings contract, scramble presets, form names, main-form controls and events, process-selection state, and the top-level injection workflow. The workflow now explicitly performs per-module file checks, configured delays, architecture validation, working-copy preparation, backend selection, post-injection options, optional export invocation, and UI completion. Automatic injection is tracked by process ID so the timer injects once per process instance. The former flattened single-module wrapper is retained under `#if false` as recovery evidence while the active implementation is sequential.
-
-The Ex interface uses DPI-aware layout containers instead of the recovered absolute-position designers. DLL headers and rows are measured from their fonts and padding at the current monitor DPI. The smoke project exercises configuration migration, round-trip persistence, the main form, and the About form without entering the injector runtime.
-
-## Recovery limits
-
-This is not the exact original project. Obfuscation permanently removed original private type/member names, comments, local names, formatting, and the original solution layout. Names such as `Class171` are stable recovered names, not the authors' original identifiers. Lower-level injection, PE parsing, and native interop code still contains recovered `ClassN` and `smethod_N` names and control-flow state machines; those areas must be cleaned incrementally against the preserved baseline.
-
-The rebuilt executable is a recovered development artifact, not a byte-identical reproduction of the supplied executable. Runtime behavior has not been exercised as part of this static recovery.
+仓库当前未附带独立许可证文件。分发或再利用前，请同时确认原始项目与本仓库贡献内容的授权条件。

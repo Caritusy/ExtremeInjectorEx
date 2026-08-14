@@ -1,3 +1,0 @@
-internal struct Struct21
-{
-}
