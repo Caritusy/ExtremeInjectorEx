@@ -5444,7 +5444,7 @@ public sealed class Class171
 					num = ((int)num2 * -287199415) ^ -562303043;
 					continue;
 				case 29u:
-					form0_0.AutoScaleMode = AutoScaleMode.Font;
+					form0_0.AutoScaleMode = AutoScaleMode.Dpi;
 					num = (int)(num2 * 789205610) ^ -1249280313;
 					continue;
 				case 28u:
@@ -5551,7 +5551,7 @@ public sealed class Class171
 					num = (int)(num2 * 10036335) ^ -1293850617;
 					continue;
 				case 5u:
-					form0_0.AutoScaleDimensions = new SizeF(6f, 13f);
+					form0_0.AutoScaleDimensions = new SizeF(96f, 96f);
 					num = (int)(num2 * 1351954849) ^ -405506269;
 					continue;
 				case 4u:
