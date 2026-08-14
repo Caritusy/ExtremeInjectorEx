@@ -6,7 +6,7 @@ using ExtremeInjector;
 
 public sealed class AdvancedScrambleSettingsForm : Form
 {
-	internal IContainer container;
+	internal IContainer container = null;
 
 	internal GroupBox groupBox;
 

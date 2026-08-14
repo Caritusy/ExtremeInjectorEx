@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>ExtremeInjector.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.3.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.3.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.IO.Compression" />
+    <ProjectReference Include="..\..\src\ExtremeInjector\ExtremeInjector.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\res\Localization\Strings.en.resx"
+          Link="Localization\Strings.en.resx"
+          CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\res\Localization\Strings.zh-CN.resx"
+          Link="Localization\Strings.zh-CN.resx"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

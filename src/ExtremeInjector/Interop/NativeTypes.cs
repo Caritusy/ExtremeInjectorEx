@@ -108,8 +108,11 @@ public static class NativeTypes
 
 		public uint uintValue2;
 
+		// Filled by native process-information marshaling.
+#pragma warning disable CS0649
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
 		internal long[] longValueArray;
+#pragma warning restore CS0649
 
 		public long longValue;
 
@@ -582,8 +585,11 @@ public static class NativeTypes
 
 		public M128A m128A16;
 
+		// Filled by native CONTEXT structure marshaling.
+#pragma warning disable CS0649
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 96)]
 		internal byte[] bytes;
+#pragma warning restore CS0649
 	}
 
 	[StructLayout(LayoutKind.Explicit)]

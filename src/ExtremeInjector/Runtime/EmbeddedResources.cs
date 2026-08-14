@@ -9,7 +9,7 @@ public sealed class EmbeddedResources
 {
 	internal static ResourceManager resourceManager;
 
-	internal static CultureInfo cultureInfo;
+	internal static CultureInfo cultureInfo = null;
 
 	internal EmbeddedResources()
 	{

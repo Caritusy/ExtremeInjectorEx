@@ -2,7 +2,7 @@ using System;
 
 public sealed class InvertedFunctionTable32 : RemotePlatformStructure
 {
-	internal static int intValue;
+	internal static int intValue = 0;
 
 	static InvertedFunctionTable32()
 	{

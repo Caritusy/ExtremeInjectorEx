@@ -2,7 +2,10 @@ using System;
 
 public struct AsmJitAssemblerState
 {
+	// Populated by the native AsmJit API through the structure reference.
+#pragma warning disable CS0649
 	internal IntPtr address;
+#pragma warning restore CS0649
 
 	public AsmJitZone zone;
 

@@ -25,7 +25,7 @@ public sealed class RemoteProcess
 
 	public IntPtr Handle { get; internal set; }
 
-	internal bool flag;
+	internal bool flag = false;
 
 	internal bool flag2 = true;
 

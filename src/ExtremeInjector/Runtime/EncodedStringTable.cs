@@ -7,15 +7,15 @@ using System.Threading;
 
 public sealed class EncodedStringTable
 {
-	internal static readonly string text;
+	internal static readonly string text = null;
 
-	internal static readonly string text2;
+	internal static readonly string text2 = null;
 
 	internal static readonly byte[] bytes;
 
 	internal static readonly Dictionary<int, string> dictionary;
 
-	internal static readonly object instance;
+	internal static readonly object instance = null;
 
 	internal static readonly bool flag;
 

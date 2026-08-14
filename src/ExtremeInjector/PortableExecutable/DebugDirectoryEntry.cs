@@ -104,7 +104,7 @@ public sealed class DebugDirectoryEntry
 		pointerToRawData = uintValue;
 	}
 
-	protected DebugDirectoryEntry()
+	private DebugDirectoryEntry()
 	{
 	}
 

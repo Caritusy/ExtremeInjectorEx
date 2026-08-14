@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 public sealed class WorkingSetTrimmer
 {
-	internal static WorkingSetTrimmer workingSetTrimmer;
+	internal static WorkingSetTrimmer workingSetTrimmer = null;
 
 	internal long longValue = DateTime.Now.Ticks;
 

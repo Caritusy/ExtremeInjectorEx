@@ -8,17 +8,17 @@ public interface IOrderedDictionaryEx<T, U> : IDictionary<T, U>, ICollection<Key
 
 	new U this[T key] { get; set; }
 
-	int Count { get; }
+	new int Count { get; }
 
-	ICollection<T> Keys { get; }
+	new ICollection<T> Keys { get; }
 
-	ICollection<U> Values { get; }
+	new ICollection<U> Values { get; }
 
-	bool IsReadOnly { get; }
+	new bool IsReadOnly { get; }
 
-	void Add(T key, U value);
+	new void Add(T key, U value);
 
-	void Clear();
+	new void Clear();
 
 	void Insert(int intValue, T value, U value2);
 
@@ -28,15 +28,15 @@ public interface IOrderedDictionaryEx<T, U> : IDictionary<T, U>, ICollection<Key
 
 	bool ContainsValue(U value, IEqualityComparer<U> equalityComparer);
 
-	bool ContainsKey(T key);
+	new bool ContainsKey(T key);
 
 	KeyValuePair<T, U> GetItemAt(int intValue);
 
-	IEnumerator<KeyValuePair<T, U>> GetEnumerator();
+	new IEnumerator<KeyValuePair<T, U>> GetEnumerator();
 
-	bool Remove(T key);
+	new bool Remove(T key);
 
-	void RemoveAt(int index);
+	new void RemoveAt(int index);
 
-	bool TryGetValue(T key, out U value);
+	new bool TryGetValue(T key, out U value);
 }

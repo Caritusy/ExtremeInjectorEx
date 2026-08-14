@@ -16,7 +16,7 @@ public abstract class RemotePlatformStructure : RemoteStructure
 
 	internal static Dictionary<Type, int[]> dictionary = new Dictionary<Type, int[]>();
 
-	internal static Dictionary<Type, int[]> dictionary2;
+	internal static Dictionary<Type, int[]> dictionary2 = new Dictionary<Type, int[]>();
 
 	internal int[] intValueArray;
 

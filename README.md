@@ -1,6 +1,8 @@
 # Extreme Injector Ex
 
 [![Version](https://img.shields.io/badge/version-3.7.4-1677c8)](./version)
+[![CI](https://github.com/Caritusy/ExtremeInjectorEx/actions/workflows/ci.yml/badge.svg)](https://github.com/Caritusy/ExtremeInjectorEx/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Caritusy/ExtremeInjectorEx)](https://github.com/Caritusy/ExtremeInjectorEx/releases/latest)
 ![Platform](https://img.shields.io/badge/platform-Windows-0078d4)
 ![Framework](https://img.shields.io/badge/.NET_Framework-4.8-512bd4)
 
@@ -40,16 +42,17 @@ This repository preserves compatibility where the recovered runtime still matter
 
 - Visual Studio 2022 or Build Tools 2022.
 - .NET Framework 4.8 Developer Pack.
-- A .NET SDK that can build SDK-style `net48` projects.
+- .NET 10 SDK (the pinned build toolchain; the application still targets .NET Framework 4.8).
 
 ## Build
 
 ```powershell
 git clone https://github.com/Caritusy/ExtremeInjectorEx.git
 Set-Location .\ExtremeInjectorEx
-dotnet restore .\ExtremeInjectorEx.sln
-dotnet build .\ExtremeInjectorEx.sln -c Release
+.\build.ps1 -Platform AnyCPU -Configuration Release
 ```
+
+The build entry point restores dependencies, builds the application, runs automated tests, checks English and Simplified Chinese CLI startup, and prints the executable SHA-256. Architecture-only validation is available with `-Platform x86` and `-Platform x64`; see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 Release artifacts are written outside the source tree:
 
@@ -58,6 +61,14 @@ out/bin/ExtremeInjector/Release/net48/
 ```
 
 Intermediate files are written to `out/obj/`. The runtime-distributable artifact is `Extreme Injector.exe`; package dependencies and localization resources are embedded. The generated `.pdb` and `.config` files are not required for ordinary execution.
+
+## Quality and releases
+
+- Pull requests and `main` are validated on Windows through GitHub Actions.
+- CI builds AnyCPU, x86, and x64 configurations and runs deterministic tests plus bilingual CLI smoke checks.
+- Future `v*` tags must match the repository version, pass all gates, and produce a versioned executable, SHA-256 file, and build-provenance attestation.
+- Compatibility claims use the evidence levels in [docs/COMPATIBILITY.md](./docs/COMPATIBILITY.md); a successful build is not presented as proof of every injection backend.
+- Security-sensitive reports follow [SECURITY.md](./SECURITY.md), while release maintainers follow [docs/RELEASING.md](./docs/RELEASING.md).
 
 ## GUI usage
 
@@ -201,6 +212,9 @@ src/ExtremeInjector/
   UI/                   WinForms views and reusable controls
   Utilities/            focused shared helpers
 res/                    application, form, embedded, and localization resources
+tests/                  deterministic unit and parser regression tests
+docs/                   compatibility and release-maintenance guides
+.github/                CI, dependency updates, and contribution templates
 out/                    local build output; never committed
 ```
 
@@ -212,7 +226,9 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) before changing startup, injection, Man
 - Numbered recovered types and ordinary members have been restored to semantic names. Binary-stub data and compatibility adapters remain specialized migration areas and should be changed only with a focused regression path.
 - Normal application paths use typed construction. The compatibility runtime still uses dynamic IL, assembly loading, and metadata-token resolution where the original behavior requires them.
 - Because of that runtime chain, trimming, NativeAOT, and WinFormsComInterop are not drop-in migrations. They require replacement of the dynamic compatibility layer and separate interop validation first.
-- Changes to injection, PE parsing, embedded dependencies, settings, or localization should be followed by a Release build and a CLI smoke test.
+- Settings, localization resources, scrambling presets, and PE parsing now have an initial automated regression suite; controlled injection fixtures remain the next validation milestone.
+- `build.ps1` is shared by local development and CI. Changes to injection, PE parsing, embedded dependencies, settings, or localization must pass that gate.
+- Project changes are recorded in [CHANGELOG.md](./CHANGELOG.md); contribution rules are in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Project history
 

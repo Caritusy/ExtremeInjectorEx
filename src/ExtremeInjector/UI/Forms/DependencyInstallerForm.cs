@@ -11,7 +11,6 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using Ionic.Zip;
 
 public sealed class DependencyInstallerForm : Form
 {
@@ -25,7 +24,7 @@ public sealed class DependencyInstallerForm : Form
 
 	internal CookieAwareWebClient cookieAwareWebClient = new CookieAwareWebClient();
 
-	internal IContainer container;
+	internal IContainer container = null;
 
 	internal Label label;
 
@@ -40,11 +39,11 @@ public sealed class DependencyInstallerForm : Form
 		MinimizeBox = false;
 		ShowInTaskbar = false;
 		SizeGripStyle = SizeGripStyle.Hide;
-		cookieAwareWebClient.DownloadDataCompleted += class20_0_DownloadDataCompleted;
-		cookieAwareWebClient.DownloadProgressChanged += class20_0_DownloadProgressChanged;
+		cookieAwareWebClient.DownloadDataCompleted += OnDownloadCompleted;
+		cookieAwareWebClient.DownloadProgressChanged += OnDownloadProgressChanged;
 	}
 
-	internal void class20_0_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+	internal void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
 	{
 		base.Invoke(new MethodInvoker(delegate
 		{
@@ -75,7 +74,7 @@ public sealed class DependencyInstallerForm : Form
 		}));
 	}
 
-	internal void class20_0_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
+	internal void OnDownloadCompleted(object sender, DownloadDataCompletedEventArgs e)
 	{
 		base.Invoke(new MethodInvoker(delegate
 		{
@@ -103,19 +102,14 @@ public sealed class DependencyInstallerForm : Form
 			{
 				this.label.Text = EncodedStringTable.DecodeString(1869);
 			}));
-			using (MemoryStream memoryStream = new MemoryStream(downloadedData))
-			using (ZipFile zipFile = ZipFile.Read(memoryStream))
+			try
 			{
-				foreach (ZipEntry zipEntry in zipFile)
-				{
-					try
-					{
-						zipEntry.Extract(this.text2, (ExtractExistingFileAction)1);
-					}
-					catch
-					{
-					}
-				}
+				SafeZipExtractor.Extract(downloadedData, this.text2);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(EncodedStringTable.DecodeString(4029) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				succeeded = false;
 			}
 		}
 		else

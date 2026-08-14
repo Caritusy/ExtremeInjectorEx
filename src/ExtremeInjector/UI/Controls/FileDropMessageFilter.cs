@@ -60,7 +60,7 @@ public sealed class FileDropMessageFilter : IMessageFilter
 		while (eventHandler != eventHandler2);
 	}
 
-	protected FileDropMessageFilter()
+	private FileDropMessageFilter()
 	{
 		Application.AddMessageFilter(this);
 	}

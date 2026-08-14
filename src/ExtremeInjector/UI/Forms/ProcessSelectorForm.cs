@@ -6,7 +6,7 @@ public sealed class ProcessSelectorForm : Form
 {
 	internal RemoteProcess SelectedProcess { get; private set; }
 
-	internal IContainer container;
+	internal IContainer container = null;
 
 	internal DataGridView dataGridView;
 

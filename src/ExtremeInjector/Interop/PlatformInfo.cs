@@ -15,7 +15,7 @@ public static class PlatformInfo
 
 	public static readonly bool flag;
 
-	internal static Dictionary<Type, int> dictionary;
+	internal static Dictionary<Type, int> dictionary = new Dictionary<Type, int>();
 
 	public static readonly Random randomElement;
 
@@ -51,13 +51,13 @@ public static class PlatformInfo
 
 	public static readonly string text4;
 
-	internal static MemoryCopyRoutine memoryCopyRoutine;
+	internal static MemoryCopyRoutine memoryCopyRoutine = null;
 
-	internal static MemoryCopyRoutine memoryCopyRoutine2;
+	internal static MemoryCopyRoutine memoryCopyRoutine2 = null;
 
-	internal static MemoryCopyRoutine memoryCopyRoutine3;
+	internal static MemoryCopyRoutine memoryCopyRoutine3 = null;
 
-	internal static MemoryCopyRoutine memoryCopyRoutine4;
+	internal static MemoryCopyRoutine memoryCopyRoutine4 = null;
 
 	static PlatformInfo()
 	{

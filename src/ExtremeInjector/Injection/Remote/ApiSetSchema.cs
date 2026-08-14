@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 
 public static class ApiSetSchema
 {
+	// These fields are filled by native structure marshaling.
+#pragma warning disable CS0649
 	public struct ApiSetNamespaceEntryV2
 	{
 		public uint uintValue;
@@ -45,6 +47,7 @@ public static class ApiSetSchema
 
 		internal uint uintValue8;
 	}
+#pragma warning restore CS0649
 
 	public struct ApiSetValueEntryV2
 	{
@@ -135,7 +138,7 @@ public static class ApiSetSchema
 		}
 	}
 
-	internal static Dictionary<string, List<string>> dictionary;
+	internal static Dictionary<string, List<string>> dictionary = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
 	static ApiSetSchema()
 	{

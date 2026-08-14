@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 [CompilerGenerated]
 public sealed class NativeStubData
 {
+	// These recovered fields represent field-RVA data in the original binary. The
+	// C# compiler cannot observe that metadata-backed initialization.
+#pragma warning disable CS0649
 	[StructLayout(LayoutKind.Explicit, Pack = 1, Size = 3)]
 	public struct FixedStubData3
 	{
@@ -96,4 +99,5 @@ public sealed class NativeStubData
 	internal static readonly FixedStubData3 fixedStubData323/* Not supported: data(C6 03 60) */;
 
 	internal static readonly FixedStubData3 fixedStubData324/* Not supported: data(83 C1 07) */;
+#pragma warning restore CS0649
 }

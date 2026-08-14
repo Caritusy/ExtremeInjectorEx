@@ -1,6 +1,8 @@
 # Extreme Injector Ex
 
 [![版本](https://img.shields.io/badge/version-3.7.4-1677c8)](./version)
+[![CI](https://github.com/Caritusy/ExtremeInjectorEx/actions/workflows/ci.yml/badge.svg)](https://github.com/Caritusy/ExtremeInjectorEx/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Caritusy/ExtremeInjectorEx)](https://github.com/Caritusy/ExtremeInjectorEx/releases/latest)
 ![平台](https://img.shields.io/badge/platform-Windows-0078d4)
 ![框架](https://img.shields.io/badge/.NET_Framework-4.8-512bd4)
 
@@ -40,16 +42,17 @@ Extreme Injector Ex 是 Extreme Injector 3.7.3 的持续维护与演进版本，
 
 - Visual Studio 2022 或 Build Tools 2022。
 - .NET Framework 4.8 Developer Pack。
-- 能够构建 SDK 风格 `net48` 项目的 .NET SDK。
+- .NET 10 SDK（固定的构建工具链；应用运行时仍以 .NET Framework 4.8 为目标）。
 
 ## 构建项目
 
 ```powershell
 git clone https://github.com/Caritusy/ExtremeInjectorEx.git
 Set-Location .\ExtremeInjectorEx
-dotnet restore .\ExtremeInjectorEx.sln
-dotnet build .\ExtremeInjectorEx.sln -c Release
+.\build.ps1 -Platform AnyCPU -Configuration Release
 ```
+
+统一构建入口会恢复依赖、构建应用、运行自动化测试、检查英文与简体中文 CLI 启动，并输出 EXE 的 SHA-256。使用 `-Platform x86` 或 `-Platform x64` 可以进行体系结构构建检查，详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 Release 产物会写入源码树之外的目录：
 
@@ -58,6 +61,14 @@ out/bin/ExtremeInjector/Release/net48/
 ```
 
 中间文件位于 `out/obj/`。实际运行时只需要分发 `Extreme Injector.exe`；包依赖和本地化资源均已嵌入。生成的 `.pdb` 与 `.config` 文件不是正常运行所必需的依赖。
+
+## 质量与发布
+
+- Pull Request 和 `main` 会通过 GitHub Actions 在 Windows 上验证。
+- CI 构建 AnyCPU、x86 与 x64 配置，并运行确定性测试和双语 CLI 冒烟检查。
+- 后续 `v*` 标签必须与仓库版本一致并通过全部门禁，随后生成带版本号的 EXE、SHA-256 文件和构建来源证明。
+- 兼容性结论遵循 [docs/COMPATIBILITY.md](./docs/COMPATIBILITY.md) 中的证据等级；构建成功不等于所有注入后端均已获得验证。
+- 安全问题按照 [SECURITY.md](./SECURITY.md) 私下报告，发布维护者遵循 [docs/RELEASING.md](./docs/RELEASING.md)。
 
 ## GUI 使用方式
 
@@ -201,6 +212,9 @@ src/ExtremeInjector/
   UI/                   WinForms 视图与通用控件
   Utilities/            小型通用辅助功能
 res/                    应用、窗体、嵌入数据和本地化资源
+tests/                  确定性单元测试与解析器回归测试
+docs/                   兼容性与发布维护指南
+.github/                CI、依赖更新与贡献模板
 out/                    本地构建产物，不提交到仓库
 ```
 
@@ -212,7 +226,9 @@ out/                    本地构建产物，不提交到仓库
 - 普通的数字类型名和成员名已经恢复为语义名称。二进制桩数据与兼容适配器仍属于特殊迁移区域，只应在具备针对性回归方案时修改。
 - 常规应用路径使用强类型构造；为保持原有行为，兼容运行时仍在部分位置使用动态 IL、程序集加载和元数据令牌解析。
 - 因此，trimming、NativeAOT 和 WinFormsComInterop 目前都不是可直接接入的替换方案。必须先替换动态兼容链，再单独验证互操作行为。
-- 修改注入、PE 解析、嵌入依赖、设置或本地化后，应至少完成一次 Release 构建和 CLI 冒烟测试。
+- 设置、本地化资源、混淆预设和 PE 解析现在具有初始自动化回归测试；受控注入夹具是下一项验证里程碑。
+- 本地开发与 CI 共用 `build.ps1`。修改注入、PE 解析、嵌入依赖、设置或本地化后必须通过这套门禁。
+- 项目变化记录在 [CHANGELOG.md](./CHANGELOG.md)，贡献规则位于 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 ## 项目历史
 

@@ -10,7 +10,7 @@ public static class AsmJitRuntime
 
 	public static readonly bool flag;
 
-	internal static readonly AsmJitUninitializedOperandTag uninitializedOperandTag;
+	internal static readonly AsmJitUninitializedOperandTag uninitializedOperandTag = default;
 
 	internal static ReleaseNativeLibrary releaseNativeLibrary;
 

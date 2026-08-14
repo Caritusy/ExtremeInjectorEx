@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test and smoke check
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build, test, and verify CLI
+        shell: pwsh
+        run: .\build.ps1 -Platform AnyCPU -Configuration Release
+
+      - name: Upload portable executable
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ExtremeInjector-anycpu
+          path: out/bin/ExtremeInjector/Release/net48/Extreme Injector.exe
+          if-no-files-found: error
+
+  architecture-builds:
+    name: Build ${{ matrix.platform }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - x86
+          - x64
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build and verify CLI
+        shell: pwsh
+        run: .\build.ps1 -Platform ${{ matrix.platform }} -Configuration Release -SkipTests
+
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+
+  release:
+    name: Publish release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - test
+      - architecture-builds
+    runs-on: windows-latest
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Verify tag matches project version
+        shell: pwsh
+        run: |
+          $expectedTag = 'v' + (Get-Content -LiteralPath version -Raw).Trim()
+          if ($env:GITHUB_REF_NAME -ne $expectedTag) {
+            throw "Tag '$env:GITHUB_REF_NAME' does not match version file '$expectedTag'."
+          }
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ExtremeInjector-anycpu
+          path: release
+
+      - name: Name release artifact and generate checksum
+        shell: pwsh
+        run: |
+          $source = 'release\Extreme Injector.exe'
+          $destination = "release\Extreme-Injector-Ex-$env:GITHUB_REF_NAME.exe"
+          Move-Item -LiteralPath $source -Destination $destination
+          $hash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $(Split-Path -Leaf $destination)" | Set-Content -LiteralPath "$destination.sha256" -Encoding ascii
+
+      - name: Attest executable provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: release/*.exe
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $assets = Get-ChildItem -LiteralPath release -File | ForEach-Object FullName
+          if (gh release view $env:GITHUB_REF_NAME --repo $env:GITHUB_REPOSITORY *> $null) {
+            gh release upload $env:GITHUB_REF_NAME $assets --repo $env:GITHUB_REPOSITORY --clobber
+          }
+          else {
+            gh release create $env:GITHUB_REF_NAME $assets --repo $env:GITHUB_REPOSITORY --verify-tag --generate-notes --latest
+          }

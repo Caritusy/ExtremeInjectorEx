@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
-    <PackageReference Include="DotNetZip.Reduced" Version="1.9.1.8" />
-    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+    <Reference Include="System.IO.Compression" />
+    <PackageReference Include="System.Resources.Extensions" Version="10.0.11" />
   </ItemGroup>
   <Target Name="EmbedPrivatePackageAssemblies"
           AfterTargets="ResolveReferences">
