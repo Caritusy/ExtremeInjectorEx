@@ -1,0 +1,3 @@
+public struct Struct20
+{
+}

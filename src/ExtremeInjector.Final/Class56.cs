@@ -1,0 +1,378 @@
+using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+[StructLayout(LayoutKind.Sequential)]
+public class Class56
+{
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct Struct7
+	{
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+		public uint[] uint_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		public IntPtr[] intptr_0;
+	}
+
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct Struct8
+	{
+		public Enum8 enum8_0;
+
+		public byte byte_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		public byte[] byte_1;
+
+		public uint uint_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		private uint[] uint_1;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		private IntPtr[] intptr_0;
+	}
+
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct Struct9
+	{
+		public Enum8 enum8_0;
+
+		public byte byte_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		public byte[] byte_1;
+
+		public uint uint_0;
+
+		public uint uint_1;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+		private uint[] uint_2;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		private IntPtr[] intptr_0;
+	}
+
+	public struct Struct10
+	{
+		private byte byte_0;
+
+		private static byte[] byte_1 = new byte[9] { 0, 1, 3, 7, 15, 31, 63, 127, 255 };
+
+		public void method_0(int int_0, int int_1, byte byte_2)
+		{
+			byte b = byte_1[int_1];
+			while (true)
+			{
+				int num = -1217736627;
+				while (true)
+				{
+					uint num2;
+					switch ((num2 = (uint)(num ^ -974201227)) % 6)
+					{
+					case 4u:
+					{
+						int num3;
+						int num4;
+						if (byte_2 <= b)
+						{
+							num3 = -1878150151;
+							num4 = -1878150151;
+						}
+						else
+						{
+							num3 = -1719776998;
+							num4 = -1719776998;
+						}
+						num = num3 ^ ((int)num2 * -198098087);
+						continue;
+					}
+					case 3u:
+						byte_0 = (byte)(byte_0 | (byte_2 << int_0));
+						num = (int)((num2 * 189092499) ^ 0x46D36231);
+						continue;
+					case 2u:
+						byte_0 = (byte)(byte_0 & ~(b << int_0));
+						num = -396937012;
+						continue;
+					default:
+						return;
+					case 0u:
+						break;
+					case 1u:
+						throw new ArgumentOutOfRangeException();
+					case 5u:
+						return;
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct Struct11
+	{
+		public Enum8 enum8_0;
+
+		public byte byte_0;
+
+		public Enum9 enum9_0;
+
+		private Struct10 struct10_0;
+
+		public uint uint_0;
+
+		public uint uint_1;
+
+		public uint uint_2;
+
+		public IntPtr intptr_0;
+
+		public IntPtr intptr_1;
+
+		[SpecialName]
+		public void method_0(bool bool_0)
+		{
+			struct10_0.method_0(4, 1, (byte)(bool_0 ? 1 : 0));
+		}
+
+		[SpecialName]
+		public void method_1(byte byte_1)
+		{
+			struct10_0.method_0(5, 3, byte_1);
+		}
+	}
+
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct Struct12
+	{
+		public Enum8 enum8_0;
+
+		public byte byte_0;
+
+		[MarshalAs(UnmanagedType.U1)]
+		public bool bool_0;
+
+		public byte byte_1;
+
+		public uint uint_0;
+
+		public IntPtr intptr_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		private uint[] uint_1;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+		private IntPtr[] intptr_1;
+	}
+
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct Struct13
+	{
+		public Enum8 enum8_0;
+
+		public byte byte_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		public byte[] byte_1;
+
+		public uint uint_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		private uint[] uint_1;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		private IntPtr[] intptr_0;
+	}
+
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public struct Struct14
+	{
+		public Enum8 enum8_0;
+
+		public byte byte_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		public byte[] byte_1;
+
+		public uint uint_0;
+
+		public uint uint_1;
+
+		public Enum11 enum11_0;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		private IntPtr[] intptr_0;
+	}
+
+	[CompilerGenerated]
+	private Struct7 struct7_0;
+
+	[SpecialName]
+	[CompilerGenerated]
+	internal Struct7 method_0()
+	{
+		return struct7_0;
+	}
+
+	[SpecialName]
+	[CompilerGenerated]
+	internal void method_1(Struct7 struct7_1)
+	{
+		struct7_0 = struct7_1;
+	}
+
+	internal static U smethod_0<T, U>(T gparam_0) where T : struct where U : struct
+	{
+		IntPtr intPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(T)));
+		while (true)
+		{
+			int num = -1801068041;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -2124770681)) % 3)
+				{
+				case 2u:
+					goto IL_0017;
+				case 0u:
+					break;
+				default:
+				{
+					U result = (U)Marshal.PtrToStructure(intPtr, typeof(U));
+					Marshal.FreeHGlobal(intPtr);
+					return result;
+				}
+				}
+				break;
+				IL_0017:
+				Marshal.StructureToPtr((object)gparam_0, intPtr, false);
+				num = (int)(num2 * 457157488) ^ -400236183;
+			}
+		}
+	}
+
+	public Class56()
+	{
+		Struct8 struct8_ = default(Struct8);
+		while (true)
+		{
+			int num = -1485077065;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -227471119)) % 4)
+				{
+				case 3u:
+					struct8_ = Class171.smethod_213(this);
+					struct8_.uint_0 = Class49.uint_0;
+					num = ((int)num2 * -1885681385) ^ -1653105623;
+					continue;
+				case 2u:
+					method_1(new Struct7
+					{
+						uint_0 = new uint[4],
+						intptr_0 = new IntPtr[2]
+					});
+					num = (int)((num2 * 1783438672) ^ 0x52E232A2);
+					continue;
+				case 0u:
+					break;
+				default:
+					Class171.smethod_273(this, struct8_);
+					return;
+				}
+				break;
+			}
+		}
+	}
+
+	internal Class56(Struct20 struct20_0)
+	{
+		method_1(new Struct7
+		{
+			uint_0 = new uint[4],
+			intptr_0 = new IntPtr[2]
+		});
+	}
+
+	public override bool Equals(object obj)
+	{
+		Class56 @class = obj as Class56;
+		if (@class == null)
+		{
+			goto IL_000d;
+		}
+		goto IL_00a3;
+		IL_000d:
+		int num = -181055998;
+		goto IL_0072;
+		IL_0072:
+		Struct8 @struct = default(Struct8);
+		while (true)
+		{
+			uint num2;
+			switch ((num2 = (uint)(num ^ -2145577002)) % 8)
+			{
+			case 5u:
+				break;
+			case 3u:
+				goto IL_0014;
+			case 2u:
+			{
+				int num3;
+				int num4;
+				if (Class171.smethod_213(@class).enum8_0 != @struct.enum8_0)
+				{
+					num3 = -860608492;
+					num4 = -860608492;
+				}
+				else
+				{
+					num3 = -1234531591;
+					num4 = -1234531591;
+				}
+				num = num3 ^ (int)(num2 * 1807140430);
+				continue;
+			}
+			case 0u:
+				goto IL_00a3;
+			default:
+				return @struct.uint_0 == Class171.smethod_213(@class).uint_0;
+			case 4u:
+				return false;
+			case 6u:
+				return false;
+			case 7u:
+				return false;
+			}
+			break;
+			IL_0014:
+			int num5;
+			if (Class171.smethod_213(@class).byte_0 != @struct.byte_0)
+			{
+				num = -1860768839;
+				num5 = -1860768839;
+			}
+			else
+			{
+				num = -1273019657;
+				num5 = -1273019657;
+			}
+		}
+		goto IL_000d;
+		IL_00a3:
+		@struct = Class171.smethod_213(this);
+		num = -11293284;
+		goto IL_0072;
+	}
+
+	public override int GetHashCode()
+	{
+		Struct8 @struct = Class171.smethod_213(this);
+		return (@struct.uint_0.GetHashCode() * 397 + @struct.enum8_0.GetHashCode()) * 397 + @struct.byte_0.GetHashCode();
+	}
+}

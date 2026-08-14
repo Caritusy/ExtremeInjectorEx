@@ -1,0 +1,1334 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Windows.Forms;
+
+public sealed class GForm0 : Form
+{
+	public sealed class Class21
+	{
+		[CompilerGenerated]
+		internal Class16 class16_0;
+
+		[SpecialName]
+		[CompilerGenerated]
+		public Class16 method_0()
+		{
+			return class16_0;
+		}
+
+		[SpecialName]
+		[CompilerGenerated]
+		public void method_1(Class16 class16_1)
+		{
+			class16_0 = class16_1;
+		}
+
+		public Class21(Class16 class16_1)
+		{
+			method_1(class16_1 ?? new Class16
+			{
+				bool_0 = true
+			});
+		}
+	}
+
+	[CompilerGenerated]
+	public sealed class Class22
+	{
+		public Class21 class21_0;
+
+		internal bool method_0(Class152 class152_0)
+		{
+			return class152_0.method_4() == class21_0.method_0().string_1;
+		}
+
+		internal static bool smethod_0(string string_0, string string_1)
+		{
+			return string_0 == string_1;
+		}
+	}
+
+	[Serializable]
+	[CompilerGenerated]
+	public sealed class Class23
+	{
+		public static readonly Class23 _003C_003E9 = new Class23();
+
+		public static WaitCallback _003C_003E9__4_1;
+
+		public static Func<DataGridViewRow, Class21> _003C_003E9__8_0;
+
+		public static Func<Class21, bool> _003C_003E9__8_1;
+
+		internal void method_0(object object_0)
+		{
+			Class171.smethod_408();
+		}
+
+		internal Class21 method_1(DataGridViewRow dataGridViewRow_0)
+		{
+			return (Class21)dataGridViewRow_0.Tag;
+		}
+
+		internal bool method_2(Class21 class21_0)
+		{
+			return class21_0.method_0().bool_0;
+		}
+
+		internal static object smethod_0(DataGridViewBand dataGridViewBand_0)
+		{
+			return dataGridViewBand_0.Tag;
+		}
+	}
+
+	[CompilerGenerated]
+	public sealed class Class24
+	{
+		public Class21[] class21_0;
+
+		public Enum3 enum3_0;
+
+		public GForm0 gform0_0;
+
+		internal void method_0(object object_0)
+		{
+			Class26 CS_0024_003C_003E8__locals5 = new Class26();
+			Class25 @class = default(Class25);
+			GForm0 gForm = default(GForm0);
+			Class21[] array = default(Class21[]);
+			Class21 class2 = default(Class21);
+			IntPtr intptr_ = default(IntPtr);
+			int num3 = default(int);
+			while (true)
+			{
+				int num = 2095854833;
+				while (true)
+				{
+					uint num2;
+					int num4;
+					switch ((num2 = (uint)(num ^ 0x44BA2852)) % 14)
+					{
+					case 10u:
+						break;
+					case 13u:
+						CS_0024_003C_003E8__locals5.class24_0 = this;
+						num = ((int)num2 * -69833256) ^ -2125899609;
+						continue;
+					case 12u:
+						gform0_0.Invoke(new Action(@class.method_0));
+						gForm = gform0_0;
+						num = (int)((num2 * 647728552) ^ 0x7AD86FBE);
+						continue;
+					case 11u:
+						CS_0024_003C_003E8__locals5.bool_0 = false;
+						array = class21_0;
+						num = ((int)num2 * -177398216) ^ -317006518;
+						continue;
+					default:
+						gform0_0.Invoke(new Action(@class.method_1));
+						try
+						{
+							@class.class26_0.bool_0 = Class171.smethod_37(class2, intptr_, gform0_0);
+						}
+						catch (Exception exception_)
+						{
+							Class171.smethod_158(gform0_0, "An error occurred while running the export routine.", exception_);
+							@class.class26_0.bool_0 = false;
+						}
+						goto IL_02ae;
+					case 3u:
+						class2 = array[num3];
+						@class = new Class25();
+						num = 1297658261;
+						continue;
+					case 8u:
+						if (!string.IsNullOrEmpty(class2.method_0().string_1))
+						{
+							num = (int)(num2 * 1989880082) ^ -753991385;
+							continue;
+						}
+						goto IL_02ae;
+					case 7u:
+						@class.string_0 = Path.GetFileName(Class171.smethod_243(class2));
+						num = ((int)num2 * -1134913587) ^ 0x19E9CB0B;
+						continue;
+					case 6u:
+						@class.class26_0.bool_0 = true;
+						num = ((int)num2 * -483328851) ^ 0x2A0CEE10;
+						continue;
+					case 5u:
+						@class.class26_0 = CS_0024_003C_003E8__locals5;
+						if (File.Exists(Class171.smethod_243(class2)))
+						{
+							num = ((int)num2 * -810754441) ^ 0x19BE967C;
+							continue;
+						}
+						goto IL_0125;
+					case 4u:
+						num3 = 0;
+						goto IL_0130;
+					case 2u:
+					{
+						string string_ = Class171.smethod_243(class2);
+						Enum3 @enum = enum3_0;
+						num = (Class171.smethod_216(ref intptr_, gForm, @enum, string_) ? (-339275510) : (-1054222856)) ^ ((int)num2 * -1439401513);
+						continue;
+					}
+					case 1u:
+						Class171.smethod_212(gform0_0, Class12.class12_0.class14_0.int_1, "Waiting {0} seconds before injection...");
+						num = (int)(num2 * 766385120) ^ -431335701;
+						continue;
+					case 0u:
+						{
+							if (@class.class26_0.bool_0)
+							{
+								num = 792056410;
+								continue;
+							}
+							goto IL_02ae;
+						}
+						IL_0130:
+						if (num3 >= array.Length)
+						{
+							num4 = 1631207293;
+							goto IL_013b;
+						}
+						goto case 3u;
+						IL_0125:
+						num3++;
+						num4 = 863955787;
+						goto IL_013b;
+						IL_02ae:
+						Class171.smethod_212(gform0_0, Class12.class12_0.class14_0.int_2, "Waiting {0} seconds before injecting the next DLL..");
+						goto IL_0160;
+						IL_0160:
+						num4 = 133242544;
+						goto IL_013b;
+						IL_013b:
+						switch ((uint)(num4 ^ 0x44BA2852) % 4u)
+						{
+						case 2u:
+							break;
+						case 1u:
+							goto IL_0130;
+						case 0u:
+							goto IL_0160;
+						default:
+							gform0_0.Invoke((Action)delegate
+							{
+								GForm0 gForm2 = CS_0024_003C_003E8__locals5.class24_0.gform0_0;
+								bool bool_ = default(bool);
+								while (true)
+								{
+									int num5 = 1112446656;
+									while (true)
+									{
+										uint num6;
+										switch ((num6 = (uint)(num5 ^ 0x6B79169F)) % 4)
+										{
+										case 3u:
+											bool_ = CS_0024_003C_003E8__locals5.bool_0;
+											num5 = ((int)num6 * -78775071) ^ -886593470;
+											continue;
+										case 2u:
+											Class171.smethod_350(bool_, gForm2);
+											num5 = (int)((num6 * 1757077180) ^ 0x3F5AEF5A);
+											continue;
+										default:
+											return;
+										case 0u:
+											break;
+										case 1u:
+											return;
+										}
+										break;
+									}
+								}
+							});
+							return;
+						}
+						goto IL_0125;
+					}
+					break;
+				}
+			}
+		}
+
+		internal static bool smethod_0(string string_0)
+		{
+			return File.Exists(string_0);
+		}
+
+		internal static string smethod_1(string string_0)
+		{
+			return Path.GetFileName(string_0);
+		}
+
+		internal static object smethod_2(Control control_0, Delegate delegate_0)
+		{
+			return control_0.Invoke(delegate_0);
+		}
+
+		internal static bool smethod_3(string string_0)
+		{
+			return string.IsNullOrEmpty(string_0);
+		}
+	}
+
+	[CompilerGenerated]
+	public sealed class Class25
+	{
+		public string string_0;
+
+		public Class26 class26_0;
+
+		internal void method_0()
+		{
+			class26_0.class24_0.gform0_0.label_1.Text = "Injecting " + string_0 + "...";
+		}
+
+		internal void method_1()
+		{
+			class26_0.class24_0.gform0_0.label_1.Text = "Running export routine... (" + string_0 + ")";
+		}
+
+		internal static string smethod_0(string string_1, string string_2, string string_3)
+		{
+			return string_1 + string_2 + string_3;
+		}
+
+		internal static void smethod_1(Control control_0, string string_1)
+		{
+			control_0.Text = string_1;
+		}
+	}
+
+	[CompilerGenerated]
+	public sealed class Class26
+	{
+		public bool bool_0;
+
+		public Class24 class24_0;
+
+		internal void method_0()
+		{
+			GForm0 gform0_ = class24_0.gform0_0;
+			bool flag = default(bool);
+			while (true)
+			{
+				int num = 1112446656;
+				while (true)
+				{
+					uint num2;
+					switch ((num2 = (uint)(num ^ 0x6B79169F)) % 4)
+					{
+					case 3u:
+						flag = bool_0;
+						num = ((int)num2 * -78775071) ^ -886593470;
+						continue;
+					case 2u:
+						Class171.smethod_350(flag, gform0_);
+						num = (int)((num2 * 1757077180) ^ 0x3F5AEF5A);
+						continue;
+					default:
+						return;
+					case 0u:
+						break;
+					case 1u:
+						return;
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	[CompilerGenerated]
+	public sealed class Class27
+	{
+		public string string_0;
+
+		public int int_0;
+
+		public GForm0 gform0_0;
+	}
+
+	[CompilerGenerated]
+	public sealed class Class28
+	{
+		public int int_0;
+
+		public Class27 class27_0;
+
+		internal void method_0()
+		{
+			class27_0.gform0_0.label_1.Text = string.Format(class27_0.string_0, (float)(class27_0.int_0 - int_0) / 1000f);
+		}
+
+		internal static string smethod_0(string string_0, object object_0)
+		{
+			return string.Format(string_0, object_0);
+		}
+
+		internal static void smethod_1(Control control_0, string string_0)
+		{
+			control_0.Text = string_0;
+		}
+	}
+
+	[CompilerGenerated]
+	public sealed class Class29
+	{
+		public string string_0;
+
+		public string string_1;
+
+		public Class30 class30_0;
+
+		internal void method_0()
+		{
+			MessageBox.Show(class30_0.gform0_0, "Platform mismatch detected. You are trying to inject a " + string_0 + " DLL (" + Path.GetFileName(class30_0.string_0) + ") into a " + string_1 + " process (" + class30_0.gform0_0.gclass2_0.method_2() + ") which is not supported.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+		}
+
+		internal static string smethod_0(string string_2)
+		{
+			return Path.GetFileName(string_2);
+		}
+
+		internal static string smethod_1(string[] string_2)
+		{
+			return string.Concat(string_2);
+		}
+
+		internal static DialogResult smethod_2(IWin32Window iwin32Window_0, string string_2, string string_3, MessageBoxButtons messageBoxButtons_0, MessageBoxIcon messageBoxIcon_0)
+		{
+			return MessageBox.Show(iwin32Window_0, string_2, string_3, messageBoxButtons_0, messageBoxIcon_0);
+		}
+	}
+
+	[CompilerGenerated]
+	public sealed class Class30
+	{
+		public string string_0;
+
+		public GForm0 gform0_0;
+	}
+
+	[CompilerGenerated]
+	public sealed class Class31
+	{
+		public string string_0;
+
+		public Exception exception_0;
+
+		public GForm0 gform0_0;
+
+		internal void method_0()
+		{
+			MessageBox.Show(gform0_0, Class171.smethod_345(string_0, exception_0, bool_0: true), "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+		}
+
+		internal static DialogResult smethod_0(IWin32Window iwin32Window_0, string string_1, string string_2, MessageBoxButtons messageBoxButtons_0, MessageBoxIcon messageBoxIcon_0)
+		{
+			return MessageBox.Show(iwin32Window_0, string_1, string_2, messageBoxButtons_0, messageBoxIcon_0);
+		}
+	}
+
+	internal GClass2 gclass2_0;
+
+	internal static readonly Dictionary<Enum4, Type> dictionary_0 = new Dictionary<Enum4, Type>
+	{
+		{
+			Enum4.const_0,
+			typeof(Class87)
+		},
+		{
+			Enum4.const_2,
+			typeof(Class88)
+		},
+		{
+			Enum4.const_3,
+			typeof(Class86)
+		},
+		{
+			Enum4.const_1,
+			typeof(Class90)
+		}
+	};
+
+	internal IContainer icontainer_0;
+
+	internal Label label_0;
+
+	internal TextBox textBox_0;
+
+	internal Button button_0;
+
+	internal PictureBox pictureBox_0;
+
+	internal Label label_1;
+
+	internal System.Windows.Forms.Timer timer_0;
+
+	internal Panel panel_0;
+
+	internal Label label_2;
+
+	internal DataGridView dataGridView_0;
+
+	internal Button button_1;
+
+	internal Button button_2;
+
+	internal Button button_3;
+
+	internal Button button_4;
+
+	internal Button button_5;
+
+	internal Button button_6;
+
+	internal Button button_7;
+
+	internal DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn_0;
+
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_0;
+
+	internal DataGridViewButtonColumn dataGridViewButtonColumn_0;
+
+	public GForm0()
+	{
+		Class171.smethod_383(this);
+		Class171.smethod_341();
+		timer_0.Start();
+		Class171.smethod_4(Class10.class10_0, dataGridView_0.Handle);
+		Class10.class10_0.method_0(delegate(object sender, EventArgs0 e)
+		{
+			using (List<string>.Enumerator enumerator2 = e.method_1().GetEnumerator())
+			{
+				while (true)
+				{
+					IL_0065:
+					int num = ((!enumerator2.MoveNext()) ? (-893043266) : (-1808137696));
+					while (true)
+					{
+						switch ((uint)(num ^ -783116989) % 4u)
+						{
+						case 3u:
+						{
+							string current2 = enumerator2.Current;
+							Class171.smethod_349(bool_0: true, null, bool_1: true, this, current2);
+							num = -1917655493;
+							continue;
+						}
+						case 2u:
+							num = -1808137696;
+							continue;
+						default:
+							goto end_IL_003a;
+						case 0u:
+							break;
+						case 1u:
+							goto end_IL_003a;
+						}
+						goto IL_0065;
+						continue;
+						end_IL_003a:
+						break;
+					}
+					break;
+				}
+			}
+			Class12.smethod_1();
+		});
+		if (Class127.bool_1)
+		{
+			dataGridView_0.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+		}
+		foreach (Class16 item in Class12.class12_0.list_0)
+		{
+			string string_ = item.string_0;
+			Class171.smethod_349(item.bool_0, item, bool_1: false, this, string_);
+		}
+		textBox_0.Text = Class12.class12_0.string_0;
+		Class171.smethod_289(this);
+		if (DateTime.Now.Subtract(Class12.class12_0.dateTime_0).TotalDays >= 7.0)
+		{
+			Class12.class12_0.dateTime_0 = DateTime.Now;
+			ThreadPool.QueueUserWorkItem(delegate
+			{
+				Class171.smethod_408();
+			});
+		}
+		Class171.smethod_79(this);
+		Class12.smethod_1();
+	}
+
+	internal void method_0(object sender, EventArgs e)
+	{
+		GClass2 gClass = Class171.smethod_45();
+		while (true)
+		{
+			int num = 885604246;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ 0x408FAA74)) % 5)
+				{
+				case 3u:
+					Class171.smethod_380(this, gClass);
+					num = ((int)num2 * -168255463) ^ 0x19454FBF;
+					continue;
+				case 2u:
+					textBox_0.Text = gClass.method_2();
+					num = (int)(num2 * 47810369) ^ -1450466420;
+					continue;
+				case 1u:
+					num = ((gClass == null) ? 1818432828 : 392114455) ^ (int)(num2 * 166785732);
+					continue;
+				default:
+					return;
+				case 4u:
+					break;
+				case 0u:
+					return;
+				}
+				break;
+			}
+		}
+	}
+
+	internal void method_1(object sender, EventArgs e)
+	{
+		Class171.smethod_430(this);
+	}
+
+	internal void method_2(object sender, EventArgs e)
+	{
+		if (gclass2_0 != null)
+		{
+			goto IL_000b;
+		}
+		goto IL_0101;
+		IL_000b:
+		int num = 913092886;
+		goto IL_00c7;
+		IL_00c7:
+		while (true)
+		{
+			uint num2;
+			switch ((num2 = (uint)(num ^ 0x4448A500)) % 10)
+			{
+			case 8u:
+				break;
+			case 7u:
+				num = ((Class171.smethod_154(this).Length != 0) ? 1761209380 : 970253221) ^ (int)(num2 * 945278361);
+				continue;
+			case 4u:
+				goto IL_0042;
+			case 3u:
+				timer_0.Stop();
+				num = ((int)num2 * -2079949461) ^ -1012620610;
+				continue;
+			case 2u:
+				num = ((!Class12.class12_0.class14_0.bool_0) ? 1135081994 : 2052540103) ^ (int)(num2 * 906729616);
+				continue;
+			case 1u:
+				Class171.smethod_10(this);
+				num = (int)((num2 * 542547353) ^ 0x699EBF7C);
+				continue;
+			default:
+				return;
+			case 5u:
+				goto IL_0101;
+			case 0u:
+				return;
+			case 6u:
+				return;
+			case 9u:
+				return;
+			}
+			break;
+			IL_0042:
+			num = ((!Class171.smethod_302(gclass2_0)) ? 922654054 : 1450742243);
+		}
+		goto IL_000b;
+		IL_0101:
+		timer_0.Stop();
+		Class171.smethod_430(this);
+		timer_0.Start();
+		num = 1477361870;
+		goto IL_00c7;
+	}
+
+	internal void method_3(object sender, PaintEventArgs e)
+	{
+		Size clientSize = base.ClientSize;
+		while (true)
+		{
+			int num = -788328708;
+			while (true)
+			{
+				int num4;
+				uint num2;
+				switch ((num2 = (uint)(num ^ -1290972729)) % 4)
+				{
+				case 3u:
+					num4 = ((!clientSize.IsEmpty) ? (-747675630) : (-528146501));
+					goto IL_0028;
+				case 2u:
+					break;
+				case 0u:
+					return;
+				default:
+				{
+					Rectangle rect = new Rectangle(0, 0, base.ClientSize.Width, base.ClientSize.Height);
+					LinearGradientBrush linearGradientBrush = new LinearGradientBrush(rect, Class12.class12_0.class14_0.Color_0, Class12.class12_0.class14_0.Color_1, 90f);
+					try
+					{
+						e.Graphics.FillRectangle(linearGradientBrush, rect);
+						return;
+					}
+					finally
+					{
+						if (linearGradientBrush != null)
+						{
+							while (true)
+							{
+								IL_00ed:
+								int num3 = -1501431655;
+								while (true)
+								{
+									switch ((num2 = (uint)(num3 ^ -1290972729)) % 3)
+									{
+									case 1u:
+										goto IL_00bd;
+									default:
+										goto end_IL_00d0;
+									case 0u:
+										break;
+									case 2u:
+										goto end_IL_00d0;
+									}
+									goto IL_00ed;
+									IL_00bd:
+									((IDisposable)linearGradientBrush).Dispose();
+									num3 = (int)((num2 * 1691631517) ^ 0x265F23C);
+									continue;
+									end_IL_00d0:
+									break;
+								}
+								break;
+							}
+						}
+					}
+				}
+				}
+				break;
+				IL_0028:
+				num = num4 ^ (int)(num2 * 1786941324);
+			}
+		}
+	}
+
+	internal void method_4(object sender, EventArgs e)
+	{
+		dataGridView_0.Rows.Clear();
+		while (true)
+		{
+			int num = -786483381;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -1117557375)) % 3)
+				{
+				case 2u:
+					goto IL_0012;
+				default:
+					return;
+				case 0u:
+					break;
+				case 1u:
+					return;
+				}
+				break;
+				IL_0012:
+				Class12.class12_0.list_0.Clear();
+				Class12.smethod_1();
+				num = (int)(num2 * 1095002302) ^ -734838463;
+			}
+		}
+	}
+
+	internal void method_5(object sender, EventArgs e)
+	{
+		if (dataGridView_0.SelectedRows.Count <= 0)
+		{
+			return;
+		}
+		DataGridViewRow dataGridViewRow = default(DataGridViewRow);
+		while (true)
+		{
+			int num = -1877785361;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -55263900)) % 5)
+				{
+				case 4u:
+					Class12.class12_0.list_0.Remove(((Class21)dataGridViewRow.Tag).method_0());
+					num = ((int)num2 * -252673013) ^ -1930896394;
+					continue;
+				case 3u:
+					dataGridViewRow = dataGridView_0.SelectedRows[0];
+					dataGridView_0.Rows.Remove(dataGridViewRow);
+					num = (int)((num2 * 405120424) ^ 0x64F84D11);
+					continue;
+				case 1u:
+					Class12.smethod_1();
+					num = ((int)num2 * -1517584645) ^ 0x28FA4CBB;
+					continue;
+				default:
+					return;
+				case 0u:
+					break;
+				case 2u:
+					return;
+				}
+				break;
+			}
+		}
+	}
+
+	internal void method_6(object sender, EventArgs e)
+	{
+		if (dataGridView_0.SelectedRows.Count != 0)
+		{
+			Class171.smethod_111(this, dataGridView_0.SelectedRows[0].Index);
+		}
+	}
+
+	internal void method_7(object sender, EventArgs e)
+	{
+		OpenFileDialog openFileDialog = new OpenFileDialog();
+		try
+		{
+			openFileDialog.Filter = "DLL Files|*.dll";
+			if (openFileDialog.ShowDialog() != DialogResult.OK)
+			{
+				return;
+			}
+			while (true)
+			{
+				int num = 1001138623;
+				while (true)
+				{
+					uint num2;
+					switch ((num2 = (uint)(num ^ 0x6F50CE45)) % 4)
+					{
+					case 2u:
+						Class171.smethod_349(bool_0: true, null, bool_1: true, this, openFileDialog.FileName);
+						num = ((int)num2 * -1628861704) ^ 0x477DCB3C;
+						continue;
+					case 1u:
+						Class12.smethod_1();
+						num = (int)((num2 * 904965658) ^ 0x6B3DE40);
+						continue;
+					default:
+						return;
+					case 0u:
+						break;
+					case 3u:
+						return;
+					}
+					break;
+				}
+			}
+		}
+		finally
+		{
+			if (openFileDialog != null)
+			{
+				while (true)
+				{
+					IL_00b0:
+					int num3 = 680032298;
+					while (true)
+					{
+						uint num2;
+						switch ((num2 = (uint)(num3 ^ 0x6F50CE45)) % 3)
+						{
+						case 1u:
+							goto IL_0080;
+						default:
+							goto end_IL_0093;
+						case 0u:
+							break;
+						case 2u:
+							goto end_IL_0093;
+						}
+						goto IL_00b0;
+						IL_0080:
+						((IDisposable)openFileDialog).Dispose();
+						num3 = (int)(num2 * 571036560) ^ -1212022825;
+						continue;
+						end_IL_0093:
+						break;
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	internal void method_8(object sender, DataGridViewCellMouseEventArgs e)
+	{
+		if (e.ColumnIndex == 0)
+		{
+			goto IL_0017;
+		}
+		goto IL_0081;
+		IL_0017:
+		int num = 1368065273;
+		goto IL_0050;
+		IL_0050:
+		while (true)
+		{
+			uint num2;
+			switch ((num2 = (uint)(num ^ 0xBDC4E55)) % 5)
+			{
+			case 4u:
+				break;
+			case 1u:
+				Class171.smethod_6((Class21)dataGridView_0.Rows[e.RowIndex].Tag);
+				num = ((int)num2 * -1498507046) ^ 0x5DD94F7A;
+				continue;
+			default:
+				return;
+			case 0u:
+				goto IL_0081;
+			case 2u:
+				return;
+			case 3u:
+				Class171.smethod_111(this, e.RowIndex);
+				return;
+			}
+			break;
+		}
+		goto IL_0017;
+		IL_0081:
+		num = ((e.ColumnIndex != 2) ? 1873441336 : 1655184592);
+		goto IL_0050;
+	}
+
+	internal void method_9(object sender, EventArgs e)
+	{
+		if (gclass2_0 == null)
+		{
+			return;
+		}
+		while (true)
+		{
+			int num = -48067247;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -1021811542)) % 3)
+				{
+				case 1u:
+					goto IL_000a;
+				default:
+					return;
+				case 2u:
+					break;
+				case 0u:
+					return;
+				}
+				break;
+				IL_000a:
+				Class171.smethod_214(gclass2_0);
+				num = (int)((num2 * 29376819) ^ 0x67D8A74C);
+			}
+		}
+	}
+
+	internal void method_10(object sender, EventArgs e)
+	{
+		Refresh();
+	}
+
+	internal void method_11(object sender, EventArgs e)
+	{
+		new Form1().ShowDialog(this);
+	}
+
+	internal void method_12(object sender, EventArgs e)
+	{
+		Class171.smethod_244(gclass2_0);
+		while (true)
+		{
+			int num = 611492607;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ 0x395D1E14)) % 3)
+				{
+				case 1u:
+					goto IL_000d;
+				case 2u:
+					break;
+				default:
+					Class171.smethod_289(this);
+					return;
+				}
+				break;
+				IL_000d:
+				Invalidate();
+				num = (int)(num2 * 628624752) ^ -580379289;
+			}
+		}
+	}
+
+	internal void method_13(object sender, EventArgs e)
+	{
+		Class171.smethod_10(this);
+	}
+
+	internal void method_14(object sender, EventArgs e)
+	{
+		DoubleBuffered = true;
+		while (true)
+		{
+			int num = 272788726;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ 0xD28D10F)) % 4)
+				{
+				case 2u:
+					Text = Class171.smethod_275(Class127.random_0.Next(10, 25));
+					num = ((int)num2 * -1437779953) ^ -861528518;
+					continue;
+				case 1u:
+					num = ((!Class18.bool_0) ? 2079763258 : 1254342227) ^ (int)(num2 * 1786912406);
+					continue;
+				default:
+					return;
+				case 0u:
+					break;
+				case 3u:
+					return;
+				}
+				break;
+			}
+		}
+	}
+
+	internal void method_15(object sender, MouseEventArgs e)
+	{
+		if (button_5.Enabled)
+		{
+			return;
+		}
+		while (true)
+		{
+			int num = -118742640;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -87900181)) % 10)
+				{
+				case 9u:
+					num = ((GetChildAtPoint(e.Location) != button_5) ? 1712314969 : 650290902) ^ ((int)num2 * -597800849);
+					continue;
+				case 6u:
+					num = (Class12.class12_0.class14_0.bool_0 ? (-26103791) : (-650660338));
+					continue;
+				case 4u:
+					MessageBox.Show("You have not selected or entered a process to be injected.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					num = ((int)num2 * -1777241989) ^ -676478233;
+					continue;
+				case 3u:
+					MessageBox.Show("You have not selected or entered a process that is currently running.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					num = -1453238682;
+					continue;
+				case 0u:
+					num = (string.IsNullOrEmpty(textBox_0.Text) ? (-68952149) : (-1871696631));
+					continue;
+				default:
+					return;
+				case 7u:
+					break;
+				case 2u:
+					return;
+				case 5u:
+					return;
+				case 8u:
+					MessageBox.Show("Extreme Injector is waiting for the specified process (" + textBox_0.Text + ") to start because you selected auto-inject. Extreme Injector will automatically inject when the process starts.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					return;
+				case 1u:
+					return;
+				}
+				break;
+			}
+		}
+	}
+
+	protected override void Dispose(bool disposing)
+	{
+		if (disposing)
+		{
+			goto IL_0003;
+		}
+		goto IL_0070;
+		IL_0003:
+		int num = -1876328478;
+		goto IL_004b;
+		IL_004b:
+		while (true)
+		{
+			uint num2;
+			switch ((num2 = (uint)(num ^ -698741242)) % 5)
+			{
+			case 4u:
+				break;
+			case 1u:
+				num = ((icontainer_0 == null) ? 704378865 : 464053287) ^ (int)(num2 * 697077469);
+				continue;
+			case 0u:
+				icontainer_0.Dispose();
+				num = (int)((num2 * 1777553482) ^ 0x2E45CAF7);
+				continue;
+			default:
+				return;
+			case 2u:
+				goto IL_0070;
+			case 3u:
+				return;
+			}
+			break;
+		}
+		goto IL_0003;
+		IL_0070:
+		base.Dispose(disposing);
+		num = -2040569350;
+		goto IL_004b;
+	}
+
+	[CompilerGenerated]
+	internal void method_16(object sender, EventArgs0 e)
+	{
+		using (List<string>.Enumerator enumerator = e.method_1().GetEnumerator())
+		{
+			while (true)
+			{
+				IL_0065:
+				int num = ((!enumerator.MoveNext()) ? (-893043266) : (-1808137696));
+				while (true)
+				{
+					switch ((uint)(num ^ -783116989) % 4u)
+					{
+					case 3u:
+					{
+						string current = enumerator.Current;
+						Class171.smethod_349(bool_0: true, null, bool_1: true, this, current);
+						num = -1917655493;
+						continue;
+					}
+					case 2u:
+						num = -1808137696;
+						continue;
+					default:
+						goto end_IL_003a;
+					case 0u:
+						break;
+					case 1u:
+						goto end_IL_003a;
+					}
+					goto IL_0065;
+					continue;
+					end_IL_003a:
+					break;
+				}
+				break;
+			}
+		}
+		Class12.smethod_1();
+	}
+
+	internal static void smethod_0(System.Windows.Forms.Timer timer_1)
+	{
+		timer_1.Start();
+	}
+
+	internal static IntPtr smethod_1(Control control_0)
+	{
+		return control_0.Handle;
+	}
+
+	internal static void smethod_2(DataGridView dataGridView_1, DataGridViewHeaderBorderStyle dataGridViewHeaderBorderStyle_0)
+	{
+		dataGridView_1.ColumnHeadersBorderStyle = dataGridViewHeaderBorderStyle_0;
+	}
+
+	internal static void smethod_3(Control control_0, string string_0)
+	{
+		control_0.Text = string_0;
+	}
+
+	internal static void smethod_4(System.Windows.Forms.Timer timer_1)
+	{
+		timer_1.Stop();
+	}
+
+	internal static Size smethod_5(Form form_0)
+	{
+		return form_0.ClientSize;
+	}
+
+	internal static DataGridViewRowCollection smethod_6(DataGridView dataGridView_1)
+	{
+		return dataGridView_1.Rows;
+	}
+
+	internal static void smethod_7(DataGridViewRowCollection dataGridViewRowCollection_0)
+	{
+		dataGridViewRowCollection_0.Clear();
+	}
+
+	internal static DataGridViewSelectedRowCollection smethod_8(DataGridView dataGridView_1)
+	{
+		return dataGridView_1.SelectedRows;
+	}
+
+	internal static int smethod_9(BaseCollection baseCollection_0)
+	{
+		return baseCollection_0.Count;
+	}
+
+	internal static DataGridViewRow smethod_10(DataGridViewSelectedRowCollection dataGridViewSelectedRowCollection_0, int int_0)
+	{
+		return dataGridViewSelectedRowCollection_0[int_0];
+	}
+
+	internal static void smethod_11(DataGridViewRowCollection dataGridViewRowCollection_0, DataGridViewRow dataGridViewRow_0)
+	{
+		dataGridViewRowCollection_0.Remove(dataGridViewRow_0);
+	}
+
+	internal static object smethod_12(DataGridViewBand dataGridViewBand_0)
+	{
+		return dataGridViewBand_0.Tag;
+	}
+
+	internal static int smethod_13(DataGridViewBand dataGridViewBand_0)
+	{
+		return dataGridViewBand_0.Index;
+	}
+
+	internal static OpenFileDialog smethod_14()
+	{
+		return new OpenFileDialog();
+	}
+
+	internal static void smethod_15(FileDialog fileDialog_0, string string_0)
+	{
+		fileDialog_0.Filter = string_0;
+	}
+
+	internal static DialogResult smethod_16(CommonDialog commonDialog_0)
+	{
+		return commonDialog_0.ShowDialog();
+	}
+
+	internal static string smethod_17(FileDialog fileDialog_0)
+	{
+		return fileDialog_0.FileName;
+	}
+
+	internal static void smethod_18(IDisposable idisposable_0)
+	{
+		idisposable_0.Dispose();
+	}
+
+	internal static int smethod_19(DataGridViewCellMouseEventArgs dataGridViewCellMouseEventArgs_0)
+	{
+		return dataGridViewCellMouseEventArgs_0.ColumnIndex;
+	}
+
+	internal static int smethod_20(DataGridViewCellMouseEventArgs dataGridViewCellMouseEventArgs_0)
+	{
+		return dataGridViewCellMouseEventArgs_0.RowIndex;
+	}
+
+	internal static DataGridViewRow smethod_21(DataGridViewRowCollection dataGridViewRowCollection_0, int int_0)
+	{
+		return dataGridViewRowCollection_0[int_0];
+	}
+
+	internal static void smethod_22(Control control_0)
+	{
+		control_0.Refresh();
+	}
+
+	internal static DialogResult smethod_23(Form form_0, IWin32Window iwin32Window_0)
+	{
+		return form_0.ShowDialog(iwin32Window_0);
+	}
+
+	internal static void smethod_24(Control control_0)
+	{
+		control_0.Invalidate();
+	}
+
+	internal static int smethod_25(Random random_0, int int_0, int int_1)
+	{
+		return random_0.Next(int_0, int_1);
+	}
+
+	internal static bool smethod_26(Control control_0)
+	{
+		return control_0.Enabled;
+	}
+
+	internal static Point smethod_27(MouseEventArgs mouseEventArgs_0)
+	{
+		return mouseEventArgs_0.Location;
+	}
+
+	internal static Control smethod_28(Control control_0, Point point_0)
+	{
+		return control_0.GetChildAtPoint(point_0);
+	}
+
+	internal static string smethod_29(Control control_0)
+	{
+		return control_0.Text;
+	}
+
+	internal static bool smethod_30(string string_0)
+	{
+		return string.IsNullOrEmpty(string_0);
+	}
+
+	internal static DialogResult smethod_31(string string_0, string string_1, MessageBoxButtons messageBoxButtons_0, MessageBoxIcon messageBoxIcon_0)
+	{
+		return MessageBox.Show(string_0, string_1, messageBoxButtons_0, messageBoxIcon_0);
+	}
+
+	internal static string smethod_32(string string_0, string string_1, string string_2)
+	{
+		return string_0 + string_1 + string_2;
+	}
+
+	internal static Type smethod_33(RuntimeTypeHandle runtimeTypeHandle_0)
+	{
+		return Type.GetTypeFromHandle(runtimeTypeHandle_0);
+	}
+}

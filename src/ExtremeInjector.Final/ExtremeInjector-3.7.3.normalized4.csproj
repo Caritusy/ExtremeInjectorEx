@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <AssemblyName>Extreme Injector</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>True</UseWindowsForms>
+    <TargetFramework>net48</TargetFramework>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>12.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="-f4f5d655-d3f5-4ecf-9a53-3a2fe4afba9b-" />
+    <None Remove="-c61cd46d-9d75-437f-8270-5249854f931f-" />
+    <None Remove="-" />
+    <None Remove="-5a3e54c3-0556-4780-bd19-e692c4c55323-" />
+    <EmbeddedResource Include="-f4f5d655-d3f5-4ecf-9a53-3a2fe4afba9b-" LogicalName="{f4f5d655-d3f5-4ecf-9a53-3a2fe4afba9b}" />
+    <EmbeddedResource Include="-c61cd46d-9d75-437f-8270-5249854f931f-" LogicalName="{c61cd46d-9d75-437f-8270-5249854f931f}" />
+    <EmbeddedResource Include="-" LogicalName="&#x14;" />
+    <EmbeddedResource Include="-5a3e54c3-0556-4780-bd19-e692c4c55323-" LogicalName="{5a3e54c3-0556-4780-bd19-e692c4c55323}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <PackageReference Include="DotNetZip.Reduced" Version="1.9.1.8" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+  </ItemGroup>
+</Project>

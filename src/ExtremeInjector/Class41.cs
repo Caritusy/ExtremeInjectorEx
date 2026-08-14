@@ -1,0 +1,237 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+
+internal sealed class Class41<T, U> : KeyedCollection<T, U>
+{
+	[CompilerGenerated]
+	private sealed class Class42
+	{
+		public IComparer<T> icomparer_0;
+
+		public Class41<T, U> class41_0;
+
+		internal int method_0(U gparam_0, U gparam_1)
+		{
+			return icomparer_0.Compare(class41_0.GetKeyForItem(gparam_0), class41_0.GetKeyForItem(gparam_1));
+		}
+	}
+
+	[CompilerGenerated]
+	private sealed class Class43
+	{
+		public Comparison<T> comparison_0;
+
+		public Class41<T, U> class41_0;
+
+		internal int method_0(U gparam_0, U gparam_1)
+		{
+			return comparison_0(class41_0.GetKeyForItem(gparam_0), class41_0.GetKeyForItem(gparam_1));
+		}
+	}
+
+	private const string string_0 = "Delegate passed cannot be null";
+
+	private readonly Func<U, T> func_0;
+
+	public Class41(Func<U, T> func_1)
+	{
+		while (true)
+		{
+			int num = -126874242;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -2004383140)) % 5)
+				{
+				case 3u:
+				{
+					int num3;
+					int num4;
+					if (func_1 != null)
+					{
+						num3 = 734701266;
+						num4 = 734701266;
+					}
+					else
+					{
+						num3 = 713054124;
+						num4 = 713054124;
+					}
+					num = num3 ^ (int)(num2 * 65584307);
+					continue;
+				}
+				case 1u:
+					func_0 = func_1;
+					num = -1716428505;
+					continue;
+				default:
+					return;
+				case 2u:
+					break;
+				case 0u:
+					throw Class41<T, U>._202E_206F_200B_206D_202E_206A_206C_202C_200F_200F_202B_202A_206F_200E_202A_206E_206C_202C_206D_206B_202C_206B_206D_206D_202E_202D_200F_200C_202B_202D_200C_200F_202A_200E_206F_200E_206E_202C_202D_202D_202E(Class178.smethod_0(4398));
+				case 4u:
+					return;
+				}
+				break;
+			}
+		}
+	}
+
+	public Class41(Func<U, T> func_1, IEqualityComparer<T> iequalityComparer_0)
+		: base(iequalityComparer_0)
+	{
+		if (func_1 == null)
+		{
+			throw Class41<T, U>._202E_206F_200B_206D_202E_206A_206C_202C_200F_200F_202B_202A_206F_200E_202A_206E_206C_202C_206D_206B_202C_206B_206D_206D_202E_202D_200F_200C_202B_202D_200C_200F_202A_200E_206F_200E_206E_202C_202D_202D_202E(Class178.smethod_0(4398));
+		}
+		func_0 = func_1;
+	}
+
+	T KeyedCollection<T, U>.GetKeyForItem(U item)
+	{
+		return func_0(item);
+	}
+
+	public void method_0()
+	{
+		Comparer<T> icomparer_ = Comparer<T>.Default;
+		method_1(icomparer_);
+	}
+
+	public void method_1(IComparer<T> icomparer_0)
+	{
+		Class44<U> icomparer_1 = new Class44<U>((U gparam_0, U gparam_1) => icomparer_0.Compare(GetKeyForItem(gparam_0), GetKeyForItem(gparam_1)));
+		while (true)
+		{
+			int num = -1976439927;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -996877530)) % 3)
+				{
+				case 1u:
+					goto IL_0026;
+				default:
+					return;
+				case 2u:
+					break;
+				case 0u:
+					return;
+				}
+				break;
+				IL_0026:
+				method_5(icomparer_1);
+				num = ((int)num2 * -39520486) ^ 0x43D05C02;
+			}
+		}
+	}
+
+	public void method_2(Comparison<T> comparison_0)
+	{
+		Class44<U> icomparer_ = new Class44<U>((U gparam_0, U gparam_1) => comparison_0(GetKeyForItem(gparam_0), GetKeyForItem(gparam_1)));
+		while (true)
+		{
+			int num = 635973468;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ 0x32882B7F)) % 3)
+				{
+				case 2u:
+					goto IL_0026;
+				default:
+					return;
+				case 0u:
+					break;
+				case 1u:
+					return;
+				}
+				break;
+				IL_0026:
+				method_5(icomparer_);
+				num = (int)(num2 * 1166292602) ^ -187062113;
+			}
+		}
+	}
+
+	public void method_3()
+	{
+		Comparer<U> icomparer_ = Comparer<U>.Default;
+		method_5(icomparer_);
+	}
+
+	public void method_4(Comparison<U> comparison_0)
+	{
+		Class44<U> icomparer_ = new Class44<U>(comparison_0);
+		while (true)
+		{
+			int num = -1714163073;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ -1678821669)) % 3)
+				{
+				case 2u:
+					goto IL_0009;
+				default:
+					return;
+				case 0u:
+					break;
+				case 1u:
+					return;
+				}
+				break;
+				IL_0009:
+				method_5(icomparer_);
+				num = ((int)num2 * -373036248) ^ -133428155;
+			}
+		}
+	}
+
+	public void method_5(IComparer<U> icomparer_0)
+	{
+		List<U> list = base.Items as List<U>;
+		while (true)
+		{
+			int num = 931145369;
+			while (true)
+			{
+				uint num2;
+				switch ((num2 = (uint)(num ^ 0x30DE67E)) % 4)
+				{
+				case 3u:
+				{
+					int num3;
+					int num4;
+					if (list == null)
+					{
+						num3 = -313842527;
+						num4 = -313842527;
+					}
+					else
+					{
+						num3 = -1819889566;
+						num4 = -1819889566;
+					}
+					num = num3 ^ (int)(num2 * 1055052206);
+					continue;
+				}
+				case 2u:
+					list.Sort(icomparer_0);
+					num = (int)(num2 * 600933619) ^ -1278440743;
+					continue;
+				default:
+					return;
+				case 0u:
+					break;
+				case 1u:
+					return;
+				}
+				break;
+			}
+		}
+	}
+}
