@@ -6,212 +6,218 @@
 
 **English** | [简体中文](./README.zh-CN.md)
 
-Extreme Injector Ex is a maintained Windows DLL injector based on the recoverable source of Extreme Injector 3.7.3. This repository reorganizes the recovered code into a buildable project and continues development with a modernized interface, reliable PE parsing, bilingual localization, portable single-file distribution, and a scriptable command-line mode.
+Extreme Injector Ex is a maintained evolution of Extreme Injector 3.7.3 for Windows. What began as source recovery is now a structured application with a modern bilingual GUI, a complete command-line interface, hardened injection and PE-processing paths, portable single-file deployment, and source that can be maintained without navigating decompiler control-flow noise.
+
+This repository preserves compatibility where the recovered runtime still matters, but it no longer treats the recovered program layout as the architecture to follow. New work is organized around small application, presentation, injection, PE, localization, and platform services.
 
 > [!WARNING]
-> Use this software only with programs that you own or are explicitly authorized to test. Injecting code into third-party processes may violate software licenses, security policies, or local law.
+> Use this software only with applications that you own or are explicitly authorized to test. Code injection can violate software licenses, security policies, or applicable law when used without permission.
 
-## Highlights
+## What the project provides
 
-- Standard (`LoadLibrary`), thread-hijacking, `LdrLoadDll`, `LdrLoadDll Stub`, and Manual Map injection methods.
-- PE32 and PE32+ parsing for imports, exports, relocations, TLS, resources, and CLR directories.
-- Target/DLL architecture validation before injection.
-- Configurable delays, automatic injection, post-injection PE erasure, module hiding, and DLL scrambling.
-- Export invocation with calling-convention and typed-argument support.
-- A consistent, DPI-aware WinForms interface in English and Simplified Chinese.
-- System-language detection with an immediate, persistent language override.
-- One GUI instance per Windows user; later launches restore and foreground the existing window.
-- Complete CLI access through `-c` or `--cli`, including every persisted application setting.
-- Embedded runtime dependencies and localization resources: the built EXE can be copied and run on its own.
-- Structurally deobfuscated source: no opaque predicates, XOR/modulo switch dispatchers, or decompiler-generated `goto` graphs remain under `src`.
+| Area | Current implementation |
+| --- | --- |
+| User experience | DPI-aware WinForms GUI, fixed application layouts, English and Simplified Chinese localization, and system-language detection |
+| Automation | First-class CLI activated by `-c` or `--cli`, with deterministic exit codes and coverage for all persisted settings |
+| Injection | Standard (`LoadLibrary`), thread hijacking, `LdrLoadDll`, `LdrLoadDll Stub`, and Manual Map backends |
+| Manual Map | Import and API-set resolution, relocations, TLS callbacks, page-aware memory protection, instruction-cache flushing, and exception-support paths |
+| PE processing | PE32/PE32+ headers, imports, exports, relocations, TLS, resources, CLR metadata directories, validation, and optional scrambling |
+| Process tooling | Process selection, module snapshots, remote memory access, export invocation, and process inspection |
+| Deployment | Runtime package assemblies and localization resources embedded into one movable executable |
+| Reliability | Per-user GUI single instance, foreground activation on a second launch, atomic settings writes, and isolated CLI settings files |
+| Maintainability | Thin composition root, separated GUI/CLI hosts, semantic type and member names, and structured control flow under `src` |
 
 ## Requirements
 
-### Running
+### To run
 
 - Windows 10 or Windows 11.
 - .NET Framework 4.8.
-- Administrator privileges when an injection operation requires access to the target process.
-- Matching target-process and DLL architectures.
+- Administrator privileges for operations that require access to another process.
+- A DLL whose architecture matches the target process.
 
-### Building
+### To build
 
 - Visual Studio 2022 or Build Tools 2022.
 - .NET Framework 4.8 Developer Pack.
-- A .NET SDK capable of building SDK-style `net48` projects.
+- A .NET SDK that can build SDK-style `net48` projects.
 
-## Build from source
-
-Clone the repository and run the following commands from its root:
+## Build
 
 ```powershell
+git clone https://github.com/Caritusy/ExtremeInjectorEx.git
+Set-Location .\ExtremeInjectorEx
 dotnet restore .\ExtremeInjectorEx.sln
 dotnet build .\ExtremeInjectorEx.sln -c Release
 ```
 
-The Release output is written to:
+Release artifacts are written outside the source tree:
 
 ```text
 out/bin/ExtremeInjector/Release/net48/
 ```
 
-All intermediate files are kept under `out/obj/`. Build output, local settings, test results, and IDE state are excluded from Git.
+Intermediate files are written to `out/obj/`. The runtime-distributable artifact is `Extreme Injector.exe`; package dependencies and localization resources are embedded. The generated `.pdb` and `.config` files are not required for ordinary execution.
 
-## GUI quick start
+## GUI usage
 
-Run `Extreme Injector.exe` normally to open the graphical interface:
+Start `Extreme Injector.exe` without CLI arguments:
 
-1. Select a target process.
+1. Select the target process.
 2. Add one or more DLLs.
 3. Choose an injection method and optional behavior in **Settings**.
 4. Select **Inject**.
 
-The GUI is single-instance per Windows user. Starting the application again restores and foregrounds the existing main window instead of opening another settings writer.
+The GUI is single-instance for each Windows user. Launching it again restores and foregrounds the existing window, which prevents concurrent writes to the same settings file. Window-title randomization is enabled by default and can be disabled in Settings.
 
-Settings are stored at:
+The interface follows the Windows display language by default. English and Simplified Chinese can also be selected explicitly, and the change is applied immediately.
 
-```text
-%AppData%\ExtremeInjectorEx\settings.xml
-```
+## Command-line usage
 
-Writes use a temporary file and atomic replacement. Legacy settings found beside the executable are migrated to the per-user location.
-
-### Portable distribution
-
-Only `Extreme Injector.exe` is required at runtime. The generated `.config` and `.pdb` files are build/debug artifacts rather than runtime dependencies.
-
-## Command-line interface
-
-Enable CLI mode with `-c` or `--cli`. The executable remains windowless during ordinary GUI launches while behaving like a regular console program in CLI mode.
-
-Show the authoritative option list for the current build:
+CLI mode is enabled only when `-c` or `--cli` is present. Ask the current build for its authoritative option list:
 
 ```powershell
 & '.\Extreme Injector.exe' --cli --help
 ```
 
-### Select a target
-
-Inject a DLL by process ID:
+### Select by PID
 
 ```powershell
-& '.\Extreme Injector.exe' --cli --pid 1234 `
-  --dll 'D:\Modules\Example.dll'
+& '.\Extreme Injector.exe' --cli `
+  --pid 1234 `
+  --dll 'D:\Modules\Example.dll' `
+  --method standard
 ```
 
-Wait for a named process and use Manual Map:
+### Wait for a named process and use Manual Map
 
 ```powershell
-& '.\Extreme Injector.exe' -c --process Game.exe `
-  --auto-inject --wait-timeout 60 `
-  --dll 'D:\Modules\Example.dll' --method manual-map
+& '.\Extreme Injector.exe' -c `
+  --process Game.exe `
+  --auto-inject `
+  --wait-timeout 60 `
+  --dll 'D:\Modules\Example.dll' `
+  --method manual-map
 ```
 
-Process names may be supplied with or without `.exe`. A name must resolve to exactly one process. When multiple processes match, the CLI exits with code `3` and prints candidates without guessing:
+Process names may include or omit `.exe`. A name must identify exactly one running process. If several processes match, the command exits with code `3` and prints candidates in this form:
 
 ```text
-[0] First window title (1234)
-[1] Second window title (5678)
+[0] Window title (1234)
+[1] Another window (5678)
 ```
 
-Run the command again with the required PID.
+Run the command again with the intended PID; the program never guesses between matching processes.
 
 ### Multiple DLLs and exported routines
 
-Repeat `--dll` to add multiple modules. `--export`, `--calling-convention`, and `--arg` apply to the most recently added DLL:
+Repeat `--dll` to add modules. Export options apply to the most recently declared DLL:
 
 ```powershell
 & '.\Extreme Injector.exe' --cli --pid 1234 `
   --dll 'D:\Modules\First.dll' `
-  --export Initialize --calling-convention stdcall --arg uint32:1 `
+  --export Initialize `
+  --calling-convention stdcall `
+  --arg uint32:1 `
   --dll 'D:\Modules\Second.dll'
 ```
 
-Supported exported-routine argument types are `ansi`, `unicode`, `byte`, `uint16`, `uint32`, `uint64`, and `float`.
+Calling conventions are `stdcall`, `fastcall`, and `cdecl`. Export argument types are `ansi`, `unicode`, `byte`, `uint16`, `uint32`, `uint64`, and `float`.
 
-### Configuration and persistence
+### Settings and non-interactive configuration
 
-Every user-configurable GUI setting has a CLI equivalent, including:
+CLI switches cover injection behavior, Manual Map options, scrambling, delays, localization, interface colors, warning acknowledgements, title randomization, and the saved DLL list. Changes are in-memory for the current invocation unless `--save-settings` is supplied.
 
-- Injection method, automatic injection, close-on-success behavior, and stealth injection.
-- Pre-injection and between-module delays.
-- PE-header erasure, module hiding, and Manual Map options.
-- Scrambling preset and every individual scrambling flag.
-- Interface language, random window title, and all three interface colors.
-- Warning acknowledgements and the saved DLL list.
-
-Arguments affect only the current invocation unless `--save-settings` is supplied. Use `--settings <path>` to work with an isolated settings file:
+Use a separate settings file for scripts or isolated workflows:
 
 ```powershell
-& '.\Extreme Injector.exe' --cli --settings '.\automation.xml' `
-  --reset-settings --language zh-CN --no-random-title --save-settings
+& '.\Extreme Injector.exe' --cli `
+  --settings '.\automation.xml' `
+  --reset-settings `
+  --language en `
+  --no-random-title `
+  --save-settings
 ```
 
-CLI injection may run alongside the GUI. A settings write acquires the same per-user lock as the GUI; if another instance owns it, the command exits with code `7` rather than risking a conflicting write.
+CLI injection can run while the GUI is open. A CLI command that writes the shared settings file uses the same per-user lock and exits with code `7` if another instance owns it.
 
 ### Exit codes
 
 | Code | Meaning |
 | ---: | --- |
-| `0` | Operation completed successfully. |
-| `1` | Invalid command-line arguments. |
-| `2` | Target process was not found. |
-| `3` | The process name matched multiple targets. |
-| `4` | A DLL was missing, invalid, or no enabled DLL was available. |
-| `5` | Administrator privileges are required. |
-| `6` | Injection failed. |
-| `7` | Another instance currently owns the settings lock. |
-| `8` | Process waiting was canceled. |
+| `0` | Completed successfully |
+| `1` | Invalid command-line arguments |
+| `2` | Target process not found or wait timed out |
+| `3` | Process name matched multiple targets |
+| `4` | Missing, invalid, or disabled DLL input |
+| `5` | Administrator privileges required |
+| `6` | Injection or an unexpected runtime operation failed |
+| `7` | Settings are owned by another instance |
+| `8` | Process waiting was canceled |
 
-## Localization
+## Settings and localization
 
-The interface defaults to the Windows display language: Simplified Chinese is selected for Chinese systems and English elsewhere. The language can be changed immediately under **Settings → Appearance and language → Interface language**.
+The default settings file is:
 
-Project-owned UI and CLI text uses stable resource keys. English and Simplified Chinese resources are kept in:
+```text
+%AppData%\ExtremeInjectorEx\settings.xml
+```
+
+Settings are written through a temporary file and atomically replaced. A legacy `settings.xml` beside the executable is migrated to the per-user location when no current settings file exists.
+
+Application-owned GUI and CLI text is stored in matching resource sets:
 
 ```text
 res/Localization/Strings.en.resx
 res/Localization/Strings.zh-CN.resx
 ```
 
-Both files must contain the same key set. Process names, DLL names, export names, paths, window titles, and operating-system error details remain unchanged because they originate outside the application.
+External values such as process names, paths, DLL names, export names, window titles, and operating-system error details are intentionally left unchanged.
 
-## Repository layout
+## Architecture
 
 ```text
-ExtremeInjectorEx/
-├─ src/ExtremeInjector/
-│  ├─ Application/          Entry points, CLI, settings, and application models
-│  ├─ Assembly/             AsmJit and BeaEngine interop
-│  ├─ Collections/          Internal collection implementations
-│  ├─ Compression/          Embedded-resource decompression
-│  ├─ Injection/            Injection strategies, remote processes, and Manual Map
-│  ├─ Interop/              Win32 declarations
-│  ├─ Localization/         Language selection and resource access
-│  ├─ PortableExecutable/   PE32/PE32+ structures and parsing
-│  ├─ Runtime/              Startup, resource loading, and recovered compatibility code
-│  ├─ UI/                   WinForms windows and controls
-│  └─ Utilities/            Shared helpers
-├─ res/
-│  ├─ Embedded/             Protected and compressed runtime resources
-│  ├─ Forms/                WinForms resources
-│  └─ Localization/         English and Simplified Chinese text
-└─ out/                     Local build output (not committed)
+Program
+  -> ApplicationHost
+      -> GuiApplication / CliApplication
+          -> presentation models and coordinators
+              -> injection, PE, settings, localization, and platform services
+                  -> Win32 interop and recovered compatibility adapters
 ```
 
-## Development notes
+The repository is organized by responsibility:
 
-- Read [ARCHITECTURE.md](./ARCHITECTURE.md) before changing application startup, presentation state, injection services, PE parsing, or recovered compatibility code. New code keeps entry points thin, system behavior in focused services, and source free of control-flow obfuscation.
-- The application currently targets .NET Framework 4.8; it is not a NativeAOT application.
-- Normal application paths use typed factories and bindings instead of reflection-based construction. The recovered compatibility runtime still depends on dynamic IL, dynamic assembly loading, and metadata-token resolution.
-- Because of those runtime requirements, WinFormsComInterop, trimming, and NativeAOT cannot be adopted as drop-in changes. A modern .NET migration must replace the dynamic runtime chain first and validate WinForms/COM behavior separately.
-- Logical names for protected resources are intentionally preserved for compatibility. Check the resource resolver before changing them.
-- Changes to PE parsing, process access, assembly generation, embedded dependencies, or localization should be followed by a Release build and focused regression testing.
+```text
+src/ExtremeInjector/
+  Application/          composition, GUI/CLI hosts, settings, and application models
+  Assembly/             AsmJit and BeaEngine integration
+  Collections/          internal collection implementations
+  Compression/          embedded-resource decompression
+  Injection/            injection backends, Manual Map, and remote-process services
+  Interop/              Win32 contracts and native structures
+  Localization/         culture selection and localized text access
+  PortableExecutable/   PE models, readers, writers, and transformations
+  Runtime/              startup support and recovered compatibility adapters
+  UI/                   WinForms views and reusable controls
+  Utilities/            focused shared helpers
+res/                    application, form, embedded, and localization resources
+out/                    local build output; never committed
+```
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) before changing startup, injection, Manual Map, PE parsing, or recovered compatibility code. `Program.Main` remains a composition root; forms remain views; injection and system behavior belong in focused services.
+
+## Development status
+
+- Recovered control-flow obfuscation and decompiler-generated `goto` graphs have been removed from maintained source.
+- Numbered recovered types and ordinary members have been restored to semantic names. Binary-stub data and compatibility adapters remain specialized migration areas and should be changed only with a focused regression path.
+- Normal application paths use typed construction. The compatibility runtime still uses dynamic IL, assembly loading, and metadata-token resolution where the original behavior requires them.
+- Because of that runtime chain, trimming, NativeAOT, and WinFormsComInterop are not drop-in migrations. They require replacement of the dynamic compatibility layer and separate interop validation first.
+- Changes to injection, PE parsing, embedded dependencies, settings, or localization should be followed by a Release build and a CLI smoke test.
 
 ## Project history
 
-Extreme Injector was originally developed by **master131**. Extreme Injector Ex 3.7.4 is a community-maintained reconstruction based on the recoverable 3.7.3 program source. It does not claim to reproduce lost private identifiers, comments, or the original project layout.
+Extreme Injector was originally created by **master131**. Extreme Injector Ex 3.7.4 began from recoverable 3.7.3 program source and has since been reorganized and substantially rewritten for maintainability. It does not claim to reproduce lost private source, original identifiers, comments, or the original project structure.
 
 ## License
 
-This repository does not currently include a standalone license file. Do not assume permission to redistribute or reuse the code beyond rights granted by the original project and individual contributors. Review and establish the applicable licensing terms before distributing derived builds.
+This repository currently has no standalone license file. Do not assume redistribution or reuse rights beyond those granted by the original project and individual contributors. Establish the applicable license terms before distributing derived builds.

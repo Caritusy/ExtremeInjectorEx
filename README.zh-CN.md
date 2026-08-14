@@ -6,24 +6,26 @@
 
 [English](./README.md) | **简体中文**
 
-Extreme Injector Ex 是一个持续维护的 Windows DLL 注入器，基于 Extreme Injector 3.7.3 的可恢复源码构建。本仓库将恢复出的代码重新组织为可维护、可构建的工程，并继续完善现代化界面、PE 解析、双语本地化、单文件便携分发和可用于自动化的命令行模式。
+Extreme Injector Ex 是 Extreme Injector 3.7.3 的持续维护与演进版本，面向 Windows 平台。项目虽然起步于源码恢复，但现在已经成为一套结构化应用：具有现代化双语 GUI、完整命令行接口、经过加固的注入与 PE 处理流程、便携式单文件分发，以及不再需要穿越反编译控制流噪声的可维护源码。
+
+仓库会在恢复运行时仍然必要的地方保留兼容行为，但不再把恢复出来的程序布局当成新代码必须遵循的架构。当前开发以职责明确的应用层、表现层、注入服务、PE 服务、本地化服务和平台服务为边界。
 
 > [!WARNING]
-> 仅可将本软件用于你拥有或已获得明确测试授权的程序。向第三方进程注入代码可能违反软件许可、安全策略或当地法律。
+> 本软件只能用于你拥有或已获得明确测试授权的程序。未经许可向第三方进程注入代码，可能违反软件许可、安全策略或适用法律。
 
-## 主要特性
+## 当前能力
 
-- 支持标准方式（`LoadLibrary`）、线程劫持、`LdrLoadDll`、`LdrLoadDll Stub` 和 Manual Map 注入。
-- 支持解析 PE32 与 PE32+ 的导入、导出、重定位、TLS、资源和 CLR 目录。
-- 注入前检查目标进程与 DLL 的体系结构是否匹配。
-- 可配置自动注入、注入延迟、PE 头擦除、模块隐藏和 DLL 混淆。
-- 支持调用导出函数，并可指定调用约定和类型化参数。
-- 提供统一、支持高 DPI 的 WinForms 界面，内置英语和简体中文。
-- 默认跟随系统语言，也可即时切换并持久保存语言选择。
-- 每个 Windows 用户只运行一个 GUI 实例；再次启动会恢复并前置现有窗口。
-- 通过 `-c` 或 `--cli` 提供完整命令行功能，覆盖所有可持久化设置。
-- 运行时依赖和本地化资源均嵌入主程序，构建出的 EXE 可单独复制运行。
-- `src` 已完成结构化去混淆：不再包含不透明谓词、XOR／取模 `switch` 分发器或反编译生成的 `goto` 控制流图。
+| 领域 | 当前实现 |
+| --- | --- |
+| 使用体验 | 支持 DPI 的 WinForms GUI、固定且一致的窗口布局、英语与简体中文，以及系统语言自动检测 |
+| 自动化 | 通过 `-c` 或 `--cli` 启用的一等命令行接口，具有确定的退出码，并覆盖全部可持久化设置 |
+| 注入方式 | 标准注入（`LoadLibrary`）、线程劫持、`LdrLoadDll`、`LdrLoadDll Stub` 和 Manual Map |
+| Manual Map | 导入与 API Set 解析、基址重定位、TLS 回调、按内存页规划保护属性、指令缓存刷新和异常支持路径 |
+| PE 处理 | PE32/PE32+ 头、导入、导出、重定位、TLS、资源、CLR 元数据目录、有效性检查和可选 DLL 混淆 |
+| 进程工具 | 进程选择、模块快照、远程内存访问、导出函数调用和进程检查 |
+| 分发 | 运行时包依赖与本地化资源嵌入单个可移动 EXE |
+| 可靠性 | 每用户单一 GUI 实例、重复启动时前置已有窗口、设置原子写入和 CLI 独立设置文件 |
+| 可维护性 | 轻量组合入口、独立 GUI/CLI 宿主、语义化类型与成员名称，以及 `src` 下的结构化控制流 |
 
 ## 环境要求
 
@@ -31,8 +33,8 @@ Extreme Injector Ex 是一个持续维护的 Windows DLL 注入器，基于 Extr
 
 - Windows 10 或 Windows 11。
 - .NET Framework 4.8。
-- 注入操作需要访问目标进程时，必须以管理员身份运行。
-- 目标进程与 DLL 的体系结构必须匹配。
+- 当操作需要访问其他进程时，使用管理员权限运行。
+- DLL 与目标进程的体系结构必须匹配。
 
 ### 构建
 
@@ -40,178 +42,182 @@ Extreme Injector Ex 是一个持续维护的 Windows DLL 注入器，基于 Extr
 - .NET Framework 4.8 Developer Pack。
 - 能够构建 SDK 风格 `net48` 项目的 .NET SDK。
 
-## 从源码构建
-
-克隆仓库后，在仓库根目录运行：
+## 构建项目
 
 ```powershell
+git clone https://github.com/Caritusy/ExtremeInjectorEx.git
+Set-Location .\ExtremeInjectorEx
 dotnet restore .\ExtremeInjectorEx.sln
 dotnet build .\ExtremeInjectorEx.sln -c Release
 ```
 
-Release 输出目录为：
+Release 产物会写入源码树之外的目录：
 
 ```text
 out/bin/ExtremeInjector/Release/net48/
 ```
 
-所有中间文件都存放在 `out/obj/`。构建产物、本地设置、测试结果和 IDE 状态均不会提交到 Git。
+中间文件位于 `out/obj/`。实际运行时只需要分发 `Extreme Injector.exe`；包依赖和本地化资源均已嵌入。生成的 `.pdb` 与 `.config` 文件不是正常运行所必需的依赖。
 
-## GUI 快速上手
+## GUI 使用方式
 
-正常运行 `Extreme Injector.exe` 即可打开图形界面：
+不带 CLI 参数启动 `Extreme Injector.exe`：
 
 1. 选择目标进程。
 2. 添加一个或多个 DLL。
 3. 在“设置”中选择注入方式和可选行为。
 4. 点击“注入”。
 
-GUI 按 Windows 用户保持单实例。再次启动程序不会创建第二个设置写入进程，而是恢复并前置已有主窗口。
+GUI 按 Windows 用户保持单实例。再次启动程序会恢复并前置已有窗口，从而避免两个实例并发写入同一份设置。每次启动使用不同窗口标题默认开启，也可以在设置中关闭。
 
-设置文件保存在：
+界面默认跟随 Windows 显示语言。用户也可以明确选择英语或简体中文，切换后会立即生效。
 
-```text
-%AppData%\ExtremeInjectorEx\settings.xml
-```
+## 命令行使用方式
 
-设置写入采用临时文件和原子替换。程序目录中发现的旧版设置会迁移到当前用户目录。
-
-### 便携分发
-
-运行时只需要 `Extreme Injector.exe`。构建生成的 `.config` 和 `.pdb` 属于构建或调试辅助文件，并非运行依赖。
-
-## 命令行模式
-
-使用 `-c` 或 `--cli` 启用命令行模式。正常启动 GUI 时不会显示控制台窗口；在 CLI 模式下，它会像普通命令行程序一样等待完成并返回退出码。
-
-查看当前构建版本的权威参数列表：
+只有提供 `-c` 或 `--cli` 时才会进入 CLI 模式。以下命令会显示当前构建版本的权威参数列表：
 
 ```powershell
 & '.\Extreme Injector.exe' --cli --help
 ```
 
-### 选择目标
-
-按进程 ID 注入 DLL：
+### 按 PID 选择进程
 
 ```powershell
-& '.\Extreme Injector.exe' --cli --pid 1234 `
-  --dll 'D:\Modules\Example.dll'
+& '.\Extreme Injector.exe' --cli `
+  --pid 1234 `
+  --dll 'D:\Modules\Example.dll' `
+  --method standard
 ```
 
-等待指定名称的进程启动，并使用 Manual Map：
+### 等待进程并使用 Manual Map
 
 ```powershell
-& '.\Extreme Injector.exe' -c --process Game.exe `
-  --auto-inject --wait-timeout 60 `
-  --dll 'D:\Modules\Example.dll' --method manual-map
+& '.\Extreme Injector.exe' -c `
+  --process Game.exe `
+  --auto-inject `
+  --wait-timeout 60 `
+  --dll 'D:\Modules\Example.dll' `
+  --method manual-map
 ```
 
-进程名可以包含或省略 `.exe`，但最终必须唯一匹配。如果存在多个同名进程，CLI 不会猜测目标，而是以退出码 `3` 失败并输出候选项：
+进程名可以包含或省略 `.exe`，但必须唯一对应一个正在运行的进程。如果存在多个同名进程，命令会以退出码 `3` 结束并输出候选项：
 
 ```text
-[0] 第一个窗口标题 (1234)
-[1] 第二个窗口标题 (5678)
+[0] 窗口标题 (1234)
+[1] 另一个窗口 (5678)
 ```
 
-请使用需要的 PID 重新执行命令。
+请使用目标 PID 重新执行命令；程序不会在多个候选进程之间自行猜测。
 
 ### 多个 DLL 与导出函数
 
-重复使用 `--dll` 可添加多个模块。`--export`、`--calling-convention` 和 `--arg` 只作用于最近添加的 DLL：
+重复使用 `--dll` 可以添加多个模块。导出函数选项只作用于最近声明的 DLL：
 
 ```powershell
 & '.\Extreme Injector.exe' --cli --pid 1234 `
   --dll 'D:\Modules\First.dll' `
-  --export Initialize --calling-convention stdcall --arg uint32:1 `
+  --export Initialize `
+  --calling-convention stdcall `
+  --arg uint32:1 `
   --dll 'D:\Modules\Second.dll'
 ```
 
-导出函数参数支持 `ansi`、`unicode`、`byte`、`uint16`、`uint32`、`uint64` 和 `float` 类型。
+调用约定支持 `stdcall`、`fastcall` 和 `cdecl`。导出函数参数类型支持 `ansi`、`unicode`、`byte`、`uint16`、`uint32`、`uint64` 和 `float`。
 
-### 配置与持久化
+### 设置与非交互配置
 
-GUI 中的所有用户可配置项都有对应 CLI 参数，包括：
+CLI 参数覆盖注入行为、Manual Map 选项、DLL 混淆、延迟、本地化、界面颜色、警告确认、随机窗口标题和已保存 DLL 列表。除非指定 `--save-settings`，否则参数只在本次运行的内存中生效。
 
-- 注入方式、自动注入、成功后关闭和隐蔽注入。
-- 注入前延迟和模块间延迟。
-- PE 头擦除、模块隐藏和 Manual Map 高级选项。
-- 混淆预设以及每一个独立混淆开关。
-- 界面语言、随机窗口标题和三种界面颜色。
-- 警告确认状态以及保存的 DLL 列表。
-
-参数默认只影响本次运行；只有加入 `--save-settings` 才会持久保存。使用 `--settings <路径>` 可读写独立设置文件：
+脚本或隔离工作流可以使用独立设置文件：
 
 ```powershell
-& '.\Extreme Injector.exe' --cli --settings '.\automation.xml' `
-  --reset-settings --language zh-CN --no-random-title --save-settings
+& '.\Extreme Injector.exe' --cli `
+  --settings '.\automation.xml' `
+  --reset-settings `
+  --language zh-CN `
+  --no-random-title `
+  --save-settings
 ```
 
-CLI 注入可以与 GUI 同时运行。写入设置时会请求与 GUI 相同的每用户锁；如果另一个实例已占用设置，命令会以退出码 `7` 结束，而不会冒险产生冲突写入。
+CLI 注入可以与 GUI 同时运行。当 CLI 需要写入共享设置时，会使用与 GUI 相同的每用户锁；如果设置正被另一个实例占用，命令会以退出码 `7` 结束。
 
 ### 退出码
 
 | 代码 | 含义 |
 | ---: | --- |
-| `0` | 操作成功完成。 |
-| `1` | 命令行参数无效。 |
-| `2` | 未找到目标进程。 |
-| `3` | 进程名匹配到多个目标。 |
-| `4` | DLL 缺失、无效，或没有已启用的 DLL。 |
-| `5` | 需要管理员权限。 |
-| `6` | 注入失败。 |
-| `7` | 另一个实例正在占用设置锁。 |
-| `8` | 等待进程的操作已取消。 |
+| `0` | 操作成功完成 |
+| `1` | 命令行参数无效 |
+| `2` | 未找到目标进程或等待超时 |
+| `3` | 进程名匹配到多个目标 |
+| `4` | DLL 缺失、无效或未启用 |
+| `5` | 需要管理员权限 |
+| `6` | 注入或其他运行时操作失败 |
+| `7` | 设置正被另一个实例占用 |
+| `8` | 等待进程时被用户取消 |
 
-## 本地化
+## 设置与本地化
 
-界面默认跟随 Windows 显示语言：中文系统使用简体中文，其他系统使用英语。可以在“设置 → 外观与语言 → 界面语言”中即时切换。
+默认设置文件位于：
 
-项目自身的 GUI 和 CLI 文本都使用稳定资源键，英语和简体中文资源分别位于：
+```text
+%AppData%\ExtremeInjectorEx\settings.xml
+```
+
+设置先写入临时文件，再通过原子替换提交。如果当前用户尚无设置文件，程序会把 EXE 旁边的旧版 `settings.xml` 迁移到每用户目录。
+
+程序自身的 GUI 与 CLI 文本保存在键集合一致的两份资源中：
 
 ```text
 res/Localization/Strings.en.resx
 res/Localization/Strings.zh-CN.resx
 ```
 
-两份资源必须保持完全相同的键集合。进程名、DLL 名、导出函数名、路径、窗口标题和操作系统错误详情来自外部，因此保持原文。
+进程名、路径、DLL 名、导出函数名、窗口标题和操作系统错误详情等外部数据会保留原文，不参与翻译。
 
-## 仓库结构
+## 架构
 
 ```text
-ExtremeInjectorEx/
-├─ src/ExtremeInjector/
-│  ├─ Application/          程序入口、CLI、设置和应用模型
-│  ├─ Assembly/             AsmJit 与 BeaEngine 互操作
-│  ├─ Collections/          内部集合实现
-│  ├─ Compression/          内嵌资源解压
-│  ├─ Injection/            注入策略、远程进程和 Manual Map
-│  ├─ Interop/              Win32 声明
-│  ├─ Localization/         语言选择和资源访问
-│  ├─ PortableExecutable/   PE32/PE32+ 数据结构与解析
-│  ├─ Runtime/              启动、资源加载和恢复代码兼容层
-│  ├─ UI/                   WinForms 窗口与控件
-│  └─ Utilities/            通用辅助代码
-├─ res/
-│  ├─ Embedded/             受保护和压缩的运行时资源
-│  ├─ Forms/                WinForms 资源
-│  └─ Localization/         英语与简体中文文本
-└─ out/                     本地构建输出（不提交）
+Program
+  -> ApplicationHost
+      -> GuiApplication / CliApplication
+          -> 表现模型与协调器
+              -> 注入、PE、设置、本地化和平台服务
+                  -> Win32 互操作与恢复代码兼容适配器
 ```
 
-## 开发说明
+仓库按职责组织：
 
-- 修改应用入口、界面状态、注入服务、PE 解析或恢复代码兼容层前，请先阅读 [ARCHITECTURE.md](./ARCHITECTURE.md)。新增代码必须保持入口轻量、功能服务独立，并禁止源代码级控制流混淆。
-- 当前目标框架为 .NET Framework 4.8，并非 NativeAOT 应用。
-- 普通应用路径已使用强类型工厂和绑定，避免通过反射构造核心对象；恢复代码兼容层仍依赖动态 IL、动态程序集加载和元数据令牌解析。
-- 由于上述运行时要求，目前不能把 WinFormsComInterop、trimming 或 NativeAOT 当作直接替换方案。迁移到现代 .NET 前，需要先替换动态运行时链，再单独验证 WinForms 与 COM 行为。
-- 受保护资源的逻辑名称是为兼容性保留的；修改前必须同步检查资源解析器。
-- 修改 PE 解析、进程访问、程序集生成、内嵌依赖或本地化后，应至少完成一次 Release 构建和对应的回归测试。
+```text
+src/ExtremeInjector/
+  Application/          组合入口、GUI/CLI 宿主、设置和应用模型
+  Assembly/             AsmJit 与 BeaEngine 集成
+  Collections/          内部集合实现
+  Compression/          嵌入资源解压
+  Injection/            注入后端、Manual Map 和远程进程服务
+  Interop/              Win32 契约与原生结构
+  Localization/         语言选择与本地化文本访问
+  PortableExecutable/   PE 模型、读取、写入和转换
+  Runtime/              启动支持与恢复代码兼容适配器
+  UI/                   WinForms 视图与通用控件
+  Utilities/            小型通用辅助功能
+res/                    应用、窗体、嵌入数据和本地化资源
+out/                    本地构建产物，不提交到仓库
+```
+
+修改启动流程、注入、Manual Map、PE 解析或恢复代码兼容层前，请先阅读 [ARCHITECTURE.md](./ARCHITECTURE.md)。`Program.Main` 只承担组合入口职责，窗体只作为视图，注入和系统行为应放入独立服务。
+
+## 开发状态
+
+- 维护源码中的控制流混淆和反编译器生成 `goto` 图已经清除。
+- 普通的数字类型名和成员名已经恢复为语义名称。二进制桩数据与兼容适配器仍属于特殊迁移区域，只应在具备针对性回归方案时修改。
+- 常规应用路径使用强类型构造；为保持原有行为，兼容运行时仍在部分位置使用动态 IL、程序集加载和元数据令牌解析。
+- 因此，trimming、NativeAOT 和 WinFormsComInterop 目前都不是可直接接入的替换方案。必须先替换动态兼容链，再单独验证互操作行为。
+- 修改注入、PE 解析、嵌入依赖、设置或本地化后，应至少完成一次 Release 构建和 CLI 冒烟测试。
 
 ## 项目历史
 
-Extreme Injector 最初由 **master131** 开发。Extreme Injector Ex 3.7.4 是基于 3.7.3 可恢复程序源码维护的社区重建版本，不声称能够还原已经丢失的私有标识符、注释或原始工程布局。
+Extreme Injector 最初由 **master131** 创建。Extreme Injector Ex 3.7.4 从可恢复的 3.7.3 程序源码起步，此后已经针对可维护性进行了重新组织和大量重写。项目不声称能够还原已经丢失的私有源码、原始标识符、注释或原始工程结构。
 
-## 许可证
+## 许可
 
-本仓库目前没有附带独立许可证文件。请勿自行假定拥有重新分发或复用代码的权利；相关权限应以原项目和各贡献者实际授予的条款为准。分发衍生构建前，请先确认并建立明确的许可条件。
+本仓库目前没有独立的许可证文件。请勿自行假定拥有原项目和各贡献者未明确授予的重新分发或代码复用权利；分发衍生构建前，应先确认并建立适用的许可条款。
