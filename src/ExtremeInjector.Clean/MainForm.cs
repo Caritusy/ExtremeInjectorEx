@@ -8,32 +8,32 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 
-public sealed class GForm0 : Form
+public sealed class MainForm : Form
 {
 	public sealed class Class21
 	{
 		[CompilerGenerated]
-		internal Class16 class16_0;
+		internal ModuleEntry class16_0;
 
 		[SpecialName]
 		[CompilerGenerated]
-		public Class16 method_0()
+		public ModuleEntry method_0()
 		{
 			return class16_0;
 		}
 
 		[SpecialName]
 		[CompilerGenerated]
-		public void method_1(Class16 class16_1)
+		public void method_1(ModuleEntry class16_1)
 		{
 			class16_0 = class16_1;
 		}
 
-		public Class21(Class16 class16_1)
+		public Class21(ModuleEntry class16_1)
 		{
-			method_1(class16_1 ?? new Class16
+			method_1(class16_1 ?? new ModuleEntry
 			{
-				bool_0 = true
+				Enabled = true
 			});
 		}
 	}
@@ -45,7 +45,7 @@ public sealed class GForm0 : Form
 
 		internal bool method_0(Class152 class152_0)
 		{
-			return class152_0.method_4() == class21_0.method_0().string_1;
+			return class152_0.method_4() == class21_0.method_0().ExportName;
 		}
 
 		internal static bool smethod_0(string string_0, string string_1)
@@ -78,7 +78,7 @@ public sealed class GForm0 : Form
 
 		internal bool method_2(Class21 class21_0)
 		{
-			return class21_0.method_0().bool_0;
+			return class21_0.method_0().Enabled;
 		}
 
 		internal static object smethod_0(DataGridViewBand dataGridViewBand_0)
@@ -92,15 +92,15 @@ public sealed class GForm0 : Form
 	{
 		public Class21[] class21_0;
 
-		public Enum3 enum3_0;
+		public ScramblePreset enum3_0;
 
-		public GForm0 gform0_0;
+		public MainForm gform0_0;
 
 		internal void method_0(object object_0)
 		{
 			Class26 CS_0024_003C_003E8__locals5 = new Class26();
 			Class25 @class = default(Class25);
-			GForm0 gForm = default(GForm0);
+			MainForm gForm = default(MainForm);
 			Class21[] array = default(Class21[]);
 			Class21 class2 = default(Class21);
 			IntPtr intptr_ = default(IntPtr);
@@ -148,7 +148,7 @@ public sealed class GForm0 : Form
 						num = 1297658261;
 						continue;
 					case 8u:
-						if (!string.IsNullOrEmpty(class2.method_0().string_1))
+						if (!string.IsNullOrEmpty(class2.method_0().ExportName))
 						{
 							num = (int)(num2 * 1989880082) ^ -753991385;
 							continue;
@@ -176,12 +176,12 @@ public sealed class GForm0 : Form
 					case 2u:
 					{
 						string string_ = Class171.smethod_243(class2);
-						Enum3 @enum = enum3_0;
+						ScramblePreset @enum = enum3_0;
 						num = (Class171.smethod_216(ref intptr_, gForm, @enum, string_) ? (-339275510) : (-1054222856)) ^ ((int)num2 * -1439401513);
 						continue;
 					}
 					case 1u:
-						Class171.smethod_212(gform0_0, Class12.class12_0.class14_0.int_1, "Waiting {0} seconds before injection...");
+						Class171.smethod_212(gform0_0, ApplicationSettings.Current.Options.DelayBeforeInjection, "Waiting {0} seconds before injection...");
 						num = (int)(num2 * 766385120) ^ -431335701;
 						continue;
 					case 0u:
@@ -205,7 +205,7 @@ public sealed class GForm0 : Form
 						num4 = 863955787;
 						goto IL_013b;
 						IL_02ae:
-						Class171.smethod_212(gform0_0, Class12.class12_0.class14_0.int_2, "Waiting {0} seconds before injecting the next DLL..");
+						Class171.smethod_212(gform0_0, ApplicationSettings.Current.Options.DelayBetweenModules, "Waiting {0} seconds before injecting the next DLL..");
 						goto IL_0160;
 						IL_0160:
 						num4 = 133242544;
@@ -222,7 +222,7 @@ public sealed class GForm0 : Form
 						default:
 							gform0_0.Invoke((Action)delegate
 							{
-								GForm0 gForm2 = CS_0024_003C_003E8__locals5.class24_0.gform0_0;
+								MainForm gForm2 = CS_0024_003C_003E8__locals5.class24_0.gform0_0;
 								bool bool_ = default(bool);
 								while (true)
 								{
@@ -318,7 +318,7 @@ public sealed class GForm0 : Form
 
 		internal void method_0()
 		{
-			GForm0 gform0_ = class24_0.gform0_0;
+			MainForm gform0_ = class24_0.gform0_0;
 			bool flag = default(bool);
 			while (true)
 			{
@@ -356,7 +356,7 @@ public sealed class GForm0 : Form
 
 		public int int_0;
 
-		public GForm0 gform0_0;
+		public MainForm gform0_0;
 	}
 
 	[CompilerGenerated]
@@ -417,7 +417,7 @@ public sealed class GForm0 : Form
 	{
 		public string string_0;
 
-		public GForm0 gform0_0;
+		public MainForm gform0_0;
 	}
 
 	[CompilerGenerated]
@@ -427,7 +427,7 @@ public sealed class GForm0 : Form
 
 		public Exception exception_0;
 
-		public GForm0 gform0_0;
+		public MainForm gform0_0;
 
 		internal void method_0()
 		{
@@ -442,22 +442,22 @@ public sealed class GForm0 : Form
 
 	internal GClass2 gclass2_0;
 
-	internal static readonly Dictionary<Enum4, Type> dictionary_0 = new Dictionary<Enum4, Type>
+	internal static readonly Dictionary<InjectionMethod, Type> dictionary_0 = new Dictionary<InjectionMethod, Type>
 	{
 		{
-			Enum4.const_0,
+			InjectionMethod.StandardInjection,
 			typeof(Class87)
 		},
 		{
-			Enum4.const_2,
+			InjectionMethod.LdrpLoadDll,
 			typeof(Class88)
 		},
 		{
-			Enum4.const_3,
+			InjectionMethod.LdrpLoadDllStub,
 			typeof(Class86)
 		},
 		{
-			Enum4.const_1,
+			InjectionMethod.ThreadHijacking,
 			typeof(Class90)
 		}
 	};
@@ -502,7 +502,7 @@ public sealed class GForm0 : Form
 
 	internal DataGridViewButtonColumn dataGridViewButtonColumn_0;
 
-	public GForm0()
+	public MainForm()
 	{
 		Class171.smethod_383(this);
 		Class171.smethod_341();
@@ -545,29 +545,29 @@ public sealed class GForm0 : Form
 					break;
 				}
 			}
-			Class12.smethod_1();
+			ApplicationSettings.Save();
 		});
 		if (Class127.bool_1)
 		{
 			dataGridView_0.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 		}
-		foreach (Class16 item in Class12.class12_0.list_0)
+		foreach (ModuleEntry item in ApplicationSettings.Current.Modules)
 		{
-			string string_ = item.string_0;
-			Class171.smethod_349(item.bool_0, item, bool_1: false, this, string_);
+			string string_ = item.Path;
+			Class171.smethod_349(item.Enabled, item, bool_1: false, this, string_);
 		}
-		textBox_0.Text = Class12.class12_0.string_0;
+		textBox_0.Text = ApplicationSettings.Current.ProcessName;
 		Class171.smethod_289(this);
-		if (DateTime.Now.Subtract(Class12.class12_0.dateTime_0).TotalDays >= 7.0)
+		if (DateTime.Now.Subtract(ApplicationSettings.Current.LastUpdateCheck).TotalDays >= 7.0)
 		{
-			Class12.class12_0.dateTime_0 = DateTime.Now;
+			ApplicationSettings.Current.LastUpdateCheck = DateTime.Now;
 			ThreadPool.QueueUserWorkItem(delegate
 			{
 				Class171.smethod_408();
 			});
 		}
 		Class171.smethod_79(this);
-		Class12.smethod_1();
+		ApplicationSettings.Save();
 	}
 
 	internal void method_0(object sender, EventArgs e)
@@ -637,7 +637,7 @@ public sealed class GForm0 : Form
 				num = ((int)num2 * -2079949461) ^ -1012620610;
 				continue;
 			case 2u:
-				num = ((!Class12.class12_0.class14_0.bool_0) ? 1135081994 : 2052540103) ^ (int)(num2 * 906729616);
+				num = ((!ApplicationSettings.Current.Options.AutoInject) ? 1135081994 : 2052540103) ^ (int)(num2 * 906729616);
 				continue;
 			case 1u:
 				Class171.smethod_10(this);
@@ -689,7 +689,7 @@ public sealed class GForm0 : Form
 				default:
 				{
 					Rectangle rect = new Rectangle(0, 0, base.ClientSize.Width, base.ClientSize.Height);
-					LinearGradientBrush linearGradientBrush = new LinearGradientBrush(rect, Class12.class12_0.class14_0.Color_0, Class12.class12_0.class14_0.Color_1, 90f);
+					LinearGradientBrush linearGradientBrush = new LinearGradientBrush(rect, ApplicationSettings.Current.Options.BackgroundColor1, ApplicationSettings.Current.Options.BackgroundColor2, 90f);
 					try
 					{
 						e.Graphics.FillRectangle(linearGradientBrush, rect);
@@ -759,8 +759,8 @@ public sealed class GForm0 : Form
 				}
 				break;
 				IL_0012:
-				Class12.class12_0.list_0.Clear();
-				Class12.smethod_1();
+				ApplicationSettings.Current.Modules.Clear();
+				ApplicationSettings.Save();
 				num = (int)(num2 * 1095002302) ^ -734838463;
 			}
 		}
@@ -782,7 +782,7 @@ public sealed class GForm0 : Form
 				switch ((num2 = (uint)(num ^ -55263900)) % 5)
 				{
 				case 4u:
-					Class12.class12_0.list_0.Remove(((Class21)dataGridViewRow.Tag).method_0());
+					ApplicationSettings.Current.Modules.Remove(((Class21)dataGridViewRow.Tag).method_0());
 					num = ((int)num2 * -252673013) ^ -1930896394;
 					continue;
 				case 3u:
@@ -791,7 +791,7 @@ public sealed class GForm0 : Form
 					num = (int)((num2 * 405120424) ^ 0x64F84D11);
 					continue;
 				case 1u:
-					Class12.smethod_1();
+					ApplicationSettings.Save();
 					num = ((int)num2 * -1517584645) ^ 0x28FA4CBB;
 					continue;
 				default:
@@ -837,7 +837,7 @@ public sealed class GForm0 : Form
 						num = ((int)num2 * -1628861704) ^ 0x477DCB3C;
 						continue;
 					case 1u:
-						Class12.smethod_1();
+						ApplicationSettings.Save();
 						num = (int)((num2 * 904965658) ^ 0x6B3DE40);
 						continue;
 					default:
@@ -965,7 +965,7 @@ public sealed class GForm0 : Form
 
 	internal void method_11(object sender, EventArgs e)
 	{
-		new Form1().ShowDialog(this);
+		new AboutForm().ShowDialog(this);
 	}
 
 	internal void method_12(object sender, EventArgs e)
@@ -1016,7 +1016,7 @@ public sealed class GForm0 : Form
 					num = ((int)num2 * -1437779953) ^ -861528518;
 					continue;
 				case 1u:
-					num = ((!Class18.bool_0) ? 2079763258 : 1254342227) ^ (int)(num2 * 1786912406);
+					num = ((!Program.UsesExternalSettings) ? 2079763258 : 1254342227) ^ (int)(num2 * 1786912406);
 					continue;
 				default:
 					return;
@@ -1048,7 +1048,7 @@ public sealed class GForm0 : Form
 					num = ((GetChildAtPoint(e.Location) != button_5) ? 1712314969 : 650290902) ^ ((int)num2 * -597800849);
 					continue;
 				case 6u:
-					num = (Class12.class12_0.class14_0.bool_0 ? (-26103791) : (-650660338));
+					num = (ApplicationSettings.Current.Options.AutoInject ? (-26103791) : (-650660338));
 					continue;
 				case 4u:
 					MessageBox.Show("You have not selected or entered a process to be injected.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -1159,7 +1159,7 @@ public sealed class GForm0 : Form
 				break;
 			}
 		}
-		Class12.smethod_1();
+		ApplicationSettings.Save();
 	}
 
 	internal static void smethod_0(System.Windows.Forms.Timer timer_1)

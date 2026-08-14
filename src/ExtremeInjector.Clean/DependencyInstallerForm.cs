@@ -13,14 +13,14 @@ using System.Threading;
 using System.Windows.Forms;
 using Ionic.Zip;
 
-public sealed class Form3 : Form
+public sealed class DependencyInstallerForm : Form
 {
 	[CompilerGenerated]
 	public sealed class Class35
 	{
 		public DownloadProgressChangedEventArgs downloadProgressChangedEventArgs_0;
 
-		public Form3 form3_0;
+		public DependencyInstallerForm form3_0;
 
 		internal void method_0()
 		{
@@ -153,7 +153,7 @@ public sealed class Form3 : Form
 	{
 		public DownloadDataCompletedEventArgs downloadDataCompletedEventArgs_0;
 
-		public Form3 form3_0;
+		public DependencyInstallerForm form3_0;
 
 		public WaitCallback waitCallback_0;
 
@@ -947,7 +947,7 @@ public sealed class Form3 : Form
 
 	internal ProgressBar progressBar_0;
 
-	public Form3()
+	public DependencyInstallerForm()
 	{
 		Class171.smethod_114(this);
 		class20_0.DownloadDataCompleted += class20_0_DownloadDataCompleted;
@@ -956,7 +956,7 @@ public sealed class Form3 : Form
 
 	internal void class20_0_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
 	{
-		Form3 form3_0;
+		DependencyInstallerForm form3_0;
 		DownloadProgressChangedEventArgs downloadProgressChangedEventArgs_0;
 		while (true)
 		{

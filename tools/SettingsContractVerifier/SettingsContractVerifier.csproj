@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\ApplicationSettings.cs" Link="ApplicationSettings.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\AdvancedInjectionOptions.cs" Link="AdvancedInjectionOptions.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\InjectionOptions.cs" Link="InjectionOptions.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\WarningPreferences.cs" Link="WarningPreferences.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\ModuleEntry.cs" Link="ModuleEntry.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\ExportParameter.cs" Link="ExportParameter.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\InjectionMethod.cs" Link="InjectionMethod.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\ScramblePreset.cs" Link="ScramblePreset.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\ScramblePresetAttribute.cs" Link="ScramblePresetAttribute.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\Enum5.cs" Link="Enum5.cs" />
+    <Compile Include="..\..\src\ExtremeInjector.Clean\ExtremeInjector\InjectorScrambleOptions.cs" Link="InjectorScrambleOptions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+</Project>

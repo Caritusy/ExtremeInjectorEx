@@ -2,21 +2,21 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-[DataContract(Namespace = "")]
-public sealed class Class16
+[DataContract(Name = "ModuleEntry", Namespace = "")]
+public sealed class ModuleEntry
 {
 	[DataMember(Name = "Path")]
-	public string string_0;
+	public string Path { get; set; }
 
 	[DataMember(Name = "Enable")]
-	public bool bool_0;
+	public bool Enabled { get; set; }
 
 	[DataMember(Name = "Export")]
-	public string string_1;
+	public string ExportName { get; set; }
 
 	[DataMember(Name = "CallingConvention", EmitDefaultValue = false)]
-	public CallingConvention callingConvention_0;
+	public CallingConvention CallingConvention { get; set; }
 
 	[DataMember(Name = "Parameters")]
-	public List<Class17> list_0;
+	public List<ExportParameter> Parameters { get; set; }
 }

@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Windows.Forms;
 using ExtremeInjector;
 
-public sealed class GForm1 : Form
+public sealed class AdvancedScrambleSettingsForm : Form
 {
 	public sealed class Class32
 	{
@@ -120,7 +120,7 @@ public sealed class GForm1 : Form
 					switch ((num2 = (uint)(num ^ -2048042955)) % 8)
 					{
 					case 7u:
-						fieldInfo.SetValue(Class12.class12_0.class14_0.injectorScrambleOptions_0, checkBox.Checked);
+						fieldInfo.SetValue(ApplicationSettings.Current.Options.Scramble, checkBox.Checked);
 						num = -305095817;
 						continue;
 					case 6u:
@@ -204,7 +204,7 @@ public sealed class GForm1 : Form
 
 	internal CheckBox checkBox_12;
 
-	public GForm1()
+	public AdvancedScrambleSettingsForm()
 	{
 		Class171.smethod_234(this);
 		checkBox_3.CheckedChanged += delegate

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-public sealed class Form2 : Form
+public sealed class ManualMapOptionsForm : Form
 {
 	internal IContainer icontainer_0;
 
@@ -18,7 +18,7 @@ public sealed class Form2 : Form
 
 	internal CheckBox checkBox_3;
 
-	public Form2()
+	public ManualMapOptionsForm()
 	{
 		while (true)
 		{
@@ -30,13 +30,13 @@ public sealed class Form2 : Form
 				{
 				case 1u:
 					Class171.smethod_233(this);
-					checkBox_2.Checked = Class12.class12_0.class14_0.class13_0.bool_0;
-					checkBox_1.Checked = Class12.class12_0.class14_0.class13_0.bool_1;
-					checkBox_0.Checked = Class12.class12_0.class14_0.class13_0.bool_2;
+					checkBox_2.Checked = ApplicationSettings.Current.Options.Advanced.HideFromDebugger;
+					checkBox_1.Checked = ApplicationSettings.Current.Options.Advanced.ManualResolveImports;
+					checkBox_0.Checked = ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport;
 					num = ((int)num2 * -384148681) ^ 0x458527FD;
 					continue;
 				case 0u:
-					checkBox_3.Checked = Class12.class12_0.class14_0.class13_0.bool_3;
+					checkBox_3.Checked = ApplicationSettings.Current.Options.Advanced.DisableSehValidation;
 					num = ((int)num2 * -631221181) ^ 0x1BFD9914;
 					continue;
 				default:
@@ -77,7 +77,7 @@ public sealed class Form2 : Form
 		}
 		goto IL_0008;
 		IL_002c:
-		Class12.class12_0.class14_0.class13_0.bool_0 = checkBox_2.Checked;
+		ApplicationSettings.Current.Options.Advanced.HideFromDebugger = checkBox_2.Checked;
 		num = 541304271;
 		goto IL_000d;
 	}
@@ -108,7 +108,7 @@ public sealed class Form2 : Form
 		}
 		goto IL_0008;
 		IL_002c:
-		Class12.class12_0.class14_0.class13_0.bool_1 = checkBox_1.Checked;
+		ApplicationSettings.Current.Options.Advanced.ManualResolveImports = checkBox_1.Checked;
 		num = -1516801494;
 		goto IL_000d;
 	}
@@ -137,7 +137,7 @@ public sealed class Form2 : Form
 				num = ((MessageBox.Show("Are you sure you want to disable exception support? Disabling it might cause some DLLs to crash when they are manual mapped.", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No) ? (-1116613047) : (-1888268518)) ^ ((int)num2 * -1675529366);
 				continue;
 			case 2u:
-				Class12.class12_0.class14_0.class13_0.bool_2 = checkBox_0.Checked;
+				ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport = checkBox_0.Checked;
 				num = -1866456628;
 				continue;
 			case 0u:
@@ -181,7 +181,7 @@ public sealed class Form2 : Form
 			case 4u:
 				break;
 			case 2u:
-				Class12.class12_0.class14_0.class13_0.bool_3 = checkBox_3.Checked;
+				ApplicationSettings.Current.Options.Advanced.DisableSehValidation = checkBox_3.Checked;
 				num = 1883006899;
 				continue;
 			case 0u:

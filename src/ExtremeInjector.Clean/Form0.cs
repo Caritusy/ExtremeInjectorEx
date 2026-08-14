@@ -9,7 +9,7 @@ using System.Windows.Forms;
 public sealed class Form0 : Form
 {
 	[CompilerGenerated]
-	internal Class16 class16_0;
+	internal ModuleEntry class16_0;
 
 	[CompilerGenerated]
 	internal Class154 class154_0;
@@ -44,14 +44,14 @@ public sealed class Form0 : Form
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal Class16 method_0()
+	internal ModuleEntry method_0()
 	{
 		return class16_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(Class16 class16_1)
+	internal void method_1(ModuleEntry class16_1)
 	{
 		class16_0 = class16_1;
 	}
@@ -80,7 +80,7 @@ public sealed class Form0 : Form
 		comboBox_0.Items.Add("");
 		int selectedIndex = default(int);
 		Class152 current = default(Class152);
-		Class17 current2 = default(Class17);
+		ExportParameter current2 = default(ExportParameter);
 		while (true)
 		{
 			int num = -219746061;
@@ -120,7 +120,7 @@ public sealed class Form0 : Form
 										continue;
 									case 4u:
 										comboBox_0.Items.Add(current.method_4());
-										num3 = ((!(current.method_4() == method_0().string_1)) ? (-446458686) : (-1627027615)) ^ (int)(num2 * 1984859475);
+										num3 = ((!(current.method_4() == method_0().ExportName)) ? (-446458686) : (-1627027615)) ^ (int)(num2 * 1984859475);
 										continue;
 									case 3u:
 										selectedIndex = comboBox_0.Items.Count - 1;
@@ -168,17 +168,17 @@ public sealed class Form0 : Form
 								num4 = ((int)num2 * -1682805343) ^ -888335665;
 								continue;
 							case 16u:
-								num4 = ((method_0().callingConvention_0 == (CallingConvention)0) ? (-229270540) : (-943580251)) ^ (int)(num2 * 654463414);
+								num4 = ((method_0().CallingConvention == (CallingConvention)0) ? (-229270540) : (-943580251)) ^ (int)(num2 * 654463414);
 								continue;
 							case 15u:
 								comboBox_1.Items.Add("FastCall");
 								num4 = ((int)num2 * -337876557) ^ 0x1D2162E2;
 								continue;
 							case 14u:
-								num4 = ((method_0().callingConvention_0 != CallingConvention.Cdecl) ? (-1891489375) : (-1461955806));
+								num4 = ((method_0().CallingConvention != CallingConvention.Cdecl) ? (-1891489375) : (-1461955806));
 								continue;
 							case 13u:
-								num4 = ((method_0().list_0 != null) ? 6450968 : 1792036083) ^ ((int)num2 * -237178418);
+								num4 = ((method_0().Parameters != null) ? 6450968 : 1792036083) ^ ((int)num2 * -237178418);
 								continue;
 							case 12u:
 								comboBox_1.Items.Add("Cdecl");
@@ -192,7 +192,7 @@ public sealed class Form0 : Form
 								num4 = ((int)num2 * -1421628372) ^ 0x7DE74003;
 								continue;
 							case 7u:
-								num4 = ((method_0().callingConvention_0 != CallingConvention.FastCall) ? (-340801925) : (-1363730));
+								num4 = ((method_0().CallingConvention != CallingConvention.FastCall) ? (-340801925) : (-1363730));
 								continue;
 							case 6u:
 								comboBox_2.Items.Add("DWORD");
@@ -207,7 +207,7 @@ public sealed class Form0 : Form
 								num4 = (int)((num2 * 2007912271) ^ 0x449AB0B0);
 								continue;
 							case 2u:
-								num4 = ((method_0().callingConvention_0 != CallingConvention.StdCall) ? 303533518 : 1377154188) ^ (int)(num2 * 1400031935);
+								num4 = ((method_0().CallingConvention != CallingConvention.StdCall) ? 303533518 : 1377154188) ^ (int)(num2 * 1400031935);
 								continue;
 							case 1u:
 								comboBox_2.Items.Add("LPCSTR");
@@ -226,7 +226,7 @@ public sealed class Form0 : Form
 								return;
 							default:
 							{
-								using List<Class17>.Enumerator enumerator2 = method_0().list_0.GetEnumerator();
+								using List<ExportParameter>.Enumerator enumerator2 = method_0().Parameters.GetEnumerator();
 								while (true)
 								{
 									int num5 = (enumerator2.MoveNext() ? (-616727158) : (-93580133));
@@ -242,7 +242,7 @@ public sealed class Form0 : Form
 											num5 = -258485167;
 											continue;
 										case 2u:
-											Class171.smethod_342(this, current2.string_0, current2.enum5_0, bool_0: false);
+											Class171.smethod_342(this, current2.Value, current2.Type, bool_0: false);
 											num5 = ((int)num2 * -1607316244) ^ 0x4896AA15;
 											continue;
 										default:
@@ -278,7 +278,7 @@ public sealed class Form0 : Form
 		bool flag6 = (comboBox2.Enabled = flag4);
 		bool enabled = (dataGridView.Enabled = flag6);
 		comboBox.Enabled = enabled;
-		method_0().string_1 = ((comboBox_0.SelectedIndex != 0) ? comboBox_0.SelectedItem.ToString() : string.Empty);
+		method_0().ExportName = ((comboBox_0.SelectedIndex != 0) ? comboBox_0.SelectedItem.ToString() : string.Empty);
 	}
 
 	internal void method_6(object sender, EventArgs e)
@@ -302,15 +302,15 @@ public sealed class Form0 : Form
 			case 6u:
 				goto IL_0026;
 			case 4u:
-				method_0().callingConvention_0 = CallingConvention.StdCall;
+				method_0().CallingConvention = CallingConvention.StdCall;
 				num = ((int)num2 * -469334512) ^ -170244121;
 				continue;
 			case 3u:
-				method_0().callingConvention_0 = CallingConvention.Cdecl;
+				method_0().CallingConvention = CallingConvention.Cdecl;
 				num = (int)((num2 * 462020655) ^ 0x297F4B08);
 				continue;
 			case 0u:
-				method_0().callingConvention_0 = CallingConvention.FastCall;
+				method_0().CallingConvention = CallingConvention.FastCall;
 				num = (int)((num2 * 1106634793) ^ 0x2E8A28F0);
 				continue;
 			default:
@@ -447,7 +447,7 @@ public sealed class Form0 : Form
 
 	internal void method_9(object sender, DataGridViewRowsRemovedEventArgs e)
 	{
-		method_0().list_0.RemoveAt(e.RowIndex);
+		method_0().Parameters.RemoveAt(e.RowIndex);
 		int num = 0;
 		IEnumerator enumerator = ((IEnumerable)dataGridView_0.Rows).GetEnumerator();
 		try

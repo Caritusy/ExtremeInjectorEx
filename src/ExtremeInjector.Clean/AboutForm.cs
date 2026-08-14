@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
-public sealed class Form1 : Form
+public sealed class AboutForm : Form
 {
 	internal IContainer icontainer_0;
 
@@ -24,7 +24,7 @@ public sealed class Form1 : Form
 
 	internal Label label_4;
 
-	public Form1()
+	public AboutForm()
 	{
 		Version version = default(Version);
 		while (true)

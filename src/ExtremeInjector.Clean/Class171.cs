@@ -597,10 +597,10 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_6(GForm0.Class21 class21_0)
+	internal static void smethod_6(MainForm.Class21 class21_0)
 	{
 		smethod_172(class21_0.method_0());
-		Class12.smethod_1();
+		ApplicationSettings.Save();
 	}
 
 	internal static bool smethod_7(Class5 class5_0, uint uint_0, out Class162 class162_0)
@@ -788,12 +788,12 @@ public sealed class Class171
 		};
 	}
 
-	internal static void smethod_10(GForm0 gform0_0)
+	internal static void smethod_10(MainForm gform0_0)
 	{
-		GForm0.Class24 @class = new GForm0.Class24();
+		MainForm.Class24 @class = new MainForm.Class24();
 		@class.gform0_0 = gform0_0;
-		Enum4 enum4_ = default(Enum4);
-		Class15 class15_ = default(Class15);
+		InjectionMethod enum4_ = default(InjectionMethod);
+		WarningPreferences class15_ = default(WarningPreferences);
 		while (true)
 		{
 			int num = -1343463675;
@@ -807,7 +807,7 @@ public sealed class Class171
 					num = ((int)num2 * -994046648) ^ 0x24CB22CD;
 					continue;
 				case 19u:
-					enum4_ = Class12.class12_0.class14_0.Enum4_0;
+					enum4_ = ApplicationSettings.Current.Options.Method;
 					num = (int)((num2 * 1462702194) ^ 0x4D14EF34);
 					continue;
 				case 18u:
@@ -818,39 +818,39 @@ public sealed class Class171
 					num = (int)((num2 * 1586997919) ^ 0x283CE583);
 					continue;
 				case 16u:
-					@class.enum3_0 = Class12.class12_0.class14_0.injectorScrambleOptions_0.Detect();
+					@class.enum3_0 = ApplicationSettings.Current.Options.Scramble.Detect();
 					num = -844229546;
 					continue;
 				case 14u:
-					num = ((enum4_ != Enum4.const_3) ? 884106562 : 781853476) ^ ((int)num2 * -1888504819);
+					num = ((enum4_ != InjectionMethod.LdrpLoadDllStub) ? 884106562 : 781853476) ^ ((int)num2 * -1888504819);
 					continue;
 				case 13u:
 					MessageBox.Show(gform0_0, "It appears you are using a version of Windows that has not been properly tested with the LdrpLoadDll injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					class15_.bool_0 = true;
+					class15_.LdrpLoadDllAcknowledged = true;
 					num = ((int)num2 * -1362656191) ^ 0x7D549429;
 					continue;
 				case 12u:
-					num = ((enum4_ != Enum4.const_4) ? (-303152124) : (-1377231110));
+					num = ((enum4_ != InjectionMethod.ManualMap) ? (-303152124) : (-1377231110));
 					continue;
 				case 11u:
-					num = ((@class.enum3_0 == Enum3.const_0) ? (-2049946800) : (-1681409826)) ^ (int)(num2 * 1477936238);
+					num = ((@class.enum3_0 == ScramblePreset.None) ? (-2049946800) : (-1681409826)) ^ (int)(num2 * 1477936238);
 					continue;
 				case 10u:
 					MessageBox.Show(gform0_0, "It appears you are using a version of Windows that has not been properly tested with the manual map injection method. There is a chance that injection may fail or crash so use another injection method if it doesn't work and report the problem to me. If it crashes, you may want to try ticking \"Disable SEH handler validation\" under Injection Method's Advanced settings.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					num = ((int)num2 * -232927014) ^ 0x62C0A2AE;
 					continue;
 				case 9u:
-					class15_ = Class12.class12_0.class15_0;
+					class15_ = ApplicationSettings.Current.Warnings;
 					num = (Class127.bool_11 ? (-1741877174) : (-1085754137)) ^ (int)(num2 * 1062009333);
 					continue;
 				case 8u:
-					num = (class15_.bool_2 ? (-660348292) : (-1700305939)) ^ ((int)num2 * -552992280);
+					num = (class15_.ScrambleAcknowledged ? (-660348292) : (-1700305939)) ^ ((int)num2 * -552992280);
 					continue;
 				case 6u:
-					num = ((!class15_.bool_1) ? 305443209 : 1051399956) ^ ((int)num2 * -1452471880);
+					num = ((!class15_.ManualMapAcknowledged) ? 305443209 : 1051399956) ^ ((int)num2 * -1452471880);
 					continue;
 				case 5u:
-					num = (class15_.bool_0 ? 90808096 : 1002178716) ^ (int)(num2 * 271899536);
+					num = (class15_.LdrpLoadDllAcknowledged ? 90808096 : 1002178716) ^ (int)(num2 * 271899536);
 					continue;
 				case 4u:
 					gform0_0.timer_0.Stop();
@@ -858,7 +858,7 @@ public sealed class Class171
 					num = -2119713228;
 					continue;
 				case 2u:
-					class15_.bool_2 = true;
+					class15_.ScrambleAcknowledged = true;
 					num = (int)(num2 * 943538954) ^ -499727834;
 					continue;
 				case 1u:
@@ -866,7 +866,7 @@ public sealed class Class171
 					num = ((@class.class21_0.Length != 0) ? (-360183429) : (-233523157)) ^ ((int)num2 * -962541727);
 					continue;
 				case 0u:
-					class15_.bool_1 = true;
+					class15_.ManualMapAcknowledged = true;
 					num = (int)(num2 * 2000419613) ^ -725509940;
 					continue;
 				case 7u:
@@ -5916,7 +5916,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_29(Form3 form3_0, string string_0, string string_1, string string_2)
+	internal static void smethod_29(DependencyInstallerForm form3_0, string string_0, string string_1, string string_2)
 	{
 		form3_0.string_0 = string_0;
 		form3_0.string_1 = string_1;
@@ -6832,9 +6832,9 @@ public sealed class Class171
 		goto IL_002e;
 	}
 
-	internal static bool smethod_37(GForm0.Class21 class21_0, IntPtr intptr_0, GForm0 gform0_0)
+	internal static bool smethod_37(MainForm.Class21 class21_0, IntPtr intptr_0, MainForm gform0_0)
 	{
-		GForm0.Class22 @class = new GForm0.Class22();
+		MainForm.Class22 @class = new MainForm.Class22();
 		Class152 class3 = default(Class152);
 		int num9 = default(int);
 		object[] array = default(object[]);
@@ -6891,7 +6891,7 @@ public sealed class Class171
 							case 1u:
 								goto IL_0103;
 							case 0u:
-								throw new MissingMethodException("Unable to find the exported routine, '" + @class.class21_0.method_0().string_1 + "'.");
+								throw new MissingMethodException("Unable to find the exported routine, '" + @class.class21_0.method_0().ExportName + "'.");
 							case 4u:
 								throw new MissingFieldException("Unable to detect export directory in the specified module.");
 							case 2u:
@@ -7003,7 +7003,7 @@ public sealed class Class171
 								num6 = 23605831;
 								continue;
 							case 27u:
-								num6 = ((@class.class21_0.method_0().list_0 != null) ? 277257009 : 458827322) ^ (int)(num2 * 1073412424);
+								num6 = ((@class.class21_0.method_0().Parameters != null) ? 277257009 : 458827322) ^ (int)(num2 * 1073412424);
 								continue;
 							case 26u:
 								num6 = ((text == null) ? (-737539902) : (-781970105)) ^ (int)(num2 * 1280621455);
@@ -7013,7 +7013,7 @@ public sealed class Class171
 								num6 = ((int)num2 * -2031373568) ^ 0x3ADEFA02;
 								continue;
 							case 24u:
-								smethod_54(class47_, new Class57(intptr_1), @class.class21_0.method_0().callingConvention_0, list.ToArray());
+								smethod_54(class47_, new Class57(intptr_1), @class.class21_0.method_0().CallingConvention, list.ToArray());
 								num6 = ((int)num2 * -833880767) ^ -355695803;
 								continue;
 							case 23u:
@@ -7026,7 +7026,7 @@ public sealed class Class171
 								num6 = (int)(num2 * 1666297250) ^ -1722348554;
 								continue;
 							case 21u:
-								array = @class.class21_0.method_0().list_0.Select(smethod_138).ToArray();
+								array = @class.class21_0.method_0().Parameters.Select(smethod_138).ToArray();
 								class5 = new Class53();
 								num6 = 361321445;
 								continue;
@@ -7055,7 +7055,7 @@ public sealed class Class171
 								continue;
 							case 12u:
 								smethod_36(class5, list2[num11++]);
-								num6 = ((@class.class21_0.method_0().list_0[num9].enum5_0 != Enum5.LPCSTR) ? 603531166 : 1483483870) ^ ((int)num2 * -612483973);
+								num6 = ((@class.class21_0.method_0().Parameters[num9].Type != Enum5.LPCSTR) ? 603531166 : 1483483870) ^ ((int)num2 * -612483973);
 								continue;
 							case 11u:
 								num11 = 0;
@@ -7067,7 +7067,7 @@ public sealed class Class171
 								num6 = 1806823426;
 								continue;
 							case 9u:
-								num6 = ((@class.class21_0.method_0().list_0[num8].enum5_0 != Enum5.QWORD) ? 999067885 : 24045617) ^ ((int)num2 * -1483361820);
+								num6 = ((@class.class21_0.method_0().Parameters[num8].Type != Enum5.QWORD) ? 999067885 : 24045617) ^ ((int)num2 * -1483361820);
 								continue;
 							case 8u:
 								num6 = (smethod_427(gform0_0.gclass2_0) ? 1596134350 : 1875134809);
@@ -7076,7 +7076,7 @@ public sealed class Class171
 								num6 = ((int)num2 * -1199280702) ^ 0x4B2314FA;
 								continue;
 							case 6u:
-								@class.class21_0.method_0().list_0 = new List<Class17>();
+								@class.class21_0.method_0().Parameters = new List<ExportParameter>();
 								num6 = (int)(num2 * 932447528) ^ -163800271;
 								continue;
 							case 5u:
@@ -7896,7 +7896,7 @@ public sealed class Class171
 		return !smethod_328(class56_0, class56_1);
 	}
 
-	internal static void smethod_50(Form3 form3_0, string string_0, string string_1)
+	internal static void smethod_50(DependencyInstallerForm form3_0, string string_0, string string_1)
 	{
 		form3_0.string_0 = string_0;
 		form3_0.string_1 = string_1;
@@ -8856,10 +8856,10 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_79(GForm0 gform0_0)
+	internal static void smethod_79(MainForm gform0_0)
 	{
 		StringBuilder stringBuilder = new StringBuilder("Extreme Injector v");
-		Version version = typeof(GForm0).Assembly.GetName().Version;
+		Version version = typeof(MainForm).Assembly.GetName().Version;
 		while (true)
 		{
 			int num = -1107503483;
@@ -9089,7 +9089,7 @@ public sealed class Class171
 	[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
 	internal static extern IntPtr GetModuleHandle(string string_0);
 
-	internal static void smethod_88(Form4 form4_0)
+	internal static void smethod_88(ProcessInspectorForm form4_0)
 	{
 		Class76 @class = ((Class75)form4_0.dataGridView_1.SelectedRows[0].Tag).method_9();
 		if (@class.struct40_0.uint_3 == 5)
@@ -9750,12 +9750,12 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_104(GForm1 gform1_0, IEnumerable<GForm1.Class32> ienumerable_0)
+	internal static void smethod_104(AdvancedScrambleSettingsForm gform1_0, IEnumerable<AdvancedScrambleSettingsForm.Class32> ienumerable_0)
 	{
-		IEnumerator<GForm1.Class32> enumerator = ienumerable_0.GetEnumerator();
+		IEnumerator<AdvancedScrambleSettingsForm.Class32> enumerator = ienumerable_0.GetEnumerator();
 		try
 		{
-			GForm1.Class32 current = default(GForm1.Class32);
+			AdvancedScrambleSettingsForm.Class32 current = default(AdvancedScrambleSettingsForm.Class32);
 			while (true)
 			{
 				int num = (enumerator.MoveNext() ? 852654070 : 898221549);
@@ -9767,8 +9767,8 @@ public sealed class Class171
 						num = 852654070;
 						continue;
 					case 2u:
-						current.method_0().CheckedChanged += GForm1.Class34._003C_003E9.method_0;
-						current.method_0().Checked = (bool)current.method_2().GetValue(Class12.class12_0.class14_0.injectorScrambleOptions_0);
+						current.method_0().CheckedChanged += AdvancedScrambleSettingsForm.Class34._003C_003E9.method_0;
+						current.method_0().Checked = (bool)current.method_2().GetValue(ApplicationSettings.Current.Options.Scramble);
 						num = 900190036;
 						continue;
 					case 1u:
@@ -9949,7 +9949,7 @@ public sealed class Class171
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool GetExitCodeProcess(IntPtr intptr_0, out uint uint_0);
 
-	internal static void smethod_111(GForm0 gform0_0, int int_0)
+	internal static void smethod_111(MainForm gform0_0, int int_0)
 	{
 		if (int_0 == -1)
 		{
@@ -9968,7 +9968,7 @@ public sealed class Class171
 			case 4u:
 				break;
 			case 2u:
-				Class12.smethod_1();
+				ApplicationSettings.Save();
 				num = (int)(num2 * 170104945) ^ -1189759056;
 				continue;
 			default:
@@ -9987,7 +9987,7 @@ public sealed class Class171
 		DataGridViewRow dataGridViewRow = gform0_0.dataGridView_0.Rows[int_0];
 		bool flag = !(bool)dataGridViewRow.Cells[0].Value;
 		dataGridViewRow.Cells[0].Value = flag;
-		((GForm0.Class21)dataGridViewRow.Tag).method_0().bool_0 = flag;
+		((MainForm.Class21)dataGridViewRow.Tag).method_0().Enabled = flag;
 		num = 2078513177;
 		goto IL_001d;
 	}
@@ -10040,9 +10040,9 @@ public sealed class Class171
 		return gclass4_0.class154_0;
 	}
 
-	internal static void smethod_114(Form3 form3_0)
+	internal static void smethod_114(DependencyInstallerForm form3_0)
 	{
-		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(Form3));
+		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(DependencyInstallerForm));
 		while (true)
 		{
 			int num = -1329755379;
@@ -11118,9 +11118,9 @@ public sealed class Class171
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool TerminateThread(IntPtr intptr_0, int int_0);
 
-	internal static object smethod_138(Class17 class17_0)
+	internal static object smethod_138(ExportParameter class17_0)
 	{
-		if (class17_0.enum5_0 != Enum5.LPCSTR)
+		if (class17_0.Type != Enum5.LPCSTR)
 		{
 			char result = default(char);
 			while (true)
@@ -11136,17 +11136,17 @@ public sealed class Class171
 					case 7u:
 						goto IL_0032;
 					case 5u:
-						num = ((class17_0.enum5_0 == Enum5.LPCWSTR) ? (-1735061705) : (-489017136)) ^ (int)(num2 * 25929941);
+						num = ((class17_0.Type == Enum5.LPCWSTR) ? (-1735061705) : (-489017136)) ^ (int)(num2 * 25929941);
 						continue;
 					case 3u:
-						num = (char.TryParse(class17_0.string_0, out result) ? (-1648022941) : (-1949091339)) ^ (int)(num2 * 713691138);
+						num = (char.TryParse(class17_0.Value, out result) ? (-1648022941) : (-1949091339)) ^ (int)(num2 * 713691138);
 						continue;
 					case 0u:
 						goto end_IL_00ac;
 					default:
 						try
 						{
-							object obj = new Int64Converter().ConvertFromString(class17_0.string_0);
+							object obj = new Int64Converter().ConvertFromString(class17_0.Value);
 							if (obj != null)
 							{
 								return (long)obj;
@@ -11159,14 +11159,14 @@ public sealed class Class171
 					case 4u:
 						return (long)result;
 					case 6u:
-						return float.Parse(class17_0.string_0);
+						return float.Parse(class17_0.Value);
 					case 1u:
 						goto end_IL_00e2;
 					}
-					num = ((class17_0.enum5_0 == Enum5.BYTE) ? (-156496262) : (-401896299));
+					num = ((class17_0.Type == Enum5.BYTE) ? (-156496262) : (-401896299));
 					continue;
 					IL_0032:
-					num = ((class17_0.enum5_0 != Enum5.FLOAT) ? (-1524535812) : (-1745716555));
+					num = ((class17_0.Type != Enum5.FLOAT) ? (-1524535812) : (-1745716555));
 					continue;
 					end_IL_00ac:
 					break;
@@ -11176,7 +11176,7 @@ public sealed class Class171
 				break;
 			}
 		}
-		return class17_0.string_0;
+		return class17_0.Value;
 	}
 
 	[DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -12569,9 +12569,9 @@ public sealed class Class171
 	[DllImport("shell32.dll")]
 	internal static extern uint DragQueryFile(IntPtr intptr_0, uint uint_0, [Out] StringBuilder stringBuilder_0, uint uint_1);
 
-	internal static GForm0.Class21[] smethod_154(GForm0 gform0_0)
+	internal static MainForm.Class21[] smethod_154(MainForm gform0_0)
 	{
-		return gform0_0.dataGridView_0.Rows.Cast<DataGridViewRow>().Select(GForm0.Class23._003C_003E9.method_1).Where(GForm0.Class23._003C_003E9.method_2)
+		return gform0_0.dataGridView_0.Rows.Cast<DataGridViewRow>().Select(MainForm.Class23._003C_003E9.method_1).Where(MainForm.Class23._003C_003E9.method_2)
 			.ToArray();
 	}
 
@@ -12673,9 +12673,9 @@ public sealed class Class171
 		class5_0.BaseStream.Position = long_0;
 	}
 
-	internal static void smethod_158(GForm0 gform0_0, string string_0, Exception exception_0)
+	internal static void smethod_158(MainForm gform0_0, string string_0, Exception exception_0)
 	{
-		GForm0.Class31 @class = new GForm0.Class31();
+		MainForm.Class31 @class = new MainForm.Class31();
 		while (true)
 		{
 			int num = 604669233;
@@ -13539,19 +13539,19 @@ public sealed class Class171
 		smethod_352(class63_0, Enum7.const_419, class53_0);
 	}
 
-	internal static void smethod_172(Class16 class16_0)
+	internal static void smethod_172(ModuleEntry class16_0)
 	{
-		if (!File.Exists(class16_0.string_0))
+		if (!File.Exists(class16_0.Path))
 		{
 			return;
 		}
 		Class154 @class = null;
 		try
 		{
-			FileStream fileStream = new FileStream(class16_0.string_0, FileMode.Open, FileAccess.Read, FileShare.Read);
+			FileStream fileStream = new FileStream(class16_0.Path, FileMode.Open, FileAccess.Read, FileShare.Read);
 			try
 			{
-				@class = Class6.smethod_3<Class8>(fileStream, class16_0.string_0, bool_0: false, Enum39.const_0);
+				@class = Class6.smethod_3<Class8>(fileStream, class16_0.Path, bool_0: false, Enum39.const_0);
 				while (true)
 				{
 					IL_0079:
@@ -13767,7 +13767,7 @@ public sealed class Class171
 		return smethod_282(class166_0, (int)(class166_0.class5_0.BaseStream.Position - class166_0.long_0), int_0);
 	}
 
-	internal static void smethod_177(string string_0, GForm0 gform0_0, string string_1)
+	internal static void smethod_177(string string_0, MainForm gform0_0, string string_1)
 	{
 		MessageBox.Show(gform0_0, "The DLL you have selected, \"" + string_1 + "\" requires \"" + string_0 + "\" in order to work properly, but you are running Windows XP which does not support it. Please notify the creator of the DLL to build in Release mode with XP compatibility.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 	}
@@ -15087,7 +15087,7 @@ public sealed class Class171
 		class5_0.BaseStream.Position = uint_0;
 	}
 
-	internal static void smethod_203(string string_0, string string_1, string string_2, Class154 class154_0, string string_3, GForm0 gform0_0, string string_4, bool bool_0, string string_5, bool bool_1, string string_6)
+	internal static void smethod_203(string string_0, string string_1, string string_2, Class154 class154_0, string string_3, MainForm gform0_0, string string_4, bool bool_0, string string_5, bool bool_1, string string_6)
 	{
 		if (bool_0)
 		{
@@ -15107,7 +15107,7 @@ public sealed class Class171
 			{
 			case 11u:
 			{
-				Form3 form = new Form3();
+				DependencyInstallerForm form = new DependencyInstallerForm();
 				smethod_29(form, string_0, string_1, "vcredist_" + (smethod_19(class154_0) ? "x86" : "x64") + ".exe");
 				form.ShowDialog();
 				num = -223346627;
@@ -15425,11 +15425,11 @@ public sealed class Class171
 		return smethod_183(GetCurrentProcess(), (int)GetCurrentProcessId());
 	}
 
-	internal static void smethod_212(GForm0 gform0_0, int int_0, string string_0)
+	internal static void smethod_212(MainForm gform0_0, int int_0, string string_0)
 	{
-		GForm0.Class27 @class = new GForm0.Class27();
+		MainForm.Class27 @class = new MainForm.Class27();
 		int num3 = default(int);
-		GForm0.Class28 class2 = default(GForm0.Class28);
+		MainForm.Class28 class2 = default(MainForm.Class28);
 		while (true)
 		{
 			int num = 388441957;
@@ -15455,7 +15455,7 @@ public sealed class Class171
 					num = ((num3 >= @class.int_0) ? 1326681373 : 270861812);
 					continue;
 				case 6u:
-					class2 = new GForm0.Class28();
+					class2 = new MainForm.Class28();
 					num = 2060011901;
 					continue;
 				case 5u:
@@ -15530,7 +15530,7 @@ public sealed class Class171
 
 	internal static void smethod_214(GClass2 gclass2_0)
 	{
-		Form4 form = new Form4();
+		ProcessInspectorForm form = new ProcessInspectorForm();
 		form.method_1(gclass2_0);
 		form.ShowDialog();
 	}
@@ -15578,9 +15578,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static bool smethod_216(ref IntPtr intptr_0, GForm0 gform0_0, [Out] Enum3 enum3_0, string string_0)
+	internal static bool smethod_216(ref IntPtr intptr_0, MainForm gform0_0, [Out] ScramblePreset enum3_0, string string_0)
 	{
-		GForm0.Class30 @class = new GForm0.Class30();
+		MainForm.Class30 @class = new MainForm.Class30();
 		@class.gform0_0 = gform0_0;
 		@class.string_0 = string_0;
 		intptr_0 = IntPtr.Zero;
@@ -15591,7 +15591,7 @@ public sealed class Class171
 			Class154 class154_ = Class7.smethod_13(fileStream, @class.string_0, bool_0: false, Enum39.const_0);
 			if (smethod_19(class154_) != smethod_427(gform0_0.gclass2_0))
 			{
-				GForm0.Class29 class2 = new GForm0.Class29();
+				MainForm.Class29 class2 = new MainForm.Class29();
 				class2.class30_0 = @class;
 				class2.string_0 = (smethod_19(class154_) ? "32-bit" : "64-bit");
 				class2.string_1 = (smethod_427(gform0_0.gclass2_0) ? "32-bit" : "64-bit");
@@ -15634,7 +15634,7 @@ public sealed class Class171
 				}
 			}
 		}
-		Class14 class14_ = Class12.class12_0.class14_0;
+		InjectionOptions class14_ = ApplicationSettings.Current.Options;
 		string text2 = default(string);
 		string text = default(string);
 		string path = default(string);
@@ -15661,7 +15661,7 @@ public sealed class Class171
 					num3 = ((int)num2 * -1611286360) ^ 0x15D10E84;
 					continue;
 				case 2u:
-					num3 = (class14_.bool_2 ? 1887908592 : 1097553202) ^ ((int)num2 * -801763565);
+					num3 = (class14_.StealthInject ? 1887908592 : 1097553202) ^ ((int)num2 * -801763565);
 					continue;
 				case 1u:
 					goto IL_01ee;
@@ -15754,7 +15754,7 @@ public sealed class Class171
 				}
 				goto IL_03cd;
 				IL_01ee:
-				if (enum3_0 != Enum3.const_0)
+				if (enum3_0 != ScramblePreset.None)
 				{
 					num3 = 1616631776;
 					continue;
@@ -15789,17 +15789,17 @@ public sealed class Class171
 				smethod_325(gform0_0, text, @class.string_0);
 				goto IL_03da;
 				IL_03da:
-				Enum4 enum4_ = class14_.Enum4_0;
+				InjectionMethod enum4_ = class14_.Method;
 				try
 				{
-					if (enum4_ == Enum4.const_4)
+					if (enum4_ == InjectionMethod.ManualMap)
 					{
-						Class13 class13_ = class14_.class13_0;
+						AdvancedInjectionOptions class13_ = class14_.Advanced;
 						Class89 class3 = new Class89(gform0_0.gclass2_0);
 						try
 						{
-							class3.method_18(class13_.bool_0);
-							class3.method_25(class13_.bool_2);
+							class3.method_18(class13_.HideFromDebugger);
+							class3.method_25(class13_.DisableExceptionSupport);
 							while (true)
 							{
 								IL_04a1:
@@ -15810,9 +15810,9 @@ public sealed class Class171
 									switch ((num2 = (uint)(num8 ^ 0x7007E065)) % 4)
 									{
 									case 1u:
-										class3.method_31(class13_.bool_1);
-										class3.method_27(class14_.bool_3);
-										class3.method_33(class13_.bool_3);
+										class3.method_31(class13_.ManualResolveImports);
+										class3.method_27(class14_.ErasePeHeaders);
+										class3.method_33(class13_.DisableSehValidation);
 										intptr_0 = class3.method_0BA6(@class.string_0);
 										num9 = ((class3.method_34() != null) ? 1628520009 : 932593972);
 										goto IL_0475;
@@ -15871,8 +15871,8 @@ public sealed class Class171
 					}
 					else
 					{
-						Class85 class4 = (Class85)Activator.CreateInstance(GForm0.dictionary_0[enum4_], gform0_0.gclass2_0);
-						class4.method_18(class14_.class13_0.bool_0);
+						Class85 class4 = (Class85)Activator.CreateInstance(MainForm.dictionary_0[enum4_], gform0_0.gclass2_0);
+						class4.method_18(class14_.Advanced.HideFromDebugger);
 						while (true)
 						{
 							int num11 = 1553830076;
@@ -15895,7 +15895,7 @@ public sealed class Class171
 							end_IL_056b:
 							break;
 						}
-						if (class14_.bool_3)
+						if (class14_.ErasePeHeaders)
 						{
 							try
 							{
@@ -15943,7 +15943,7 @@ public sealed class Class171
 								smethod_158(gform0_0, "An error occurred while erasing the PE for \"" + Path.GetFileName(text) + "\"", exception_);
 							}
 						}
-						if (class14_.bool_4)
+						if (class14_.HideModule)
 						{
 							try
 							{
@@ -16439,9 +16439,9 @@ public sealed class Class171
 		return value;
 	}
 
-	internal static void smethod_233(Form2 form2_0)
+	internal static void smethod_233(ManualMapOptionsForm form2_0)
 	{
-		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(Form2));
+		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(ManualMapOptionsForm));
 		while (true)
 		{
 			int num = 1286435599;
@@ -16670,9 +16670,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_234(GForm1 gform1_0)
+	internal static void smethod_234(AdvancedScrambleSettingsForm gform1_0)
 	{
-		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(GForm1));
+		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(AdvancedScrambleSettingsForm));
 		while (true)
 		{
 			int num = -621873833;
@@ -17217,7 +17217,7 @@ public sealed class Class171
 	[DllImport("kernel32.dll", SetLastError = true)]
 	internal static extern bool QueryFullProcessImageName([In] IntPtr intptr_0, [In] int int_0, [Out] StringBuilder stringBuilder_0, ref int int_1);
 
-	internal static void smethod_237(GForm1 gform1_0)
+	internal static void smethod_237(AdvancedScrambleSettingsForm gform1_0)
 	{
 		bool enabled = gform1_0.checkBox_3.Checked;
 		gform1_0.checkBox_9.Enabled = enabled;
@@ -17278,7 +17278,7 @@ public sealed class Class171
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool ChangeWindowMessageFilter(uint uint_0, Class10.Enum2 enum2_0);
 
-	internal static void smethod_240(Class154 class154_0, string string_0, GForm0 gform0_0)
+	internal static void smethod_240(Class154 class154_0, string string_0, MainForm gform0_0)
 	{
 		bool flag2 = false;
 		if (!string_0.StartsWith("msvc", StringComparison.OrdinalIgnoreCase))
@@ -17733,14 +17733,14 @@ public sealed class Class171
 	[DllImport("kernel32.dll")]
 	internal static extern ulong VerSetConditionMask(ulong ulong_0, uint uint_0, byte byte_0);
 
-	internal static string smethod_243(GForm0.Class21 class21_0)
+	internal static string smethod_243(MainForm.Class21 class21_0)
 	{
-		return class21_0.method_0().string_0;
+		return class21_0.method_0().Path;
 	}
 
 	internal static void smethod_244(GClass2 gclass2_0)
 	{
-		GForm2 gForm = new GForm2();
+		SettingsForm gForm = new SettingsForm();
 		gForm.method_1(gclass2_0);
 		gForm.button_6.Enabled = gclass2_0 != null;
 		gForm.ShowDialog();
@@ -18339,9 +18339,9 @@ public sealed class Class171
 		return smethod_161(1u, (IntPtr)long_0, class58_0);
 	}
 
-	internal static void smethod_258(GForm2 gform2_0)
+	internal static void smethod_258(SettingsForm gform2_0)
 	{
-		Class14 class14_ = Class12.class12_0.class14_0;
+		InjectionOptions class14_ = ApplicationSettings.Current.Options;
 		while (true)
 		{
 			int num = 336446219;
@@ -18351,43 +18351,43 @@ public sealed class Class171
 				switch ((num2 = (uint)(num ^ 0x21E75A13)) % 10)
 				{
 				case 9u:
-					gform2_0.panel_0.BackColor = class14_.Color_1;
+					gform2_0.panel_0.BackColor = class14_.BackgroundColor2;
 					num = ((int)num2 * -713785333) ^ 0x3796121E;
 					continue;
 				case 8u:
-					gform2_0.checkBox_4.Checked = class14_.bool_3;
+					gform2_0.checkBox_4.Checked = class14_.ErasePeHeaders;
 					num = ((int)num2 * -179221261) ^ 0x7709B898;
 					continue;
 				case 7u:
-					gform2_0.numericUpDown_0.Value = class14_.int_2;
+					gform2_0.numericUpDown_0.Value = class14_.DelayBetweenModules;
 					num = ((int)num2 * -590752730) ^ 0x5F67E55B;
 					continue;
 				case 6u:
-					gform2_0.numericUpDown_1.Value = class14_.int_1;
+					gform2_0.numericUpDown_1.Value = class14_.DelayBeforeInjection;
 					num = (int)(num2 * 1873854063) ^ -1436503997;
 					continue;
 				case 4u:
-					gform2_0.comboBox_0.SelectedIndex = (int)class14_.Enum4_0;
-					gform2_0.panel_2.BackColor = class14_.Color_2;
-					gform2_0.panel_1.BackColor = class14_.Color_0;
+					gform2_0.comboBox_0.SelectedIndex = (int)class14_.Method;
+					gform2_0.panel_2.BackColor = class14_.TextColor;
+					gform2_0.panel_1.BackColor = class14_.BackgroundColor1;
 					num = (int)((num2 * 540263552) ^ 0x3670B412);
 					continue;
 				case 3u:
-					gform2_0.checkBox_1.Checked = class14_.bool_1;
+					gform2_0.checkBox_1.Checked = class14_.CloseOnInject;
 					num = ((int)num2 * -450971630) ^ 0x1ACB9788;
 					continue;
 				case 2u:
-					gform2_0.checkBox_2.Checked = class14_.bool_0;
+					gform2_0.checkBox_2.Checked = class14_.AutoInject;
 					num = (int)(num2 * 1371463133) ^ -1356489936;
 					continue;
 				case 1u:
-					gform2_0.checkBox_0.Checked = class14_.bool_2;
+					gform2_0.checkBox_0.Checked = class14_.StealthInject;
 					num = (int)((num2 * 1677704227) ^ 0xE9EAACB);
 					continue;
 				case 0u:
 					break;
 				default:
-					gform2_0.checkBox_3.Checked = class14_.bool_4;
+					gform2_0.checkBox_3.Checked = class14_.HideModule;
 					smethod_421(gform2_0);
 					return;
 				}
@@ -18472,7 +18472,7 @@ public sealed class Class171
 		goto IL_00dd;
 	}
 
-	internal static void smethod_261(Class154 class154_0, GForm0 gform0_0)
+	internal static void smethod_261(Class154 class154_0, MainForm gform0_0)
 	{
 		if (class154_0.method_10() == null)
 		{
@@ -20392,9 +20392,9 @@ public sealed class Class171
 		class53_0.struct19_0.uint_2 |= 8u;
 	}
 
-	internal static void smethod_289(GForm0 gform0_0)
+	internal static void smethod_289(MainForm gform0_0)
 	{
-		Color color_ = Class12.class12_0.class14_0.Color_2;
+		Color color_ = ApplicationSettings.Current.Options.TextColor;
 		while (true)
 		{
 			int num = 358457720;
@@ -20748,9 +20748,9 @@ public sealed class Class171
 	[DllImport("ntdll.dll", SetLastError = true)]
 	internal static extern uint NtQueryInformationThread(IntPtr intptr_0, Class124.Enum25 enum25_0, out Class124.Struct49 struct49_0, int int_0, out int int_1);
 
-	internal static void smethod_294(GForm2 gform2_0)
+	internal static void smethod_294(SettingsForm gform2_0)
 	{
-		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(GForm2));
+		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(SettingsForm));
 		while (true)
 		{
 			int num = -1705853563;
@@ -21740,9 +21740,9 @@ public sealed class Class171
 		goto IL_027c;
 	}
 
-	internal static void smethod_296(GForm0.Class21 class21_0, string string_0)
+	internal static void smethod_296(MainForm.Class21 class21_0, string string_0)
 	{
-		class21_0.method_0().string_0 = string_0;
+		class21_0.method_0().Path = string_0;
 	}
 
 	internal static void smethod_297(Class53 class53_0)
@@ -22381,9 +22381,9 @@ public sealed class Class171
 		smethod_137(class53_0, Enum7.const_266, class63_0, class57_0);
 	}
 
-	internal static void smethod_307(Form1 form1_0)
+	internal static void smethod_307(AboutForm form1_0)
 	{
-		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(Form1));
+		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(AboutForm));
 		while (true)
 		{
 			int num = 239988398;
@@ -23243,9 +23243,9 @@ public sealed class Class171
 		goto IL_0050;
 	}
 
-	internal static void smethod_325(GForm0 gform0_0, string string_0, string string_1)
+	internal static void smethod_325(MainForm gform0_0, string string_0, string string_1)
 	{
-		InjectorScrambleOptions injectorScrambleOptions_ = Class12.class12_0.class14_0.injectorScrambleOptions_0;
+		InjectorScrambleOptions injectorScrambleOptions_ = ApplicationSettings.Current.Options.Scramble;
 		Class131 @class = new Class131();
 		@class.method_21(injectorScrambleOptions_.CreateNewEntryPoint);
 		@class.method_3(injectorScrambleOptions_.InsertExtraSections);
@@ -23462,20 +23462,20 @@ public sealed class Class171
 		return smethod_161(8u, (IntPtr)long_0, class58_0);
 	}
 
-	internal static void smethod_330(GForm2 gform2_0)
+	internal static void smethod_330(SettingsForm gform2_0)
 	{
-		Class14 class14_ = Class12.class12_0.class14_0;
-		class14_.Enum4_0 = (Enum4)gform2_0.comboBox_0.SelectedIndex;
-		class14_.Color_2 = gform2_0.panel_2.BackColor;
-		class14_.Color_0 = gform2_0.panel_1.BackColor;
-		class14_.Color_1 = gform2_0.panel_0.BackColor;
-		class14_.bool_0 = gform2_0.checkBox_2.Checked;
-		class14_.bool_2 = gform2_0.checkBox_0.Checked;
-		class14_.bool_1 = gform2_0.checkBox_1.Checked;
-		class14_.int_2 = (int)gform2_0.numericUpDown_0.Value;
-		class14_.int_1 = (int)gform2_0.numericUpDown_1.Value;
-		class14_.bool_3 = gform2_0.checkBox_4.Checked;
-		class14_.bool_4 = gform2_0.checkBox_3.Checked;
+		InjectionOptions class14_ = ApplicationSettings.Current.Options;
+		class14_.Method = (InjectionMethod)gform2_0.comboBox_0.SelectedIndex;
+		class14_.TextColor = gform2_0.panel_2.BackColor;
+		class14_.BackgroundColor1 = gform2_0.panel_1.BackColor;
+		class14_.BackgroundColor2 = gform2_0.panel_0.BackColor;
+		class14_.AutoInject = gform2_0.checkBox_2.Checked;
+		class14_.StealthInject = gform2_0.checkBox_0.Checked;
+		class14_.CloseOnInject = gform2_0.checkBox_1.Checked;
+		class14_.DelayBetweenModules = (int)gform2_0.numericUpDown_0.Value;
+		class14_.DelayBeforeInjection = (int)gform2_0.numericUpDown_1.Value;
+		class14_.ErasePeHeaders = gform2_0.checkBox_4.Checked;
+		class14_.HideModule = gform2_0.checkBox_3.Checked;
 		while (true)
 		{
 			int num = -1681404562;
@@ -23495,7 +23495,7 @@ public sealed class Class171
 				}
 				break;
 				IL_00d0:
-				Class12.smethod_1();
+				ApplicationSettings.Save();
 				num = (int)((num2 * 1317291613) ^ 0x79221AD5);
 			}
 		}
@@ -24125,7 +24125,7 @@ public sealed class Class171
 	[DllImport("ntdll.dll", SetLastError = true)]
 	internal static extern uint NtQuerySystemInformation(Class124.Enum24 enum24_0, IntPtr intptr_0, int int_0, out int int_1);
 
-	internal static bool smethod_337(GForm0 gform0_0, string string_0, string string_1, string string_2, bool bool_0, string string_3)
+	internal static bool smethod_337(MainForm gform0_0, string string_0, string string_1, string string_2, bool bool_0, string string_3)
 	{
 		if (bool_0)
 		{
@@ -24307,10 +24307,10 @@ public sealed class Class171
 				case 18u:
 					goto IL_0113;
 				case 17u:
-					form0_0.method_0().list_0.Add(new Class17
+					form0_0.method_0().Parameters.Add(new ExportParameter
 					{
-						enum5_0 = (Enum5)form0_0.comboBox_2.SelectedIndex,
-						string_0 = string_0
+						Type = (Enum5)form0_0.comboBox_2.SelectedIndex,
+						Value = string_0
 					});
 					num = 660552184;
 					continue;
@@ -24319,13 +24319,13 @@ public sealed class Class171
 				case 15u:
 					goto IL_016b;
 				case 14u:
-					form0_0.method_0().list_0 = new List<Class17>();
+					form0_0.method_0().Parameters = new List<ExportParameter>();
 					num = (int)((num2 * 746177784) ^ 0xF0A0ECA);
 					continue;
 				case 11u:
 					goto IL_01d0;
 				case 10u:
-					num = ((form0_0.method_0().list_0 != null) ? (-322189534) : (-1727077499)) ^ ((int)num2 * -684848276);
+					num = ((form0_0.method_0().Parameters != null) ? (-322189534) : (-1727077499)) ^ ((int)num2 * -684848276);
 					continue;
 				case 9u:
 					goto IL_0235;
@@ -25052,7 +25052,7 @@ public sealed class Class171
 	[DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
 	internal static extern long StrFormatByteSize(long long_0, StringBuilder stringBuilder_0, int int_0);
 
-	internal static void smethod_349(bool bool_0, Class16 class16_0, bool bool_1, GForm0 gform0_0, string string_0)
+	internal static void smethod_349(bool bool_0, ModuleEntry class16_0, bool bool_1, MainForm gform0_0, string string_0)
 	{
 		if (!File.Exists(string_0))
 		{
@@ -25073,7 +25073,7 @@ public sealed class Class171
 						switch ((uint)(num ^ 0x866414E) % 5u)
 						{
 						case 4u:
-							num = ((!smethod_243((GForm0.Class21)((DataGridViewRow)enumerator.Current).Tag).Equals(string_0, StringComparison.OrdinalIgnoreCase)) ? 799792168 : 2026028820);
+							num = ((!smethod_243((MainForm.Class21)((DataGridViewRow)enumerator.Current).Tag).Equals(string_0, StringComparison.OrdinalIgnoreCase)) ? 799792168 : 2026028820);
 							continue;
 						case 2u:
 							num = 1770609057;
@@ -25159,9 +25159,9 @@ public sealed class Class171
 							{
 							}
 							int index = gform0_0.dataGridView_0.Rows.Add(bool_0, Path.GetFileName(string_0));
-							GForm0.Class21 class2 = new GForm0.Class21(class16_0);
+							MainForm.Class21 class2 = new MainForm.Class21(class16_0);
 							smethod_296(class2, string_0);
-							GForm0.Class21 class3 = class2;
+							MainForm.Class21 class3 = class2;
 							while (true)
 							{
 								int num5 = 1051019898;
@@ -25170,7 +25170,7 @@ public sealed class Class171
 									switch ((num3 = (uint)(num5 ^ 0x866414E)) % 7)
 									{
 									case 6u:
-										Class12.class12_0.list_0.Add(class3.method_0());
+										ApplicationSettings.Current.Modules.Add(class3.method_0());
 										num5 = (int)(num3 * 215100400) ^ -1017146116;
 										continue;
 									case 4u:
@@ -25273,9 +25273,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_350(bool bool_0, GForm0 gform0_0)
+	internal static void smethod_350(bool bool_0, MainForm gform0_0)
 	{
-		if (!Class12.class12_0.class14_0.bool_1)
+		if (!ApplicationSettings.Current.Options.CloseOnInject)
 		{
 			goto IL_0063;
 		}
@@ -25305,7 +25305,7 @@ public sealed class Class171
 				num = 841678329;
 				continue;
 			case 6u:
-				num = ((!Class12.class12_0.class14_0.bool_0) ? (-1810448472) : (-1107754714)) ^ (int)(num2 * 1240776510);
+				num = ((!ApplicationSettings.Current.Options.AutoInject) ? (-1810448472) : (-1107754714)) ^ (int)(num2 * 1240776510);
 				continue;
 			case 5u:
 				smethod_380(gform0_0, gclass2_);
@@ -25340,7 +25340,7 @@ public sealed class Class171
 		goto IL_0110;
 	}
 
-	internal static void smethod_351(Class154 class154_0, string string_0, GForm0 gform0_0)
+	internal static void smethod_351(Class154 class154_0, string string_0, MainForm gform0_0)
 	{
 		if (!string_0.StartsWith("d3dx9_", StringComparison.OrdinalIgnoreCase))
 		{
@@ -25463,7 +25463,7 @@ public sealed class Class171
 						break;
 					case 2u:
 					{
-						Form3 form = new Form3();
+						DependencyInstallerForm form = new DependencyInstallerForm();
 						smethod_29(form, "https://www.microsoft.com/download/details.aspx?id=35", null, "dxwebsetup.exe");
 						form.ShowDialog();
 						num5 = ((int)num2 * -1141238744) ^ -883323518;
@@ -25570,7 +25570,7 @@ public sealed class Class171
 
 	internal static void smethod_354(string[] string_0)
 	{
-		Class18.bool_0 = true;
+		Program.UsesExternalSettings = true;
 		char[] array = string_0[0].ToCharArray();
 		Array.Reverse(array);
 		try
@@ -25588,7 +25588,7 @@ public sealed class Class171
 						num = ((!File.Exists(text)) ? (-1984382835) : (-7205414)) ^ (int)(num2 * 1554585898);
 						continue;
 					case 1u:
-						Class12.class12_0 = Class12.smethod_0(text);
+						ApplicationSettings.Current = ApplicationSettings.Load(text);
 						num = ((int)num2 * -1023680343) ^ 0x2574E04A;
 						continue;
 					default:
@@ -26769,7 +26769,7 @@ public sealed class Class171
 		return false;
 	}
 
-	internal static void smethod_380(GForm0 gform0_0, GClass2 gclass2_0)
+	internal static void smethod_380(MainForm gform0_0, GClass2 gclass2_0)
 	{
 		if (gform0_0.pictureBox_0.BackgroundImage != null)
 		{
@@ -26900,11 +26900,11 @@ public sealed class Class171
 						switch ((num2 = (uint)(num5 ^ 0x16FE6775)) % 6)
 						{
 						case 5u:
-							Class12.class12_0.string_0 = gform0_0.textBox_0.Text;
+							ApplicationSettings.Current.ProcessName = gform0_0.textBox_0.Text;
 							num5 = ((int)num2 * -256342931) ^ -598566268;
 							continue;
 						case 4u:
-							Class12.smethod_1();
+							ApplicationSettings.Save();
 							num5 = (int)(num2 * 1096574868) ^ -806517515;
 							continue;
 						case 3u:
@@ -26912,7 +26912,7 @@ public sealed class Class171
 							num5 = (int)((num2 * 316077633) ^ 0x16407D15);
 							continue;
 						case 0u:
-							num5 = ((!Class12.class12_0.class14_0.bool_0) ? (-14799428) : (-223502948)) ^ ((int)num2 * -1715865287);
+							num5 = ((!ApplicationSettings.Current.Options.AutoInject) ? (-14799428) : (-223502948)) ^ ((int)num2 * -1715865287);
 							continue;
 						default:
 							return;
@@ -27092,7 +27092,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_383(GForm0 gform0_0)
+	internal static void smethod_383(MainForm gform0_0)
 	{
 		gform0_0.icontainer_0 = new Container();
 		ComponentResourceManager componentResourceManager = default(ComponentResourceManager);
@@ -27445,7 +27445,7 @@ public sealed class Class171
 					num = (int)(num2 * 1250769651) ^ -1427032670;
 					continue;
 				case 46u:
-					componentResourceManager = new ComponentResourceManager(typeof(GForm0));
+					componentResourceManager = new ComponentResourceManager(typeof(MainForm));
 					gform0_0.label_0 = new System.Windows.Forms.Label();
 					gform0_0.textBox_0 = new TextBox();
 					num = ((int)num2 * -799717845) ^ -1093906566;
@@ -28443,7 +28443,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_405(string string_0, GForm0 gform0_0, string string_1, string string_2, string string_3)
+	internal static void smethod_405(string string_0, MainForm gform0_0, string string_1, string string_2, string string_3)
 	{
 		DialogResult dialogResult = MessageBox.Show(gform0_0, "The DLL you have selected, \"" + string_0 + "\" requires \"" + string_3 + "\" in order to work properly, but it appears you do not have this file on the system or have installed it incorrectly. Extreme Injector can download this file automatically for you. Click 'Yes' to do it automatically, 'No' to do it manually or 'Cancel' to ignore.", "Extreme Injector v3", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
 		if (dialogResult == DialogResult.Yes)
@@ -28466,7 +28466,7 @@ public sealed class Class171
 				continue;
 			case 7u:
 			{
-				Form3 form = new Form3();
+				DependencyInstallerForm form = new DependencyInstallerForm();
 				smethod_50(form, string_2, string_1);
 				form.ShowDialog();
 				num = -1712413616;
@@ -28501,7 +28501,7 @@ public sealed class Class171
 		goto IL_0102;
 	}
 
-	internal static void smethod_406(Form4 form4_0)
+	internal static void smethod_406(ProcessInspectorForm form4_0)
 	{
 		form4_0.icontainer_0 = new Container();
 		ComponentResourceManager componentResourceManager = default(ComponentResourceManager);
@@ -28897,7 +28897,7 @@ public sealed class Class171
 					num = (int)(num2 * 1612143251) ^ -1018879073;
 					continue;
 				case 32u:
-					componentResourceManager = new ComponentResourceManager(typeof(Form4));
+					componentResourceManager = new ComponentResourceManager(typeof(ProcessInspectorForm));
 					num = ((int)num2 * -1936636729) ^ -1851659438;
 					continue;
 				case 31u:
@@ -30392,9 +30392,9 @@ public sealed class Class171
 	[DllImport("kernel32.dll", EntryPoint = "ReadProcessMemory", SetLastError = true)]
 	internal unsafe static extern bool ReadProcessMemory_1(IntPtr intptr_0, IntPtr intptr_1, byte* pByte_0, UIntPtr uintptr_0, UIntPtr* pUintPtr_0);
 
-	internal static void smethod_421(GForm2 gform2_0)
+	internal static void smethod_421(SettingsForm gform2_0)
 	{
-		Enum3 @enum = Class12.class12_0.class14_0.injectorScrambleOptions_0.Detect();
+		ScramblePreset @enum = ApplicationSettings.Current.Options.Scramble.Detect();
 		while (true)
 		{
 			int num = 1333184472;
@@ -30404,10 +30404,10 @@ public sealed class Class171
 				switch ((num2 = (uint)(num ^ 0xB247207)) % 9)
 				{
 				case 6u:
-					num = ((@enum == Enum3.const_1) ? 1483050419 : 371770663);
+					num = ((@enum == ScramblePreset.Custom) ? 1483050419 : 371770663);
 					continue;
 				case 5u:
-					num = ((@enum == Enum3.const_0) ? (-695007426) : (-1407516889)) ^ (int)(num2 * 1622403653);
+					num = ((@enum == ScramblePreset.None) ? (-695007426) : (-1407516889)) ^ (int)(num2 * 1622403653);
 					continue;
 				case 4u:
 					gform2_0.comboBox_1.SelectedIndex = (int)(@enum - 1);
@@ -30847,7 +30847,7 @@ public sealed class Class171
 		smethod_137(class53_0, Enum7.const_266, class63_0, class59_0);
 	}
 
-	internal static void smethod_430(GForm0 gform0_0)
+	internal static void smethod_430(MainForm gform0_0)
 	{
 		if (gform0_0.textBox_0.Text.Contains("."))
 		{

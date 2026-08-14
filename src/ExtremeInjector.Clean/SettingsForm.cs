@@ -11,7 +11,7 @@ using System.Text;
 using System.Windows.Forms;
 using ExtremeInjector;
 
-public sealed class GForm2 : Form
+public sealed class SettingsForm : Form
 {
 	[Serializable]
 	[CompilerGenerated]
@@ -23,7 +23,7 @@ public sealed class GForm2 : Form
 
 		internal bool method_0(object object_0)
 		{
-			return object_0.GetType() == typeof(Attribute0);
+			return object_0.GetType() == typeof(ScramblePresetAttribute);
 		}
 
 		internal static Type smethod_0(object object_0)
@@ -109,7 +109,7 @@ public sealed class GForm2 : Form
 
 	internal ColorDialog colorDialog_0;
 
-	public GForm2()
+	public SettingsForm()
 	{
 		while (true)
 		{
@@ -157,119 +157,28 @@ public sealed class GForm2 : Form
 
 	internal void method_3(object sender, EventArgs e)
 	{
-		new GForm1().ShowDialog();
+		new AdvancedScrambleSettingsForm().ShowDialog();
 		Class171.smethod_421(this);
 	}
 
 	internal void method_4(object sender, EventArgs e)
 	{
-		new Form2().ShowDialog();
+		new ManualMapOptionsForm().ShowDialog();
 	}
 
 	internal void method_5()
 	{
-		FieldInfo[] array = ((GForm2)(object)typeof(InjectorScrambleOptions)).method_16();
-		if (comboBox_1.SelectedIndex == 0)
+		var selectedPreset = comboBox_1.SelectedIndex switch
 		{
-			goto IL_020c;
-		}
-		goto IL_027f;
-		IL_020c:
-		int num = 335506543;
-		goto IL_0211;
-		IL_0211:
-		FieldInfo[] array2 = default(FieldInfo[]);
-		FieldInfo fieldInfo = default(FieldInfo);
-		int num3 = default(int);
-		object obj = default(object);
-		int num5 = default(int);
-		while (true)
-		{
-			uint num2;
-			switch ((num2 = (uint)(num ^ 0x5CE54162)) % 19)
-			{
-			case 18u:
-				array2 = array;
-				num = ((int)num2 * -367903709) ^ 0x7D8E6F02;
-				continue;
-			case 17u:
-				fieldInfo = array2[num3];
-				num = 74003427;
-				continue;
-			case 16u:
-				button_5.Enabled = false;
-				num = (int)((num2 * 1542956286) ^ 0x73245C63);
-				continue;
-			case 15u:
-				array2[num3].SetValue(Class12.class12_0.class14_0.injectorScrambleOptions_0, false);
-				num3++;
-				num = 801499988;
-				continue;
-			case 14u:
-			{
-				int num4 = (int)((Attribute0)obj).method_0();
-				fieldInfo.SetValue(Class12.class12_0.class14_0.injectorScrambleOptions_0, num5 >= num4);
-				num = (int)(num2 * 2094900494) ^ -779081180;
-				continue;
-			}
-			case 13u:
-				button_5.Enabled = true;
-				num = (int)(num2 * 469685797) ^ -1110203276;
-				continue;
-			case 12u:
-				num3++;
-				num = 1333476743;
-				continue;
-			case 11u:
-				array2 = array;
-				num3 = 0;
-				num = (int)((num2 * 1296503411) ^ 0x72B6E272);
-				continue;
-			case 9u:
-				num = ((obj == null) ? 2017708180 : 1721512633) ^ (int)(num2 * 292277522);
-				continue;
-			case 8u:
-				num5 = 2 + comboBox_1.SelectedIndex - 1;
-				num = (int)((num2 * 1837118451) ^ 0x1DE9E466);
-				continue;
-			case 7u:
-				break;
-			case 6u:
-				num = ((int)num2 * -373126672) ^ 0xDF9C37;
-				continue;
-			case 3u:
-				goto IL_01a6;
-			case 2u:
-				num3 = 0;
-				num = (int)(num2 * 530455336) ^ -2028983220;
-				continue;
-			case 1u:
-				obj = fieldInfo.GetCustomAttributes(inherit: false).FirstOrDefault((object object_0) => object_0.GetType() == typeof(Attribute0));
-				num = 2009770873;
-				continue;
-			case 0u:
-				goto end_IL_0211;
-			default:
-				return;
-			case 5u:
-				goto IL_027f;
-			case 4u:
-				return;
-			case 10u:
-				return;
-			}
-			num = ((num3 >= array2.Length) ? 1306111333 : 37215);
-			continue;
-			IL_01a6:
-			num = ((num3 >= array2.Length) ? 926407722 : 453309878);
-			continue;
-			end_IL_0211:
-			break;
-		}
-		goto IL_020c;
-		IL_027f:
-		num = ((comboBox_1.SelectedIndex >= comboBox_1.Items.Count - 1) ? 1306111333 : 2088906825);
-		goto IL_0211;
+			0 => ScramblePreset.None,
+			1 => ScramblePreset.Basic,
+			2 => ScramblePreset.Standard,
+			3 => ScramblePreset.Extreme,
+			_ => ScramblePreset.Custom
+		};
+
+		button_5.Enabled = selectedPreset == ScramblePreset.Custom;
+		ApplicationSettings.Current.Options.Scramble.ApplyPreset(selectedPreset);
 	}
 
 	internal void method_6(object sender, EventArgs e)
@@ -302,8 +211,8 @@ public sealed class GForm2 : Form
 				}
 				break;
 				IL_0021:
-				Class12.class12_0 = new Class12();
-				Class12.smethod_1();
+				ApplicationSettings.Current = new ApplicationSettings();
+				ApplicationSettings.Save();
 				Class171.smethod_258(this);
 				num = (int)(num2 * 874433739) ^ -228795254;
 			}
@@ -327,7 +236,7 @@ public sealed class GForm2 : Form
 
 	internal void method_11(object sender, EventArgs e)
 	{
-		if (!Class12.class12_0.class15_0.bool_2)
+		if (!ApplicationSettings.Current.Warnings.ScrambleAcknowledged)
 		{
 			while (true)
 			{
@@ -342,7 +251,7 @@ public sealed class GForm2 : Form
 						num = (int)((num2 * 233957255) ^ 0x12755E55);
 						continue;
 					case 1u:
-						Class12.class12_0.class15_0.bool_2 = true;
+						ApplicationSettings.Current.Warnings.ScrambleAcknowledged = true;
 						num = ((int)num2 * -238310262) ^ -1069707356;
 						continue;
 					case 0u:
@@ -424,7 +333,7 @@ public sealed class GForm2 : Form
 												continue;
 											}
 											case 4u:
-												injectorScrambleOptions_ = Class12.class12_0.class14_0.injectorScrambleOptions_0;
+												injectorScrambleOptions_ = ApplicationSettings.Current.Options.Scramble;
 												num4 = -1291058490;
 												continue;
 											case 3u:
@@ -676,7 +585,7 @@ public sealed class GForm2 : Form
 							num = ((int)num2 * -1341676039) ^ -50678194;
 							continue;
 						case 9u:
-							Class12.smethod_1();
+							ApplicationSettings.Save();
 							memoryStream = new MemoryStream();
 							num = ((int)num2 * -2079510115) ^ -970640455;
 							continue;
@@ -825,7 +734,7 @@ public sealed class GForm2 : Form
 
 	internal void method_13(object sender, EventArgs e)
 	{
-		colorDialog_0.Color = Class12.class12_0.class14_0.Color_2;
+		colorDialog_0.Color = ApplicationSettings.Current.Options.TextColor;
 		if (colorDialog_0.ShowDialog() == DialogResult.OK)
 		{
 			goto IL_0053;
@@ -841,7 +750,7 @@ public sealed class GForm2 : Form
 			switch ((num2 = (uint)(num ^ -879150788)) % 4)
 			{
 			case 1u:
-				Class12.class12_0.class14_0.Color_2 = colorDialog_0.Color;
+				ApplicationSettings.Current.Options.TextColor = colorDialog_0.Color;
 				num = ((int)num2 * -1234069786) ^ 0x34BD0CED;
 				continue;
 			case 0u:
@@ -864,7 +773,7 @@ public sealed class GForm2 : Form
 
 	internal void method_14(object sender, EventArgs e)
 	{
-		colorDialog_0.Color = Class12.class12_0.class14_0.Color_0;
+		colorDialog_0.Color = ApplicationSettings.Current.Options.BackgroundColor1;
 		if (colorDialog_0.ShowDialog() == DialogResult.OK)
 		{
 			goto IL_0053;
@@ -880,7 +789,7 @@ public sealed class GForm2 : Form
 			switch ((num2 = (uint)(num ^ 0x59219B28)) % 4)
 			{
 			case 1u:
-				Class12.class12_0.class14_0.Color_0 = colorDialog_0.Color;
+				ApplicationSettings.Current.Options.BackgroundColor1 = colorDialog_0.Color;
 				num = (int)(num2 * 946961291) ^ -321877223;
 				continue;
 			case 0u:
@@ -903,7 +812,7 @@ public sealed class GForm2 : Form
 
 	internal void method_15(object sender, EventArgs e)
 	{
-		colorDialog_0.Color = Class12.class12_0.class14_0.Color_1;
+		colorDialog_0.Color = ApplicationSettings.Current.Options.BackgroundColor2;
 		while (true)
 		{
 			int num = 1652796655;
@@ -916,7 +825,7 @@ public sealed class GForm2 : Form
 					num = ((colorDialog_0.ShowDialog() != DialogResult.OK) ? 660861890 : 2098480816) ^ (int)(num2 * 1727397516);
 					continue;
 				case 1u:
-					Class12.class12_0.class14_0.Color_1 = colorDialog_0.Color;
+					ApplicationSettings.Current.Options.BackgroundColor2 = colorDialog_0.Color;
 					num = (int)((num2 * 1503459866) ^ 0x6E3B60A0);
 					continue;
 				case 0u:

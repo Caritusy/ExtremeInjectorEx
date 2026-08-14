@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
-public sealed class Form4 : Form
+public sealed class ProcessInspectorForm : Form
 {
 	[CompilerGenerated]
 	internal GClass2 gclass2_0;
@@ -66,7 +66,7 @@ public sealed class Form4 : Form
 		gclass2_0 = gclass2_1;
 	}
 
-	public Form4()
+	public ProcessInspectorForm()
 	{
 		Class171.smethod_406(this);
 		new Class11(tabControl_0);
