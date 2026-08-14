@@ -27,7 +27,7 @@ public sealed class GClass1
 
 	internal List<Class152> list_0;
 
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	internal Class69 class69_0;
 
@@ -129,12 +129,12 @@ public sealed class GClass1
 		bool_1 = bool_2;
 	}
 
-	internal GClass1(GClass2 gclass2_1, Class69 class69_1, IntPtr intptr_2, bool bool_2)
+	internal GClass1(RemoteProcess gclass2_1, Class69 class69_1, IntPtr intptr_2, bool bool_2)
 		: this(gclass2_1, class69_1, intptr_2, bool_2, bool_3: false)
 	{
 	}
 
-	internal GClass1(GClass2 gclass2_1, Class69 class69_1, IntPtr intptr_2, bool bool_2, bool bool_3)
+	internal GClass1(RemoteProcess gclass2_1, Class69 class69_1, IntPtr intptr_2, bool bool_2, bool bool_3)
 	{
 		method_1(intptr_2);
 		method_11(bool_2);

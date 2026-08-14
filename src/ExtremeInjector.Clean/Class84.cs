@@ -2,7 +2,7 @@ using System;
 
 public abstract class Class84 : Class83
 {
-	protected Class84(GClass2 gclass2_1)
+	protected Class84(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
 	}

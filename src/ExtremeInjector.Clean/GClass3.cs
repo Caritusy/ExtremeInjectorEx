@@ -74,10 +74,10 @@ public sealed class GClass3 : Class84
 		intptr_3 = intptr_4;
 	}
 
-	internal GClass3(GClass2 gclass2_1)
+	internal GClass3(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
-		method_8(gclass2_1.method_0());
+		method_8(gclass2_1.ProcessId);
 		Class171.smethod_357(this);
 	}
 

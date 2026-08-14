@@ -53,11 +53,11 @@ public sealed class Class69 : List<GClass1>
 		}
 	}
 
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	public GClass1 this[string string_0] => Find((GClass1 gclass1_0) => gclass1_0.method_8().Equals(string_0, StringComparison.OrdinalIgnoreCase));
 
-	public Class69(GClass2 gclass2_1)
+	public Class69(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}

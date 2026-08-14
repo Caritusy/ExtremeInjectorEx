@@ -23,7 +23,7 @@ public sealed class Class75
 	[CompilerGenerated]
 	internal ThreadPriorityLevel threadPriorityLevel_0;
 
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	[SpecialName]
 	[CompilerGenerated]
@@ -116,7 +116,7 @@ public sealed class Class75
 						default:
 							goto IL_007b;
 						}
-						if (current.method_0().intptr_0.ToInt64() != gclass2_0.method_0())
+						if (current.method_0().intptr_0.ToInt64() != gclass2_0.ProcessId)
 						{
 							goto end_IL_006c;
 						}
@@ -178,7 +178,7 @@ public sealed class Class75
 		return null;
 	}
 
-	internal Class75(GClass2 gclass2_1, int int_3)
+	internal Class75(RemoteProcess gclass2_1, int int_3)
 	{
 		gclass2_0 = gclass2_1;
 		method_1(int_3);

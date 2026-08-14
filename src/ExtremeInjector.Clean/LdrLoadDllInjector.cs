@@ -3,9 +3,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-public sealed class Class88 : Class85
+public sealed class LdrLoadDllInjector : DllInjector
 {
-	public Class88(GClass2 gclass2_1)
+	public LdrLoadDllInjector(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
 	}
@@ -43,7 +43,7 @@ public sealed class Class88 : Class85
 		}
 	}
 
-	public override IntPtr method_0BA6(string string_0)
+	public override IntPtr Inject(string string_0)
 	{
 		if (!Path.IsPathRooted(string_0))
 		{
@@ -148,7 +148,7 @@ public sealed class Class88 : Class85
 				Class171.smethod_108(this, intPtr);
 				return result;
 			}
-			num = (method_8(method_19().method_0()) ? (-1661214097) : (-211511902));
+			num = (method_8(method_19().ProcessId) ? (-1661214097) : (-211511902));
 			continue;
 			IL_012e:
 			intPtr2 = Class171.smethod_225(Class171.smethod_42(method_19())["ntdll.dll"] ?? throw new FileNotFoundException("Unable to find ntdll.dll in the specified process."), "LdrLoadDll", bool_0: false);

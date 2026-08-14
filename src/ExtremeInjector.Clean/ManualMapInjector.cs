@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-public sealed class Class89(GClass2 gclass2_1) : Class85(gclass2_1)
+public sealed class ManualMapInjector(RemoteProcess gclass2_1) : DllInjector(gclass2_1)
 {
 	[Flags]
 	public enum Enum44
@@ -333,7 +333,7 @@ public sealed class Class89(GClass2 gclass2_1) : Class85(gclass2_1)
 		}
 	}
 
-	public override IntPtr method_0BA6(string string_0)
+	public override IntPtr Inject(string string_0)
 	{
 		method_35(null);
 		while (true)
@@ -485,14 +485,14 @@ public sealed class Class89(GClass2 gclass2_1) : Class85(gclass2_1)
 				return intPtr;
 			}
 			}
-			num = ((!method_19().method_8()) ? 1530193526 : 693834845);
+			num = ((!method_19().IsDepEnabled) ? 1530193526 : 693834845);
 			continue;
 			end_IL_00ce:
 			break;
 		}
 		goto IL_00c9;
 		IL_0120:
-		num = ((!method_8(method_19().method_0())) ? 470025023 : 1798152687);
+		num = ((!method_8(method_19().ProcessId)) ? 470025023 : 1798152687);
 		goto IL_00ce;
 	}
 

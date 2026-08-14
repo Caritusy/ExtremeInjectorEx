@@ -5,9 +5,9 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-public sealed class Class90 : Class85
+public sealed class ThreadHijackInjector : DllInjector
 {
-	public Class90(GClass2 gclass2_1)
+	public ThreadHijackInjector(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
 	}
@@ -45,7 +45,7 @@ public sealed class Class90 : Class85
 		}
 	}
 
-	public override IntPtr method_0BA6(string string_0)
+	public override IntPtr Inject(string string_0)
 	{
 		if (Class127.bool_0)
 		{
@@ -214,7 +214,7 @@ public sealed class Class90 : Class85
 			num = ((!flag) ? 1834549555 : 510167614);
 			continue;
 			IL_03b0:
-			num = ((!method_8(method_19().method_0())) ? 478909834 : 1880433719);
+			num = ((!method_8(method_19().ProcessId)) ? 478909834 : 1880433719);
 			continue;
 			IL_0316:
 			num = ((Class171.ResumeThread(intPtr) != -1) ? 1999961644 : 825188329);

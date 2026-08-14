@@ -6,7 +6,7 @@ using System.Windows.Forms;
 public sealed class ProcessSelectorForm : Form
 {
 	[CompilerGenerated]
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	internal IContainer icontainer_0;
 
@@ -26,14 +26,14 @@ public sealed class ProcessSelectorForm : Form
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal GClass2 method_0()
+	internal RemoteProcess method_0()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(GClass2 gclass2_1)
+	internal void method_1(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
@@ -52,7 +52,7 @@ public sealed class ProcessSelectorForm : Form
 
 	internal void method_3(object sender, EventArgs e)
 	{
-		method_1((GClass2)dataGridView_0.SelectedRows[0].Tag);
+		method_1((RemoteProcess)dataGridView_0.SelectedRows[0].Tag);
 		while (true)
 		{
 			int num = 1639599028;

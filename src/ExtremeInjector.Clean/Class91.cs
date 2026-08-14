@@ -2,7 +2,7 @@ using System;
 
 public sealed class Class91 : Class84
 {
-	public Class91(GClass2 gclass2_1)
+	public Class91(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
 		while (true)
@@ -24,7 +24,7 @@ public sealed class Class91 : Class84
 				}
 				break;
 				IL_0009:
-				method_8(gclass2_1.method_0());
+				method_8(gclass2_1.ProcessId);
 				num = ((int)num2 * -2103905919) ^ 0x519A9F65;
 			}
 		}

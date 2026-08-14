@@ -28,7 +28,7 @@ public sealed class Class93 : Class83
 		}
 	}
 
-	public Class93(GClass2 gclass2_1)
+	public Class93(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
 	}

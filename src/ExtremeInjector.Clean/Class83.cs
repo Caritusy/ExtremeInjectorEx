@@ -7,7 +7,7 @@ public abstract class Class83 : Class82, IDisposable
 	internal bool bool_1;
 
 	[CompilerGenerated]
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	[SpecialName]
 	[CompilerGenerated]
@@ -25,19 +25,19 @@ public abstract class Class83 : Class82, IDisposable
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected internal GClass2 method_19()
+	protected internal RemoteProcess method_19()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected internal void method_20(GClass2 gclass2_1)
+	protected internal void method_20(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
 
-	protected Class83(GClass2 gclass2_1)
+	protected Class83(RemoteProcess gclass2_1)
 	{
 		while (true)
 		{

@@ -157,7 +157,7 @@ public static class Class169
 			goto IL_0167;
 			IL_0167:
 			IntPtr intPtr = default(IntPtr);
-			GClass2 gclass2_ = default(GClass2);
+			RemoteProcess gclass2_ = default(RemoteProcess);
 			while (true)
 			{
 				uint num2;

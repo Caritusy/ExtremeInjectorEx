@@ -15,23 +15,23 @@ public sealed class Class129
 	}
 
 	[CompilerGenerated]
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	[SpecialName]
 	[CompilerGenerated]
-	public GClass2 method_0()
+	public RemoteProcess method_0()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_1(GClass2 gclass2_1)
+	public void method_1(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
 
-	public Class129(GClass2 gclass2_1)
+	public Class129(RemoteProcess gclass2_1)
 	{
 		method_1(gclass2_1);
 	}

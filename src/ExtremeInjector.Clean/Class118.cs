@@ -75,13 +75,13 @@ public sealed class Class118 : Class117
 		});
 	}
 
-	public Class118(GClass2 gclass2_1)
+	public Class118(RemoteProcess gclass2_1)
 		: base(gclass2_1, bool_2: false)
 	{
 		method_04C6();
 	}
 
-	public Class118(GClass2 gclass2_1, IntPtr intptr_2)
+	public Class118(RemoteProcess gclass2_1, IntPtr intptr_2)
 		: base(gclass2_1, bool_2: false)
 	{
 		method_3(intptr_2);

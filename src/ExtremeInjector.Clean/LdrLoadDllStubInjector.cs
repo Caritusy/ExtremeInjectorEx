@@ -3,9 +3,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-public sealed class Class86 : Class85
+public sealed class LdrLoadDllStubInjector : DllInjector
 {
-	public Class86(GClass2 gclass2_1)
+	public LdrLoadDllStubInjector(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
 	}
@@ -43,7 +43,7 @@ public sealed class Class86 : Class85
 		}
 	}
 
-	public override IntPtr method_0BA6(string string_0)
+	public override IntPtr Inject(string string_0)
 	{
 		if (!Path.IsPathRooted(string_0))
 		{
@@ -166,7 +166,7 @@ public sealed class Class86 : Class85
 			num = ((gClass != null) ? 894989736 : 894232897);
 			continue;
 			IL_00dc:
-			num = ((!method_8(method_19().method_0())) ? 691193350 : 1322853569);
+			num = ((!method_8(method_19().ProcessId)) ? 691193350 : 1322853569);
 			continue;
 			end_IL_0232:
 			break;
@@ -556,7 +556,7 @@ public sealed class Class86 : Class85
 					num = ((!Class171.smethod_427(method_19())) ? (-348565149) : (-2068400396));
 					continue;
 				case 20u:
-					s = Path.GetDirectoryName(method_19().method_4()) + ";" + Class127.string_1 + ";" + Class127.string_3 + ";" + Class127.string_0 + "\0";
+					s = Path.GetDirectoryName(method_19().FilePath) + ";" + Class127.string_1 + ";" + Class127.string_3 + ";" + Class127.string_0 + "\0";
 					num = ((int)num2 * -922044725) ^ 0xE1D8B86;
 					continue;
 				case 19u:

@@ -313,7 +313,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static bool smethod_2(GClass2 gclass2_0)
+	internal static bool smethod_2(RemoteProcess gclass2_0)
 	{
 		if (Class127.bool_0)
 		{
@@ -331,7 +331,7 @@ public sealed class Class171
 						num = ((intPtr == IntPtr.Zero) ? (-1356036650) : (-1425031679)) ^ ((int)num2 * -653878624);
 						continue;
 					case 9u:
-						gclass2_0.method_7(!bool_);
+						gclass2_0.Is64Bit = !bool_;
 						num = -340052088;
 						continue;
 					case 8u:
@@ -344,7 +344,7 @@ public sealed class Class171
 					case 5u:
 						break;
 					case 1u:
-						intPtr = smethod_250(gclass2_0, Class127.bool_1 ? Class124.Enum32.flag_10 : Class124.Enum32.flag_9, bool_0: false, gclass2_0.method_0());
+						intPtr = smethod_250(gclass2_0, Class127.bool_1 ? Class124.Enum32.flag_10 : Class124.Enum32.flag_9, bool_0: false, gclass2_0.ProcessId);
 						num = -1143235234;
 						continue;
 					case 0u:
@@ -5650,10 +5650,10 @@ public sealed class Class171
 	internal static void smethod_25(ProcessSelectorForm form5_0)
 	{
 		form5_0.dataGridView_0.Rows.Clear();
-		GClass2[] array = smethod_155();
+		RemoteProcess[] array = smethod_155();
 		int num = 0;
 		bool flag = default(bool);
-		GClass2 gClass = default(GClass2);
+		RemoteProcess gClass = default(RemoteProcess);
 		Icon icon = default(Icon);
 		while (true)
 		{
@@ -5672,7 +5672,7 @@ public sealed class Class171
 					continue;
 				case 7u:
 					gClass = array[num];
-					icon = smethod_11(gClass.method_4(), Enum18.const_1);
+					icon = smethod_11(gClass.FilePath, Enum18.const_1);
 					if (icon != null)
 					{
 						num2 = -729349090;
@@ -5706,7 +5706,7 @@ public sealed class Class171
 					return;
 					IL_0075:
 					bitmap2 = bitmap;
-					index = form5_0.dataGridView_0.Rows.Add(bitmap2, string.Format("{0:X8}-{1}", gClass.method_0(), gClass.method_2()));
+					index = form5_0.dataGridView_0.Rows.Add(bitmap2, string.Format("{0:X8}-{1}", gClass.ProcessId, gClass.Name));
 					form5_0.dataGridView_0.Rows[index].Tag = gClass;
 					num2 = -435977795;
 					continue;
@@ -5716,9 +5716,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static bool smethod_26(Class89 class89_0, Class89.Class172 class172_0)
+	internal static bool smethod_26(ManualMapInjector class89_0, ManualMapInjector.Class172 class172_0)
 	{
-		byte[] array = Class89.smethod_7(class172_0.method_0());
+		byte[] array = ManualMapInjector.smethod_7(class172_0.method_0());
 		Class53 @class = default(Class53);
 		Class47 class2 = default(Class47);
 		Class58 class58_ = default(Class58);
@@ -5848,9 +5848,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static bool smethod_27(GClass2 gclass2_0, IntPtr intptr_0)
+	internal static bool smethod_27(RemoteProcess gclass2_0, IntPtr intptr_0)
 	{
-		if (gclass2_0.method_10() != intptr_0)
+		if (gclass2_0.Handle != intptr_0)
 		{
 			return CloseHandle(intptr_0);
 		}
@@ -5898,7 +5898,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static IntPtr[] smethod_30(GClass2 gclass2_0, bool bool_0)
+	internal static IntPtr[] smethod_30(RemoteProcess gclass2_0, bool bool_0)
 	{
 		if (bool_0)
 		{
@@ -5985,7 +5985,7 @@ public sealed class Class171
 		}
 		goto IL_0051;
 		IL_0227:
-		intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, gclass2_0.method_0());
+		intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, gclass2_0.ProcessId);
 		num = 817091961;
 		goto IL_01c5;
 	}
@@ -7472,7 +7472,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static Class69 smethod_42(GClass2 gclass2_0)
+	internal static Class69 smethod_42(RemoteProcess gclass2_0)
 	{
 		Class69 @class = new Class69(gclass2_0);
 		int num3 = default(int);
@@ -7497,7 +7497,7 @@ public sealed class Class171
 					num = (int)((num2 * 1456103393) ^ 0x7F34B10B);
 					continue;
 				case 15u:
-					@class.AddRange(gclass2_0.list_1.Where(GClass2.Class74._003C_003E9.method_0));
+					@class.AddRange(gclass2_0.list_1.Where(module => module.method_10()));
 					num = 1014844718;
 					continue;
 				case 13u:
@@ -7541,7 +7541,7 @@ public sealed class Class171
 					num = (smethod_246(gClass2) ? 493758102 : 1343730546) ^ ((int)num2 * -98838020);
 					continue;
 				case 2u:
-					@class.AddRange(gclass2_0.list_1.Where(GClass2.Class74._003C_003E9.method_1));
+					@class.AddRange(gclass2_0.list_1.Where(module => smethod_109(module)));
 					num = 1914154479;
 					continue;
 				case 1u:
@@ -7606,7 +7606,7 @@ public sealed class Class171
 	[DllImport("kernel32.dll", SetLastError = true)]
 	internal static extern bool WriteProcessMemory(IntPtr intptr_0, IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0, out UIntPtr uintptr_1);
 
-	internal static GClass2 SelectProcess()
+	internal static RemoteProcess SelectProcess()
 	{
 		ProcessSelectorForm form = new ProcessSelectorForm();
 		while (true)
@@ -7772,9 +7772,9 @@ public sealed class Class171
 		goto IL_0019;
 	}
 
-	internal static GClass2 smethod_47(int int_0)
+	internal static RemoteProcess smethod_47(int int_0)
 	{
-		GClass2 gClass = new GClass2((uint)int_0);
+		RemoteProcess gClass = new RemoteProcess((uint)int_0);
 		while (true)
 		{
 			int num = -1650746781;
@@ -8290,9 +8290,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static IEnumerable<int> smethod_66(GClass2 gclass2_0)
+	internal static IEnumerable<int> smethod_66(RemoteProcess gclass2_0)
 	{
-		IntPtr intPtr = CreateToolhelp32Snapshot(Class124.Enum27.flag_2, gclass2_0.method_0());
+		IntPtr intPtr = CreateToolhelp32Snapshot(Class124.Enum27.flag_2, gclass2_0.ProcessId);
 		Class124.Struct44 struct44_ = default(Class124.Struct44);
 		Class124.Struct44 @struct = default(Class124.Struct44);
 		List<int> list = default(List<int>);
@@ -8312,7 +8312,7 @@ public sealed class Class171
 					num = ((int)num2 * -1408375011) ^ -762988503;
 					continue;
 				case 8u:
-					num = ((struct44_.uint_3 != (uint)gclass2_0.method_0()) ? 168089781 : 439633439);
+					num = ((struct44_.uint_3 != (uint)gclass2_0.ProcessId) ? 168089781 : 439633439);
 					continue;
 				case 6u:
 					num = ((!Thread32First(intPtr, ref struct44_)) ? 2057302549 : 2073148229) ^ (int)(num2 * 1867242070);
@@ -8355,9 +8355,9 @@ public sealed class Class171
 	[return: MarshalAs(UnmanagedType.Bool)]
 	internal static extern bool IsWindowVisible(IntPtr intptr_0);
 
-	internal static IntPtr smethod_67(Class89.Class172 class172_0, Class89 class89_0, string string_0)
+	internal static IntPtr smethod_67(ManualMapInjector.Class172 class172_0, ManualMapInjector class89_0, string string_0)
 	{
-		Class89.Enum44 enum44_ = Class89.Enum44.flag_5 | Class89.Enum44.flag_6 | Class89.Enum44.flag_7;
+		ManualMapInjector.Enum44 enum44_ = ManualMapInjector.Enum44.flag_5 | ManualMapInjector.Enum44.flag_6 | ManualMapInjector.Enum44.flag_7;
 		IntPtr intPtr = smethod_42(class89_0.method_19()).method_0(string_0);
 		if (intPtr != IntPtr.Zero)
 		{
@@ -8369,7 +8369,7 @@ public sealed class Class171
 		goto IL_0117;
 		IL_0117:
 		Enum43 @enum = default(Enum43);
-		Class89 @class = default(Class89);
+		ManualMapInjector @class = default(ManualMapInjector);
 		string text = default(string);
 		while (true)
 		{
@@ -8384,7 +8384,7 @@ public sealed class Class171
 				continue;
 			case 8u:
 			{
-				Class89 class2 = new Class89(class89_0.method_19());
+				ManualMapInjector class2 = new ManualMapInjector(class89_0.method_19());
 				class2.method_20(class89_0.method_19());
 				@class = class2;
 				num = ((int)num2 * -58568668) ^ -244573276;
@@ -8419,7 +8419,7 @@ public sealed class Class171
 			default:
 				try
 				{
-					return new Class87(class89_0.method_19()).method_0BA6(text);
+					return new LoadLibraryInjector(class89_0.method_19()).Inject(text);
 				}
 				catch (Exception innerException)
 				{
@@ -8431,7 +8431,7 @@ public sealed class Class171
 			}
 			break;
 			IL_00c9:
-			num = (((class172_0.method_8() & Class89.Enum44.flag_4) != 0) ? 1788943320 : 1492857747);
+			num = (((class172_0.method_8() & ManualMapInjector.Enum44.flag_4) != 0) ? 1788943320 : 1492857747);
 		}
 		goto IL_0028;
 		IL_015a:
@@ -8633,7 +8633,7 @@ public sealed class Class171
 		return new Class57((IntPtr)byte_0, bool_0: true);
 	}
 
-	internal static int smethod_73(GClass2 gclass2_0)
+	internal static int smethod_73(RemoteProcess gclass2_0)
 	{
 		if (!smethod_427(gclass2_0))
 		{
@@ -8938,7 +8938,7 @@ public sealed class Class171
 		class117_0.method_18(intptr_0);
 	}
 
-	internal static bool smethod_87(GClass2 gclass2_0)
+	internal static bool smethod_87(RemoteProcess gclass2_0)
 	{
 		if (Class127.bool_1)
 		{
@@ -8988,7 +8988,7 @@ public sealed class Class171
 			case 7u:
 				goto IL_00ea;
 			case 1u:
-				intPtr2 = smethod_250(gclass2_0, Class124.Enum32.flag_10, bool_0: false, gclass2_0.method_0());
+				intPtr2 = smethod_250(gclass2_0, Class124.Enum32.flag_10, bool_0: false, gclass2_0.ProcessId);
 				num = ((intPtr2 == IntPtr.Zero) ? 564309919 : 8767601) ^ ((int)num2 * -2057680169);
 				continue;
 			case 0u:
@@ -8999,8 +8999,8 @@ public sealed class Class171
 			case 3u:
 				return false;
 			case 4u:
-				gclass2_0.method_5(stringBuilder.ToString());
-				gclass2_0.method_3(Path.GetFileName(gclass2_0.method_4()));
+				gclass2_0.FilePath = stringBuilder.ToString();
+				gclass2_0.Name = Path.GetFileName(gclass2_0.FilePath);
 				smethod_27(gclass2_0, intPtr2);
 				return true;
 			case 5u:
@@ -9012,8 +9012,8 @@ public sealed class Class171
 			case 12u:
 				return false;
 			default:
-				gclass2_0.method_5(text);
-				gclass2_0.method_3(Path.GetFileName(gclass2_0.method_4()));
+				gclass2_0.FilePath = text;
+				gclass2_0.Name = Path.GetFileName(gclass2_0.FilePath);
 				smethod_27(gclass2_0, intPtr);
 				return true;
 			}
@@ -9028,7 +9028,7 @@ public sealed class Class171
 		}
 		goto IL_00ad;
 		IL_01ea:
-		intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_9, bool_0: false, gclass2_0.method_0());
+		intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_9, bool_0: false, gclass2_0.ProcessId);
 		num = 704195301;
 		goto IL_018f;
 	}
@@ -9588,7 +9588,7 @@ public sealed class Class171
 		smethod_414(class138_0);
 	}
 
-	internal static bool smethod_102(GClass2 gclass2_0)
+	internal static bool smethod_102(RemoteProcess gclass2_0)
 	{
 		if (!smethod_87(gclass2_0))
 		{
@@ -9675,7 +9675,7 @@ public sealed class Class171
 					num = ((uint_ != 0) ? 1334523807 : 100454095) ^ (int)(num2 * 323425302);
 					continue;
 				case 3u:
-					num = ((!class93_0.method_8(class93_0.method_19().method_0())) ? 1422638295 : 2124295937);
+					num = ((!class93_0.method_8(class93_0.method_19().ProcessId)) ? 1422638295 : 2124295937);
 					continue;
 				case 1u:
 					num = ((intPtr == IntPtr.Zero) ? 329242723 : 1906672512) ^ (int)(num2 * 56786663);
@@ -10485,7 +10485,7 @@ public sealed class Class171
 		smethod_137(class53_0, Enum7.const_266, class59_0, class57_0);
 	}
 
-	internal static bool smethod_128(Class89 class89_0, Exception exception_0)
+	internal static bool smethod_128(ManualMapInjector class89_0, Exception exception_0)
 	{
 		class89_0.method_35(exception_0);
 		return false;
@@ -11151,7 +11151,7 @@ public sealed class Class171
 	[DllImport("ntdll.dll")]
 	internal static extern void RtlFreeUnicodeString(ref Class124.Struct43 struct43_0);
 
-	internal static IntPtr smethod_142(Class90 class90_0, IntPtr intptr_0, IntPtr intptr_1, byte[] byte_0, out Class124.Struct54 struct54_0, out int int_0, out int int_1, ref int int_2)
+	internal static IntPtr smethod_142(ThreadHijackInjector class90_0, IntPtr intptr_0, IntPtr intptr_1, byte[] byte_0, out Class124.Struct54 struct54_0, out int int_0, out int int_1, ref int int_2)
 	{
 		struct54_0 = default(Class124.Struct54);
 		int_0 = 0;
@@ -11385,7 +11385,7 @@ public sealed class Class171
 	internal static void smethod_145(ProcessSelectorForm form5_0)
 	{
 		form5_0.dataGridView_0.Rows.Clear();
-		GClass2 gClass = default(GClass2);
+		RemoteProcess gClass = default(RemoteProcess);
 		Class77 @class = default(Class77);
 		Class77[] array = default(Class77[]);
 		int num3 = default(int);
@@ -11553,13 +11553,13 @@ public sealed class Class171
 		}
 	}
 
-	internal static GClass2[] smethod_148(string string_0, bool bool_0)
+	internal static RemoteProcess[] smethod_148(string string_0, bool bool_0)
 	{
-		List<GClass2> list = new List<GClass2>();
+		List<RemoteProcess> list = new List<RemoteProcess>();
 		int num3 = default(int);
-		GClass2[] array = default(GClass2[]);
+		RemoteProcess[] array = default(RemoteProcess[]);
 		string text = default(string);
-		GClass2 gClass = default(GClass2);
+		RemoteProcess gClass = default(RemoteProcess);
 		while (true)
 		{
 			int num = -1797034305;
@@ -11588,7 +11588,7 @@ public sealed class Class171
 					num = (int)((num2 * 17857332) ^ 0x77DA5924);
 					continue;
 				case 7u:
-					text = gClass.method_2();
+					text = gClass.Name;
 					num = (int)(num2 * 484229070) ^ -1986312089;
 					continue;
 				case 6u:
@@ -12474,15 +12474,15 @@ public sealed class Class171
 			.ToArray();
 	}
 
-	internal static GClass2[] smethod_155()
+	internal static RemoteProcess[] smethod_155()
 	{
 		uint num = 0u;
 		uint num5 = default(uint);
 		uint num6 = default(uint);
-		GClass2 gClass = default(GClass2);
+		RemoteProcess gClass = default(RemoteProcess);
 		uint[] array = default(uint[]);
 		uint num4 = default(uint);
-		List<GClass2> list = default(List<GClass2>);
+		List<RemoteProcess> list = default(List<RemoteProcess>);
 		uint uint_ = default(uint);
 		while (true)
 		{
@@ -12503,12 +12503,12 @@ public sealed class Class171
 					num2 = ((int)num3 * -1716113736) ^ 0x47080EB3;
 					continue;
 				case 11u:
-					gClass = new GClass2(array[num5]);
+					gClass = new RemoteProcess(array[num5]);
 					num2 = -1933701878;
 					continue;
 				case 10u:
 					num4 = 0u;
-					list = new List<GClass2>
+					list = new List<RemoteProcess>
 					{
 						Capacity = 0
 					};
@@ -13650,7 +13650,7 @@ public sealed class Class171
 		MessageBox.Show(mainForm, "The DLL you have selected, \"" + string_1 + "\" requires \"" + string_0 + "\" in order to work properly, but you are running Windows XP which does not support it. Please notify the creator of the DLL to build in Release mode with XP compatibility.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 	}
 
-	internal static IntPtr smethod_178(Class90 class90_0, IntPtr intptr_0, IntPtr intptr_1, byte[] byte_0, out Class124.Struct55 struct55_0, out int int_0, out int int_1, ref int int_2)
+	internal static IntPtr smethod_178(ThreadHijackInjector class90_0, IntPtr intptr_0, IntPtr intptr_1, byte[] byte_0, out Class124.Struct55 struct55_0, out int int_0, out int int_1, ref int int_2)
 	{
 		struct55_0 = default(Class124.Struct55);
 		int_0 = 0;
@@ -13913,7 +13913,7 @@ public sealed class Class171
 	[DllImport("kernel32.dll")]
 	internal static extern int VirtualQuery(IntPtr intptr_0, out Class124.Struct47 struct47_0, uint uint_0);
 
-	internal static List<Class75> smethod_179(GClass2 gclass2_0)
+	internal static List<Class75> smethod_179(RemoteProcess gclass2_0)
 	{
 		List<Class75> list = new List<Class75>();
 		IEnumerator<int> enumerator = smethod_66(gclass2_0).GetEnumerator();
@@ -14112,11 +14112,11 @@ public sealed class Class171
 		}
 	}
 
-	internal static GClass2 smethod_183(IntPtr intptr_0, int int_0)
+	internal static RemoteProcess smethod_183(IntPtr intptr_0, int int_0)
 	{
-		GClass2 gClass = new GClass2((uint)int_0);
-		gClass.method_11(intptr_0);
-		GClass2 gClass2 = gClass;
+		RemoteProcess gClass = new RemoteProcess((uint)int_0);
+		gClass.Handle = intptr_0;
+		RemoteProcess gClass2 = gClass;
 		while (true)
 		{
 			int num = 1566458528;
@@ -14509,7 +14509,7 @@ public sealed class Class171
 		return class69_0.Find(@class.method_0);
 	}
 
-	internal unsafe static IntPtr smethod_197(Class86 class86_0, IntPtr intptr_0, GClass1 gclass1_0)
+	internal unsafe static IntPtr smethod_197(LdrLoadDllStubInjector class86_0, IntPtr intptr_0, GClass1 gclass1_0)
 	{
 		//The blocks IL_004a, IL_005e, IL_007e, IL_008b, IL_0097, IL_00a1, IL_00b0, IL_00d5, IL_00e1, IL_00eb, IL_00fa, IL_0111, IL_0127, IL_0133, IL_013d, IL_014c, IL_0162, IL_016e, IL_0178, IL_0187, IL_01aa, IL_01c0, IL_01cc, IL_01d6, IL_01e5, IL_01f8, IL_0204, IL_020e, IL_021d, IL_023a, IL_0246, IL_0256, IL_025d, IL_0269, IL_0273, IL_0282, IL_0288, IL_0294, IL_029e, IL_02ad, IL_02b3, IL_02bf, IL_02cf, IL_02e1, IL_02ec, IL_02f8, IL_0305, IL_0320, IL_0349, IL_0361, IL_036e, IL_03f9, IL_0403, IL_0413, IL_0423, IL_0433, IL_0443, IL_0453 are reachable both inside and outside the pinned region starting at IL_003e. ILSpy has duplicated these blocks in order to place them both within and outside the `fixed` statement.
 		byte[] array = class86_0.method_10<byte>(intptr_0, 512);
@@ -15052,9 +15052,9 @@ public sealed class Class171
 		smethod_137(class53_0, Enum7.const_64, class63_0, class63_1);
 	}
 
-	internal static Class89.Enum44 smethod_206(Class89 class89_0)
+	internal static ManualMapInjector.Enum44 smethod_206(ManualMapInjector class89_0)
 	{
-		Class89.Enum44 @enum = (Class89.Enum44)0;
+		ManualMapInjector.Enum44 @enum = (ManualMapInjector.Enum44)0;
 		while (true)
 		{
 			int num = 1854214070;
@@ -15064,11 +15064,11 @@ public sealed class Class171
 				switch ((num2 = (uint)(num ^ 0x4707AFE7)) % 12)
 				{
 				case 11u:
-					@enum |= Class89.Enum44.flag_4;
+					@enum |= ManualMapInjector.Enum44.flag_4;
 					num = ((int)num2 * -1520174881) ^ -852355327;
 					continue;
 				case 9u:
-					@enum |= Class89.Enum44.flag_1;
+					@enum |= ManualMapInjector.Enum44.flag_1;
 					num = ((int)num2 * -2001017929) ^ -1916017482;
 					continue;
 				case 8u:
@@ -15081,11 +15081,11 @@ public sealed class Class171
 					num = ((!class89_0.method_26()) ? 1263587133 : 1006590223);
 					continue;
 				case 4u:
-					@enum |= Class89.Enum44.flag_2;
+					@enum |= ManualMapInjector.Enum44.flag_2;
 					num = (int)((num2 * 561684884) ^ 0x2E96691D);
 					continue;
 				case 3u:
-					@enum |= Class89.Enum44.flag_3;
+					@enum |= ManualMapInjector.Enum44.flag_3;
 					num = ((int)num2 * -450798947) ^ -406828320;
 					continue;
 				case 2u:
@@ -15095,7 +15095,7 @@ public sealed class Class171
 					num = (class89_0.method_24() ? (-1226952485) : (-62108980)) ^ (int)(num2 * 455416225);
 					continue;
 				case 0u:
-					@enum |= Class89.Enum44.flag_0;
+					@enum |= ManualMapInjector.Enum44.flag_0;
 					num = (int)((num2 * 285533461) ^ 0x7E9C673D);
 					continue;
 				case 5u:
@@ -15298,7 +15298,7 @@ public sealed class Class171
 		return class182_0.int_1;
 	}
 
-	internal static GClass2 smethod_211()
+	internal static RemoteProcess smethod_211()
 	{
 		return smethod_183(GetCurrentProcess(), (int)GetCurrentProcessId());
 	}
@@ -15357,7 +15357,7 @@ public sealed class Class171
 		goto IL_0051;
 	}
 
-	internal static void ShowProcessInspector(GClass2 gclass2_0)
+	internal static void ShowProcessInspector(RemoteProcess gclass2_0)
 	{
 		ProcessInspectorForm form = new ProcessInspectorForm();
 		form.method_1(gclass2_0);
@@ -15431,7 +15431,7 @@ public sealed class Class171
 		}
 		catch (Exception exception)
 		{
-			string processName = mainForm.selectedProcess?.method_2() ?? "unknown process";
+			string processName = mainForm.selectedProcess?.Name ?? "unknown process";
 			ShowInjectionError(mainForm, "An error occurred while injecting \"" + Path.GetFileName(sourceModulePath) + "\" into \"" + processName + "\".", exception);
 			return false;
 		}
@@ -15474,7 +15474,7 @@ public sealed class Class171
 			string processPlatform = processIs32Bit ? "32-bit" : "64-bit";
 			MessageBox.Show(
 				mainForm,
-				"Platform mismatch detected. You are trying to inject a " + modulePlatform + " DLL (" + Path.GetFileName(modulePath) + ") into a " + processPlatform + " process (" + mainForm.selectedProcess.method_2() + ") which is not supported.",
+				"Platform mismatch detected. You are trying to inject a " + modulePlatform + " DLL (" + Path.GetFileName(modulePath) + ") into a " + processPlatform + " process (" + mainForm.selectedProcess.Name + ") which is not supported.",
 				"Extreme Injector v3",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation);
@@ -15542,10 +15542,10 @@ public sealed class Class171
 		}
 
 		IntPtr moduleBase;
-		using (Class85 injector = (Class85)Activator.CreateInstance(MainForm.InjectorBackendTypes[options.Method], mainForm.selectedProcess))
+		using (DllInjector injector = (DllInjector)Activator.CreateInstance(MainForm.InjectorBackendTypes[options.Method], mainForm.selectedProcess))
 		{
 			injector.method_18(options.Advanced.HideFromDebugger);
-			moduleBase = injector.method_0BA6(modulePath);
+			moduleBase = injector.Inject(modulePath);
 		}
 
 		if (moduleBase == IntPtr.Zero)
@@ -15557,10 +15557,10 @@ public sealed class Class171
 		return moduleBase;
 	}
 
-	private static IntPtr InjectWithManualMap(GClass2 process, string modulePath, InjectionOptions options)
+	private static IntPtr InjectWithManualMap(RemoteProcess process, string modulePath, InjectionOptions options)
 	{
 		AdvancedInjectionOptions advanced = options.Advanced;
-		using (Class89 injector = new Class89(process))
+		using (ManualMapInjector injector = new ManualMapInjector(process))
 		{
 			injector.method_18(advanced.HideFromDebugger);
 			injector.method_25(advanced.DisableExceptionSupport);
@@ -15568,7 +15568,7 @@ public sealed class Class171
 			injector.method_27(options.ErasePeHeaders);
 			injector.method_33(advanced.DisableSehValidation);
 
-			IntPtr moduleBase = injector.method_0BA6(modulePath);
+			IntPtr moduleBase = injector.Inject(modulePath);
 			if (injector.method_34() != null)
 			{
 				throw injector.method_34();
@@ -15827,7 +15827,7 @@ public sealed class Class171
 					if (enum4_ == InjectionMethod.ManualMap)
 					{
 						AdvancedInjectionOptions class13_ = class14_.Advanced;
-						Class89 class3 = new Class89(mainForm.selectedProcess);
+						ManualMapInjector class3 = new ManualMapInjector(mainForm.selectedProcess);
 						try
 						{
 							class3.method_18(class13_.HideFromDebugger);
@@ -15845,7 +15845,7 @@ public sealed class Class171
 										class3.method_31(class13_.ManualResolveImports);
 										class3.method_27(class14_.ErasePeHeaders);
 										class3.method_33(class13_.DisableSehValidation);
-							intptr_0 = class3.method_0BA6(modulePath);
+							intptr_0 = class3.Inject(modulePath);
 										num9 = ((class3.method_34() != null) ? 1628520009 : 932593972);
 										goto IL_0475;
 									default:
@@ -15903,7 +15903,7 @@ public sealed class Class171
 					}
 					else
 					{
-						Class85 class4 = (Class85)Activator.CreateInstance(MainForm.InjectorBackendTypes[enum4_], mainForm.selectedProcess);
+						DllInjector class4 = (DllInjector)Activator.CreateInstance(MainForm.InjectorBackendTypes[enum4_], mainForm.selectedProcess);
 						class4.method_18(class14_.Advanced.HideFromDebugger);
 						while (true)
 						{
@@ -15913,7 +15913,7 @@ public sealed class Class171
 								switch ((num2 = (uint)(num11 ^ 0x7007E065)) % 3)
 								{
 								case 2u:
-									intptr_0 = class4.method_0BA6(modulePath);
+									intptr_0 = class4.Inject(modulePath);
 									num11 = ((int)num2 * -1040866324) ^ 0x102DE663;
 									continue;
 								case 0u:
@@ -16354,10 +16354,10 @@ public sealed class Class171
 					{
 						if (!(FileVersionInfo.GetVersionInfo(text).CompanyName != "Microsoft Corporation"))
 						{
-							Class87 @class = new Class87(gclass1_0.gclass2_0);
+							LoadLibraryInjector @class = new LoadLibraryInjector(gclass1_0.gclass2_0);
 							try
 							{
-								IntPtr intPtr = @class.method_0BA6(text);
+								IntPtr intPtr = @class.Inject(text);
 								if (!(intPtr == IntPtr.Zero))
 								{
 									goto IL_00bb;
@@ -17711,9 +17711,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_242(Class89 class89_0, Class89.Class172 class172_0)
+	internal static void smethod_242(ManualMapInjector class89_0, ManualMapInjector.Class172 class172_0)
 	{
-		byte[] array = Class89.smethod_7(class172_0.method_0());
+		byte[] array = ManualMapInjector.smethod_7(class172_0.method_0());
 		Class124.Struct50 @struct = default(Class124.Struct50);
 		string tempFileName = default(string);
 		Class124.Struct50 struct50_ = default(Class124.Struct50);
@@ -17771,7 +17771,7 @@ public sealed class Class171
 		return class21_0.Entry.Path;
 	}
 
-	internal static void ShowSettings(GClass2 gclass2_0)
+	internal static void ShowSettings(RemoteProcess gclass2_0)
 	{
 		SettingsForm gForm = new SettingsForm();
 		gForm.method_1(gclass2_0);
@@ -17790,7 +17790,7 @@ public sealed class Class171
 
 	internal static bool smethod_246(GClass1 gclass1_0)
 	{
-		IntPtr intPtr = smethod_250(gclass1_0.gclass2_0, Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, gclass1_0.gclass2_0.method_0());
+		IntPtr intPtr = smethod_250(gclass1_0.gclass2_0, Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, gclass1_0.gclass2_0.ProcessId);
 		StringBuilder stringBuilder = default(StringBuilder);
 		Class124.Struct46 struct46_ = default(Class124.Struct46);
 		while (true)
@@ -18058,11 +18058,11 @@ public sealed class Class171
 		}
 	}
 
-	internal static IntPtr smethod_250(GClass2 gclass2_0, Class124.Enum32 enum32_0, bool bool_0, int int_0)
+	internal static IntPtr smethod_250(RemoteProcess gclass2_0, Class124.Enum32 enum32_0, bool bool_0, int int_0)
 	{
-		if (gclass2_0.method_10() != IntPtr.Zero)
+		if (gclass2_0.Handle != IntPtr.Zero)
 		{
-			return gclass2_0.method_10();
+			return gclass2_0.Handle;
 		}
 		return OpenProcess(enum32_0, bool_0, int_0);
 	}
@@ -18267,7 +18267,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static Class119 smethod_255(GClass2 gclass2_0)
+	internal static Class119 smethod_255(RemoteProcess gclass2_0)
 	{
 		if (Class127.bool_0)
 		{
@@ -18291,7 +18291,7 @@ public sealed class Class171
 				num = ((smethod_270(@class) != IntPtr.Zero) ? 690128447 : 1113153845) ^ ((int)num2 * -220634323);
 				continue;
 			case 1u:
-				num = ((!gclass2_0.method_6()) ? 446886717 : 1299284044) ^ (int)(num2 * 1150804737);
+				num = ((!gclass2_0.Is64Bit) ? 446886717 : 1299284044) ^ (int)(num2 * 1150804737);
 				continue;
 			case 0u:
 				break;
@@ -18300,7 +18300,7 @@ public sealed class Class171
 			case 4u:
 				goto IL_00f5;
 			default:
-				return gclass2_0.method_12(@class);
+				return gclass2_0.TrackResource(@class);
 			case 3u:
 				return null;
 			case 6u:
@@ -18311,9 +18311,9 @@ public sealed class Class171
 		goto IL_00a5;
 		IL_00f5:
 		Class119 class2;
-		if (gclass2_0.method_10() != IntPtr.Zero)
+		if (gclass2_0.Handle != IntPtr.Zero)
 		{
-			class2 = new Class119(gclass2_0, gclass2_0.method_10());
+			class2 = new Class119(gclass2_0, gclass2_0.Handle);
 			goto IL_00e6;
 		}
 		num = 493614286;
@@ -18429,7 +18429,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_259(Class89 class89_0)
+	internal static void smethod_259(ManualMapInjector class89_0)
 	{
 		class89_0.method_31(bool_7: false);
 		class89_0.method_29(bool_7: false);
@@ -18441,7 +18441,7 @@ public sealed class Class171
 	[DllImport("kernel32.dll")]
 	internal static extern IntPtr OpenProcess(Class124.Enum32 enum32_0, [MarshalAs(UnmanagedType.Bool)] bool bool_0, int int_0);
 
-	internal static bool smethod_260(GClass2 gclass2_0)
+	internal static bool smethod_260(RemoteProcess gclass2_0)
 	{
 		if (Class127.bool_0)
 		{
@@ -18460,11 +18460,11 @@ public sealed class Class171
 			switch ((num2 = (uint)(num ^ -24526846)) % 12)
 			{
 			case 11u:
-				intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_9, bool_0: false, gclass2_0.method_0());
+				intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_9, bool_0: false, gclass2_0.ProcessId);
 				num = ((!(intPtr == IntPtr.Zero)) ? (-608033379) : (-662107286)) ^ ((int)num2 * -506787402);
 				continue;
 			case 6u:
-				num = ((!gclass2_0.method_6()) ? 553229817 : 1638943364) ^ ((int)num2 * -498208378);
+				num = ((!gclass2_0.Is64Bit) ? 553229817 : 1638943364) ^ ((int)num2 * -498208378);
 				continue;
 			case 5u:
 				break;
@@ -18473,7 +18473,7 @@ public sealed class Class171
 				num = (int)(num2 * 1999703407) ^ -1992290343;
 				continue;
 			case 1u:
-				gclass2_0.method_9((uint_ & 1) != 0);
+				gclass2_0.IsDepEnabled = (uint_ & 1) != 0;
 				num = -493749486;
 				continue;
 			case 0u:
@@ -18481,7 +18481,7 @@ public sealed class Class171
 			case 7u:
 				goto IL_012e;
 			case 2u:
-				gclass2_0.method_9(bool_6: true);
+				gclass2_0.IsDepEnabled = true;
 				return true;
 			case 3u:
 				return true;
@@ -18489,7 +18489,7 @@ public sealed class Class171
 				smethod_27(gclass2_0, intPtr);
 				return false;
 			default:
-				gclass2_0.method_9(bool_6: false);
+				gclass2_0.IsDepEnabled = false;
 				return true;
 			case 10u:
 				return false;
@@ -18501,7 +18501,7 @@ public sealed class Class171
 		}
 		goto IL_00d8;
 		IL_012e:
-		num = ((!GClass2.bool_5) ? (-69344553) : (-581835979));
+		num = ((!RemoteProcess.SupportsDepPolicyQuery) ? (-69344553) : (-581835979));
 		goto IL_00dd;
 	}
 
@@ -19050,7 +19050,7 @@ public sealed class Class171
 						num = ((intPtr == IntPtr.Zero) ? (-1018909171) : (-1351058720)) ^ (int)(num2 * 646622078);
 						continue;
 					case 9u:
-						intPtr = OpenProcess(Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, class118_0.gclass2_0.method_0());
+						intPtr = OpenProcess(Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, class118_0.gclass2_0.ProcessId);
 						num = (int)(num2 * 1204011911) ^ -163764910;
 						continue;
 					case 7u:
@@ -20367,7 +20367,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static GClass3 smethod_285(GClass2 gclass2_0)
+	internal static GClass3 smethod_285(RemoteProcess gclass2_0)
 	{
 		return gclass2_0.gclass3_0 ?? (gclass2_0.gclass3_0 = new GClass3(gclass2_0));
 	}
@@ -21904,7 +21904,7 @@ public sealed class Class171
 		return new Class57((IntPtr)(long)(ulong)uintptr_0, bool_0: true);
 	}
 
-	internal static bool HasProcessExited(GClass2 gclass2_0)
+	internal static bool HasProcessExited(RemoteProcess gclass2_0)
 	{
 		if (gclass2_0.bool_4)
 		{
@@ -21952,7 +21952,7 @@ public sealed class Class171
 			case 9u:
 				return true;
 			}
-			intPtr = smethod_250(gclass2_0, Class127.bool_1 ? Class124.Enum32.flag_10 : Class124.Enum32.flag_9, bool_0: false, gclass2_0.method_0());
+			intPtr = smethod_250(gclass2_0, Class127.bool_1 ? Class124.Enum32.flag_10 : Class124.Enum32.flag_9, bool_0: false, gclass2_0.ProcessId);
 			num = ((!(intPtr == IntPtr.Zero)) ? (-1399956404) : (-1042910522));
 			continue;
 			end_IL_00bc:
@@ -21960,7 +21960,7 @@ public sealed class Class171
 		}
 		goto IL_00a0;
 		IL_0105:
-		intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_11, bool_0: false, gclass2_0.method_0());
+		intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_11, bool_0: false, gclass2_0.ProcessId);
 		num = ((intPtr == IntPtr.Zero) ? (-862091211) : (-427289265));
 		goto IL_00bc;
 	}
@@ -23742,7 +23742,7 @@ public sealed class Class171
 		}
 	}
 
-	internal unsafe static IntPtr smethod_335(IntPtr intptr_0, Class86 class86_0, GClass1 gclass1_0)
+	internal unsafe static IntPtr smethod_335(IntPtr intptr_0, LdrLoadDllStubInjector class86_0, GClass1 gclass1_0)
 	{
 		//The blocks IL_0012, IL_0016, IL_0022, IL_002c, IL_0049, IL_005c, IL_0073, IL_0096, IL_00b5, IL_00c1, IL_00cb, IL_00da, IL_011d, IL_012a, IL_0136, IL_0140, IL_014f, IL_0155, IL_0161, IL_0171, IL_0185, IL_01a0, IL_01cd, IL_01d9, IL_01e9, IL_0206, IL_0212, IL_0222, IL_0226, IL_0232, IL_0242, IL_0267, IL_026d, IL_0279, IL_0283, IL_0292, IL_029d, IL_02a9, IL_02b9, IL_02bd, IL_02c9, IL_02d3, IL_02e2, IL_02fe, IL_0314, IL_0320, IL_032a, IL_0341, IL_0361, IL_0365, IL_0371, IL_037b, IL_0385, IL_0410, IL_041a, IL_042a, IL_043a, IL_044a, IL_045a are reachable both inside and outside the pinned region starting at IL_0111. ILSpy has duplicated these blocks in order to place them both within and outside the `fixed` statement.
 		byte[] array = class86_0.method_10<byte>(intptr_0, 512);
@@ -26314,7 +26314,7 @@ public sealed class Class171
 		smethod_299(string_0, gclass4_0.class154_0);
 	}
 
-	internal static void smethod_368(Class89.Class172 class172_0)
+	internal static void smethod_368(ManualMapInjector.Class172 class172_0)
 	{
 		if (class172_0.method_0() != null)
 		{
@@ -26360,7 +26360,7 @@ public sealed class Class171
 		goto IL_0074;
 	}
 
-	internal static Class118 smethod_369(GClass2 gclass2_0)
+	internal static Class118 smethod_369(RemoteProcess gclass2_0)
 	{
 		if (!Class127.bool_0)
 		{
@@ -26394,7 +26394,7 @@ public sealed class Class171
 			case 4u:
 				return null;
 			default:
-				return gclass2_0.method_12(@class);
+				return gclass2_0.TrackResource(@class);
 			}
 			break;
 		}
@@ -26407,9 +26407,9 @@ public sealed class Class171
 		num = ((!smethod_281(@class)) ? (-766285094) : (-1197472239));
 		goto IL_008b;
 		IL_00e8:
-		if (gclass2_0.method_10() != IntPtr.Zero)
+		if (gclass2_0.Handle != IntPtr.Zero)
 		{
-			class2 = new Class118(gclass2_0, gclass2_0.method_10());
+			class2 = new Class118(gclass2_0, gclass2_0.Handle);
 			goto IL_00d3;
 		}
 		num = -1979089664;
@@ -26655,7 +26655,7 @@ public sealed class Class171
 		goto IL_00e0;
 	}
 
-	internal static bool smethod_379(GClass2 gclass2_0)
+	internal static bool smethod_379(RemoteProcess gclass2_0)
 	{
 		if (smethod_427(gclass2_0))
 		{
@@ -26664,7 +26664,7 @@ public sealed class Class171
 		return false;
 	}
 
-	internal static void SetSelectedProcess(MainForm mainForm, GClass2 gclass2_0)
+	internal static void SetSelectedProcess(MainForm mainForm, RemoteProcess gclass2_0)
 	{
 		Image previousImage = mainForm.processIconPictureBox.BackgroundImage;
 		mainForm.processIconPictureBox.BackgroundImage = null;
@@ -26683,7 +26683,7 @@ public sealed class Class171
 		mainForm.processIconPictureBox.Cursor = Cursors.Hand;
 		try
 		{
-			using (Icon icon = smethod_11(gclass2_0.method_4(), Enum18.const_1))
+			using (Icon icon = smethod_11(gclass2_0.FilePath, Enum18.const_1))
 			{
 				mainForm.processIconPictureBox.BackgroundImage = icon?.ToBitmap();
 			}
@@ -26696,7 +26696,7 @@ public sealed class Class171
 		string description = "No description";
 		try
 		{
-			FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(gclass2_0.method_4());
+			FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(gclass2_0.FilePath);
 			if (!string.IsNullOrEmpty(versionInfo.FileDescription))
 			{
 				description = versionInfo.FileDescription;
@@ -26711,7 +26711,7 @@ public sealed class Class171
 			description = description.Substring(0, 50) + "...";
 		}
 
-		mainForm.processDescriptionLabel.Text = string.Format("{0}\nProcess ID: 0x{1:X} ({1})", description, gclass2_0.method_0());
+		mainForm.processDescriptionLabel.Text = string.Format("{0}\nProcess ID: 0x{1:X} ({1})", description, gclass2_0.ProcessId);
 		ApplicationSettings.Current.ProcessName = mainForm.processNameTextBox.Text;
 		ApplicationSettings.Save();
 		mainForm.injectButton.Enabled = !ApplicationSettings.Current.Options.AutoInject;
@@ -28116,7 +28116,7 @@ public sealed class Class171
 		}
 	}
 
-	internal static bool smethod_399(GClass2 gclass2_0)
+	internal static bool smethod_399(RemoteProcess gclass2_0)
 	{
 		return gclass2_0.bool_2;
 	}
@@ -28965,7 +28965,7 @@ public sealed class Class171
 			case 13u:
 				goto IL_0078;
 			case 12u:
-				intPtr2 = OpenProcess(Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, class119_0.gclass2_0.method_0());
+				intPtr2 = OpenProcess(Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, class119_0.gclass2_0.ProcessId);
 				num = ((!(intPtr2 == IntPtr.Zero)) ? (-1507649381) : (-990940690)) ^ (int)(num2 * 257908533);
 				continue;
 			case 11u:
@@ -28987,7 +28987,7 @@ public sealed class Class171
 				num = -705260852;
 				continue;
 			case 3u:
-				intPtr = OpenProcess(Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, class119_0.gclass2_0.method_0());
+				intPtr = OpenProcess(Class124.Enum32.flag_4 | Class124.Enum32.flag_9, bool_0: false, class119_0.gclass2_0.ProcessId);
 				num = (int)(num2 * 1294523756) ^ -1554815762;
 				continue;
 			case 17u:
@@ -29255,7 +29255,7 @@ public sealed class Class171
 					num = (int)((num2 * 1121192180) ^ 0x72EE9328);
 					continue;
 				case 19u:
-					num = (class92_0.method_19().method_6() ? 1520727512 : 401250852) ^ (int)(num2 * 1334665265);
+					num = (class92_0.method_19().Is64Bit ? 1520727512 : 401250852) ^ (int)(num2 * 1334665265);
 					continue;
 				case 18u:
 					smethod_164(@class, Class49.class63_53, Class49.class63_53);
@@ -29349,9 +29349,9 @@ public sealed class Class171
 		}
 	}
 
-	internal static void smethod_411(GClass2 gclass2_0)
+	internal static void smethod_411(RemoteProcess gclass2_0)
 	{
-		IntPtr intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_1, bool_0: false, gclass2_0.method_0());
+		IntPtr intPtr = smethod_250(gclass2_0, Class124.Enum32.flag_1, bool_0: false, gclass2_0.ProcessId);
 		while (true)
 		{
 			int num = 459084344;
@@ -30226,9 +30226,9 @@ public sealed class Class171
 		return new Class57((IntPtr)BitConverter.ToInt32(BitConverter.GetBytes(float_0), 0));
 	}
 
-	internal static bool smethod_424(Class89 class89_0, Class89.Class172 class172_0)
+	internal static bool smethod_424(ManualMapInjector class89_0, ManualMapInjector.Class172 class172_0)
 	{
-		bool bool_ = (class172_0.method_8() & Class89.Enum44.flag_5) != 0;
+		bool bool_ = (class172_0.method_8() & ManualMapInjector.Enum44.flag_5) != 0;
 		GClass1 gClass = default(GClass1);
 		IntPtr intptr_2 = default(IntPtr);
 		Class47 @class = default(Class47);
@@ -30259,12 +30259,12 @@ public sealed class Class171
 					num = ((int)num2 * -738077742) ^ 0x4F5D13EF;
 					continue;
 				case 6u:
-					if (class89_0.method_19().method_6())
+					if (class89_0.method_19().Is64Bit)
 					{
 						num = ((int)num2 * -845766627) ^ -1299211156;
 						continue;
 					}
-					if ((class172_0.method_8() & Class89.Enum44.flag_0) == 0)
+					if ((class172_0.method_8() & ManualMapInjector.Enum44.flag_0) == 0)
 					{
 						while (true)
 						{
@@ -30552,9 +30552,9 @@ public sealed class Class171
 	[DllImport("ntdll.dll", EntryPoint = "NtQueryInformationThread", SetLastError = true)]
 	internal static extern uint NtQueryInformationThread_1(IntPtr intptr_0, Class124.Enum25 enum25_0, out IntPtr intptr_1, int int_0, out int int_1);
 
-	internal static bool smethod_427(GClass2 gclass2_0)
+	internal static bool smethod_427(RemoteProcess gclass2_0)
 	{
-		return !gclass2_0.method_6();
+		return !gclass2_0.Is64Bit;
 	}
 
 	[DllImport("Kernel32.dll", SetLastError = true)]
@@ -30635,7 +30635,7 @@ public sealed class Class171
 			return;
 		}
 
-		GClass2 process = smethod_148(processName, bool_0: true).FirstOrDefault();
+		RemoteProcess process = smethod_148(processName, bool_0: true).FirstOrDefault();
 		SetSelectedProcess(mainForm, process);
 	}
 
@@ -31315,7 +31315,7 @@ public sealed class Class171
 							num6 = -495439490;
 							continue;
 						case 24u:
-							text3 = Path.Combine(Path.GetDirectoryName(smethod_47(int_0).method_4()), @class.string_0);
+							text3 = Path.Combine(Path.GetDirectoryName(smethod_47(int_0).FilePath), @class.string_0);
 							num6 = ((int)num2 * -135185338) ^ -1880361875;
 							continue;
 						case 23u:

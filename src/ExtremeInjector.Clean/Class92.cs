@@ -66,10 +66,10 @@ public sealed class Class92 : Class84
 
 	internal IntPtr intptr_3;
 
-	public Class92(GClass2 gclass2_1)
+	public Class92(RemoteProcess gclass2_1)
 		: base(gclass2_1)
 	{
-		method_8(gclass2_1.method_0());
+		method_8(gclass2_1.ProcessId);
 	}
 
 	protected override void method_04C6()

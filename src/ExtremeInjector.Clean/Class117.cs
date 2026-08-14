@@ -3,10 +3,10 @@ using System.Runtime.CompilerServices;
 
 public abstract class Class117 : Class96
 {
-	protected internal GClass2 gclass2_0;
+	protected internal RemoteProcess gclass2_0;
 
-	internal Class117(GClass2 gclass2_1, bool bool_2)
-		: base(gclass2_1.method_0(), bool_2)
+	internal Class117(RemoteProcess gclass2_1, bool bool_2)
+		: base(gclass2_1.ProcessId, bool_2)
 	{
 		gclass2_0 = gclass2_1;
 	}

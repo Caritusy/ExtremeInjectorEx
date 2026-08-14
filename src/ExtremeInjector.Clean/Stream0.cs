@@ -127,8 +127,8 @@ public sealed class Stream0 : Stream, Interface0
 		return bool_2;
 	}
 
-	public Stream0(GClass2 gclass2_0, IntPtr intptr_2, Enum15 enum15_1, long long_2)
-		: this((gclass2_0.method_10() != IntPtr.Zero) ? gclass2_0.method_10() : Class171.smethod_253(gclass2_0.method_0(), enum15_1), intptr_2, enum15_1, long_2)
+	public Stream0(RemoteProcess gclass2_0, IntPtr intptr_2, Enum15 enum15_1, long long_2)
+		: this((gclass2_0.Handle != IntPtr.Zero) ? gclass2_0.Handle : Class171.smethod_253(gclass2_0.ProcessId, enum15_1), intptr_2, enum15_1, long_2)
 	{
 		while (true)
 		{
@@ -139,7 +139,7 @@ public sealed class Stream0 : Stream, Interface0
 				switch ((num2 = (uint)(num ^ 0x1229B333)) % 4)
 				{
 				case 3u:
-					num = ((gclass2_0.method_10() != IntPtr.Zero) ? (-275960835) : (-1182880146)) ^ ((int)num2 * -943599107);
+					num = ((gclass2_0.Handle != IntPtr.Zero) ? (-275960835) : (-1182880146)) ^ ((int)num2 * -943599107);
 					continue;
 				case 1u:
 					bool_1 = false;

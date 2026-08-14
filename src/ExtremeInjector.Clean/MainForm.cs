@@ -22,15 +22,15 @@ public sealed class MainForm : Form
 		}
 	}
 
-	internal GClass2 selectedProcess;
+	internal RemoteProcess selectedProcess;
 	private int? lastAutoInjectedProcessId;
 
 	internal static readonly Dictionary<InjectionMethod, Type> InjectorBackendTypes = new Dictionary<InjectionMethod, Type>
 	{
-		{ InjectionMethod.StandardInjection, typeof(Class87) },
-		{ InjectionMethod.LdrpLoadDll, typeof(Class88) },
-		{ InjectionMethod.LdrpLoadDllStub, typeof(Class86) },
-		{ InjectionMethod.ThreadHijacking, typeof(Class90) }
+		{ InjectionMethod.StandardInjection, typeof(LoadLibraryInjector) },
+		{ InjectionMethod.LdrpLoadDll, typeof(LdrLoadDllInjector) },
+		{ InjectionMethod.LdrpLoadDllStub, typeof(LdrLoadDllStubInjector) },
+		{ InjectionMethod.ThreadHijacking, typeof(ThreadHijackInjector) }
 	};
 
 	internal IContainer icontainer_0;
@@ -141,13 +141,13 @@ public sealed class MainForm : Form
 
 	internal void OnSelectProcessClicked(object sender, EventArgs e)
 	{
-		GClass2 process = Class171.SelectProcess();
+		RemoteProcess process = Class171.SelectProcess();
 		if (process == null)
 		{
 			return;
 		}
 
-		processNameTextBox.Text = process.method_2();
+		processNameTextBox.Text = process.Name;
 		Class171.SetSelectedProcess(this, process);
 	}
 
@@ -170,7 +170,7 @@ public sealed class MainForm : Form
 			return;
 		}
 
-		if (lastAutoInjectedProcessId == selectedProcess.method_0())
+		if (lastAutoInjectedProcessId == selectedProcess.ProcessId)
 		{
 			return;
 		}
@@ -180,7 +180,7 @@ public sealed class MainForm : Form
 			return;
 		}
 
-		lastAutoInjectedProcessId = selectedProcess.method_0();
+		lastAutoInjectedProcessId = selectedProcess.ProcessId;
 		processRefreshTimer.Stop();
 		Class171.BeginInjection(this);
 	}

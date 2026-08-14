@@ -43,7 +43,7 @@ public sealed class SettingsForm : Form
 	}
 
 	[CompilerGenerated]
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	internal IContainer icontainer_0;
 
@@ -138,14 +138,14 @@ public sealed class SettingsForm : Form
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal GClass2 method_0()
+	internal RemoteProcess method_0()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(GClass2 gclass2_1)
+	internal void method_1(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}

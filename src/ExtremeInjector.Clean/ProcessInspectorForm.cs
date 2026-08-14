@@ -8,7 +8,7 @@ using System.Windows.Forms;
 public sealed class ProcessInspectorForm : Form
 {
 	[CompilerGenerated]
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	internal IContainer icontainer_0;
 
@@ -54,14 +54,14 @@ public sealed class ProcessInspectorForm : Form
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal GClass2 method_0()
+	internal RemoteProcess method_0()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void method_1(GClass2 gclass2_1)
+	internal void method_1(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
@@ -165,7 +165,7 @@ public sealed class ProcessInspectorForm : Form
 							break;
 						}
 					}
-					Icon icon = Class171.smethod_11(method_0().method_4(), Enum18.const_1);
+					Icon icon = Class171.smethod_11(method_0().FilePath, Enum18.const_1);
 					try
 					{
 						pictureBox_0.BackgroundImage = icon?.ToBitmap();
@@ -203,7 +203,7 @@ public sealed class ProcessInspectorForm : Form
 							}
 						}
 					}
-					label_0.Text = string.Format("{0}\n\n{1}\n\nProcess ID: 0x{2:X} ({2})\n\nModules: {3}    Threads: {4}", method_0().method_2(), method_0().method_4(), method_0().method_0(), Class171.smethod_42(method_0()).Count, Class171.smethod_179(method_0()).Count);
+					label_0.Text = string.Format("{0}\n\n{1}\n\nProcess ID: 0x{2:X} ({2})\n\nModules: {3}    Threads: {4}", method_0().Name, method_0().FilePath, method_0().ProcessId, Class171.smethod_42(method_0()).Count, Class171.smethod_179(method_0()).Count);
 					using List<Class75>.Enumerator enumerator2 = Class171.smethod_179(method_0()).GetEnumerator();
 					while (true)
 					{

@@ -4,23 +4,23 @@ using System.Runtime.CompilerServices;
 public sealed class Class94 : Class82, IDisposable
 {
 	[CompilerGenerated]
-	internal GClass2 gclass2_0;
+	internal RemoteProcess gclass2_0;
 
 	[SpecialName]
 	[CompilerGenerated]
-	public GClass2 method_17()
+	public RemoteProcess method_17()
 	{
 		return gclass2_0;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void method_18(GClass2 gclass2_1)
+	public void method_18(RemoteProcess gclass2_1)
 	{
 		gclass2_0 = gclass2_1;
 	}
 
-	public Class94(GClass2 gclass2_1)
+	public Class94(RemoteProcess gclass2_1)
 	{
 		method_18(gclass2_1);
 	}
@@ -60,7 +60,7 @@ public sealed class Class94 : Class82, IDisposable
 
 	public void method_19(IntPtr intptr_1)
 	{
-		if (!method_8(method_17().method_0()))
+		if (!method_8(method_17().ProcessId))
 		{
 			goto IL_0028;
 		}

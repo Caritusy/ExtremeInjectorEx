@@ -75,7 +75,7 @@ public sealed class Class119 : Class117
 		});
 	}
 
-	public Class119(GClass2 gclass2_1)
+	public Class119(RemoteProcess gclass2_1)
 		: base(gclass2_1, bool_2: true)
 	{
 		while (true)
@@ -103,7 +103,7 @@ public sealed class Class119 : Class117
 		}
 	}
 
-	public Class119(GClass2 gclass2_1, IntPtr intptr_2)
+	public Class119(RemoteProcess gclass2_1, IntPtr intptr_2)
 		: base(gclass2_1, bool_2: true)
 	{
 		method_3(intptr_2);

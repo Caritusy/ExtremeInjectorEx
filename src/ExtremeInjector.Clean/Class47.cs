@@ -103,7 +103,7 @@ public sealed class Class47
 		int_1 = int_2;
 	}
 
-	public Class47(Class53 class53_1, GClass2 gclass2_0)
+	public Class47(Class53 class53_1, RemoteProcess gclass2_0)
 	{
 		class53_0 = class53_1;
 		bool_0 = Class171.smethod_427(gclass2_0);
