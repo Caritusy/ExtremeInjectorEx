@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>True</UseWindowsForms>
+    <ApplicationManifest>..\..\src\ExtremeInjector.Clean\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ExtremeInjector.Clean\ExtremeInjector.Clean.csproj" />
+  </ItemGroup>
+</Project>

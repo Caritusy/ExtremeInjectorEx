@@ -188,7 +188,7 @@ public sealed class SettingsForm : Form
 
 	internal void method_7(object sender, EventArgs e)
 	{
-		if (MessageBox.Show("Are you sure you want to reset the settings?", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+		if (MessageBox.Show("Are you sure you want to reset the settings?", "Extreme Injector Ex", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
 		{
 			return;
 		}
@@ -247,7 +247,7 @@ public sealed class SettingsForm : Form
 					switch ((num2 = (uint)(num ^ -605434328)) % 4)
 					{
 					case 2u:
-						MessageBox.Show("Extreme Injector v3 automatically scrambles DLLs on injection. You only need to use this if you are using another injector.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+						MessageBox.Show("Extreme Injector Ex can scramble DLLs during injection. Use this standalone action only when preparing a DLL for another injector.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 						num = (int)((num2 * 233957255) ^ 0x12755E55);
 						continue;
 					case 1u:
@@ -364,7 +364,7 @@ public sealed class SettingsForm : Form
 															case 0u:
 																break;
 															default:
-																MessageBox.Show("The specified DLL has been successfully scrambled!", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+																MessageBox.Show("The specified DLL has been successfully scrambled!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 																return;
 															}
 															break;
@@ -495,7 +495,7 @@ public sealed class SettingsForm : Form
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("An error occurred while trying to scramble the specified file:\n\n" + ex.Message, "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("An error occurred while trying to scramble the specified file:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 		finally
@@ -656,7 +656,7 @@ public sealed class SettingsForm : Form
 						}
 						break;
 						IL_026a:
-						MessageBox.Show("An error occurred while trying to start in secure mode:\n\n" + ex.Message, "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						MessageBox.Show("An error occurred while trying to start in secure mode:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						num3 = ((int)num2 * -1892939032) ^ -911176050;
 					}
 				}

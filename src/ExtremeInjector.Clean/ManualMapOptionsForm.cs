@@ -134,7 +134,7 @@ public sealed class ManualMapOptionsForm : Form
 				num = ((int)num2 * -44775183) ^ 0x7A65BD21;
 				continue;
 			case 4u:
-				num = ((MessageBox.Show("Are you sure you want to disable exception support? Disabling it might cause some DLLs to crash when they are manual mapped.", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No) ? (-1116613047) : (-1888268518)) ^ ((int)num2 * -1675529366);
+				num = ((MessageBox.Show("Are you sure you want to disable exception support? Disabling it might cause some DLLs to crash when they are manual mapped.", "Extreme Injector Ex", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No) ? (-1116613047) : (-1888268518)) ^ ((int)num2 * -1675529366);
 				continue;
 			case 2u:
 				ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport = checkBox_0.Checked;
@@ -176,7 +176,7 @@ public sealed class ManualMapOptionsForm : Form
 			switch ((num2 = (uint)(num ^ 0x48B8183A)) % 7)
 			{
 			case 5u:
-				num = ((MessageBox.Show("Are you sure you want to disable SEH handler validation? Disabling it is only recommended on OSes that are not supported officially yet that might not be compatible with the manual map code (eg. anything newer than Windows 10).", "Extreme Injector v3", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.No) ? 756122273 : 75688510) ^ ((int)num2 * -387340463);
+				num = ((MessageBox.Show("Are you sure you want to disable SEH handler validation? Disabling it is only recommended on OSes that are not supported officially yet that might not be compatible with the manual map code (eg. anything newer than Windows 10).", "Extreme Injector Ex", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.No) ? 756122273 : 75688510) ^ ((int)num2 * -387340463);
 				continue;
 			case 4u:
 				break;

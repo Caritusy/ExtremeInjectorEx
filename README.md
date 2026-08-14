@@ -1,6 +1,6 @@
-# Extreme Injector 3.7.3 recovered source
+# Extreme Injector Ex 3.7.4
 
-This directory contains a buildable source recovery of the supplied Extreme Injector executable. The recovery was performed by static analysis only; the original executable was not launched.
+This repository contains Extreme Injector Ex, a maintained continuation of the recovered Extreme Injector 3.7.3 source. The original recovery was performed by static analysis only; the supplied executable was not launched.
 
 ## Current status
 
@@ -8,6 +8,9 @@ This directory contains a buildable source recovery of the supplied Extreme Inje
 - Recovered source: 217 C# files and 8 WinForms `.resx` files
 - Recovered resources: application icon, manifest, managed resources, and embedded binary resources
 - Clean development project: `src\ExtremeInjector.Clean\ExtremeInjector.Clean.csproj`
+- Per-monitor V2 UI with content-measured WinForms layouts and a redesigned main/About experience
+- Unified settings: `%AppData%\ExtremeInjectorEx\settings.xml`, with automatic migration from legacy folder-local settings
+- UI/settings smoke checks: `tests\ExtremeInjector.UiSmoke\ExtremeInjector.UiSmoke.csproj`
 - Build status: full solution succeeds with 0 errors
 - Detected protector: Goliath .NET Obfuscator 2.2.0
 - Babel, Dotfuscator, and Xenocode strings in the assembly are decoy markers, not the active protector
@@ -53,6 +56,8 @@ The metadata normalizer removes fake obfuscator attributes and invalid `MethodIm
 Several pointer-heavy methods were decompiled into illegal C# because control-flow jumps crossed pinned regions. Their raw ILSpy bodies remain in the source under `#if false`, while equivalent readable implementations are active for byte-pattern search, masked-pattern search, array marshalling, and process-memory stream reads/writes. This keeps the recovery evidence without preventing compilation.
 
 The clean project also restores the settings contract, scramble presets, form names, main-form controls and events, process-selection state, and the top-level injection workflow. The workflow now explicitly performs per-module file checks, configured delays, architecture validation, working-copy preparation, backend selection, post-injection options, optional export invocation, and UI completion. Automatic injection is tracked by process ID so the timer injects once per process instance. The former flattened single-module wrapper is retained under `#if false` as recovery evidence while the active implementation is sequential.
+
+The Ex interface uses DPI-aware layout containers instead of the recovered absolute-position designers. DLL headers and rows are measured from their fonts and padding at the current monitor DPI. The smoke project exercises configuration migration, round-trip persistence, the main form, and the About form without entering the injector runtime.
 
 ## Recovery limits
 

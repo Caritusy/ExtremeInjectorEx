@@ -180,7 +180,7 @@ public sealed class DependencyInstallerForm : Form
 					num = ((int)num2 * -1958857336) ^ -1983099817;
 					continue;
 				case 1u:
-					MessageBox.Show(form3_0, "An error occurred while downloading the required files:\n\n" + downloadDataCompletedEventArgs_0.Error.Message, "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(form3_0, "An error occurred while downloading the required files:\n\n" + downloadDataCompletedEventArgs_0.Error.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					num = (int)(num2 * 977009865) ^ -647304280;
 					continue;
 				case 3u:
@@ -425,7 +425,7 @@ public sealed class DependencyInstallerForm : Form
 													}
 													goto IL_035d;
 													IL_0307:
-													MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+													MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 													flag = false;
 													num6 = ((int)num4 * -893526725) ^ 0x3B80B715;
 													continue;
@@ -456,7 +456,7 @@ public sealed class DependencyInstallerForm : Form
 										switch ((num4 = (uint)(num10 ^ -265431999)) % 4)
 										{
 										case 1u:
-											MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+											MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 											num10 = (int)((num4 * 1571657903) ^ 0x24EA10B1);
 											continue;
 										case 0u:
@@ -730,7 +730,7 @@ public sealed class DependencyInstallerForm : Form
 										}
 										goto IL_035d;
 										IL_0307:
-										MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+										MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 										flag = false;
 										num4 = ((int)num2 * -893526725) ^ 0x3B80B715;
 										continue;
@@ -761,7 +761,7 @@ public sealed class DependencyInstallerForm : Form
 							switch ((num2 = (uint)(num8 ^ -265431999)) % 4)
 							{
 							case 1u:
-								MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+								MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 								num8 = (int)((num2 * 1571657903) ^ 0x24EA10B1);
 								continue;
 							case 0u:
@@ -1058,7 +1058,7 @@ public sealed class DependencyInstallerForm : Form
 					num = ((int)num2 * -1958857336) ^ -1983099817;
 					continue;
 				case 1u:
-					MessageBox.Show(this, "An error occurred while downloading the required files:\n\n" + e.Error.Message, "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(this, "An error occurred while downloading the required files:\n\n" + e.Error.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					num = (int)(num2 * 977009865) ^ -647304280;
 					continue;
 				case 3u:
@@ -1303,7 +1303,7 @@ public sealed class DependencyInstallerForm : Form
 													}
 													goto IL_035d;
 													IL_0307:
-													MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+													MessageBox.Show("A problem ocurred while saving or running the setup:\n\n" + ex.Message, "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 													flag = false;
 													num6 = ((int)num4 * -893526725) ^ 0x3B80B715;
 													continue;
@@ -1334,7 +1334,7 @@ public sealed class DependencyInstallerForm : Form
 										switch ((num4 = (uint)(num10 ^ -265431999)) % 4)
 										{
 										case 1u:
-											MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+											MessageBox.Show("The dependency installation has completed successfully!", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 											num10 = (int)((num4 * 1571657903) ^ 0x24EA10B1);
 											continue;
 										case 0u:
@@ -1479,7 +1479,7 @@ public sealed class DependencyInstallerForm : Form
 				switch ((num2 = (uint)(num4 ^ -1523805111)) % 5)
 				{
 				case 3u:
-					MessageBox.Show("When the page appears, download \"" + string_2 + "\" and install it before injection.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					MessageBox.Show("When the page appears, download \"" + string_2 + "\" and install it before injection.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 					Process.Start(string_0);
 					num4 = (int)((num2 * 766058975) ^ 0x4B474E8F);
 					continue;
@@ -1673,7 +1673,7 @@ public sealed class DependencyInstallerForm : Form
 			switch ((num2 = (uint)(num4 ^ -1523805111)) % 5)
 			{
 			case 3u:
-				MessageBox.Show("When the page appears, download \"" + string_2 + "\" and install it before injection.", "Extreme Injector v3", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show("When the page appears, download \"" + string_2 + "\" and install it before injection.", "Extreme Injector Ex", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 				Process.Start(string_0);
 				num4 = (int)((num2 * 766058975) ^ 0x4B474E8F);
 				continue;
