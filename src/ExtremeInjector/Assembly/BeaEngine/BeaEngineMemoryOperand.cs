@@ -3,11 +3,11 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Sequential, Pack = 4)]
 public struct BeaEngineMemoryOperand
 {
-	public int int_0;
+	public int intValue;
 
-	public int int_1;
+	public int intValue2;
 
-	public int int_2;
+	public int intValue3;
 
-	public long long_0;
+	public long longValue;
 }

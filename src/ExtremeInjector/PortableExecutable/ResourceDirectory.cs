@@ -2,34 +2,34 @@ using System.Runtime.CompilerServices;
 
 public sealed class ResourceDirectory
 {
-	internal long long_0;
+	internal long longValue;
 
-	internal uint uint_0;
+	internal uint uintValue;
 
-	internal BoundsCheckedBinaryReader class5_0;
+	internal BoundsCheckedBinaryReader boundsCheckedBinaryReader;
 
 	[CompilerGenerated]
-	internal ResourceDirectoryNode class138_0;
+	internal ResourceDirectoryNode root;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ResourceDirectoryNode GetRoot()
 	{
-		return class138_0;
+		return root;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetRoot(ResourceDirectoryNode class138_1)
+	public void SetRoot(ResourceDirectoryNode resourceDirectoryNode)
 	{
-		class138_0 = class138_1;
+		root = resourceDirectoryNode;
 	}
 
-	internal ResourceDirectory(BoundsCheckedBinaryReader class5_1, long long_1, uint uint_1)
+	internal ResourceDirectory(BoundsCheckedBinaryReader boundsCheckedBinaryReader2, long longValue2, uint uintValue2)
 	{
-		class5_0 = class5_1;
-		long_0 = long_1;
-		uint_0 = uint_1;
-		SetRoot(new ResourceDirectoryNode("root", this, (long_0 <= 0L) ? (-1) : 0));
+		boundsCheckedBinaryReader = boundsCheckedBinaryReader2;
+		longValue = longValue2;
+		uintValue = uintValue2;
+		SetRoot(new ResourceDirectoryNode("root", this, (longValue <= 0L) ? (-1) : 0));
 	}
 }

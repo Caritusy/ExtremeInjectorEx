@@ -8,47 +8,47 @@ public sealed class NativeLibraryImage
 {
 	[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 	[return: MarshalAs(UnmanagedType.Bool)]
-	public delegate bool Delegate45(IntPtr intptr_0, uint uint_0, IntPtr intptr_1);
+	public delegate bool DllEntryPoint(IntPtr address, uint uintValue, IntPtr address2);
 
-	internal readonly PeImage class154_0;
+	internal readonly PeImage exportAddress;
 
-	internal byte[] byte_0;
+	internal byte[] bytes;
 
-	internal Delegate45 delegate45_0;
+	internal DllEntryPoint dllEntryPoint;
 
-	internal readonly List<Delegate45> list_0 = new List<Delegate45>();
+	internal readonly List<DllEntryPoint> items = new List<DllEntryPoint>();
 
-	internal readonly List<IntPtr> list_1 = new List<IntPtr>();
+	internal readonly List<IntPtr> items2 = new List<IntPtr>();
 
 	[CompilerGenerated]
-	internal IntPtr intptr_0;
+	internal IntPtr moduleBase;
 
-	internal static readonly NativeTypes.Enum34[][][] enum34_0 = new NativeTypes.Enum34[2][][]
+	internal static readonly NativeTypes.MemoryProtection[][][] memoryProtectionArrayArrayArray = new NativeTypes.MemoryProtection[2][][]
 	{
-		new NativeTypes.Enum34[2][]
+		new NativeTypes.MemoryProtection[2][]
 		{
-			new NativeTypes.Enum34[2]
+			new NativeTypes.MemoryProtection[2]
 			{
-				NativeTypes.Enum34.flag_4,
-				NativeTypes.Enum34.flag_7
+				NativeTypes.MemoryProtection.NoAccess,
+				NativeTypes.MemoryProtection.WriteCopy
 			},
-			new NativeTypes.Enum34[2]
+			new NativeTypes.MemoryProtection[2]
 			{
-				NativeTypes.Enum34.flag_5,
-				NativeTypes.Enum34.flag_6
+				NativeTypes.MemoryProtection.ReadOnly,
+				NativeTypes.MemoryProtection.ReadWrite
 			}
 		},
-		new NativeTypes.Enum34[2][]
+		new NativeTypes.MemoryProtection[2][]
 		{
-			new NativeTypes.Enum34[2]
+			new NativeTypes.MemoryProtection[2]
 			{
-				NativeTypes.Enum34.flag_0,
-				NativeTypes.Enum34.flag_3
+				NativeTypes.MemoryProtection.Execute,
+				NativeTypes.MemoryProtection.ExecuteWriteCopy
 			},
-			new NativeTypes.Enum34[2]
+			new NativeTypes.MemoryProtection[2]
 			{
-				NativeTypes.Enum34.flag_1,
-				NativeTypes.Enum34.flag_2
+				NativeTypes.MemoryProtection.ExecuteRead,
+				NativeTypes.MemoryProtection.ExecuteReadWrite
 			}
 		}
 	};
@@ -57,43 +57,43 @@ public sealed class NativeLibraryImage
 	[CompilerGenerated]
 	public IntPtr GetModuleBase()
 	{
-		return intptr_0;
+		return moduleBase;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetModuleBase(IntPtr intptr_1)
+	internal void SetModuleBase(IntPtr address)
 	{
-		intptr_0 = intptr_1;
+		moduleBase = address;
 	}
 
-	public NativeLibraryImage(PeImage class154_1, bool bool_0)
+	public NativeLibraryImage(PeImage peImage, bool flag)
 	{
-		class154_0 = class154_1;
-		if (class154_0 == null)
+		exportAddress = peImage;
+		if (exportAddress == null)
 		{
 			throw new BadImageFormatException("The module bytes do not represent a valid portable executable image.");
 		}
-		if ((RecoveredRuntime.Is32BitImage(class154_0) && IntPtr.Size != 4) || (!RecoveredRuntime.Is32BitImage(class154_0) && IntPtr.Size != 8))
+		if ((RecoveredRuntime.Is32BitImage(exportAddress) && IntPtr.Size != 4) || (!RecoveredRuntime.Is32BitImage(exportAddress) && IntPtr.Size != 8))
 		{
 			throw new BadImageFormatException("The image format of the module bytes does not match the process.");
 		}
-		InitializeImage(bool_0);
+		InitializeImage(flag);
 	}
 
-	public NativeLibraryImage(byte[] byte_1, bool bool_0)
-		: this(RecoveredRuntime.LoadPeImageFromBytes(byte_1, PeImageLayout.const_0), bool_0)
+	public NativeLibraryImage(byte[] bytes2, bool flag)
+		: this(RecoveredRuntime.LoadPeImageFromBytes(bytes2, PeImageLayout.File), flag)
 	{
-		class154_0.Dispose();
+		exportAddress.Dispose();
 	}
 
-	public IntPtr GetExportAddress(string string_0)
+	public IntPtr GetExportAddress(string text)
 	{
-		if (this.class154_0.GetExports() != null && !(this.GetModuleBase() == IntPtr.Zero))
+		if (this.exportAddress.GetExports() != null && !(this.GetModuleBase() == IntPtr.Zero))
 		{
-			foreach (ExportedSymbol @class in this.class154_0.GetExports().list_1)
+			foreach (ExportedSymbol @class in this.exportAddress.GetExports().items2)
 			{
-				if (@class.GetHasName() && @class.GetName() == string_0)
+				if (@class.GetHasName() && @class.GetName() == text)
 				{
 					return this.GetModuleBase().Add((long)((ulong)@class.GetAddressRva()));
 				}
@@ -103,17 +103,17 @@ public sealed class NativeLibraryImage
 		return IntPtr.Zero;
 	}
 
-	internal void InitializeImage(bool bool_0)
+	internal void InitializeImage(bool flag)
 	{
-		this.SetModuleBase(RecoveredRuntime.VirtualAlloc((IntPtr)((long)this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase()), (UIntPtr)this.class154_0.GetHeaders().GetOptionalHeader().GetSizeOfImage(), NativeTypes.Enum33.flag_0 | NativeTypes.Enum33.flag_1, NativeTypes.Enum34.flag_6));
+		this.SetModuleBase(RecoveredRuntime.VirtualAlloc((IntPtr)((long)this.exportAddress.GetHeaders().GetOptionalHeader().GetImageBase()), (UIntPtr)this.exportAddress.GetHeaders().GetOptionalHeader().GetSizeOfImage(), NativeTypes.MemoryAllocationType.Commit | NativeTypes.MemoryAllocationType.Reserve, NativeTypes.MemoryProtection.ReadWrite));
 		if (this.GetModuleBase() == IntPtr.Zero)
 		{
-			this.SetModuleBase(RecoveredRuntime.VirtualAlloc(IntPtr.Zero, (UIntPtr)this.class154_0.GetHeaders().GetOptionalHeader().GetSizeOfImage(), NativeTypes.Enum33.flag_0 | NativeTypes.Enum33.flag_1, NativeTypes.Enum34.flag_6));
+			this.SetModuleBase(RecoveredRuntime.VirtualAlloc(IntPtr.Zero, (UIntPtr)this.exportAddress.GetHeaders().GetOptionalHeader().GetSizeOfImage(), NativeTypes.MemoryAllocationType.Commit | NativeTypes.MemoryAllocationType.Reserve, NativeTypes.MemoryProtection.ReadWrite));
 		}
-		if (bool_0)
+		if (flag)
 		{
-			int num = (int)(this.class154_0.GetDosHeader().GetPeHeaderOffset() + this.class154_0.GetHeaders().GetOptionalHeader().GetSizeOfHeaders());
-			using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, 0L, num))
+			int num = (int)(this.exportAddress.GetDosHeader().GetPeHeaderOffset() + this.exportAddress.GetHeaders().GetOptionalHeader().GetSizeOfHeaders());
+			using (Stream stream = RecoveredRuntime.CopyImageRange(this.exportAddress, 0L, num))
 			{
 				byte[] array = new byte[num];
 				stream.Read(array, 0, num);
@@ -121,39 +121,39 @@ public sealed class NativeLibraryImage
 			}
 		}
 		this.MapSections();
-		if (this.class154_0.GetBaseRelocations() != null)
+		if (this.exportAddress.GetBaseRelocations() != null)
 		{
-			IntPtr intPtr = this.GetModuleBase().Subtract((IntPtr)((long)this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase()));
+			IntPtr intPtr = this.GetModuleBase().Subtract((IntPtr)((long)this.exportAddress.GetHeaders().GetOptionalHeader().GetImageBase()));
 			if (intPtr != IntPtr.Zero)
 			{
 				this.ApplyBaseRelocations(intPtr);
 			}
 		}
-		this.ResolveImports(this.class154_0.GetImports());
-		if (this.class154_0.GetDelayImports() != null)
+		this.ResolveImports(this.exportAddress.GetImports());
+		if (this.exportAddress.GetDelayImports() != null)
 		{
-			this.ResolveImports(this.class154_0.GetDelayImports());
+			this.ResolveImports(this.exportAddress.GetDelayImports());
 		}
 		this.ApplySectionProtections();
-		if (this.class154_0.GetTlsDirectory() != null)
+		if (this.exportAddress.GetTlsDirectory() != null)
 		{
-			foreach (ulong num2 in this.class154_0.GetTlsDirectory().list_0)
+			foreach (ulong num2 in this.exportAddress.GetTlsDirectory().items)
 			{
-				long long_ = (long)(num2 - this.class154_0.GetHeaders().GetOptionalHeader().GetImageBase());
+				long long_ = (long)(num2 - this.exportAddress.GetHeaders().GetOptionalHeader().GetImageBase());
 				IntPtr ptr = this.GetModuleBase().Add(long_);
-				NativeLibraryImage.Delegate45 @delegate = (NativeLibraryImage.Delegate45)Marshal.GetDelegateForFunctionPointer(ptr, typeof(NativeLibraryImage.Delegate45));
+				NativeLibraryImage.DllEntryPoint @delegate = (NativeLibraryImage.DllEntryPoint)Marshal.GetDelegateForFunctionPointer(ptr, typeof(NativeLibraryImage.DllEntryPoint));
 				if (!@delegate(this.GetModuleBase(), 1u, IntPtr.Zero))
 				{
 					throw new Exception(EncodedStringTable.DecodeString(9232) + ptr.ToString(EncodedStringTable.DecodeString(2077)) + EncodedStringTable.DecodeString(9277));
 				}
-				this.list_0.Add(@delegate);
+				this.items.Add(@delegate);
 			}
 		}
-		if (this.class154_0.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint() != 0u)
+		if (this.exportAddress.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint() != 0u)
 		{
-			IntPtr ptr2 = this.GetModuleBase().Add((long)((ulong)this.class154_0.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint()));
-			this.delegate45_0 = (NativeLibraryImage.Delegate45)Marshal.GetDelegateForFunctionPointer(ptr2, typeof(NativeLibraryImage.Delegate45));
-			if (!this.delegate45_0(this.GetModuleBase(), 1u, IntPtr.Zero))
+			IntPtr ptr2 = this.GetModuleBase().Add((long)((ulong)this.exportAddress.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint()));
+			this.dllEntryPoint = (NativeLibraryImage.DllEntryPoint)Marshal.GetDelegateForFunctionPointer(ptr2, typeof(NativeLibraryImage.DllEntryPoint));
+			if (!this.dllEntryPoint(this.GetModuleBase(), 1u, IntPtr.Zero))
 			{
 				throw new Exception(EncodedStringTable.DecodeString(9302));
 			}
@@ -162,23 +162,23 @@ public sealed class NativeLibraryImage
 
 	internal void ApplySectionProtections()
 	{
-		foreach (PeSectionHeader section in class154_0.GetSections())
+		foreach (PeSectionHeader section in exportAddress.GetSections())
 		{
 			IntPtr address = GetModuleBase().Add(section.GetVirtualAddress());
 			SectionCharacteristics characteristics = section.GetCharacteristics();
-			if ((characteristics & SectionCharacteristics.flag_28) != 0)
+			if ((characteristics & SectionCharacteristics.Discardable) != 0)
 			{
-				RecoveredRuntime.VirtualFree(address, (UIntPtr)section.GetVirtualSize(), NativeTypes.Enum28.const_0);
+				RecoveredRuntime.VirtualFree(address, (UIntPtr)section.GetVirtualSize(), NativeTypes.MemoryFreeType.Decommit);
 				continue;
 			}
 
-			bool executable = (characteristics & SectionCharacteristics.flag_32) != 0;
-			bool readable = (characteristics & SectionCharacteristics.flag_33) != 0;
-			bool writable = (characteristics & SectionCharacteristics.flag_34) != 0;
-			NativeTypes.Enum34 protection = enum34_0[executable ? 1 : 0][readable ? 1 : 0][writable ? 1 : 0];
-			if ((characteristics & SectionCharacteristics.flag_29) != 0)
+			bool executable = (characteristics & SectionCharacteristics.Execute) != 0;
+			bool readable = (characteristics & SectionCharacteristics.Read) != 0;
+			bool writable = (characteristics & SectionCharacteristics.Write) != 0;
+			NativeTypes.MemoryProtection protection = memoryProtectionArrayArrayArray[executable ? 1 : 0][readable ? 1 : 0][writable ? 1 : 0];
+			if ((characteristics & SectionCharacteristics.NotCached) != 0)
 			{
-				protection |= NativeTypes.Enum34.flag_9;
+				protection |= NativeTypes.MemoryProtection.NoCache;
 			}
 
 			if (!RecoveredRuntime.VirtualProtect(address, (UIntPtr)section.GetVirtualSize(), protection, out _))
@@ -188,29 +188,29 @@ public sealed class NativeLibraryImage
 		}
 	}
 
-	internal void ResolveImports(ImportDirectory class148_0)
+	internal void ResolveImports(ImportDirectory importDirectory)
 	{
-		if (this.byte_0 == null)
+		if (this.bytes == null)
 		{
-			this.byte_0 = this.ExtractManifestResource();
+			this.bytes = this.ExtractManifestResource();
 		}
-		IntPtr value = NativeTypes.intptr_0;
+		IntPtr value = NativeTypes.address;
 		IntPtr zero = IntPtr.Zero;
-		if (this.byte_0 != null)
+		if (this.bytes != null)
 		{
 			string tempFileName = Path.GetTempFileName();
-			File.WriteAllBytes(tempFileName, this.byte_0);
-			NativeTypes.Struct50 @struct = default(NativeTypes.Struct50);
-			@struct.int_0 = Marshal.SizeOf(typeof(NativeTypes.Struct50));
-			@struct.string_0 = tempFileName;
-			NativeTypes.Struct50 struct2 = @struct;
+			File.WriteAllBytes(tempFileName, this.bytes);
+			NativeTypes.ActivationContext @struct = default(NativeTypes.ActivationContext);
+			@struct.intValue = Marshal.SizeOf(typeof(NativeTypes.ActivationContext));
+			@struct.text = tempFileName;
+			NativeTypes.ActivationContext struct2 = @struct;
 			value = RecoveredRuntime.CreateActCtx(ref struct2);
 			RecoveredRuntime.ActivateActCtx(value, out zero);
 			File.Delete(tempFileName);
 		}
-		for (int i = 0; i < class148_0.list_0.Count; i++)
+		for (int i = 0; i < importDirectory.items.Count; i++)
 		{
-			ImportDescriptor @class = class148_0.list_0[i];
+			ImportDescriptor @class = importDirectory.items[i];
 			IntPtr ptr = this.GetModuleBase().Add((long)((ulong)@class.GetFirstThunk()));
 			string text = @class.GetModuleName();
 			IntPtr intPtr = RecoveredRuntime.LoadLibrary(text);
@@ -218,7 +218,7 @@ public sealed class NativeLibraryImage
 			{
 				throw new DllNotFoundException(EncodedStringTable.DecodeString(9433) + text + EncodedStringTable.DecodeString(9470));
 			}
-			this.list_1.Add(intPtr);
+			this.items2.Add(intPtr);
 			foreach (ImportedSymbol class2 in @class.GetOriginalThunkSymbols())
 			{
 				string text2 = class2.GetIsOrdinal() ? ((char)class2.GetOrdinal()).ToString() : class2.GetName();
@@ -238,7 +238,7 @@ public sealed class NativeLibraryImage
 				ptr = ptr.Add(IntPtr.Size);
 			}
 		}
-		if (value != NativeTypes.intptr_0)
+		if (value != NativeTypes.address)
 		{
 			RecoveredRuntime.DeactivateActCtx(0, zero);
 			RecoveredRuntime.ReleaseActCtx(value);
@@ -247,20 +247,20 @@ public sealed class NativeLibraryImage
 
 	internal byte[] ExtractManifestResource()
 	{
-		if (this.class154_0.GetResources() == null)
+		if (this.exportAddress.GetResources() == null)
 		{
 			return null;
 		}
-		foreach (ResourceDirectoryNode @class in this.class154_0.GetResources().GetRoot().GetSubdirectories())
+		foreach (ResourceDirectoryNode @class in this.exportAddress.GetResources().GetRoot().GetSubdirectories())
 		{
 			if (RecoveredRuntime.HasNumericResourceIdentifier(@class) && @class.GetId() == 24 && @class.GetSubdirectories().Count == 1 && @class.GetSubdirectories()[0].GetDataEntries().Count == 1)
 			{
 				ResourceDataEntry class2 = @class.GetSubdirectories()[0].GetDataEntries()[0];
-				long num = RecoveredRuntime.MapRvaToFileOffset(this.class154_0, class2.GetDataRva());
+				long num = RecoveredRuntime.MapRvaToFileOffset(this.exportAddress, class2.GetDataRva());
 				if (num != -1L)
 				{
 					byte[] array = new byte[class2.GetSize()];
-					using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, num, (int)class2.GetSize()))
+					using (Stream stream = RecoveredRuntime.CopyImageRange(this.exportAddress, num, (int)class2.GetSize()))
 					{
 						stream.Read(array, 0, array.Length);
 					}
@@ -271,17 +271,17 @@ public sealed class NativeLibraryImage
 		return null;
 	}
 
-	internal void ApplyBaseRelocations(IntPtr intptr_1)
+	internal void ApplyBaseRelocations(IntPtr address)
 	{
-		foreach (BaseRelocationBlock @class in this.class154_0.GetBaseRelocations().list_0)
+		foreach (BaseRelocationBlock @class in this.exportAddress.GetBaseRelocations().items)
 		{
-			foreach (BaseRelocationEntry class2 in @class.list_0)
+			foreach (BaseRelocationEntry class2 in @class.items)
 			{
 				if (class2.GetRelocationType() == BaseRelocationType.Dir64 || class2.GetRelocationType() == BaseRelocationType.HighLow)
 				{
 					IntPtr ptr = this.GetModuleBase().Add((long)((ulong)(@class.GetPageRva() + class2.GetOffset())));
 					IntPtr intPtr = Marshal.ReadIntPtr(ptr);
-					Marshal.WriteIntPtr(ptr, intPtr.Add(intptr_1));
+					Marshal.WriteIntPtr(ptr, intPtr.Add(address));
 				}
 			}
 		}
@@ -289,13 +289,13 @@ public sealed class NativeLibraryImage
 
 	internal void MapSections()
 	{
-		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
+		foreach (PeSectionHeader gclass in this.exportAddress.GetSections())
 		{
 			IntPtr intPtr;
 			if (gclass.GetSizeOfRawData() != 0u)
 			{
-				IntPtr destination = RecoveredRuntime.VirtualAlloc(this.GetModuleBase().Add((long)((ulong)gclass.GetVirtualAddress())), (UIntPtr)gclass.GetSizeOfRawData(), NativeTypes.Enum33.flag_0, NativeTypes.Enum34.flag_6);
-				using (Stream stream = RecoveredRuntime.CopyImageRange(this.class154_0, (long)((ulong)gclass.GetPointerToRawData()), (int)gclass.GetSizeOfRawData()))
+				IntPtr destination = RecoveredRuntime.VirtualAlloc(this.GetModuleBase().Add((long)((ulong)gclass.GetVirtualAddress())), (UIntPtr)gclass.GetSizeOfRawData(), NativeTypes.MemoryAllocationType.Commit, NativeTypes.MemoryProtection.ReadWrite);
+				using (Stream stream = RecoveredRuntime.CopyImageRange(this.exportAddress, (long)((ulong)gclass.GetPointerToRawData()), (int)gclass.GetSizeOfRawData()))
 				{
 					byte[] array = new byte[gclass.GetSizeOfRawData()];
 					stream.Read(array, 0, array.Length);
@@ -305,7 +305,7 @@ public sealed class NativeLibraryImage
 			}
 			else
 			{
-				intPtr = RecoveredRuntime.VirtualAlloc(this.GetModuleBase().Add((long)((ulong)gclass.GetVirtualAddress())), (UIntPtr)gclass.GetVirtualSize(), NativeTypes.Enum33.flag_0, NativeTypes.Enum34.flag_6);
+				intPtr = RecoveredRuntime.VirtualAlloc(this.GetModuleBase().Add((long)((ulong)gclass.GetVirtualAddress())), (UIntPtr)gclass.GetVirtualSize(), NativeTypes.MemoryAllocationType.Commit, NativeTypes.MemoryProtection.ReadWrite);
 			}
 			long long_ = (long)((ulong)gclass.GetVirtualSize());
 			RecoveredRuntime.ZeroMemory(long_, intPtr, 0);

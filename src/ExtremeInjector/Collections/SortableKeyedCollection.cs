@@ -4,33 +4,33 @@ using System.Collections.ObjectModel;
 
 public sealed class SortableKeyedCollection<T, U> : KeyedCollection<T, U>
 {
-	internal const string string_0 = "Delegate passed cannot be null";
+	internal const string text = "Delegate passed cannot be null";
 
-	internal readonly Func<U, T> func_0;
+	internal readonly Func<U, T> keyForItem;
 
-	public SortableKeyedCollection(Func<U, T> func_1)
+	public SortableKeyedCollection(Func<U, T> callback)
 	{
-		if (func_1 != null)
+		if (callback != null)
 		{
-			this.func_0 = func_1;
+			this.keyForItem = callback;
 			return;
 		}
 		throw new ArgumentNullException(EncodedStringTable.DecodeString(4398));
 	}
 
-	public SortableKeyedCollection(Func<U, T> func_1, IEqualityComparer<T> iequalityComparer_0)
-		: base(iequalityComparer_0)
+	public SortableKeyedCollection(Func<U, T> callback, IEqualityComparer<T> equalityComparer)
+		: base(equalityComparer)
 	{
-		if (func_1 == null)
+		if (callback == null)
 		{
 			throw new ArgumentNullException("Delegate passed cannot be null");
 		}
-		func_0 = func_1;
+		keyForItem = callback;
 	}
 
 	protected override T GetKeyForItem(U item)
 	{
-		return func_0(item);
+		return keyForItem(item);
 	}
 
 	public void SortByKey()
@@ -39,15 +39,15 @@ public sealed class SortableKeyedCollection<T, U> : KeyedCollection<T, U>
 		SortByKey(icomparer_);
 	}
 
-	public void SortByKey(IComparer<T> icomparer_0)
+	public void SortByKey(IComparer<T> comparer)
 	{
-		ComparisonComparer<U> icomparer_ = new ComparisonComparer<U>((U gparam_0, U gparam_1) => icomparer_0.Compare(this.GetKeyForItem(gparam_0), this.GetKeyForItem(gparam_1)));
+		ComparisonComparer<U> icomparer_ = new ComparisonComparer<U>((U value, U value2) => comparer.Compare(this.GetKeyForItem(value), this.GetKeyForItem(value2)));
 		this.SortByValue(icomparer_);
 	}
 
-	public void SortByKey(Comparison<T> comparison_0)
+	public void SortByKey(Comparison<T> comparison)
 	{
-		ComparisonComparer<U> icomparer_ = new ComparisonComparer<U>((U gparam_0, U gparam_1) => comparison_0(this.GetKeyForItem(gparam_0), this.GetKeyForItem(gparam_1)));
+		ComparisonComparer<U> icomparer_ = new ComparisonComparer<U>((U value, U value2) => comparison(this.GetKeyForItem(value), this.GetKeyForItem(value2)));
 		this.SortByValue(icomparer_);
 	}
 
@@ -57,18 +57,18 @@ public sealed class SortableKeyedCollection<T, U> : KeyedCollection<T, U>
 		SortByValue(icomparer_);
 	}
 
-	public void SortByValue(Comparison<U> comparison_0)
+	public void SortByValue(Comparison<U> comparison)
 	{
-		ComparisonComparer<U> icomparer_ = new ComparisonComparer<U>(comparison_0);
+		ComparisonComparer<U> icomparer_ = new ComparisonComparer<U>(comparison);
 		this.SortByValue(icomparer_);
 	}
 
-	public void SortByValue(IComparer<U> icomparer_0)
+	public void SortByValue(IComparer<U> comparer)
 	{
 		List<U> list = base.Items as List<U>;
 		if (list != null)
 		{
-			list.Sort(icomparer_0);
+			list.Sort(comparer);
 		}
 	}
 }

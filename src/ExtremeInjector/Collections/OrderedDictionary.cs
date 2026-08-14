@@ -7,29 +7,29 @@ using System.Runtime.CompilerServices;
 
 public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<KeyValuePair<T, U>>, IEnumerable<KeyValuePair<T, U>>, IOrderedDictionaryEx<T, U>, IEnumerable, IOrderedDictionary, IDictionary, ICollection
 {
-	internal SortableKeyedCollection<T, KeyValuePair<T, U>> class41_0;
+	internal SortableKeyedCollection<T, KeyValuePair<T, U>> itemAt;
 
 	[CompilerGenerated]
-	internal IEqualityComparer<T> iequalityComparer_0;
+	internal IEqualityComparer<T> equalityComparer;
 
-	public U this[int int_0]
+	public U this[int intValue]
 	{
 		get
 		{
-			if (int_0 >= 0 && int_0 < class41_0.Count)
+			if (intValue >= 0 && intValue < itemAt.Count)
 			{
-				return class41_0[int_0].Value;
+				return itemAt[intValue].Value;
 			}
-			throw new ArgumentException(string.Format("The index is outside the bounds of the dictionary: {0}", int_0));
+			throw new ArgumentException(string.Format("The index is outside the bounds of the dictionary: {0}", intValue));
 		}
 		set
 		{
-			if (int_0 >= 0 && int_0 < class41_0.Count)
+			if (intValue >= 0 && intValue < itemAt.Count)
 			{
-				class41_0[int_0] = new KeyValuePair<T, U>(class41_0[int_0].Key, value);
+				itemAt[intValue] = new KeyValuePair<T, U>(itemAt[intValue].Key, value);
 				return;
 			}
-			throw new ArgumentException(string.Format("The index is outside the bounds of the dictionary: {0}", int_0));
+			throw new ArgumentException(string.Format("The index is outside the bounds of the dictionary: {0}", intValue));
 		}
 	}
 
@@ -37,11 +37,11 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 	{
 		get
 		{
-			if (!class41_0.Contains(key))
+			if (!itemAt.Contains(key))
 			{
 				throw new ArgumentException(string.Format("The given key is not present in the dictionary: {0}", key));
 			}
-			return class41_0[key].Value;
+			return itemAt[key].Value;
 		}
 		set
 		{
@@ -49,30 +49,30 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 			int num = IndexOfKey(key);
 			if (num > -1)
 			{
-				class41_0[num] = keyValuePair;
+				itemAt[num] = keyValuePair;
 				return;
 			}
-			class41_0.Add(keyValuePair);
+			itemAt.Add(keyValuePair);
 		}
 	}
 
-	public int Count => class41_0.Count;
+	public int Count => itemAt.Count;
 
-	public ICollection<T> Keys => class41_0.Select(pair => pair.Key).ToList();
+	public ICollection<T> Keys => itemAt.Select(pair => pair.Key).ToList();
 
-	public ICollection<U> Values => class41_0.Select(pair => pair.Value).ToList();
+	public ICollection<U> Values => itemAt.Select(pair => pair.Value).ToList();
 
 	public IEqualityComparer<T> KeyComparer
 	{
 		[CompilerGenerated]
 		get
 		{
-			return iequalityComparer_0;
+			return equalityComparer;
 		}
 		[CompilerGenerated]
 		internal set
 		{
-			iequalityComparer_0 = value;
+			equalityComparer = value;
 		}
 	}
 
@@ -94,7 +94,7 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 		}
 	}
 
-	int ICollection<KeyValuePair<T, U>>.Count => class41_0.Count;
+	int ICollection<KeyValuePair<T, U>>.Count => itemAt.Count;
 
 	bool ICollection<KeyValuePair<T, U>>.IsReadOnly => false;
 
@@ -130,118 +130,118 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 		}
 	}
 
-	int ICollection.Count => class41_0.Count;
+	int ICollection.Count => itemAt.Count;
 
-	bool ICollection.IsSynchronized => ((ICollection)class41_0).IsSynchronized;
+	bool ICollection.IsSynchronized => ((ICollection)itemAt).IsSynchronized;
 
-	object ICollection.SyncRoot => ((ICollection)class41_0).SyncRoot;
+	object ICollection.SyncRoot => ((ICollection)itemAt).SyncRoot;
 
 	public OrderedDictionary()
 	{
 		Initialize(null);
 	}
 
-	public OrderedDictionary(IEqualityComparer<T> iequalityComparer_1)
+	public OrderedDictionary(IEqualityComparer<T> equalityComparer2)
 	{
-		Initialize(iequalityComparer_1);
+		Initialize(equalityComparer2);
 	}
 
-	public OrderedDictionary(IOrderedDictionaryEx<T, U> interface1_0)
+	public OrderedDictionary(IOrderedDictionaryEx<T, U> dictionary)
 	{
 		this.Initialize(null);
-		foreach (KeyValuePair<T, U> item in interface1_0)
+		foreach (KeyValuePair<T, U> item in dictionary)
 		{
-			this.class41_0.Add(item);
+			this.itemAt.Add(item);
 		}
 	}
 
-	public OrderedDictionary(IOrderedDictionaryEx<T, U> interface1_0, IEqualityComparer<T> iequalityComparer_1)
+	public OrderedDictionary(IOrderedDictionaryEx<T, U> dictionary, IEqualityComparer<T> equalityComparer2)
 	{
-		Initialize(iequalityComparer_1);
-		foreach (KeyValuePair<T, U> item in interface1_0)
+		Initialize(equalityComparer2);
+		foreach (KeyValuePair<T, U> item in dictionary)
 		{
-			class41_0.Add(item);
+			itemAt.Add(item);
 		}
 	}
 
-	internal void Initialize(IEqualityComparer<T> iequalityComparer_1)
+	internal void Initialize(IEqualityComparer<T> equalityComparer2)
 	{
-		KeyComparer = iequalityComparer_1;
-		class41_0 = ((iequalityComparer_1 != null) ? new SortableKeyedCollection<T, KeyValuePair<T, U>>((KeyValuePair<T, U> keyValuePair_0) => keyValuePair_0.Key, iequalityComparer_1) : new SortableKeyedCollection<T, KeyValuePair<T, U>>((KeyValuePair<T, U> keyValuePair_0) => keyValuePair_0.Key));
+		KeyComparer = equalityComparer2;
+		itemAt = ((equalityComparer2 != null) ? new SortableKeyedCollection<T, KeyValuePair<T, U>>((KeyValuePair<T, U> keyValuePair) => keyValuePair.Key, equalityComparer2) : new SortableKeyedCollection<T, KeyValuePair<T, U>>((KeyValuePair<T, U> keyValuePair) => keyValuePair.Key));
 	}
 
 	public void Add(T key, U value)
 	{
-		class41_0.Add(new KeyValuePair<T, U>(key, value));
+		itemAt.Add(new KeyValuePair<T, U>(key, value));
 	}
 
 	public void Clear()
 	{
-		class41_0.Clear();
+		itemAt.Clear();
 	}
 
-	public void Insert(int int_0, T gparam_0, U gparam_1)
+	public void Insert(int intValue, T value, U value2)
 	{
-		class41_0.Insert(int_0, new KeyValuePair<T, U>(gparam_0, gparam_1));
+		itemAt.Insert(intValue, new KeyValuePair<T, U>(value, value2));
 	}
 
-	public int IndexOfKey(T gparam_0)
+	public int IndexOfKey(T value)
 	{
-		if (class41_0.Contains(gparam_0))
+		if (itemAt.Contains(value))
 		{
-			return class41_0.IndexOf(class41_0[gparam_0]);
+			return itemAt.IndexOf(itemAt[value]);
 		}
 		return -1;
 	}
 
-	public bool ContainsValue(U gparam_0)
+	public bool ContainsValue(U value)
 	{
-		return Values.Contains(gparam_0);
+		return Values.Contains(value);
 	}
 
-	public bool ContainsValue(U gparam_0, IEqualityComparer<U> iequalityComparer_1)
+	public bool ContainsValue(U value, IEqualityComparer<U> equalityComparer2)
 	{
-		return Values.Contains(gparam_0, iequalityComparer_1);
+		return Values.Contains(value, equalityComparer2);
 	}
 
 	public bool ContainsKey(T key)
 	{
-		return class41_0.Contains(key);
+		return itemAt.Contains(key);
 	}
 
-	public KeyValuePair<T, U> GetItemAt(int int_0)
+	public KeyValuePair<T, U> GetItemAt(int intValue)
 	{
-		if (int_0 >= 0 && int_0 < this.class41_0.Count)
+		if (intValue >= 0 && intValue < this.itemAt.Count)
 		{
-			return this.class41_0[int_0];
+			return this.itemAt[intValue];
 		}
-		throw new ArgumentException(string.Format(EncodedStringTable.DecodeString(4321), int_0));
+		throw new ArgumentException(string.Format(EncodedStringTable.DecodeString(4321), intValue));
 	}
 
 	public IEnumerator<KeyValuePair<T, U>> GetEnumerator()
 	{
-		return class41_0.GetEnumerator();
+		return itemAt.GetEnumerator();
 	}
 
 	public bool Remove(T key)
 	{
-		return class41_0.Remove(key);
+		return itemAt.Remove(key);
 	}
 
 	public void RemoveAt(int index)
 	{
-		if (index < 0 || index >= this.class41_0.Count)
+		if (index < 0 || index >= this.itemAt.Count)
 		{
 			throw new ArgumentException(string.Format(EncodedStringTable.DecodeString(4321), index));
 		}
-		this.class41_0.RemoveAt(index);
+		this.itemAt.RemoveAt(index);
 	}
 
 	public bool TryGetValue(T key, out U value)
 	{
-		if (class41_0.Contains(key))
+		if (itemAt.Contains(key))
 		{
-			value = class41_0[key].Value;
+			value = itemAt[key].Value;
 			return true;
 		}
 		value = default(U);
@@ -250,17 +250,17 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	public void SortByKey()
 	{
-		class41_0.SortByKey();
+		itemAt.SortByKey();
 	}
 
-	public void SortByKey(IComparer<T> icomparer_0)
+	public void SortByKey(IComparer<T> comparer)
 	{
-		class41_0.SortByKey(icomparer_0);
+		itemAt.SortByKey(comparer);
 	}
 
-	public void SortByKey(Comparison<T> comparison_0)
+	public void SortByKey(Comparison<T> comparison)
 	{
-		class41_0.SortByKey(comparison_0);
+		itemAt.SortByKey(comparison);
 	}
 
 	public void SortByValue()
@@ -269,14 +269,14 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 		this.SortByValue(@default);
 	}
 
-	public void SortByValue(IComparer<U> icomparer_0)
+	public void SortByValue(IComparer<U> comparer)
 	{
-		class41_0.SortByValue((KeyValuePair<T, U> keyValuePair_0, KeyValuePair<T, U> keyValuePair_1) => icomparer_0.Compare(keyValuePair_0.Value, keyValuePair_1.Value));
+		itemAt.SortByValue((KeyValuePair<T, U> keyValuePair, KeyValuePair<T, U> keyValuePair2) => comparer.Compare(keyValuePair.Value, keyValuePair2.Value));
 	}
 
-	public void SortByValue(Comparison<U> comparison_0)
+	public void SortByValue(Comparison<U> comparison)
 	{
-		class41_0.SortByValue((KeyValuePair<T, U> keyValuePair_0, KeyValuePair<T, U> keyValuePair_1) => comparison_0(keyValuePair_0.Value, keyValuePair_1.Value));
+		itemAt.SortByValue((KeyValuePair<T, U> keyValuePair, KeyValuePair<T, U> keyValuePair2) => comparison(keyValuePair.Value, keyValuePair2.Value));
 	}
 
 	void IDictionary<T, U>.Add(T key, U value)
@@ -301,27 +301,27 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	void ICollection<KeyValuePair<T, U>>.Add(KeyValuePair<T, U> item)
 	{
-		class41_0.Add(item);
+		itemAt.Add(item);
 	}
 
 	void ICollection<KeyValuePair<T, U>>.Clear()
 	{
-		class41_0.Clear();
+		itemAt.Clear();
 	}
 
 	bool ICollection<KeyValuePair<T, U>>.Contains(KeyValuePair<T, U> item)
 	{
-		return class41_0.Contains(item);
+		return itemAt.Contains(item);
 	}
 
 	void ICollection<KeyValuePair<T, U>>.CopyTo(KeyValuePair<T, U>[] array, int arrayIndex)
 	{
-		class41_0.CopyTo(array, arrayIndex);
+		itemAt.CopyTo(array, arrayIndex);
 	}
 
 	bool ICollection<KeyValuePair<T, U>>.Remove(KeyValuePair<T, U> item)
 	{
-		return class41_0.Remove(item);
+		return itemAt.Remove(item);
 	}
 
 	IEnumerator<KeyValuePair<T, U>> IEnumerable<KeyValuePair<T, U>>.GetEnumerator()
@@ -361,7 +361,7 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	bool IDictionary.Contains(object key)
 	{
-		return class41_0.Contains((T)key);
+		return itemAt.Contains((T)key);
 	}
 
 	IDictionaryEnumerator IDictionary.GetEnumerator()
@@ -376,6 +376,6 @@ public sealed class OrderedDictionary<T, U> : IDictionary<T, U>, ICollection<Key
 
 	void ICollection.CopyTo(Array array, int index)
 	{
-		((ICollection)class41_0).CopyTo(array, index);
+		((ICollection)itemAt).CopyTo(array, index);
 	}
 }

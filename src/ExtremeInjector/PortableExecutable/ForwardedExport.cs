@@ -3,70 +3,70 @@ using System.Runtime.CompilerServices;
 public sealed class ForwardedExport
 {
 	[CompilerGenerated]
-	internal string string_0;
+	internal string moduleName;
 
 	[CompilerGenerated]
-	internal bool bool_0;
+	internal bool isOrdinal;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort ordinal;
 
 	[CompilerGenerated]
-	internal string string_1;
+	internal string name;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetModuleName()
 	{
-		return string_0;
+		return moduleName;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetModuleName(string string_2)
+	public void SetModuleName(string text)
 	{
-		string_0 = string_2;
+		moduleName = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public bool GetIsOrdinal()
 	{
-		return bool_0;
+		return isOrdinal;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetIsOrdinal(bool bool_1)
+	public void SetIsOrdinal(bool flag)
 	{
-		bool_0 = bool_1;
+		isOrdinal = flag;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetOrdinal()
 	{
-		return ushort_0;
+		return ordinal;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetOrdinal(ushort ushort_1)
+	public void SetOrdinal(ushort ushortValue)
 	{
-		ushort_0 = ushort_1;
+		ordinal = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetName()
 	{
-		return string_1;
+		return name;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetName(string string_2)
+	public void SetName(string text)
 	{
-		string_1 = string_2;
+		name = text;
 	}
 }

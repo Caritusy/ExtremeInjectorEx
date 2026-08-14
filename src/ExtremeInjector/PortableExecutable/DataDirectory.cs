@@ -4,46 +4,46 @@ using System.Runtime.CompilerServices;
 public sealed class DataDirectory
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint virtualAddress;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint size;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetVirtualAddress()
 	{
-		return uint_0;
+		return virtualAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetVirtualAddress(uint uint_2)
+	public void SetVirtualAddress(uint uintValue)
 	{
-		uint_0 = uint_2;
+		virtualAddress = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSize()
 	{
-		return uint_1;
+		return size;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSize(uint uint_2)
+	public void SetSize(uint uintValue)
 	{
-		uint_1 = uint_2;
+		size = uintValue;
 	}
 
 	public DataDirectory()
 	{
 	}
 
-	public DataDirectory(BinaryReader binaryReader_0)
+	public DataDirectory(BinaryReader binaryReader)
 	{
-		this.SetVirtualAddress(binaryReader_0.ReadUInt32());
-		this.SetSize(binaryReader_0.ReadUInt32());
+		this.SetVirtualAddress(binaryReader.ReadUInt32());
+		this.SetSize(binaryReader.ReadUInt32());
 	}
 }

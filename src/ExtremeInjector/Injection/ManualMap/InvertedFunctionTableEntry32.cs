@@ -13,9 +13,9 @@ public sealed class InvertedFunctionTableEntry32 : RemotePlatformStructure
 		});
 	}
 
-	public InvertedFunctionTableEntry32(IntPtr intptr_2, IntPtr intptr_3)
-		: base(intptr_3, bool_2: true)
+	public InvertedFunctionTableEntry32(IntPtr address, IntPtr address2)
+		: base(address2, flag2: true)
 	{
-		SetAddress(intptr_2);
+		SetAddress(address);
 	}
 }

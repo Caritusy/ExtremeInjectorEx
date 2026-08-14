@@ -4,39 +4,39 @@ using System.Runtime.CompilerServices;
 public abstract class RemoteStructure : RemoteMemoryAccessor
 {
 	[CompilerGenerated]
-	internal IntPtr intptr_1;
+	internal IntPtr address;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetAddress()
 	{
-		return intptr_1;
+		return address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected internal void SetAddress(IntPtr intptr_2)
+	protected internal void SetAddress(IntPtr address2)
 	{
-		intptr_1 = intptr_2;
+		address = address2;
 	}
 
-	protected RemoteStructure(int int_1)
-		: base(int_1)
-	{
-	}
-
-	protected RemoteStructure(IntPtr intptr_2)
-		: base(intptr_2)
+	protected RemoteStructure(int intValue)
+		: base(intValue)
 	{
 	}
 
-	protected T ReadFieldAtOffset<T>(int int_1)
+	protected RemoteStructure(IntPtr address2)
+		: base(address2)
 	{
-		return Read<T>(GetAddress().Add(int_1));
 	}
 
-	protected void WriteFieldAtOffset<T>(T gparam_0, int int_1)
+	protected T ReadFieldAtOffset<T>(int intValue)
 	{
-		Write(GetAddress().Add(int_1), gparam_0);
+		return Read<T>(GetAddress().Add(intValue));
+	}
+
+	protected void WriteFieldAtOffset<T>(T value, int intValue)
+	{
+		Write(GetAddress().Add(intValue), value);
 	}
 }

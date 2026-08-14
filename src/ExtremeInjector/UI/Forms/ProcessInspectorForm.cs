@@ -8,56 +8,56 @@ public sealed class ProcessInspectorForm : Form
 {
 	internal RemoteProcess SelectedProcess { get; set; }
 
-	internal IContainer icontainer_0;
+	internal IContainer container;
 
-	internal Button button_0;
+	internal Button button;
 
-	internal DataGridView dataGridView_0;
+	internal DataGridView dataGridView;
 
-	internal Label label_0;
+	internal Label label;
 
-	internal GroupBox groupBox_0;
+	internal GroupBox groupBox;
 
-	internal PictureBox pictureBox_0;
+	internal PictureBox pictureBox;
 
-	internal Button button_1;
+	internal Button button2;
 
-	internal Timer timer_0;
+	internal Timer timer;
 
-	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_0;
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn;
 
-	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_1;
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 
-	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_2;
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
 
-	internal Button button_2;
+	internal Button button3;
 
-	internal TabControl tabControl_0;
+	internal TabControl tabControl;
 
-	internal TabPage tabPage_0;
+	internal TabPage tabPage;
 
-	internal TabPage tabPage_1;
+	internal TabPage tabPage2;
 
-	internal DataGridView dataGridView_1;
+	internal DataGridView dataGridView2;
 
-	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_3;
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
 
-	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_4;
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
 
-	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_5;
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
 
-	internal Button button_3;
+	internal Button button4;
 
-	internal Button button_4;
+	internal Button button5;
 
 	public ProcessInspectorForm()
 	{
 		RecoveredRuntime.InitializeProcessInspectorForm(this);
 		ModernUi.ApplyLegacyFormTheme(this);
 		ApplyModernLayout();
-		ModernUi.StyleDangerButton(button_0);
-		ModernUi.StyleDangerButton(button_1);
-		ModernUi.StyleDangerButton(button_4);
+		ModernUi.StyleDangerButton(button);
+		ModernUi.StyleDangerButton(button2);
+		ModernUi.StyleDangerButton(button5);
 	}
 
 	private void ApplyModernLayout()
@@ -82,16 +82,16 @@ public sealed class ProcessInspectorForm : Form
 		root.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
 		root.RowStyles.Add(new RowStyle(SizeType.Absolute, 42f));
 
-		groupBox_0.Dock = DockStyle.Fill;
-		groupBox_0.Margin = new Padding(0, 0, 0, 12);
-		pictureBox_0.Size = new Size(48, 48);
-		pictureBox_0.BackgroundImageLayout = ImageLayout.Zoom;
-		pictureBox_0.Anchor = AnchorStyles.Top;
-		pictureBox_0.Margin = Padding.Empty;
-		label_0.AutoSize = false;
-		label_0.AutoEllipsis = true;
-		label_0.Dock = DockStyle.Fill;
-		label_0.Margin = new Padding(10, 0, 0, 0);
+		groupBox.Dock = DockStyle.Fill;
+		groupBox.Margin = new Padding(0, 0, 0, 12);
+		pictureBox.Size = new Size(48, 48);
+		pictureBox.BackgroundImageLayout = ImageLayout.Zoom;
+		pictureBox.Anchor = AnchorStyles.Top;
+		pictureBox.Margin = Padding.Empty;
+		label.AutoSize = false;
+		label.AutoEllipsis = true;
+		label.Dock = DockStyle.Fill;
+		label.Margin = new Padding(10, 0, 0, 0);
 		var summaryLayout = new TableLayoutPanel
 		{
 			BackColor = ModernUi.Surface,
@@ -104,15 +104,15 @@ public sealed class ProcessInspectorForm : Form
 		summaryLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 52f));
 		summaryLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 		summaryLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
-		summaryLayout.Controls.Add(pictureBox_0, 0, 0);
-		summaryLayout.Controls.Add(label_0, 1, 0);
-		groupBox_0.Controls.Clear();
-		groupBox_0.Controls.Add(summaryLayout);
+		summaryLayout.Controls.Add(pictureBox, 0, 0);
+		summaryLayout.Controls.Add(label, 1, 0);
+		groupBox.Controls.Clear();
+		groupBox.Controls.Add(summaryLayout);
 
-		tabControl_0.Dock = DockStyle.Fill;
-		tabControl_0.Margin = new Padding(0, 0, 0, 10);
-		ConfigureTabPage(tabPage_0, dataGridView_0, button_1, null);
-		ConfigureTabPage(tabPage_1, dataGridView_1, button_4, button_3);
+		tabControl.Dock = DockStyle.Fill;
+		tabControl.Margin = new Padding(0, 0, 0, 10);
+		ConfigureTabPage(tabPage, dataGridView, button2, null);
+		ConfigureTabPage(tabPage2, dataGridView2, button5, button4);
 
 		var footer = new FlowLayoutPanel
 		{
@@ -123,14 +123,14 @@ public sealed class ProcessInspectorForm : Form
 			Padding = new Padding(0, 6, 0, 0),
 			WrapContents = false
 		};
-		button_2.Margin = Padding.Empty;
-		button_0.Margin = new Padding(0, 0, 8, 0);
-		footer.Controls.Add(button_2);
-		footer.Controls.Add(button_0);
+		button3.Margin = Padding.Empty;
+		button.Margin = new Padding(0, 0, 8, 0);
+		footer.Controls.Add(button3);
+		footer.Controls.Add(button);
 
 		Controls.Clear();
-		root.Controls.Add(groupBox_0, 0, 0);
-		root.Controls.Add(tabControl_0, 0, 1);
+		root.Controls.Add(groupBox, 0, 0);
+		root.Controls.Add(tabControl, 0, 1);
 		root.Controls.Add(footer, 0, 2);
 		Controls.Add(root);
 		ResumeLayout(performLayout: true);
@@ -182,8 +182,8 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void RefreshProcessDetails()
 	{
-		this.dataGridView_0.Rows.Clear();
-		this.dataGridView_1.Rows.Clear();
+		this.dataGridView.Rows.Clear();
+		this.dataGridView2.Rows.Clear();
 		ProcessModuleCollection @class = RecoveredRuntime.CaptureProcessModules(SelectedProcess);
 		foreach (ProcessModuleInfo gclass in @class)
 		{
@@ -208,14 +208,14 @@ public sealed class ProcessInspectorForm : Form
 					Value = RecoveredRuntime.FormatByteSize((long)((ulong)gclass.GetImageSize())),
 					Tag = gclass.GetImageSize()
 				});
-				this.dataGridView_0.Rows.Add(dataGridViewRow);
+				this.dataGridView.Rows.Add(dataGridViewRow);
 			}
 		}
-		using (Icon icon = RecoveredRuntime.GetFileIcon(SelectedProcess.FilePath, IconSize.const_1))
+		using (Icon icon = RecoveredRuntime.GetFileIcon(SelectedProcess.FilePath, IconSize.Large))
 		{
-			this.pictureBox_0.BackgroundImage = ((icon == null) ? null : icon.ToBitmap());
+			this.pictureBox.BackgroundImage = ((icon == null) ? null : icon.ToBitmap());
 		}
-		this.label_0.Text = string.Format(EncodedStringTable.DecodeString(2082), new object[]
+		this.label.Text = string.Format(EncodedStringTable.DecodeString(2082), new object[]
 		{
 			SelectedProcess.Name,
 			SelectedProcess.FilePath,
@@ -244,18 +244,18 @@ public sealed class ProcessInspectorForm : Form
 				Value = RecoveredRuntime.FormatThreadPriority(class2.GetPriorityLevel()),
 				Tag = class2.GetPriorityLevel()
 			});
-			this.dataGridView_1.Rows.Add(dataGridViewRow2);
+			this.dataGridView2.Rows.Add(dataGridViewRow2);
 		}
 	}
 
-	internal static string FormatAddress(IEnumerable<ProcessModuleInfo> ienumerable_0, IntPtr intptr_0)
+	internal static string FormatAddress(IEnumerable<ProcessModuleInfo> items, IntPtr address)
 	{
-		foreach (ProcessModuleInfo gclass in ienumerable_0)
+		foreach (ProcessModuleInfo gclass in items)
 		{
-			if ((long)intptr_0 >= (long)gclass.GetModuleBase() && (long)intptr_0 <= (long)gclass.GetModuleBase() + (long)((ulong)gclass.GetImageSize()))
+			if ((long)address >= (long)gclass.GetModuleBase() && (long)address <= (long)gclass.GetModuleBase() + (long)((ulong)gclass.GetImageSize()))
 			{
 				List<ExportedSymbol> list = RecoveredRuntime.GetRemoteModuleExports(gclass);
-				uint num = (uint)((long)intptr_0 - (long)gclass.GetModuleBase());
+				uint num = (uint)((long)address - (long)gclass.GetModuleBase());
 				ExportedSymbol @class = null;
 				foreach (ExportedSymbol class2 in list)
 				{
@@ -279,7 +279,7 @@ public sealed class ProcessInspectorForm : Form
 				return gclass.GetFilePath() + EncodedStringTable.DecodeString(2171) + num.ToString(EncodedStringTable.DecodeString(2077));
 			}
 		}
-		return EncodedStringTable.DecodeString(2072) + intptr_0.ToString(EncodedStringTable.DecodeString(2077));
+		return EncodedStringTable.DecodeString(2072) + address.ToString(EncodedStringTable.DecodeString(2077));
 	}
 
 	internal void OnCloseClick(object sender, EventArgs e)
@@ -306,11 +306,11 @@ public sealed class ProcessInspectorForm : Form
 		{
 			return;
 		}
-		this.timer_0.Stop();
-		Control control = this.button_0;
-		Control control2 = this.button_1;
-		Control control3 = this.button_3;
-		this.button_4.Enabled = false;
+		this.timer.Stop();
+		Control control = this.button;
+		Control control2 = this.button2;
+		Control control3 = this.button4;
+		this.button5.Enabled = false;
 		control3.Enabled = false;
 		control2.Enabled = false;
 		control.Enabled = false;
@@ -318,7 +318,7 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void OnModuleSelectionChanged(object sender, EventArgs e)
 	{
-		button_1.Enabled = timer_0.Enabled;
+		button2.Enabled = timer.Enabled;
 	}
 
 	internal void OnGridSortCompare(object sender, DataGridViewSortCompareEventArgs e)
@@ -337,14 +337,14 @@ public sealed class ProcessInspectorForm : Form
 	internal void OnFormLoad(object sender, EventArgs e)
 	{
 		RefreshProcessDetails();
-		timer_0.Start();
+		timer.Start();
 	}
 
 	internal void OnUnloadModuleClick(object sender, EventArgs e)
 	{
 		try
 		{
-			ProcessModuleInfo gclass = (ProcessModuleInfo)this.dataGridView_0.SelectedRows[0].Tag;
+			ProcessModuleInfo gclass = (ProcessModuleInfo)this.dataGridView.SelectedRows[0].Tag;
 			if (RecoveredRuntime.UnloadProcessModule(gclass, new RemoteModuleManager(SelectedProcess)))
 			{
 				this.RefreshProcessDetails();
@@ -363,8 +363,8 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void OnThreadSelectionChanged(object sender, EventArgs e)
 	{
-		this.button_3.Enabled = (this.button_4.Enabled = this.timer_0.Enabled);
-		if (this.timer_0.Enabled)
+		this.button4.Enabled = (this.button5.Enabled = this.timer.Enabled);
+		if (this.timer.Enabled)
 		{
 			RecoveredRuntime.UpdateThreadActionText(this);
 		}
@@ -372,9 +372,9 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void OnToggleThreadSuspensionClick(object sender, EventArgs e)
 	{
-		ProcessThreadInfo class75_ = (ProcessThreadInfo)this.dataGridView_1.SelectedRows[0].Tag;
+		ProcessThreadInfo class75_ = (ProcessThreadInfo)this.dataGridView2.SelectedRows[0].Tag;
 		bool flag;
-		if (!((!(flag = (this.button_3.Text == EncodedStringTable.DecodeString(2546)))) ? RecoveredRuntime.SuspendProcessThread(class75_) : RecoveredRuntime.ResumeProcessThread(class75_)))
+		if (!((!(flag = (this.button4.Text == EncodedStringTable.DecodeString(2546)))) ? RecoveredRuntime.SuspendProcessThread(class75_) : RecoveredRuntime.ResumeProcessThread(class75_)))
 		{
 			MessageBox.Show(EncodedStringTable.DecodeString(2555) + (flag ? EncodedStringTable.DecodeString(2585) : EncodedStringTable.DecodeString(2572)) + EncodedStringTable.DecodeString(2594), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
@@ -387,7 +387,7 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void OnTerminateThreadClick(object sender, EventArgs e)
 	{
-		if (!RecoveredRuntime.TerminateProcessThread((ProcessThreadInfo)this.dataGridView_1.SelectedRows[0].Tag))
+		if (!RecoveredRuntime.TerminateProcessThread((ProcessThreadInfo)this.dataGridView2.SelectedRows[0].Tag))
 		{
 			MessageBox.Show(EncodedStringTable.DecodeString(2711), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			return;
@@ -397,9 +397,9 @@ public sealed class ProcessInspectorForm : Form
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing && this.icontainer_0 != null)
+		if (disposing && this.container != null)
 		{
-			this.icontainer_0.Dispose();
+			this.container.Dispose();
 		}
 		base.Dispose(disposing);
 	}

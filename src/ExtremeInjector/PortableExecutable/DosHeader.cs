@@ -3,19 +3,19 @@ using System.Runtime.CompilerServices;
 public sealed class DosHeader
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint peHeaderOffset;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetPeHeaderOffset()
 	{
-		return uint_0;
+		return peHeaderOffset;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetPeHeaderOffset(uint uint_1)
+	public void SetPeHeaderOffset(uint uintValue)
 	{
-		uint_0 = uint_1;
+		peHeaderOffset = uintValue;
 	}
 }

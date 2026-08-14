@@ -6,64 +6,64 @@ using System.Text;
 
 public static class PlatformInfo
 {
-	public delegate void Delegate47(IntPtr intptr_0, IntPtr intptr_1, uint uint_0);
+	public delegate void MemoryCopyRoutine(IntPtr address, IntPtr address2, uint uintValue);
 
-	public static class Class128<T>
+	public static class NativeTypeSizeCache<T>
 	{
-		public static readonly int int_0 = RecoveredRuntime.SizeOfNativeType(typeof(T));
+		public static readonly int intValue = RecoveredRuntime.SizeOfNativeType(typeof(T));
 	}
 
-	public static readonly bool bool_0;
+	public static readonly bool flag;
 
-	internal static Dictionary<Type, int> dictionary_0;
+	internal static Dictionary<Type, int> dictionary;
 
-	public static readonly Random random_0;
+	public static readonly Random randomElement;
 
-	public static readonly Random random_1;
+	public static readonly Random random;
 
-	public static readonly bool bool_1;
+	public static readonly bool flag2;
 
-	public static readonly bool bool_2;
+	public static readonly bool flag3;
 
-	public static readonly bool bool_3;
+	public static readonly bool flag4;
 
-	public static readonly bool bool_4;
+	public static readonly bool flag5;
 
-	public static readonly bool bool_5;
+	public static readonly bool flag6;
 
-	public static readonly bool bool_6;
+	public static readonly bool flag7;
 
-	public static readonly bool bool_7;
+	public static readonly bool flag8;
 
-	public static readonly bool bool_8;
+	public static readonly bool flag9;
 
-	public static readonly bool bool_9;
+	public static readonly bool flag10;
 
-	public static readonly bool bool_10;
+	public static readonly bool flag11;
 
-	public static readonly bool bool_11;
+	public static readonly bool flag12;
 
-	public static readonly string string_0;
+	public static readonly string text;
 
-	public static readonly string string_1;
+	public static readonly string text2;
 
-	public static readonly string string_2;
+	public static readonly string text3;
 
-	public static readonly string string_3;
+	public static readonly string text4;
 
-	internal static Delegate47 delegate47_0;
+	internal static MemoryCopyRoutine memoryCopyRoutine;
 
-	internal static Delegate47 delegate47_1;
+	internal static MemoryCopyRoutine memoryCopyRoutine2;
 
-	internal static Delegate47 delegate47_2;
+	internal static MemoryCopyRoutine memoryCopyRoutine3;
 
-	internal static Delegate47 delegate47_3;
+	internal static MemoryCopyRoutine memoryCopyRoutine4;
 
 	static PlatformInfo()
 	{
 	}
 
-	public static string ConvertDevicePathToDosPath(string string_4)
+	public static string ConvertDevicePathToDosPath(string text5)
 	{
 		StringBuilder stringBuilder = new StringBuilder(255);
 		for (int i = 65; i <= 90; i++)
@@ -71,9 +71,9 @@ public static class PlatformInfo
 			if (RecoveredRuntime.QueryDosDevice(((char)i).ToString() + EncodedStringTable.DecodeString(9709), stringBuilder, stringBuilder.Capacity) != 0u)
 			{
 				string text = stringBuilder.ToString();
-				if (string_4.StartsWith(text, StringComparison.OrdinalIgnoreCase))
+				if (text5.StartsWith(text, StringComparison.OrdinalIgnoreCase))
 				{
-					return ((char)i).ToString() + EncodedStringTable.DecodeString(9709) + string_4.Substring(text.Length, string_4.Length - text.Length);
+					return ((char)i).ToString() + EncodedStringTable.DecodeString(9709) + text5.Substring(text.Length, text5.Length - text.Length);
 				}
 			}
 		}
@@ -82,29 +82,29 @@ public static class PlatformInfo
 
 	public static int SizeOf<T>()
 	{
-		return Class128<T>.int_0;
+		return NativeTypeSizeCache<T>.intValue;
 	}
 
-	public static T GetRandomElement<T>(this T[] gparam_0)
+	public static T GetRandomElement<T>(this T[] valueArray)
 	{
-		return gparam_0[random_0.Next(gparam_0.Length)];
+		return valueArray[randomElement.Next(valueArray.Length)];
 	}
 
-	public static int GetRandomIndex<T>(this T[] gparam_0)
+	public static int GetRandomIndex<T>(this T[] valueArray)
 	{
-		return random_0.Next(gparam_0.Length);
+		return randomElement.Next(valueArray.Length);
 	}
 
-	public static void Shuffle<T>(this IList<T> ilist_0)
+	public static void Shuffle<T>(this IList<T> items)
 	{
-		int i = ilist_0.Count;
+		int i = items.Count;
 		while (i > 1)
 		{
 			i--;
-			int index = PlatformInfo.random_0.Next(i + 1);
-			T value = ilist_0[index];
-			ilist_0[index] = ilist_0[i];
-			ilist_0[i] = value;
+			int index = PlatformInfo.randomElement.Next(i + 1);
+			T value = items[index];
+			items[index] = items[i];
+			items[i] = value;
 		}
 	}
 }

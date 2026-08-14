@@ -6,9 +6,9 @@ using System.Text;
 
 public static class DynamicIlEmitter
 {
-	internal static readonly Random random_0 = new Random();
+	internal static readonly Random random = new Random();
 
-	internal static readonly Type[] type_0 = new Type[10]
+	internal static readonly Type[] typeArray = new Type[10]
 	{
 		typeof(void),
 		typeof(int),
@@ -24,7 +24,7 @@ public static class DynamicIlEmitter
 
 	internal static void EmitEmbeddedAssemblyLoader(ILGenerator ilGenerator, byte[] assemblyBytes)
 	{
-		byte b = (byte)DynamicIlEmitter.random_0.Next(1, 256);
+		byte b = (byte)DynamicIlEmitter.random.Next(1, 256);
 		StringBuilder stringBuilder = new StringBuilder(assemblyBytes.Length);
 		for (int i = 0; i < assemblyBytes.Length; i++)
 		{
@@ -104,8 +104,8 @@ public static class DynamicIlEmitter
 		AssemblyName assemblyName = new AssemblyName(RecoveredRuntime.GenerateRandomIdentifier());
 		AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Save);
 		ModuleBuilder moduleBuilder_ = assemblyBuilder.DefineDynamicModule(assemblyName.Name, assemblyName.Name + EncodedStringTable.DecodeString(93));
-		int num = DynamicIlEmitter.random_0.Next(5, 30);
-		int num2 = DynamicIlEmitter.random_0.Next(num);
+		int num = DynamicIlEmitter.random.Next(5, 30);
+		int num2 = DynamicIlEmitter.random.Next(num);
 		MethodBuilder methodBuilder = null;
 		for (int i = 0; i < num; i++)
 		{

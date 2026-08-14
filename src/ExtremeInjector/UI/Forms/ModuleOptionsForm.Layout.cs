@@ -9,7 +9,7 @@ public sealed partial class ModuleOptionsForm
 	private void InitializeModernModuleOptionsForm(bool attachRuntimeLoadHandler)
 	{
 		SuspendLayout();
-		icontainer_0 = new Container();
+		container = new Container();
 
 		AutoScaleDimensions = new SizeF(96f, 96f);
 		AutoScaleMode = AutoScaleMode.Dpi;
@@ -83,43 +83,43 @@ public sealed partial class ModuleOptionsForm
 
 	private ModernCard CreateExportOptionsCard()
 	{
-		groupBox_0 = new ModernCard
+		modernCard = new ModernCard
 		{
 			Dock = DockStyle.Fill,
 			Margin = new Padding(0, 0, 0, 8),
 			Name = "exportGroupBox",
 			Text = UiText.Get("Module.ExportOptions")
 		};
-		ModernUi.StyleCard(groupBox_0);
+		ModernUi.StyleCard(modernCard);
 
-		label_0 = CreateModuleFieldLabel("exportFunctionLabel", UiText.Get("Module.ExportFunction"));
-		label_1 = CreateModuleFieldLabel("callingConventionLabel", UiText.Get("Module.CallingConvention"));
-		label_2 = CreateModuleFieldLabel("parametersLabel", UiText.Get("Module.Parameters"));
+		label = CreateModuleFieldLabel("exportFunctionLabel", UiText.Get("Module.ExportFunction"));
+		label2 = CreateModuleFieldLabel("callingConventionLabel", UiText.Get("Module.CallingConvention"));
+		label3 = CreateModuleFieldLabel("parametersLabel", UiText.Get("Module.Parameters"));
 
-		comboBox_0 = CreateModuleComboBox("exportFunctionComboBox");
-		comboBox_0.SelectedIndexChanged += OnExportSelectionChanged;
-		comboBox_1 = CreateModuleComboBox("callingConvComboBox");
-		comboBox_1.SelectedIndexChanged += OnCallingConventionChanged;
-		comboBox_2 = CreateModuleComboBox("paramTypeComboBox");
+		exportRoutineComboBox = CreateModuleComboBox("exportFunctionComboBox");
+		exportRoutineComboBox.SelectedIndexChanged += OnExportSelectionChanged;
+		callingConventionComboBox = CreateModuleComboBox("callingConvComboBox");
+		callingConventionComboBox.SelectedIndexChanged += OnCallingConventionChanged;
+		parameterTypeComboBox = CreateModuleComboBox("paramTypeComboBox");
 
-		textBox_0 = new TextBox
+		parameterValueTextBox = new TextBox
 		{
 			Dock = DockStyle.Fill,
 			Margin = new Padding(8, 0, 8, 0),
 			Name = "argValueTextBox"
 		};
-		ModernUi.StyleTextBox(textBox_0);
+		ModernUi.StyleTextBox(parameterValueTextBox);
 
-		button_0 = new Button
+		button = new Button
 		{
 			Enabled = false,
 			Name = "addButton",
 			Text = UiText.Get("Module.Add")
 		};
-		button_0.Click += OnAddParameterClick;
-		button_0.EnabledChanged += (sender, args) => ApplyModernModuleOptionsTheme();
+		button.Click += OnAddParameterClick;
+		button.EnabledChanged += (sender, args) => ApplyModernModuleOptionsTheme();
 
-		dataGridViewTextBoxColumn_0 = new DataGridViewTextBoxColumn
+		dataGridViewTextBoxColumn = new DataGridViewTextBoxColumn
 		{
 			AutoSizeMode = DataGridViewAutoSizeColumnMode.None,
 			HeaderText = UiText.Get("Module.Number"),
@@ -128,7 +128,7 @@ public sealed partial class ModuleOptionsForm
 			SortMode = DataGridViewColumnSortMode.NotSortable,
 			Width = 42
 		};
-		dataGridViewTextBoxColumn_1 = new DataGridViewTextBoxColumn
+		dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn
 		{
 			AutoSizeMode = DataGridViewAutoSizeColumnMode.None,
 			HeaderText = UiText.Get("Module.Type"),
@@ -137,7 +137,7 @@ public sealed partial class ModuleOptionsForm
 			SortMode = DataGridViewColumnSortMode.NotSortable,
 			Width = 112
 		};
-		dataGridViewTextBoxColumn_2 = new DataGridViewTextBoxColumn
+		dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn
 		{
 			AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
 			HeaderText = UiText.Get("Module.Value"),
@@ -146,7 +146,7 @@ public sealed partial class ModuleOptionsForm
 			SortMode = DataGridViewColumnSortMode.NotSortable
 		};
 
-		dataGridView_0 = new DataGridView
+		parametersGrid = new DataGridView
 		{
 			AllowUserToAddRows = false,
 			AllowUserToDeleteRows = true,
@@ -160,12 +160,12 @@ public sealed partial class ModuleOptionsForm
 			ReadOnly = true,
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect
 		};
-		dataGridView_0.Columns.AddRange(
-			dataGridViewTextBoxColumn_0,
-			dataGridViewTextBoxColumn_1,
-			dataGridViewTextBoxColumn_2);
-		dataGridView_0.RowsAdded += OnParameterRowsAdded;
-		dataGridView_0.RowsRemoved += OnParameterRowsRemoved;
+		parametersGrid.Columns.AddRange(
+			dataGridViewTextBoxColumn,
+			dataGridViewTextBoxColumn2,
+			dataGridViewTextBoxColumn3);
+		parametersGrid.RowsAdded += OnParameterRowsAdded;
+		parametersGrid.RowsRemoved += OnParameterRowsRemoved;
 
 		var layout = new TableLayoutPanel
 		{
@@ -183,19 +183,19 @@ public sealed partial class ModuleOptionsForm
 		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 26f));
 		layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
 		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 42f));
-		comboBox_0.Dock = DockStyle.Fill;
-		comboBox_0.Margin = new Padding(0, 0, 0, 6);
-		comboBox_1.Dock = DockStyle.Fill;
-		comboBox_1.Margin = new Padding(0, 0, 0, 6);
-		layout.Controls.Add(label_0, 0, 0);
-		layout.Controls.Add(comboBox_0, 0, 1);
-		layout.Controls.Add(label_1, 0, 2);
-		layout.Controls.Add(comboBox_1, 0, 3);
-		layout.Controls.Add(label_2, 0, 4);
-		layout.Controls.Add(dataGridView_0, 0, 5);
+		exportRoutineComboBox.Dock = DockStyle.Fill;
+		exportRoutineComboBox.Margin = new Padding(0, 0, 0, 6);
+		callingConventionComboBox.Dock = DockStyle.Fill;
+		callingConventionComboBox.Margin = new Padding(0, 0, 0, 6);
+		layout.Controls.Add(label, 0, 0);
+		layout.Controls.Add(exportRoutineComboBox, 0, 1);
+		layout.Controls.Add(label2, 0, 2);
+		layout.Controls.Add(callingConventionComboBox, 0, 3);
+		layout.Controls.Add(label3, 0, 4);
+		layout.Controls.Add(parametersGrid, 0, 5);
 		layout.Controls.Add(CreateParameterEntryRow(), 0, 6);
-		groupBox_0.Controls.Add(layout);
-		return groupBox_0;
+		modernCard.Controls.Add(layout);
+		return modernCard;
 	}
 
 	private Control CreateParameterEntryRow()
@@ -211,13 +211,13 @@ public sealed partial class ModuleOptionsForm
 		row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 118f));
 		row.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 		row.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-		comboBox_2.Dock = DockStyle.Fill;
-		comboBox_2.Margin = Padding.Empty;
-		button_0.Dock = DockStyle.Fill;
-		button_0.Margin = Padding.Empty;
-		row.Controls.Add(comboBox_2, 0, 0);
-		row.Controls.Add(textBox_0, 1, 0);
-		row.Controls.Add(button_0, 2, 0);
+		parameterTypeComboBox.Dock = DockStyle.Fill;
+		parameterTypeComboBox.Margin = Padding.Empty;
+		button.Dock = DockStyle.Fill;
+		button.Margin = Padding.Empty;
+		row.Controls.Add(parameterTypeComboBox, 0, 0);
+		row.Controls.Add(parameterValueTextBox, 1, 0);
+		row.Controls.Add(button, 2, 0);
 		return row;
 	}
 
@@ -248,8 +248,8 @@ public sealed partial class ModuleOptionsForm
 	{
 		Color accent = ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1);
 		Color secondary = ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor2);
-		ModernUi.StyleDataGridView(dataGridView_0, accent);
-		ModernUi.StylePrimaryButton(button_0, accent, ModernUi.HarmonizeInteractiveColor(accent, secondary));
+		ModernUi.StyleDataGridView(parametersGrid, accent);
+		ModernUi.StylePrimaryButton(button, accent, ModernUi.HarmonizeInteractiveColor(accent, secondary));
 		if (AcceptButton is Button closeButton)
 		{
 			ModernUi.StyleSecondaryButton(closeButton, accent);

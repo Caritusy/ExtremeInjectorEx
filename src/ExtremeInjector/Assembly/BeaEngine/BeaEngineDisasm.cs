@@ -7,40 +7,40 @@ public struct BeaEngineDisasm
 	[StructLayout(LayoutKind.Sequential, Size = 64)]
 	[CompilerGenerated]
 	[UnsafeValueType]
-	public struct Struct32
+	public struct CompleteInstructionBuffer
 	{
-		public sbyte sbyte_0;
+		public sbyte signedByteValue;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Size = 160)]
 	[CompilerGenerated]
 	[UnsafeValueType]
-	public struct Struct33
+	public struct ReservedDisassemblyData
 	{
-		public uint uint_0;
+		public uint uintValue;
 	}
 
-	public unsafe byte* pByte_0;
+	public unsafe byte* pointer;
 
-	public ulong ulong_0;
+	public ulong ulongValue;
 
-	public uint uint_0;
+	public uint uintValue;
 
-	public Struct32 struct32_0;
+	public CompleteInstructionBuffer completeInstructionBuffer;
 
-	public uint uint_1;
+	public uint uintValue2;
 
-	public ulong ulong_1;
+	public ulong ulongValue2;
 
-	public BeaEngineInstruction struct27_0;
+	public BeaEngineInstruction instruction;
 
-	public BeaEngineArgument struct29_0;
+	public BeaEngineArgument argument;
 
-	public BeaEngineArgument struct29_1;
+	public BeaEngineArgument argument2;
 
-	public BeaEngineArgument struct29_2;
+	public BeaEngineArgument argument3;
 
-	public BeaEnginePrefixInfo struct23_0;
+	public BeaEnginePrefixInfo prefixInfo;
 
-	public Struct33 struct33_0;
+	public ReservedDisassemblyData reservedDisassemblyData;
 }

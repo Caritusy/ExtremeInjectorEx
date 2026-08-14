@@ -3,102 +3,102 @@ using System.IO;
 
 public class LzmaDecoder
 {
-	public class Class188
+	public class LzmaLengthDecoder
 	{
-		internal LzmaBitDecoder struct86_0;
+		internal LzmaBitDecoder bitDecoder;
 
-		internal LzmaBitDecoder struct86_1;
+		internal LzmaBitDecoder bitDecoder2;
 
-		internal LzmaBitTreeDecoder struct87_0 = new LzmaBitTreeDecoder(8);
+		internal LzmaBitTreeDecoder bitTreeDecoder = new LzmaBitTreeDecoder(8);
 
-		internal LzmaBitTreeDecoder[] struct87_1 = new LzmaBitTreeDecoder[16];
+		internal LzmaBitTreeDecoder[] bitTreeDecoderArray = new LzmaBitTreeDecoder[16];
 
-		internal LzmaBitTreeDecoder[] struct87_2 = new LzmaBitTreeDecoder[16];
+		internal LzmaBitTreeDecoder[] bitTreeDecoderArray2 = new LzmaBitTreeDecoder[16];
 
-		internal uint uint_0;
+		internal uint uintValue;
 
-		public void Create(uint uint_1)
+		public void Create(uint uintValue2)
 		{
-			for (uint num = uint_0; num < uint_1; num++)
+			for (uint num = uintValue; num < uintValue2; num++)
 			{
-				struct87_1[num] = new LzmaBitTreeDecoder(3);
-				struct87_2[num] = new LzmaBitTreeDecoder(3);
+				bitTreeDecoderArray[num] = new LzmaBitTreeDecoder(3);
+				bitTreeDecoderArray2[num] = new LzmaBitTreeDecoder(3);
 			}
-			uint_0 = uint_1;
+			uintValue = uintValue2;
 		}
 
 		public void Initialize()
 		{
-			struct86_0.Initialize();
-			for (uint num = 0u; num < uint_0; num++)
+			bitDecoder.Initialize();
+			for (uint num = 0u; num < uintValue; num++)
 			{
-				struct87_1[num].Initialize();
-				struct87_2[num].Initialize();
+				bitTreeDecoderArray[num].Initialize();
+				bitTreeDecoderArray2[num].Initialize();
 			}
-			struct86_1.Initialize();
-			struct87_0.Initialize();
+			bitDecoder2.Initialize();
+			bitTreeDecoder.Initialize();
 		}
 
-		public uint Decode(LzmaRangeDecoder class190_0, uint uint_1)
+		public uint Decode(LzmaRangeDecoder rangeDecoder, uint uintValue2)
 		{
-			if (struct86_0.Decode(class190_0) == 0)
+			if (bitDecoder.Decode(rangeDecoder) == 0)
 			{
-				return struct87_1[uint_1].Decode(class190_0);
+				return bitTreeDecoderArray[uintValue2].Decode(rangeDecoder);
 			}
 			uint num = 8u;
-			if (struct86_1.Decode(class190_0) == 0)
+			if (bitDecoder2.Decode(rangeDecoder) == 0)
 			{
-				return num + struct87_2[uint_1].Decode(class190_0);
+				return num + bitTreeDecoderArray2[uintValue2].Decode(rangeDecoder);
 			}
 			num += 8;
-			return num + struct87_0.Decode(class190_0);
+			return num + bitTreeDecoder.Decode(rangeDecoder);
 		}
 	}
 
-	public class Class189
+	public class LzmaLiteralDecoder
 	{
-		public struct Struct85
+		public struct LzmaLiteralSubdecoder
 		{
-			internal LzmaBitDecoder[] struct86_0;
+			internal LzmaBitDecoder[] bitDecoderArray;
 
 			public void Create()
 			{
-				struct86_0 = new LzmaBitDecoder[768];
+				bitDecoderArray = new LzmaBitDecoder[768];
 			}
 
 			public void Initialize()
 			{
 				for (int i = 0; i < 768; i++)
 				{
-					struct86_0[i].Initialize();
+					bitDecoderArray[i].Initialize();
 				}
 			}
 
-			public byte DecodeNormal(LzmaRangeDecoder class190_0)
+			public byte DecodeNormal(LzmaRangeDecoder rangeDecoder)
 			{
 				uint num = 1u;
 				do
 				{
-					num = (num << 1) | struct86_0[num].Decode(class190_0);
+					num = (num << 1) | bitDecoderArray[num].Decode(rangeDecoder);
 				}
 				while (num < 256);
 				return (byte)num;
 			}
 
-			public byte DecodeWithMatchByte(LzmaRangeDecoder class190_0, byte byte_0)
+			public byte DecodeWithMatchByte(LzmaRangeDecoder rangeDecoder, byte byteValue)
 			{
 				uint num = 1u;
 				do
 				{
-					uint num2 = (uint)((byte_0 >> 7) & 1);
-					byte_0 <<= 1;
-					uint num3 = struct86_0[(1 + num2 << 8) + num].Decode(class190_0);
+					uint num2 = (uint)((byteValue >> 7) & 1);
+					byteValue <<= 1;
+					uint num3 = bitDecoderArray[(1 + num2 << 8) + num].Decode(rangeDecoder);
 					num = (num << 1) | num3;
 					if (num2 != num3)
 					{
 						while (num < 256)
 						{
-							num = (num << 1) | struct86_0[num].Decode(class190_0);
+							num = (num << 1) | bitDecoderArray[num].Decode(rangeDecoder);
 						}
 						break;
 					}
@@ -108,209 +108,209 @@ public class LzmaDecoder
 			}
 		}
 
-		internal Struct85[] struct85_0;
+		internal LzmaLiteralSubdecoder[] literalSubdecoderArray;
 
-		internal int int_0;
+		internal int intValue;
 
-		internal int int_1;
+		internal int intValue2;
 
-		internal uint uint_0;
+		internal uint uintValue;
 
-		public void Create(int int_2, int int_3)
+		public void Create(int intValue3, int intValue4)
 		{
-			if (struct85_0 == null || int_1 != int_3 || int_0 != int_2)
+			if (literalSubdecoderArray == null || intValue2 != intValue4 || intValue != intValue3)
 			{
-				int_0 = int_2;
-				uint_0 = (uint)((1 << int_2) - 1);
-				int_1 = int_3;
-				uint num = (uint)(1 << int_1 + int_0);
-				struct85_0 = new Struct85[num];
+				intValue = intValue3;
+				uintValue = (uint)((1 << intValue3) - 1);
+				intValue2 = intValue4;
+				uint num = (uint)(1 << intValue2 + intValue);
+				literalSubdecoderArray = new LzmaLiteralSubdecoder[num];
 				for (uint num2 = 0u; num2 < num; num2++)
 				{
-					struct85_0[num2].Create();
+					literalSubdecoderArray[num2].Create();
 				}
 			}
 		}
 
 		public void Initialize()
 		{
-			uint num = (uint)(1 << int_1 + int_0);
+			uint num = (uint)(1 << intValue2 + intValue);
 			for (uint num2 = 0u; num2 < num; num2++)
 			{
-				struct85_0[num2].Initialize();
+				literalSubdecoderArray[num2].Initialize();
 			}
 		}
 
-		internal uint GetDecoderIndex(uint uint_1, byte byte_0)
+		internal uint GetDecoderIndex(uint uintValue2, byte byteValue)
 		{
-			return ((uint_1 & uint_0) << int_1) + (uint)(byte_0 >> 8 - int_1);
+			return ((uintValue2 & uintValue) << intValue2) + (uint)(byteValue >> 8 - intValue2);
 		}
 
-		public byte DecodeNormal(LzmaRangeDecoder class190_0, uint uint_1, byte byte_0)
+		public byte DecodeNormal(LzmaRangeDecoder rangeDecoder, uint uintValue2, byte byteValue)
 		{
-			return struct85_0[GetDecoderIndex(uint_1, byte_0)].DecodeNormal(class190_0);
+			return literalSubdecoderArray[GetDecoderIndex(uintValue2, byteValue)].DecodeNormal(rangeDecoder);
 		}
 
-		public byte DecodeWithMatchByte(LzmaRangeDecoder class190_0, uint uint_1, byte byte_0, byte byte_1)
+		public byte DecodeWithMatchByte(LzmaRangeDecoder rangeDecoder, uint uintValue2, byte byteValue, byte byteValue2)
 		{
-			return struct85_0[GetDecoderIndex(uint_1, byte_0)].DecodeWithMatchByte(class190_0, byte_1);
+			return literalSubdecoderArray[GetDecoderIndex(uintValue2, byteValue)].DecodeWithMatchByte(rangeDecoder, byteValue2);
 		}
 	}
 
-	internal const bool bool_0 = default(bool);
+	internal const bool flag = default(bool);
 
-	internal uint uint_0;
+	internal uint uintValue;
 
-	internal uint uint_1;
+	internal uint uintValue2;
 
-	internal LzmaBitDecoder[] struct86_0 = new LzmaBitDecoder[192];
+	internal LzmaBitDecoder[] bitDecoderArray = new LzmaBitDecoder[192];
 
-	internal LzmaBitDecoder[] struct86_1 = new LzmaBitDecoder[192];
+	internal LzmaBitDecoder[] bitDecoderArray2 = new LzmaBitDecoder[192];
 
-	internal LzmaBitDecoder[] struct86_2 = new LzmaBitDecoder[12];
+	internal LzmaBitDecoder[] bitDecoderArray3 = new LzmaBitDecoder[12];
 
-	internal LzmaBitDecoder[] struct86_3 = new LzmaBitDecoder[12];
+	internal LzmaBitDecoder[] bitDecoderArray4 = new LzmaBitDecoder[12];
 
-	internal LzmaBitDecoder[] struct86_4 = new LzmaBitDecoder[12];
+	internal LzmaBitDecoder[] bitDecoderArray5 = new LzmaBitDecoder[12];
 
-	internal LzmaBitDecoder[] struct86_5 = new LzmaBitDecoder[12];
+	internal LzmaBitDecoder[] bitDecoderArray6 = new LzmaBitDecoder[12];
 
-	internal Class188 class188_0 = new Class188();
+	internal LzmaLengthDecoder lengthDecoder = new LzmaLengthDecoder();
 
-	internal Class189 class189_0 = new Class189();
+	internal LzmaLiteralDecoder literalProperties = new LzmaLiteralDecoder();
 
-	internal LzmaOutputWindow gclass9_0 = new LzmaOutputWindow();
+	internal LzmaOutputWindow outputWindow = new LzmaOutputWindow();
 
-	internal LzmaBitTreeDecoder struct87_0 = new LzmaBitTreeDecoder(4);
+	internal LzmaBitTreeDecoder bitTreeDecoder = new LzmaBitTreeDecoder(4);
 
-	internal LzmaBitDecoder[] struct86_6 = new LzmaBitDecoder[114];
+	internal LzmaBitDecoder[] bitDecoderArray7 = new LzmaBitDecoder[114];
 
-	internal LzmaBitTreeDecoder[] struct87_1 = new LzmaBitTreeDecoder[4];
+	internal LzmaBitTreeDecoder[] bitTreeDecoderArray = new LzmaBitTreeDecoder[4];
 
-	internal uint uint_2;
+	internal uint uintValue3;
 
-	internal LzmaRangeDecoder class190_0 = new LzmaRangeDecoder();
+	internal LzmaRangeDecoder rangeDecoder = new LzmaRangeDecoder();
 
-	internal Class188 class188_1 = new Class188();
+	internal LzmaLengthDecoder lengthDecoder2 = new LzmaLengthDecoder();
 
 	public LzmaDecoder()
 	{
-		uint_0 = uint.MaxValue;
+		uintValue = uint.MaxValue;
 		for (int i = 0; i < 4L; i++)
 		{
-			struct87_1[i] = new LzmaBitTreeDecoder(6);
+			bitTreeDecoderArray[i] = new LzmaBitTreeDecoder(6);
 		}
 	}
 
-	internal void SetDictionarySize(uint uint_3)
+	internal void SetDictionarySize(uint uintValue4)
 	{
-		if (uint_0 != uint_3)
+		if (uintValue != uintValue4)
 		{
-			uint_0 = uint_3;
-			uint_1 = Math.Max(uint_0, 1u);
-			uint uint_4 = Math.Max(uint_1, 4096u);
-			gclass9_0.Create(uint_4);
+			uintValue = uintValue4;
+			uintValue2 = Math.Max(uintValue, 1u);
+			uint uintValue5 = Math.Max(uintValue2, 4096u);
+			outputWindow.Create(uintValue5);
 		}
 	}
 
-	internal void SetLiteralProperties(int int_0, int int_1)
+	internal void SetLiteralProperties(int intValue, int intValue2)
 	{
-		if (int_0 > 8)
-		{
-			throw new LzmaInvalidParameterException();
-		}
-		if (int_1 > 8)
+		if (intValue > 8)
 		{
 			throw new LzmaInvalidParameterException();
 		}
-		class189_0.Create(int_0, int_1);
-	}
-
-	internal void SetPositionBits(int int_0)
-	{
-		if (int_0 > 4)
+		if (intValue2 > 8)
 		{
 			throw new LzmaInvalidParameterException();
 		}
-		uint num = (uint)(1 << int_0);
-		class188_0.Create(num);
-		class188_1.Create(num);
-		uint_2 = num - 1;
+		literalProperties.Create(intValue, intValue2);
 	}
 
-	internal void Initialize(Stream stream_0, Stream stream_1)
+	internal void SetPositionBits(int intValue)
 	{
-		class190_0.Initialize(stream_0);
-		gclass9_0.SetStream(stream_1, bool_0: false);
+		if (intValue > 4)
+		{
+			throw new LzmaInvalidParameterException();
+		}
+		uint num = (uint)(1 << intValue);
+		lengthDecoder.Create(num);
+		lengthDecoder2.Create(num);
+		uintValue3 = num - 1;
+	}
+
+	internal void Initialize(Stream stream, Stream stream2)
+	{
+		rangeDecoder.Initialize(stream);
+		outputWindow.SetStream(stream2, flag: false);
 		for (uint num = 0u; num < 12; num++)
 		{
-			for (uint num2 = 0u; num2 <= uint_2; num2++)
+			for (uint num2 = 0u; num2 <= uintValue3; num2++)
 			{
 				uint num3 = (num << 4) + num2;
-				struct86_0[num3].Initialize();
-				struct86_1[num3].Initialize();
+				bitDecoderArray[num3].Initialize();
+				bitDecoderArray2[num3].Initialize();
 			}
-			struct86_2[num].Initialize();
-			struct86_3[num].Initialize();
-			struct86_4[num].Initialize();
-			struct86_5[num].Initialize();
+			bitDecoderArray3[num].Initialize();
+			bitDecoderArray4[num].Initialize();
+			bitDecoderArray5[num].Initialize();
+			bitDecoderArray6[num].Initialize();
 		}
-		class189_0.Initialize();
+		literalProperties.Initialize();
 		for (uint num = 0u; num < 4; num++)
 		{
-			struct87_1[num].Initialize();
+			bitTreeDecoderArray[num].Initialize();
 		}
 		for (uint num = 0u; num < 114; num++)
 		{
-			struct86_6[num].Initialize();
+			bitDecoderArray7[num].Initialize();
 		}
-		class188_0.Initialize();
-		class188_1.Initialize();
-		struct87_0.Initialize();
+		lengthDecoder.Initialize();
+		lengthDecoder2.Initialize();
+		bitTreeDecoder.Initialize();
 	}
 
-	public void Decode(Stream stream_0, Stream stream_1, long long_0)
+	public void Decode(Stream stream, Stream stream2, long longValue)
 	{
-		Initialize(stream_0, stream_1);
-		LzmaCodecConstants.Struct88 @struct = default(LzmaCodecConstants.Struct88);
+		Initialize(stream, stream2);
+		LzmaCodecConstants.LzmaState @struct = default(LzmaCodecConstants.LzmaState);
 		@struct.Initialize();
 		uint num = 0u;
 		uint num2 = 0u;
 		uint num3 = 0u;
 		uint num4 = 0u;
 		ulong num5 = 0uL;
-		if (0uL < (ulong)long_0)
+		if (0uL < (ulong)longValue)
 		{
-			if (struct86_0[@struct.uint_0 << 4].Decode(class190_0) != 0)
+			if (bitDecoderArray[@struct.isLiteralState << 4].Decode(rangeDecoder) != 0)
 			{
 				throw new LzmaDataErrorException();
 			}
 			@struct.UpdateLiteral();
-			byte byte_ = class189_0.DecodeNormal(class190_0, 0u, 0);
-			gclass9_0.PutByte(byte_);
+			byte byte_ = literalProperties.DecodeNormal(rangeDecoder, 0u, 0);
+			outputWindow.PutByte(byte_);
 			num5++;
 		}
-		while (num5 < (ulong)long_0)
+		while (num5 < (ulong)longValue)
 		{
-			uint num6 = (uint)(int)num5 & uint_2;
-			if (struct86_0[(@struct.uint_0 << 4) + num6].Decode(class190_0) == 0)
+			uint num6 = (uint)(int)num5 & uintValue3;
+			if (bitDecoderArray[(@struct.isLiteralState << 4) + num6].Decode(rangeDecoder) == 0)
 			{
-				byte byte_2 = gclass9_0.GetByte(0u);
-				byte byte_3 = (@struct.IsLiteralState() ? class189_0.DecodeNormal(class190_0, (uint)num5, byte_2) : class189_0.DecodeWithMatchByte(class190_0, (uint)num5, byte_2, gclass9_0.GetByte(num)));
-				gclass9_0.PutByte(byte_3);
+				byte byteValue = outputWindow.GetByte(0u);
+				byte byteValue2 = (@struct.IsLiteralState() ? literalProperties.DecodeNormal(rangeDecoder, (uint)num5, byteValue) : literalProperties.DecodeWithMatchByte(rangeDecoder, (uint)num5, byteValue, outputWindow.GetByte(num)));
+				outputWindow.PutByte(byteValue2);
 				@struct.UpdateLiteral();
 				num5++;
 				continue;
 			}
 			uint num8;
-			if (struct86_2[@struct.uint_0].Decode(class190_0) == 1)
+			if (bitDecoderArray3[@struct.isLiteralState].Decode(rangeDecoder) == 1)
 			{
-				if (struct86_3[@struct.uint_0].Decode(class190_0) == 0)
+				if (bitDecoderArray4[@struct.isLiteralState].Decode(rangeDecoder) == 0)
 				{
-					if (struct86_1[(@struct.uint_0 << 4) + num6].Decode(class190_0) == 0)
+					if (bitDecoderArray2[(@struct.isLiteralState << 4) + num6].Decode(rangeDecoder) == 0)
 					{
 						@struct.UpdateShortRepeatedMatch();
-						gclass9_0.PutByte(gclass9_0.GetByte(num));
+						outputWindow.PutByte(outputWindow.GetByte(num));
 						num5++;
 						continue;
 					}
@@ -318,13 +318,13 @@ public class LzmaDecoder
 				else
 				{
 					uint num7;
-					if (struct86_4[@struct.uint_0].Decode(class190_0) == 0)
+					if (bitDecoderArray5[@struct.isLiteralState].Decode(rangeDecoder) == 0)
 					{
 						num7 = num2;
 					}
 					else
 					{
-						if (struct86_5[@struct.uint_0].Decode(class190_0) == 0)
+						if (bitDecoderArray6[@struct.isLiteralState].Decode(rangeDecoder) == 0)
 						{
 							num7 = num3;
 						}
@@ -338,7 +338,7 @@ public class LzmaDecoder
 					num2 = num;
 					num = num7;
 				}
-				num8 = class188_1.Decode(class190_0, num6) + 2;
+				num8 = lengthDecoder2.Decode(rangeDecoder, num6) + 2;
 				@struct.UpdateRepeatedMatch();
 			}
 			else
@@ -346,21 +346,21 @@ public class LzmaDecoder
 				num4 = num3;
 				num3 = num2;
 				num2 = num;
-				num8 = 2 + class188_0.Decode(class190_0, num6);
+				num8 = 2 + lengthDecoder.Decode(rangeDecoder, num6);
 				@struct.UpdateMatch();
-				uint num9 = struct87_1[LzmaCodecConstants.GetLengthToPositionState(num8)].Decode(class190_0);
+				uint num9 = bitTreeDecoderArray[LzmaCodecConstants.GetLengthToPositionState(num8)].Decode(rangeDecoder);
 				if (num9 >= 4)
 				{
 					int num10 = (int)((num9 >> 1) - 1);
 					num = (2 | (num9 & 1)) << num10;
 					if (num9 < 14)
 					{
-						num += LzmaBitTreeDecoder.ReverseDecode(struct86_6, num - num9 - 1, class190_0, num10);
+						num += LzmaBitTreeDecoder.ReverseDecode(bitDecoderArray7, num - num9 - 1, rangeDecoder, num10);
 					}
 					else
 					{
-						num += class190_0.DecodeDirectBits(num10 - 4) << 4;
-						num += struct87_0.ReverseDecode(class190_0);
+						num += rangeDecoder.DecodeDirectBits(num10 - 4) << 4;
+						num += bitTreeDecoder.ReverseDecode(rangeDecoder);
 					}
 				}
 				else
@@ -368,9 +368,9 @@ public class LzmaDecoder
 					num = num9;
 				}
 			}
-			if (num < gclass9_0.uint_0 + num5 && num < uint_1)
+			if (num < outputWindow.uintValue + num5 && num < uintValue2)
 			{
-				gclass9_0.CopyBlock(num, num8);
+				outputWindow.CopyBlock(num, num8);
 				num5 += num8;
 				continue;
 			}
@@ -380,20 +380,20 @@ public class LzmaDecoder
 			}
 			throw new LzmaDataErrorException();
 		}
-		gclass9_0.Flush();
-		gclass9_0.ReleaseStream();
-		class190_0.ReleaseStream();
+		outputWindow.Flush();
+		outputWindow.ReleaseStream();
+		rangeDecoder.ReleaseStream();
 	}
 
-	public void SetDecoderProperties(byte[] byte_0)
+	public void SetDecoderProperties(byte[] bytes)
 	{
-		if (byte_0.Length < 5)
+		if (bytes.Length < 5)
 		{
 			throw new LzmaInvalidParameterException();
 		}
-		int int_ = byte_0[0] % 9;
-		int num = byte_0[0] / 9;
-		int int_2 = num % 5;
+		int int_ = bytes[0] % 9;
+		int num = bytes[0] / 9;
+		int intValue = num % 5;
 		int num2 = num / 5;
 		if (num2 > 4)
 		{
@@ -402,10 +402,10 @@ public class LzmaDecoder
 		uint num3 = 0u;
 		for (int i = 0; i < 4; i++)
 		{
-			num3 += (uint)(byte_0[1 + i] << i * 8);
+			num3 += (uint)(bytes[1 + i] << i * 8);
 		}
 		SetDictionarySize(num3);
-		SetLiteralProperties(int_2, int_);
+		SetLiteralProperties(intValue, int_);
 		SetPositionBits(num2);
 	}
 }

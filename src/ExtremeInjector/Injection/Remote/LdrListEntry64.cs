@@ -11,8 +11,8 @@ public sealed class LdrListEntry64 : RemoteLdrListEntry
 		});
 	}
 
-	internal LdrListEntry64(IntPtr intptr_2, IntPtr intptr_3)
-		: base(intptr_2, intptr_3, bool_2: false)
+	internal LdrListEntry64(IntPtr address, IntPtr address2)
+		: base(address, address2, flag: false)
 	{
 	}
 

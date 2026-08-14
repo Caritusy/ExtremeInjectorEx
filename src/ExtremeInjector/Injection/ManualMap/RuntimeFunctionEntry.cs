@@ -3,53 +3,53 @@ using System.Runtime.CompilerServices;
 public sealed class RuntimeFunctionEntry
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint beginAddress;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint endAddress;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal uint unwindInfoAddress;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetBeginAddress()
 	{
-		return uint_0;
+		return beginAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetBeginAddress(uint uint_3)
+	public void SetBeginAddress(uint uintValue)
 	{
-		uint_0 = uint_3;
+		beginAddress = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetEndAddress()
 	{
-		return uint_1;
+		return endAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetEndAddress(uint uint_3)
+	public void SetEndAddress(uint uintValue)
 	{
-		uint_1 = uint_3;
+		endAddress = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetUnwindInfoAddress()
 	{
-		return uint_2;
+		return unwindInfoAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetUnwindInfoAddress(uint uint_3)
+	public void SetUnwindInfoAddress(uint uintValue)
 	{
-		uint_2 = uint_3;
+		unwindInfoAddress = uintValue;
 	}
 }

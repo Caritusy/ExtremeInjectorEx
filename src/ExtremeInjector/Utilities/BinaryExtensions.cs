@@ -3,37 +3,37 @@ using System.IO;
 
 public static class BinaryExtensions
 {
-	internal static readonly bool bool_0 = IntPtr.Size == 4;
+	internal static readonly bool flag = IntPtr.Size == 4;
 
-	public static uint NextUInt32(this Random random_0)
+	public static uint NextUInt32(this Random random)
 	{
-		return (uint)random_0.Next();
+		return (uint)random.Next();
 	}
 
-	public static uint NextUInt32(this Random random_0, uint uint_0, uint uint_1)
+	public static uint NextUInt32(this Random random, uint uintValue, uint uintValue2)
 	{
-		if (uint_1 <= uint_0)
+		if (uintValue2 <= uintValue)
 		{
-			return (uint)random_0.Next((int)uint_1, (int)uint_0);
+			return (uint)random.Next((int)uintValue2, (int)uintValue);
 		}
-		return (uint)random_0.Next((int)uint_0, (int)uint_1);
+		return (uint)random.Next((int)uintValue, (int)uintValue2);
 	}
 
-	public static ushort NextUInt16(this Random random_0)
+	public static ushort NextUInt16(this Random random)
 	{
-		return (ushort)random_0.Next(0, 65536);
+		return (ushort)random.Next(0, 65536);
 	}
 
-	public static byte NextByte(this Random random_0)
+	public static byte NextByte(this Random random)
 	{
 		byte[] array = new byte[1];
-		random_0.NextBytes(array);
+		random.NextBytes(array);
 		return array[0];
 	}
 
-	public static string GetFilePath(this Stream stream_0)
+	public static string GetFilePath(this Stream stream)
 	{
-		FileStream fileStream = stream_0 as FileStream;
+		FileStream fileStream = stream as FileStream;
 		if (fileStream != null)
 		{
 			return Path.GetFullPath(fileStream.Name);
@@ -41,83 +41,83 @@ public static class BinaryExtensions
 		return string.Empty;
 	}
 
-	public static void CopyBytesTo(this Stream stream_0, Stream stream_1, int int_0)
+	public static void CopyBytesTo(this Stream stream, Stream stream2, int intValue)
 	{
-		byte[] array = new byte[int_0];
+		byte[] array = new byte[intValue];
 		int num = 0;
-		while (int_0 > 0)
+		while (intValue > 0)
 		{
-			int num2 = stream_0.Read(array, num, int_0);
+			int num2 = stream.Read(array, num, intValue);
 			if (num2 == 0)
 			{
 				break;
 			}
 			num += num2;
-			int_0 -= num2;
+			intValue -= num2;
 		}
-		stream_1.Write(array, 0, num);
+		stream2.Write(array, 0, num);
 	}
 
-	public static void CopyTo(this Stream stream_0, Stream stream_1)
+	public static void CopyTo(this Stream stream, Stream stream2)
 	{
-		if (stream_1 == null)
+		if (stream2 == null)
 		{
 			throw new ArgumentNullException(EncodedStringTable.DecodeString(4456));
 		}
-		if (!stream_0.CanRead && !stream_0.CanWrite)
+		if (!stream.CanRead && !stream.CanWrite)
 		{
 			throw new ObjectDisposedException(null);
 		}
-		if (!stream_1.CanRead && !stream_1.CanWrite)
+		if (!stream2.CanRead && !stream2.CanWrite)
 		{
 			throw new ObjectDisposedException(EncodedStringTable.DecodeString(4456));
 		}
-		if (!stream_0.CanRead)
+		if (!stream.CanRead)
 		{
 			throw new NotSupportedException();
 		}
-		if (!stream_1.CanWrite)
+		if (!stream2.CanWrite)
 		{
 			throw new NotSupportedException();
 		}
 		byte[] array = new byte[81920];
 		int count;
-		while ((count = stream_0.Read(array, 0, array.Length)) != 0)
+		while ((count = stream.Read(array, 0, array.Length)) != 0)
 		{
-			stream_1.Write(array, 0, count);
+			stream2.Write(array, 0, count);
 		}
 	}
 
-	public static int SizeOf(this Type type_0)
+	public static int SizeOf(this Type typeValue)
 	{
-		return RecoveredRuntime.GetCachedNativeTypeSize(type_0);
+		return RecoveredRuntime.GetCachedNativeTypeSize(typeValue);
 	}
 
-	public unsafe static IntPtr Add(this IntPtr intptr_0, int int_0)
+	public unsafe static IntPtr Add(this IntPtr address, int intValue)
 	{
-		return (IntPtr)((byte*)(void*)intptr_0 + int_0);
+		return (IntPtr)((byte*)(void*)address + intValue);
 	}
 
-	public unsafe static IntPtr Add(this IntPtr intptr_0, long long_0)
+	public unsafe static IntPtr Add(this IntPtr address, long longValue)
 	{
-		return (IntPtr)((byte*)(void*)intptr_0 + long_0);
+		return (IntPtr)((byte*)(void*)address + longValue);
 	}
 
-	public static IntPtr Add(this IntPtr intptr_0, IntPtr intptr_1)
+	public static IntPtr Add(this IntPtr address, IntPtr address2)
 	{
-		if (bool_0)
+		if (flag)
 		{
-			return (IntPtr)(intptr_0.ToInt32() + intptr_1.ToInt32());
+			return (IntPtr)(address.ToInt32() + address2.ToInt32());
 		}
-		return (IntPtr)(intptr_0.ToInt64() + intptr_1.ToInt64());
+		return (IntPtr)(address.ToInt64() + address2.ToInt64());
 	}
 
-	public static IntPtr Subtract(this IntPtr intptr_0, IntPtr intptr_1)
+	public static IntPtr Subtract(this IntPtr address, IntPtr address2)
 	{
-		if (bool_0)
+		if (flag)
 		{
-			return (IntPtr)(intptr_0.ToInt32() - intptr_1.ToInt32());
+			return (IntPtr)(address.ToInt32() - address2.ToInt32());
 		}
-		return (IntPtr)(intptr_0.ToInt64() - intptr_1.ToInt64());
+		return (IntPtr)(address.ToInt64() - address2.ToInt64());
 	}
 }

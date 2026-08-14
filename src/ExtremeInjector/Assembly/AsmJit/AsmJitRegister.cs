@@ -3,14 +3,14 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Sequential)]
 public class AsmJitRegister : AsmJitOperand
 {
-	public AsmJitRegister(uint uint_0, uint uint_1)
-		: base(AsmJitRuntime.struct20_0)
+	public AsmJitRegister(uint uintValue, uint uintValue2)
+		: base(AsmJitRuntime.uninitializedOperandTag)
 	{
-		AsmJitOperand.Struct9 struct9_ = RecoveredRuntime.GetRegisterOperandData(this);
-		struct9_.enum8_0 = AsmJitOperandType.flag_1;
-		struct9_.byte_0 = (byte)uint_1;
-		struct9_.uint_0 = AsmJitRuntime.uint_0;
-		struct9_.uint_1 = uint_0;
+		AsmJitOperand.ImmediateOperandData struct9_ = RecoveredRuntime.GetRegisterOperandData(this);
+		struct9_.operandType = AsmJitOperandType.Register;
+		struct9_.byteValue = (byte)uintValue2;
+		struct9_.uintValue = AsmJitRuntime.uintValue;
+		struct9_.uintValue2 = uintValue;
 		RecoveredRuntime.SetRegisterOperandData(this, struct9_);
 	}
 

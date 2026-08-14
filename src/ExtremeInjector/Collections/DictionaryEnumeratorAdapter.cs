@@ -4,40 +4,40 @@ using System.Collections.Generic;
 
 public sealed class DictionaryEnumeratorAdapter<T, U> : IDisposable, IEnumerator, IDictionaryEnumerator
 {
-	internal readonly IEnumerator<KeyValuePair<T, U>> ienumerator_0;
+	internal readonly IEnumerator<KeyValuePair<T, U>> enumerator;
 
 	DictionaryEntry IDictionaryEnumerator.Entry
 	{
 		get
 		{
-			KeyValuePair<T, U> current = ienumerator_0.Current;
+			KeyValuePair<T, U> current = enumerator.Current;
 			return new DictionaryEntry(current.Key, current.Value);
 		}
 	}
 
-	object IDictionaryEnumerator.Key => ienumerator_0.Current.Key;
+	object IDictionaryEnumerator.Key => enumerator.Current.Key;
 
-	object IDictionaryEnumerator.Value => ienumerator_0.Current.Value;
+	object IDictionaryEnumerator.Value => enumerator.Current.Value;
 
 	object IEnumerator.Current => ((IDictionaryEnumerator)this).Entry;
 
 	void IDisposable.Dispose()
 	{
-		ienumerator_0.Dispose();
+		enumerator.Dispose();
 	}
 
-	public DictionaryEnumeratorAdapter(IEnumerable<KeyValuePair<T, U>> ienumerable_0)
+	public DictionaryEnumeratorAdapter(IEnumerable<KeyValuePair<T, U>> items)
 	{
-		ienumerator_0 = ienumerable_0.GetEnumerator();
+		enumerator = items.GetEnumerator();
 	}
 
 	void IEnumerator.Reset()
 	{
-		ienumerator_0.Reset();
+		enumerator.Reset();
 	}
 
 	bool IEnumerator.MoveNext()
 	{
-		return ienumerator_0.MoveNext();
+		return enumerator.MoveNext();
 	}
 }

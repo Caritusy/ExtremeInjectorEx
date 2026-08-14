@@ -3,87 +3,87 @@ using System.Runtime.CompilerServices;
 public sealed class ExportedSymbol
 {
 	[CompilerGenerated]
-	internal bool bool_0;
+	internal bool hasName;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort ordinal;
 
 	[CompilerGenerated]
-	internal string string_0;
+	internal string name;
 
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint addressRva;
 
 	[CompilerGenerated]
-	internal ForwardedExport class153_0;
+	internal ForwardedExport forwarder;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public bool GetHasName()
 	{
-		return bool_0;
+		return hasName;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetHasName(bool bool_1)
+	public void SetHasName(bool flag)
 	{
-		bool_0 = bool_1;
+		hasName = flag;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetOrdinal()
 	{
-		return ushort_0;
+		return ordinal;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetOrdinal(ushort ushort_1)
+	public void SetOrdinal(ushort ushortValue)
 	{
-		ushort_0 = ushort_1;
+		ordinal = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetName()
 	{
-		return string_0;
+		return name;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetName(string string_1)
+	public void SetName(string text)
 	{
-		string_0 = string_1;
+		name = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetAddressRva()
 	{
-		return uint_0;
+		return addressRva;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetAddressRva(uint uint_1)
+	public void SetAddressRva(uint uintValue)
 	{
-		uint_0 = uint_1;
+		addressRva = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ForwardedExport GetForwarder()
 	{
-		return class153_0;
+		return forwarder;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetForwarder(ForwardedExport class153_1)
+	public void SetForwarder(ForwardedExport forwardedExport)
 	{
-		class153_0 = class153_1;
+		forwarder = forwardedExport;
 	}
 }

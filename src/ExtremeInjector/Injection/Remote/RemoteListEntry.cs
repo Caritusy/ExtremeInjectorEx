@@ -10,9 +10,9 @@ public abstract class RemoteListEntry : RemotePlatformStructure
 	}
 
 	[SpecialName]
-	public virtual void SetForwardLink(IntPtr intptr_2)
+	public virtual void SetForwardLink(IntPtr address)
 	{
-		WriteField(0, intptr_2);
+		WriteField(0, address);
 	}
 
 	[SpecialName]
@@ -22,18 +22,18 @@ public abstract class RemoteListEntry : RemotePlatformStructure
 	}
 
 	[SpecialName]
-	public virtual void SetBackwardLink(IntPtr intptr_2)
+	public virtual void SetBackwardLink(IntPtr address)
 	{
-		WriteField(1, intptr_2);
+		WriteField(1, address);
 	}
 
 	public abstract RemoteListEntry GetForwardEntry();
 
 	public abstract RemoteListEntry GetBackwardEntry();
 
-	protected RemoteListEntry(IntPtr intptr_2, IntPtr intptr_3, bool bool_2)
-		: base(intptr_3, bool_2)
+	protected RemoteListEntry(IntPtr address, IntPtr address2, bool flag)
+		: base(address2, flag)
 	{
-		SetAddress(intptr_2);
+		SetAddress(address);
 	}
 }

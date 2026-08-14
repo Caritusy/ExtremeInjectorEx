@@ -3,27 +3,27 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct BeaEngineEFlags
 {
-	public byte byte_0;
+	public byte byteValue;
 
-	public byte byte_1;
+	public byte byteValue2;
 
-	public byte byte_2;
+	public byte byteValue3;
 
-	public byte byte_3;
+	public byte byteValue4;
 
-	public byte byte_4;
+	public byte byteValue5;
 
-	public byte byte_5;
+	public byte byteValue6;
 
-	public byte byte_6;
+	public byte byteValue7;
 
-	public byte byte_7;
+	public byte byteValue8;
 
-	public byte byte_8;
+	public byte byteValue9;
 
-	public byte byte_9;
+	public byte byteValue10;
 
-	public byte byte_10;
+	public byte byteValue11;
 
-	public byte byte_11;
+	public byte byteValue12;
 }

@@ -7,18 +7,18 @@ public sealed class PeImage : IDisposable
 {
 	public interface IRvaToFileOffsetMapper
 	{
-		long MapRvaToFileOffset(PeImage class154_0, uint uint_0);
+		long MapRvaToFileOffset(PeImage peImage, uint uintValue);
 	}
 
 	public sealed class FileLayoutRvaMapper : IRvaToFileOffsetMapper
 	{
-		public long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
+		public long MapRvaToFileOffset(PeImage peImage, uint uintValue)
 		{
-			foreach (PeSectionHeader gclass in class154_0.GetSections())
+			foreach (PeSectionHeader gclass in peImage.GetSections())
 			{
-				if (uint_0 >= gclass.GetVirtualAddress() && uint_0 < gclass.GetVirtualAddress() + gclass.GetSizeOfRawData())
+				if (uintValue >= gclass.GetVirtualAddress() && uintValue < gclass.GetVirtualAddress() + gclass.GetSizeOfRawData())
 				{
-					return (long)((ulong)(uint_0 - gclass.GetVirtualAddress() + gclass.GetPointerToRawData()));
+					return (long)((ulong)(uintValue - gclass.GetVirtualAddress() + gclass.GetPointerToRawData()));
 				}
 			}
 			return -1L;
@@ -27,64 +27,64 @@ public sealed class PeImage : IDisposable
 
 	public sealed class MemoryLayoutRvaMapper : IRvaToFileOffsetMapper
 	{
-		public long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
+		public long MapRvaToFileOffset(PeImage peImage, uint uintValue)
 		{
-			return uint_0;
+			return uintValue;
 		}
 	}
 
 	[CompilerGenerated]
-	internal string string_0;
+	internal string filePath;
 
 	[CompilerGenerated]
-	internal string string_1;
+	internal string fileName;
 
 	[CompilerGenerated]
-	internal DosHeader class158_0;
+	internal DosHeader dosHeader;
 
 	[CompilerGenerated]
-	internal PeHeaders class161_0;
+	internal PeHeaders headers;
 
 	[CompilerGenerated]
-	internal List<PeSectionHeader> list_0;
+	internal List<PeSectionHeader> sections;
 
 	[CompilerGenerated]
-	internal ImportDirectory class148_0;
+	internal ImportDirectory imports;
 
 	[CompilerGenerated]
-	internal DelayImportDirectory class149_0;
+	internal DelayImportDirectory delayImports;
 
 	[CompilerGenerated]
-	internal ExportDirectory class151_0;
+	internal ExportDirectory exports;
 
 	[CompilerGenerated]
-	internal BaseRelocationDirectory class146_0;
+	internal BaseRelocationDirectory baseRelocations;
 
 	[CompilerGenerated]
-	internal DebugDirectoryEntry class147_0;
+	internal DebugDirectoryEntry debugDirectory;
 
 	[CompilerGenerated]
-	internal TlsDirectory class167_0;
+	internal TlsDirectory tlsDirectory;
 
 	[CompilerGenerated]
-	internal LoadConfigurationDirectory class143_0;
+	internal LoadConfigurationDirectory loadConfigurationDirectory;
 
 	[CompilerGenerated]
-	internal ResourceDirectory class166_0;
+	internal ResourceDirectory resources;
 
 	[CompilerGenerated]
-	internal ExceptionDirectory class141_0;
+	internal ExceptionDirectory exceptionDirectory;
 
 	[CompilerGenerated]
-	internal ClrHeader class142_0;
+	internal ClrHeader clrHeader;
 
 	[CompilerGenerated]
-	internal Stream stream_0;
+	internal Stream stream;
 
 	[CompilerGenerated]
-	internal PeImageLayout enum39_0;
+	internal PeImageLayout layout;
 
-	internal readonly bool bool_0;
+	internal readonly bool flag;
 
 	internal readonly IRvaToFileOffsetMapper rvaMapper;
 
@@ -92,224 +92,224 @@ public sealed class PeImage : IDisposable
 	[CompilerGenerated]
 	public string GetFilePath()
 	{
-		return string_0;
+		return filePath;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetFilePath(string string_2)
+	public void SetFilePath(string text)
 	{
-		string_0 = string_2;
+		filePath = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetFileName()
 	{
-		return string_1;
+		return fileName;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetFileName(string string_2)
+	public void SetFileName(string text)
 	{
-		string_1 = string_2;
+		fileName = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public DosHeader GetDosHeader()
 	{
-		return class158_0;
+		return dosHeader;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDosHeader(DosHeader class158_1)
+	public void SetDosHeader(DosHeader dosHeader2)
 	{
-		class158_0 = class158_1;
+		dosHeader = dosHeader2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public PeHeaders GetHeaders()
 	{
-		return class161_0;
+		return headers;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetHeaders(PeHeaders class161_1)
+	public void SetHeaders(PeHeaders peHeaders)
 	{
-		class161_0 = class161_1;
+		headers = peHeaders;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public List<PeSectionHeader> GetSections()
 	{
-		return list_0;
+		return sections;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSections(List<PeSectionHeader> list_1)
+	public void SetSections(List<PeSectionHeader> items)
 	{
-		list_0 = list_1;
+		sections = items;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ImportDirectory GetImports()
 	{
-		return class148_0;
+		return imports;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetImports(ImportDirectory class148_1)
+	public void SetImports(ImportDirectory importDirectory)
 	{
-		class148_0 = class148_1;
+		imports = importDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public DelayImportDirectory GetDelayImports()
 	{
-		return class149_0;
+		return delayImports;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDelayImports(DelayImportDirectory class149_1)
+	public void SetDelayImports(DelayImportDirectory delayImportDirectory)
 	{
-		class149_0 = class149_1;
+		delayImports = delayImportDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ExportDirectory GetExports()
 	{
-		return class151_0;
+		return exports;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetExports(ExportDirectory class151_1)
+	public void SetExports(ExportDirectory exportDirectory)
 	{
-		class151_0 = class151_1;
+		exports = exportDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public BaseRelocationDirectory GetBaseRelocations()
 	{
-		return class146_0;
+		return baseRelocations;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetBaseRelocations(BaseRelocationDirectory class146_1)
+	public void SetBaseRelocations(BaseRelocationDirectory baseRelocationDirectory)
 	{
-		class146_0 = class146_1;
+		baseRelocations = baseRelocationDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public DebugDirectoryEntry GetDebugDirectory()
 	{
-		return class147_0;
+		return debugDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDebugDirectory(DebugDirectoryEntry class147_1)
+	public void SetDebugDirectory(DebugDirectoryEntry debugDirectoryEntry)
 	{
-		class147_0 = class147_1;
+		debugDirectory = debugDirectoryEntry;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public TlsDirectory GetTlsDirectory()
 	{
-		return class167_0;
+		return tlsDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetTlsDirectory(TlsDirectory class167_1)
+	public void SetTlsDirectory(TlsDirectory tlsDirectory2)
 	{
-		class167_0 = class167_1;
+		tlsDirectory = tlsDirectory2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetLoadConfigurationDirectory(LoadConfigurationDirectory class143_1)
+	public void SetLoadConfigurationDirectory(LoadConfigurationDirectory loadConfigurationDirectory2)
 	{
-		class143_0 = class143_1;
+		loadConfigurationDirectory = loadConfigurationDirectory2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ResourceDirectory GetResources()
 	{
-		return class166_0;
+		return resources;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetResources(ResourceDirectory class166_1)
+	public void SetResources(ResourceDirectory resourceDirectory)
 	{
-		class166_0 = class166_1;
+		resources = resourceDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ExceptionDirectory GetExceptionDirectory()
 	{
-		return class141_0;
+		return exceptionDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetExceptionDirectory(ExceptionDirectory class141_1)
+	public void SetExceptionDirectory(ExceptionDirectory exceptionDirectory2)
 	{
-		class141_0 = class141_1;
+		exceptionDirectory = exceptionDirectory2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetClrHeader(ClrHeader class142_1)
+	public void SetClrHeader(ClrHeader clrHeader2)
 	{
-		class142_0 = class142_1;
+		clrHeader = clrHeader2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public Stream GetStream()
 	{
-		return stream_0;
+		return stream;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetStream(Stream stream_1)
+	internal void SetStream(Stream stream2)
 	{
-		stream_0 = stream_1;
+		stream = stream2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetLayout(PeImageLayout enum39_1)
+	internal void SetLayout(PeImageLayout peImageLayout)
 	{
-		enum39_0 = enum39_1;
+		layout = peImageLayout;
 	}
 
-	public PeImage(Stream stream_1, PeImageLayout enum39_1)
+	public PeImage(Stream stream2, PeImageLayout peImageLayout)
 	{
-		this.SetLayout(enum39_1);
-		this.SetStream(stream_1);
-		if (enum39_1 != PeImageLayout.const_0)
+		this.SetLayout(peImageLayout);
+		this.SetStream(stream2);
+		if (peImageLayout != PeImageLayout.File)
 		{
 			this.rvaMapper = new PeImage.MemoryLayoutRvaMapper();
 			return;
@@ -317,15 +317,15 @@ public sealed class PeImage : IDisposable
 		this.rvaMapper = new PeImage.FileLayoutRvaMapper();
 	}
 
-	public PeImage(Stream stream_1, bool bool_1, PeImageLayout enum39_1)
-		: this(stream_1, enum39_1)
+	public PeImage(Stream stream2, bool flag2, PeImageLayout peImageLayout)
+		: this(stream2, peImageLayout)
 	{
-		bool_0 = bool_1;
+		flag = flag2;
 	}
 
 	public void Dispose()
 	{
-		if (this.bool_0 && this.GetStream() != null)
+		if (this.flag && this.GetStream() != null)
 		{
 			this.GetStream().Dispose();
 			this.SetStream(null);

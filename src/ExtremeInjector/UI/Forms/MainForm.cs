@@ -28,7 +28,7 @@ public sealed class MainForm : Form
 	private bool suppressProcessNameResolution;
 	private string randomizedWindowTitle;
 
-	internal IContainer icontainer_0;
+	internal IContainer container;
 	internal Label processNameLabel;
 	internal TextBox processNameTextBox;
 	internal Button selectProcessButton;
@@ -68,17 +68,17 @@ public sealed class MainForm : Form
 
 		RecoveredRuntime.EnableDebugPrivilege();
 		processRefreshTimer.Start();
-		RecoveredRuntime.EnableFileDropMessages(FileDropMessageFilter.class10_0, moduleGrid.Handle);
-		FileDropMessageFilter.class10_0.SubscribeFilesDropped(OnModulesDropped);
+		RecoveredRuntime.EnableFileDropMessages(FileDropMessageFilter.fileDropMessageFilter, moduleGrid.Handle);
+		FileDropMessageFilter.fileDropMessageFilter.SubscribeFilesDropped(OnModulesDropped);
 
-		if (PlatformInfo.bool_1)
+		if (PlatformInfo.flag2)
 		{
 			moduleGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 		}
 
 		foreach (ModuleEntry module in ApplicationSettings.Current.Modules)
 		{
-			RecoveredRuntime.AddModuleToGrid(module.Enabled, module, bool_1: false, this, module.Path);
+			RecoveredRuntime.AddModuleToGrid(module.Enabled, module, flag2: false, this, module.Path);
 		}
 
 		processNameTextBox.Text = ApplicationSettings.Current.ProcessName;
@@ -96,8 +96,8 @@ public sealed class MainForm : Form
 
 	private void InitializeModernComponents()
 	{
-		icontainer_0 = new Container();
-		processRefreshTimer = new System.Windows.Forms.Timer(icontainer_0);
+		container = new Container();
+		processRefreshTimer = new System.Windows.Forms.Timer(container);
 		processNameLabel = new Label();
 		processNameTextBox = new TextBox();
 		selectProcessButton = new Button();
@@ -741,7 +741,7 @@ public sealed class MainForm : Form
 				return;
 			}
 
-			RecoveredRuntime.AddModuleToGrid(bool_0: true, null, bool_1: true, this, dialog.FileName);
+			RecoveredRuntime.AddModuleToGrid(flag: true, null, flag2: true, this, dialog.FileName);
 			ApplicationSettings.Save();
 		}
 	}
@@ -847,7 +847,7 @@ public sealed class MainForm : Form
 	{
 		foreach (string modulePath in e.Files)
 		{
-			RecoveredRuntime.AddModuleToGrid(bool_0: true, null, bool_1: true, this, modulePath);
+			RecoveredRuntime.AddModuleToGrid(flag: true, null, flag2: true, this, modulePath);
 		}
 
 		ApplicationSettings.Save();
@@ -896,7 +896,7 @@ public sealed class MainForm : Form
 	{
 		if (disposing)
 		{
-			icontainer_0?.Dispose();
+			container?.Dispose();
 		}
 
 		base.Dispose(disposing);

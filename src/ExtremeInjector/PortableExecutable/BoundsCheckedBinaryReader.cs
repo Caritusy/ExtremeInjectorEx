@@ -2,20 +2,20 @@ using System.IO;
 
 public class BoundsCheckedBinaryReader : BinaryReader, ILengthValidator
 {
-	internal ILengthValidator interface0_0;
+	internal ILengthValidator isValidOffset;
 
-	public BoundsCheckedBinaryReader(Stream stream_0)
-		: base(stream_0)
+	public BoundsCheckedBinaryReader(Stream stream)
+		: base(stream)
 	{
-		this.interface0_0 = (stream_0 as ILengthValidator);
+		this.isValidOffset = (stream as ILengthValidator);
 	}
 
-	public bool IsValidOffset(long long_0)
+	public bool IsValidOffset(long longValue)
 	{
-		if (this.interface0_0 != null)
+		if (this.isValidOffset != null)
 		{
-			return this.interface0_0.IsValidOffset(long_0);
+			return this.isValidOffset.IsValidOffset(longValue);
 		}
-		return long_0 > 0L && long_0 <= this.BaseStream.Length;
+		return longValue > 0L && longValue <= this.BaseStream.Length;
 	}
 }

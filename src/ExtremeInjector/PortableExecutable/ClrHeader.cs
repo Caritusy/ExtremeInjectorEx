@@ -4,149 +4,149 @@ using System.Runtime.CompilerServices;
 public sealed class ClrHeader
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint headerSize;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort majorRuntimeVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort minorRuntimeVersion;
 
 	[CompilerGenerated]
-	internal DataDirectory class157_0;
+	internal DataDirectory metadataDirectory;
 
 	[CompilerGenerated]
-	internal CorFlags enum35_0;
+	internal CorFlags flags;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint entryPointToken;
 
 	[CompilerGenerated]
-	internal DataDirectory class157_1;
+	internal DataDirectory resourcesDirectory;
 
 	[CompilerGenerated]
-	internal DataDirectory class157_2;
+	internal DataDirectory strongNameSignatureDirectory;
 
 	[CompilerGenerated]
-	internal DataDirectory class157_3;
+	internal DataDirectory codeManagerTableDirectory;
 
 	[CompilerGenerated]
-	internal DataDirectory class157_4;
+	internal DataDirectory vTableFixupsDirectory;
 
 	[CompilerGenerated]
-	internal DataDirectory class157_5;
+	internal DataDirectory exportAddressTableJumpsDirectory;
 
 	[CompilerGenerated]
-	internal DataDirectory class157_6;
+	internal DataDirectory managedNativeHeaderDirectory;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetHeaderSize()
 	{
-		return uint_0;
+		return headerSize;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetHeaderSize(uint uint_2)
+	public void SetHeaderSize(uint uintValue)
 	{
-		uint_0 = uint_2;
+		headerSize = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorRuntimeVersion(ushort ushort_2)
+	public void SetMajorRuntimeVersion(ushort ushortValue)
 	{
-		ushort_0 = ushort_2;
+		majorRuntimeVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorRuntimeVersion(ushort ushort_2)
+	public void SetMinorRuntimeVersion(ushort ushortValue)
 	{
-		ushort_1 = ushort_2;
+		minorRuntimeVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMetadataDirectory(DataDirectory class157_7)
+	public void SetMetadataDirectory(DataDirectory dataDirectory)
 	{
-		class157_0 = class157_7;
+		metadataDirectory = dataDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetFlags(CorFlags enum35_1)
+	public void SetFlags(CorFlags corFlags)
 	{
-		enum35_0 = enum35_1;
+		flags = corFlags;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetEntryPointToken(uint uint_2)
+	public void SetEntryPointToken(uint uintValue)
 	{
-		uint_1 = uint_2;
+		entryPointToken = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetResourcesDirectory(DataDirectory class157_7)
+	public void SetResourcesDirectory(DataDirectory dataDirectory)
 	{
-		class157_1 = class157_7;
+		resourcesDirectory = dataDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetStrongNameSignatureDirectory(DataDirectory class157_7)
+	public void SetStrongNameSignatureDirectory(DataDirectory dataDirectory)
 	{
-		class157_2 = class157_7;
+		strongNameSignatureDirectory = dataDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCodeManagerTableDirectory(DataDirectory class157_7)
+	public void SetCodeManagerTableDirectory(DataDirectory dataDirectory)
 	{
-		class157_3 = class157_7;
+		codeManagerTableDirectory = dataDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetVTableFixupsDirectory(DataDirectory class157_7)
+	public void SetVTableFixupsDirectory(DataDirectory dataDirectory)
 	{
-		class157_4 = class157_7;
+		vTableFixupsDirectory = dataDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetExportAddressTableJumpsDirectory(DataDirectory class157_7)
+	public void SetExportAddressTableJumpsDirectory(DataDirectory dataDirectory)
 	{
-		class157_5 = class157_7;
+		exportAddressTableJumpsDirectory = dataDirectory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetManagedNativeHeaderDirectory(DataDirectory class157_7)
+	public void SetManagedNativeHeaderDirectory(DataDirectory dataDirectory)
 	{
-		class157_6 = class157_7;
+		managedNativeHeaderDirectory = dataDirectory;
 	}
 
 	public ClrHeader()
 	{
 	}
 
-	internal ClrHeader(BoundsCheckedBinaryReader class5_0)
+	internal ClrHeader(BoundsCheckedBinaryReader boundsCheckedBinaryReader)
 	{
-		this.SetHeaderSize(class5_0.ReadUInt32());
-		this.SetMajorRuntimeVersion(class5_0.ReadUInt16());
-		this.SetMinorRuntimeVersion(class5_0.ReadUInt16());
-		this.SetMetadataDirectory(new DataDirectory(class5_0));
-		this.SetFlags((CorFlags)class5_0.ReadUInt32());
-		this.SetEntryPointToken(class5_0.ReadUInt32());
-		this.SetResourcesDirectory(new DataDirectory(class5_0));
-		this.SetStrongNameSignatureDirectory(new DataDirectory(class5_0));
-		this.SetCodeManagerTableDirectory(new DataDirectory(class5_0));
-		this.SetVTableFixupsDirectory(new DataDirectory(class5_0));
-		this.SetExportAddressTableJumpsDirectory(new DataDirectory(class5_0));
-		this.SetManagedNativeHeaderDirectory(new DataDirectory(class5_0));
+		this.SetHeaderSize(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetMajorRuntimeVersion(boundsCheckedBinaryReader.ReadUInt16());
+		this.SetMinorRuntimeVersion(boundsCheckedBinaryReader.ReadUInt16());
+		this.SetMetadataDirectory(new DataDirectory(boundsCheckedBinaryReader));
+		this.SetFlags((CorFlags)boundsCheckedBinaryReader.ReadUInt32());
+		this.SetEntryPointToken(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetResourcesDirectory(new DataDirectory(boundsCheckedBinaryReader));
+		this.SetStrongNameSignatureDirectory(new DataDirectory(boundsCheckedBinaryReader));
+		this.SetCodeManagerTableDirectory(new DataDirectory(boundsCheckedBinaryReader));
+		this.SetVTableFixupsDirectory(new DataDirectory(boundsCheckedBinaryReader));
+		this.SetExportAddressTableJumpsDirectory(new DataDirectory(boundsCheckedBinaryReader));
+		this.SetManagedNativeHeaderDirectory(new DataDirectory(boundsCheckedBinaryReader));
 	}
 }

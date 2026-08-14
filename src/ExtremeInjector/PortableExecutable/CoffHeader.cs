@@ -4,136 +4,136 @@ using System.Runtime.CompilerServices;
 public sealed class CoffHeader
 {
 	[CompilerGenerated]
-	internal MachineType enum40_0;
+	internal MachineType machine;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort numberOfSections;
 
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint timeDateStamp;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint pointerToSymbolTable;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal uint numberOfSymbols;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort sizeOfOptionalHeader;
 
 	[CompilerGenerated]
-	internal CoffCharacteristics enum36_0;
+	internal CoffCharacteristics characteristics;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public MachineType GetMachine()
 	{
-		return enum40_0;
+		return machine;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMachine(MachineType enum40_1)
+	public void SetMachine(MachineType machineType)
 	{
-		enum40_0 = enum40_1;
+		machine = machineType;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetNumberOfSections()
 	{
-		return ushort_0;
+		return numberOfSections;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNumberOfSections(ushort ushort_2)
+	public void SetNumberOfSections(ushort ushortValue)
 	{
-		ushort_0 = ushort_2;
+		numberOfSections = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetTimeDateStamp()
 	{
-		return uint_0;
+		return timeDateStamp;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetTimeDateStamp(uint uint_3)
+	public void SetTimeDateStamp(uint uintValue)
 	{
-		uint_0 = uint_3;
+		timeDateStamp = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetPointerToSymbolTable()
 	{
-		return uint_1;
+		return pointerToSymbolTable;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetPointerToSymbolTable(uint uint_3)
+	public void SetPointerToSymbolTable(uint uintValue)
 	{
-		uint_1 = uint_3;
+		pointerToSymbolTable = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetNumberOfSymbols()
 	{
-		return uint_2;
+		return numberOfSymbols;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNumberOfSymbols(uint uint_3)
+	public void SetNumberOfSymbols(uint uintValue)
 	{
-		uint_2 = uint_3;
+		numberOfSymbols = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetSizeOfOptionalHeader()
 	{
-		return ushort_1;
+		return sizeOfOptionalHeader;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfOptionalHeader(ushort ushort_2)
+	public void SetSizeOfOptionalHeader(ushort ushortValue)
 	{
-		ushort_1 = ushort_2;
+		sizeOfOptionalHeader = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public CoffCharacteristics GetCharacteristics()
 	{
-		return enum36_0;
+		return characteristics;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCharacteristics(CoffCharacteristics enum36_1)
+	public void SetCharacteristics(CoffCharacteristics coffCharacteristics)
 	{
-		enum36_0 = enum36_1;
+		characteristics = coffCharacteristics;
 	}
 
 	public CoffHeader()
 	{
 	}
 
-	public CoffHeader(BinaryReader binaryReader_0)
+	public CoffHeader(BinaryReader binaryReader)
 	{
-		this.SetMachine((MachineType)binaryReader_0.ReadUInt16());
-		this.SetNumberOfSections(binaryReader_0.ReadUInt16());
-		this.SetTimeDateStamp(binaryReader_0.ReadUInt32());
-		this.SetPointerToSymbolTable(binaryReader_0.ReadUInt32());
-		this.SetNumberOfSymbols(binaryReader_0.ReadUInt32());
-		this.SetSizeOfOptionalHeader(binaryReader_0.ReadUInt16());
-		this.SetCharacteristics((CoffCharacteristics)binaryReader_0.ReadUInt16());
+		this.SetMachine((MachineType)binaryReader.ReadUInt16());
+		this.SetNumberOfSections(binaryReader.ReadUInt16());
+		this.SetTimeDateStamp(binaryReader.ReadUInt32());
+		this.SetPointerToSymbolTable(binaryReader.ReadUInt32());
+		this.SetNumberOfSymbols(binaryReader.ReadUInt32());
+		this.SetSizeOfOptionalHeader(binaryReader.ReadUInt16());
+		this.SetCharacteristics((CoffCharacteristics)binaryReader.ReadUInt16());
 	}
 }

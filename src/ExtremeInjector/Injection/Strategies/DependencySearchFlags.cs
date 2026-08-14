@@ -3,9 +3,9 @@ using System;
 [Flags]
 public enum DependencySearchFlags
 {
-	flag_0 = 0,
-	flag_1 = 1,
-	flag_2 = 2,
-	flag_3 = 4,
-	flag_4 = 8
+	None = 0,
+	ApiSetOnly = 1,
+	ResolveApiSetToSystemDirectory = 2,
+	SideBySideOnly = 4,
+	UseWow64SystemDirectory = 8
 }

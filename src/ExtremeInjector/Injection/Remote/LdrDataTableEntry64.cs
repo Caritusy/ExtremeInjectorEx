@@ -26,8 +26,8 @@ public sealed class LdrDataTableEntry64 : RemoteLdrDataTableEntry
 		});
 	}
 
-	internal LdrDataTableEntry64(IntPtr intptr_2, IntPtr intptr_3)
-		: base(intptr_2, intptr_3, bool_2: false)
+	internal LdrDataTableEntry64(IntPtr address, IntPtr address2)
+		: base(address, address2, flag: false)
 	{
 	}
 

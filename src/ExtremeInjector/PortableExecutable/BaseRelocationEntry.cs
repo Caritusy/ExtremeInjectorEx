@@ -3,36 +3,36 @@ using System.Runtime.CompilerServices;
 public sealed class BaseRelocationEntry
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint offset;
 
 	[CompilerGenerated]
-	internal BaseRelocationType genum0_0;
+	internal BaseRelocationType relocationType;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetOffset()
 	{
-		return uint_0;
+		return offset;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetOffset(uint uint_1)
+	public void SetOffset(uint uintValue)
 	{
-		uint_0 = uint_1;
+		offset = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public BaseRelocationType GetRelocationType()
 	{
-		return genum0_0;
+		return relocationType;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetType(BaseRelocationType genum0_1)
+	public void SetType(BaseRelocationType baseRelocationType)
 	{
-		genum0_0 = genum0_1;
+		relocationType = baseRelocationType;
 	}
 }

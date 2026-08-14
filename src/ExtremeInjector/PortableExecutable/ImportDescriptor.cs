@@ -4,125 +4,125 @@ using System.Runtime.CompilerServices;
 public sealed class ImportDescriptor
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint originalFirstThunk;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint timeDateStamp;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal uint forwarderChain;
 
 	[CompilerGenerated]
-	internal uint uint_3;
+	internal uint nameRva;
 
 	[CompilerGenerated]
-	internal uint uint_4;
+	internal uint firstThunk;
 
 	[CompilerGenerated]
-	internal List<ImportedSymbol> list_0;
+	internal List<ImportedSymbol> originalThunkSymbols;
 
 	[CompilerGenerated]
-	internal List<ImportedSymbol> list_1;
+	internal List<ImportedSymbol> firstThunkSymbols;
 
 	[CompilerGenerated]
-	internal string string_0;
+	internal string moduleName;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetOriginalFirstThunk()
 	{
-		return uint_0;
+		return originalFirstThunk;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetOriginalFirstThunk(uint uint_5)
+	public void SetOriginalFirstThunk(uint uintValue)
 	{
-		uint_0 = uint_5;
+		originalFirstThunk = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetTimeDateStamp(uint uint_5)
+	public void SetTimeDateStamp(uint uintValue)
 	{
-		uint_1 = uint_5;
+		timeDateStamp = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetForwarderChain(uint uint_5)
+	public void SetForwarderChain(uint uintValue)
 	{
-		uint_2 = uint_5;
+		forwarderChain = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetNameRva()
 	{
-		return uint_3;
+		return nameRva;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNameRva(uint uint_5)
+	public void SetNameRva(uint uintValue)
 	{
-		uint_3 = uint_5;
+		nameRva = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetFirstThunk()
 	{
-		return uint_4;
+		return firstThunk;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetFirstThunk(uint uint_5)
+	public void SetFirstThunk(uint uintValue)
 	{
-		uint_4 = uint_5;
+		firstThunk = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public List<ImportedSymbol> GetOriginalThunkSymbols()
 	{
-		return list_0;
+		return originalThunkSymbols;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetOriginalThunkSymbols(List<ImportedSymbol> list_2)
+	public void SetOriginalThunkSymbols(List<ImportedSymbol> items)
 	{
-		list_0 = list_2;
+		originalThunkSymbols = items;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public List<ImportedSymbol> GetFirstThunkSymbols()
 	{
-		return list_1;
+		return firstThunkSymbols;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetFirstThunkSymbols(List<ImportedSymbol> list_2)
+	public void SetFirstThunkSymbols(List<ImportedSymbol> items)
 	{
-		list_1 = list_2;
+		firstThunkSymbols = items;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetModuleName()
 	{
-		return string_0;
+		return moduleName;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetModuleName(string string_1)
+	public void SetModuleName(string text)
 	{
-		string_0 = string_1;
+		moduleName = text;
 	}
 
 	public ImportDescriptor()

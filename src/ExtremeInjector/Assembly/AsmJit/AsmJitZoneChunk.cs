@@ -2,11 +2,11 @@ using System;
 
 public struct AsmJitZoneChunk
 {
-	public IntPtr intptr_0;
+	public IntPtr address;
 
-	public IntPtr intptr_1;
+	public IntPtr address2;
 
-	public IntPtr intptr_2;
+	public IntPtr address3;
 
-	public IntPtr intptr_3;
+	public IntPtr address4;
 }

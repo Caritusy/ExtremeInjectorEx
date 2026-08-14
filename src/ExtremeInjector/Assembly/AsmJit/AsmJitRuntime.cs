@@ -4,223 +4,223 @@ using System.Runtime.InteropServices;
 public static class AsmJitRuntime
 {
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate0(IntPtr intptr_0);
+	public delegate void ReleaseNativeLibrary(IntPtr address);
 
-	internal static NativeLibraryImage class123_0;
+	internal static NativeLibraryImage nativeLibraryImage;
 
-	public static readonly bool bool_0;
+	public static readonly bool flag;
 
-	internal static readonly AsmJitUninitializedOperandTag struct20_0;
+	internal static readonly AsmJitUninitializedOperandTag uninitializedOperandTag;
 
-	internal static Delegate0 delegate0_0;
+	internal static ReleaseNativeLibrary releaseNativeLibrary;
 
-	public static readonly uint uint_0;
+	public static readonly uint uintValue;
 
-	public static AsmJitGpRegister class63_0;
+	public static AsmJitGpRegister gpRegister;
 
-	public static AsmJitGpRegister class63_1;
+	public static AsmJitGpRegister gpRegister2;
 
-	public static AsmJitGpRegister class63_2;
+	public static AsmJitGpRegister gpRegister3;
 
-	public static AsmJitGpRegister class63_3;
+	public static AsmJitGpRegister gpRegister4;
 
-	public static AsmJitGpRegister class63_4;
+	public static AsmJitGpRegister gpRegister5;
 
-	public static AsmJitGpRegister class63_5;
+	public static AsmJitGpRegister gpRegister6;
 
-	public static AsmJitGpRegister class63_6;
+	public static AsmJitGpRegister gpRegister7;
 
-	public static AsmJitGpRegister class63_7;
+	public static AsmJitGpRegister gpRegister8;
 
-	public static AsmJitGpRegister class63_8;
+	public static AsmJitGpRegister gpRegister9;
 
-	public static AsmJitGpRegister class63_9;
+	public static AsmJitGpRegister gpRegister10;
 
-	public static AsmJitGpRegister class63_10;
+	public static AsmJitGpRegister gpRegister11;
 
-	public static AsmJitGpRegister class63_11;
+	public static AsmJitGpRegister gpRegister12;
 
-	public static AsmJitGpRegister class63_12;
+	public static AsmJitGpRegister gpRegister13;
 
-	public static AsmJitGpRegister class63_13;
+	public static AsmJitGpRegister gpRegister14;
 
-	public static AsmJitGpRegister class63_14;
+	public static AsmJitGpRegister gpRegister15;
 
-	public static AsmJitGpRegister class63_15;
+	public static AsmJitGpRegister gpRegister16;
 
-	public static AsmJitGpRegister class63_16;
+	public static AsmJitGpRegister gpRegister17;
 
-	public static AsmJitGpRegister class63_17;
+	public static AsmJitGpRegister gpRegister18;
 
-	public static AsmJitGpRegister class63_18;
+	public static AsmJitGpRegister gpRegister19;
 
-	public static AsmJitGpRegister class63_19;
+	public static AsmJitGpRegister gpRegister20;
 
-	public static AsmJitGpRegister class63_20;
+	public static AsmJitGpRegister gpRegister21;
 
-	public static AsmJitGpRegister class63_21;
+	public static AsmJitGpRegister gpRegister22;
 
-	public static AsmJitGpRegister class63_22;
+	public static AsmJitGpRegister gpRegister23;
 
-	public static AsmJitGpRegister class63_23;
+	public static AsmJitGpRegister gpRegister24;
 
-	public static AsmJitGpRegister class63_24;
+	public static AsmJitGpRegister gpRegister25;
 
-	public static AsmJitGpRegister class63_25;
+	public static AsmJitGpRegister gpRegister26;
 
-	public static AsmJitGpRegister class63_26;
+	public static AsmJitGpRegister gpRegister27;
 
-	public static AsmJitGpRegister class63_27;
+	public static AsmJitGpRegister gpRegister28;
 
-	public static AsmJitGpRegister class63_28;
+	public static AsmJitGpRegister gpRegister29;
 
-	public static AsmJitGpRegister class63_29;
+	public static AsmJitGpRegister gpRegister30;
 
-	public static AsmJitGpRegister class63_30;
+	public static AsmJitGpRegister gpRegister31;
 
-	public static AsmJitGpRegister class63_31;
+	public static AsmJitGpRegister gpRegister32;
 
-	public static AsmJitGpRegister class63_32;
+	public static AsmJitGpRegister gpRegister33;
 
-	public static AsmJitGpRegister class63_33;
+	public static AsmJitGpRegister gpRegister34;
 
-	public static AsmJitGpRegister class63_34;
+	public static AsmJitGpRegister gpRegister35;
 
-	public static AsmJitGpRegister class63_35;
+	public static AsmJitGpRegister gpRegister36;
 
-	public static AsmJitGpRegister class63_36;
+	public static AsmJitGpRegister gpRegister37;
 
-	public static AsmJitGpRegister class63_37;
+	public static AsmJitGpRegister gpRegister38;
 
-	public static AsmJitGpRegister class63_38;
+	public static AsmJitGpRegister gpRegister39;
 
-	public static AsmJitGpRegister class63_39;
+	public static AsmJitGpRegister gpRegister40;
 
-	public static AsmJitGpRegister class63_40;
+	public static AsmJitGpRegister gpRegister41;
 
-	public static AsmJitGpRegister class63_41;
+	public static AsmJitGpRegister gpRegister42;
 
-	public static AsmJitGpRegister class63_42;
+	public static AsmJitGpRegister gpRegister43;
 
-	public static AsmJitGpRegister class63_43;
+	public static AsmJitGpRegister gpRegister44;
 
-	public static AsmJitGpRegister class63_44;
+	public static AsmJitGpRegister gpRegister45;
 
-	public static AsmJitGpRegister class63_45;
+	public static AsmJitGpRegister gpRegister46;
 
-	public static AsmJitGpRegister class63_46;
+	public static AsmJitGpRegister gpRegister47;
 
-	public static AsmJitGpRegister class63_47;
+	public static AsmJitGpRegister gpRegister48;
 
-	public static AsmJitGpRegister class63_48;
+	public static AsmJitGpRegister gpRegister49;
 
-	public static AsmJitGpRegister class63_49;
+	public static AsmJitGpRegister gpRegister50;
 
-	public static AsmJitGpRegister class63_50;
+	public static AsmJitGpRegister gpRegister51;
 
-	public static AsmJitGpRegister class63_51;
+	public static AsmJitGpRegister gpRegister52;
 
-	public static AsmJitGpRegister class63_52;
+	public static AsmJitGpRegister gpRegister53;
 
-	public static AsmJitGpRegister class63_53;
+	public static AsmJitGpRegister gpRegister54;
 
-	public static AsmJitGpRegister class63_54;
+	public static AsmJitGpRegister gpRegister55;
 
-	public static AsmJitGpRegister class63_55;
+	public static AsmJitGpRegister gpRegister56;
 
-	public static AsmJitGpRegister class63_56;
+	public static AsmJitGpRegister gpRegister57;
 
-	public static AsmJitGpRegister class63_57;
+	public static AsmJitGpRegister gpRegister58;
 
-	public static AsmJitGpRegister class63_58;
+	public static AsmJitGpRegister gpRegister59;
 
-	public static AsmJitGpRegister class63_59;
+	public static AsmJitGpRegister gpRegister60;
 
-	public static AsmJitGpRegister class63_60;
+	public static AsmJitGpRegister gpRegister61;
 
-	public static AsmJitGpRegister class63_61;
+	public static AsmJitGpRegister gpRegister62;
 
-	public static AsmJitGpRegister class63_62;
+	public static AsmJitGpRegister gpRegister63;
 
-	public static AsmJitGpRegister class63_63;
+	public static AsmJitGpRegister gpRegister64;
 
-	public static AsmJitGpRegister class63_64;
+	public static AsmJitGpRegister gpRegister65;
 
-	public static AsmJitGpRegister class63_65;
+	public static AsmJitGpRegister gpRegister66;
 
-	public static AsmJitGpRegister class63_66;
+	public static AsmJitGpRegister gpRegister67;
 
-	public static AsmJitGpRegister class63_67;
+	public static AsmJitGpRegister gpRegister68;
 
-	public static AsmJitGpRegister class63_68;
+	public static AsmJitGpRegister gpRegister69;
 
-	public static AsmJitGpRegister class63_69;
+	public static AsmJitGpRegister gpRegister70;
 
-	public static AsmJitGpRegister class63_70;
+	public static AsmJitGpRegister gpRegister71;
 
-	public static AsmJitGpRegister class63_71;
+	public static AsmJitGpRegister gpRegister72;
 
-	public static AsmJitGpRegister class63_72;
+	public static AsmJitGpRegister gpRegister73;
 
-	public static AsmJitGpRegister class63_73;
+	public static AsmJitGpRegister gpRegister74;
 
-	public static AsmJitGpRegister class63_74;
+	public static AsmJitGpRegister gpRegister75;
 
-	public static AsmJitGpRegister class63_75;
+	public static AsmJitGpRegister gpRegister76;
 
-	public static AsmJitGpRegister class63_76;
+	public static AsmJitGpRegister gpRegister77;
 
-	public static AsmJitMmxRegister class64_0;
+	public static AsmJitMmxRegister mmxRegister;
 
-	public static AsmJitMmxRegister class64_1;
+	public static AsmJitMmxRegister mmxRegister2;
 
-	public static AsmJitMmxRegister class64_2;
+	public static AsmJitMmxRegister mmxRegister3;
 
-	public static AsmJitMmxRegister class64_3;
+	public static AsmJitMmxRegister mmxRegister4;
 
-	public static AsmJitMmxRegister class64_4;
+	public static AsmJitMmxRegister mmxRegister5;
 
-	public static AsmJitMmxRegister class64_5;
+	public static AsmJitMmxRegister mmxRegister6;
 
-	public static AsmJitMmxRegister class64_6;
+	public static AsmJitMmxRegister mmxRegister7;
 
-	public static AsmJitMmxRegister class64_7;
+	public static AsmJitMmxRegister mmxRegister8;
 
-	public static AsmJitXmmRegister class65_0;
+	public static AsmJitXmmRegister xmmRegister;
 
-	public static AsmJitXmmRegister class65_1;
+	public static AsmJitXmmRegister xmmRegister2;
 
-	public static AsmJitXmmRegister class65_2;
+	public static AsmJitXmmRegister xmmRegister3;
 
-	public static AsmJitXmmRegister class65_3;
+	public static AsmJitXmmRegister xmmRegister4;
 
-	public static AsmJitXmmRegister class65_4;
+	public static AsmJitXmmRegister xmmRegister5;
 
-	public static AsmJitXmmRegister class65_5;
+	public static AsmJitXmmRegister xmmRegister6;
 
-	public static AsmJitXmmRegister class65_6;
+	public static AsmJitXmmRegister xmmRegister7;
 
-	public static AsmJitXmmRegister class65_7;
+	public static AsmJitXmmRegister xmmRegister8;
 
-	public static AsmJitXmmRegister class65_8;
+	public static AsmJitXmmRegister xmmRegister9;
 
-	public static AsmJitXmmRegister class65_9;
+	public static AsmJitXmmRegister xmmRegister10;
 
-	public static AsmJitXmmRegister class65_10;
+	public static AsmJitXmmRegister xmmRegister11;
 
-	public static AsmJitXmmRegister class65_11;
+	public static AsmJitXmmRegister xmmRegister12;
 
-	public static AsmJitXmmRegister class65_12;
+	public static AsmJitXmmRegister xmmRegister13;
 
-	public static AsmJitXmmRegister class65_13;
+	public static AsmJitXmmRegister xmmRegister14;
 
-	public static AsmJitXmmRegister class65_14;
+	public static AsmJitXmmRegister xmmRegister15;
 
-	public static AsmJitXmmRegister class65_15;
+	public static AsmJitXmmRegister xmmRegister16;
 
 	static AsmJitRuntime()
 	{
-		AsmJitRuntime.class123_0 = new NativeLibraryImage(AsmJitRuntime.bool_0 ? RecoveredRuntime.GetAsmJitX64Image() : RecoveredRuntime.GetAsmJitX86Image(), true);
+		AsmJitRuntime.nativeLibraryImage = new NativeLibraryImage(AsmJitRuntime.flag ? RecoveredRuntime.GetAsmJitX64Image() : RecoveredRuntime.GetAsmJitX86Image(), true);
 		RecoveredRuntime.InitializeAsmJitRegisters();
 	}
 }

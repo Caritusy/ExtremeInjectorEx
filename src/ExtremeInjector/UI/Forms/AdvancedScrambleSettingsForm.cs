@@ -6,39 +6,39 @@ using ExtremeInjector;
 
 public sealed class AdvancedScrambleSettingsForm : Form
 {
-	internal IContainer icontainer_0;
+	internal IContainer container;
 
-	internal GroupBox groupBox_0;
+	internal GroupBox groupBox;
 
-	internal CheckBox checkBox_0;
+	internal CheckBox checkBox;
 
-	internal CheckBox checkBox_1;
+	internal CheckBox checkBox2;
 
-	internal GroupBox groupBox_1;
+	internal GroupBox groupBox2;
 
-	internal CheckBox checkBox_2;
+	internal CheckBox checkBox3;
 
-	internal CheckBox checkBox_3;
+	internal CheckBox checkBox4;
 
-	internal CheckBox checkBox_4;
+	internal CheckBox checkBox5;
 
-	internal CheckBox checkBox_5;
+	internal CheckBox checkBox6;
 
-	internal CheckBox checkBox_6;
+	internal CheckBox checkBox7;
 
-	internal GroupBox groupBox_2;
+	internal GroupBox groupBox3;
 
-	internal CheckBox checkBox_7;
+	internal CheckBox checkBox8;
 
-	internal CheckBox checkBox_8;
+	internal CheckBox checkBox9;
 
-	internal CheckBox checkBox_9;
+	internal CheckBox checkBox10;
 
-	internal CheckBox checkBox_10;
+	internal CheckBox checkBox11;
 
-	internal CheckBox checkBox_11;
+	internal CheckBox checkBox12;
 
-	internal CheckBox checkBox_12;
+	internal CheckBox checkBox13;
 
 	public AdvancedScrambleSettingsForm()
 	{
@@ -49,23 +49,23 @@ public sealed class AdvancedScrambleSettingsForm : Form
 		MinimizeBox = false;
 		ShowInTaskbar = false;
 		SizeGripStyle = SizeGripStyle.Hide;
-		checkBox_3.CheckedChanged += delegate
+		checkBox4.CheckedChanged += delegate
 		{
 			RecoveredRuntime.UpdateScrambleOptionAvailability(this);
 		};
-		BindOption(checkBox_0, options => options.ScrambleHeaderFields, (options, value) => options.ScrambleHeaderFields = value);
-		BindOption(checkBox_1, options => options.RemoveUselessData, (options, value) => options.RemoveUselessData = value);
-		BindOption(checkBox_3, options => options.InsertExtraSections, (options, value) => options.InsertExtraSections = value);
-		BindOption(checkBox_2, options => options.ShiftSectionData, (options, value) => options.ShiftSectionData = value);
-		BindOption(checkBox_4, options => options.ModifyAssemblyCode, (options, value) => options.ModifyAssemblyCode = value);
-		BindOption(checkBox_5, options => options.RenameSections, (options, value) => options.RenameSections = value);
-		BindOption(checkBox_6, options => options.CreateNewEntryPoint, (options, value) => options.CreateNewEntryPoint = value);
-		BindOption(checkBox_8, options => options.ModifyImportTable, (options, value) => options.ModifyImportTable = value);
-		BindOption(checkBox_10, options => options.RemoveDebugData, (options, value) => options.RemoveDebugData = value);
-		BindOption(checkBox_7, options => options.MoveRelocationTable, (options, value) => options.MoveRelocationTable = value);
-		BindOption(checkBox_9, options => options.CreateFakeDebugDirectory, (options, value) => options.CreateFakeDebugDirectory = value);
-		BindOption(checkBox_12, options => options.ShiftSectionMemory, (options, value) => options.ShiftSectionMemory = value);
-		BindOption(checkBox_11, options => options.StripSectionCharacteristics, (options, value) => options.StripSectionCharacteristics = value);
+		BindOption(checkBox, options => options.ScrambleHeaderFields, (options, value) => options.ScrambleHeaderFields = value);
+		BindOption(checkBox2, options => options.RemoveUselessData, (options, value) => options.RemoveUselessData = value);
+		BindOption(checkBox4, options => options.InsertExtraSections, (options, value) => options.InsertExtraSections = value);
+		BindOption(checkBox3, options => options.ShiftSectionData, (options, value) => options.ShiftSectionData = value);
+		BindOption(checkBox5, options => options.ModifyAssemblyCode, (options, value) => options.ModifyAssemblyCode = value);
+		BindOption(checkBox6, options => options.RenameSections, (options, value) => options.RenameSections = value);
+		BindOption(checkBox7, options => options.CreateNewEntryPoint, (options, value) => options.CreateNewEntryPoint = value);
+		BindOption(checkBox9, options => options.ModifyImportTable, (options, value) => options.ModifyImportTable = value);
+		BindOption(checkBox11, options => options.RemoveDebugData, (options, value) => options.RemoveDebugData = value);
+		BindOption(checkBox8, options => options.MoveRelocationTable, (options, value) => options.MoveRelocationTable = value);
+		BindOption(checkBox10, options => options.CreateFakeDebugDirectory, (options, value) => options.CreateFakeDebugDirectory = value);
+		BindOption(checkBox13, options => options.ShiftSectionMemory, (options, value) => options.ShiftSectionMemory = value);
+		BindOption(checkBox12, options => options.StripSectionCharacteristics, (options, value) => options.StripSectionCharacteristics = value);
 		RecoveredRuntime.UpdateScrambleOptionAvailability(this);
 	}
 
@@ -81,9 +81,9 @@ public sealed class AdvancedScrambleSettingsForm : Form
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing && this.icontainer_0 != null)
+		if (disposing && this.container != null)
 		{
-			this.icontainer_0.Dispose();
+			this.container.Dispose();
 		}
 		base.Dispose(disposing);
 	}

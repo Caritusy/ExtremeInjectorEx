@@ -4,30 +4,30 @@ using System.Runtime.InteropServices;
 public sealed class NativeAsmJitMemoryManager : AsmJitMemoryManager
 {
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-	public delegate void Delegate42(IntPtr intptr_0, IntPtr intptr_1);
+	public delegate void ReleaseMemoryThisCall(IntPtr address, IntPtr address2);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate43(IntPtr intptr_0, IntPtr intptr_1);
+	public delegate void ReleaseMemoryCdecl(IntPtr address, IntPtr address2);
 
-	internal IntPtr intptr_0;
+	internal IntPtr virtualFunction;
 
-	internal NativeAsmJitMemoryManager(IntPtr intptr_1)
+	internal NativeAsmJitMemoryManager(IntPtr address)
 	{
-		this.intptr_0 = intptr_1;
+		this.virtualFunction = address;
 	}
 
-	internal T GetVirtualFunction<T>(int int_0)
+	internal T GetVirtualFunction<T>(int intValue)
 	{
-		return (T)(object)Marshal.GetDelegateForFunctionPointer(Marshal.ReadIntPtr(Marshal.ReadIntPtr(intptr_0), int_0 * IntPtr.Size), typeof(T));
+		return (T)(object)Marshal.GetDelegateForFunctionPointer(Marshal.ReadIntPtr(Marshal.ReadIntPtr(virtualFunction), intValue * IntPtr.Size), typeof(T));
 	}
 
-	public override void Release(IntPtr intptr_1)
+	public override void Release(IntPtr address)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			this.GetVirtualFunction<NativeAsmJitMemoryManager.Delegate43>(2)(this.intptr_0, intptr_1);
+			this.GetVirtualFunction<NativeAsmJitMemoryManager.ReleaseMemoryCdecl>(2)(this.virtualFunction, address);
 			return;
 		}
-		this.GetVirtualFunction<NativeAsmJitMemoryManager.Delegate42>(2)(this.intptr_0, intptr_1);
+		this.GetVirtualFunction<NativeAsmJitMemoryManager.ReleaseMemoryThisCall>(2)(this.virtualFunction, address);
 	}
 }

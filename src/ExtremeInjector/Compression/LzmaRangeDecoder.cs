@@ -2,36 +2,36 @@ using System.IO;
 
 public class LzmaRangeDecoder
 {
-	public const uint uint_0 = default(uint);
+	public const uint uintValue = default(uint);
 
-	public uint uint_1;
+	public uint uintValue2;
 
-	public uint uint_2;
+	public uint uintValue3;
 
-	public Stream stream_0;
+	public Stream stream;
 
-	public void Initialize(Stream stream_1)
+	public void Initialize(Stream stream2)
 	{
-		stream_0 = stream_1;
-		uint_1 = 0u;
-		uint_2 = uint.MaxValue;
+		stream = stream2;
+		uintValue2 = 0u;
+		uintValue3 = uint.MaxValue;
 		for (int i = 0; i < 5; i++)
 		{
-			uint_1 = (uint_1 << 8) | (byte)stream_0.ReadByte();
+			uintValue2 = (uintValue2 << 8) | (byte)stream.ReadByte();
 		}
 	}
 
 	public void ReleaseStream()
 	{
-		stream_0 = null;
+		stream = null;
 	}
 
-	public uint DecodeDirectBits(int int_0)
+	public uint DecodeDirectBits(int intValue)
 	{
-		uint num = uint_2;
-		uint num2 = uint_1;
+		uint num = uintValue3;
+		uint num2 = uintValue2;
 		uint num3 = 0u;
-		for (int num4 = int_0; num4 > 0; num4--)
+		for (int num4 = intValue; num4 > 0; num4--)
 		{
 			num >>= 1;
 			uint num5 = num2 - num >> 31;
@@ -39,12 +39,12 @@ public class LzmaRangeDecoder
 			num3 = (num3 << 1) | (1 - num5);
 			if (num < 16777216)
 			{
-				num2 = (num2 << 8) | (byte)stream_0.ReadByte();
+				num2 = (num2 << 8) | (byte)stream.ReadByte();
 				num <<= 8;
 			}
 		}
-		uint_2 = num;
-		uint_1 = num2;
+		uintValue3 = num;
+		uintValue2 = num2;
 		return num3;
 	}
 }

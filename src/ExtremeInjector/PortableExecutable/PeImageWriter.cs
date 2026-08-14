@@ -4,31 +4,31 @@ using System.Text;
 
 public sealed class PeImageWriter
 {
-	internal PeImage class154_0;
+	internal PeImage peImage;
 
-	internal BinaryWriter binaryWriter_0;
+	internal BinaryWriter binaryWriter;
 
-	internal Stream stream_0;
+	internal Stream stream;
 
-	public PeImageWriter(PeImage class154_1)
+	public PeImageWriter(PeImage peImage2)
 	{
-		this.class154_0 = class154_1;
+		this.peImage = peImage2;
 	}
 
 	internal void WriteSectionHeaders()
 	{
-		foreach (PeSectionHeader gclass in this.class154_0.GetSections())
+		foreach (PeSectionHeader gclass in this.peImage.GetSections())
 		{
-			this.binaryWriter_0.Write(Encoding.ASCII.GetBytes(gclass.GetName().PadRight(8, '\0')));
-			this.binaryWriter_0.Write(gclass.GetVirtualSize());
-			this.binaryWriter_0.Write(gclass.GetVirtualAddress());
-			this.binaryWriter_0.Write(gclass.GetSizeOfRawData());
-			this.binaryWriter_0.Write(gclass.GetPointerToRawData());
-			this.binaryWriter_0.Write(gclass.GetPointerToRelocations());
-			this.binaryWriter_0.Write(gclass.GetPointerToLineNumbers());
-			this.binaryWriter_0.Write(gclass.GetNumberOfRelocations());
-			this.binaryWriter_0.Write(gclass.GetNumberOfLineNumbers());
-			this.binaryWriter_0.Write((uint)gclass.GetCharacteristics());
+			this.binaryWriter.Write(Encoding.ASCII.GetBytes(gclass.GetName().PadRight(8, '\0')));
+			this.binaryWriter.Write(gclass.GetVirtualSize());
+			this.binaryWriter.Write(gclass.GetVirtualAddress());
+			this.binaryWriter.Write(gclass.GetSizeOfRawData());
+			this.binaryWriter.Write(gclass.GetPointerToRawData());
+			this.binaryWriter.Write(gclass.GetPointerToRelocations());
+			this.binaryWriter.Write(gclass.GetPointerToLineNumbers());
+			this.binaryWriter.Write(gclass.GetNumberOfRelocations());
+			this.binaryWriter.Write(gclass.GetNumberOfLineNumbers());
+			this.binaryWriter.Write((uint)gclass.GetCharacteristics());
 		}
 	}
 }

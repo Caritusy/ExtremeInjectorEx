@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 public sealed class AsmJitXmmRegister : AsmJitRegister
 {
 	public AsmJitXmmRegister()
-		: base(AsmJitRuntime.uint_0, 16u)
+		: base(AsmJitRuntime.uintValue, 16u)
 	{
 	}
 }

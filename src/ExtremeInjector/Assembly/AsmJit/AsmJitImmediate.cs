@@ -5,41 +5,41 @@ using System.Runtime.InteropServices;
 public sealed class AsmJitImmediate : AsmJitOperand
 {
 	public AsmJitImmediate()
-		: base(AsmJitRuntime.struct20_0)
+		: base(AsmJitRuntime.uninitializedOperandTag)
 	{
-		AsmJitOperand.Struct12 struct12_ = RecoveredRuntime.GetImmediateOperandData(this);
-		struct12_.enum8_0 = AsmJitOperandType.flag_3;
-		struct12_.byte_0 = 0;
-		struct12_.bool_0 = false;
-		struct12_.byte_1 = 0;
-		struct12_.uint_0 = AsmJitRuntime.uint_0;
-		struct12_.intptr_0 = IntPtr.Zero;
+		AsmJitOperand.LabelOperandData struct12_ = RecoveredRuntime.GetImmediateOperandData(this);
+		struct12_.operandType = AsmJitOperandType.Immediate;
+		struct12_.byteValue = 0;
+		struct12_.flag = false;
+		struct12_.byteValue2 = 0;
+		struct12_.uintValue = AsmJitRuntime.uintValue;
+		struct12_.address = IntPtr.Zero;
 		RecoveredRuntime.SetImmediateOperandData(this, struct12_);
 	}
 
-	public AsmJitImmediate(IntPtr intptr_0)
-		: base(AsmJitRuntime.struct20_0)
+	public AsmJitImmediate(IntPtr address)
+		: base(AsmJitRuntime.uninitializedOperandTag)
 	{
-		AsmJitOperand.Struct12 struct12_ = RecoveredRuntime.GetImmediateOperandData(this);
-		struct12_.enum8_0 = AsmJitOperandType.flag_3;
-		struct12_.byte_0 = 0;
-		struct12_.bool_0 = false;
-		struct12_.byte_1 = 0;
-		struct12_.uint_0 = AsmJitRuntime.uint_0;
-		struct12_.intptr_0 = intptr_0;
+		AsmJitOperand.LabelOperandData struct12_ = RecoveredRuntime.GetImmediateOperandData(this);
+		struct12_.operandType = AsmJitOperandType.Immediate;
+		struct12_.byteValue = 0;
+		struct12_.flag = false;
+		struct12_.byteValue2 = 0;
+		struct12_.uintValue = AsmJitRuntime.uintValue;
+		struct12_.address = address;
 		RecoveredRuntime.SetImmediateOperandData(this, struct12_);
 	}
 
-	public AsmJitImmediate(IntPtr intptr_0, bool bool_0)
-		: base(AsmJitRuntime.struct20_0)
+	public AsmJitImmediate(IntPtr address, bool flag)
+		: base(AsmJitRuntime.uninitializedOperandTag)
 	{
-		AsmJitOperand.Struct12 struct12_ = RecoveredRuntime.GetImmediateOperandData(this);
-		struct12_.enum8_0 = AsmJitOperandType.flag_3;
-		struct12_.byte_0 = 0;
-		struct12_.bool_0 = bool_0;
-		struct12_.byte_1 = 0;
-		struct12_.uint_0 = AsmJitRuntime.uint_0;
-		struct12_.intptr_0 = intptr_0;
+		AsmJitOperand.LabelOperandData struct12_ = RecoveredRuntime.GetImmediateOperandData(this);
+		struct12_.operandType = AsmJitOperandType.Immediate;
+		struct12_.byteValue = 0;
+		struct12_.flag = flag;
+		struct12_.byteValue2 = 0;
+		struct12_.uintValue = AsmJitRuntime.uintValue;
+		struct12_.address = address;
 		RecoveredRuntime.SetImmediateOperandData(this, struct12_);
 	}
 }

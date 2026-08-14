@@ -3,93 +3,93 @@ using System.Runtime.CompilerServices;
 
 public sealed class ResourceDirectoryNode : ResourceIdentifier
 {
-	internal long long_0;
+	internal long longValue;
 
-	internal ResourceDirectory class166_0;
-
-	[CompilerGenerated]
-	internal List<ResourceDataEntry> list_0;
+	internal ResourceDirectory resourceDirectory;
 
 	[CompilerGenerated]
-	internal List<ResourceDirectoryNode> list_1;
+	internal List<ResourceDataEntry> dataEntries;
 
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal List<ResourceDirectoryNode> subdirectories;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint characteristics;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal uint timeDateStamp;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort majorVersion;
+
+	[CompilerGenerated]
+	internal ushort minorVersion;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public List<ResourceDataEntry> GetDataEntries()
 	{
-		return list_0;
+		return dataEntries;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetDataEntries(List<ResourceDataEntry> list_2)
+	internal void SetDataEntries(List<ResourceDataEntry> items)
 	{
-		list_0 = list_2;
+		dataEntries = items;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public List<ResourceDirectoryNode> GetSubdirectories()
 	{
-		return list_1;
+		return subdirectories;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetSubdirectories(List<ResourceDirectoryNode> list_2)
+	internal void SetSubdirectories(List<ResourceDirectoryNode> items)
 	{
-		list_1 = list_2;
+		subdirectories = items;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCharacteristics(uint uint_2)
+	public void SetCharacteristics(uint uintValue)
 	{
-		uint_0 = uint_2;
+		characteristics = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetTimeDateStamp(uint uint_2)
+	public void SetTimeDateStamp(uint uintValue)
 	{
-		uint_1 = uint_2;
+		timeDateStamp = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorVersion(ushort ushort_2)
+	public void SetMajorVersion(ushort ushortValue)
 	{
-		ushort_0 = ushort_2;
+		majorVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorVersion(ushort ushort_2)
+	public void SetMinorVersion(ushort ushortValue)
 	{
-		ushort_1 = ushort_2;
+		minorVersion = ushortValue;
 	}
 
-	public ResourceDirectoryNode(int int_1, ResourceDirectory class166_1, long long_1)
-		: base(int_1)
+	public ResourceDirectoryNode(int intValue, ResourceDirectory resourceDirectory2, long longValue2)
+		: base(intValue)
 	{
-		RecoveredRuntime.InitializeResourceDirectoryNode(long_1, class166_1, this);
+		RecoveredRuntime.InitializeResourceDirectoryNode(longValue2, resourceDirectory2, this);
 	}
 
-	public ResourceDirectoryNode(string string_1, ResourceDirectory class166_1, long long_1)
-		: base(string_1)
+	public ResourceDirectoryNode(string text, ResourceDirectory resourceDirectory2, long longValue2)
+		: base(text)
 	{
-		RecoveredRuntime.InitializeResourceDirectoryNode(long_1, class166_1, this);
+		RecoveredRuntime.InitializeResourceDirectoryNode(longValue2, resourceDirectory2, this);
 	}
 }

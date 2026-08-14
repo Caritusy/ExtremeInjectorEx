@@ -7,351 +7,351 @@ public static class AsmJitApi
 {
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-	public delegate void Delegate1(ref AsmJitAssemblerState struct19_0, IntPtr intptr_0);
+	public delegate void DestroyAssemblerThisCall(ref AsmJitAssemblerState assemblerState, IntPtr address);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate2(ref AsmJitAssemblerState struct19_0, IntPtr intptr_0);
+	public delegate void DestroyAssemblerCdecl(ref AsmJitAssemblerState assemblerState, IntPtr address);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate3(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0);
+	public delegate void EmitInstructionThisCall(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate4(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitOperand class56_0);
+	public delegate void EmitOneOperandInstructionThisCall(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitOperand operand);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate5(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitOperand class56_0, [In] AsmJitOperand class56_1);
+	public delegate void EmitTwoOperandInstructionThisCall(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitOperand operand, [In] AsmJitOperand operand2);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate6(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitOperand class56_0, [In] AsmJitOperand class56_1, [In] AsmJitOperand class56_2);
+	public delegate void EmitThreeOperandInstructionThisCall(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitOperand operand, [In] AsmJitOperand operand2, [In] AsmJitOperand operand3);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate7(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0);
+	public delegate void EmitInstructionCdecl(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate8(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitOperand class56_0);
+	public delegate void EmitOneOperandInstructionCdecl(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitOperand operand);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate9(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitOperand class56_0, [In] AsmJitOperand class56_1);
+	public delegate void EmitTwoOperandInstructionCdecl(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitOperand operand, [In] AsmJitOperand operand2);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate10(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitOperand class56_0, [In] AsmJitOperand class56_1, [In] AsmJitOperand class56_2);
+	public delegate void EmitThreeOperandInstructionCdecl(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitOperand operand, [In] AsmJitOperand operand2, [In] AsmJitOperand operand3);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate11(ref AsmJitAssemblerState struct19_0);
+	public delegate IntPtr GetAssemblerOffsetThisCall(ref AsmJitAssemblerState assemblerState);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate12(ref AsmJitAssemblerState struct19_0);
+	public delegate IntPtr GetAssemblerOffsetCdecl(ref AsmJitAssemblerState assemblerState);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-	public delegate IntPtr Delegate13(ref AsmJitAssemblerState struct19_0, IntPtr intptr_0);
+	public delegate IntPtr GetAssemblerPointerThisCall(ref AsmJitAssemblerState assemblerState, IntPtr address);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate14(ref AsmJitAssemblerState struct19_0, IntPtr intptr_0);
+	public delegate IntPtr GetAssemblerPointerCdecl(ref AsmJitAssemblerState assemblerState, IntPtr address);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-	public delegate IntPtr Delegate15(ref AsmJitAssemblerState struct19_0, IntPtr intptr_0, IntPtr intptr_1);
+	public delegate IntPtr RelocateCodeThisCall(ref AsmJitAssemblerState assemblerState, IntPtr address, IntPtr address2);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate16(ref AsmJitAssemblerState struct19_0, IntPtr intptr_0, IntPtr intptr_1);
+	public delegate IntPtr RelocateCodeCdecl(ref AsmJitAssemblerState assemblerState, IntPtr address, IntPtr address2);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate17(ref AsmJitAssemblerState struct19_0, [In][MarshalAs(UnmanagedType.AsAny)] object object_0, IntPtr intptr_0);
+	public delegate void EmbedDataThisCall(ref AsmJitAssemblerState assemblerState, [In][MarshalAs(UnmanagedType.AsAny)] object instance, IntPtr address);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate18(ref AsmJitAssemblerState struct19_0, [In][MarshalAs(UnmanagedType.AsAny)] object object_0, IntPtr intptr_0);
+	public delegate void EmbedDataCdecl(ref AsmJitAssemblerState assemblerState, [In][MarshalAs(UnmanagedType.AsAny)] object instance, IntPtr address);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate19([In][Out] AsmJitMemoryOperand class59_0, AsmJitVariable class60_0, uint uint_0);
+	public delegate IntPtr CreateBaseVariableMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, AsmJitVariable variable, uint uintValue);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate20([In][Out] AsmJitMemoryOperand class59_0, AsmJitVariable class60_0, uint uint_0, IntPtr intptr_0);
+	public delegate IntPtr CreateVariableMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, AsmJitVariable variable, uint uintValue, IntPtr address);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate21([In][Out] AsmJitMemoryOperand class59_0, AsmJitVariable class60_0, uint uint_0, AsmJitGpVariable class61_0, uint uint_1, IntPtr intptr_0);
+	public delegate IntPtr CreateIndexedVariableMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, AsmJitVariable variable, uint uintValue, AsmJitGpVariable gpVariable, uint uintValue2, IntPtr address);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate22(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitLabel class58_0, AsmJitJumpHint enum12_0);
+	public delegate void EmitJumpThisCall(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitLabel label, AsmJitJumpHint jumpHint);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate23(ref AsmJitAssemblerState struct19_0, AsmJitInstructionId enum7_0, [In] AsmJitLabel class58_0, AsmJitJumpHint enum12_0);
+	public delegate void EmitJumpCdecl(ref AsmJitAssemblerState assemblerState, AsmJitInstructionId instructionId, [In] AsmJitLabel label, AsmJitJumpHint jumpHint);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-	public delegate IntPtr Delegate24(ref AsmJitAssemblerState struct19_0, [In][Out] AsmJitLabel class58_0);
+	public delegate IntPtr CreateLabelThisCall(ref AsmJitAssemblerState assemblerState, [In][Out] AsmJitLabel label);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate25(ref AsmJitAssemblerState struct19_0, [In][Out] AsmJitLabel class58_0);
+	public delegate IntPtr CreateLabelCdecl(ref AsmJitAssemblerState assemblerState, [In][Out] AsmJitLabel label);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-	public delegate void Delegate26(ref AsmJitAssemblerState struct19_0, [In] AsmJitLabel class58_0);
+	public delegate void BindLabelThisCall(ref AsmJitAssemblerState assemblerState, [In] AsmJitLabel label);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate27(ref AsmJitAssemblerState struct19_0, [In] AsmJitLabel class58_0);
+	public delegate void BindLabelCdecl(ref AsmJitAssemblerState assemblerState, [In] AsmJitLabel label);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate28([In][Out] AsmJitMemoryOperand class59_0, [In] AsmJitLabel class58_0, IntPtr intptr_0, uint uint_0);
+	public delegate IntPtr CreateLabelMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] AsmJitLabel label, IntPtr address, uint uintValue);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate29([In][Out] AsmJitMemoryOperand class59_0, [In] AsmJitLabel class58_0, [In] AsmJitGpRegister class63_0, uint uint_0, IntPtr intptr_0, uint uint_1);
+	public delegate IntPtr CreateRegisterIndexedLabelMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] AsmJitLabel label, [In] AsmJitGpRegister gpRegister, uint uintValue, IntPtr address, uint uintValue2);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate30([In][Out] AsmJitMemoryOperand class59_0, [In] AsmJitLabel class58_0, [In] AsmJitGpVariable class61_0, uint uint_0, IntPtr intptr_0, uint uint_1);
+	public delegate IntPtr CreateVariableIndexedLabelMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] AsmJitLabel label, [In] AsmJitGpVariable gpVariable, uint uintValue, IntPtr address, uint uintValue2);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate31([In][Out] AsmJitMemoryOperand class59_0, [In] IntPtr intptr_0, IntPtr intptr_1, AsmJitSegmentPrefix enum10_0, uint uint_0);
+	public delegate IntPtr CreateAbsoluteMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] IntPtr address, IntPtr address2, AsmJitSegmentPrefix segmentPrefix, uint uintValue);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate32([In][Out] AsmJitMemoryOperand class59_0, [In] IntPtr intptr_0, [In] AsmJitGpRegister class63_0, uint uint_0, IntPtr intptr_1, AsmJitSegmentPrefix enum10_0, uint uint_1);
+	public delegate IntPtr CreateRegisterIndexedAbsoluteMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] IntPtr address, [In] AsmJitGpRegister gpRegister, uint uintValue, IntPtr address2, AsmJitSegmentPrefix segmentPrefix, uint uintValue2);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate33([In][Out] AsmJitMemoryOperand class59_0, [In] IntPtr intptr_0, [In] AsmJitGpVariable class61_0, uint uint_0, IntPtr intptr_1, AsmJitSegmentPrefix enum10_0, uint uint_1);
+	public delegate IntPtr CreateVariableIndexedAbsoluteMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] IntPtr address, [In] AsmJitGpVariable gpVariable, uint uintValue, IntPtr address2, AsmJitSegmentPrefix segmentPrefix, uint uintValue2);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate34([In][Out] AsmJitMemoryOperand class59_0, [In] AsmJitGpRegister class63_0, IntPtr intptr_0, uint uint_0);
+	public delegate IntPtr CreateRegisterMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] AsmJitGpRegister gpRegister, IntPtr address, uint uintValue);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate35([In][Out] AsmJitMemoryOperand class59_0, [In] AsmJitGpVariable class61_0, IntPtr intptr_0, uint uint_0);
+	public delegate IntPtr CreateVariableMemoryOperandBase([In][Out] AsmJitMemoryOperand memoryOperand, [In] AsmJitGpVariable gpVariable, IntPtr address, uint uintValue);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr Delegate36([In][Out] AsmJitMemoryOperand class59_0, [In] AsmJitGpRegister class63_0, [In] AsmJitGpRegister class63_1, uint uint_0, IntPtr intptr_0, uint uint_1);
+	public delegate IntPtr CreateRegisterPairMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] AsmJitGpRegister gpRegister, [In] AsmJitGpRegister gpRegister2, uint uintValue, IntPtr address, uint uintValue2);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate37([In][Out] AsmJitMemoryOperand class59_0, [In] AsmJitGpVariable class61_0, [In] AsmJitGpVariable class61_1, uint uint_0, IntPtr intptr_0, uint uint_1);
+	public delegate IntPtr CreateVariablePairMemoryOperand([In][Out] AsmJitMemoryOperand memoryOperand, [In] AsmJitGpVariable gpVariable, [In] AsmJitGpVariable gpVariable2, uint uintValue, IntPtr address, uint uintValue2);
 
 	[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate void Delegate38(ref AsmJitAssemblerState struct19_0, uint uint_0);
+	public delegate void AlignAssemblerThisCall(ref AsmJitAssemblerState assemblerState, uint uintValue);
 
 	[SuppressUnmanagedCodeSecurity]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void Delegate39(ref AsmJitAssemblerState struct19_0, uint uint_0);
+	public delegate void AlignAssemblerCdecl(ref AsmJitAssemblerState assemblerState, uint uintValue);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	[SuppressUnmanagedCodeSecurity]
-	public delegate IntPtr Delegate40();
+	public delegate IntPtr GetNativeApiPointer();
 
 	[CompilerGenerated]
-	internal static Delegate1 delegate1_0;
+	internal static DestroyAssemblerThisCall destroyAssemblerThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate2 delegate2_0;
+	internal static DestroyAssemblerCdecl destroyAssemblerCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate3 delegate3_0;
+	internal static EmitInstructionThisCall emitInstructionThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate4 delegate4_0;
+	internal static EmitOneOperandInstructionThisCall emitOneOperandInstructionThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate5 delegate5_0;
+	internal static EmitTwoOperandInstructionThisCall emitTwoOperandInstructionThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate6 delegate6_0;
+	internal static EmitThreeOperandInstructionThisCall emitThreeOperandInstructionThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate7 delegate7_0;
+	internal static EmitInstructionCdecl emitInstructionCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate8 delegate8_0;
+	internal static EmitOneOperandInstructionCdecl emitOneOperandInstructionCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate9 delegate9_0;
+	internal static EmitTwoOperandInstructionCdecl emitTwoOperandInstructionCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate10 delegate10_0;
+	internal static EmitThreeOperandInstructionCdecl emitThreeOperandInstructionCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate11 delegate11_0;
+	internal static GetAssemblerOffsetThisCall getAssemblerOffsetThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate12 delegate12_0;
+	internal static GetAssemblerOffsetCdecl getAssemblerOffsetCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate13 delegate13_0;
+	internal static GetAssemblerPointerThisCall getAssemblerPointerThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate14 delegate14_0;
+	internal static GetAssemblerPointerCdecl getAssemblerPointerCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate15 delegate15_0;
+	internal static RelocateCodeThisCall relocateCodeThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate16 delegate16_0;
+	internal static RelocateCodeCdecl relocateCodeCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate17 delegate17_0;
+	internal static EmbedDataThisCall embedDataThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate18 delegate18_0;
+	internal static EmbedDataCdecl embedDataCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate19 delegate19_0;
+	internal static CreateBaseVariableMemoryOperand createBaseVariableMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate20 delegate20_0;
+	internal static CreateVariableMemoryOperand createVariableMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate21 delegate21_0;
+	internal static CreateIndexedVariableMemoryOperand createIndexedVariableMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate22 delegate22_0;
+	internal static EmitJumpThisCall emitJumpThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate23 delegate23_0;
+	internal static EmitJumpCdecl emitJumpCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate22 delegate22_1;
+	internal static EmitJumpThisCall emitJumpThisCall2;
 
 	[CompilerGenerated]
-	internal static Delegate23 delegate23_1;
+	internal static EmitJumpCdecl emitJumpCdecl2;
 
 	[CompilerGenerated]
-	internal static Delegate24 delegate24_0;
+	internal static CreateLabelThisCall createLabelThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate25 delegate25_0;
+	internal static CreateLabelCdecl createLabelCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate26 delegate26_0;
+	internal static BindLabelThisCall bindLabelThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate27 delegate27_0;
+	internal static BindLabelCdecl bindLabelCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate28 delegate28_0;
+	internal static CreateLabelMemoryOperand createLabelMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate30 delegate30_0;
+	internal static CreateVariableIndexedLabelMemoryOperand createVariableIndexedLabelMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate29 delegate29_0;
+	internal static CreateRegisterIndexedLabelMemoryOperand createRegisterIndexedLabelMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate31 delegate31_0;
+	internal static CreateAbsoluteMemoryOperand createAbsoluteMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate33 delegate33_0;
+	internal static CreateVariableIndexedAbsoluteMemoryOperand createVariableIndexedAbsoluteMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate32 delegate32_0;
+	internal static CreateRegisterIndexedAbsoluteMemoryOperand createRegisterIndexedAbsoluteMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate35 delegate35_0;
+	internal static CreateVariableMemoryOperandBase createVariableMemoryOperandBase;
 
 	[CompilerGenerated]
-	internal static Delegate37 delegate37_0;
+	internal static CreateVariablePairMemoryOperand createVariablePairMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate34 delegate34_0;
+	internal static CreateRegisterMemoryOperand createRegisterMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate36 delegate36_0;
+	internal static CreateRegisterPairMemoryOperand createRegisterPairMemoryOperand;
 
 	[CompilerGenerated]
-	internal static Delegate38 delegate38_0;
+	internal static AlignAssemblerThisCall alignAssemblerThisCall;
 
 	[CompilerGenerated]
-	internal static Delegate39 delegate39_0;
+	internal static AlignAssemblerCdecl alignAssemblerCdecl;
 
 	[CompilerGenerated]
-	internal static Delegate40 delegate40_0;
+	internal static GetNativeApiPointer getNativeApiPointer;
 
 	static AsmJitApi()
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate2_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate2>(EncodedStringTable.DecodeString(4502));
-			AsmJitApi.delegate7_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate7>(EncodedStringTable.DecodeString(4567));
-			AsmJitApi.delegate8_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate8>(EncodedStringTable.DecodeString(4632));
-			AsmJitApi.delegate9_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate9>(EncodedStringTable.DecodeString(4717));
-			AsmJitApi.delegate10_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate10>(EncodedStringTable.DecodeString(4802));
-			AsmJitApi.delegate12_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate12>(EncodedStringTable.DecodeString(4891));
-			AsmJitApi.delegate14_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate14>(EncodedStringTable.DecodeString(4944));
-			AsmJitApi.delegate16_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate16>(EncodedStringTable.DecodeString(5005));
-			AsmJitApi.delegate18_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate18>(EncodedStringTable.DecodeString(5070));
-			AsmJitApi.delegate19_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate19>(EncodedStringTable.DecodeString(5127));
-			AsmJitApi.delegate20_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate20>(EncodedStringTable.DecodeString(5196));
-			AsmJitApi.delegate21_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate21>(EncodedStringTable.DecodeString(5265));
-			AsmJitApi.delegate23_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate23>(EncodedStringTable.DecodeString(5354));
-			AsmJitApi.delegate23_1=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate23>(EncodedStringTable.DecodeString(5427));
-			AsmJitApi.delegate25_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate25>(EncodedStringTable.DecodeString(5508));
-			AsmJitApi.delegate27_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate27>(EncodedStringTable.DecodeString(5577));
-			AsmJitApi.delegate28_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate28>(EncodedStringTable.DecodeString(5642));
-			AsmJitApi.delegate30_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate30>(EncodedStringTable.DecodeString(5711));
-			AsmJitApi.delegate29_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate29>(EncodedStringTable.DecodeString(5796));
-			AsmJitApi.delegate31_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate31>(EncodedStringTable.DecodeString(5881));
-			AsmJitApi.delegate33_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate33>(EncodedStringTable.DecodeString(5938));
-			AsmJitApi.delegate32_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate32>(EncodedStringTable.DecodeString(6011));
-			AsmJitApi.delegate35_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate35>(EncodedStringTable.DecodeString(6084));
-			AsmJitApi.delegate37_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate37>(EncodedStringTable.DecodeString(6153));
-			AsmJitApi.delegate34_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate34>(EncodedStringTable.DecodeString(6226));
-			AsmJitApi.delegate36_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate36>(EncodedStringTable.DecodeString(6295));
-			AsmJitApi.delegate39_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate39>(EncodedStringTable.DecodeString(6368));
-			AsmJitApi.delegate40_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate40>(EncodedStringTable.DecodeString(6421));
+			AsmJitApi.destroyAssemblerCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.DestroyAssemblerCdecl>(EncodedStringTable.DecodeString(4502));
+			AsmJitApi.emitInstructionCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.EmitInstructionCdecl>(EncodedStringTable.DecodeString(4567));
+			AsmJitApi.emitOneOperandInstructionCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.EmitOneOperandInstructionCdecl>(EncodedStringTable.DecodeString(4632));
+			AsmJitApi.emitTwoOperandInstructionCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.EmitTwoOperandInstructionCdecl>(EncodedStringTable.DecodeString(4717));
+			AsmJitApi.emitThreeOperandInstructionCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.EmitThreeOperandInstructionCdecl>(EncodedStringTable.DecodeString(4802));
+			AsmJitApi.getAssemblerOffsetCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.GetAssemblerOffsetCdecl>(EncodedStringTable.DecodeString(4891));
+			AsmJitApi.getAssemblerPointerCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.GetAssemblerPointerCdecl>(EncodedStringTable.DecodeString(4944));
+			AsmJitApi.relocateCodeCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.RelocateCodeCdecl>(EncodedStringTable.DecodeString(5005));
+			AsmJitApi.embedDataCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.EmbedDataCdecl>(EncodedStringTable.DecodeString(5070));
+			AsmJitApi.createBaseVariableMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateBaseVariableMemoryOperand>(EncodedStringTable.DecodeString(5127));
+			AsmJitApi.createVariableMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableMemoryOperand>(EncodedStringTable.DecodeString(5196));
+			AsmJitApi.createIndexedVariableMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateIndexedVariableMemoryOperand>(EncodedStringTable.DecodeString(5265));
+			AsmJitApi.emitJumpCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.EmitJumpCdecl>(EncodedStringTable.DecodeString(5354));
+			AsmJitApi.emitJumpCdecl2=AsmJitNative.ResolveDelegate<AsmJitApi.EmitJumpCdecl>(EncodedStringTable.DecodeString(5427));
+			AsmJitApi.createLabelCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.CreateLabelCdecl>(EncodedStringTable.DecodeString(5508));
+			AsmJitApi.bindLabelCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.BindLabelCdecl>(EncodedStringTable.DecodeString(5577));
+			AsmJitApi.createLabelMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateLabelMemoryOperand>(EncodedStringTable.DecodeString(5642));
+			AsmJitApi.createVariableIndexedLabelMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableIndexedLabelMemoryOperand>(EncodedStringTable.DecodeString(5711));
+			AsmJitApi.createRegisterIndexedLabelMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterIndexedLabelMemoryOperand>(EncodedStringTable.DecodeString(5796));
+			AsmJitApi.createAbsoluteMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateAbsoluteMemoryOperand>(EncodedStringTable.DecodeString(5881));
+			AsmJitApi.createVariableIndexedAbsoluteMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableIndexedAbsoluteMemoryOperand>(EncodedStringTable.DecodeString(5938));
+			AsmJitApi.createRegisterIndexedAbsoluteMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterIndexedAbsoluteMemoryOperand>(EncodedStringTable.DecodeString(6011));
+			AsmJitApi.createVariableMemoryOperandBase=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableMemoryOperandBase>(EncodedStringTable.DecodeString(6084));
+			AsmJitApi.createVariablePairMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariablePairMemoryOperand>(EncodedStringTable.DecodeString(6153));
+			AsmJitApi.createRegisterMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterMemoryOperand>(EncodedStringTable.DecodeString(6226));
+			AsmJitApi.createRegisterPairMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterPairMemoryOperand>(EncodedStringTable.DecodeString(6295));
+			AsmJitApi.alignAssemblerCdecl=AsmJitNative.ResolveDelegate<AsmJitApi.AlignAssemblerCdecl>(EncodedStringTable.DecodeString(6368));
+			AsmJitApi.getNativeApiPointer=AsmJitNative.ResolveDelegate<AsmJitApi.GetNativeApiPointer>(EncodedStringTable.DecodeString(6421));
 			return;
 		}
-		AsmJitApi.delegate1_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate1>(EncodedStringTable.DecodeString(6474));
-		AsmJitApi.delegate3_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate3>(EncodedStringTable.DecodeString(6539));
-		AsmJitApi.delegate4_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate4>(EncodedStringTable.DecodeString(6604));
-		AsmJitApi.delegate5_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate5>(EncodedStringTable.DecodeString(6685));
-		AsmJitApi.delegate6_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate6>(EncodedStringTable.DecodeString(6770));
-		AsmJitApi.delegate11_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate11>(EncodedStringTable.DecodeString(6855));
-		AsmJitApi.delegate13_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate13>(EncodedStringTable.DecodeString(6904));
-		AsmJitApi.delegate15_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate15>(EncodedStringTable.DecodeString(6961));
-		AsmJitApi.delegate17_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate17>(EncodedStringTable.DecodeString(7022));
-		AsmJitApi.delegate19_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate19>(EncodedStringTable.DecodeString(7075));
-		AsmJitApi.delegate20_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate20>(EncodedStringTable.DecodeString(7140));
-		AsmJitApi.delegate21_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate21>(EncodedStringTable.DecodeString(7209));
-		AsmJitApi.delegate22_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate22>(EncodedStringTable.DecodeString(7294));
-		AsmJitApi.delegate22_1=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate22>(EncodedStringTable.DecodeString(7363));
-		AsmJitApi.delegate24_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate24>(EncodedStringTable.DecodeString(7440));
-		AsmJitApi.delegate26_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate26>(EncodedStringTable.DecodeString(7505));
-		AsmJitApi.delegate28_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate28>(EncodedStringTable.DecodeString(7566));
-		AsmJitApi.delegate30_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate30>(EncodedStringTable.DecodeString(7631));
-		AsmJitApi.delegate29_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate29>(EncodedStringTable.DecodeString(7712));
-		AsmJitApi.delegate31_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate31>(EncodedStringTable.DecodeString(7793));
-		AsmJitApi.delegate33_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate33>(EncodedStringTable.DecodeString(7846));
-		AsmJitApi.delegate32_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate32>(EncodedStringTable.DecodeString(7915));
-		AsmJitApi.delegate35_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate35>(EncodedStringTable.DecodeString(7984));
-		AsmJitApi.delegate37_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate37>(EncodedStringTable.DecodeString(8049));
-		AsmJitApi.delegate34_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate34>(EncodedStringTable.DecodeString(8118));
-		AsmJitApi.delegate36_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate36>(EncodedStringTable.DecodeString(8183));
-		AsmJitApi.delegate38_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate38>(EncodedStringTable.DecodeString(8252));
-		AsmJitApi.delegate40_0=AsmJitNative.ResolveDelegate<AsmJitApi.Delegate40>(EncodedStringTable.DecodeString(8301));
+		AsmJitApi.destroyAssemblerThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.DestroyAssemblerThisCall>(EncodedStringTable.DecodeString(6474));
+		AsmJitApi.emitInstructionThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.EmitInstructionThisCall>(EncodedStringTable.DecodeString(6539));
+		AsmJitApi.emitOneOperandInstructionThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.EmitOneOperandInstructionThisCall>(EncodedStringTable.DecodeString(6604));
+		AsmJitApi.emitTwoOperandInstructionThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.EmitTwoOperandInstructionThisCall>(EncodedStringTable.DecodeString(6685));
+		AsmJitApi.emitThreeOperandInstructionThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.EmitThreeOperandInstructionThisCall>(EncodedStringTable.DecodeString(6770));
+		AsmJitApi.getAssemblerOffsetThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.GetAssemblerOffsetThisCall>(EncodedStringTable.DecodeString(6855));
+		AsmJitApi.getAssemblerPointerThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.GetAssemblerPointerThisCall>(EncodedStringTable.DecodeString(6904));
+		AsmJitApi.relocateCodeThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.RelocateCodeThisCall>(EncodedStringTable.DecodeString(6961));
+		AsmJitApi.embedDataThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.EmbedDataThisCall>(EncodedStringTable.DecodeString(7022));
+		AsmJitApi.createBaseVariableMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateBaseVariableMemoryOperand>(EncodedStringTable.DecodeString(7075));
+		AsmJitApi.createVariableMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableMemoryOperand>(EncodedStringTable.DecodeString(7140));
+		AsmJitApi.createIndexedVariableMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateIndexedVariableMemoryOperand>(EncodedStringTable.DecodeString(7209));
+		AsmJitApi.emitJumpThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.EmitJumpThisCall>(EncodedStringTable.DecodeString(7294));
+		AsmJitApi.emitJumpThisCall2=AsmJitNative.ResolveDelegate<AsmJitApi.EmitJumpThisCall>(EncodedStringTable.DecodeString(7363));
+		AsmJitApi.createLabelThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.CreateLabelThisCall>(EncodedStringTable.DecodeString(7440));
+		AsmJitApi.bindLabelThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.BindLabelThisCall>(EncodedStringTable.DecodeString(7505));
+		AsmJitApi.createLabelMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateLabelMemoryOperand>(EncodedStringTable.DecodeString(7566));
+		AsmJitApi.createVariableIndexedLabelMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableIndexedLabelMemoryOperand>(EncodedStringTable.DecodeString(7631));
+		AsmJitApi.createRegisterIndexedLabelMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterIndexedLabelMemoryOperand>(EncodedStringTable.DecodeString(7712));
+		AsmJitApi.createAbsoluteMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateAbsoluteMemoryOperand>(EncodedStringTable.DecodeString(7793));
+		AsmJitApi.createVariableIndexedAbsoluteMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableIndexedAbsoluteMemoryOperand>(EncodedStringTable.DecodeString(7846));
+		AsmJitApi.createRegisterIndexedAbsoluteMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterIndexedAbsoluteMemoryOperand>(EncodedStringTable.DecodeString(7915));
+		AsmJitApi.createVariableMemoryOperandBase=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariableMemoryOperandBase>(EncodedStringTable.DecodeString(7984));
+		AsmJitApi.createVariablePairMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateVariablePairMemoryOperand>(EncodedStringTable.DecodeString(8049));
+		AsmJitApi.createRegisterMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterMemoryOperand>(EncodedStringTable.DecodeString(8118));
+		AsmJitApi.createRegisterPairMemoryOperand=AsmJitNative.ResolveDelegate<AsmJitApi.CreateRegisterPairMemoryOperand>(EncodedStringTable.DecodeString(8183));
+		AsmJitApi.alignAssemblerThisCall=AsmJitNative.ResolveDelegate<AsmJitApi.AlignAssemblerThisCall>(EncodedStringTable.DecodeString(8252));
+		AsmJitApi.getNativeApiPointer=AsmJitNative.ResolveDelegate<AsmJitApi.GetNativeApiPointer>(EncodedStringTable.DecodeString(8301));
 	}
 }

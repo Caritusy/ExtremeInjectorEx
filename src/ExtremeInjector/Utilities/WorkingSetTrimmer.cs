@@ -5,12 +5,12 @@ using System.Windows.Forms;
 
 public sealed class WorkingSetTrimmer
 {
-	internal static WorkingSetTrimmer gclass6_0;
+	internal static WorkingSetTrimmer workingSetTrimmer;
 
-	internal long long_0 = DateTime.Now.Ticks;
+	internal long longValue = DateTime.Now.Ticks;
 
 	[DllImport("kernel32")]
-	internal static extern int SetProcessWorkingSetSize(IntPtr intptr_0, IntPtr intptr_1, IntPtr intptr_2);
+	internal static extern int SetProcessWorkingSetSize(IntPtr address, IntPtr address2, IntPtr address3);
 
 	internal void TrimWorkingSet()
 	{
@@ -31,9 +31,9 @@ public sealed class WorkingSetTrimmer
 		try
 		{
 			long ticks = DateTime.Now.Ticks;
-			if (ticks - this.long_0 > 10000000L)
+			if (ticks - this.longValue > 10000000L)
 			{
-				this.long_0 = ticks;
+				this.longValue = ticks;
 				this.TrimWorkingSet();
 			}
 		}

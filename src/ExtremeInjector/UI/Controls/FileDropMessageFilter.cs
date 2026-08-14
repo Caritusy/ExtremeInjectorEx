@@ -40,22 +40,22 @@ public sealed class FileDropMessageFilter : IMessageFilter
 		public MessageFilterStatus Status;
 	}
 
-	public static FileDropMessageFilter class10_0 = new FileDropMessageFilter();
+	public static FileDropMessageFilter fileDropMessageFilter = new FileDropMessageFilter();
 
 	[CompilerGenerated]
-	internal EventHandler<FileDropEventArgs> eventHandler_0;
+	internal EventHandler<FileDropEventArgs> eventHandler;
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SubscribeFilesDropped(EventHandler<FileDropEventArgs> eventHandler_1)
+	public void SubscribeFilesDropped(EventHandler<FileDropEventArgs> eventHandler3)
 	{
-		EventHandler<FileDropEventArgs> eventHandler = this.eventHandler_0;
+		EventHandler<FileDropEventArgs> eventHandler = this.eventHandler;
 		EventHandler<FileDropEventArgs> eventHandler2;
 		do
 		{
 			eventHandler2 = eventHandler;
-			EventHandler<FileDropEventArgs> value = (EventHandler<FileDropEventArgs>)Delegate.Combine(eventHandler2, eventHandler_1);
-			eventHandler = Interlocked.CompareExchange<EventHandler<FileDropEventArgs>>(ref this.eventHandler_0, value, eventHandler2);
+			EventHandler<FileDropEventArgs> value = (EventHandler<FileDropEventArgs>)Delegate.Combine(eventHandler2, eventHandler3);
+			eventHandler = Interlocked.CompareExchange<EventHandler<FileDropEventArgs>>(ref this.eventHandler, value, eventHandler2);
 		}
 		while (eventHandler != eventHandler2);
 	}
@@ -65,11 +65,11 @@ public sealed class FileDropMessageFilter : IMessageFilter
 		Application.AddMessageFilter(this);
 	}
 
-	bool IMessageFilter.PreFilterMessage(ref Message message_0)
+	bool IMessageFilter.PreFilterMessage(ref Message message)
 	{
-		if (message_0.Msg == 563L)
+		if (message.Msg == 563L)
 		{
-			RecoveredRuntime.HandleFileDrop(this, message_0);
+			RecoveredRuntime.HandleFileDrop(this, message);
 			return true;
 		}
 		return false;

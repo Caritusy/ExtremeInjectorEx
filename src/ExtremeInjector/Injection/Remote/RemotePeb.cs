@@ -3,12 +3,12 @@ using System.Runtime.CompilerServices;
 
 public abstract class RemotePeb : RemotePlatformStructure
 {
-	protected internal RemoteProcess gclass2_0;
+	protected internal RemoteProcess remoteProcess;
 
-	internal RemotePeb(RemoteProcess gclass2_1, bool bool_2)
-		: base(gclass2_1.ProcessId, bool_2)
+	internal RemotePeb(RemoteProcess remoteProcess2, bool flag)
+		: base(remoteProcess2.ProcessId, flag)
 	{
-		gclass2_0 = gclass2_1;
+		remoteProcess = remoteProcess2;
 	}
 
 	[SpecialName]

@@ -1,9 +1,9 @@
 public sealed class NativeThreadInfo
 {
-	internal NativeTypes.Struct40 struct40_0;
+	internal NativeTypes.SystemThreadInformation systemThreadInformation;
 
-	internal NativeThreadInfo(NativeTypes.Struct40 struct40_1)
+	internal NativeThreadInfo(NativeTypes.SystemThreadInformation systemThreadInformation2)
 	{
-		this.struct40_0 = struct40_1;
+		this.systemThreadInformation = systemThreadInformation2;
 	}
 }

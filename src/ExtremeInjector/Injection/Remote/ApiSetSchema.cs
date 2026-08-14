@@ -5,143 +5,143 @@ using System.Runtime.InteropServices;
 
 public static class ApiSetSchema
 {
-	public struct Struct59
+	public struct ApiSetNamespaceEntryV2
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		internal uint uint_2;
+		internal uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public uint uint_5;
+		public uint uintValue6;
 	}
 
-	public struct Struct60
+	public struct ApiSetEntryIndexV2
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 	}
 
-	public struct Struct61
+	public struct ApiSetNamespaceHeaderV2
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public uint uint_5;
+		public uint uintValue6;
 
-		internal uint uint_6;
+		internal uint uintValue7;
 
-		internal uint uint_7;
+		internal uint uintValue8;
 	}
 
-	public struct Struct62
+	public struct ApiSetValueEntryV2
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 	}
 
-	public struct Struct63
+	public struct ApiSetValueArrayV4
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 	}
 
-	public struct Struct64
+	public struct ApiSetNamespaceEntryV4
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public uint uint_5;
+		public uint uintValue6;
 	}
 
-	public struct Struct65
+	public struct ApiSetNamespaceHeaderV4
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 	}
 
-	public struct Struct66
+	public struct ApiSetValueEntryV6
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 	}
 
-	public struct Struct67
+	public struct ApiSetValueArrayV6
 	{
-		public uint uint_0;
+		public uint uintValue;
 	}
 
-	public struct Struct68
+	public struct ApiSetNamespaceEntryV6
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 	}
 
-	public struct Struct69
+	public struct ApiSetNamespaceHeaderV6
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 	}
 
 	[CompilerGenerated]
-	public sealed class Class170
+	public sealed class ApiSetContractMatcher
 	{
-		public string string_0;
+		public string text;
 
-		internal bool MatchesContract(KeyValuePair<string, List<string>> keyValuePair_0)
+		internal bool MatchesContract(KeyValuePair<string, List<string>> keyValuePair)
 		{
-			return string_0.IndexOf(keyValuePair_0.Key) != -1;
+			return text.IndexOf(keyValuePair.Key) != -1;
 		}
 	}
 
-	internal static Dictionary<string, List<string>> dictionary_0;
+	internal static Dictionary<string, List<string>> dictionary;
 
 	static ApiSetSchema()
 	{
 		try
 		{
-			if (PlatformInfo.bool_2)
+			if (PlatformInfo.flag3)
 			{
 				RemoteProcess gclass2_ = RecoveredRuntime.GetCurrentRemoteProcess();
 				RemotePeb peb = RecoveredRuntime.Is32BitProcess(gclass2_)
@@ -150,13 +150,13 @@ public static class ApiSetSchema
 				IntPtr intPtr = peb.GetApiSetMapAddress();
 				if (!(intPtr == IntPtr.Zero) && RecoveredRuntime.IsReadableMemoryAddress(intPtr))
 				{
-					if (PlatformInfo.bool_7)
+					if (PlatformInfo.flag8)
 					{
 						RecoveredRuntime.ReadApiSetSchemaV2(intPtr);
 					}
-					else if (!PlatformInfo.bool_6)
+					else if (!PlatformInfo.flag7)
 					{
-						if (PlatformInfo.bool_2)
+						if (PlatformInfo.flag3)
 						{
 							RecoveredRuntime.ReadApiSetSchemaV6(intPtr);
 						}
@@ -173,19 +173,19 @@ public static class ApiSetSchema
 		}
 	}
 
-	internal static U[] ReadEntries<T, U>(IntPtr intptr_0) where T : struct where U : struct
+	internal static U[] ReadEntries<T, U>(IntPtr address) where T : struct where U : struct
 	{
 		int num = typeof(T).SizeOf();
-		IntPtr intPtr = intptr_0.Add(num - 4);
+		IntPtr intPtr = address.Add(num - 4);
 		if (RecoveredRuntime.IsReadableMemoryAddress(intPtr))
 		{
 			int num2 = Marshal.ReadInt32(intPtr);
-			intptr_0 = intptr_0.Add(num);
+			address = address.Add(num);
 			int num3 = typeof(U).SizeOf();
 			U[] array = new U[num2];
 			for (int i = 0; i < num2; i++)
 			{
-				IntPtr intPtr2 = intptr_0.Add(num3 * i);
+				IntPtr intPtr2 = address.Add(num3 * i);
 				if (!RecoveredRuntime.IsReadableMemoryAddress(intPtr2))
 				{
 					return new U[0];

@@ -14,75 +14,75 @@ public sealed partial class SettingsForm : Form
 {
 	internal RemoteProcess SelectedProcess { get; set; }
 
-	internal IContainer icontainer_0;
+	internal IContainer container;
 
-	internal ModernCard groupBox_0;
+	internal ModernCard modernCard;
 
-	internal ComboBox comboBox_0;
+	internal ComboBox comboBox;
 
-	internal Button button_0;
+	internal Button button;
 
-	internal ModernCard groupBox_1;
+	internal ModernCard modernCard2;
 
-	internal CheckBox checkBox_0;
+	internal CheckBox checkBox;
 
-	internal CheckBox checkBox_1;
+	internal CheckBox checkBox2;
 
-	internal CheckBox checkBox_2;
+	internal CheckBox checkBox3;
 
-	internal ModernCard groupBox_2;
+	internal ModernCard modernCard3;
 
-	internal Button button_1;
+	internal Button button2;
 
-	internal ComboBox comboBox_1;
+	internal ComboBox comboBox2;
 
-	internal NumericUpDown numericUpDown_0;
+	internal NumericUpDown numericUpDown;
 
-	internal System.Windows.Forms.Label label_0;
+	internal System.Windows.Forms.Label label;
 
-	internal NumericUpDown numericUpDown_1;
+	internal NumericUpDown numericUpDown2;
 
-	internal System.Windows.Forms.Label label_1;
+	internal System.Windows.Forms.Label label2;
 
-	internal ModernCard groupBox_3;
+	internal ModernCard modernCard4;
 
-	internal CheckBox checkBox_3;
+	internal CheckBox checkBox4;
 
-	internal CheckBox checkBox_4;
+	internal CheckBox checkBox5;
 
-	internal ModernCard groupBox_4;
+	internal ModernCard modernCard5;
 
-	internal System.Windows.Forms.Label label_2;
+	internal System.Windows.Forms.Label label3;
 
-	internal Panel panel_0;
+	internal Panel panel;
 
-	internal Panel panel_1;
+	internal Panel panel2;
 
-	internal System.Windows.Forms.Label label_3;
+	internal System.Windows.Forms.Label label4;
 
-	internal System.Windows.Forms.Label label_4;
+	internal System.Windows.Forms.Label label5;
 
-	internal Panel panel_2;
+	internal Panel panel3;
 
-	internal Button button_2;
+	internal Button button3;
 
-	internal Button button_3;
+	internal Button button4;
 
-	internal ModernCard groupBox_5;
+	internal ModernCard modernCard6;
 
-	internal Button button_4;
+	internal Button button5;
 
-	internal Button button_5;
+	internal Button button6;
 
-	internal Button button_6;
+	internal Button button7;
 
-	internal ColorDialog colorDialog_0;
+	internal ColorDialog colorDialog;
 	private bool updatingLanguageSelection;
 
 	public SettingsForm()
 	{
 		InitializeModernSettingsForm();
-		button_4.Enabled = !string.IsNullOrEmpty(Assembly.GetExecutingAssembly().Location);
+		button5.Enabled = !string.IsNullOrEmpty(Assembly.GetExecutingAssembly().Location);
 		RecoveredRuntime.LoadSettingsIntoForm(this);
 		randomizeWindowTitleCheckBox.Checked = ApplicationSettings.Current.RandomizeWindowTitle;
 		InitializeLanguageSelection();
@@ -90,7 +90,7 @@ public sealed partial class SettingsForm : Form
 
 	internal void OnAutoInjectChanged(object sender, EventArgs e)
 	{
-		checkBox_1.Enabled = !checkBox_2.Checked;
+		checkBox2.Enabled = !checkBox3.Checked;
 	}
 
 	internal void OnAdvancedScrambleSettingsClick(object sender, EventArgs e)
@@ -106,7 +106,7 @@ public sealed partial class SettingsForm : Form
 
 	internal void ApplySelectedScramblePreset()
 	{
-		var selectedPreset = comboBox_1.SelectedIndex switch
+		var selectedPreset = comboBox2.SelectedIndex switch
 		{
 			0 => ScramblePreset.None,
 			1 => ScramblePreset.Basic,
@@ -115,7 +115,7 @@ public sealed partial class SettingsForm : Form
 			_ => ScramblePreset.Custom
 		};
 
-		button_5.Enabled = selectedPreset == ScramblePreset.Custom;
+		button6.Enabled = selectedPreset == ScramblePreset.Custom;
 		ApplicationSettings.Current.Options.Scramble.ApplyPreset(selectedPreset);
 	}
 
@@ -226,9 +226,9 @@ public sealed partial class SettingsForm : Form
 			{
 				try
 				{
-					using (PeImage @class = RecoveredRuntime.LoadPeImageFromFile(PeImageLayout.const_0, openFileDialog.FileName))
+					using (PeImage @class = RecoveredRuntime.LoadPeImageFromFile(PeImageLayout.File, openFileDialog.FileName))
 					{
-						if (@class != null && (@class.GetHeaders().GetCoffHeader().GetCharacteristics() & CoffCharacteristics.flag_12) != (CoffCharacteristics)0)
+						if (@class != null && (@class.GetHeaders().GetCoffHeader().GetCharacteristics() & CoffCharacteristics.Dll) != (CoffCharacteristics)0)
 						{
 							using (SaveFileDialog saveFileDialog = new SaveFileDialog())
 							{
@@ -274,7 +274,7 @@ public sealed partial class SettingsForm : Form
 
 	internal void OnRestartSafeModeClick(object sender, EventArgs e)
 	{
-		using (PeImage @class = RecoveredRuntime.LoadPeImageFromFile(PeImageLayout.const_0, Assembly.GetExecutingAssembly().Location))
+		using (PeImage @class = RecoveredRuntime.LoadPeImageFromFile(PeImageLayout.File, Assembly.GetExecutingAssembly().Location))
 		{
 			PeScrambleOptions class2 = new PeScrambleOptions();
 			class2.ScrambleHeaderFields = true;
@@ -294,15 +294,15 @@ public sealed partial class SettingsForm : Form
 					string_ = EncodedStringTable.DecodeString(3300);
 					ascii = Encoding.ASCII;
 					RecoveredRuntime.ReplaceStringWithRandomValue(ascii, gclass, string_);
-					string string_2 = EncodedStringTable.DecodeString(3321);
+					string text2 = EncodedStringTable.DecodeString(3321);
 					Encoding encoding_ = Encoding.ASCII;
-					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, string_2);
-					string_2 = EncodedStringTable.DecodeString(3321);
+					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, text2);
+					text2 = EncodedStringTable.DecodeString(3321);
 					encoding_ = Encoding.Unicode;
-					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, string_2);
-					string_2 = EncodedStringTable.DecodeString(3275);
+					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, text2);
+					text2 = EncodedStringTable.DecodeString(3275);
 					encoding_ = Encoding.Unicode;
-					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, string_2);
+					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, text2);
 					string text = RecoveredRuntime.CreateUniqueTemporaryPath(EncodedStringTable.DecodeString(93));
 					ApplicationSettings.Save();
 					MemoryStream memoryStream = new MemoryStream();
@@ -322,39 +322,39 @@ public sealed partial class SettingsForm : Form
 
 	internal void OnTextColorClick(object sender, EventArgs e)
 	{
-		this.colorDialog_0.Color = ApplicationSettings.Current.Options.TextColor;
-		if (this.colorDialog_0.ShowDialog() == DialogResult.OK)
+		this.colorDialog.Color = ApplicationSettings.Current.Options.TextColor;
+		if (this.colorDialog.ShowDialog() == DialogResult.OK)
 		{
-			ApplicationSettings.Current.Options.TextColor = this.colorDialog_0.Color;
+			ApplicationSettings.Current.Options.TextColor = this.colorDialog.Color;
 		}
 		RecoveredRuntime.LoadSettingsIntoForm(this);
 	}
 
 	internal void OnPrimaryColorClick(object sender, EventArgs e)
 	{
-		this.colorDialog_0.Color = ApplicationSettings.Current.Options.BackgroundColor1;
-		if (this.colorDialog_0.ShowDialog() == DialogResult.OK)
+		this.colorDialog.Color = ApplicationSettings.Current.Options.BackgroundColor1;
+		if (this.colorDialog.ShowDialog() == DialogResult.OK)
 		{
-			ApplicationSettings.Current.Options.BackgroundColor1 = this.colorDialog_0.Color;
+			ApplicationSettings.Current.Options.BackgroundColor1 = this.colorDialog.Color;
 		}
 		RecoveredRuntime.LoadSettingsIntoForm(this);
 	}
 
 	internal void OnSecondaryColorClick(object sender, EventArgs e)
 	{
-		this.colorDialog_0.Color = ApplicationSettings.Current.Options.BackgroundColor2;
-		if (this.colorDialog_0.ShowDialog() == DialogResult.OK)
+		this.colorDialog.Color = ApplicationSettings.Current.Options.BackgroundColor2;
+		if (this.colorDialog.ShowDialog() == DialogResult.OK)
 		{
-			ApplicationSettings.Current.Options.BackgroundColor2 = this.colorDialog_0.Color;
+			ApplicationSettings.Current.Options.BackgroundColor2 = this.colorDialog.Color;
 		}
 		RecoveredRuntime.LoadSettingsIntoForm(this);
 	}
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing && this.icontainer_0 != null)
+		if (disposing && this.container != null)
 		{
-			this.icontainer_0.Dispose();
+			this.container.Dispose();
 		}
 		base.Dispose(disposing);
 	}

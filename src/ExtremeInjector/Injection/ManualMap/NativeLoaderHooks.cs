@@ -6,73 +6,73 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 {
 	[Serializable]
 	[CompilerGenerated]
-	public sealed class Class81
+	public sealed class TextSectionPredicateCache
 	{
-		public static readonly Class81 _003C_003E9 = new Class81();
+		public static readonly TextSectionPredicateCache _003C_003E9 = new TextSectionPredicateCache();
 
 		public static Func<PeSectionHeader, bool> _003C_003E9__14_0;
 
-		internal bool IsTextSection(PeSectionHeader gclass5_0)
+		internal bool IsTextSection(PeSectionHeader peSectionHeader)
 		{
-			return gclass5_0.GetName() == ".text";
+			return peSectionHeader.GetName() == ".text";
 		}
 	}
 
 	[CompilerGenerated]
-	internal IntPtr intptr_1;
+	internal IntPtr insertInvertedFunctionTableAddress;
 
 	[CompilerGenerated]
-	internal IntPtr intptr_2;
+	internal IntPtr invertedFunctionTableAddress;
 
 	[CompilerGenerated]
-	internal IntPtr intptr_3;
+	internal IntPtr removeInvertedFunctionTableAddress;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetInsertInvertedFunctionTableAddress()
 	{
-		return intptr_1;
+		return insertInvertedFunctionTableAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetInsertInvertedFunctionTableAddress(IntPtr intptr_4)
+	internal void SetInsertInvertedFunctionTableAddress(IntPtr address)
 	{
-		intptr_1 = intptr_4;
+		insertInvertedFunctionTableAddress = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetInvertedFunctionTableAddress()
 	{
-		return intptr_2;
+		return invertedFunctionTableAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetInvertedFunctionTableAddress(IntPtr intptr_4)
+	internal void SetInvertedFunctionTableAddress(IntPtr address)
 	{
-		intptr_2 = intptr_4;
+		invertedFunctionTableAddress = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetRemoveInvertedFunctionTableAddress()
 	{
-		return intptr_3;
+		return removeInvertedFunctionTableAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetRemoveInvertedFunctionTableAddress(IntPtr intptr_4)
+	internal void SetRemoveInvertedFunctionTableAddress(IntPtr address)
 	{
-		intptr_3 = intptr_4;
+		removeInvertedFunctionTableAddress = address;
 	}
 
-	internal NativeLoaderHooks(RemoteProcess gclass2_1)
-		: base(gclass2_1)
+	internal NativeLoaderHooks(RemoteProcess remoteProcess)
+		: base(remoteProcess)
 	{
-		EnsureAttachedToProcess(gclass2_1.ProcessId);
+		EnsureAttachedToProcess(remoteProcess.ProcessId);
 		RecoveredRuntime.LocateNativeLoaderHooks(this);
 	}
 
@@ -80,13 +80,13 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 	{
 		if (base.GetProcessHandle() == IntPtr.Zero && base.GetProcessId() != -1)
 		{
-			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.GetProcessId()));
+			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.ProcessAccessRights.CreateThread | NativeTypes.ProcessAccessRights.VirtualMemoryOperation | NativeTypes.ProcessAccessRights.VirtualMemoryRead | NativeTypes.ProcessAccessRights.VirtualMemoryWrite | NativeTypes.ProcessAccessRights.QueryInformation, false, base.GetProcessId()));
 		}
 	}
 
-	public bool InsertInvertedFunctionTableEntry(IntPtr intptr_4, ulong ulong_0, out bool bool_2)
+	public bool InsertInvertedFunctionTableEntry(IntPtr address, ulong ulongValue, out bool flag)
 	{
-		bool_2 = false;
+		flag = false;
 		if (this.GetInsertInvertedFunctionTableAddress() == IntPtr.Zero || this.GetInvertedFunctionTableAddress() == IntPtr.Zero)
 		{
 			return false;
@@ -95,7 +95,7 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 		int num = 0;
 		while ((long)num < (long)((ulong)RecoveredRuntime.GetInvertedFunctionTableCount(class112_)))
 		{
-			if (RecoveredRuntime.GetInvertedFunctionImageBase(RecoveredRuntime.ReadInvertedFunctionTableEntries(class112_)[num]) == intptr_4)
+			if (RecoveredRuntime.GetInvertedFunctionImageBase(RecoveredRuntime.ReadInvertedFunctionTableEntries(class112_)[num]) == address)
 			{
 				return true;
 			}
@@ -106,14 +106,14 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 		class2.SetRandomizeArgumentSetup(true);
 		RemoteAssembler class3 = class2;
 		RecoveredRuntime.EmitRemoteCallPrologue(class3);
-		if (!PlatformInfo.bool_6)
+		if (!PlatformInfo.flag7)
 		{
-			if (PlatformInfo.bool_5)
+			if (PlatformInfo.flag6)
 			{
 				RecoveredRuntime.EmitRemoteCall(class3, new AsmJitImmediate(this.GetInsertInvertedFunctionTableAddress()), CallingConvention.StdCall, new object[]
 				{
-					intptr_4,
-					(IntPtr)((long)ulong_0)
+					address,
+					(IntPtr)((long)ulongValue)
 				});
 			}
 			else
@@ -121,8 +121,8 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 				RecoveredRuntime.EmitRemoteCall(class3, new AsmJitImmediate(this.GetInsertInvertedFunctionTableAddress()), CallingConvention.StdCall, new object[]
 				{
 					this.GetInvertedFunctionTableAddress(),
-					intptr_4,
-					(IntPtr)((long)ulong_0)
+					address,
+					(IntPtr)((long)ulongValue)
 				});
 			}
 		}
@@ -130,8 +130,8 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 		{
 			RecoveredRuntime.EmitRemoteCall(class3, new AsmJitImmediate(this.GetInsertInvertedFunctionTableAddress()), CallingConvention.FastCall, new object[]
 			{
-				intptr_4,
-				(IntPtr)((long)ulong_0)
+				address,
+				(IntPtr)((long)ulongValue)
 			});
 		}
 		RecoveredRuntime.EmitRemoteCallEpilogue(class3, -1);
@@ -141,14 +141,14 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 			while ((long)num2 < (long)((ulong)RecoveredRuntime.GetInvertedFunctionTableCount(class112_)))
 			{
 				InvertedFunctionTableEntry32 class4 = RecoveredRuntime.ReadInvertedFunctionTableEntries(class112_)[num2];
-				if (!(RecoveredRuntime.GetInvertedFunctionImageBase(class4) != intptr_4))
+				if (!(RecoveredRuntime.GetInvertedFunctionImageBase(class4) != address))
 				{
 					if (RecoveredRuntime.GetInvertedFunctionTableEntrySize(class4) != 0u)
 					{
-						bool_2 = true;
+						flag = true;
 						return true;
 					}
-					IntPtr intPtr = RecoveredRuntime.AllocateRemoteMemory(this, 2048L, NativeTypes.Enum34.flag_6);
+					IntPtr intPtr = RecoveredRuntime.AllocateRemoteMemory(this, 2048L, NativeTypes.MemoryProtection.ReadWrite);
 					if (intPtr == IntPtr.Zero)
 					{
 						return false;
@@ -162,8 +162,8 @@ public sealed class NativeLoaderHooks : RemoteCodeExecutorBase
 					class3.CaptureReturnValue<IntPtr>();
 					RecoveredRuntime.EmitRemoteCallEpilogue(class3, -1);
 					IntPtr intPtr2 = base.Execute<IntPtr>(class3);
-					NativeTypes.Enum34 enum34_;
-					this.ProtectMemoryCore(class4.GetAddress(), (long)RecoveredRuntime.GetRemotePointerSize(base.GetRemoteProcess()), NativeTypes.Enum34.flag_2, out enum34_);
+					NativeTypes.MemoryProtection enum34_;
+					this.ProtectMemoryCore(class4.GetAddress(), (long)RecoveredRuntime.GetRemotePointerSize(base.GetRemoteProcess()), NativeTypes.MemoryProtection.ExecuteReadWrite, out enum34_);
 					bool result = base.Write<int>(class4.GetAddress(), intPtr2.ToInt32());
 					this.ProtectMemoryCore(class4.GetAddress(), (long)RecoveredRuntime.GetRemotePointerSize(base.GetRemoteProcess()), enum34_, out enum34_);
 					return result;

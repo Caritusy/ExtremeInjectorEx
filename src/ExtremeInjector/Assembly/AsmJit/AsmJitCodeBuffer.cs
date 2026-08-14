@@ -2,23 +2,23 @@ using System;
 
 public struct AsmJitCodeBuffer
 {
-	public IntPtr intptr_0;
+	public IntPtr address;
 
-	public IntPtr intptr_1;
+	public IntPtr address2;
 
-	public IntPtr intptr_2;
+	public IntPtr address3;
 
-	public IntPtr intptr_3;
+	public IntPtr address4;
 
-	public IntPtr intptr_4;
+	public IntPtr address5;
 
 	public void Release()
 	{
-		if (this.intptr_0 == IntPtr.Zero)
+		if (this.address == IntPtr.Zero)
 		{
 			return;
 		}
-		RecoveredRuntime.ReleaseAsmJitAllocation(this.intptr_0);
-		this.intptr_0 = (this.intptr_1 = (this.intptr_2 = (this.intptr_3 = IntPtr.Zero)));
+		RecoveredRuntime.ReleaseAsmJitAllocation(this.address);
+		this.address = (this.address2 = (this.address3 = (this.address4 = IntPtr.Zero)));
 	}
 }

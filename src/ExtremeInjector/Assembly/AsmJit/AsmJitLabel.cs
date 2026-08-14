@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 public sealed class AsmJitLabel : AsmJitOperand
 {
 	public AsmJitLabel()
-		: base(AsmJitRuntime.struct20_0)
+		: base(AsmJitRuntime.uninitializedOperandTag)
 	{
-		Struct13 struct13_ = RecoveredRuntime.GetLabelOperandData(this);
-		struct13_.enum8_0 = AsmJitOperandType.flag_4;
-		struct13_.byte_0 = 0;
-		struct13_.uint_0 = AsmJitRuntime.uint_0;
+		RegisterOperandData struct13_ = RecoveredRuntime.GetLabelOperandData(this);
+		struct13_.operandType = AsmJitOperandType.Label;
+		struct13_.byteValue = 0;
+		struct13_.uintValue = AsmJitRuntime.uintValue;
 		RecoveredRuntime.SetLabelOperandData(struct13_, this);
 	}
 }

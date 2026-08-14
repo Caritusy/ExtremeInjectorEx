@@ -6,68 +6,68 @@ using System.Runtime.InteropServices;
 public class AsmJitOperand
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct7
+	public struct RawOperandData
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-		public uint[] uint_0;
+		public uint[] uintValueArray;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public IntPtr[] intptr_0;
+		public IntPtr[] addresses;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct8
+	public struct BaseOperandData
 	{
-		public AsmJitOperandType enum8_0;
+		public AsmJitOperandType operandType;
 
-		public byte byte_0;
-
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public byte[] byte_1;
-
-		public uint uint_0;
+		public byte byteValue;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		internal uint[] uint_1;
+		public byte[] bytes;
+
+		public uint uintValue;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		internal IntPtr[] intptr_0;
+		internal uint[] uintValueArray;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		internal IntPtr[] addresses;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct9
+	public struct ImmediateOperandData
 	{
-		public AsmJitOperandType enum8_0;
+		public AsmJitOperandType operandType;
 
-		public byte byte_0;
+		public byte byteValue;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public byte[] byte_1;
+		public byte[] bytes;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
-		internal uint[] uint_2;
+		internal uint[] uintValueArray;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		internal IntPtr[] intptr_0;
+		internal IntPtr[] addresses;
 	}
 
-	public struct Struct10
+	public struct PackedOperandFlags
 	{
-		internal byte byte_0;
+		internal byte byteValue;
 
-		internal static byte[] byte_1 = new byte[9] { 0, 1, 3, 7, 15, 31, 63, 127, 255 };
+		internal static byte[] bytes = new byte[9] { 0, 1, 3, 7, 15, 31, 63, 127, 255 };
 
-		public void SetBits(int int_0, int int_1, byte byte_2)
+		public void SetBits(int intValue, int intValue2, byte byteValue2)
 		{
-			byte b = AsmJitOperand.Struct10.byte_1[int_1];
-			if (byte_2 <= b)
+			byte b = AsmJitOperand.PackedOperandFlags.bytes[intValue2];
+			if (byteValue2 <= b)
 			{
-				this.byte_0 = (byte)((int)this.byte_0 & ~((int)b << int_0));
-				this.byte_0 = (byte)((int)this.byte_0 | (int)byte_2 << int_0);
+				this.byteValue = (byte)((int)this.byteValue & ~((int)b << intValue));
+				this.byteValue = (byte)((int)this.byteValue | (int)byteValue2 << intValue);
 				return;
 			}
 			throw new ArgumentOutOfRangeException();
@@ -75,122 +75,122 @@ public class AsmJitOperand
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct11
+	public struct MemoryOperandData
 	{
-		public AsmJitOperandType enum8_0;
+		public AsmJitOperandType operandType;
 
-		public byte byte_0;
+		public byte byteValue;
 
-		public AsmJitMemoryType enum9_0;
+		public AsmJitMemoryType memoryType;
 
-		internal Struct10 struct10_0;
+		internal PackedOperandFlags addressingFlag;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 
 		[SpecialName]
-		public void SetAddressingFlag(bool bool_0)
+		public void SetAddressingFlag(bool flag)
 		{
-			struct10_0.SetBits(4, 1, (byte)(bool_0 ? 1 : 0));
+			addressingFlag.SetBits(4, 1, (byte)(flag ? 1 : 0));
 		}
 
 		[SpecialName]
-		public void SetScaleShift(byte byte_1)
+		public void SetScaleShift(byte byteValue2)
 		{
-			struct10_0.SetBits(5, 3, byte_1);
+			addressingFlag.SetBits(5, 3, byteValue2);
 		}
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct12
+	public struct LabelOperandData
 	{
-		public AsmJitOperandType enum8_0;
+		public AsmJitOperandType operandType;
 
-		public byte byte_0;
+		public byte byteValue;
 
 		[MarshalAs(UnmanagedType.U1)]
-		public bool bool_0;
+		public bool flag;
 
-		public byte byte_1;
+		public byte byteValue2;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		internal uint[] uint_1;
+		internal uint[] uintValueArray;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
-		internal IntPtr[] intptr_1;
+		internal IntPtr[] addresses;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct13
+	public struct RegisterOperandData
 	{
-		public AsmJitOperandType enum8_0;
+		public AsmJitOperandType operandType;
 
-		public byte byte_0;
-
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public byte[] byte_1;
-
-		public uint uint_0;
+		public byte byteValue;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		internal uint[] uint_1;
+		public byte[] bytes;
+
+		public uint uintValue;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		internal IntPtr[] intptr_0;
+		internal uint[] uintValueArray;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		internal IntPtr[] addresses;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct14
+	public struct VariableOperandData
 	{
-		public AsmJitOperandType enum8_0;
+		public AsmJitOperandType operandType;
 
-		public byte byte_0;
-
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public byte[] byte_1;
-
-		public uint uint_0;
-
-		public uint uint_1;
-
-		public AsmJitVariableType enum11_0;
+		public byte byteValue;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		internal IntPtr[] intptr_0;
+		public byte[] bytes;
+
+		public uint uintValue;
+
+		public uint uintValue2;
+
+		public AsmJitVariableType variableType;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		internal IntPtr[] addresses;
 	}
 
 	[CompilerGenerated]
-	internal Struct7 struct7_0;
+	internal RawOperandData rawData;
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal Struct7 GetRawData()
+	internal RawOperandData GetRawData()
 	{
-		return struct7_0;
+		return rawData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetRawData(Struct7 struct7_1)
+	internal void SetRawData(RawOperandData rawOperandData)
 	{
-		struct7_0 = struct7_1;
+		rawData = rawOperandData;
 	}
 
-	internal static U Reinterpret<T, U>(T gparam_0) where T : struct where U : struct
+	internal static U Reinterpret<T, U>(T value) where T : struct where U : struct
 	{
 		IntPtr intPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(T)));
-		Marshal.StructureToPtr(gparam_0, intPtr, false);
+		Marshal.StructureToPtr(value, intPtr, false);
 		U result = (U)((object)Marshal.PtrToStructure(intPtr, typeof(U)));
 		Marshal.FreeHGlobal(intPtr);
 		return result;
@@ -198,22 +198,22 @@ public class AsmJitOperand
 
 	public AsmJitOperand()
 	{
-		this.SetRawData(new AsmJitOperand.Struct7
+		this.SetRawData(new AsmJitOperand.RawOperandData
 		{
-			uint_0 = new uint[4],
-			intptr_0 = new IntPtr[2]
+			uintValueArray = new uint[4],
+			addresses = new IntPtr[2]
 		});
-		AsmJitOperand.Struct8 struct8_ = RecoveredRuntime.GetBaseOperandData(this);
-		struct8_.uint_0 = AsmJitRuntime.uint_0;
+		AsmJitOperand.BaseOperandData struct8_ = RecoveredRuntime.GetBaseOperandData(this);
+		struct8_.uintValue = AsmJitRuntime.uintValue;
 		RecoveredRuntime.SetBaseOperandData(this, struct8_);
 	}
 
-	internal AsmJitOperand(AsmJitUninitializedOperandTag struct20_0)
+	internal AsmJitOperand(AsmJitUninitializedOperandTag uninitializedOperandTag)
 	{
-		SetRawData(new Struct7
+		SetRawData(new RawOperandData
 		{
-			uint_0 = new uint[4],
-			intptr_0 = new IntPtr[2]
+			uintValueArray = new uint[4],
+			addresses = new IntPtr[2]
 		});
 	}
 
@@ -224,13 +224,13 @@ public class AsmJitOperand
 		{
 			return false;
 		}
-		AsmJitOperand.Struct8 @struct = RecoveredRuntime.GetBaseOperandData(this);
-		return RecoveredRuntime.GetBaseOperandData(@class).enum8_0 == @struct.enum8_0 && RecoveredRuntime.GetBaseOperandData(@class).byte_0 == @struct.byte_0 && @struct.uint_0 == RecoveredRuntime.GetBaseOperandData(@class).uint_0;
+		AsmJitOperand.BaseOperandData @struct = RecoveredRuntime.GetBaseOperandData(this);
+		return RecoveredRuntime.GetBaseOperandData(@class).operandType == @struct.operandType && RecoveredRuntime.GetBaseOperandData(@class).byteValue == @struct.byteValue && @struct.uintValue == RecoveredRuntime.GetBaseOperandData(@class).uintValue;
 	}
 
 	public override int GetHashCode()
 	{
-		Struct8 @struct = RecoveredRuntime.GetBaseOperandData(this);
-		return (@struct.uint_0.GetHashCode() * 397 + @struct.enum8_0.GetHashCode()) * 397 + @struct.byte_0.GetHashCode();
+		BaseOperandData @struct = RecoveredRuntime.GetBaseOperandData(this);
+		return (@struct.uintValue.GetHashCode() * 397 + @struct.operandType.GetHashCode()) * 397 + @struct.byteValue.GetHashCode();
 	}
 }

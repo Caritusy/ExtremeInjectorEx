@@ -7,22 +7,22 @@ public struct BeaEngineArgument
 	[StructLayout(LayoutKind.Sequential, Size = 64)]
 	[UnsafeValueType]
 	[CompilerGenerated]
-	public struct Struct30
+	public struct ArgumentTextBuffer
 	{
-		public sbyte sbyte_0;
+		public sbyte signedByteValue;
 	}
 
-	public Struct30 struct30_0;
+	public ArgumentTextBuffer argumentTextBuffer;
 
-	public int int_0;
+	public int intValue;
 
-	public int int_1;
+	public int intValue2;
 
-	public int int_2;
+	public int intValue3;
 
-	public uint uint_0;
+	public uint uintValue;
 
-	public BeaEngineMemoryOperand struct26_0;
+	public BeaEngineMemoryOperand memoryOperand;
 
-	public uint uint_1;
+	public uint uintValue2;
 }

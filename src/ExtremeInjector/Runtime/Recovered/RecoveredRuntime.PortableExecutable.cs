@@ -26,9 +26,9 @@ using Microsoft.Win32;
 public sealed partial class RecoveredRuntime
 {
 
-	internal static void RandomizeImportNameCasing(PeScrambler gclass4_0)
+	internal static void RandomizeImportNameCasing(PeScrambler peScrambler)
 	{
-		PeImage image = gclass4_0.class154_0;
+		PeImage image = peScrambler.peImage;
 		DataDirectory importDirectory = image.GetHeaders().GetOptionalHeader().GetDataDirectories()[1];
 		long importDirectoryOffset = RecoveredRuntime.MapRvaToFileOffset(image, importDirectory.GetVirtualAddress());
 		if (importDirectoryOffset == -1L)
@@ -63,8 +63,8 @@ public sealed partial class RecoveredRuntime
 				byte character;
 				while ((character = reader.ReadByte()) != 0)
 				{
-					bool useUpperCase = gclass4_0.random_0.Next(2) == 1;
-					gclass4_0.binaryWriter_0.Write((byte)(useUpperCase
+					bool useUpperCase = peScrambler.random.Next(2) == 1;
+					peScrambler.binaryWriter.Write((byte)(useUpperCase
 						? char.ToUpperInvariant((char)character)
 						: char.ToLowerInvariant((char)character)));
 				}
@@ -73,96 +73,96 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static DebugDirectoryEntry ReadDebugDirectory(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static DebugDirectoryEntry ReadDebugDirectory(PeImage peImage, BoundsCheckedBinaryReader boundsCheckedBinaryReader)
 	{
-		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[6];
+		DataDirectory @class = peImage.GetHeaders().GetOptionalHeader().GetDataDirectories()[6];
 		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
-		if (num == -1L || !class5_0.IsValidOffset(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(peImage, @class.GetVirtualAddress());
+		if (num == -1L || !boundsCheckedBinaryReader.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
+		if (boundsCheckedBinaryReader.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
-			RecoveredRuntime.SeekReader(class5_0, num);
-			return new DebugDirectoryEntry(class5_0);
+			RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num);
+			return new DebugDirectoryEntry(boundsCheckedBinaryReader);
 		}
 		return null;
 	}
 
-	internal static bool TryReadPe32OptionalHeader(BoundsCheckedBinaryReader class5_0, uint uint_0, out Pe32OptionalHeader class162_0)
+	internal static bool TryReadPe32OptionalHeader(BoundsCheckedBinaryReader boundsCheckedBinaryReader, uint uintValue, out Pe32OptionalHeader pe32OptionalHeader)
 	{
-		class162_0 = null;
+		pe32OptionalHeader = null;
 		const uint fixedHeaderSize = 96;
-		long start = class5_0.BaseStream.Position;
-		if (uint_0 < fixedHeaderSize || start < 0 || start + uint_0 > class5_0.BaseStream.Length)
+		long start = boundsCheckedBinaryReader.BaseStream.Position;
+		if (uintValue < fixedHeaderSize || start < 0 || start + uintValue > boundsCheckedBinaryReader.BaseStream.Length)
 		{
 			return false;
 		}
 
 		var header = new Pe32OptionalHeader();
-		header.SetMagic(class5_0.ReadUInt16());
+		header.SetMagic(boundsCheckedBinaryReader.ReadUInt16());
 		if (header.GetMagic() != 0x010B)
 		{
 			return false;
 		}
 
-		header.SetMajorLinkerVersion(class5_0.ReadByte());
-		header.SetMinorLinkerVersion(class5_0.ReadByte());
-		header.SetSizeOfCode(class5_0.ReadUInt32());
-		header.SetSizeOfInitializedData(class5_0.ReadUInt32());
-		header.SetSizeOfUninitializedData(class5_0.ReadUInt32());
-		header.SetAddressOfEntryPoint(class5_0.ReadUInt32());
-		header.SetBaseOfCode(class5_0.ReadUInt32());
-		header.SetBaseOfData(class5_0.ReadUInt32());
-		header.SetImageBase(class5_0.ReadUInt32());
-		header.SetSectionAlignment(class5_0.ReadUInt32());
-		header.SetFileAlignment(class5_0.ReadUInt32());
-		header.SetMajorOperatingSystemVersion(class5_0.ReadUInt16());
-		header.SetMinorOperatingSystemVersion(class5_0.ReadUInt16());
-		header.SetMajorImageVersion(class5_0.ReadUInt16());
-		header.SetMinorImageVersion(class5_0.ReadUInt16());
-		header.SetMajorSubsystemVersion(class5_0.ReadUInt16());
-		header.SetMinorSubsystemVersion(class5_0.ReadUInt16());
-		header.SetWin32VersionValue(class5_0.ReadUInt32());
-		header.SetSizeOfImage(class5_0.ReadUInt32());
-		header.SetSizeOfHeaders(class5_0.ReadUInt32());
-		header.SetChecksum(class5_0.ReadUInt32());
-		header.SetSubsystem((Subsystem)class5_0.ReadUInt16());
-		header.SetDllCharacteristics((DllCharacteristics)class5_0.ReadUInt16());
-		header.SetSizeOfStackReserve(class5_0.ReadUInt32());
-		header.SetSizeOfStackCommit(class5_0.ReadUInt32());
-		header.SetSizeOfHeapReserve(class5_0.ReadUInt32());
-		header.SetSizeOfHeapCommit(class5_0.ReadUInt32());
-		header.SetLoaderFlags(class5_0.ReadUInt32());
-		header.SetNumberOfRvaAndSizes(class5_0.ReadUInt32());
+		header.SetMajorLinkerVersion(boundsCheckedBinaryReader.ReadByte());
+		header.SetMinorLinkerVersion(boundsCheckedBinaryReader.ReadByte());
+		header.SetSizeOfCode(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSizeOfInitializedData(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSizeOfUninitializedData(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetAddressOfEntryPoint(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetBaseOfCode(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetBaseOfData(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetImageBase(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSectionAlignment(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetFileAlignment(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetMajorOperatingSystemVersion(boundsCheckedBinaryReader.ReadUInt16());
+		header.SetMinorOperatingSystemVersion(boundsCheckedBinaryReader.ReadUInt16());
+		header.SetMajorImageVersion(boundsCheckedBinaryReader.ReadUInt16());
+		header.SetMinorImageVersion(boundsCheckedBinaryReader.ReadUInt16());
+		header.SetMajorSubsystemVersion(boundsCheckedBinaryReader.ReadUInt16());
+		header.SetMinorSubsystemVersion(boundsCheckedBinaryReader.ReadUInt16());
+		header.SetWin32VersionValue(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSizeOfImage(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSizeOfHeaders(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetChecksum(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSubsystem((Subsystem)boundsCheckedBinaryReader.ReadUInt16());
+		header.SetDllCharacteristics((DllCharacteristics)boundsCheckedBinaryReader.ReadUInt16());
+		header.SetSizeOfStackReserve(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSizeOfStackCommit(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSizeOfHeapReserve(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetSizeOfHeapCommit(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetLoaderFlags(boundsCheckedBinaryReader.ReadUInt32());
+		header.SetNumberOfRvaAndSizes(boundsCheckedBinaryReader.ReadUInt32());
 
 		DataDirectory[] directories = header.GetDataDirectories();
-		uint availableDirectoryCount = (uint_0 - fixedHeaderSize) / 8U;
+		uint availableDirectoryCount = (uintValue - fixedHeaderSize) / 8U;
 		int directoryCount = (int)Math.Min((uint)directories.Length, Math.Min(header.GetNumberOfRvaAndSizes(), availableDirectoryCount));
 		for (int index = 0; index < directories.Length; index++)
 		{
-			directories[index] = index < directoryCount ? new DataDirectory(class5_0) : new DataDirectory();
+			directories[index] = index < directoryCount ? new DataDirectory(boundsCheckedBinaryReader) : new DataDirectory();
 		}
 
-		class5_0.BaseStream.Position = start + uint_0;
-		class162_0 = header;
+		boundsCheckedBinaryReader.BaseStream.Position = start + uintValue;
+		pe32OptionalHeader = header;
 		return true;
 	}
 
-	internal static byte[] ReadImageBytes(long long_0, PeImage class154_0, long long_1)
+	internal static byte[] ReadImageBytes(long longValue, PeImage peImage, long longValue2)
 	{
-		Stream imageStream = class154_0.GetStream();
+		Stream imageStream = peImage.GetStream();
 		long originalPosition = imageStream.Position;
 		try
 		{
-			imageStream.Position = long_1;
+			imageStream.Position = longValue2;
 			using (MemoryStream output = new MemoryStream())
 			{
-				long byteCount = long_0 == -1L ? imageStream.Length - long_1 : long_0;
+				long byteCount = longValue == -1L ? imageStream.Length - longValue2 : longValue;
 				imageStream.CopyBytesTo(output, checked((int)byteCount));
 				return output.ToArray();
 			}
@@ -186,7 +186,7 @@ public sealed partial class RecoveredRuntime
 		ScramblePreset scramblePreset = options.Scramble.Detect();
 		bool warningsChanged = false;
 
-		if (!PlatformInfo.bool_11 && options.Method == InjectionMethod.ManualMap && !warnings.ManualMapAcknowledged)
+		if (!PlatformInfo.flag12 && options.Method == InjectionMethod.ManualMap && !warnings.ManualMapAcknowledged)
 		{
 			MessageBox.Show(mainForm, UiText.Get("Message.ManualMapCompatibility"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			warnings.ManualMapAcknowledged = true;
@@ -194,7 +194,7 @@ public sealed partial class RecoveredRuntime
 		}
 
 		bool usesLdrpLoadDll = options.Method == InjectionMethod.LdrpLoadDll || options.Method == InjectionMethod.LdrpLoadDllStub;
-		if (!PlatformInfo.bool_11 && usesLdrpLoadDll && !warnings.LdrpLoadDllAcknowledged)
+		if (!PlatformInfo.flag12 && usesLdrpLoadDll && !warnings.LdrpLoadDllAcknowledged)
 		{
 			MessageBox.Show(mainForm, UiText.Get("Message.LdrpCompatibility"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			warnings.LdrpLoadDllAcknowledged = true;
@@ -219,255 +219,255 @@ public sealed partial class RecoveredRuntime
 		mainForm.QueueInjectionWorkflow(modules, scramblePreset);
 	}
 
-	internal static bool Is32BitImage(PeImage class154_0)
+	internal static bool Is32BitImage(PeImage peImage)
 	{
-		return class154_0.GetHeaders().GetOptionalHeader().GetMagic() == 267;
+		return peImage.GetHeaders().GetOptionalHeader().GetMagic() == 267;
 	}
 
-	internal static ImportDirectory ReadImportDirectory(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static ImportDirectory ReadImportDirectory(PeImage peImage, BoundsCheckedBinaryReader boundsCheckedBinaryReader)
 	{
-		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[1];
+		DataDirectory @class = peImage.GetHeaders().GetOptionalHeader().GetDataDirectories()[1];
 		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
-		if (num == -1L || !class5_0.IsValidOffset(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(peImage, @class.GetVirtualAddress());
+		if (num == -1L || !boundsCheckedBinaryReader.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
+		if (boundsCheckedBinaryReader.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
-			RecoveredRuntime.SeekReader(class5_0, num);
-			return new ImportDirectory(class5_0, class154_0);
+			RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num);
+			return new ImportDirectory(boundsCheckedBinaryReader, peImage);
 		}
 		return null;
 	}
 
-	internal static void WriteFakeDebugDirectory(PeSectionHeader gclass5_0, PeScrambler gclass4_0)
+	internal static void WriteFakeDebugDirectory(PeSectionHeader peSectionHeader, PeScrambler peScrambler)
 	{
 		byte[] array;
 		using (MemoryStream memoryStream = new MemoryStream())
 		using (BinaryWriter binaryWriter = new BinaryWriter(memoryStream))
 		{
 			binaryWriter.Write(1396986706);
-			binaryWriter.Write(gclass4_0.random_0.Next());
-			binaryWriter.Write(gclass4_0.random_0.Next());
-			binaryWriter.Write(gclass4_0.random_0.Next());
-			binaryWriter.Write(gclass4_0.random_0.Next());
-			binaryWriter.Write(gclass4_0.random_0.Next());
-			binaryWriter.Write(Encoding.ASCII.GetBytes(RecoveredRuntime.GenerateFakePdbPath(gclass4_0) + EncodedStringTable.DecodeString(12219)));
+			binaryWriter.Write(peScrambler.random.Next());
+			binaryWriter.Write(peScrambler.random.Next());
+			binaryWriter.Write(peScrambler.random.Next());
+			binaryWriter.Write(peScrambler.random.Next());
+			binaryWriter.Write(peScrambler.random.Next());
+			binaryWriter.Write(Encoding.ASCII.GetBytes(RecoveredRuntime.GenerateFakePdbPath(peScrambler) + EncodedStringTable.DecodeString(12219)));
 			array = memoryStream.ToArray();
 		}
-		gclass4_0.class154_0.GetStream().Position = (long)((ulong)gclass5_0.GetPointerToRawData());
-		gclass4_0.binaryWriter_0.Write(0);
-		gclass4_0.binaryWriter_0.Write(gclass4_0.random_0.NextUInt32());
-		gclass4_0.binaryWriter_0.Write(0);
-		gclass4_0.binaryWriter_0.Write(2);
-		gclass4_0.binaryWriter_0.Write(array.Length);
-		gclass4_0.binaryWriter_0.Write(gclass5_0.GetVirtualAddress() + 32u);
-		gclass4_0.binaryWriter_0.Write(gclass5_0.GetPointerToRawData() + 32u);
-		gclass4_0.binaryWriter_0.Write(0);
-		gclass4_0.binaryWriter_0.Write(array);
-		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[6].SetVirtualAddress(gclass5_0.GetVirtualAddress());
-		gclass4_0.class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[6].SetSize(28u);
-		gclass5_0.SetCharacteristics(gclass5_0.GetCharacteristics() & ~SectionCharacteristics.flag_28);
+		peScrambler.peImage.GetStream().Position = (long)((ulong)peSectionHeader.GetPointerToRawData());
+		peScrambler.binaryWriter.Write(0);
+		peScrambler.binaryWriter.Write(peScrambler.random.NextUInt32());
+		peScrambler.binaryWriter.Write(0);
+		peScrambler.binaryWriter.Write(2);
+		peScrambler.binaryWriter.Write(array.Length);
+		peScrambler.binaryWriter.Write(peSectionHeader.GetVirtualAddress() + 32u);
+		peScrambler.binaryWriter.Write(peSectionHeader.GetPointerToRawData() + 32u);
+		peScrambler.binaryWriter.Write(0);
+		peScrambler.binaryWriter.Write(array);
+		peScrambler.peImage.GetHeaders().GetOptionalHeader().GetDataDirectories()[6].SetVirtualAddress(peSectionHeader.GetVirtualAddress());
+		peScrambler.peImage.GetHeaders().GetOptionalHeader().GetDataDirectories()[6].SetSize(28u);
+		peSectionHeader.SetCharacteristics(peSectionHeader.GetCharacteristics() & ~SectionCharacteristics.Discardable);
 	}
 
-	internal static void DisposeImportNameIterator(ImportDirectory.Class150 class150_0)
+	internal static void DisposeImportNameIterator(ImportDirectory.ImportedNameIterator importedNameIterator)
 	{
-		class150_0.int_0 = -1;
-		if (class150_0.ienumerator_0 != null)
+		importedNameIterator.intValue = -1;
+		if (importedNameIterator.enumerator != null)
 		{
-			class150_0.ienumerator_0.Dispose();
+			importedNameIterator.enumerator.Dispose();
 		}
 	}
 
-	internal static long MapVirtualAddressToFileOffset(PeImage class154_0, ulong ulong_0)
+	internal static long MapVirtualAddressToFileOffset(PeImage peImage, ulong ulongValue)
 	{
-		if (ulong_0 < class154_0.GetHeaders().GetOptionalHeader().GetImageBase())
+		if (ulongValue < peImage.GetHeaders().GetOptionalHeader().GetImageBase())
 		{
 			return -1L;
 		}
-		return MapRvaToFileOffset(class154_0, (uint)(ulong_0 - class154_0.GetHeaders().GetOptionalHeader().GetImageBase()));
+		return MapRvaToFileOffset(peImage, (uint)(ulongValue - peImage.GetHeaders().GetOptionalHeader().GetImageBase()));
 	}
 
-	internal static IntPtr ResolveOrLoadDependency(ManualMapInjector.Class172 class172_0, ManualMapInjector class89_0, string string_0)
+	internal static IntPtr ResolveOrLoadDependency(ManualMapInjector.MappingContext mappingContext, ManualMapInjector manualMapInjector, string text2)
 	{
-		ManualMapInjector.Enum44 enum44_ = ManualMapInjector.Enum44.flag_5 | ManualMapInjector.Enum44.flag_6 | ManualMapInjector.Enum44.flag_7;
-		IntPtr intPtr = RecoveredRuntime.CaptureProcessModules(class89_0.GetRemoteProcess()).GetModuleBase(string_0);
+		ManualMapInjector.ManualMapOptions enum44_ = ManualMapInjector.ManualMapOptions.UseVectoredExceptionHandler | ManualMapInjector.ManualMapOptions.SkipActivationContext | ManualMapInjector.ManualMapOptions.SkipDelayImports;
+		IntPtr intPtr = RecoveredRuntime.CaptureProcessModules(manualMapInjector.GetRemoteProcess()).GetModuleBase(text2);
 		if (intPtr != IntPtr.Zero)
 		{
 			return intPtr;
 		}
-		DependencySearchFlags @enum = DependencySearchFlags.flag_2;
-		if (RecoveredRuntime.IsWow64RemoteProcess(class89_0.GetRemoteProcess()))
+		DependencySearchFlags @enum = DependencySearchFlags.ResolveApiSetToSystemDirectory;
+		if (RecoveredRuntime.IsWow64RemoteProcess(manualMapInjector.GetRemoteProcess()))
 		{
-			@enum |= DependencySearchFlags.flag_4;
+			@enum |= DependencySearchFlags.UseWow64SystemDirectory;
 		}
-		string text = RecoveredRuntime.ResolveDependencyPath(string_0, class172_0.GetFilePath(), Path.GetDirectoryName(class172_0.GetFilePath()), @enum, class89_0.GetProcessId(), class172_0.GetActivationContextHandle());
+		string text = RecoveredRuntime.ResolveDependencyPath(text2, mappingContext.GetFilePath(), Path.GetDirectoryName(mappingContext.GetFilePath()), @enum, manualMapInjector.GetProcessId(), mappingContext.GetActivationContextHandle());
 		if (text == null)
 		{
-			class89_0.SetLastException(new FileNotFoundException(EncodedStringTable.DecodeString(12476) + string_0));
+			manualMapInjector.SetLastException(new FileNotFoundException(EncodedStringTable.DecodeString(12476) + text2));
 			return IntPtr.Zero;
 		}
-		if ((class172_0.GetOptions() & ManualMapInjector.Enum44.flag_4) == (ManualMapInjector.Enum44)0)
+		if ((mappingContext.GetOptions() & ManualMapInjector.ManualMapOptions.ResolveImportsManually) == (ManualMapInjector.ManualMapOptions)0)
 		{
 			IntPtr result;
 			try
 			{
-				result = new LoadLibraryInjector(class89_0.GetRemoteProcess()).Inject(text);
+				result = new LoadLibraryInjector(manualMapInjector.GetRemoteProcess()).Inject(text);
 			}
 			catch (Exception innerException)
 			{
-				class89_0.SetLastException(new Exception(EncodedStringTable.DecodeString(12529) + text, innerException));
+				manualMapInjector.SetLastException(new Exception(EncodedStringTable.DecodeString(12529) + text, innerException));
 				result = IntPtr.Zero;
 			}
 			return result;
 		}
-		ManualMapInjector @class = new ManualMapInjector(class89_0.GetRemoteProcess());
-		@class.SetRemoteProcess(class89_0.GetRemoteProcess());
+		ManualMapInjector @class = new ManualMapInjector(manualMapInjector.GetRemoteProcess());
+		@class.SetRemoteProcess(manualMapInjector.GetRemoteProcess());
 		ManualMapInjector class2 = @class;
 		IntPtr intPtr2 = class2.InjectModule(text, enum44_);
 		if (intPtr2 == IntPtr.Zero)
 		{
-			class89_0.SetLastException(new Exception(EncodedStringTable.DecodeString(12529) + text, class2.GetLastException()));
+			manualMapInjector.SetLastException(new Exception(EncodedStringTable.DecodeString(12529) + text, class2.GetLastException()));
 		}
 		return intPtr2;
 	}
 
-	internal static void WritePeHeaders(PeImageWriter class165_0)
+	internal static void WritePeHeaders(PeImageWriter peImageWriter)
 	{
-		class165_0.stream_0.Position = (long)((ulong)class165_0.class154_0.GetDosHeader().GetPeHeaderOffset());
-		class165_0.stream_0.Position += 4L;
-		RecoveredRuntime.WriteCoffHeader(class165_0);
-		RecoveredRuntime.WriteOptionalHeader(class165_0);
+		peImageWriter.stream.Position = (long)((ulong)peImageWriter.peImage.GetDosHeader().GetPeHeaderOffset());
+		peImageWriter.stream.Position += 4L;
+		RecoveredRuntime.WriteCoffHeader(peImageWriter);
+		RecoveredRuntime.WriteOptionalHeader(peImageWriter);
 	}
 
-	internal static void WritePeImage(Stream stream_0, PeImageWriter class165_0)
+	internal static void WritePeImage(Stream stream, PeImageWriter peImageWriter)
 	{
-		stream_0.SetLength(0L);
-		class165_0.stream_0 = stream_0;
-		class165_0.binaryWriter_0 = new BinaryWriter(stream_0);
-		class165_0.class154_0.GetStream().Position = 0L;
-        BinaryExtensions.CopyTo(class165_0.class154_0.GetStream(), stream_0);
-		class165_0.class154_0.GetStream().Position = 0L;
-		RecoveredRuntime.WriteDosHeaderPeOffset(class165_0);
-		RecoveredRuntime.WritePeHeaders(class165_0);
-		class165_0.WriteSectionHeaders();
+		stream.SetLength(0L);
+		peImageWriter.stream = stream;
+		peImageWriter.binaryWriter = new BinaryWriter(stream);
+		peImageWriter.peImage.GetStream().Position = 0L;
+        BinaryExtensions.CopyTo(peImageWriter.peImage.GetStream(), stream);
+		peImageWriter.peImage.GetStream().Position = 0L;
+		RecoveredRuntime.WriteDosHeaderPeOffset(peImageWriter);
+		RecoveredRuntime.WritePeHeaders(peImageWriter);
+		peImageWriter.WriteSectionHeaders();
 	}
 
-	internal static PeImage LoadPeImageFromFile(PeImageLayout enum39_0, string string_0)
+	internal static PeImage LoadPeImageFromFile(PeImageLayout peImageLayout, string text)
 	{
-		return PeImageReader.ReadFullImage(new FileStream(string_0, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), string_0, bool_0: true, enum39_0);
+		return PeImageReader.ReadFullImage(new FileStream(text, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), text, flag: true, peImageLayout);
 	}
 
-	internal static LoadConfigurationDirectory ReadLoadConfigurationDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0)
+	internal static LoadConfigurationDirectory ReadLoadConfigurationDirectory(BoundsCheckedBinaryReader boundsCheckedBinaryReader, PeImage peImage)
 	{
-		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[10];
+		DataDirectory @class = peImage.GetHeaders().GetOptionalHeader().GetDataDirectories()[10];
 		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
-		if (num == -1L || !class5_0.IsValidOffset(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(peImage, @class.GetVirtualAddress());
+		if (num == -1L || !boundsCheckedBinaryReader.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
+		if (boundsCheckedBinaryReader.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
-			RecoveredRuntime.SeekReader(class5_0, num);
-			return new LoadConfigurationDirectory(class5_0, class154_0);
+			RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num);
+			return new LoadConfigurationDirectory(boundsCheckedBinaryReader, peImage);
 		}
 		return null;
 	}
 
-	internal static bool FailManualMap(ManualMapInjector class89_0, Exception exception_0)
+	internal static bool FailManualMap(ManualMapInjector manualMapInjector, Exception exception)
 	{
-		class89_0.SetLastException(exception_0);
+		manualMapInjector.SetLastException(exception);
 		return false;
 	}
 
-	internal static List<ExportedSymbol> GetRemoteModuleExports(ProcessModuleInfo gclass1_0)
+	internal static List<ExportedSymbol> GetRemoteModuleExports(ProcessModuleInfo processModuleInfo)
 	{
-		if (gclass1_0.list_0 == null)
+		if (processModuleInfo.items == null)
 		{
-			using (ProcessMemoryStream stream = new ProcessMemoryStream(gclass1_0.gclass2_0, gclass1_0.GetModuleBase(), ProcessMemoryAccess.const_0, (long)((ulong)gclass1_0.GetImageSize())))
-			using (PeImage image = PeExportReader.ReadExports(stream, false, PeImageLayout.const_1))
+			using (ProcessMemoryStream stream = new ProcessMemoryStream(processModuleInfo.remoteProcess, processModuleInfo.GetModuleBase(), ProcessMemoryAccess.Read, (long)((ulong)processModuleInfo.GetImageSize())))
+			using (PeImage image = PeExportReader.ReadExports(stream, false, PeImageLayout.Memory))
 			{
 				if (image.GetExports() == null)
 				{
 					return new List<ExportedSymbol>();
 				}
-				gclass1_0.list_0 = new List<ExportedSymbol>(image.GetExports().list_1);
+				processModuleInfo.items = new List<ExportedSymbol>(image.GetExports().items2);
 			}
-			if (!gclass1_0.gclass2_0.dictionary_0.ContainsKey(gclass1_0))
+			if (!processModuleInfo.remoteProcess.dictionary.ContainsKey(processModuleInfo))
 			{
-				gclass1_0.gclass2_0.dictionary_0.Add(gclass1_0, gclass1_0.list_0);
+				processModuleInfo.remoteProcess.dictionary.Add(processModuleInfo, processModuleInfo.items);
 			}
 		}
-		return gclass1_0.list_0;
+		return processModuleInfo.items;
 	}
 
-	internal static long MapRvaToFileOffset(PeImage class154_0, uint uint_0)
+	internal static long MapRvaToFileOffset(PeImage peImage, uint uintValue)
 	{
-		return class154_0.rvaMapper.MapRvaToFileOffset(class154_0, uint_0);
+		return peImage.rvaMapper.MapRvaToFileOffset(peImage, uintValue);
 	}
 
-	internal static void WriteCoffHeader(PeImageWriter class165_0)
+	internal static void WriteCoffHeader(PeImageWriter peImageWriter)
 	{
-		CoffHeader @class = class165_0.class154_0.GetHeaders().GetCoffHeader();
-		class165_0.binaryWriter_0.Write((ushort)@class.GetMachine());
-		@class.SetNumberOfSections((ushort)class165_0.class154_0.GetSections().Count);
-		class165_0.binaryWriter_0.Write(@class.GetNumberOfSections());
-		class165_0.binaryWriter_0.Write(@class.GetTimeDateStamp());
-		class165_0.binaryWriter_0.Write(@class.GetPointerToSymbolTable());
-		class165_0.binaryWriter_0.Write(@class.GetNumberOfSymbols());
-		class165_0.binaryWriter_0.Write(@class.GetSizeOfOptionalHeader());
-		class165_0.binaryWriter_0.Write((ushort)@class.GetCharacteristics());
+		CoffHeader @class = peImageWriter.peImage.GetHeaders().GetCoffHeader();
+		peImageWriter.binaryWriter.Write((ushort)@class.GetMachine());
+		@class.SetNumberOfSections((ushort)peImageWriter.peImage.GetSections().Count);
+		peImageWriter.binaryWriter.Write(@class.GetNumberOfSections());
+		peImageWriter.binaryWriter.Write(@class.GetTimeDateStamp());
+		peImageWriter.binaryWriter.Write(@class.GetPointerToSymbolTable());
+		peImageWriter.binaryWriter.Write(@class.GetNumberOfSymbols());
+		peImageWriter.binaryWriter.Write(@class.GetSizeOfOptionalHeader());
+		peImageWriter.binaryWriter.Write((ushort)@class.GetCharacteristics());
 	}
 
-	internal static TlsDirectory ReadTlsDirectory(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static TlsDirectory ReadTlsDirectory(PeImage peImage, BoundsCheckedBinaryReader boundsCheckedBinaryReader)
 	{
-		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[9];
+		DataDirectory @class = peImage.GetHeaders().GetOptionalHeader().GetDataDirectories()[9];
 		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
-		if (num == -1L || !class5_0.IsValidOffset(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(peImage, @class.GetVirtualAddress());
+		if (num == -1L || !boundsCheckedBinaryReader.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (!class5_0.IsValidOffset(num + (long)((ulong)@class.GetSize())))
+		if (!boundsCheckedBinaryReader.IsValidOffset(num + (long)((ulong)@class.GetSize())))
 		{
 			return null;
 		}
-		RecoveredRuntime.SeekReader(class5_0, num);
-		return new TlsDirectory(class5_0, class154_0);
+		RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num);
+		return new TlsDirectory(boundsCheckedBinaryReader, peImage);
 	}
 
-	internal static List<ImportedSymbol> ReadImportedSymbols(BoundsCheckedBinaryReader class5_0, ImportDirectory class148_0, PeImage class154_0)
+	internal static List<ImportedSymbol> ReadImportedSymbols(BoundsCheckedBinaryReader boundsCheckedBinaryReader, ImportDirectory importDirectory, PeImage peImage)
 	{
 		List<ImportedSymbol> list = new List<ImportedSymbol>();
 		ulong ulong_;
-		while ((ulong_ = (RecoveredRuntime.Is32BitImage(class154_0) ? ((ulong)class5_0.ReadUInt32()) : class5_0.ReadUInt64())) != 0UL)
+		while ((ulong_ = (RecoveredRuntime.Is32BitImage(peImage) ? ((ulong)boundsCheckedBinaryReader.ReadUInt32()) : boundsCheckedBinaryReader.ReadUInt64())) != 0UL)
 		{
 			ImportedSymbol @class = new ImportedSymbol();
 			@class.SetThunkValue(ulong_);
 			ImportedSymbol class2 = @class;
-			class2.SetIsOrdinal((class2.GetThunkValue() & (RecoveredRuntime.Is32BitImage(class154_0) ? 2147483648UL : 9223372036854775808UL)) > 0UL);
+			class2.SetIsOrdinal((class2.GetThunkValue() & (RecoveredRuntime.Is32BitImage(peImage) ? 2147483648UL : 9223372036854775808UL)) > 0UL);
 			if (!class2.GetIsOrdinal())
 			{
-				long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, (uint)class2.GetThunkValue());
-				long position = class5_0.BaseStream.Position;
-				if (num != -1L && class5_0.IsValidOffset(num))
+				long num = RecoveredRuntime.MapRvaToFileOffset(peImage, (uint)class2.GetThunkValue());
+				long position = boundsCheckedBinaryReader.BaseStream.Position;
+				if (num != -1L && boundsCheckedBinaryReader.IsValidOffset(num))
 				{
-					RecoveredRuntime.SeekReader(class5_0, num);
-					class2.SetHint(class5_0.ReadUInt16());
-					class2.SetName(RecoveredRuntime.ReadNullTerminatedAsciiString(class5_0));
+					RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num);
+					class2.SetHint(boundsCheckedBinaryReader.ReadUInt16());
+					class2.SetName(RecoveredRuntime.ReadNullTerminatedAsciiString(boundsCheckedBinaryReader));
 				}
-				RecoveredRuntime.SeekReader(class5_0, position);
+				RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, position);
 			}
 			else
 			{
@@ -478,11 +478,11 @@ public sealed partial class RecoveredRuntime
 		return list;
 	}
 
-	internal static void WriteOptionalHeader(PeImageWriter class165_0)
+	internal static void WriteOptionalHeader(PeImageWriter peImageWriter)
 	{
-		IPeOptionalHeader @interface = class165_0.class154_0.GetHeaders().GetOptionalHeader();
-		BinaryWriter writer = class165_0.binaryWriter_0;
-		bool is32Bit = RecoveredRuntime.Is32BitImage(class165_0.class154_0);
+		IPeOptionalHeader @interface = peImageWriter.peImage.GetHeaders().GetOptionalHeader();
+		BinaryWriter writer = peImageWriter.binaryWriter;
+		bool is32Bit = RecoveredRuntime.Is32BitImage(peImageWriter.peImage);
 
 		writer.Write(@interface.GetMagic());
 		writer.Write(@interface.GetMajorLinkerVersion());
@@ -539,17 +539,17 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void ShowModuleOptions(ModuleEntry class16_0)
+	internal static void ShowModuleOptions(ModuleEntry moduleEntry)
 	{
-		if (!File.Exists(class16_0.Path))
+		if (!File.Exists(moduleEntry.Path))
 		{
 			return;
 		}
 
 		try
 		{
-			using (FileStream fileStream = new FileStream(class16_0.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
-			using (PeImage image = PeExportReader.ReadExports(fileStream, class16_0.Path, false, PeImageLayout.const_0))
+			using (FileStream fileStream = new FileStream(moduleEntry.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
+			using (PeImage image = PeExportReader.ReadExports(fileStream, moduleEntry.Path, false, PeImageLayout.File))
 			{
 				if (image == null)
 				{
@@ -558,7 +558,7 @@ public sealed partial class RecoveredRuntime
 
 				ModuleOptionsForm form = new ModuleOptionsForm
 				{
-					Module = class16_0,
+					Module = moduleEntry,
 					Image = image
 				};
 				form.ShowDialog();
@@ -570,9 +570,9 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static Stream OpenImageReadStream(PeImage class154_0)
+	internal static Stream OpenImageReadStream(PeImage peImage)
 	{
-		Stream imageStream = class154_0.GetStream();
+		Stream imageStream = peImage.GetStream();
 		lock (imageStream)
 		{
 			if (imageStream is FileStream)
@@ -588,59 +588,59 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void HandleRuntimeDependencyInstallation(string string_0, string string_1, string string_2, PeImage class154_0, string string_3, MainForm mainForm, string string_4, bool bool_0, string string_5, bool bool_1, string string_6)
+	internal static void HandleRuntimeDependencyInstallation(string text, string text2, string text3, PeImage peImage, string text4, MainForm mainForm, string text5, bool flag, string text6, bool flag2, string text7)
 	{
-		if (bool_0)
+		if (flag)
 		{
-			if (!PlatformInfo.bool_1)
+			if (!PlatformInfo.flag2)
 			{
-				RecoveredRuntime.ShowUnsupportedWindowsXpMessage(string_2, mainForm, class154_0.GetFileName());
+				RecoveredRuntime.ShowUnsupportedWindowsXpMessage(text3, mainForm, peImage.GetFileName());
 				return;
 			}
 
-			string packageName = RecoveredRuntime.Is32BitImage(class154_0) ? string_4 : string_5;
-			RecoveredRuntime.PromptDependencyInstallation(class154_0.GetFileName(), mainForm, string_1, packageName, string_2);
+			string packageName = RecoveredRuntime.Is32BitImage(peImage) ? text5 : text6;
+			RecoveredRuntime.PromptDependencyInstallation(peImage.GetFileName(), mainForm, text2, packageName, text3);
 			return;
 		}
 
-		if (!RecoveredRuntime.ConfirmDependencyInstallation(mainForm, class154_0.GetFileName(), string_2, string_3, bool_1, string.Format(EncodedStringTable.DecodeString(14117), string_6)))
+		if (!RecoveredRuntime.ConfirmDependencyInstallation(mainForm, peImage.GetFileName(), text3, text4, flag2, string.Format(EncodedStringTable.DecodeString(14117), text7)))
 		{
 			return;
 		}
 
 		DependencyInstallerForm form = new DependencyInstallerForm();
-		RecoveredRuntime.ConfigureInstallerDownload(form, string_0, string_1, EncodedStringTable.DecodeString(14162) + (RecoveredRuntime.Is32BitImage(class154_0) ? EncodedStringTable.DecodeString(14180) : EncodedStringTable.DecodeString(14175)) + EncodedStringTable.DecodeString(93));
+		RecoveredRuntime.ConfigureInstallerDownload(form, text, text2, EncodedStringTable.DecodeString(14162) + (RecoveredRuntime.Is32BitImage(peImage) ? EncodedStringTable.DecodeString(14180) : EncodedStringTable.DecodeString(14175)) + EncodedStringTable.DecodeString(93));
 		form.ShowDialog();
 	}
 
-	internal static ManualMapInjector.Enum44 BuildManualMapOptions(ManualMapInjector class89_0)
+	internal static ManualMapInjector.ManualMapOptions BuildManualMapOptions(ManualMapInjector manualMapInjector)
 	{
-		ManualMapInjector.Enum44 @enum = (ManualMapInjector.Enum44)0;
-		if (class89_0.GetDisableExceptionSupport())
+		ManualMapInjector.ManualMapOptions @enum = (ManualMapInjector.ManualMapOptions)0;
+		if (manualMapInjector.GetDisableExceptionSupport())
 		{
-			@enum |= ManualMapInjector.Enum44.flag_1;
+			@enum |= ManualMapInjector.ManualMapOptions.DisableExceptionSupport;
 		}
-		if (class89_0.GetErasePeHeaders())
+		if (manualMapInjector.GetErasePeHeaders())
 		{
-			@enum |= ManualMapInjector.Enum44.flag_2;
+			@enum |= ManualMapInjector.ManualMapOptions.ErasePeHeaders;
 		}
-		if (class89_0.GetManualResolveImports())
+		if (manualMapInjector.GetManualResolveImports())
 		{
-			@enum |= ManualMapInjector.Enum44.flag_4;
+			@enum |= ManualMapInjector.ManualMapOptions.ResolveImportsManually;
 		}
-		if (class89_0.GetDisableSehValidation())
+		if (manualMapInjector.GetDisableSehValidation())
 		{
-			@enum |= ManualMapInjector.Enum44.flag_0;
+			@enum |= ManualMapInjector.ManualMapOptions.DisableSehValidation;
 		}
 		return @enum;
 	}
 
-	internal static PeImage ReadRemoteModuleImage(ProcessModuleInfo gclass1_0)
+	internal static PeImage ReadRemoteModuleImage(ProcessModuleInfo processModuleInfo)
 	{
 		PeImage result;
-		using (ProcessMemoryStream stream = new ProcessMemoryStream(gclass1_0.gclass2_0, gclass1_0.GetModuleBase(), ProcessMemoryAccess.const_0, (long)((ulong)gclass1_0.GetImageSize())))
+		using (ProcessMemoryStream stream = new ProcessMemoryStream(processModuleInfo.remoteProcess, processModuleInfo.GetModuleBase(), ProcessMemoryAccess.Read, (long)((ulong)processModuleInfo.GetImageSize())))
 		{
-			result = PeImageReader.ReadFullImage(stream, false, PeImageLayout.const_1);
+			result = PeImageReader.ReadFullImage(stream, false, PeImageLayout.Memory);
 		}
 		return result;
 	}
@@ -650,7 +650,7 @@ public sealed partial class RecoveredRuntime
 		mismatchMessage = null;
 		bool moduleIs32Bit;
 		using (FileStream stream = new FileStream(modulePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-		using (PeImage module = PeImportReader.ReadImports(stream, modulePath, bool_0: false, PeImageLayout.const_0))
+		using (PeImage module = PeImportReader.ReadImports(stream, modulePath, flag: false, PeImageLayout.File))
 		{
 			moduleIs32Bit = Is32BitImage(module);
 		}
@@ -755,282 +755,282 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void SkipBytes(BoundsCheckedBinaryReader class5_0, int int_0)
+	internal static void SkipBytes(BoundsCheckedBinaryReader boundsCheckedBinaryReader, int intValue)
 	{
-		class5_0.BaseStream.Position += int_0;
+		boundsCheckedBinaryReader.BaseStream.Position += intValue;
 	}
 
-	internal static BaseRelocationDirectory ReadBaseRelocationDirectory(PeImage class154_0, BoundsCheckedBinaryReader class5_0)
+	internal static BaseRelocationDirectory ReadBaseRelocationDirectory(PeImage peImage, BoundsCheckedBinaryReader boundsCheckedBinaryReader)
 	{
-		DataDirectory @class = class154_0.GetHeaders().GetOptionalHeader().GetDataDirectories()[5];
+		DataDirectory @class = peImage.GetHeaders().GetOptionalHeader().GetDataDirectories()[5];
 		if (@class.GetVirtualAddress() == 0u || @class.GetSize() == 0u)
 		{
 			return null;
 		}
-		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, @class.GetVirtualAddress());
-		if (num == -1L || !class5_0.IsValidOffset(num))
+		long num = RecoveredRuntime.MapRvaToFileOffset(peImage, @class.GetVirtualAddress());
+		if (num == -1L || !boundsCheckedBinaryReader.IsValidOffset(num))
 		{
 			return null;
 		}
-		if (num + (long)((ulong)@class.GetSize()) > class5_0.BaseStream.Length)
+		if (num + (long)((ulong)@class.GetSize()) > boundsCheckedBinaryReader.BaseStream.Length)
 		{
 			return null;
 		}
-		RecoveredRuntime.SeekReader(class5_0, num);
-		return new BaseRelocationDirectory(class5_0, class154_0);
+		RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num);
+		return new BaseRelocationDirectory(boundsCheckedBinaryReader, peImage);
 	}
 
-	internal static void InitializeManualMapOptionsForm(ManualMapOptionsForm form2_0)
+	internal static void InitializeManualMapOptionsForm(ManualMapOptionsForm manualMapOptionsForm)
 	{
 		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(ManualMapOptionsForm));
-		form2_0.groupBox_0 = new GroupBox();
-		form2_0.checkBox_3 = new CheckBox();
-		form2_0.checkBox_0 = new CheckBox();
-		form2_0.checkBox_1 = new CheckBox();
-		form2_0.groupBox_1 = new GroupBox();
-		form2_0.checkBox_2 = new CheckBox();
-		form2_0.groupBox_0.SuspendLayout();
-		form2_0.groupBox_1.SuspendLayout();
-		form2_0.SuspendLayout();
-		form2_0.groupBox_0.Controls.Add(form2_0.checkBox_3);
-		form2_0.groupBox_0.Controls.Add(form2_0.checkBox_0);
-		form2_0.groupBox_0.Controls.Add(form2_0.checkBox_1);
-		form2_0.groupBox_0.Location = new Point(12, 65);
-		form2_0.groupBox_0.Name = EncodedStringTable.DecodeString(14653);
-		form2_0.groupBox_0.Size = new Size(199, 93);
-		form2_0.groupBox_0.TabIndex = 1;
-		form2_0.groupBox_0.TabStop = false;
-		form2_0.groupBox_0.Text = EncodedStringTable.DecodeString(14678);
-		form2_0.checkBox_3.AutoSize = true;
-		form2_0.checkBox_3.Location = new Point(10, 67);
-		form2_0.checkBox_3.Name = EncodedStringTable.DecodeString(14703);
-		form2_0.checkBox_3.Size = new Size(184, 17);
-		form2_0.checkBox_3.TabIndex = 2;
-		form2_0.checkBox_3.Text = EncodedStringTable.DecodeString(14748);
-		form2_0.checkBox_3.UseVisualStyleBackColor = true;
-		form2_0.checkBox_3.CheckedChanged += form2_0.OnDisableSehValidationChanged;
-		form2_0.checkBox_0.AutoSize = true;
-		form2_0.checkBox_0.Location = new Point(10, 44);
-		form2_0.checkBox_0.Name = EncodedStringTable.DecodeString(14789);
-		form2_0.checkBox_0.Size = new Size(161, 17);
-		form2_0.checkBox_0.TabIndex = 1;
-		form2_0.checkBox_0.Text = EncodedStringTable.DecodeString(14826);
-		form2_0.checkBox_0.UseVisualStyleBackColor = true;
-		form2_0.checkBox_0.CheckedChanged += form2_0.OnDisableExceptionSupportChanged;
-		form2_0.checkBox_1.AutoSize = true;
-		form2_0.checkBox_1.Location = new Point(10, 21);
-		form2_0.checkBox_1.Name = EncodedStringTable.DecodeString(14863);
-		form2_0.checkBox_1.Size = new Size(140, 17);
-		form2_0.checkBox_1.TabIndex = 0;
-		form2_0.checkBox_1.Text = EncodedStringTable.DecodeString(14896);
-		form2_0.checkBox_1.UseVisualStyleBackColor = true;
-		form2_0.checkBox_1.CheckedChanged += form2_0.OnManualResolveImportsChanged;
-		form2_0.groupBox_1.Controls.Add(form2_0.checkBox_2);
-		form2_0.groupBox_1.Location = new Point(12, 12);
-		form2_0.groupBox_1.Name = EncodedStringTable.DecodeString(14925);
-		form2_0.groupBox_1.Size = new Size(199, 47);
-		form2_0.groupBox_1.TabIndex = 2;
-		form2_0.groupBox_1.TabStop = false;
-		form2_0.groupBox_1.Text = EncodedStringTable.DecodeString(14946);
-		form2_0.checkBox_2.AutoSize = true;
-		form2_0.checkBox_2.Location = new Point(10, 21);
-		form2_0.checkBox_2.Name = EncodedStringTable.DecodeString(14959);
-		form2_0.checkBox_2.Size = new Size(173, 17);
-		form2_0.checkBox_2.TabIndex = 1;
-		form2_0.checkBox_2.Text = EncodedStringTable.DecodeString(14992);
-		form2_0.checkBox_2.UseVisualStyleBackColor = true;
-		form2_0.checkBox_2.CheckedChanged += form2_0.OnHideFromDebuggerChanged;
-		form2_0.AutoScaleDimensions = new SizeF(96f, 96f);
-		form2_0.AutoScaleMode = AutoScaleMode.Dpi;
-		form2_0.ClientSize = new Size(223, 170);
-		form2_0.Controls.Add(form2_0.groupBox_1);
-		form2_0.Controls.Add(form2_0.groupBox_0);
-		form2_0.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
-		form2_0.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-		form2_0.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
-		form2_0.Name = EncodedStringTable.DecodeString(15029);
-		form2_0.StartPosition = FormStartPosition.CenterParent;
-		form2_0.Text = EncodedStringTable.DecodeString(15058);
-		form2_0.groupBox_0.ResumeLayout(false);
-		form2_0.groupBox_0.PerformLayout();
-		form2_0.groupBox_1.ResumeLayout(false);
-		form2_0.groupBox_1.PerformLayout();
-		form2_0.ResumeLayout(false);
+		manualMapOptionsForm.groupBox = new GroupBox();
+		manualMapOptionsForm.checkBox4 = new CheckBox();
+		manualMapOptionsForm.checkBox = new CheckBox();
+		manualMapOptionsForm.checkBox2 = new CheckBox();
+		manualMapOptionsForm.groupBox2 = new GroupBox();
+		manualMapOptionsForm.checkBox3 = new CheckBox();
+		manualMapOptionsForm.groupBox.SuspendLayout();
+		manualMapOptionsForm.groupBox2.SuspendLayout();
+		manualMapOptionsForm.SuspendLayout();
+		manualMapOptionsForm.groupBox.Controls.Add(manualMapOptionsForm.checkBox4);
+		manualMapOptionsForm.groupBox.Controls.Add(manualMapOptionsForm.checkBox);
+		manualMapOptionsForm.groupBox.Controls.Add(manualMapOptionsForm.checkBox2);
+		manualMapOptionsForm.groupBox.Location = new Point(12, 65);
+		manualMapOptionsForm.groupBox.Name = EncodedStringTable.DecodeString(14653);
+		manualMapOptionsForm.groupBox.Size = new Size(199, 93);
+		manualMapOptionsForm.groupBox.TabIndex = 1;
+		manualMapOptionsForm.groupBox.TabStop = false;
+		manualMapOptionsForm.groupBox.Text = EncodedStringTable.DecodeString(14678);
+		manualMapOptionsForm.checkBox4.AutoSize = true;
+		manualMapOptionsForm.checkBox4.Location = new Point(10, 67);
+		manualMapOptionsForm.checkBox4.Name = EncodedStringTable.DecodeString(14703);
+		manualMapOptionsForm.checkBox4.Size = new Size(184, 17);
+		manualMapOptionsForm.checkBox4.TabIndex = 2;
+		manualMapOptionsForm.checkBox4.Text = EncodedStringTable.DecodeString(14748);
+		manualMapOptionsForm.checkBox4.UseVisualStyleBackColor = true;
+		manualMapOptionsForm.checkBox4.CheckedChanged += manualMapOptionsForm.OnDisableSehValidationChanged;
+		manualMapOptionsForm.checkBox.AutoSize = true;
+		manualMapOptionsForm.checkBox.Location = new Point(10, 44);
+		manualMapOptionsForm.checkBox.Name = EncodedStringTable.DecodeString(14789);
+		manualMapOptionsForm.checkBox.Size = new Size(161, 17);
+		manualMapOptionsForm.checkBox.TabIndex = 1;
+		manualMapOptionsForm.checkBox.Text = EncodedStringTable.DecodeString(14826);
+		manualMapOptionsForm.checkBox.UseVisualStyleBackColor = true;
+		manualMapOptionsForm.checkBox.CheckedChanged += manualMapOptionsForm.OnDisableExceptionSupportChanged;
+		manualMapOptionsForm.checkBox2.AutoSize = true;
+		manualMapOptionsForm.checkBox2.Location = new Point(10, 21);
+		manualMapOptionsForm.checkBox2.Name = EncodedStringTable.DecodeString(14863);
+		manualMapOptionsForm.checkBox2.Size = new Size(140, 17);
+		manualMapOptionsForm.checkBox2.TabIndex = 0;
+		manualMapOptionsForm.checkBox2.Text = EncodedStringTable.DecodeString(14896);
+		manualMapOptionsForm.checkBox2.UseVisualStyleBackColor = true;
+		manualMapOptionsForm.checkBox2.CheckedChanged += manualMapOptionsForm.OnManualResolveImportsChanged;
+		manualMapOptionsForm.groupBox2.Controls.Add(manualMapOptionsForm.checkBox3);
+		manualMapOptionsForm.groupBox2.Location = new Point(12, 12);
+		manualMapOptionsForm.groupBox2.Name = EncodedStringTable.DecodeString(14925);
+		manualMapOptionsForm.groupBox2.Size = new Size(199, 47);
+		manualMapOptionsForm.groupBox2.TabIndex = 2;
+		manualMapOptionsForm.groupBox2.TabStop = false;
+		manualMapOptionsForm.groupBox2.Text = EncodedStringTable.DecodeString(14946);
+		manualMapOptionsForm.checkBox3.AutoSize = true;
+		manualMapOptionsForm.checkBox3.Location = new Point(10, 21);
+		manualMapOptionsForm.checkBox3.Name = EncodedStringTable.DecodeString(14959);
+		manualMapOptionsForm.checkBox3.Size = new Size(173, 17);
+		manualMapOptionsForm.checkBox3.TabIndex = 1;
+		manualMapOptionsForm.checkBox3.Text = EncodedStringTable.DecodeString(14992);
+		manualMapOptionsForm.checkBox3.UseVisualStyleBackColor = true;
+		manualMapOptionsForm.checkBox3.CheckedChanged += manualMapOptionsForm.OnHideFromDebuggerChanged;
+		manualMapOptionsForm.AutoScaleDimensions = new SizeF(96f, 96f);
+		manualMapOptionsForm.AutoScaleMode = AutoScaleMode.Dpi;
+		manualMapOptionsForm.ClientSize = new Size(223, 170);
+		manualMapOptionsForm.Controls.Add(manualMapOptionsForm.groupBox2);
+		manualMapOptionsForm.Controls.Add(manualMapOptionsForm.groupBox);
+		manualMapOptionsForm.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
+		manualMapOptionsForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+		manualMapOptionsForm.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
+		manualMapOptionsForm.Name = EncodedStringTable.DecodeString(15029);
+		manualMapOptionsForm.StartPosition = FormStartPosition.CenterParent;
+		manualMapOptionsForm.Text = EncodedStringTable.DecodeString(15058);
+		manualMapOptionsForm.groupBox.ResumeLayout(false);
+		manualMapOptionsForm.groupBox.PerformLayout();
+		manualMapOptionsForm.groupBox2.ResumeLayout(false);
+		manualMapOptionsForm.groupBox2.PerformLayout();
+		manualMapOptionsForm.ResumeLayout(false);
 	}
 
-	internal static void InitializeAdvancedScrambleSettingsForm(AdvancedScrambleSettingsForm gform1_0)
+	internal static void InitializeAdvancedScrambleSettingsForm(AdvancedScrambleSettingsForm advancedScrambleSettingsForm)
 	{
 		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(AdvancedScrambleSettingsForm));
-		gform1_0.groupBox_0 = new GroupBox();
-		gform1_0.checkBox_1 = new CheckBox();
-		gform1_0.checkBox_0 = new CheckBox();
-		gform1_0.groupBox_1 = new GroupBox();
-		gform1_0.checkBox_6 = new CheckBox();
-		gform1_0.checkBox_5 = new CheckBox();
-		gform1_0.checkBox_4 = new CheckBox();
-		gform1_0.checkBox_2 = new CheckBox();
-		gform1_0.checkBox_3 = new CheckBox();
-		gform1_0.groupBox_2 = new GroupBox();
-		gform1_0.checkBox_10 = new CheckBox();
-		gform1_0.checkBox_9 = new CheckBox();
-		gform1_0.checkBox_7 = new CheckBox();
-		gform1_0.checkBox_8 = new CheckBox();
-		gform1_0.checkBox_12 = new CheckBox();
-		gform1_0.checkBox_11 = new CheckBox();
-		gform1_0.groupBox_0.SuspendLayout();
-		gform1_0.groupBox_1.SuspendLayout();
-		gform1_0.groupBox_2.SuspendLayout();
-		gform1_0.SuspendLayout();
-		gform1_0.groupBox_0.Controls.Add(gform1_0.checkBox_1);
-		gform1_0.groupBox_0.Controls.Add(gform1_0.checkBox_0);
-		gform1_0.groupBox_0.Location = new Point(12, 12);
-		gform1_0.groupBox_0.Name = EncodedStringTable.DecodeString(15083);
-		gform1_0.groupBox_0.Size = new Size(187, 68);
-		gform1_0.groupBox_0.TabIndex = 0;
-		gform1_0.groupBox_0.TabStop = false;
-		gform1_0.groupBox_0.Text = EncodedStringTable.DecodeString(15104);
-		gform1_0.checkBox_1.AutoSize = true;
-		gform1_0.checkBox_1.Location = new Point(9, 44);
-		gform1_0.checkBox_1.Name = EncodedStringTable.DecodeString(15125);
-		gform1_0.checkBox_1.Size = new Size(132, 17);
-		gform1_0.checkBox_1.TabIndex = 1;
-		gform1_0.checkBox_1.Text = EncodedStringTable.DecodeString(15162);
-		gform1_0.checkBox_1.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_0.AutoSize = true;
-		gform1_0.checkBox_0.Location = new Point(9, 21);
-		gform1_0.checkBox_0.Name = EncodedStringTable.DecodeString(15191);
-		gform1_0.checkBox_0.Size = new Size(142, 17);
-		gform1_0.checkBox_0.TabIndex = 0;
-		gform1_0.checkBox_0.Text = EncodedStringTable.DecodeString(15224);
-		gform1_0.checkBox_0.UseVisualStyleBackColor = true;
-		gform1_0.groupBox_1.Controls.Add(gform1_0.checkBox_11);
-		gform1_0.groupBox_1.Controls.Add(gform1_0.checkBox_12);
-		gform1_0.groupBox_1.Controls.Add(gform1_0.checkBox_6);
-		gform1_0.groupBox_1.Controls.Add(gform1_0.checkBox_5);
-		gform1_0.groupBox_1.Controls.Add(gform1_0.checkBox_4);
-		gform1_0.groupBox_1.Controls.Add(gform1_0.checkBox_2);
-		gform1_0.groupBox_1.Controls.Add(gform1_0.checkBox_3);
-		gform1_0.groupBox_1.Location = new Point(12, 86);
-		gform1_0.groupBox_1.Name = EncodedStringTable.DecodeString(15257);
-		gform1_0.groupBox_1.Size = new Size(187, 186);
-		gform1_0.groupBox_1.TabIndex = 1;
-		gform1_0.groupBox_1.TabStop = false;
-		gform1_0.groupBox_1.Text = EncodedStringTable.DecodeString(15282);
-		gform1_0.checkBox_6.AutoSize = true;
-		gform1_0.checkBox_6.Location = new Point(9, 159);
-		gform1_0.checkBox_6.Name = EncodedStringTable.DecodeString(15303);
-		gform1_0.checkBox_6.Size = new Size(141, 17);
-		gform1_0.checkBox_6.TabIndex = 4;
-		gform1_0.checkBox_6.Text = EncodedStringTable.DecodeString(15336);
-		gform1_0.checkBox_6.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_5.AutoSize = true;
-		gform1_0.checkBox_5.Location = new Point(9, 90);
-		gform1_0.checkBox_5.Name = EncodedStringTable.DecodeString(15365);
-		gform1_0.checkBox_5.Size = new Size(112, 17);
-		gform1_0.checkBox_5.TabIndex = 3;
-		gform1_0.checkBox_5.Text = EncodedStringTable.DecodeString(15398);
-		gform1_0.checkBox_5.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_4.AutoSize = true;
-		gform1_0.checkBox_4.Location = new Point(9, 67);
-		gform1_0.checkBox_4.Name = EncodedStringTable.DecodeString(15419);
-		gform1_0.checkBox_4.Size = new Size(139, 17);
-		gform1_0.checkBox_4.TabIndex = 2;
-		gform1_0.checkBox_4.Text = EncodedStringTable.DecodeString(15444);
-		gform1_0.checkBox_4.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_2.AutoSize = true;
-		gform1_0.checkBox_2.Location = new Point(9, 44);
-		gform1_0.checkBox_2.Name = EncodedStringTable.DecodeString(15473);
-		gform1_0.checkBox_2.Size = new Size(116, 17);
-		gform1_0.checkBox_2.TabIndex = 1;
-		gform1_0.checkBox_2.Text = EncodedStringTable.DecodeString(15506);
-		gform1_0.checkBox_2.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_3.AutoSize = true;
-		gform1_0.checkBox_3.Location = new Point(9, 21);
-		gform1_0.checkBox_3.Name = EncodedStringTable.DecodeString(15531);
-		gform1_0.checkBox_3.Size = new Size(128, 17);
-		gform1_0.checkBox_3.TabIndex = 0;
-		gform1_0.checkBox_3.Text = EncodedStringTable.DecodeString(15564);
-		gform1_0.checkBox_3.UseVisualStyleBackColor = true;
-		gform1_0.groupBox_2.Controls.Add(gform1_0.checkBox_10);
-		gform1_0.groupBox_2.Controls.Add(gform1_0.checkBox_9);
-		gform1_0.groupBox_2.Controls.Add(gform1_0.checkBox_7);
-		gform1_0.groupBox_2.Controls.Add(gform1_0.checkBox_8);
-		gform1_0.groupBox_2.Location = new Point(12, 278);
-		gform1_0.groupBox_2.Name = EncodedStringTable.DecodeString(15593);
-		gform1_0.groupBox_2.Size = new Size(187, 120);
-		gform1_0.groupBox_2.TabIndex = 2;
-		gform1_0.groupBox_2.TabStop = false;
-		gform1_0.groupBox_2.Text = EncodedStringTable.DecodeString(15626);
-		gform1_0.checkBox_10.AutoSize = true;
-		gform1_0.checkBox_10.Location = new Point(9, 44);
-		gform1_0.checkBox_10.Name = EncodedStringTable.DecodeString(15651);
-		gform1_0.checkBox_10.Size = new Size(129, 17);
-		gform1_0.checkBox_10.TabIndex = 6;
-		gform1_0.checkBox_10.Text = EncodedStringTable.DecodeString(15684);
-		gform1_0.checkBox_10.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_9.AutoSize = true;
-		gform1_0.checkBox_9.Location = new Point(9, 90);
-		gform1_0.checkBox_9.Name = EncodedStringTable.DecodeString(15709);
-		gform1_0.checkBox_9.Size = new Size(169, 17);
-		gform1_0.checkBox_9.TabIndex = 5;
-		gform1_0.checkBox_9.Text = EncodedStringTable.DecodeString(15754);
-		gform1_0.checkBox_9.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_7.AutoSize = true;
-		gform1_0.checkBox_7.Location = new Point(9, 67);
-		gform1_0.checkBox_7.Name = EncodedStringTable.DecodeString(15791);
-		gform1_0.checkBox_7.Size = new Size(138, 17);
-		gform1_0.checkBox_7.TabIndex = 4;
-		gform1_0.checkBox_7.Text = EncodedStringTable.DecodeString(15828);
-		gform1_0.checkBox_7.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_8.AutoSize = true;
-		gform1_0.checkBox_8.Location = new Point(9, 21);
-		gform1_0.checkBox_8.Name = EncodedStringTable.DecodeString(15857);
-		gform1_0.checkBox_8.Size = new Size(128, 17);
-		gform1_0.checkBox_8.TabIndex = 3;
-		gform1_0.checkBox_8.Text = EncodedStringTable.DecodeString(15894);
-		gform1_0.checkBox_8.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_12.AutoSize = true;
-		gform1_0.checkBox_12.Location = new Point(9, 113);
-		gform1_0.checkBox_12.Name = EncodedStringTable.DecodeString(15923);
-		gform1_0.checkBox_12.Size = new Size(133, 17);
-		gform1_0.checkBox_12.TabIndex = 5;
-		gform1_0.checkBox_12.Text = EncodedStringTable.DecodeString(15960);
-		gform1_0.checkBox_12.UseVisualStyleBackColor = true;
-		gform1_0.checkBox_11.AutoSize = true;
-		gform1_0.checkBox_11.Location = new Point(9, 136);
-		gform1_0.checkBox_11.Name = EncodedStringTable.DecodeString(15989);
-		gform1_0.checkBox_11.Size = new Size(165, 17);
-		gform1_0.checkBox_11.TabIndex = 6;
-		gform1_0.checkBox_11.Text = EncodedStringTable.DecodeString(16030);
-		gform1_0.checkBox_11.UseVisualStyleBackColor = true;
-		gform1_0.AutoScaleDimensions = new SizeF(96f, 96f);
-		gform1_0.AutoScaleMode = AutoScaleMode.Dpi;
-		gform1_0.ClientSize = new Size(213, 411);
-		gform1_0.Controls.Add(gform1_0.groupBox_2);
-		gform1_0.Controls.Add(gform1_0.groupBox_1);
-		gform1_0.Controls.Add(gform1_0.groupBox_0);
-		gform1_0.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
-		gform1_0.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-		gform1_0.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
-		gform1_0.Name = EncodedStringTable.DecodeString(16071);
-		gform1_0.StartPosition = FormStartPosition.CenterParent;
-		gform1_0.Text = EncodedStringTable.DecodeString(16100);
-		gform1_0.groupBox_0.ResumeLayout(false);
-		gform1_0.groupBox_0.PerformLayout();
-		gform1_0.groupBox_1.ResumeLayout(false);
-		gform1_0.groupBox_1.PerformLayout();
-		gform1_0.groupBox_2.ResumeLayout(false);
-		gform1_0.groupBox_2.PerformLayout();
-		gform1_0.ResumeLayout(false);
+		advancedScrambleSettingsForm.groupBox = new GroupBox();
+		advancedScrambleSettingsForm.checkBox2 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox = new CheckBox();
+		advancedScrambleSettingsForm.groupBox2 = new GroupBox();
+		advancedScrambleSettingsForm.checkBox7 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox6 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox5 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox3 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox4 = new CheckBox();
+		advancedScrambleSettingsForm.groupBox3 = new GroupBox();
+		advancedScrambleSettingsForm.checkBox11 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox10 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox8 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox9 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox13 = new CheckBox();
+		advancedScrambleSettingsForm.checkBox12 = new CheckBox();
+		advancedScrambleSettingsForm.groupBox.SuspendLayout();
+		advancedScrambleSettingsForm.groupBox2.SuspendLayout();
+		advancedScrambleSettingsForm.groupBox3.SuspendLayout();
+		advancedScrambleSettingsForm.SuspendLayout();
+		advancedScrambleSettingsForm.groupBox.Controls.Add(advancedScrambleSettingsForm.checkBox2);
+		advancedScrambleSettingsForm.groupBox.Controls.Add(advancedScrambleSettingsForm.checkBox);
+		advancedScrambleSettingsForm.groupBox.Location = new Point(12, 12);
+		advancedScrambleSettingsForm.groupBox.Name = EncodedStringTable.DecodeString(15083);
+		advancedScrambleSettingsForm.groupBox.Size = new Size(187, 68);
+		advancedScrambleSettingsForm.groupBox.TabIndex = 0;
+		advancedScrambleSettingsForm.groupBox.TabStop = false;
+		advancedScrambleSettingsForm.groupBox.Text = EncodedStringTable.DecodeString(15104);
+		advancedScrambleSettingsForm.checkBox2.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox2.Location = new Point(9, 44);
+		advancedScrambleSettingsForm.checkBox2.Name = EncodedStringTable.DecodeString(15125);
+		advancedScrambleSettingsForm.checkBox2.Size = new Size(132, 17);
+		advancedScrambleSettingsForm.checkBox2.TabIndex = 1;
+		advancedScrambleSettingsForm.checkBox2.Text = EncodedStringTable.DecodeString(15162);
+		advancedScrambleSettingsForm.checkBox2.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox.Location = new Point(9, 21);
+		advancedScrambleSettingsForm.checkBox.Name = EncodedStringTable.DecodeString(15191);
+		advancedScrambleSettingsForm.checkBox.Size = new Size(142, 17);
+		advancedScrambleSettingsForm.checkBox.TabIndex = 0;
+		advancedScrambleSettingsForm.checkBox.Text = EncodedStringTable.DecodeString(15224);
+		advancedScrambleSettingsForm.checkBox.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.groupBox2.Controls.Add(advancedScrambleSettingsForm.checkBox12);
+		advancedScrambleSettingsForm.groupBox2.Controls.Add(advancedScrambleSettingsForm.checkBox13);
+		advancedScrambleSettingsForm.groupBox2.Controls.Add(advancedScrambleSettingsForm.checkBox7);
+		advancedScrambleSettingsForm.groupBox2.Controls.Add(advancedScrambleSettingsForm.checkBox6);
+		advancedScrambleSettingsForm.groupBox2.Controls.Add(advancedScrambleSettingsForm.checkBox5);
+		advancedScrambleSettingsForm.groupBox2.Controls.Add(advancedScrambleSettingsForm.checkBox3);
+		advancedScrambleSettingsForm.groupBox2.Controls.Add(advancedScrambleSettingsForm.checkBox4);
+		advancedScrambleSettingsForm.groupBox2.Location = new Point(12, 86);
+		advancedScrambleSettingsForm.groupBox2.Name = EncodedStringTable.DecodeString(15257);
+		advancedScrambleSettingsForm.groupBox2.Size = new Size(187, 186);
+		advancedScrambleSettingsForm.groupBox2.TabIndex = 1;
+		advancedScrambleSettingsForm.groupBox2.TabStop = false;
+		advancedScrambleSettingsForm.groupBox2.Text = EncodedStringTable.DecodeString(15282);
+		advancedScrambleSettingsForm.checkBox7.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox7.Location = new Point(9, 159);
+		advancedScrambleSettingsForm.checkBox7.Name = EncodedStringTable.DecodeString(15303);
+		advancedScrambleSettingsForm.checkBox7.Size = new Size(141, 17);
+		advancedScrambleSettingsForm.checkBox7.TabIndex = 4;
+		advancedScrambleSettingsForm.checkBox7.Text = EncodedStringTable.DecodeString(15336);
+		advancedScrambleSettingsForm.checkBox7.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox6.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox6.Location = new Point(9, 90);
+		advancedScrambleSettingsForm.checkBox6.Name = EncodedStringTable.DecodeString(15365);
+		advancedScrambleSettingsForm.checkBox6.Size = new Size(112, 17);
+		advancedScrambleSettingsForm.checkBox6.TabIndex = 3;
+		advancedScrambleSettingsForm.checkBox6.Text = EncodedStringTable.DecodeString(15398);
+		advancedScrambleSettingsForm.checkBox6.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox5.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox5.Location = new Point(9, 67);
+		advancedScrambleSettingsForm.checkBox5.Name = EncodedStringTable.DecodeString(15419);
+		advancedScrambleSettingsForm.checkBox5.Size = new Size(139, 17);
+		advancedScrambleSettingsForm.checkBox5.TabIndex = 2;
+		advancedScrambleSettingsForm.checkBox5.Text = EncodedStringTable.DecodeString(15444);
+		advancedScrambleSettingsForm.checkBox5.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox3.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox3.Location = new Point(9, 44);
+		advancedScrambleSettingsForm.checkBox3.Name = EncodedStringTable.DecodeString(15473);
+		advancedScrambleSettingsForm.checkBox3.Size = new Size(116, 17);
+		advancedScrambleSettingsForm.checkBox3.TabIndex = 1;
+		advancedScrambleSettingsForm.checkBox3.Text = EncodedStringTable.DecodeString(15506);
+		advancedScrambleSettingsForm.checkBox3.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox4.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox4.Location = new Point(9, 21);
+		advancedScrambleSettingsForm.checkBox4.Name = EncodedStringTable.DecodeString(15531);
+		advancedScrambleSettingsForm.checkBox4.Size = new Size(128, 17);
+		advancedScrambleSettingsForm.checkBox4.TabIndex = 0;
+		advancedScrambleSettingsForm.checkBox4.Text = EncodedStringTable.DecodeString(15564);
+		advancedScrambleSettingsForm.checkBox4.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.groupBox3.Controls.Add(advancedScrambleSettingsForm.checkBox11);
+		advancedScrambleSettingsForm.groupBox3.Controls.Add(advancedScrambleSettingsForm.checkBox10);
+		advancedScrambleSettingsForm.groupBox3.Controls.Add(advancedScrambleSettingsForm.checkBox8);
+		advancedScrambleSettingsForm.groupBox3.Controls.Add(advancedScrambleSettingsForm.checkBox9);
+		advancedScrambleSettingsForm.groupBox3.Location = new Point(12, 278);
+		advancedScrambleSettingsForm.groupBox3.Name = EncodedStringTable.DecodeString(15593);
+		advancedScrambleSettingsForm.groupBox3.Size = new Size(187, 120);
+		advancedScrambleSettingsForm.groupBox3.TabIndex = 2;
+		advancedScrambleSettingsForm.groupBox3.TabStop = false;
+		advancedScrambleSettingsForm.groupBox3.Text = EncodedStringTable.DecodeString(15626);
+		advancedScrambleSettingsForm.checkBox11.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox11.Location = new Point(9, 44);
+		advancedScrambleSettingsForm.checkBox11.Name = EncodedStringTable.DecodeString(15651);
+		advancedScrambleSettingsForm.checkBox11.Size = new Size(129, 17);
+		advancedScrambleSettingsForm.checkBox11.TabIndex = 6;
+		advancedScrambleSettingsForm.checkBox11.Text = EncodedStringTable.DecodeString(15684);
+		advancedScrambleSettingsForm.checkBox11.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox10.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox10.Location = new Point(9, 90);
+		advancedScrambleSettingsForm.checkBox10.Name = EncodedStringTable.DecodeString(15709);
+		advancedScrambleSettingsForm.checkBox10.Size = new Size(169, 17);
+		advancedScrambleSettingsForm.checkBox10.TabIndex = 5;
+		advancedScrambleSettingsForm.checkBox10.Text = EncodedStringTable.DecodeString(15754);
+		advancedScrambleSettingsForm.checkBox10.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox8.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox8.Location = new Point(9, 67);
+		advancedScrambleSettingsForm.checkBox8.Name = EncodedStringTable.DecodeString(15791);
+		advancedScrambleSettingsForm.checkBox8.Size = new Size(138, 17);
+		advancedScrambleSettingsForm.checkBox8.TabIndex = 4;
+		advancedScrambleSettingsForm.checkBox8.Text = EncodedStringTable.DecodeString(15828);
+		advancedScrambleSettingsForm.checkBox8.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox9.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox9.Location = new Point(9, 21);
+		advancedScrambleSettingsForm.checkBox9.Name = EncodedStringTable.DecodeString(15857);
+		advancedScrambleSettingsForm.checkBox9.Size = new Size(128, 17);
+		advancedScrambleSettingsForm.checkBox9.TabIndex = 3;
+		advancedScrambleSettingsForm.checkBox9.Text = EncodedStringTable.DecodeString(15894);
+		advancedScrambleSettingsForm.checkBox9.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox13.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox13.Location = new Point(9, 113);
+		advancedScrambleSettingsForm.checkBox13.Name = EncodedStringTable.DecodeString(15923);
+		advancedScrambleSettingsForm.checkBox13.Size = new Size(133, 17);
+		advancedScrambleSettingsForm.checkBox13.TabIndex = 5;
+		advancedScrambleSettingsForm.checkBox13.Text = EncodedStringTable.DecodeString(15960);
+		advancedScrambleSettingsForm.checkBox13.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.checkBox12.AutoSize = true;
+		advancedScrambleSettingsForm.checkBox12.Location = new Point(9, 136);
+		advancedScrambleSettingsForm.checkBox12.Name = EncodedStringTable.DecodeString(15989);
+		advancedScrambleSettingsForm.checkBox12.Size = new Size(165, 17);
+		advancedScrambleSettingsForm.checkBox12.TabIndex = 6;
+		advancedScrambleSettingsForm.checkBox12.Text = EncodedStringTable.DecodeString(16030);
+		advancedScrambleSettingsForm.checkBox12.UseVisualStyleBackColor = true;
+		advancedScrambleSettingsForm.AutoScaleDimensions = new SizeF(96f, 96f);
+		advancedScrambleSettingsForm.AutoScaleMode = AutoScaleMode.Dpi;
+		advancedScrambleSettingsForm.ClientSize = new Size(213, 411);
+		advancedScrambleSettingsForm.Controls.Add(advancedScrambleSettingsForm.groupBox3);
+		advancedScrambleSettingsForm.Controls.Add(advancedScrambleSettingsForm.groupBox2);
+		advancedScrambleSettingsForm.Controls.Add(advancedScrambleSettingsForm.groupBox);
+		advancedScrambleSettingsForm.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
+		advancedScrambleSettingsForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+		advancedScrambleSettingsForm.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
+		advancedScrambleSettingsForm.Name = EncodedStringTable.DecodeString(16071);
+		advancedScrambleSettingsForm.StartPosition = FormStartPosition.CenterParent;
+		advancedScrambleSettingsForm.Text = EncodedStringTable.DecodeString(16100);
+		advancedScrambleSettingsForm.groupBox.ResumeLayout(false);
+		advancedScrambleSettingsForm.groupBox.PerformLayout();
+		advancedScrambleSettingsForm.groupBox2.ResumeLayout(false);
+		advancedScrambleSettingsForm.groupBox2.PerformLayout();
+		advancedScrambleSettingsForm.groupBox3.ResumeLayout(false);
+		advancedScrambleSettingsForm.groupBox3.PerformLayout();
+		advancedScrambleSettingsForm.ResumeLayout(false);
 	}
 
-	internal static void HandleLegacyNativeDependency(PeImage class154_0, string string_0, MainForm mainForm)
+	internal static void HandleLegacyNativeDependency(PeImage peImage, string text2, MainForm mainForm)
 	{
-		if (!string_0.StartsWith(EncodedStringTable.DecodeString(16137), StringComparison.OrdinalIgnoreCase))
+		if (!text2.StartsWith(EncodedStringTable.DecodeString(16137), StringComparison.OrdinalIgnoreCase))
 		{
 			return;
 		}
-		string text = RecoveredRuntime.ResolveImageDependencyPath(class154_0, string_0);
+		string text = RecoveredRuntime.ResolveImageDependencyPath(peImage, text2);
 		bool flag = false;
 		if (!string.IsNullOrEmpty(text))
 		{
@@ -1038,8 +1038,8 @@ public sealed partial class RecoveredRuntime
 			{
 				try
 				{
-					PeImage @class = PeImportReader.ReadImports(fileStream, text, false, PeImageLayout.const_0);
-					if (@class != null && RecoveredRuntime.Is32BitImage(@class) != RecoveredRuntime.Is32BitImage(class154_0))
+					PeImage @class = PeImportReader.ReadImports(fileStream, text, false, PeImageLayout.File);
+					if (@class != null && RecoveredRuntime.Is32BitImage(@class) != RecoveredRuntime.Is32BitImage(peImage))
 					{
 						flag = true;
 					}
@@ -1053,43 +1053,43 @@ public sealed partial class RecoveredRuntime
 				return;
 			}
 		}
-		bool flag2 = string_0.EndsWith(EncodedStringTable.DecodeString(16146), StringComparison.OrdinalIgnoreCase);
+		bool flag2 = text2.EndsWith(EncodedStringTable.DecodeString(16146), StringComparison.OrdinalIgnoreCase);
 		string string_;
-		if (!PlatformInfo.bool_0 || !RecoveredRuntime.Is32BitImage(class154_0))
+		if (!PlatformInfo.flag || !RecoveredRuntime.Is32BitImage(peImage))
 		{
-			string_ = PlatformInfo.string_1;
+			string_ = PlatformInfo.text2;
 		}
 		else
 		{
-			string_ = PlatformInfo.string_2;
+			string_ = PlatformInfo.text3;
 		}
-		if (!RecoveredRuntime.MatchesDependencyName(string_0, EncodedStringTable.DecodeString(16155)))
+		if (!RecoveredRuntime.MatchesDependencyName(text2, EncodedStringTable.DecodeString(16155)))
 		{
-			if (RecoveredRuntime.MatchesDependencyName(string_0, EncodedStringTable.DecodeString(16671)))
+			if (RecoveredRuntime.MatchesDependencyName(text2, EncodedStringTable.DecodeString(16671)))
 			{
-				string string_2 = EncodedStringTable.DecodeString(16676);
-				string string_3 = EncodedStringTable.DecodeString(16685);
-				string string_4 = EncodedStringTable.DecodeString(16843);
-				string string_5 = EncodedStringTable.DecodeString(17001);
-				RecoveredRuntime.HandleRuntimeDependencyInstallation(string_5, string_, string_0, class154_0, text, mainForm, string_3, flag2, string_4, flag, string_2);
+				string text3 = EncodedStringTable.DecodeString(16676);
+				string text4 = EncodedStringTable.DecodeString(16685);
+				string text5 = EncodedStringTable.DecodeString(16843);
+				string text6 = EncodedStringTable.DecodeString(17001);
+				RecoveredRuntime.HandleRuntimeDependencyInstallation(text6, string_, text2, peImage, text, mainForm, text4, flag2, text5, flag, text3);
 				return;
 			}
-			if (RecoveredRuntime.MatchesDependencyName(string_0, EncodedStringTable.DecodeString(17078)))
+			if (RecoveredRuntime.MatchesDependencyName(text2, EncodedStringTable.DecodeString(17078)))
 			{
-				string string_2 = EncodedStringTable.DecodeString(17083);
-				string string_3 = EncodedStringTable.DecodeString(17092);
-				string string_4 = EncodedStringTable.DecodeString(17250);
-				string string_5 = EncodedStringTable.DecodeString(17408);
-				RecoveredRuntime.HandleRuntimeDependencyInstallation(string_5, string_, string_0, class154_0, text, mainForm, string_3, flag2, string_4, flag, string_2);
+				string text7 = EncodedStringTable.DecodeString(17083);
+				string text8 = EncodedStringTable.DecodeString(17092);
+				string text9 = EncodedStringTable.DecodeString(17250);
+				string text10 = EncodedStringTable.DecodeString(17408);
+				RecoveredRuntime.HandleRuntimeDependencyInstallation(text10, string_, text2, peImage, text, mainForm, text8, flag2, text9, flag, text7);
 				return;
 			}
-			if (RecoveredRuntime.MatchesDependencyName(string_0, EncodedStringTable.DecodeString(17485)))
+			if (RecoveredRuntime.MatchesDependencyName(text2, EncodedStringTable.DecodeString(17485)))
 			{
-				string string_2 = EncodedStringTable.DecodeString(17490);
-				string string_3 = EncodedStringTable.DecodeString(17499);
-				string string_4 = EncodedStringTable.DecodeString(17657);
-				string string_5 = EncodedStringTable.DecodeString(17815);
-				RecoveredRuntime.HandleRuntimeDependencyInstallation(string_5, string_, string_0, class154_0, text, mainForm, string_3, flag2, string_4, flag2, string_2);
+				string text11 = EncodedStringTable.DecodeString(17490);
+				string text12 = EncodedStringTable.DecodeString(17499);
+				string text13 = EncodedStringTable.DecodeString(17657);
+				string text14 = EncodedStringTable.DecodeString(17815);
+				RecoveredRuntime.HandleRuntimeDependencyInstallation(text14, string_, text2, peImage, text, mainForm, text12, flag2, text13, flag2, text11);
 			}
 			return;
 		}
@@ -1097,15 +1097,15 @@ public sealed partial class RecoveredRuntime
 		{
 			if (flag2)
 			{
-				string string_6 = RecoveredRuntime.Is32BitImage(class154_0) ? EncodedStringTable.DecodeString(16318) : EncodedStringTable.DecodeString(16160);
-				RecoveredRuntime.PromptDependencyInstallation(class154_0.GetFileName(), mainForm, string_, string_6, string_0);
+				string text15 = RecoveredRuntime.Is32BitImage(peImage) ? EncodedStringTable.DecodeString(16318) : EncodedStringTable.DecodeString(16160);
+				RecoveredRuntime.PromptDependencyInstallation(peImage.GetFileName(), mainForm, string_, text15, text2);
 				return;
 			}
-			if (!RecoveredRuntime.ConfirmDependencyInstallation(mainForm, class154_0.GetFileName(), string_0, text, flag, EncodedStringTable.DecodeString(16476)))
+			if (!RecoveredRuntime.ConfirmDependencyInstallation(mainForm, peImage.GetFileName(), text2, text, flag, EncodedStringTable.DecodeString(16476)))
 			{
 				return;
 			}
-			if (!RecoveredRuntime.Is32BitImage(class154_0))
+			if (!RecoveredRuntime.Is32BitImage(peImage))
 			{
 				Process.Start(EncodedStringTable.DecodeString(16594));
 				return;
@@ -1115,9 +1115,9 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void CreateActivationContextFromManifest(ManualMapInjector class89_0, ManualMapInjector.Class172 class172_0)
+	internal static void CreateActivationContextFromManifest(ManualMapInjector manualMapInjector, ManualMapInjector.MappingContext mappingContext)
 	{
-		byte[] array = ManualMapInjector.ExtractManifestResource(class172_0.GetImage());
+		byte[] array = ManualMapInjector.ExtractManifestResource(mappingContext.GetImage());
 		if (array == null)
 		{
 			return;
@@ -1126,10 +1126,10 @@ public sealed partial class RecoveredRuntime
 		try
 		{
 			File.WriteAllBytes(tempFileName, array);
-			NativeTypes.Struct50 activationContext = default(NativeTypes.Struct50);
-			activationContext.int_0 = typeof(NativeTypes.Struct50).SizeOf();
-			activationContext.string_0 = tempFileName;
-			class172_0.SetActivationContextHandle(RecoveredRuntime.CreateActCtx(ref activationContext));
+			NativeTypes.ActivationContext activationContext = default(NativeTypes.ActivationContext);
+			activationContext.intValue = typeof(NativeTypes.ActivationContext).SizeOf();
+			activationContext.text = tempFileName;
+			mappingContext.SetActivationContextHandle(RecoveredRuntime.CreateActCtx(ref activationContext));
 		}
 		finally
 		{
@@ -1137,59 +1137,59 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void LoadSettingsIntoForm(SettingsForm gform2_0)
+	internal static void LoadSettingsIntoForm(SettingsForm settingsForm)
 	{
 		InjectionOptions class14_ = ApplicationSettings.Current.Options;
-		gform2_0.comboBox_0.SelectedIndex = (int)class14_.Method;
-		gform2_0.panel_2.BackColor = class14_.TextColor;
-		gform2_0.panel_1.BackColor = class14_.BackgroundColor1;
-		gform2_0.panel_0.BackColor = class14_.BackgroundColor2;
-		gform2_0.checkBox_2.Checked = class14_.AutoInject;
-		gform2_0.checkBox_0.Checked = class14_.StealthInject;
-		gform2_0.checkBox_1.Checked = class14_.CloseOnInject;
-		gform2_0.numericUpDown_0.Value = class14_.DelayBetweenModules;
-		gform2_0.numericUpDown_1.Value = class14_.DelayBeforeInjection;
-		gform2_0.checkBox_4.Checked = class14_.ErasePeHeaders;
-		gform2_0.checkBox_3.Checked = class14_.HideModule;
-		RecoveredRuntime.SelectCurrentScramblePreset(gform2_0);
+		settingsForm.comboBox.SelectedIndex = (int)class14_.Method;
+		settingsForm.panel3.BackColor = class14_.TextColor;
+		settingsForm.panel2.BackColor = class14_.BackgroundColor1;
+		settingsForm.panel.BackColor = class14_.BackgroundColor2;
+		settingsForm.checkBox3.Checked = class14_.AutoInject;
+		settingsForm.checkBox.Checked = class14_.StealthInject;
+		settingsForm.checkBox2.Checked = class14_.CloseOnInject;
+		settingsForm.numericUpDown.Value = class14_.DelayBetweenModules;
+		settingsForm.numericUpDown2.Value = class14_.DelayBeforeInjection;
+		settingsForm.checkBox5.Checked = class14_.ErasePeHeaders;
+		settingsForm.checkBox4.Checked = class14_.HideModule;
+		RecoveredRuntime.SelectCurrentScramblePreset(settingsForm);
 	}
 
-	internal static void ResetManualMapOptions(ManualMapInjector class89_0)
+	internal static void ResetManualMapOptions(ManualMapInjector manualMapInjector)
 	{
-		class89_0.SetManualResolveImports(bool_7: false);
-		class89_0.SetErasePeHeaders(bool_7: false);
-		class89_0.SetDisableExceptionSupport(bool_7: false);
-		class89_0.SetHideRemoteThreadFromDebugger(bool_2: false);
+		manualMapInjector.SetManualResolveImports(flag: false);
+		manualMapInjector.SetErasePeHeaders(flag: false);
+		manualMapInjector.SetDisableExceptionSupport(flag: false);
+		manualMapInjector.SetHideRemoteThreadFromDebugger(flag: false);
 	}
 
-	internal static void CheckImportedDependencies(PeImage class154_0, MainForm mainForm)
+	internal static void CheckImportedDependencies(PeImage peImage, MainForm mainForm)
 	{
-		if (class154_0.GetImports() == null)
+		if (peImage.GetImports() == null)
 		{
 			return;
 		}
-		foreach (KeyValuePair<string, List<string>> import in class154_0.GetImports().gclass0_0)
+		foreach (KeyValuePair<string, List<string>> import in peImage.GetImports().dictionary)
 		{
 			string dependencyName = import.Key;
 			if (!string.IsNullOrEmpty(dependencyName))
 			{
-				RecoveredRuntime.HandleLegacyNativeDependency(class154_0, dependencyName, mainForm);
-				RecoveredRuntime.HandleLegacyManagedDependency(class154_0, dependencyName, mainForm);
+				RecoveredRuntime.HandleLegacyNativeDependency(peImage, dependencyName, mainForm);
+				RecoveredRuntime.HandleLegacyManagedDependency(peImage, dependencyName, mainForm);
 			}
 		}
 	}
 
-	internal static Stream CopyImageRange(PeImage class154_0, long long_0, int int_0)
+	internal static Stream CopyImageRange(PeImage peImage, long longValue, int intValue)
 	{
-		Stream imageStream = class154_0.GetStream();
+		Stream imageStream = peImage.GetStream();
 		lock (imageStream)
 		{
 			long originalPosition = imageStream.Position;
 			try
 			{
-				imageStream.Position = long_0;
+				imageStream.Position = longValue;
 				MemoryStream copy = new MemoryStream();
-				imageStream.CopyBytesTo(copy, int_0);
+				imageStream.CopyBytesTo(copy, intValue);
 				copy.Position = 0L;
 				return copy;
 			}
@@ -1200,42 +1200,42 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void RegisterManualMappedModule(ProcessModuleCollection class69_0, PeImage class154_0, IntPtr intptr_0, bool bool_0)
+	internal static void RegisterManualMappedModule(ProcessModuleCollection processModuleCollection, PeImage peImage, IntPtr address, bool flag)
 	{
-		ProcessModuleInfo gclass = new ProcessModuleInfo(class69_0.gclass2_0, null, intptr_0, bool_0, true);
-		string string_ = class154_0.GetFilePath();
-		string fileName = Path.GetFileName(class154_0.GetFilePath());
-		IntPtr intptr_ = intptr_0.Add((long)((ulong)class154_0.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint()));
-		uint uint_ = class154_0.GetHeaders().GetOptionalHeader().GetSizeOfImage();
+		ProcessModuleInfo gclass = new ProcessModuleInfo(processModuleCollection.remoteProcess, null, address, flag, true);
+		string string_ = peImage.GetFilePath();
+		string fileName = Path.GetFileName(peImage.GetFilePath());
+		IntPtr intptr_ = address.Add((long)((ulong)peImage.GetHeaders().GetOptionalHeader().GetAddressOfEntryPoint()));
+		uint uint_ = peImage.GetHeaders().GetOptionalHeader().GetSizeOfImage();
 		RecoveredRuntime.SetProcessModuleMetadata(string_, fileName, intptr_, gclass, uint_);
-		class69_0.gclass2_0.list_1.Add(gclass);
+		processModuleCollection.remoteProcess.items2.Add(gclass);
 	}
 
-	internal static bool TryReadPeHeaders(ref PeHeaders class161_0, [Out] BoundsCheckedBinaryReader class5_0)
+	internal static bool TryReadPeHeaders(ref PeHeaders peHeaders, [Out] BoundsCheckedBinaryReader boundsCheckedBinaryReader)
 	{
-		class161_0 = null;
-		if (class5_0.ReadUInt32() != 0x00004550U)
+		peHeaders = null;
+		if (boundsCheckedBinaryReader.ReadUInt32() != 0x00004550U)
 		{
 			return false;
 		}
 
 		var headers = new PeHeaders();
 		headers.SetSignature(0x00004550U);
-		headers.SetCoffHeader(new CoffHeader(class5_0));
+		headers.SetCoffHeader(new CoffHeader(boundsCheckedBinaryReader));
 
 		if (headers.GetCoffHeader().GetSizeOfOptionalHeader() < sizeof(ushort))
 		{
 			return false;
 		}
 
-		long optionalHeaderStart = class5_0.BaseStream.Position;
-		ushort magic = class5_0.ReadUInt16();
-		class5_0.BaseStream.Position = optionalHeaderStart;
+		long optionalHeaderStart = boundsCheckedBinaryReader.BaseStream.Position;
+		ushort magic = boundsCheckedBinaryReader.ReadUInt16();
+		boundsCheckedBinaryReader.BaseStream.Position = optionalHeaderStart;
 
 		if (magic == 0x010B)
 		{
 			Pe32OptionalHeader optionalHeader;
-			if (!TryReadPe32OptionalHeader(class5_0, headers.GetCoffHeader().GetSizeOfOptionalHeader(), out optionalHeader))
+			if (!TryReadPe32OptionalHeader(boundsCheckedBinaryReader, headers.GetCoffHeader().GetSizeOfOptionalHeader(), out optionalHeader))
 			{
 				return false;
 			}
@@ -1245,7 +1245,7 @@ public sealed partial class RecoveredRuntime
 		else if (magic == 0x020B)
 		{
 			Pe64OptionalHeader optionalHeader;
-			if (!TryReadPe64OptionalHeader(class5_0, headers.GetCoffHeader().GetSizeOfOptionalHeader(), out optionalHeader))
+			if (!TryReadPe64OptionalHeader(boundsCheckedBinaryReader, headers.GetCoffHeader().GetSizeOfOptionalHeader(), out optionalHeader))
 			{
 				return false;
 			}
@@ -1257,7 +1257,7 @@ public sealed partial class RecoveredRuntime
 			return false;
 		}
 
-		class161_0 = headers;
+		peHeaders = headers;
 		return true;
 	}
 }

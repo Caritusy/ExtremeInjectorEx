@@ -4,7 +4,7 @@ using System.IO;
 
 internal sealed class ManualMapProtectionRun
 {
-	internal ManualMapProtectionRun(long offset, long length, bool decommit, NativeTypes.Enum34 protection)
+	internal ManualMapProtectionRun(long offset, long length, bool decommit, NativeTypes.MemoryProtection protection)
 	{
 		Offset = offset;
 		Length = length;
@@ -18,7 +18,7 @@ internal sealed class ManualMapProtectionRun
 
 	internal bool Decommit { get; }
 
-	internal NativeTypes.Enum34 Protection { get; }
+	internal NativeTypes.MemoryProtection Protection { get; }
 }
 
 internal sealed class ManualMapProtectionPlan
@@ -52,12 +52,12 @@ internal sealed class ManualMapProtectionPlan
 		var retainedCharacteristics = new SectionCharacteristics[pageCount];
 		var hasDiscardableContent = new bool[pageCount];
 		uint headerSize = Math.Min(image.GetHeaders().GetOptionalHeader().GetSizeOfHeaders(), imageSize);
-		MarkPages(retainedCharacteristics, 0, headerSize, imageSize, SectionCharacteristics.flag_33);
+		MarkPages(retainedCharacteristics, 0, headerSize, imageSize, SectionCharacteristics.Read);
 
 		foreach (PeSectionHeader section in image.GetSections())
 		{
 			uint sectionLength = Math.Max(section.GetVirtualSize(), section.GetSizeOfRawData());
-			if ((section.GetCharacteristics() & SectionCharacteristics.flag_28) != 0)
+			if ((section.GetCharacteristics() & SectionCharacteristics.Discardable) != 0)
 			{
 				MarkPages(hasDiscardableContent, section.GetVirtualAddress(), sectionLength, imageSize);
 			}
@@ -72,7 +72,7 @@ internal sealed class ManualMapProtectionPlan
 		while (pageIndex < pageCount)
 		{
 			bool decommit = ShouldDecommit(retainedCharacteristics, hasDiscardableContent, pageIndex);
-			NativeTypes.Enum34 protection = GetProtection(retainedCharacteristics[pageIndex]);
+			NativeTypes.MemoryProtection protection = GetProtection(retainedCharacteristics[pageIndex]);
 			int runEnd = pageIndex + 1;
 			while (runEnd < pageCount && HasSameAction(
 				retainedCharacteristics,
@@ -98,7 +98,7 @@ internal sealed class ManualMapProtectionPlan
 		bool[] discardable,
 		int pageIndex,
 		bool decommit,
-		NativeTypes.Enum34 protection)
+		NativeTypes.MemoryProtection protection)
 	{
 		bool nextDecommit = ShouldDecommit(retained, discardable, pageIndex);
 		return nextDecommit == decommit && (decommit || GetProtection(retained[pageIndex]) == protection);
@@ -140,28 +140,28 @@ internal sealed class ManualMapProtectionPlan
 		}
 	}
 
-	private static NativeTypes.Enum34 GetProtection(SectionCharacteristics characteristics)
+	private static NativeTypes.MemoryProtection GetProtection(SectionCharacteristics characteristics)
 	{
-		bool execute = (characteristics & SectionCharacteristics.flag_32) != 0;
-		bool read = (characteristics & SectionCharacteristics.flag_33) != 0;
-		bool write = (characteristics & SectionCharacteristics.flag_34) != 0;
-		NativeTypes.Enum34 protection;
+		bool execute = (characteristics & SectionCharacteristics.Execute) != 0;
+		bool read = (characteristics & SectionCharacteristics.Read) != 0;
+		bool write = (characteristics & SectionCharacteristics.Write) != 0;
+		NativeTypes.MemoryProtection protection;
 		if (execute)
 		{
 			protection = read
-				? (write ? NativeTypes.Enum34.flag_2 : NativeTypes.Enum34.flag_1)
-				: (write ? NativeTypes.Enum34.flag_3 : NativeTypes.Enum34.flag_0);
+				? (write ? NativeTypes.MemoryProtection.ExecuteReadWrite : NativeTypes.MemoryProtection.ExecuteRead)
+				: (write ? NativeTypes.MemoryProtection.ExecuteWriteCopy : NativeTypes.MemoryProtection.Execute);
 		}
 		else
 		{
 			protection = read
-				? (write ? NativeTypes.Enum34.flag_6 : NativeTypes.Enum34.flag_5)
-				: (write ? NativeTypes.Enum34.flag_7 : NativeTypes.Enum34.flag_4);
+				? (write ? NativeTypes.MemoryProtection.ReadWrite : NativeTypes.MemoryProtection.ReadOnly)
+				: (write ? NativeTypes.MemoryProtection.WriteCopy : NativeTypes.MemoryProtection.NoAccess);
 		}
 
-		if ((characteristics & SectionCharacteristics.flag_29) != 0)
+		if ((characteristics & SectionCharacteristics.NotCached) != 0)
 		{
-			protection |= NativeTypes.Enum34.flag_9;
+			protection |= NativeTypes.MemoryProtection.NoCache;
 		}
 
 		return protection;
@@ -170,7 +170,7 @@ internal sealed class ManualMapProtectionPlan
 
 internal static class ManualMapProtectionService
 {
-	internal static void Apply(ManualMapInjector injector, ManualMapInjector.Class172 mappedImage)
+	internal static void Apply(ManualMapInjector injector, ManualMapInjector.MappingContext mappedImage)
 	{
 		if (injector == null)
 		{

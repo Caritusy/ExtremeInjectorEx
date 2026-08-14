@@ -7,31 +7,31 @@ public struct BeaEngineInstruction
 	[StructLayout(LayoutKind.Sequential, Size = 16)]
 	[CompilerGenerated]
 	[UnsafeValueType]
-	public struct Struct28
+	public struct MnemonicBuffer
 	{
-		public sbyte sbyte_0;
+		public sbyte signedByteValue;
 	}
 
-	public int int_0;
+	public int intValue;
 
-	public int int_1;
+	public int intValue2;
 
-	public Struct28 struct28_0;
+	public MnemonicBuffer mnemonic;
 
-	public int int_2;
+	public int intValue3;
 
-	public BeaEngineEFlags struct25_0;
+	public BeaEngineEFlags eFlags;
 
-	public ulong ulong_0;
+	public ulong ulongValue;
 
-	public long long_0;
+	public long longValue;
 
-	public uint uint_0;
+	public uint uintValue;
 
 	[SpecialName]
 	public unsafe string GetMnemonic()
 	{
-		fixed (sbyte* value = &struct28_0.sbyte_0)
+		fixed (sbyte* value = &mnemonic.signedByteValue)
 		{
 			return new string(value);
 		}

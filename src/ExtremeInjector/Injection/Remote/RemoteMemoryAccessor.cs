@@ -5,93 +5,93 @@ using System.Runtime.InteropServices;
 public abstract class RemoteMemoryAccessor
 {
 	[CompilerGenerated]
-	internal int int_0;
+	internal int processId;
 
 	[CompilerGenerated]
-	internal IntPtr intptr_0;
+	internal IntPtr processHandle;
 
 	[CompilerGenerated]
-	internal bool bool_0;
+	internal bool autoProtectMemory;
 
 	[CompilerGenerated]
-	internal IRemoteMemoryApi interface4_0;
+	internal IRemoteMemoryApi memoryApi;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public int GetProcessId()
 	{
-		return int_0;
+		return processId;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetProcessId(int int_1)
+	public void SetProcessId(int intValue)
 	{
-		int_0 = int_1;
+		processId = intValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetProcessHandle()
 	{
-		return intptr_0;
+		return processHandle;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetProcessHandle(IntPtr intptr_1)
+	public void SetProcessHandle(IntPtr address)
 	{
-		intptr_0 = intptr_1;
+		processHandle = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	protected bool GetAutoProtectMemory()
 	{
-		return bool_0;
+		return autoProtectMemory;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected void SetAutoProtectMemory(bool bool_1)
+	protected void SetAutoProtectMemory(bool flag)
 	{
-		bool_0 = bool_1;
+		autoProtectMemory = flag;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IRemoteMemoryApi GetMemoryApi()
 	{
-		return interface4_0;
+		return memoryApi;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMemoryApi(IRemoteMemoryApi interface4_1)
+	public void SetMemoryApi(IRemoteMemoryApi remoteMemoryApi)
 	{
-		interface4_0 = interface4_1;
+		memoryApi = remoteMemoryApi;
 	}
 
 	protected RemoteMemoryAccessor()
 	{
 	}
 
-	protected RemoteMemoryAccessor(int int_1)
+	protected RemoteMemoryAccessor(int intValue)
 	{
-		SetProcessId(int_1);
+		SetProcessId(intValue);
 	}
 
-	protected RemoteMemoryAccessor(IntPtr intptr_1)
+	protected RemoteMemoryAccessor(IntPtr address)
 	{
 		SetProcessId(-1);
-		SetProcessHandle(intptr_1);
+		SetProcessHandle(address);
 	}
 
-	protected internal bool EnsureAttachedToProcess(int int_1)
+	protected internal bool EnsureAttachedToProcess(int intValue)
 	{
-		if (this.GetProcessId() != int_1 || this.GetProcessHandle() == IntPtr.Zero)
+		if (this.GetProcessId() != intValue || this.GetProcessHandle() == IntPtr.Zero)
 		{
-			this.SetProcessId(int_1);
+			this.SetProcessId(intValue);
 			if (this.GetProcessHandle() != IntPtr.Zero)
 			{
 				RecoveredRuntime.CloseRemoteMemoryAccessor(this);
@@ -110,55 +110,55 @@ public abstract class RemoteMemoryAccessor
 		}
 		if (this.GetProcessHandle() == IntPtr.Zero && this.GetProcessId() != -1)
 		{
-			this.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, this.GetProcessId()));
+			this.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.ProcessAccessRights.VirtualMemoryOperation | NativeTypes.ProcessAccessRights.VirtualMemoryRead | NativeTypes.ProcessAccessRights.VirtualMemoryWrite | NativeTypes.ProcessAccessRights.QueryInformation, false, this.GetProcessId()));
 		}
 	}
 
-	protected virtual void ReadMemoryCore(IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0, out UIntPtr uintptr_1)
+	protected virtual void ReadMemoryCore(IntPtr address, IntPtr address2, UIntPtr address3, out UIntPtr address4)
 	{
 		if (this.GetMemoryApi() != null)
 		{
-			this.GetMemoryApi().ReadMemory(this.GetProcessHandle(), intptr_1, intptr_2, uintptr_0, out uintptr_1);
+			this.GetMemoryApi().ReadMemory(this.GetProcessHandle(), address, address2, address3, out address4);
 			return;
 		}
-		if (!RecoveredRuntime.ReadProcessMemory(this.GetProcessHandle(), intptr_1, intptr_2, uintptr_0, out uintptr_1))
+		if (!RecoveredRuntime.ReadProcessMemory(this.GetProcessHandle(), address, address2, address3, out address4))
 		{
 			throw new AccessViolationException(EncodedStringTable.DecodeString(10098));
 		}
-		if (!(uintptr_0 != uintptr_1))
+		if (!(address3 != address4))
 		{
 			return;
 		}
 		throw new AccessViolationException(EncodedStringTable.DecodeString(10167));
 	}
 
-	protected void ReadMemory(IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0)
+	protected void ReadMemory(IntPtr address, IntPtr address2, UIntPtr address3)
 	{
-		ReadMemoryCore(intptr_1, intptr_2, uintptr_0, out var _);
+		ReadMemoryCore(address, address2, address3, out var _);
 	}
 
-	protected internal unsafe T[] ReadArray<T>(IntPtr intptr_1, int int_1)
+	protected internal unsafe T[] ReadArray<T>(IntPtr address, int intValue)
 	{
 		this.EnsureProcessHandle();
 		Type typeFromHandle = typeof(T);
 		if (typeFromHandle == typeof(byte))
 		{
-			byte[] bytes = new byte[int_1];
+			byte[] bytes = new byte[intValue];
 			fixed (byte* buffer = bytes)
 			{
-				this.ReadMemory(intptr_1, (IntPtr)buffer, (UIntPtr)(ulong)int_1);
+				this.ReadMemory(address, (IntPtr)buffer, (UIntPtr)(ulong)intValue);
 			}
 			return (T[])(object)bytes;
 		}
 
 		int elementSize = PlatformInfo.SizeOf<T>();
-		int byteCount = checked(elementSize * int_1);
+		int byteCount = checked(elementSize * intValue);
 		IntPtr bufferPointer = Marshal.AllocHGlobal(byteCount);
 		try
 		{
-			this.ReadMemory(intptr_1, bufferPointer, (UIntPtr)(ulong)byteCount);
-			T[] result = new T[int_1];
-			for (int index = 0; index < int_1; index++)
+			this.ReadMemory(address, bufferPointer, (UIntPtr)(ulong)byteCount);
+			T[] result = new T[intValue];
+			for (int index = 0; index < intValue; index++)
 			{
 				result[index] = (T)Marshal.PtrToStructure(bufferPointer.Add(index * elementSize), typeFromHandle);
 			}
@@ -170,50 +170,50 @@ public abstract class RemoteMemoryAccessor
 		}
 	}
 
-	protected internal T Read<T>(IntPtr intptr_1)
+	protected internal T Read<T>(IntPtr address)
 	{
-		return (T)Read(typeof(T), intptr_1);
+		return (T)Read(typeof(T), address);
 	}
 
-	protected object Read(Type type_0, IntPtr intptr_1)
+	protected object Read(Type typeValue, IntPtr address)
 	{
 		this.EnsureProcessHandle();
-		int num = RecoveredRuntime.GetCachedNativeTypeSize(type_0);
+		int num = RecoveredRuntime.GetCachedNativeTypeSize(typeValue);
 		IntPtr intPtr = Marshal.AllocHGlobal(num);
-		this.ReadMemory(intptr_1, intPtr, (UIntPtr)((ulong)((long)num)));
-		object result = Marshal.PtrToStructure(intPtr, type_0);
+		this.ReadMemory(address, intPtr, (UIntPtr)((ulong)((long)num)));
+		object result = Marshal.PtrToStructure(intPtr, typeValue);
 		Marshal.FreeHGlobal(intPtr);
 		return result;
 	}
 
-	protected internal bool Write<T>(IntPtr intptr_1, T gparam_0)
+	protected internal bool Write<T>(IntPtr address, T value)
 	{
 		EnsureProcessHandle();
 		int num = PlatformInfo.SizeOf<T>();
 		IntPtr intPtr = Marshal.AllocHGlobal(num);
-		Marshal.StructureToPtr((object)gparam_0, intPtr, false);
-		bool result = WriteMemoryWithProtection(intPtr, intptr_1, (UIntPtr)(ulong)num);
+		Marshal.StructureToPtr((object)value, intPtr, false);
+		bool result = WriteMemoryWithProtection(intPtr, address, (UIntPtr)(ulong)num);
 		Marshal.FreeHGlobal(intPtr);
 		return result;
 	}
 
-	protected virtual bool WriteMemoryCore(IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0)
+	protected virtual bool WriteMemoryCore(IntPtr address, IntPtr address2, UIntPtr address3)
 	{
 		if (GetMemoryApi() != null)
 		{
-			return GetMemoryApi().WriteMemory(GetProcessHandle(), intptr_1, intptr_2, uintptr_0);
+			return GetMemoryApi().WriteMemory(GetProcessHandle(), address, address2, address3);
 		}
-		UIntPtr uintptr_1;
-		return RecoveredRuntime.WriteProcessMemory(GetProcessHandle(), intptr_2, intptr_1, uintptr_0, out uintptr_1);
+		UIntPtr address4;
+		return RecoveredRuntime.WriteProcessMemory(GetProcessHandle(), address2, address, address3, out address4);
 	}
 
-	protected virtual bool WriteMemoryWithProtection(IntPtr intptr_1, IntPtr intptr_2, UIntPtr uintptr_0)
+	protected virtual bool WriteMemoryWithProtection(IntPtr address, IntPtr address2, UIntPtr address3)
 	{
 		bool result;
-		if (!(result = this.WriteMemoryCore(intptr_1, intptr_2, uintptr_0)) && this.GetAutoProtectMemory())
+		if (!(result = this.WriteMemoryCore(address, address2, address3)) && this.GetAutoProtectMemory())
 		{
-			NativeTypes.Enum34 enum34_;
-			if (!this.ProtectMemoryCore(intptr_2, (long)((ulong)uintptr_0), NativeTypes.Enum34.flag_2, out enum34_) || !this.WriteMemoryCore(intptr_1, intptr_2, uintptr_0) || !this.ProtectMemory(intptr_2, (long)((ulong)uintptr_0), enum34_))
+			NativeTypes.MemoryProtection enum34_;
+			if (!this.ProtectMemoryCore(address2, (long)((ulong)address3), NativeTypes.MemoryProtection.ExecuteReadWrite, out enum34_) || !this.WriteMemoryCore(address, address2, address3) || !this.ProtectMemory(address2, (long)((ulong)address3), enum34_))
 			{
 				throw new AccessViolationException(EncodedStringTable.DecodeString(10244));
 			}
@@ -222,84 +222,84 @@ public abstract class RemoteMemoryAccessor
 		return result;
 	}
 
-	protected virtual bool ProtectMemoryCore(IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0, out NativeTypes.Enum34 enum34_1)
+	protected virtual bool ProtectMemoryCore(IntPtr address, long longValue, NativeTypes.MemoryProtection memoryProtection, out NativeTypes.MemoryProtection memoryProtection2)
 	{
 		if (GetMemoryApi() != null)
 		{
-			return GetMemoryApi().ProtectMemory(GetProcessHandle(), intptr_1, long_0, enum34_0, out enum34_1);
+			return GetMemoryApi().ProtectMemory(GetProcessHandle(), address, longValue, memoryProtection, out memoryProtection2);
 		}
-		return RecoveredRuntime.VirtualProtectEx(GetProcessHandle(), intptr_1, (UIntPtr)(ulong)long_0, enum34_0, out enum34_1);
+		return RecoveredRuntime.VirtualProtectEx(GetProcessHandle(), address, (UIntPtr)(ulong)longValue, memoryProtection, out memoryProtection2);
 	}
 
-	protected bool ProtectMemory(IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0)
+	protected bool ProtectMemory(IntPtr address, long longValue, NativeTypes.MemoryProtection memoryProtection)
 	{
-		NativeTypes.Enum34 enum34_1;
-		return ProtectMemoryCore(intptr_1, long_0, enum34_0, out enum34_1);
+		NativeTypes.MemoryProtection memoryProtection2;
+		return ProtectMemoryCore(address, longValue, memoryProtection, out memoryProtection2);
 	}
 
-	protected virtual IntPtr AllocateMemoryCore(IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0)
+	protected virtual IntPtr AllocateMemoryCore(IntPtr address, long longValue, NativeTypes.MemoryProtection memoryProtection)
 	{
 		if (GetMemoryApi() != null)
 		{
-			return GetMemoryApi().AllocateMemory(GetProcessHandle(), intptr_1, long_0, enum34_0);
+			return GetMemoryApi().AllocateMemory(GetProcessHandle(), address, longValue, memoryProtection);
 		}
-		return RecoveredRuntime.VirtualAllocEx(GetProcessHandle(), intptr_1, (UIntPtr)(ulong)long_0, NativeTypes.Enum33.flag_0 | NativeTypes.Enum33.flag_1, enum34_0);
+		return RecoveredRuntime.VirtualAllocEx(GetProcessHandle(), address, (UIntPtr)(ulong)longValue, NativeTypes.MemoryAllocationType.Commit | NativeTypes.MemoryAllocationType.Reserve, memoryProtection);
 	}
 
-	protected internal IntPtr AllocateMemory(IntPtr intptr_1, long long_0, NativeTypes.Enum34 enum34_0)
+	protected internal IntPtr AllocateMemory(IntPtr address, long longValue, NativeTypes.MemoryProtection memoryProtection)
 	{
 		IntPtr result;
-		if ((result = this.AllocateMemoryCore(intptr_1, long_0, enum34_0)) == IntPtr.Zero && intptr_1 != IntPtr.Zero)
+		if ((result = this.AllocateMemoryCore(address, longValue, memoryProtection)) == IntPtr.Zero && address != IntPtr.Zero)
 		{
-			return this.AllocateMemory(IntPtr.Zero, long_0, enum34_0);
+			return this.AllocateMemory(IntPtr.Zero, longValue, memoryProtection);
 		}
 		return result;
 	}
 
-	protected virtual bool FreeMemory(IntPtr intptr_1, long long_0, NativeTypes.Enum28 enum28_0)
+	protected virtual bool FreeMemory(IntPtr address, long longValue, NativeTypes.MemoryFreeType memoryFreeType)
 	{
 		if (GetMemoryApi() != null)
 		{
-			return GetMemoryApi().FreeMemory(GetProcessHandle(), intptr_1, long_0, enum28_0);
+			return GetMemoryApi().FreeMemory(GetProcessHandle(), address, longValue, memoryFreeType);
 		}
-		return RecoveredRuntime.VirtualFreeEx(GetProcessHandle(), intptr_1, (UIntPtr)(ulong)long_0, enum28_0);
+		return RecoveredRuntime.VirtualFreeEx(GetProcessHandle(), address, (UIntPtr)(ulong)longValue, memoryFreeType);
 	}
 
-	protected virtual bool ReleaseMemory(IntPtr intptr_1)
+	protected virtual bool ReleaseMemory(IntPtr address)
 	{
-		return RecoveredRuntime.VirtualFreeEx(GetProcessHandle(), intptr_1, UIntPtr.Zero, NativeTypes.Enum28.const_1);
+		return RecoveredRuntime.VirtualFreeEx(GetProcessHandle(), address, UIntPtr.Zero, NativeTypes.MemoryFreeType.Release);
 	}
 
-	protected internal unsafe bool WriteArray<T>(IntPtr intptr_1, T[] gparam_0)
+	protected internal unsafe bool WriteArray<T>(IntPtr address, T[] valueArray)
 	{
 		EnsureProcessHandle();
-		if (gparam_0 == null)
+		if (valueArray == null)
 		{
-			throw new ArgumentNullException(nameof(gparam_0));
+			throw new ArgumentNullException(nameof(valueArray));
 		}
-		if (gparam_0.Length == 0)
+		if (valueArray.Length == 0)
 		{
 			return true;
 		}
 		if (typeof(T) == typeof(byte))
 		{
-			byte[] bytes = (byte[])(object)gparam_0;
+			byte[] bytes = (byte[])(object)valueArray;
 			fixed (byte* pointer = bytes)
 			{
-				return WriteMemoryWithProtection((IntPtr)pointer, intptr_1, (UIntPtr)(ulong)bytes.Length);
+				return WriteMemoryWithProtection((IntPtr)pointer, address, (UIntPtr)(ulong)bytes.Length);
 			}
 		}
 
 		int elementSize = PlatformInfo.SizeOf<T>();
-		int byteCount = checked(elementSize * gparam_0.Length);
+		int byteCount = checked(elementSize * valueArray.Length);
 		IntPtr buffer = Marshal.AllocHGlobal(byteCount);
 		try
 		{
-			for (int i = 0; i < gparam_0.Length; i++)
+			for (int i = 0; i < valueArray.Length; i++)
 			{
-				Marshal.StructureToPtr((object)gparam_0[i], buffer.Add(i * elementSize), false);
+				Marshal.StructureToPtr((object)valueArray[i], buffer.Add(i * elementSize), false);
 			}
-			return WriteMemoryWithProtection(buffer, intptr_1, (UIntPtr)(ulong)byteCount);
+			return WriteMemoryWithProtection(buffer, address, (UIntPtr)(ulong)byteCount);
 		}
 		finally
 		{

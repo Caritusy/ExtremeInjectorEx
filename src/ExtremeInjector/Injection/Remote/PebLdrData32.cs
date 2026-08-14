@@ -17,10 +17,10 @@ public sealed class PebLdrData32 : RemotePebLdrData
 		});
 	}
 
-	internal PebLdrData32(IntPtr intptr_2, IntPtr intptr_3)
-		: base(intptr_3, bool_2: true)
+	internal PebLdrData32(IntPtr address, IntPtr address2)
+		: base(address2, flag: true)
 	{
-		RecoveredRuntime.SetPebLdrDataAddress(intptr_2, this);
+		RecoveredRuntime.SetPebLdrDataAddress(address, this);
 	}
 
 	[SpecialName]

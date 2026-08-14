@@ -4,249 +4,249 @@ using System.Runtime.CompilerServices;
 public sealed class LoadConfigurationDirectory
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint size;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint timeDateStamp;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort majorVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort minorVersion;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal uint globalFlagsClear;
 
 	[CompilerGenerated]
-	internal uint uint_3;
+	internal uint globalFlagsSet;
 
 	[CompilerGenerated]
-	internal uint uint_4;
+	internal uint criticalSectionDefaultTimeout;
 
 	[CompilerGenerated]
-	internal ulong ulong_0;
+	internal ulong deCommitFreeBlockThreshold;
 
 	[CompilerGenerated]
-	internal ulong ulong_1;
+	internal ulong deCommitTotalFreeThreshold;
 
 	[CompilerGenerated]
-	internal ulong ulong_2;
+	internal ulong lockPrefixTable;
 
 	[CompilerGenerated]
-	internal ulong ulong_3;
+	internal ulong maximumAllocationSize;
 
 	[CompilerGenerated]
-	internal ulong ulong_4;
+	internal ulong virtualMemoryThreshold;
 
 	[CompilerGenerated]
-	internal ulong ulong_5;
+	internal ulong processAffinityMask;
 
 	[CompilerGenerated]
-	internal uint uint_5;
+	internal uint processHeapFlags;
 
 	[CompilerGenerated]
-	internal ushort ushort_2;
+	internal ushort csdVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_3;
+	internal ushort dependentLoadFlags;
 
 	[CompilerGenerated]
-	internal ulong ulong_6;
+	internal ulong editList;
 
 	[CompilerGenerated]
-	internal ulong ulong_7;
+	internal ulong securityCookie;
 
 	[CompilerGenerated]
-	internal ulong ulong_8;
+	internal ulong seHandlerTable;
 
 	[CompilerGenerated]
-	internal ulong ulong_9;
+	internal ulong seHandlerCount;
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSize(uint uint_6)
+	public void SetSize(uint uintValue)
 	{
-		uint_0 = uint_6;
+		size = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetTimeDateStamp(uint uint_6)
+	public void SetTimeDateStamp(uint uintValue)
 	{
-		uint_1 = uint_6;
+		timeDateStamp = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorVersion(ushort ushort_4)
+	public void SetMajorVersion(ushort ushortValue)
 	{
-		ushort_0 = ushort_4;
+		majorVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorVersion(ushort ushort_4)
+	public void SetMinorVersion(ushort ushortValue)
 	{
-		ushort_1 = ushort_4;
+		minorVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetGlobalFlagsClear(uint uint_6)
+	public void SetGlobalFlagsClear(uint uintValue)
 	{
-		uint_2 = uint_6;
+		globalFlagsClear = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetGlobalFlagsSet(uint uint_6)
+	public void SetGlobalFlagsSet(uint uintValue)
 	{
-		uint_3 = uint_6;
+		globalFlagsSet = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCriticalSectionDefaultTimeout(uint uint_6)
+	public void SetCriticalSectionDefaultTimeout(uint uintValue)
 	{
-		uint_4 = uint_6;
+		criticalSectionDefaultTimeout = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDeCommitFreeBlockThreshold(ulong ulong_10)
+	public void SetDeCommitFreeBlockThreshold(ulong ulongValue)
 	{
-		ulong_0 = ulong_10;
+		deCommitFreeBlockThreshold = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDeCommitTotalFreeThreshold(ulong ulong_10)
+	public void SetDeCommitTotalFreeThreshold(ulong ulongValue)
 	{
-		ulong_1 = ulong_10;
+		deCommitTotalFreeThreshold = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetLockPrefixTable(ulong ulong_10)
+	public void SetLockPrefixTable(ulong ulongValue)
 	{
-		ulong_2 = ulong_10;
+		lockPrefixTable = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMaximumAllocationSize(ulong ulong_10)
+	public void SetMaximumAllocationSize(ulong ulongValue)
 	{
-		ulong_3 = ulong_10;
+		maximumAllocationSize = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetVirtualMemoryThreshold(ulong ulong_10)
+	public void SetVirtualMemoryThreshold(ulong ulongValue)
 	{
-		ulong_4 = ulong_10;
+		virtualMemoryThreshold = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetProcessAffinityMask(ulong ulong_10)
+	public void SetProcessAffinityMask(ulong ulongValue)
 	{
-		ulong_5 = ulong_10;
+		processAffinityMask = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetProcessHeapFlags(uint uint_6)
+	public void SetProcessHeapFlags(uint uintValue)
 	{
-		uint_5 = uint_6;
+		processHeapFlags = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCsdVersion(ushort ushort_4)
+	public void SetCsdVersion(ushort ushortValue)
 	{
-		ushort_2 = ushort_4;
+		csdVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDependentLoadFlags(ushort ushort_4)
+	public void SetDependentLoadFlags(ushort ushortValue)
 	{
-		ushort_3 = ushort_4;
+		dependentLoadFlags = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetEditList(ulong ulong_10)
+	public void SetEditList(ulong ulongValue)
 	{
-		ulong_6 = ulong_10;
+		editList = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSecurityCookie(ulong ulong_10)
+	public void SetSecurityCookie(ulong ulongValue)
 	{
-		ulong_7 = ulong_10;
+		securityCookie = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSeHandlerTable(ulong ulong_10)
+	public void SetSeHandlerTable(ulong ulongValue)
 	{
-		ulong_8 = ulong_10;
+		seHandlerTable = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSeHandlerCount(ulong ulong_10)
+	public void SetSeHandlerCount(ulong ulongValue)
 	{
-		ulong_9 = ulong_10;
+		seHandlerCount = ulongValue;
 	}
 
-	internal LoadConfigurationDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0)
+	internal LoadConfigurationDirectory(BoundsCheckedBinaryReader boundsCheckedBinaryReader, PeImage peImage)
 	{
-		SetSize(class5_0.ReadUInt32());
-		SetTimeDateStamp(class5_0.ReadUInt32());
-		SetMajorVersion(class5_0.ReadUInt16());
-		SetMinorVersion(class5_0.ReadUInt16());
-		SetGlobalFlagsClear(class5_0.ReadUInt32());
-		SetGlobalFlagsSet(class5_0.ReadUInt32());
-		SetCriticalSectionDefaultTimeout(class5_0.ReadUInt32());
-		if (RecoveredRuntime.Is32BitImage(class154_0))
+		SetSize(boundsCheckedBinaryReader.ReadUInt32());
+		SetTimeDateStamp(boundsCheckedBinaryReader.ReadUInt32());
+		SetMajorVersion(boundsCheckedBinaryReader.ReadUInt16());
+		SetMinorVersion(boundsCheckedBinaryReader.ReadUInt16());
+		SetGlobalFlagsClear(boundsCheckedBinaryReader.ReadUInt32());
+		SetGlobalFlagsSet(boundsCheckedBinaryReader.ReadUInt32());
+		SetCriticalSectionDefaultTimeout(boundsCheckedBinaryReader.ReadUInt32());
+		if (RecoveredRuntime.Is32BitImage(peImage))
 		{
-			SetDeCommitFreeBlockThreshold(class5_0.ReadUInt32());
-			SetDeCommitTotalFreeThreshold(class5_0.ReadUInt32());
-			SetLockPrefixTable(class5_0.ReadUInt32());
-			SetMaximumAllocationSize(class5_0.ReadUInt32());
-			SetVirtualMemoryThreshold(class5_0.ReadUInt32());
-			SetProcessHeapFlags(class5_0.ReadUInt32());
-			SetProcessAffinityMask(class5_0.ReadUInt32());
+			SetDeCommitFreeBlockThreshold(boundsCheckedBinaryReader.ReadUInt32());
+			SetDeCommitTotalFreeThreshold(boundsCheckedBinaryReader.ReadUInt32());
+			SetLockPrefixTable(boundsCheckedBinaryReader.ReadUInt32());
+			SetMaximumAllocationSize(boundsCheckedBinaryReader.ReadUInt32());
+			SetVirtualMemoryThreshold(boundsCheckedBinaryReader.ReadUInt32());
+			SetProcessHeapFlags(boundsCheckedBinaryReader.ReadUInt32());
+			SetProcessAffinityMask(boundsCheckedBinaryReader.ReadUInt32());
 		}
 		else
 		{
-			SetDeCommitFreeBlockThreshold(class5_0.ReadUInt64());
-			SetDeCommitTotalFreeThreshold(class5_0.ReadUInt64());
-			SetLockPrefixTable(class5_0.ReadUInt64());
-			SetMaximumAllocationSize(class5_0.ReadUInt64());
-			SetVirtualMemoryThreshold(class5_0.ReadUInt64());
-			SetProcessAffinityMask(class5_0.ReadUInt64());
-			SetProcessHeapFlags(class5_0.ReadUInt32());
+			SetDeCommitFreeBlockThreshold(boundsCheckedBinaryReader.ReadUInt64());
+			SetDeCommitTotalFreeThreshold(boundsCheckedBinaryReader.ReadUInt64());
+			SetLockPrefixTable(boundsCheckedBinaryReader.ReadUInt64());
+			SetMaximumAllocationSize(boundsCheckedBinaryReader.ReadUInt64());
+			SetVirtualMemoryThreshold(boundsCheckedBinaryReader.ReadUInt64());
+			SetProcessAffinityMask(boundsCheckedBinaryReader.ReadUInt64());
+			SetProcessHeapFlags(boundsCheckedBinaryReader.ReadUInt32());
 		}
-		SetCsdVersion(class5_0.ReadUInt16());
-		SetDependentLoadFlags(class5_0.ReadUInt16());
-		if (RecoveredRuntime.Is32BitImage(class154_0))
+		SetCsdVersion(boundsCheckedBinaryReader.ReadUInt16());
+		SetDependentLoadFlags(boundsCheckedBinaryReader.ReadUInt16());
+		if (RecoveredRuntime.Is32BitImage(peImage))
 		{
-			SetEditList(class5_0.ReadUInt32());
-			SetSecurityCookie(class5_0.ReadUInt32());
-			SetSeHandlerTable(class5_0.ReadUInt32());
-			SetSeHandlerCount(class5_0.ReadUInt32());
+			SetEditList(boundsCheckedBinaryReader.ReadUInt32());
+			SetSecurityCookie(boundsCheckedBinaryReader.ReadUInt32());
+			SetSeHandlerTable(boundsCheckedBinaryReader.ReadUInt32());
+			SetSeHandlerCount(boundsCheckedBinaryReader.ReadUInt32());
 		}
 		else
 		{
-			SetEditList(class5_0.ReadUInt64());
-			SetSecurityCookie(class5_0.ReadUInt64());
-			SetSeHandlerTable(class5_0.ReadUInt64());
-			SetSeHandlerCount(class5_0.ReadUInt64());
+			SetEditList(boundsCheckedBinaryReader.ReadUInt64());
+			SetSecurityCookie(boundsCheckedBinaryReader.ReadUInt64());
+			SetSeHandlerTable(boundsCheckedBinaryReader.ReadUInt64());
+			SetSeHandlerCount(boundsCheckedBinaryReader.ReadUInt64());
 		}
 	}
 }

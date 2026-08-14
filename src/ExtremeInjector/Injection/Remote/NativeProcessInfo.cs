@@ -4,41 +4,41 @@ using System.Runtime.CompilerServices;
 public sealed class NativeProcessInfo
 {
 	[CompilerGenerated]
-	internal NativeTypes.Struct39 struct39_0;
+	internal NativeTypes.SystemProcessInformation processRecord;
 
 	[CompilerGenerated]
-	internal List<NativeTypes.Struct40> list_0;
+	internal List<NativeTypes.SystemThreadInformation> threads;
 
 	[SpecialName]
 	[CompilerGenerated]
-	public NativeTypes.Struct39 GetProcessRecord()
+	public NativeTypes.SystemProcessInformation GetProcessRecord()
 	{
-		return struct39_0;
+		return processRecord;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetProcessRecord(NativeTypes.Struct39 struct39_1)
+	public void SetProcessRecord(NativeTypes.SystemProcessInformation systemProcessInformation)
 	{
-		struct39_0 = struct39_1;
+		processRecord = systemProcessInformation;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public List<NativeTypes.Struct40> GetThreads()
+	public List<NativeTypes.SystemThreadInformation> GetThreads()
 	{
-		return list_0;
+		return threads;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetThreads(List<NativeTypes.Struct40> list_1)
+	public void SetThreads(List<NativeTypes.SystemThreadInformation> items)
 	{
-		list_0 = list_1;
+		threads = items;
 	}
 
 	public NativeProcessInfo()
 	{
-		SetThreads(new List<NativeTypes.Struct40>());
+		SetThreads(new List<NativeTypes.SystemThreadInformation>());
 	}
 }

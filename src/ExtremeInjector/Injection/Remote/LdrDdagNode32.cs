@@ -14,8 +14,8 @@ public sealed class LdrDdagNode32 : RemoteLdrDdagNode
 		});
 	}
 
-	public LdrDdagNode32(IntPtr intptr_2, IntPtr intptr_3)
-		: base(intptr_2, intptr_3, bool_2: true)
+	public LdrDdagNode32(IntPtr address, IntPtr address2)
+		: base(address, address2, flag: true)
 	{
 	}
 }

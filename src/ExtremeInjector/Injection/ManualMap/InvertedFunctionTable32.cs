@@ -2,7 +2,7 @@ using System;
 
 public sealed class InvertedFunctionTable32 : RemotePlatformStructure
 {
-	internal static int int_2;
+	internal static int intValue;
 
 	static InvertedFunctionTable32()
 	{
@@ -10,13 +10,13 @@ public sealed class InvertedFunctionTable32 : RemotePlatformStructure
 		{
 			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
 			RecoveredRuntime.CreateRemoteFieldLayout(typeof(uint)),
-			RecoveredRuntime.CreateRemoteArrayFieldLayout(typeof(uint), InvertedFunctionTable32.int_2)
+			RecoveredRuntime.CreateRemoteArrayFieldLayout(typeof(uint), InvertedFunctionTable32.intValue)
 		});
 	}
 
-	public InvertedFunctionTable32(IntPtr intptr_2, IntPtr intptr_3)
-		: base(intptr_3, bool_2: true)
+	public InvertedFunctionTable32(IntPtr address, IntPtr address2)
+		: base(address2, flag2: true)
 	{
-		SetAddress(intptr_2);
+		SetAddress(address);
 	}
 }

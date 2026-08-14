@@ -26,67 +26,67 @@ using Microsoft.Win32;
 public sealed partial class RecoveredRuntime
 {
 
-	internal static void EmitRemoteCallPrologue(RemoteAssembler class47_0)
+	internal static void EmitRemoteCallPrologue(RemoteAssembler remoteAssembler)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			RecoveredRuntime.EmitPushRegister(class47_0.class53_0, AsmJitRuntime.class63_42);
-			RecoveredRuntime.EmitMoveRegisterToRegister(class47_0.class53_0, AsmJitRuntime.class63_42, AsmJitRuntime.class63_41);
+			RecoveredRuntime.EmitPushRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister43);
+			RecoveredRuntime.EmitMoveRegisterToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister43, AsmJitRuntime.gpRegister42);
 			return;
 		}
-		if (class47_0.bool_1)
+		if (remoteAssembler.flag2)
 		{
-			class47_0.class58_1 = RecoveredRuntime.CreateLabel(class47_0.class53_0);
-			AsmJitAssembler class53_ = class47_0.class53_0;
-			class53_.struct19_0.uint_2 = (class53_.struct19_0.uint_2 | 8u);
-			RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateDwordLabelMemory(class47_0.class58_1, 0L), AsmJitRuntime.class63_41);
-			AsmJitAssembler class53_2 = class47_0.class53_0;
-			AsmJitGpRegister class63_ = AsmJitRuntime.class63_41;
+			remoteAssembler.label2 = RecoveredRuntime.CreateLabel(remoteAssembler.assembler);
+			AsmJitAssembler class53_ = remoteAssembler.assembler;
+			class53_.assemblerState.uintValue3 = (class53_.assemblerState.uintValue3 | 8u);
+			RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateDwordLabelMemory(remoteAssembler.label2, 0L), AsmJitRuntime.gpRegister42);
+			AsmJitAssembler assembler = remoteAssembler.assembler;
+			AsmJitGpRegister class63_ = AsmJitRuntime.gpRegister42;
 			AsmJitImmediate class57_ = RecoveredRuntime.CreateImmediate(4294967280u);
-			RecoveredRuntime.EmitAndRegisterImmediate(class63_, class57_, class53_2);
-			RecoveredRuntime.EmbedByte(106, class47_0.class53_0);
-			RecoveredRuntime.EmbedByte(51, class47_0.class53_0);
-			RecoveredRuntime.EmbedByte(232, class47_0.class53_0);
-			RecoveredRuntime.EmbedUInt32(class47_0.class53_0, 0u);
-			RecoveredRuntime.EmbedByte(131, class47_0.class53_0);
-			RecoveredRuntime.EmbedByte(4, class47_0.class53_0);
-			RecoveredRuntime.EmbedByte(36, class47_0.class53_0);
-			RecoveredRuntime.EmbedByte(5, class47_0.class53_0);
-			RecoveredRuntime.EmbedByte(203, class47_0.class53_0);
+			RecoveredRuntime.EmitAndRegisterImmediate(class63_, class57_, assembler);
+			RecoveredRuntime.EmbedByte(106, remoteAssembler.assembler);
+			RecoveredRuntime.EmbedByte(51, remoteAssembler.assembler);
+			RecoveredRuntime.EmbedByte(232, remoteAssembler.assembler);
+			RecoveredRuntime.EmbedUInt32(remoteAssembler.assembler, 0u);
+			RecoveredRuntime.EmbedByte(131, remoteAssembler.assembler);
+			RecoveredRuntime.EmbedByte(4, remoteAssembler.assembler);
+			RecoveredRuntime.EmbedByte(36, remoteAssembler.assembler);
+			RecoveredRuntime.EmbedByte(5, remoteAssembler.assembler);
+			RecoveredRuntime.EmbedByte(203, remoteAssembler.assembler);
 		}
-		RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 8L), AsmJitRuntime.class63_54);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 16L), AsmJitRuntime.class63_55);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 24L), AsmJitRuntime.class63_61);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 32L), AsmJitRuntime.class63_62);
+		RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 8L), AsmJitRuntime.gpRegister55);
+		RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 16L), AsmJitRuntime.gpRegister56);
+		RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 24L), AsmJitRuntime.gpRegister62);
+		RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 32L), AsmJitRuntime.gpRegister63);
 	}
 
-	internal static AsmJitOperand.Struct13 GetLabelOperandData(AsmJitOperand class56_0)
+	internal static AsmJitOperand.RegisterOperandData GetLabelOperandData(AsmJitOperand operand)
 	{
-		return AsmJitOperand.Reinterpret<AsmJitOperand.Struct7, AsmJitOperand.Struct13>(class56_0.GetRawData());
+		return AsmJitOperand.Reinterpret<AsmJitOperand.RawOperandData, AsmJitOperand.RegisterOperandData>(operand.GetRawData());
 	}
 
-	internal static void EmitPushFlags(AsmJitAssembler class53_0)
+	internal static void EmitPushFlags(AsmJitAssembler assembler)
 	{
-		if (!class53_0.Is32BitMode && !AsmJitRuntime.bool_0)
+		if (!assembler.Is32BitMode && !AsmJitRuntime.flag)
 		{
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(11455));
 		}
-		RecoveredRuntime.EmitInstruction(class53_0, AsmJitInstructionId.const_466);
+		RecoveredRuntime.EmitInstruction(assembler, AsmJitInstructionId.PushFlags);
 	}
 
-	internal static void EmitAndRegisterImmediate(AsmJitGpRegister class63_0, AsmJitImmediate class57_0, AsmJitAssembler class53_0)
+	internal static void EmitAndRegisterImmediate(AsmJitGpRegister gpRegister, AsmJitImmediate immediate, AsmJitAssembler assembler)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_10, class63_0, class57_0);
+		EmitInstruction(assembler, AsmJitInstructionId.And, gpRegister, immediate);
 	}
 
-	internal static bool CreateRemoteActivationContext(ManualMapInjector class89_0, ManualMapInjector.Class172 class172_0)
+	internal static bool CreateRemoteActivationContext(ManualMapInjector manualMapInjector, ManualMapInjector.MappingContext mappingContext)
 	{
-		byte[] array = ManualMapInjector.ExtractManifestResource(class172_0.GetImage());
+		byte[] array = ManualMapInjector.ExtractManifestResource(mappingContext.GetImage());
 		if (array == null)
 		{
 			return true;
 		}
-		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(class89_0.GetRemoteProcess())[EncodedStringTable.DecodeString(8503)];
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(manualMapInjector.GetRemoteProcess())[EncodedStringTable.DecodeString(8503)];
 		if (gclass == null)
 		{
 			return true;
@@ -94,21 +94,21 @@ public sealed partial class RecoveredRuntime
 		IntPtr intPtr = RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(12056), false);
 		if (intPtr == IntPtr.Zero)
 		{
-			return RecoveredRuntime.FailManualMap(class89_0, new MissingMethodException(EncodedStringTable.DecodeString(12077)));
+			return RecoveredRuntime.FailManualMap(manualMapInjector, new MissingMethodException(EncodedStringTable.DecodeString(12077)));
 		}
 		string tempFileName = Path.GetTempFileName();
 		try
 		{
 			File.WriteAllBytes(tempFileName, array);
-			IntPtr remoteBuffer = RecoveredRuntime.AllocateRemoteMemory(class89_0, 4096L, NativeTypes.Enum34.flag_2);
+			IntPtr remoteBuffer = RecoveredRuntime.AllocateRemoteMemory(manualMapInjector, 4096L, NativeTypes.MemoryProtection.ExecuteReadWrite);
 			if (remoteBuffer == IntPtr.Zero)
 			{
-				return RecoveredRuntime.FailManualMap(class89_0, new AccessViolationException(EncodedStringTable.DecodeString(12146)));
+				return RecoveredRuntime.FailManualMap(manualMapInjector, new AccessViolationException(EncodedStringTable.DecodeString(12146)));
 			}
 
 			using (AsmJitAssembler assembler = new AsmJitAssembler())
 			{
-				RemoteAssembler remoteAssembler = new RemoteAssembler(assembler, class89_0.GetRemoteProcess());
+				RemoteAssembler remoteAssembler = new RemoteAssembler(assembler, manualMapInjector.GetRemoteProcess());
 				AsmJitLabel activationContextData = RecoveredRuntime.CreateLabel(assembler);
 				RecoveredRuntime.EmitRemoteCallPrologue(remoteAssembler);
 				RecoveredRuntime.EmitRemoteCall(remoteAssembler, new AsmJitImmediate(intPtr), CallingConvention.StdCall, new object[]
@@ -119,11 +119,11 @@ public sealed partial class RecoveredRuntime
 				RecoveredRuntime.EmitRemoteCallEpilogue(remoteAssembler, -1);
 				RecoveredRuntime.AlignRemoteData(remoteAssembler);
 
-				if (!RecoveredRuntime.Is32BitProcess(class89_0.GetRemoteProcess()))
+				if (!RecoveredRuntime.Is32BitProcess(manualMapInjector.GetRemoteProcess()))
 				{
-					NativeTypes.Struct52 activationContext = default(NativeTypes.Struct52);
-					activationContext.int_0 = typeof(NativeTypes.Struct52).SizeOf();
-					activationContext.intptr_0 = remoteBuffer.Add(RecoveredRuntime.GetAssemblerOffset(assembler));
+					NativeTypes.ActivationContext64 activationContext = default(NativeTypes.ActivationContext64);
+					activationContext.intValue = typeof(NativeTypes.ActivationContext64).SizeOf();
+					activationContext.address = remoteBuffer.Add(RecoveredRuntime.GetAssemblerOffset(assembler));
 					RecoveredRuntime.EmbedBytes(assembler, Encoding.Unicode.GetBytes(tempFileName + EncodedStringTable.DecodeString(12219)));
 					RecoveredRuntime.AlignRemoteData(remoteAssembler);
 					RecoveredRuntime.BindLabel(assembler, activationContextData);
@@ -131,16 +131,16 @@ public sealed partial class RecoveredRuntime
 				}
 				else
 				{
-					NativeTypes.Struct51 activationContext = default(NativeTypes.Struct51);
-					activationContext.int_0 = typeof(NativeTypes.Struct51).SizeOf();
-					activationContext.uint_1 = (uint)(remoteBuffer.ToInt32() + RecoveredRuntime.GetAssemblerOffset(assembler));
+					NativeTypes.ActivationContext32 activationContext = default(NativeTypes.ActivationContext32);
+					activationContext.intValue = typeof(NativeTypes.ActivationContext32).SizeOf();
+					activationContext.uintValue2 = (uint)(remoteBuffer.ToInt32() + RecoveredRuntime.GetAssemblerOffset(assembler));
 					RecoveredRuntime.EmbedBytes(assembler, Encoding.Unicode.GetBytes(tempFileName + EncodedStringTable.DecodeString(12219)));
 					RecoveredRuntime.AlignRemoteData(remoteAssembler);
 					RecoveredRuntime.BindLabel(assembler, activationContextData);
 					assembler.EmbedData(activationContext);
 				}
 
-				class172_0.SetRemoteActivationContext(class89_0.Execute<IntPtr>(remoteAssembler, remoteBuffer, true));
+				mappingContext.SetRemoteActivationContext(manualMapInjector.Execute<IntPtr>(remoteAssembler, remoteBuffer, true));
 				return true;
 			}
 		}
@@ -150,34 +150,34 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static void EmitInstruction(AsmJitAssembler class53_0, AsmJitInstructionId enum7_0)
+	internal static void EmitInstruction(AsmJitAssembler assembler, AsmJitInstructionId instructionId)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate7_0(ref class53_0.struct19_0, enum7_0);
+			AsmJitApi.emitInstructionCdecl(ref assembler.assemblerState, instructionId);
 		}
 		else
 		{
-			AsmJitApi.delegate3_0(ref class53_0.struct19_0, enum7_0);
+			AsmJitApi.emitInstructionThisCall(ref assembler.assemblerState, instructionId);
 		}
 	}
 
-	internal static void EmitLowerBoundJump(AsmJitJumpHint enum12_0, AsmJitLabel class58_0, AsmJitAssembler class53_0)
+	internal static void EmitLowerBoundJump(AsmJitJumpHint jumpHint, AsmJitLabel label, AsmJitAssembler assembler)
 	{
-		EmitJumpInstruction(class58_0, enum12_0, class53_0, AsmJitInstructionId.const_225);
+		EmitJumpInstruction(label, jumpHint, assembler, AsmJitInstructionId.JumpLess);
 	}
 
-	internal static void BindLabel(AsmJitAssembler class53_0, AsmJitLabel class58_0)
+	internal static void BindLabel(AsmJitAssembler assembler, AsmJitLabel label)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate27_0(ref class53_0.struct19_0, class58_0);
+			AsmJitApi.bindLabelCdecl(ref assembler.assemblerState, label);
 			return;
 		}
-		AsmJitApi.delegate26_0(ref class53_0.struct19_0, class58_0);
+		AsmJitApi.bindLabelThisCall(ref assembler.assemblerState, label);
 	}
 
-	internal static bool InvokeExport(ModuleEntry module, IntPtr intptr_0, RemoteProcess process)
+	internal static bool InvokeExport(ModuleEntry module, IntPtr address, RemoteProcess process)
 	{
         if (HasProcessExited(process))
         {
@@ -186,21 +186,21 @@ public sealed partial class RecoveredRuntime
 
         ExportedSymbol export;
         using (FileStream stream = new FileStream(module.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
-        using (PeImage image = PeExportReader.ReadExports(stream, module.Path, ownsStream: false, layout: PeImageLayout.const_0))
+        using (PeImage image = PeExportReader.ReadExports(stream, module.Path, ownsStream: false, layout: PeImageLayout.File))
         {
             if (image.GetExports() == null)
             {
                 throw new MissingFieldException(UiText.Get("Message.ExportDirectoryMissing"));
             }
 
-            export = image.GetExports().list_1.FirstOrDefault(candidate => candidate.GetName() == module.ExportName);
+            export = image.GetExports().items2.FirstOrDefault(candidate => candidate.GetName() == module.ExportName);
             if (export == null)
             {
                 throw new MissingMethodException(UiText.Format("Message.ExportNotFound", module.ExportName));
             }
         }
 
-        IntPtr exportAddress = intptr_0.Add(export.GetAddressRva());
+        IntPtr exportAddress = address.Add(export.GetAddressRva());
         if (module.Parameters == null)
         {
             module.Parameters = new List<ExportParameter>();
@@ -266,362 +266,362 @@ public sealed partial class RecoveredRuntime
         }
     }
 
-	internal static void WriteX86RegisterArgument(AsmJitGpRegister class63_0, RemoteAssembler class47_0, RemoteAssembler.Enum6 enum6_0)
+	internal static void WriteX86RegisterArgument(AsmJitGpRegister gpRegister, RemoteAssembler remoteAssembler, RemoteAssembler.X86ArgumentSlot x86ArgumentSlot)
 	{
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_38,
-			AsmJitRuntime.class63_39
+			AsmJitRuntime.gpRegister39,
+			AsmJitRuntime.gpRegister40
 		};
-		if (enum6_0 < RemoteAssembler.Enum6.const_2)
+		if (x86ArgumentSlot < RemoteAssembler.X86ArgumentSlot.FirstStackArgument)
 		{
-			RecoveredRuntime.EmitMoveRegisterToRegister(class47_0.class53_0, array[(int)enum6_0], class63_0);
+			RecoveredRuntime.EmitMoveRegisterToRegister(remoteAssembler.assembler, array[(int)x86ArgumentSlot], gpRegister);
 			return;
 		}
-		RecoveredRuntime.EmitPushRegister(class47_0.class53_0, class63_0);
+		RecoveredRuntime.EmitPushRegister(remoteAssembler.assembler, gpRegister);
 	}
 
-	internal static AsmJitLabel CreateLabel(AsmJitAssembler class53_0)
+	internal static AsmJitLabel CreateLabel(AsmJitAssembler assembler)
 	{
 		AsmJitLabel @class = new AsmJitLabel();
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate25_0(ref class53_0.struct19_0, @class);
+			AsmJitApi.createLabelCdecl(ref assembler.assemblerState, @class);
 		}
 		else
 		{
-			AsmJitApi.delegate24_0(ref class53_0.struct19_0, @class);
+			AsmJitApi.createLabelThisCall(ref assembler.assemblerState, @class);
 		}
 		return @class;
 	}
 
-	internal static bool OperandsNotEqual(AsmJitOperand class56_0, AsmJitOperand class56_1)
+	internal static bool OperandsNotEqual(AsmJitOperand operand, AsmJitOperand operand2)
 	{
-		return !OperandsEqual(class56_0, class56_1);
+		return !OperandsEqual(operand, operand2);
 	}
 
 	internal static AsmJitMemoryManager CreateAsmJitMemoryManager()
 	{
-		return new NativeAsmJitMemoryManager(AsmJitMemoryManager.delegate41_0());
+		return new NativeAsmJitMemoryManager(AsmJitMemoryManager.getGlobalMemoryManager());
 	}
 
-	internal static void EmbedUInt16(AsmJitAssembler class53_0, ushort ushort_0)
+	internal static void EmbedUInt16(AsmJitAssembler assembler, ushort ushortValue)
 	{
-		EmbedData(2L, ushort_0, class53_0);
+		EmbedData(2L, ushortValue, assembler);
 	}
 
-	internal static void EmitPopFlags(AsmJitAssembler class53_0)
+	internal static void EmitPopFlags(AsmJitAssembler assembler)
 	{
-		if (!class53_0.Is32BitMode && AsmJitRuntime.bool_0)
+		if (!assembler.Is32BitMode && AsmJitRuntime.flag)
 		{
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(12411));
 		}
-		RecoveredRuntime.EmitInstruction(class53_0, AsmJitInstructionId.const_422);
+		RecoveredRuntime.EmitInstruction(assembler, AsmJitInstructionId.PopFlags);
 	}
 
-	internal static void EmitRemoteCall(RemoteAssembler class47_0, AsmJitImmediate class57_0, CallingConvention callingConvention_0, object[] object_0)
+	internal static void EmitRemoteCall(RemoteAssembler remoteAssembler, AsmJitImmediate immediate, CallingConvention callingConvention, object[] instanceArray)
 	{
-		DispatchRemoteCallByArchitecture(object_0, callingConvention_0, class57_0, class47_0);
+		DispatchRemoteCallByArchitecture(instanceArray, callingConvention, immediate, remoteAssembler);
 	}
 
-	internal static void EmitPopAllRegisters(AsmJitAssembler class53_0)
+	internal static void EmitPopAllRegisters(AsmJitAssembler assembler)
 	{
-		if (class53_0.Is32BitMode || !AsmJitRuntime.bool_0)
+		if (assembler.Is32BitMode || !AsmJitRuntime.flag)
 		{
-			RecoveredRuntime.EmitInstruction(class53_0, AsmJitInstructionId.const_420);
+			RecoveredRuntime.EmitInstruction(assembler, AsmJitInstructionId.PopAll);
 			return;
 		}
 		throw new InvalidOperationException(EncodedStringTable.DecodeString(12411));
 	}
 
-	internal static void SetVariableOperandData(AsmJitOperand.Struct14 struct14_0, AsmJitOperand class56_0)
+	internal static void SetVariableOperandData(AsmJitOperand.VariableOperandData variableOperandData, AsmJitOperand operand)
 	{
-		class56_0.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.Struct14, AsmJitOperand.Struct7>(struct14_0));
+		operand.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.VariableOperandData, AsmJitOperand.RawOperandData>(variableOperandData));
 	}
 
-	internal static AsmJitImmediate CreateImmediate(sbyte sbyte_0)
+	internal static AsmJitImmediate CreateImmediate(sbyte signedByteValue)
 	{
-		return new AsmJitImmediate((IntPtr)sbyte_0);
+		return new AsmJitImmediate((IntPtr)signedByteValue);
 	}
 
-	internal static IntPtr AssembleRemoteCode(AsmJitAssembler class53_0, RemoteCodeExecutorBase class84_0)
+	internal static IntPtr AssembleRemoteCode(AsmJitAssembler assembler, RemoteCodeExecutorBase remoteCodeExecutorBase)
 	{
-		return AssembleRemoteCode(IntPtr.Zero, class53_0, class84_0);
+		return AssembleRemoteCode(IntPtr.Zero, assembler, remoteCodeExecutorBase);
 	}
 
-	internal static void EmitMoveRegisterToXmm(AsmJitAssembler class53_0, AsmJitXmmRegister class65_0, AsmJitGpRegister class63_0)
+	internal static void EmitMoveRegisterToXmm(AsmJitAssembler assembler, AsmJitXmmRegister xmmRegister, AsmJitGpRegister gpRegister)
 	{
-		if (class53_0.Is32BitMode || AsmJitRuntime.bool_0)
+		if (assembler.Is32BitMode || AsmJitRuntime.flag)
 		{
-			RecoveredRuntime.EmitInstruction(class53_0, AsmJitInstructionId.const_289, class65_0, class63_0);
+			RecoveredRuntime.EmitInstruction(assembler, AsmJitInstructionId.MoveDoubleword, xmmRegister, gpRegister);
 			return;
 		}
 		throw new InvalidOperationException(EncodedStringTable.DecodeString(11455));
 	}
 
-	internal static AsmJitImmediate CreateImmediate(byte byte_0)
+	internal static AsmJitImmediate CreateImmediate(byte byteValue)
 	{
-		return new AsmJitImmediate((IntPtr)byte_0, bool_0: true);
+		return new AsmJitImmediate((IntPtr)byteValue, flag: true);
 	}
 
-	internal static void EmitMoveRegisterToMemory(AsmJitAssembler class53_0, AsmJitMemoryOperand class59_0, AsmJitGpRegister class63_0)
+	internal static void EmitMoveRegisterToMemory(AsmJitAssembler assembler, AsmJitMemoryOperand memoryOperand, AsmJitGpRegister gpRegister)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_266, class59_0, class63_0);
+		EmitInstruction(assembler, AsmJitInstructionId.Move, memoryOperand, gpRegister);
 	}
 
-	internal static AsmJitMemoryOperand CreateDwordLabelMemoryForProcess(long long_0, RemoteAssembler class47_0, AsmJitLabel class58_0)
+	internal static AsmJitMemoryOperand CreateDwordLabelMemoryForProcess(long longValue, RemoteAssembler remoteAssembler, AsmJitLabel label)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			AsmJitAssembler class53_ = class47_0.class53_0;
-			class53_.struct19_0.uint_2 = (class53_.struct19_0.uint_2 | 8u);
+			AsmJitAssembler class53_ = remoteAssembler.assembler;
+			class53_.assemblerState.uintValue3 = (class53_.assemblerState.uintValue3 | 8u);
 		}
-		return RecoveredRuntime.CreateDwordLabelMemory(class58_0, long_0);
+		return RecoveredRuntime.CreateDwordLabelMemory(label, longValue);
 	}
 
-	internal static void EmitPushRegister(AsmJitAssembler class53_0, AsmJitGpRegister class63_0)
+	internal static void EmitPushRegister(AsmJitAssembler assembler, AsmJitGpRegister gpRegister)
 	{
-		EmitInstruction(class63_0, AsmJitInstructionId.const_463, class53_0);
+		EmitInstruction(gpRegister, AsmJitInstructionId.Push, assembler);
 	}
 
-	internal static void DispatchRemoteCallByArchitecture(object[] object_0, CallingConvention callingConvention_0, AsmJitOperand class56_0, RemoteAssembler class47_0)
+	internal static void DispatchRemoteCallByArchitecture(object[] instanceArray, CallingConvention callingConvention, AsmJitOperand operand, RemoteAssembler remoteAssembler)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			RecoveredRuntime.EmitX86FunctionCall(class56_0, object_0, callingConvention_0, class47_0);
+			RecoveredRuntime.EmitX86FunctionCall(operand, instanceArray, callingConvention, remoteAssembler);
 			return;
 		}
-		RecoveredRuntime.EmitX64FunctionCall(class47_0, class56_0, object_0);
+		RecoveredRuntime.EmitX64FunctionCall(remoteAssembler, operand, instanceArray);
 	}
 
-	internal static object CreateLabelReference(RemoteAssembler class47_0, AsmJitLabel class58_0)
+	internal static object CreateLabelReference(RemoteAssembler remoteAssembler, AsmJitLabel label)
 	{
-		return new RemoteAssembler.Class48(class58_0);
+		return new RemoteAssembler.LabelReference(label);
 	}
 
-	internal static void EmitZeroResultJump(AsmJitLabel class58_0, AsmJitJumpHint enum12_0, AsmJitAssembler class53_0)
+	internal static void EmitZeroResultJump(AsmJitLabel label, AsmJitJumpHint jumpHint, AsmJitAssembler assembler)
 	{
-		EmitJumpInstructionWithHint(AsmJitInstructionId.const_240, class58_0, class53_0, enum12_0);
+		EmitJumpInstructionWithHint(AsmJitInstructionId.JumpZero, label, assembler, jumpHint);
 	}
 
-	internal static void EmitPushAllRegisters(AsmJitAssembler class53_0)
+	internal static void EmitPushAllRegisters(AsmJitAssembler assembler)
 	{
-		if (!class53_0.Is32BitMode && AsmJitRuntime.bool_0)
+		if (!assembler.Is32BitMode && AsmJitRuntime.flag)
 		{
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(12411));
 		}
-		RecoveredRuntime.EmitInstruction(class53_0, AsmJitInstructionId.const_465);
+		RecoveredRuntime.EmitInstruction(assembler, AsmJitInstructionId.PushAllDoubleword);
 	}
 
-	internal static void EmbedUInt64(AsmJitAssembler class53_0, ulong ulong_0)
+	internal static void EmbedUInt64(AsmJitAssembler assembler, ulong ulongValue)
 	{
-		EmbedData(8L, ulong_0, class53_0);
+		EmbedData(8L, ulongValue, assembler);
 	}
 
-	internal static void EmbedUInt16(ushort ushort_0, AsmJitAssembler class53_0)
+	internal static void EmbedUInt16(ushort ushortValue, AsmJitAssembler assembler)
 	{
-		EmbedData(2L, ushort_0, class53_0);
+		EmbedData(2L, ushortValue, assembler);
 	}
 
-	internal static void EmitCompareMemoryImmediate(AsmJitImmediate class57_0, AsmJitMemoryOperand class59_0, AsmJitAssembler class53_0)
+	internal static void EmitCompareMemoryImmediate(AsmJitImmediate immediate, AsmJitMemoryOperand memoryOperand, AsmJitAssembler assembler)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_64, class59_0, class57_0);
+		EmitInstruction(assembler, AsmJitInstructionId.Compare, memoryOperand, immediate);
 	}
 
-	internal static void WriteX86ImmediateArgument(RemoteAssembler.Enum6 enum6_0, AsmJitImmediate class57_0, RemoteAssembler class47_0)
+	internal static void WriteX86ImmediateArgument(RemoteAssembler.X86ArgumentSlot x86ArgumentSlot, AsmJitImmediate immediate, RemoteAssembler remoteAssembler)
 	{
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_38,
-			AsmJitRuntime.class63_39
+			AsmJitRuntime.gpRegister39,
+			AsmJitRuntime.gpRegister40
 		};
-		if (enum6_0 >= RemoteAssembler.Enum6.const_2)
+		if (x86ArgumentSlot >= RemoteAssembler.X86ArgumentSlot.FirstStackArgument)
 		{
-			RecoveredRuntime.EmitPushImmediate(class47_0.class53_0, class57_0);
+			RecoveredRuntime.EmitPushImmediate(remoteAssembler.assembler, immediate);
 			return;
 		}
-		if (!(RecoveredRuntime.GetImmediateOperandData(class57_0).intptr_0 == IntPtr.Zero))
+		if (!(RecoveredRuntime.GetImmediateOperandData(immediate).address == IntPtr.Zero))
 		{
-			RecoveredRuntime.EmitMoveImmediateToRegister(class47_0.class53_0, array[(int)enum6_0], class57_0);
+			RecoveredRuntime.EmitMoveImmediateToRegister(remoteAssembler.assembler, array[(int)x86ArgumentSlot], immediate);
 			return;
 		}
-		RecoveredRuntime.EmitXorRegisters(class47_0.class53_0, array[(int)enum6_0], array[(int)enum6_0]);
+		RecoveredRuntime.EmitXorRegisters(remoteAssembler.assembler, array[(int)x86ArgumentSlot], array[(int)x86ArgumentSlot]);
 	}
 
-	internal static void DisposeAssemblerState(AsmJitAssembler class53_0)
+	internal static void DisposeAssemblerState(AsmJitAssembler assembler)
 	{
-		class53_0.struct19_0.struct15_0.Release();
-		class53_0.struct19_0.struct17_0.Release();
-		class53_0.struct19_0.struct18_1.Release();
-		class53_0.struct19_0.struct18_0.Release();
-		class53_0.struct19_0.uint_0 = 0u;
+		assembler.assemblerState.zone.Release();
+		assembler.assemblerState.codeBuffer.Release();
+		assembler.assemblerState.dataBlock2.Release();
+		assembler.assemblerState.dataBlock.Release();
+		assembler.assemblerState.uintValue = 0u;
 	}
 
-	internal static AsmJitMemoryOperand CreateWordLabelMemoryForProcess(AsmJitLabel class58_0, long long_0, RemoteAssembler class47_0)
+	internal static AsmJitMemoryOperand CreateWordLabelMemoryForProcess(AsmJitLabel label, long longValue, RemoteAssembler remoteAssembler)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			AsmJitAssembler class53_ = class47_0.class53_0;
-			class53_.struct19_0.uint_2 = (class53_.struct19_0.uint_2 | 8u);
+			AsmJitAssembler class53_ = remoteAssembler.assembler;
+			class53_.assemblerState.uintValue3 = (class53_.assemblerState.uintValue3 | 8u);
 		}
-		return RecoveredRuntime.CreateWordLabelMemory(class58_0, long_0);
+		return RecoveredRuntime.CreateWordLabelMemory(label, longValue);
 	}
 
-	internal static void EmbedPointer(AsmJitAssembler class53_0, IntPtr intptr_0)
+	internal static void EmbedPointer(AsmJitAssembler assembler, IntPtr address)
 	{
-		EmbedData(IntPtr.Size, intptr_0, class53_0);
+		EmbedData(IntPtr.Size, address, assembler);
 	}
 
-	internal static void WriteX64ImmediateArgument(RemoteAssembler class47_0, AsmJitImmediate class57_0, int int_0, bool bool_0)
+	internal static void WriteX64ImmediateArgument(RemoteAssembler remoteAssembler, AsmJitImmediate immediate, int intValue, bool flag2)
 	{
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_54,
-			AsmJitRuntime.class63_55,
-			AsmJitRuntime.class63_61,
-			AsmJitRuntime.class63_62
+			AsmJitRuntime.gpRegister55,
+			AsmJitRuntime.gpRegister56,
+			AsmJitRuntime.gpRegister62,
+			AsmJitRuntime.gpRegister63
 		};
 		AsmJitXmmRegister[] array2 = new AsmJitXmmRegister[]
 		{
-			AsmJitRuntime.class65_0,
-			AsmJitRuntime.class65_1,
-			AsmJitRuntime.class65_2,
-			AsmJitRuntime.class65_3
+			AsmJitRuntime.xmmRegister,
+			AsmJitRuntime.xmmRegister2,
+			AsmJitRuntime.xmmRegister3,
+			AsmJitRuntime.xmmRegister4
 		};
-		bool flag = RecoveredRuntime.GetImmediateOperandData(class57_0).intptr_0 == IntPtr.Zero;
-		if (int_0 >= 4)
+		bool flag = RecoveredRuntime.GetImmediateOperandData(immediate).address == IntPtr.Zero;
+		if (intValue >= 4)
 		{
 			if (!flag)
 			{
-				RecoveredRuntime.EmitMoveImmediateToRegister(class47_0.class53_0, AsmJitRuntime.class63_53, class57_0);
+				RecoveredRuntime.EmitMoveImmediateToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, immediate);
 			}
 			else
 			{
-				RecoveredRuntime.EmitXorRegisters(class47_0.class53_0, AsmJitRuntime.class63_53, AsmJitRuntime.class63_53);
+				RecoveredRuntime.EmitXorRegisters(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, AsmJitRuntime.gpRegister54);
 			}
-			RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, (long)(int_0 * 8)), AsmJitRuntime.class63_53);
+			RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, (long)(intValue * 8)), AsmJitRuntime.gpRegister54);
 			return;
 		}
-		if (bool_0)
+		if (flag2)
 		{
 			if (flag)
 			{
-				RecoveredRuntime.EmitMoveImmediateToRegister(class47_0.class53_0, AsmJitRuntime.class63_53, class57_0);
+				RecoveredRuntime.EmitMoveImmediateToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, immediate);
 			}
 			else
 			{
-				RecoveredRuntime.EmitXorRegisters(class47_0.class53_0, AsmJitRuntime.class63_53, AsmJitRuntime.class63_53);
+				RecoveredRuntime.EmitXorRegisters(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, AsmJitRuntime.gpRegister54);
 			}
-			RecoveredRuntime.EmitMoveRegisterToXmm(class47_0.class53_0, array2[int_0], AsmJitRuntime.class63_53);
+			RecoveredRuntime.EmitMoveRegisterToXmm(remoteAssembler.assembler, array2[intValue], AsmJitRuntime.gpRegister54);
 			return;
 		}
 		if (flag)
 		{
-			RecoveredRuntime.EmitXorRegisters(class47_0.class53_0, array[int_0], array[int_0]);
+			RecoveredRuntime.EmitXorRegisters(remoteAssembler.assembler, array[intValue], array[intValue]);
 			return;
 		}
-		RecoveredRuntime.EmitMoveImmediateToRegister(class47_0.class53_0, array[int_0], class57_0);
+		RecoveredRuntime.EmitMoveImmediateToRegister(remoteAssembler.assembler, array[intValue], immediate);
 	}
 
-	internal static AsmJitImmediate CreateImmediate(ulong ulong_0)
+	internal static AsmJitImmediate CreateImmediate(ulong ulongValue)
 	{
-		if (!PlatformInfo.bool_0)
+		if (!PlatformInfo.flag)
 		{
-			return new AsmJitImmediate((IntPtr)(int)ulong_0);
+			return new AsmJitImmediate((IntPtr)(int)ulongValue);
 		}
-		return new AsmJitImmediate((IntPtr)(long)ulong_0);
+		return new AsmJitImmediate((IntPtr)(long)ulongValue);
 	}
 
-	internal static AsmJitMemoryOperand CreateDwordLabelMemory(AsmJitLabel class58_0, long long_0)
+	internal static AsmJitMemoryOperand CreateDwordLabelMemory(AsmJitLabel label, long longValue)
 	{
-		return CreateLabelMemoryOperand(4u, (IntPtr)long_0, class58_0);
+		return CreateLabelMemoryOperand(4u, (IntPtr)longValue, label);
 	}
 
-	internal static void EmitMoveImmediateToMemory(AsmJitImmediate class57_0, AsmJitMemoryOperand class59_0, AsmJitAssembler class53_0)
+	internal static void EmitMoveImmediateToMemory(AsmJitImmediate immediate, AsmJitMemoryOperand memoryOperand, AsmJitAssembler assembler)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_266, class59_0, class57_0);
+		EmitInstruction(assembler, AsmJitInstructionId.Move, memoryOperand, immediate);
 	}
 
-	internal static bool RegistersEqual(AsmJitRegister class62_0, AsmJitRegister class62_1)
+	internal static bool RegistersEqual(AsmJitRegister register, AsmJitRegister register2)
 	{
-		return (class62_1 == null && class62_0 == null) || (class62_1 != null && class62_1.Equals(class62_0));
+		return (register2 == null && register == null) || (register2 != null && register2.Equals(register));
 	}
 
-	internal static void EmitInstruction(AsmJitAssembler class53_0, AsmJitInstructionId enum7_0, AsmJitOperand class56_0, AsmJitOperand class56_1)
+	internal static void EmitInstruction(AsmJitAssembler assembler, AsmJitInstructionId instructionId, AsmJitOperand operand, AsmJitOperand operand2)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate9_0(ref class53_0.struct19_0, enum7_0, class56_0, class56_1);
+			AsmJitApi.emitTwoOperandInstructionCdecl(ref assembler.assemblerState, instructionId, operand, operand2);
 			return;
 		}
-		AsmJitApi.delegate5_0(ref class53_0.struct19_0, enum7_0, class56_0, class56_1);
+		AsmJitApi.emitTwoOperandInstructionThisCall(ref assembler.assemblerState, instructionId, operand, operand2);
 	}
 
-	internal static bool ExecuteRemoteAssembler(RemoteCodeExecutor class91_0, AsmJitAssembler class53_0)
+	internal static bool ExecuteRemoteAssembler(RemoteCodeExecutor remoteCodeExecutor, AsmJitAssembler assembler)
 	{
-		return ExecuteAssemblerThread(class53_0, class91_0);
+		return ExecuteAssemblerThread(assembler, remoteCodeExecutor);
 	}
 
-	internal static IntPtr BuildThreadHijackStub32(ThreadHijackInjector class90_0, IntPtr intptr_0, IntPtr intptr_1, byte[] byte_0, out NativeTypes.Struct54 struct54_0, out int int_0, out int int_1, ref int int_2)
+	internal static IntPtr BuildThreadHijackStub32(ThreadHijackInjector threadHijackInjector, IntPtr address, IntPtr address2, byte[] bytes, out NativeTypes.Context32 context32, out int intValue, out int intValue2, ref int intValue3)
 	{
-		struct54_0 = default(NativeTypes.Struct54);
-		int_0 = 0;
-		int_1 = 0;
+		context32 = default(NativeTypes.Context32);
+		intValue = 0;
+		intValue2 = 0;
 		AsmJitAssembler @class = new AsmJitAssembler();
 		@class.Is32BitMode = true;
 		AsmJitAssembler class2 = @class;
 		AsmJitLabel class58_ = RecoveredRuntime.CreateLabel(class2);
-		AsmJitLabel class58_2 = RecoveredRuntime.CreateLabel(class2);
-		AsmJitLabel class58_3 = RecoveredRuntime.CreateLabel(class2);
-		AsmJitLabel class58_4 = RecoveredRuntime.CreateLabel(class2);
-		AsmJitLabel class58_5 = RecoveredRuntime.CreateLabel(class2);
-		RecoveredRuntime.EmitPushImmediate(class2, RecoveredRuntime.CreateImmediate(struct54_0.uint_17));
+		AsmJitLabel label = RecoveredRuntime.CreateLabel(class2);
+		AsmJitLabel label2 = RecoveredRuntime.CreateLabel(class2);
+		AsmJitLabel label3 = RecoveredRuntime.CreateLabel(class2);
+		AsmJitLabel label4 = RecoveredRuntime.CreateLabel(class2);
+		RecoveredRuntime.EmitPushImmediate(class2, RecoveredRuntime.CreateImmediate(context32.uintValue18));
 		RecoveredRuntime.EmitPushAllRegisters(class2);
 		RecoveredRuntime.EmitPushGeneralRegisters(class2);
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_37,
-			AsmJitRuntime.class63_40,
-			AsmJitRuntime.class63_39,
-			AsmJitRuntime.class63_38,
-			AsmJitRuntime.class63_44,
-			AsmJitRuntime.class63_42,
-			AsmJitRuntime.class63_59
+			AsmJitRuntime.gpRegister38,
+			AsmJitRuntime.gpRegister41,
+			AsmJitRuntime.gpRegister40,
+			AsmJitRuntime.gpRegister39,
+			AsmJitRuntime.gpRegister45,
+			AsmJitRuntime.gpRegister43,
+			AsmJitRuntime.gpRegister60
 		};
 		AsmJitGpRegister[] array2 = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_69,
-			AsmJitRuntime.class63_72,
-			AsmJitRuntime.class63_71,
-			AsmJitRuntime.class63_70,
-			AsmJitRuntime.class63_76,
-			AsmJitRuntime.class63_74,
-			AsmJitRuntime.class63_60
+			AsmJitRuntime.gpRegister70,
+			AsmJitRuntime.gpRegister73,
+			AsmJitRuntime.gpRegister72,
+			AsmJitRuntime.gpRegister71,
+			AsmJitRuntime.gpRegister77,
+			AsmJitRuntime.gpRegister75,
+			AsmJitRuntime.gpRegister61
 		};
 		AsmJitGpRegister class63_ = array.GetRandomElement<AsmJitGpRegister>();
 		AsmJitAssembler class3 = class2;
-		class3.struct19_0.uint_2 = (class3.struct19_0.uint_2 | 8u);
+		class3.assemblerState.uintValue3 = (class3.assemblerState.uintValue3 | 8u);
 		RecoveredRuntime.EmitLoadEffectiveAddress(class2, class63_, RecoveredRuntime.CreateDwordLabelMemory(class58_, 0L));
 		RecoveredRuntime.EmitPushRegister(class2, class63_);
 		int num = array.GetRandomIndex<AsmJitGpRegister>();
-		RecoveredRuntime.EmitMoveImmediateToRegister(class2, array[num], new AsmJitImmediate(intptr_0));
+		RecoveredRuntime.EmitMoveImmediateToRegister(class2, array[num], new AsmJitImmediate(address));
 		RecoveredRuntime.EmitCallRegister(array2[num], class2);
 		AsmJitAssembler class4 = class2;
-		class4.struct19_0.uint_2 = (class4.struct19_0.uint_2 | 8u);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class2, RecoveredRuntime.CreateDwordLabelMemory(class58_3, 0L), AsmJitRuntime.class63_37);
-		AsmJitGpRegister class63_2 = AsmJitRuntime.class63_37;
-		AsmJitGpRegister class63_3 = AsmJitRuntime.class63_37;
-		RecoveredRuntime.EmitTestRegisters(class63_2, class63_3, class2);
-		RecoveredRuntime.EmitZeroResultJump(class58_5, AsmJitJumpHint.const_0, class2);
-		RecoveredRuntime.EmitMoveImmediateToRegister(class2, array[num], new AsmJitImmediate(intptr_1));
+		class4.assemblerState.uintValue3 = (class4.assemblerState.uintValue3 | 8u);
+		RecoveredRuntime.EmitMoveRegisterToMemory(class2, RecoveredRuntime.CreateDwordLabelMemory(label2, 0L), AsmJitRuntime.gpRegister38);
+		AsmJitGpRegister gpRegister = AsmJitRuntime.gpRegister38;
+		AsmJitGpRegister gpRegister2 = AsmJitRuntime.gpRegister38;
+		RecoveredRuntime.EmitTestRegisters(gpRegister, gpRegister2, class2);
+		RecoveredRuntime.EmitZeroResultJump(label4, AsmJitJumpHint.None, class2);
+		RecoveredRuntime.EmitMoveImmediateToRegister(class2, array[num], new AsmJitImmediate(address2));
 		RecoveredRuntime.EmitCallRegister(array2[num], class2);
 		AsmJitAssembler class5 = class2;
-		class5.struct19_0.uint_2 = (class5.struct19_0.uint_2 | 8u);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class2, RecoveredRuntime.CreateDwordLabelMemory(class58_4, 0L), AsmJitRuntime.class63_37);
-		RecoveredRuntime.BindLabel(class2, class58_5);
+		class5.assemblerState.uintValue3 = (class5.assemblerState.uintValue3 | 8u);
+		RecoveredRuntime.EmitMoveRegisterToMemory(class2, RecoveredRuntime.CreateDwordLabelMemory(label3, 0L), AsmJitRuntime.gpRegister38);
+		RecoveredRuntime.BindLabel(class2, label4);
 		AsmJitAssembler class6 = class2;
-		class6.struct19_0.uint_2 = (class6.struct19_0.uint_2 | 8u);
-		AsmJitMemoryOperand class59_ = RecoveredRuntime.CreateDwordLabelMemory(class58_2, 0L);
+		class6.assemblerState.uintValue3 = (class6.assemblerState.uintValue3 | 8u);
+		AsmJitMemoryOperand class59_ = RecoveredRuntime.CreateDwordLabelMemory(label, 0L);
 		AsmJitImmediate class57_ = RecoveredRuntime.CreateImmediate(1);
 		RecoveredRuntime.EmitMoveImmediateToMemory(class57_, class59_, class2);
 		RecoveredRuntime.EmitPopAllRegisters(class2);
@@ -629,103 +629,103 @@ public sealed partial class RecoveredRuntime
 		RecoveredRuntime.EmitReturn(class2);
 		RecoveredRuntime.AlignCode(class2, 4u);
 		RecoveredRuntime.BindLabel(class2, class58_);
-		RecoveredRuntime.EmbedBytes(class2, byte_0);
+		RecoveredRuntime.EmbedBytes(class2, bytes);
 		RecoveredRuntime.AlignCode(class2, 4u);
-		RecoveredRuntime.BindLabel(class2, class58_4);
-		int_2 = RecoveredRuntime.GetAssemblerOffset(class2);
+		RecoveredRuntime.BindLabel(class2, label3);
+		intValue3 = RecoveredRuntime.GetAssemblerOffset(class2);
 		RecoveredRuntime.EmbedUInt32(class2, 0u);
 		RecoveredRuntime.AlignCode(class2, 4u);
-		RecoveredRuntime.BindLabel(class2, class58_3);
-		int_1 = RecoveredRuntime.GetAssemblerOffset(class2);
+		RecoveredRuntime.BindLabel(class2, label2);
+		intValue2 = RecoveredRuntime.GetAssemblerOffset(class2);
 		RecoveredRuntime.EmbedUInt32(class2, 0u);
-		RecoveredRuntime.BindLabel(class2, class58_2);
-		int_0 = RecoveredRuntime.GetAssemblerOffset(class2);
+		RecoveredRuntime.BindLabel(class2, label);
+		intValue = RecoveredRuntime.GetAssemblerOffset(class2);
 		RecoveredRuntime.EmbedUInt32(class2, 0u);
-		return RecoveredRuntime.AssembleRemoteCode(class2, class90_0);
+		return RecoveredRuntime.AssembleRemoteCode(class2, threadHijackInjector);
 	}
 
-	internal static void EmitJumpInstructionWithHint(AsmJitInstructionId enum7_0, AsmJitLabel class58_0, AsmJitAssembler class53_0, AsmJitJumpHint enum12_0)
+	internal static void EmitJumpInstructionWithHint(AsmJitInstructionId instructionId, AsmJitLabel label, AsmJitAssembler assembler, AsmJitJumpHint jumpHint)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate23_1(ref class53_0.struct19_0, enum7_0, class58_0, enum12_0);
+			AsmJitApi.emitJumpCdecl2(ref assembler.assemblerState, instructionId, label, jumpHint);
 			return;
 		}
-		AsmJitApi.delegate22_1(ref class53_0.struct19_0, enum7_0, class58_0, enum12_0);
+		AsmJitApi.emitJumpThisCall2(ref assembler.assemblerState, instructionId, label, jumpHint);
 	}
 
-	internal static void SetImmediateOperandData(AsmJitOperand class56_0, AsmJitOperand.Struct12 struct12_0)
+	internal static void SetImmediateOperandData(AsmJitOperand operand, AsmJitOperand.LabelOperandData labelOperandData)
 	{
-		class56_0.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.Struct12, AsmJitOperand.Struct7>(struct12_0));
+		operand.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.LabelOperandData, AsmJitOperand.RawOperandData>(labelOperandData));
 	}
 
-	internal static AsmJitMemoryOperand CreateLabelMemoryOperand(uint uint_0, IntPtr intptr_0, AsmJitLabel class58_0)
+	internal static AsmJitMemoryOperand CreateLabelMemoryOperand(uint uintValue, IntPtr address, AsmJitLabel label)
 	{
 		AsmJitMemoryOperand @class = new AsmJitMemoryOperand();
-		AsmJitApi.delegate28_0(@class, class58_0, intptr_0, uint_0);
+		AsmJitApi.createLabelMemoryOperand(@class, label, address, uintValue);
 		return @class;
 	}
 
-	internal static void EmitXorRegisters(AsmJitAssembler class53_0, AsmJitGpRegister class63_0, AsmJitGpRegister class63_1)
+	internal static void EmitXorRegisters(AsmJitAssembler assembler, AsmJitGpRegister gpRegister, AsmJitGpRegister gpRegister2)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_575, class63_0, class63_1);
+		EmitInstruction(assembler, AsmJitInstructionId.Xor, gpRegister, gpRegister2);
 	}
 
-	internal static AsmJitImmediate CreateImmediate(int int_0)
+	internal static AsmJitImmediate CreateImmediate(int intValue)
 	{
-		return new AsmJitImmediate((IntPtr)int_0);
+		return new AsmJitImmediate((IntPtr)intValue);
 	}
 
-	internal static void EmitAddMemoryToRegister(AsmJitMemoryOperand class59_0, AsmJitGpRegister class63_0, AsmJitAssembler class53_0)
+	internal static void EmitAddMemoryToRegister(AsmJitMemoryOperand memoryOperand, AsmJitGpRegister gpRegister, AsmJitAssembler assembler)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_1, class63_0, class59_0);
+		EmitInstruction(assembler, AsmJitInstructionId.Add, gpRegister, memoryOperand);
 	}
 
-	internal static void EmitPopRegister(AsmJitAssembler class53_0, AsmJitGpRegister class63_0)
+	internal static void EmitPopRegister(AsmJitAssembler assembler, AsmJitGpRegister gpRegister)
 	{
-		EmitInstruction(class63_0, AsmJitInstructionId.const_419, class53_0);
+		EmitInstruction(gpRegister, AsmJitInstructionId.Pop, assembler);
 	}
 
-	internal static void EmitPushGeneralRegisters(AsmJitAssembler class53_0)
+	internal static void EmitPushGeneralRegisters(AsmJitAssembler assembler)
 	{
-		if (class53_0.Is32BitMode || !AsmJitRuntime.bool_0)
+		if (assembler.Is32BitMode || !AsmJitRuntime.flag)
 		{
-			RecoveredRuntime.EmitInstruction(class53_0, AsmJitInstructionId.const_464);
+			RecoveredRuntime.EmitInstruction(assembler, AsmJitInstructionId.PushAll);
 			return;
 		}
 		throw new InvalidOperationException(EncodedStringTable.DecodeString(12411));
 	}
 
-	internal static IntPtr BuildThreadHijackStub64(ThreadHijackInjector class90_0, IntPtr intptr_0, IntPtr intptr_1, byte[] byte_0, out NativeTypes.Struct55 struct55_0, out int int_0, out int int_1, ref int int_2)
+	internal static IntPtr BuildThreadHijackStub64(ThreadHijackInjector threadHijackInjector, IntPtr address, IntPtr address2, byte[] bytes, out NativeTypes.Context64 context64, out int intValue, out int intValue2, ref int intValue3)
 	{
-		struct55_0 = default(NativeTypes.Struct55);
-		int_0 = 0;
-		int_1 = 0;
+		context64 = default(NativeTypes.Context64);
+		intValue = 0;
+		intValue2 = 0;
 		AsmJitAssembler class53_ = new AsmJitAssembler();
 		AsmJitLabel class58_ = RecoveredRuntime.CreateLabel(class53_);
-		AsmJitLabel class58_2 = RecoveredRuntime.CreateLabel(class53_);
-		AsmJitLabel class58_3 = RecoveredRuntime.CreateLabel(class53_);
-		AsmJitLabel class58_4 = RecoveredRuntime.CreateLabel(class53_);
-		AsmJitLabel class58_5 = RecoveredRuntime.CreateLabel(class53_);
-		AsmJitLabel class58_6 = RecoveredRuntime.CreateLabel(class53_);
-		RecoveredRuntime.EmitPushMemory(class53_, RecoveredRuntime.CreateQwordLabelMemory(class58_4, 0L));
+		AsmJitLabel label = RecoveredRuntime.CreateLabel(class53_);
+		AsmJitLabel label2 = RecoveredRuntime.CreateLabel(class53_);
+		AsmJitLabel label3 = RecoveredRuntime.CreateLabel(class53_);
+		AsmJitLabel label4 = RecoveredRuntime.CreateLabel(class53_);
+		AsmJitLabel label5 = RecoveredRuntime.CreateLabel(class53_);
+		RecoveredRuntime.EmitPushMemory(class53_, RecoveredRuntime.CreateQwordLabelMemory(label3, 0L));
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_53,
-			AsmJitRuntime.class63_54,
-			AsmJitRuntime.class63_55,
-			AsmJitRuntime.class63_56,
-			AsmJitRuntime.class63_58,
-			AsmJitRuntime.class63_59,
-			AsmJitRuntime.class63_60,
-			AsmJitRuntime.class63_61,
-			AsmJitRuntime.class63_62,
-			AsmJitRuntime.class63_63,
-			AsmJitRuntime.class63_64,
-			AsmJitRuntime.class63_65,
-			AsmJitRuntime.class63_66,
-			AsmJitRuntime.class63_67,
-			AsmJitRuntime.class63_68
+			AsmJitRuntime.gpRegister54,
+			AsmJitRuntime.gpRegister55,
+			AsmJitRuntime.gpRegister56,
+			AsmJitRuntime.gpRegister57,
+			AsmJitRuntime.gpRegister59,
+			AsmJitRuntime.gpRegister60,
+			AsmJitRuntime.gpRegister61,
+			AsmJitRuntime.gpRegister62,
+			AsmJitRuntime.gpRegister63,
+			AsmJitRuntime.gpRegister64,
+			AsmJitRuntime.gpRegister65,
+			AsmJitRuntime.gpRegister66,
+			AsmJitRuntime.gpRegister67,
+			AsmJitRuntime.gpRegister68,
+			AsmJitRuntime.gpRegister69
 		};
 		array.Shuffle<AsmJitGpRegister>();
 		RecoveredRuntime.EmitPushFlags(class53_);
@@ -733,659 +733,659 @@ public sealed partial class RecoveredRuntime
 		{
 			RecoveredRuntime.EmitPushRegister(class53_, class63_);
 		}
-		ulong num = (struct55_0.ulong_16 - (ulong)((long)(IntPtr.Size * (2 + array.Length)))) % 16UL;
+		ulong num = (context64.ulongValue17 - (ulong)((long)(IntPtr.Size * (2 + array.Length)))) % 16UL;
 		if (num != 0UL)
 		{
-			AsmJitGpRegister class63_2 = AsmJitRuntime.class63_57;
+			AsmJitGpRegister gpRegister = AsmJitRuntime.gpRegister58;
 			AsmJitImmediate class57_ = RecoveredRuntime.CreateImmediate(num);
-			RecoveredRuntime.EmitSubtractRegisterImmediate(class63_2, class57_, class53_);
+			RecoveredRuntime.EmitSubtractRegisterImmediate(gpRegister, class57_, class53_);
 		}
-		RecoveredRuntime.EmitLoadEffectiveAddress(class53_, AsmJitRuntime.class63_54, RecoveredRuntime.CreateQwordLabelMemory(class58_, 0L));
-		AsmJitGpRegister class63_3 = new AsmJitGpRegister[]
+		RecoveredRuntime.EmitLoadEffectiveAddress(class53_, AsmJitRuntime.gpRegister55, RecoveredRuntime.CreateQwordLabelMemory(class58_, 0L));
+		AsmJitGpRegister gpRegister2 = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_53,
-			AsmJitRuntime.class63_55,
-			AsmJitRuntime.class63_56,
-			AsmJitRuntime.class63_58,
-			AsmJitRuntime.class63_59,
-			AsmJitRuntime.class63_60
+			AsmJitRuntime.gpRegister54,
+			AsmJitRuntime.gpRegister56,
+			AsmJitRuntime.gpRegister57,
+			AsmJitRuntime.gpRegister59,
+			AsmJitRuntime.gpRegister60,
+			AsmJitRuntime.gpRegister61
 		}.GetRandomElement<AsmJitGpRegister>();
-		RecoveredRuntime.EmitMoveImmediateToRegister(class53_, class63_3, new AsmJitImmediate(intptr_0));
-		RecoveredRuntime.EmitCallRegister(class63_3, class53_);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class53_, RecoveredRuntime.CreateQwordLabelMemory(class58_3, 0L), AsmJitRuntime.class63_53);
-		AsmJitGpRegister class63_4 = AsmJitRuntime.class63_53;
-		AsmJitGpRegister class63_5 = AsmJitRuntime.class63_53;
-		RecoveredRuntime.EmitTestRegisters(class63_4, class63_5, class53_);
-		RecoveredRuntime.EmitZeroResultJump(class58_5, AsmJitJumpHint.const_0, class53_);
-		RecoveredRuntime.EmitMoveImmediateToRegister(class53_, class63_3, new AsmJitImmediate(intptr_1));
-		RecoveredRuntime.EmitCallRegister(class63_3, class53_);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class53_, RecoveredRuntime.CreateDwordLabelMemory(class58_6, 0L), AsmJitRuntime.class63_37);
-		RecoveredRuntime.BindLabel(class53_, class58_5);
-		AsmJitMemoryOperand class59_ = RecoveredRuntime.CreateDwordLabelMemory(class58_2, 0L);
-		AsmJitImmediate class57_2 = RecoveredRuntime.CreateImmediate(1);
-		RecoveredRuntime.EmitMoveImmediateToMemory(class57_2, class59_, class53_);
+		RecoveredRuntime.EmitMoveImmediateToRegister(class53_, gpRegister2, new AsmJitImmediate(address));
+		RecoveredRuntime.EmitCallRegister(gpRegister2, class53_);
+		RecoveredRuntime.EmitMoveRegisterToMemory(class53_, RecoveredRuntime.CreateQwordLabelMemory(label2, 0L), AsmJitRuntime.gpRegister54);
+		AsmJitGpRegister gpRegister3 = AsmJitRuntime.gpRegister54;
+		AsmJitGpRegister gpRegister4 = AsmJitRuntime.gpRegister54;
+		RecoveredRuntime.EmitTestRegisters(gpRegister3, gpRegister4, class53_);
+		RecoveredRuntime.EmitZeroResultJump(label4, AsmJitJumpHint.None, class53_);
+		RecoveredRuntime.EmitMoveImmediateToRegister(class53_, gpRegister2, new AsmJitImmediate(address2));
+		RecoveredRuntime.EmitCallRegister(gpRegister2, class53_);
+		RecoveredRuntime.EmitMoveRegisterToMemory(class53_, RecoveredRuntime.CreateDwordLabelMemory(label5, 0L), AsmJitRuntime.gpRegister38);
+		RecoveredRuntime.BindLabel(class53_, label4);
+		AsmJitMemoryOperand class59_ = RecoveredRuntime.CreateDwordLabelMemory(label, 0L);
+		AsmJitImmediate immediate = RecoveredRuntime.CreateImmediate(1);
+		RecoveredRuntime.EmitMoveImmediateToMemory(immediate, class59_, class53_);
 		if (num != 0UL)
 		{
-			RecoveredRuntime.EmitAddRegisterImmediate(class53_, AsmJitRuntime.class63_57, RecoveredRuntime.CreateImmediate(num));
+			RecoveredRuntime.EmitAddRegisterImmediate(class53_, AsmJitRuntime.gpRegister58, RecoveredRuntime.CreateImmediate(num));
 		}
 		Array.Reverse(array);
-		foreach (AsmJitGpRegister class63_6 in array)
+		foreach (AsmJitGpRegister gpRegister5 in array)
 		{
-			RecoveredRuntime.EmitPopRegister(class53_, class63_6);
+			RecoveredRuntime.EmitPopRegister(class53_, gpRegister5);
 		}
 		RecoveredRuntime.EmitPopFlags64(class53_);
 		RecoveredRuntime.EmitReturn(class53_);
 		RecoveredRuntime.AlignCode(class53_, 8u);
 		RecoveredRuntime.BindLabel(class53_, class58_);
-		RecoveredRuntime.EmbedBytes(class53_, byte_0);
+		RecoveredRuntime.EmbedBytes(class53_, bytes);
 		RecoveredRuntime.AlignCode(class53_, 8u);
-		RecoveredRuntime.BindLabel(class53_, class58_4);
-		RecoveredRuntime.EmbedUInt64(class53_, struct55_0.ulong_28);
-		RecoveredRuntime.BindLabel(class53_, class58_3);
-		int_1 = RecoveredRuntime.GetAssemblerOffset(class53_);
+		RecoveredRuntime.BindLabel(class53_, label3);
+		RecoveredRuntime.EmbedUInt64(class53_, context64.ulongValue29);
+		RecoveredRuntime.BindLabel(class53_, label2);
+		intValue2 = RecoveredRuntime.GetAssemblerOffset(class53_);
 		RecoveredRuntime.EmbedPointer(class53_, IntPtr.Zero);
 		RecoveredRuntime.AlignCode(class53_, 8u);
-		int_2 = RecoveredRuntime.GetAssemblerOffset(class53_);
-		RecoveredRuntime.BindLabel(class53_, class58_6);
+		intValue3 = RecoveredRuntime.GetAssemblerOffset(class53_);
+		RecoveredRuntime.BindLabel(class53_, label5);
 		RecoveredRuntime.EmbedUInt32(class53_, 0u);
 		RecoveredRuntime.AlignCode(class53_, 8u);
-		RecoveredRuntime.BindLabel(class53_, class58_2);
-		int_0 = RecoveredRuntime.GetAssemblerOffset(class53_);
+		RecoveredRuntime.BindLabel(class53_, label);
+		intValue = RecoveredRuntime.GetAssemblerOffset(class53_);
 		RecoveredRuntime.EmbedUInt32(class53_, 0u);
-		return RecoveredRuntime.AssembleRemoteCode(class53_, class90_0);
+		return RecoveredRuntime.AssembleRemoteCode(class53_, threadHijackInjector);
 	}
 
-	internal static void WriteX86Argument(object object_0, RemoteAssembler class47_0, RemoteAssembler.Enum6 enum6_0)
+	internal static void WriteX86Argument(object instance, RemoteAssembler remoteAssembler, RemoteAssembler.X86ArgumentSlot x86ArgumentSlot)
 	{
-		RemoteAssembler.Class48 @class = object_0 as RemoteAssembler.Class48;
+		RemoteAssembler.LabelReference @class = instance as RemoteAssembler.LabelReference;
 		if (@class != null)
 		{
-			RecoveredRuntime.EmitLoadEffectiveAddress(class47_0.class53_0, AsmJitRuntime.class63_37, RecoveredRuntime.CreatePointerLabelMemory(class47_0, @class.GetLabel(), 0L));
-			RecoveredRuntime.WriteX86RegisterArgument(AsmJitRuntime.class63_37, class47_0, enum6_0);
+			RecoveredRuntime.EmitLoadEffectiveAddress(remoteAssembler.assembler, AsmJitRuntime.gpRegister38, RecoveredRuntime.CreatePointerLabelMemory(remoteAssembler, @class.GetLabel(), 0L));
+			RecoveredRuntime.WriteX86RegisterArgument(AsmJitRuntime.gpRegister38, remoteAssembler, x86ArgumentSlot);
 			return;
 		}
-		AsmJitImmediate class2 = object_0.ToImmediate();
+		AsmJitImmediate class2 = instance.ToImmediate();
 		if (RecoveredRuntime.OperandsNotEqual(class2, null))
 		{
-			RecoveredRuntime.WriteX86ImmediateArgument(enum6_0, class2, class47_0);
+			RecoveredRuntime.WriteX86ImmediateArgument(x86ArgumentSlot, class2, remoteAssembler);
 			return;
 		}
-		AsmJitGpRegister class3 = object_0 as AsmJitGpRegister;
+		AsmJitGpRegister class3 = instance as AsmJitGpRegister;
 		if (RecoveredRuntime.RegistersNotEqual(null, class3))
 		{
-			RecoveredRuntime.WriteX86RegisterArgument(class3, class47_0, enum6_0);
+			RecoveredRuntime.WriteX86RegisterArgument(class3, remoteAssembler, x86ArgumentSlot);
 			return;
 		}
-		AsmJitMemoryOperand class59_ = object_0 as AsmJitMemoryOperand;
+		AsmJitMemoryOperand class59_ = instance as AsmJitMemoryOperand;
 		if (!RecoveredRuntime.MemoryOperandsNotEqual(class59_, null))
 		{
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(13555));
 		}
-		RecoveredRuntime.WriteX86MemoryArgument(enum6_0, class47_0, class59_);
+		RecoveredRuntime.WriteX86MemoryArgument(x86ArgumentSlot, remoteAssembler, class59_);
 	}
 
-	internal static AsmJitOperand.Struct9 GetRegisterOperandData(AsmJitOperand class56_0)
+	internal static AsmJitOperand.ImmediateOperandData GetRegisterOperandData(AsmJitOperand operand)
 	{
-		return AsmJitOperand.Reinterpret<AsmJitOperand.Struct7, AsmJitOperand.Struct9>(class56_0.GetRawData());
+		return AsmJitOperand.Reinterpret<AsmJitOperand.RawOperandData, AsmJitOperand.ImmediateOperandData>(operand.GetRawData());
 	}
 
-	internal static void ReleaseAsmJitAllocation(IntPtr intptr_0)
+	internal static void ReleaseAsmJitAllocation(IntPtr address)
 	{
-		if (AsmJitRuntime.delegate0_0 == null)
+		if (AsmJitRuntime.releaseNativeLibrary == null)
 		{
-			AsmJitRuntime.delegate0_0 = RecoveredRuntime.ResolveAsmJitAllocationDelegate();
+			AsmJitRuntime.releaseNativeLibrary = RecoveredRuntime.ResolveAsmJitAllocationDelegate();
 		}
-		AsmJitRuntime.delegate0_0(intptr_0);
+		AsmJitRuntime.releaseNativeLibrary(address);
 	}
 
-	internal static void EmitSubtractRegisterImmediate(AsmJitGpRegister class63_0, AsmJitImmediate class57_0, AsmJitAssembler class53_0)
+	internal static void EmitSubtractRegisterImmediate(AsmJitGpRegister gpRegister, AsmJitImmediate immediate, AsmJitAssembler assembler)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_560, class63_0, class57_0);
+		EmitInstruction(assembler, AsmJitInstructionId.Subtract, gpRegister, immediate);
 	}
 
-	internal static AsmJitImmediate CreateImmediate(long long_0)
+	internal static AsmJitImmediate CreateImmediate(long longValue)
 	{
-		if (!PlatformInfo.bool_0)
+		if (!PlatformInfo.flag)
 		{
-			return new AsmJitImmediate((IntPtr)(int)long_0);
+			return new AsmJitImmediate((IntPtr)(int)longValue);
 		}
-		return new AsmJitImmediate((IntPtr)long_0);
+		return new AsmJitImmediate((IntPtr)longValue);
 	}
 
-	internal static void WriteX64RegisterArgument(int int_0, RemoteAssembler class47_0, AsmJitGpRegister class63_0)
+	internal static void WriteX64RegisterArgument(int intValue, RemoteAssembler remoteAssembler, AsmJitGpRegister gpRegister)
 	{
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_54,
-			AsmJitRuntime.class63_55,
-			AsmJitRuntime.class63_61,
-			AsmJitRuntime.class63_62
+			AsmJitRuntime.gpRegister55,
+			AsmJitRuntime.gpRegister56,
+			AsmJitRuntime.gpRegister62,
+			AsmJitRuntime.gpRegister63
 		};
-		if (int_0 < 4)
+		if (intValue < 4)
 		{
-			RecoveredRuntime.EmitMoveRegisterToRegister(class47_0.class53_0, array[int_0], class63_0);
+			RecoveredRuntime.EmitMoveRegisterToRegister(remoteAssembler.assembler, array[intValue], gpRegister);
 			return;
 		}
-		RecoveredRuntime.EmitMoveRegisterToRegister(class47_0.class53_0, AsmJitRuntime.class63_53, class63_0);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, (long)(int_0 * 8)), AsmJitRuntime.class63_53);
+		RecoveredRuntime.EmitMoveRegisterToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, gpRegister);
+		RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, (long)(intValue * 8)), AsmJitRuntime.gpRegister54);
 	}
 
-	internal static void AlignCode(AsmJitAssembler class53_0, uint uint_0)
+	internal static void AlignCode(AsmJitAssembler assembler, uint uintValue)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate39_0(ref class53_0.struct19_0, uint_0);
+			AsmJitApi.alignAssemblerCdecl(ref assembler.assemblerState, uintValue);
 			return;
 		}
-		AsmJitApi.delegate38_0(ref class53_0.struct19_0, uint_0);
+		AsmJitApi.alignAssemblerThisCall(ref assembler.assemblerState, uintValue);
 	}
 
-	internal static void EmitCompareRegisters(AsmJitGpRegister class63_0, AsmJitAssembler class53_0, AsmJitGpRegister class63_1)
+	internal static void EmitCompareRegisters(AsmJitGpRegister gpRegister, AsmJitAssembler assembler, AsmJitGpRegister gpRegister2)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_64, class63_0, class63_1);
+		EmitInstruction(assembler, AsmJitInstructionId.Compare, gpRegister, gpRegister2);
 	}
 
-	internal static AsmJitOperand.Struct8 GetBaseOperandData(AsmJitOperand class56_0)
+	internal static AsmJitOperand.BaseOperandData GetBaseOperandData(AsmJitOperand operand)
 	{
-		return AsmJitOperand.Reinterpret<AsmJitOperand.Struct7, AsmJitOperand.Struct8>(class56_0.GetRawData());
+		return AsmJitOperand.Reinterpret<AsmJitOperand.RawOperandData, AsmJitOperand.BaseOperandData>(operand.GetRawData());
 	}
 
-	internal static AsmJitOperand.Struct12 GetImmediateOperandData(AsmJitOperand class56_0)
+	internal static AsmJitOperand.LabelOperandData GetImmediateOperandData(AsmJitOperand operand)
 	{
-		return AsmJitOperand.Reinterpret<AsmJitOperand.Struct7, AsmJitOperand.Struct12>(class56_0.GetRawData());
+		return AsmJitOperand.Reinterpret<AsmJitOperand.RawOperandData, AsmJitOperand.LabelOperandData>(operand.GetRawData());
 	}
 
-	internal static void EmitUpperBoundJump(AsmJitJumpHint enum12_0, AsmJitLabel class58_0, AsmJitAssembler class53_0)
+	internal static void EmitUpperBoundJump(AsmJitJumpHint jumpHint, AsmJitLabel label, AsmJitAssembler assembler)
 	{
-		EmitJumpInstruction(class58_0, enum12_0, class53_0, AsmJitInstructionId.const_223);
+		EmitJumpInstruction(label, jumpHint, assembler, AsmJitInstructionId.JumpGreater);
 	}
 
-	internal static AsmJitMemoryOperand CreatePointerLabelMemory(RemoteAssembler class47_0, AsmJitLabel class58_0, long long_0)
+	internal static AsmJitMemoryOperand CreatePointerLabelMemory(RemoteAssembler remoteAssembler, AsmJitLabel label, long longValue)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			class47_0.class53_0.struct19_0.uint_2 |= 8u;
-			return CreateDwordLabelMemory(class58_0, long_0);
+			remoteAssembler.assembler.assemblerState.uintValue3 |= 8u;
+			return CreateDwordLabelMemory(label, longValue);
 		}
-		return CreateQwordLabelMemory(class58_0, long_0);
+		return CreateQwordLabelMemory(label, longValue);
 	}
 
-	internal static void EmbedInt32(AsmJitAssembler class53_0, int int_0)
+	internal static void EmbedInt32(AsmJitAssembler assembler, int intValue)
 	{
-		EmbedData(4L, int_0, class53_0);
+		EmbedData(4L, intValue, assembler);
 	}
 
-	internal static int DisassembleInstruction(ref BeaEngineDisasm struct31_0)
+	internal static int DisassembleInstruction(ref BeaEngineDisasm disasm)
 	{
-		return BeaEngineDisassembler.delegate44_0(ref struct31_0);
+		return BeaEngineDisassembler.disassembleInstruction(ref disasm);
 	}
 
-	internal static void EmitRemoteCallEpilogue(RemoteAssembler class47_0, int int_0)
+	internal static void EmitRemoteCallEpilogue(RemoteAssembler remoteAssembler, int intValue)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			RecoveredRuntime.EmitMoveRegisterToRegister(class47_0.class53_0, AsmJitRuntime.class63_41, AsmJitRuntime.class63_42);
-			RecoveredRuntime.EmitPopRegister(class47_0.class53_0, AsmJitRuntime.class63_42);
-			RecoveredRuntime.EmitReturnAndPop(class47_0.class53_0, RecoveredRuntime.CreateImmediate((int_0 == -1) ? 4 : int_0));
+			RecoveredRuntime.EmitMoveRegisterToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister42, AsmJitRuntime.gpRegister43);
+			RecoveredRuntime.EmitPopRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister43);
+			RecoveredRuntime.EmitReturnAndPop(remoteAssembler.assembler, RecoveredRuntime.CreateImmediate((intValue == -1) ? 4 : intValue));
 		}
 		else
 		{
-			RecoveredRuntime.EmitMoveMemoryToRegister(class47_0.class53_0, AsmJitRuntime.class63_54, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 8L));
-			RecoveredRuntime.EmitMoveMemoryToRegister(class47_0.class53_0, AsmJitRuntime.class63_55, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 16L));
-			RecoveredRuntime.EmitMoveMemoryToRegister(class47_0.class53_0, AsmJitRuntime.class63_61, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 24L));
-			RecoveredRuntime.EmitMoveMemoryToRegister(class47_0.class53_0, AsmJitRuntime.class63_62, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, 32L));
-			if (class47_0.bool_1)
+			RecoveredRuntime.EmitMoveMemoryToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister55, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 8L));
+			RecoveredRuntime.EmitMoveMemoryToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister56, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 16L));
+			RecoveredRuntime.EmitMoveMemoryToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister62, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 24L));
+			RecoveredRuntime.EmitMoveMemoryToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister63, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, 32L));
+			if (remoteAssembler.flag2)
 			{
-				RecoveredRuntime.EmbedByte(232, class47_0.class53_0);
-				RecoveredRuntime.EmbedUInt32(class47_0.class53_0, 0u);
-				RecoveredRuntime.EmbedByte(199, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(68, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(36, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(4, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(35, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(0, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(0, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(0, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(131, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(4, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(36, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(13, class47_0.class53_0);
-				RecoveredRuntime.EmbedByte(203, class47_0.class53_0);
-				AsmJitAssembler class53_ = class47_0.class53_0;
-				class53_.struct19_0.uint_2 = (class53_.struct19_0.uint_2 | 8u);
-				RecoveredRuntime.EmitMoveMemoryToRegister(class47_0.class53_0, AsmJitRuntime.class63_41, RecoveredRuntime.CreateDwordLabelMemory(class47_0.class58_1, 0L));
-				RecoveredRuntime.EmitReturnAndPop(class47_0.class53_0, RecoveredRuntime.CreateImmediate((int_0 == -1) ? 4 : int_0));
-				RecoveredRuntime.AlignRemoteData(class47_0);
-				RecoveredRuntime.BindLabel(class47_0.class53_0, class47_0.class58_1);
-				RecoveredRuntime.EmbedUInt32(class47_0.class53_0, 0u);
+				RecoveredRuntime.EmbedByte(232, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedUInt32(remoteAssembler.assembler, 0u);
+				RecoveredRuntime.EmbedByte(199, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(68, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(36, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(4, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(35, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(0, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(0, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(0, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(131, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(4, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(36, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(13, remoteAssembler.assembler);
+				RecoveredRuntime.EmbedByte(203, remoteAssembler.assembler);
+				AsmJitAssembler class53_ = remoteAssembler.assembler;
+				class53_.assemblerState.uintValue3 = (class53_.assemblerState.uintValue3 | 8u);
+				RecoveredRuntime.EmitMoveMemoryToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister42, RecoveredRuntime.CreateDwordLabelMemory(remoteAssembler.label2, 0L));
+				RecoveredRuntime.EmitReturnAndPop(remoteAssembler.assembler, RecoveredRuntime.CreateImmediate((intValue == -1) ? 4 : intValue));
+				RecoveredRuntime.AlignRemoteData(remoteAssembler);
+				RecoveredRuntime.BindLabel(remoteAssembler.assembler, remoteAssembler.label2);
+				RecoveredRuntime.EmbedUInt32(remoteAssembler.assembler, 0u);
 			}
 			else
 			{
-				RecoveredRuntime.EmitReturn(class47_0.class53_0);
+				RecoveredRuntime.EmitReturn(remoteAssembler.assembler);
 			}
 		}
-		if (RecoveredRuntime.OperandsNotEqual(class47_0.class58_0, null))
+		if (RecoveredRuntime.OperandsNotEqual(remoteAssembler.label, null))
 		{
-			RecoveredRuntime.AlignRemoteData(class47_0);
-			RecoveredRuntime.BindLabel(class47_0.class53_0, class47_0.class58_0);
-			class47_0.SetResultOffset(RecoveredRuntime.GetAssemblerOffset(class47_0.class53_0));
-			RecoveredRuntime.EmbedBytes(class47_0.class53_0, new byte[class47_0.int_0]);
+			RecoveredRuntime.AlignRemoteData(remoteAssembler);
+			RecoveredRuntime.BindLabel(remoteAssembler.assembler, remoteAssembler.label);
+			remoteAssembler.SetResultOffset(RecoveredRuntime.GetAssemblerOffset(remoteAssembler.assembler));
+			RecoveredRuntime.EmbedBytes(remoteAssembler.assembler, new byte[remoteAssembler.intValue]);
 		}
 	}
 
-	internal static void AlignRemoteData(RemoteAssembler class47_0)
+	internal static void AlignRemoteData(RemoteAssembler remoteAssembler)
 	{
-		AlignCode(class47_0.class53_0, class47_0.bool_0 ? 4u : 8u);
+		AlignCode(remoteAssembler.assembler, remoteAssembler.flag ? 4u : 8u);
 	}
 
-	internal static void WriteX64LabelArgument(int int_0, AsmJitLabel class58_0, RemoteAssembler class47_0)
+	internal static void WriteX64LabelArgument(int intValue, AsmJitLabel label, RemoteAssembler remoteAssembler)
 	{
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_54,
-			AsmJitRuntime.class63_55,
-			AsmJitRuntime.class63_61,
-			AsmJitRuntime.class63_62
+			AsmJitRuntime.gpRegister55,
+			AsmJitRuntime.gpRegister56,
+			AsmJitRuntime.gpRegister62,
+			AsmJitRuntime.gpRegister63
 		};
-		if (int_0 < 4)
+		if (intValue < 4)
 		{
-			RecoveredRuntime.EmitLoadEffectiveAddress(class47_0.class53_0, array[int_0], RecoveredRuntime.CreatePointerLabelMemory(class47_0, class58_0, 0L));
+			RecoveredRuntime.EmitLoadEffectiveAddress(remoteAssembler.assembler, array[intValue], RecoveredRuntime.CreatePointerLabelMemory(remoteAssembler, label, 0L));
 			return;
 		}
-		RecoveredRuntime.EmitLoadEffectiveAddress(class47_0.class53_0, AsmJitRuntime.class63_53, RecoveredRuntime.CreatePointerLabelMemory(class47_0, class58_0, 0L));
-		RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, (long)(int_0 * 8)), AsmJitRuntime.class63_53);
+		RecoveredRuntime.EmitLoadEffectiveAddress(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, RecoveredRuntime.CreatePointerLabelMemory(remoteAssembler, label, 0L));
+		RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, (long)(intValue * 8)), AsmJitRuntime.gpRegister54);
 	}
 
-	internal static AsmJitMemoryOperand CreateQwordBaseMemory(AsmJitGpRegister class63_0, long long_0)
+	internal static AsmJitMemoryOperand CreateQwordBaseMemory(AsmJitGpRegister gpRegister, long longValue)
 	{
-		return CreateBaseMemoryOperand((IntPtr)long_0, 8u, class63_0);
+		return CreateBaseMemoryOperand((IntPtr)longValue, 8u, gpRegister);
 	}
 
-	internal static bool ExecuteAssemblerThread(AsmJitAssembler class53_0, RemoteCodeExecutorBase class84_0)
+	internal static bool ExecuteAssemblerThread(AsmJitAssembler assembler, RemoteCodeExecutorBase remoteCodeExecutorBase)
 	{
-		IntPtr intPtr = RecoveredRuntime.AssembleRemoteCode(class53_0, class84_0);
+		IntPtr intPtr = RecoveredRuntime.AssembleRemoteCode(assembler, remoteCodeExecutorBase);
 		if (intPtr == IntPtr.Zero)
 		{
 			return false;
 		}
-		IntPtr intPtr2 = RecoveredRuntime.StartRemoteThread(class84_0, intPtr, IntPtr.Zero);
+		IntPtr intPtr2 = RecoveredRuntime.StartRemoteThread(remoteCodeExecutorBase, intPtr, IntPtr.Zero);
 		if (!(intPtr2 == IntPtr.Zero))
 		{
-			RecoveredRuntime.WaitForRemoteThread(class84_0, intPtr2, -1);
-			RecoveredRuntime.CloseRemoteHandle(class84_0, intPtr2);
+			RecoveredRuntime.WaitForRemoteThread(remoteCodeExecutorBase, intPtr2, -1);
+			RecoveredRuntime.CloseRemoteHandle(remoteCodeExecutorBase, intPtr2);
 			return true;
 		}
 		return false;
 	}
 
-	internal static void EmitUnconditionalJump(AsmJitAssembler class53_0, AsmJitLabel class58_0)
+	internal static void EmitUnconditionalJump(AsmJitAssembler assembler, AsmJitLabel label)
 	{
-		EmitInstruction(class58_0, AsmJitInstructionId.const_247, class53_0);
+		EmitInstruction(label, AsmJitInstructionId.Jump, assembler);
 	}
 
-	internal static int GetAssemblerOffset(AsmJitAssembler class53_0)
+	internal static int GetAssemblerOffset(AsmJitAssembler assembler)
 	{
-		return (int)(class53_0.struct19_0.struct17_0.intptr_1.ToInt64() - class53_0.struct19_0.struct17_0.intptr_0.ToInt64() + class53_0.struct19_0.intptr_3.ToInt64());
+		return (int)(assembler.assemblerState.codeBuffer.address2.ToInt64() - assembler.assemblerState.codeBuffer.address.ToInt64() + assembler.assemblerState.address4.ToInt64());
 	}
 
-	internal static void EmitJumpInstruction(AsmJitLabel class58_0, AsmJitJumpHint enum12_0, AsmJitAssembler class53_0, AsmJitInstructionId enum7_0)
+	internal static void EmitJumpInstruction(AsmJitLabel label, AsmJitJumpHint jumpHint, AsmJitAssembler assembler, AsmJitInstructionId instructionId)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate23_0(ref class53_0.struct19_0, enum7_0, class58_0, enum12_0);
+			AsmJitApi.emitJumpCdecl(ref assembler.assemblerState, instructionId, label, jumpHint);
 			return;
 		}
-		AsmJitApi.delegate22_0(ref class53_0.struct19_0, enum7_0, class58_0, enum12_0);
+		AsmJitApi.emitJumpThisCall(ref assembler.assemblerState, instructionId, label, jumpHint);
 	}
 
-	internal static AsmJitMemoryOperand CreateByteLabelMemory(AsmJitLabel class58_0, long long_0)
+	internal static AsmJitMemoryOperand CreateByteLabelMemory(AsmJitLabel label, long longValue)
 	{
-		return CreateLabelMemoryOperand(1u, (IntPtr)long_0, class58_0);
+		return CreateLabelMemoryOperand(1u, (IntPtr)longValue, label);
 	}
 
-	internal static void EmitLoadEffectiveAddress(AsmJitAssembler class53_0, AsmJitGpRegister class63_0, AsmJitMemoryOperand class59_0)
+	internal static void EmitLoadEffectiveAddress(AsmJitAssembler assembler, AsmJitGpRegister gpRegister, AsmJitMemoryOperand memoryOperand)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_251, class63_0, class59_0);
+		EmitInstruction(assembler, AsmJitInstructionId.LoadEffectiveAddress, gpRegister, memoryOperand);
 	}
 
-	internal static void EmbedInt64(AsmJitAssembler class53_0, long long_0)
+	internal static void EmbedInt64(AsmJitAssembler assembler, long longValue)
 	{
-		EmbedData(8L, long_0, class53_0);
+		EmbedData(8L, longValue, assembler);
 	}
 
-	internal static bool MemoryOperandsNotEqual(AsmJitMemoryOperand class59_0, AsmJitMemoryOperand class59_1)
+	internal static bool MemoryOperandsNotEqual(AsmJitMemoryOperand memoryOperand, AsmJitMemoryOperand memoryOperand2)
 	{
-		return !MemoryOperandsEqual(class59_0, class59_1);
+		return !MemoryOperandsEqual(memoryOperand, memoryOperand2);
 	}
 
-	internal static void SetBaseOperandData(AsmJitOperand class56_0, AsmJitOperand.Struct8 struct8_0)
+	internal static void SetBaseOperandData(AsmJitOperand operand, AsmJitOperand.BaseOperandData baseOperandData)
 	{
-		class56_0.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.Struct8, AsmJitOperand.Struct7>(struct8_0));
+		operand.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.BaseOperandData, AsmJitOperand.RawOperandData>(baseOperandData));
 	}
 
-	internal static void SetRegisterOperandData(AsmJitOperand class56_0, AsmJitOperand.Struct9 struct9_0)
+	internal static void SetRegisterOperandData(AsmJitOperand operand, AsmJitOperand.ImmediateOperandData immediateOperandData)
 	{
-		class56_0.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.Struct9, AsmJitOperand.Struct7>(struct9_0));
+		operand.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.ImmediateOperandData, AsmJitOperand.RawOperandData>(immediateOperandData));
 	}
 
-	internal static void EmbedPlatformPointer(RemoteAssembler class47_0, IntPtr intptr_0)
+	internal static void EmbedPlatformPointer(RemoteAssembler remoteAssembler, IntPtr address)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			RecoveredRuntime.EmbedInt32(class47_0.class53_0, intptr_0.ToInt32());
+			RecoveredRuntime.EmbedInt32(remoteAssembler.assembler, address.ToInt32());
 			return;
 		}
-		RecoveredRuntime.EmbedPointer(class47_0.class53_0, intptr_0);
+		RecoveredRuntime.EmbedPointer(remoteAssembler.assembler, address);
 	}
 
-	internal static AsmJitMemoryOperand CreateByteLabelMemoryForProcess(AsmJitLabel class58_0, long long_0, RemoteAssembler class47_0)
+	internal static AsmJitMemoryOperand CreateByteLabelMemoryForProcess(AsmJitLabel label, long longValue, RemoteAssembler remoteAssembler)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			AsmJitAssembler class53_ = class47_0.class53_0;
-			class53_.struct19_0.uint_2 = (class53_.struct19_0.uint_2 | 8u);
+			AsmJitAssembler class53_ = remoteAssembler.assembler;
+			class53_.assemblerState.uintValue3 = (class53_.assemblerState.uintValue3 | 8u);
 		}
-		return RecoveredRuntime.CreateByteLabelMemory(class58_0, long_0);
+		return RecoveredRuntime.CreateByteLabelMemory(label, longValue);
 	}
 
 	internal static byte[] GetAsmJitX86Image()
 	{
-		return (byte[])GetEmbeddedResourceManager().GetObject("AsmJitx86", EmbeddedResources.cultureInfo_0);
+		return (byte[])GetEmbeddedResourceManager().GetObject("AsmJitx86", EmbeddedResources.cultureInfo);
 	}
 
-	internal static void EmitPopFlags64(AsmJitAssembler class53_0)
+	internal static void EmitPopFlags64(AsmJitAssembler assembler)
 	{
-		if (!class53_0.Is32BitMode && !AsmJitRuntime.bool_0)
+		if (!assembler.Is32BitMode && !AsmJitRuntime.flag)
 		{
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(11455));
 		}
-		RecoveredRuntime.EmitInstruction(class53_0, AsmJitInstructionId.const_423);
+		RecoveredRuntime.EmitInstruction(assembler, AsmJitInstructionId.PopFlags64);
 	}
 
-	internal static void EmitPushImmediate(AsmJitAssembler class53_0, AsmJitImmediate class57_0)
+	internal static void EmitPushImmediate(AsmJitAssembler assembler, AsmJitImmediate immediate)
 	{
-		EmitInstruction(class57_0, AsmJitInstructionId.const_463, class53_0);
+		EmitInstruction(immediate, AsmJitInstructionId.Push, assembler);
 	}
 
-	internal static AsmJitImmediate CreateImmediate(UIntPtr uintptr_0)
+	internal static AsmJitImmediate CreateImmediate(UIntPtr address)
 	{
-		return new AsmJitImmediate((IntPtr)(long)(ulong)uintptr_0, bool_0: true);
+		return new AsmJitImmediate((IntPtr)(long)(ulong)address, flag: true);
 	}
 
-	internal static void EmitMoveImmediateToRegister(AsmJitAssembler class53_0, AsmJitGpRegister class63_0, AsmJitImmediate class57_0)
+	internal static void EmitMoveImmediateToRegister(AsmJitAssembler assembler, AsmJitGpRegister gpRegister, AsmJitImmediate immediate)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_266, class63_0, class57_0);
+		EmitInstruction(assembler, AsmJitInstructionId.Move, gpRegister, immediate);
 	}
 
-	internal static void EmbedData(long long_0, object object_0, AsmJitAssembler class53_0)
+	internal static void EmbedData(long longValue, object instance, AsmJitAssembler assembler)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate18_0(ref class53_0.struct19_0, object_0, (IntPtr)long_0);
+			AsmJitApi.embedDataCdecl(ref assembler.assemblerState, instance, (IntPtr)longValue);
 			return;
 		}
-		AsmJitApi.delegate17_0(ref class53_0.struct19_0, object_0, (IntPtr)long_0);
+		AsmJitApi.embedDataThisCall(ref assembler.assemblerState, instance, (IntPtr)longValue);
 	}
 
 	internal static byte[] GetAsmJitX64Image()
 	{
-		return (byte[])GetEmbeddedResourceManager().GetObject("AsmJitx64", EmbeddedResources.cultureInfo_0);
+		return (byte[])GetEmbeddedResourceManager().GetObject("AsmJitx64", EmbeddedResources.cultureInfo);
 	}
 
-	internal static void EmitTestRegisters(AsmJitGpRegister class63_0, AsmJitGpRegister class63_1, AsmJitAssembler class53_0)
+	internal static void EmitTestRegisters(AsmJitGpRegister gpRegister, AsmJitGpRegister gpRegister2, AsmJitAssembler assembler)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_565, class63_0, class63_1);
+		EmitInstruction(assembler, AsmJitInstructionId.Test, gpRegister, gpRegister2);
 	}
 
 	internal static void InitializeAsmJitRegisters()
 	{
-		AsmJitRuntime.class63_0 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(19962));
-		AsmJitRuntime.class63_1 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(19999));
-		AsmJitRuntime.class63_2 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20032));
-		AsmJitRuntime.class63_3 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20065));
-		AsmJitRuntime.class63_4 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20098));
-		if (AsmJitRuntime.bool_0)
+		AsmJitRuntime.gpRegister = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(19962));
+		AsmJitRuntime.gpRegister2 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(19999));
+		AsmJitRuntime.gpRegister3 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20032));
+		AsmJitRuntime.gpRegister4 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20065));
+		AsmJitRuntime.gpRegister5 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20098));
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitRuntime.class63_5 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20131));
-			AsmJitRuntime.class63_6 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20164));
-			AsmJitRuntime.class63_7 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20197));
-			AsmJitRuntime.class63_8 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20230));
-			AsmJitRuntime.class63_9 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20263));
-			AsmJitRuntime.class63_10 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20296));
-			AsmJitRuntime.class63_11 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20329));
-			AsmJitRuntime.class63_12 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20366));
-			AsmJitRuntime.class63_13 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20403));
-			AsmJitRuntime.class63_14 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20440));
-			AsmJitRuntime.class63_15 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20477));
-			AsmJitRuntime.class63_16 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20514));
+			AsmJitRuntime.gpRegister6 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20131));
+			AsmJitRuntime.gpRegister7 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20164));
+			AsmJitRuntime.gpRegister8 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20197));
+			AsmJitRuntime.gpRegister9 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20230));
+			AsmJitRuntime.gpRegister10 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20263));
+			AsmJitRuntime.gpRegister11 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20296));
+			AsmJitRuntime.gpRegister12 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20329));
+			AsmJitRuntime.gpRegister13 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20366));
+			AsmJitRuntime.gpRegister14 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20403));
+			AsmJitRuntime.gpRegister15 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20440));
+			AsmJitRuntime.gpRegister16 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20477));
+			AsmJitRuntime.gpRegister17 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20514));
 		}
-		AsmJitRuntime.class63_17 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20551));
-		AsmJitRuntime.class63_18 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20584));
-		AsmJitRuntime.class63_19 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20617));
-		AsmJitRuntime.class63_20 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20650));
-		AsmJitRuntime.class63_21 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20683));
-		AsmJitRuntime.class63_22 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20716));
-		AsmJitRuntime.class63_23 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20749));
-		AsmJitRuntime.class63_24 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20782));
-		AsmJitRuntime.class63_25 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20815));
-		AsmJitRuntime.class63_26 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20848));
-		AsmJitRuntime.class63_27 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20881));
-		AsmJitRuntime.class63_28 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20914));
-		if (AsmJitRuntime.bool_0)
+		AsmJitRuntime.gpRegister18 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20551));
+		AsmJitRuntime.gpRegister19 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20584));
+		AsmJitRuntime.gpRegister20 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20617));
+		AsmJitRuntime.gpRegister21 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20650));
+		AsmJitRuntime.gpRegister22 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20683));
+		AsmJitRuntime.gpRegister23 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20716));
+		AsmJitRuntime.gpRegister24 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20749));
+		AsmJitRuntime.gpRegister25 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20782));
+		AsmJitRuntime.gpRegister26 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20815));
+		AsmJitRuntime.gpRegister27 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20848));
+		AsmJitRuntime.gpRegister28 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20881));
+		AsmJitRuntime.gpRegister29 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20914));
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitRuntime.class63_29 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20947));
-			AsmJitRuntime.class63_30 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20980));
-			AsmJitRuntime.class63_31 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21013));
-			AsmJitRuntime.class63_32 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21050));
-			AsmJitRuntime.class63_33 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21087));
-			AsmJitRuntime.class63_34 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21124));
-			AsmJitRuntime.class63_35 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21161));
-			AsmJitRuntime.class63_36 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21198));
+			AsmJitRuntime.gpRegister30 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20947));
+			AsmJitRuntime.gpRegister31 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(20980));
+			AsmJitRuntime.gpRegister32 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21013));
+			AsmJitRuntime.gpRegister33 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21050));
+			AsmJitRuntime.gpRegister34 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21087));
+			AsmJitRuntime.gpRegister35 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21124));
+			AsmJitRuntime.gpRegister36 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21161));
+			AsmJitRuntime.gpRegister37 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21198));
 		}
-		AsmJitRuntime.class63_37 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21235));
-		AsmJitRuntime.class63_38 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21268));
-		AsmJitRuntime.class63_39 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21301));
-		AsmJitRuntime.class63_40 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21334));
-		AsmJitRuntime.class63_41 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21367));
-		AsmJitRuntime.class63_42 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21400));
-		AsmJitRuntime.class63_43 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21433));
-		AsmJitRuntime.class63_44 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21466));
-		if (AsmJitRuntime.bool_0)
+		AsmJitRuntime.gpRegister38 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21235));
+		AsmJitRuntime.gpRegister39 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21268));
+		AsmJitRuntime.gpRegister40 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21301));
+		AsmJitRuntime.gpRegister41 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21334));
+		AsmJitRuntime.gpRegister42 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21367));
+		AsmJitRuntime.gpRegister43 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21400));
+		AsmJitRuntime.gpRegister44 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21433));
+		AsmJitRuntime.gpRegister45 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21466));
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitRuntime.class63_45 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21499));
-			AsmJitRuntime.class63_46 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21532));
-			AsmJitRuntime.class63_47 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21565));
-			AsmJitRuntime.class63_48 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21602));
-			AsmJitRuntime.class63_49 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21639));
-			AsmJitRuntime.class63_50 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21676));
-			AsmJitRuntime.class63_51 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21713));
-			AsmJitRuntime.class63_52 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21750));
+			AsmJitRuntime.gpRegister46 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21499));
+			AsmJitRuntime.gpRegister47 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21532));
+			AsmJitRuntime.gpRegister48 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21565));
+			AsmJitRuntime.gpRegister49 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21602));
+			AsmJitRuntime.gpRegister50 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21639));
+			AsmJitRuntime.gpRegister51 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21676));
+			AsmJitRuntime.gpRegister52 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21713));
+			AsmJitRuntime.gpRegister53 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21750));
 		}
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitRuntime.class63_53 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21787));
-			AsmJitRuntime.class63_54 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21820));
-			AsmJitRuntime.class63_55 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21853));
-			AsmJitRuntime.class63_56 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21886));
-			AsmJitRuntime.class63_57 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21919));
-			AsmJitRuntime.class63_58 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21952));
-			AsmJitRuntime.class63_59 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21985));
-			AsmJitRuntime.class63_60 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22018));
-			AsmJitRuntime.class63_61 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22051));
-			AsmJitRuntime.class63_62 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22084));
-			AsmJitRuntime.class63_63 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22117));
-			AsmJitRuntime.class63_64 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22150));
-			AsmJitRuntime.class63_65 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22183));
-			AsmJitRuntime.class63_66 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22216));
-			AsmJitRuntime.class63_67 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22249));
-			AsmJitRuntime.class63_68 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22282));
+			AsmJitRuntime.gpRegister54 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21787));
+			AsmJitRuntime.gpRegister55 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21820));
+			AsmJitRuntime.gpRegister56 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21853));
+			AsmJitRuntime.gpRegister57 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21886));
+			AsmJitRuntime.gpRegister58 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21919));
+			AsmJitRuntime.gpRegister59 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21952));
+			AsmJitRuntime.gpRegister60 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(21985));
+			AsmJitRuntime.gpRegister61 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22018));
+			AsmJitRuntime.gpRegister62 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22051));
+			AsmJitRuntime.gpRegister63 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22084));
+			AsmJitRuntime.gpRegister64 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22117));
+			AsmJitRuntime.gpRegister65 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22150));
+			AsmJitRuntime.gpRegister66 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22183));
+			AsmJitRuntime.gpRegister67 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22216));
+			AsmJitRuntime.gpRegister68 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22249));
+			AsmJitRuntime.gpRegister69 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22282));
 		}
-		AsmJitRuntime.class63_69 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22315));
-		AsmJitRuntime.class63_70 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22348));
-		AsmJitRuntime.class63_71 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22381));
-		AsmJitRuntime.class63_72 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22414));
-		AsmJitRuntime.class63_73 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22447));
-		AsmJitRuntime.class63_74 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22480));
-		AsmJitRuntime.class63_75 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22513));
-		AsmJitRuntime.class63_76 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22546));
-		AsmJitRuntime.class64_0 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22579));
-		AsmJitRuntime.class64_1 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22612));
-		AsmJitRuntime.class64_2 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22645));
-		AsmJitRuntime.class64_3 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22678));
-		AsmJitRuntime.class64_4 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22711));
-		AsmJitRuntime.class64_5 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22744));
-		AsmJitRuntime.class64_6 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22777));
-		AsmJitRuntime.class64_7 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22810));
-		AsmJitRuntime.class65_0 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22843));
-		AsmJitRuntime.class65_1 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22880));
-		AsmJitRuntime.class65_2 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22917));
-		AsmJitRuntime.class65_3 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22954));
-		AsmJitRuntime.class65_4 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22991));
-		AsmJitRuntime.class65_5 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23028));
-		AsmJitRuntime.class65_6 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23065));
-		AsmJitRuntime.class65_7 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23102));
-		if (AsmJitRuntime.bool_0)
+		AsmJitRuntime.gpRegister70 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22315));
+		AsmJitRuntime.gpRegister71 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22348));
+		AsmJitRuntime.gpRegister72 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22381));
+		AsmJitRuntime.gpRegister73 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22414));
+		AsmJitRuntime.gpRegister74 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22447));
+		AsmJitRuntime.gpRegister75 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22480));
+		AsmJitRuntime.gpRegister76 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22513));
+		AsmJitRuntime.gpRegister77 = AsmJitNative.ReadExportValue<AsmJitGpRegister>(EncodedStringTable.DecodeString(22546));
+		AsmJitRuntime.mmxRegister = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22579));
+		AsmJitRuntime.mmxRegister2 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22612));
+		AsmJitRuntime.mmxRegister3 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22645));
+		AsmJitRuntime.mmxRegister4 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22678));
+		AsmJitRuntime.mmxRegister5 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22711));
+		AsmJitRuntime.mmxRegister6 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22744));
+		AsmJitRuntime.mmxRegister7 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22777));
+		AsmJitRuntime.mmxRegister8 = AsmJitNative.ReadExportValue<AsmJitMmxRegister>(EncodedStringTable.DecodeString(22810));
+		AsmJitRuntime.xmmRegister = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22843));
+		AsmJitRuntime.xmmRegister2 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22880));
+		AsmJitRuntime.xmmRegister3 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22917));
+		AsmJitRuntime.xmmRegister4 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22954));
+		AsmJitRuntime.xmmRegister5 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(22991));
+		AsmJitRuntime.xmmRegister6 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23028));
+		AsmJitRuntime.xmmRegister7 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23065));
+		AsmJitRuntime.xmmRegister8 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23102));
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitRuntime.class65_8 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23139));
-			AsmJitRuntime.class65_9 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23176));
-			AsmJitRuntime.class65_10 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23213));
-			AsmJitRuntime.class65_11 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23250));
-			AsmJitRuntime.class65_12 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23287));
-			AsmJitRuntime.class65_13 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23324));
-			AsmJitRuntime.class65_14 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23361));
-			AsmJitRuntime.class65_15 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23398));
+			AsmJitRuntime.xmmRegister9 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23139));
+			AsmJitRuntime.xmmRegister10 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23176));
+			AsmJitRuntime.xmmRegister11 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23213));
+			AsmJitRuntime.xmmRegister12 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23250));
+			AsmJitRuntime.xmmRegister13 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23287));
+			AsmJitRuntime.xmmRegister14 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23324));
+			AsmJitRuntime.xmmRegister15 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23361));
+			AsmJitRuntime.xmmRegister16 = AsmJitNative.ReadExportValue<AsmJitXmmRegister>(EncodedStringTable.DecodeString(23398));
 		}
 	}
 
-	internal static void EmitMoveRegisterToRegister(AsmJitAssembler class53_0, AsmJitGpRegister class63_0, AsmJitGpRegister class63_1)
+	internal static void EmitMoveRegisterToRegister(AsmJitAssembler assembler, AsmJitGpRegister gpRegister, AsmJitGpRegister gpRegister2)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_266, class63_0, class63_1);
+		EmitInstruction(assembler, AsmJitInstructionId.Move, gpRegister, gpRegister2);
 	}
 
-	internal static bool MemoryOperandsEqual(AsmJitMemoryOperand class59_0, AsmJitMemoryOperand class59_1)
+	internal static bool MemoryOperandsEqual(AsmJitMemoryOperand memoryOperand, AsmJitMemoryOperand memoryOperand2)
 	{
-		return (class59_0 == null && class59_1 == null) || (class59_0 != null && class59_0.Equals(class59_1));
+		return (memoryOperand == null && memoryOperand2 == null) || (memoryOperand != null && memoryOperand.Equals(memoryOperand2));
 	}
 
-	internal static void EmbedBytes(AsmJitAssembler class53_0, byte[] byte_0)
+	internal static void EmbedBytes(AsmJitAssembler assembler, byte[] bytes)
 	{
-		EmbedData(byte_0.Length, byte_0, class53_0);
+		EmbedData(bytes.Length, bytes, assembler);
 	}
 
-	internal static void WriteX64MemoryArgument(AsmJitMemoryOperand class59_0, RemoteAssembler class47_0, int int_0)
+	internal static void WriteX64MemoryArgument(AsmJitMemoryOperand memoryOperand, RemoteAssembler remoteAssembler, int intValue)
 	{
 		AsmJitGpRegister[] array = new AsmJitGpRegister[]
 		{
-			AsmJitRuntime.class63_54,
-			AsmJitRuntime.class63_55,
-			AsmJitRuntime.class63_61,
-			AsmJitRuntime.class63_62
+			AsmJitRuntime.gpRegister55,
+			AsmJitRuntime.gpRegister56,
+			AsmJitRuntime.gpRegister62,
+			AsmJitRuntime.gpRegister63
 		};
-		if (int_0 < 4)
+		if (intValue < 4)
 		{
-			RecoveredRuntime.EmitMoveMemoryToRegister(class47_0.class53_0, array[int_0], class59_0);
+			RecoveredRuntime.EmitMoveMemoryToRegister(remoteAssembler.assembler, array[intValue], memoryOperand);
 			return;
 		}
-		RecoveredRuntime.EmitMoveMemoryToRegister(class47_0.class53_0, AsmJitRuntime.class63_53, class59_0);
-		RecoveredRuntime.EmitMoveRegisterToMemory(class47_0.class53_0, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_57, (long)(int_0 * 8)), AsmJitRuntime.class63_53);
+		RecoveredRuntime.EmitMoveMemoryToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, memoryOperand);
+		RecoveredRuntime.EmitMoveRegisterToMemory(remoteAssembler.assembler, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister58, (long)(intValue * 8)), AsmJitRuntime.gpRegister54);
 	}
 
-	internal static bool OperandsEqual(AsmJitOperand class56_0, AsmJitOperand class56_1)
+	internal static bool OperandsEqual(AsmJitOperand operand, AsmJitOperand operand2)
 	{
-		return (class56_0 == null && class56_1 == null) || (class56_0 != null && class56_0.Equals(class56_1));
+		return (operand == null && operand2 == null) || (operand != null && operand.Equals(operand2));
 	}
 
-	internal static AsmJitMemoryOperand CreateQwordLabelMemory(AsmJitLabel class58_0, long long_0)
+	internal static AsmJitMemoryOperand CreateQwordLabelMemory(AsmJitLabel label, long longValue)
 	{
-		return CreateLabelMemoryOperand(8u, (IntPtr)long_0, class58_0);
+		return CreateLabelMemoryOperand(8u, (IntPtr)longValue, label);
 	}
 
-	internal static void EmitComparisonFailureJump(AsmJitJumpHint enum12_0, AsmJitAssembler class53_0, AsmJitLabel class58_0)
+	internal static void EmitComparisonFailureJump(AsmJitJumpHint jumpHint, AsmJitAssembler assembler, AsmJitLabel label)
 	{
-		EmitJumpInstruction(class58_0, enum12_0, class53_0, AsmJitInstructionId.const_232);
+		EmitJumpInstruction(label, jumpHint, assembler, AsmJitInstructionId.JumpNotEqual);
 	}
 
-	internal static void EmbedNullPointer(RemoteAssembler class47_0)
+	internal static void EmbedNullPointer(RemoteAssembler remoteAssembler)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			RecoveredRuntime.EmbedUInt32(class47_0.class53_0, 0u);
+			RecoveredRuntime.EmbedUInt32(remoteAssembler.assembler, 0u);
 			return;
 		}
-		RecoveredRuntime.EmbedInt64(class47_0.class53_0, 0L);
+		RecoveredRuntime.EmbedInt64(remoteAssembler.assembler, 0L);
 	}
 
-	internal static uint GetRegisterId(AsmJitRegister class62_0)
+	internal static uint GetRegisterId(AsmJitRegister register)
 	{
-		return GetRegisterOperandData(class62_0).uint_1;
+		return GetRegisterOperandData(register).uintValue2;
 	}
 
-	internal static AsmJitImmediate CreateImmediate(short short_0)
+	internal static AsmJitImmediate CreateImmediate(short shortValue)
 	{
-		return new AsmJitImmediate((IntPtr)short_0);
+		return new AsmJitImmediate((IntPtr)shortValue);
 	}
 
-	internal static void EmitReturn(AsmJitAssembler class53_0)
+	internal static void EmitReturn(AsmJitAssembler assembler)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_502);
+		EmitInstruction(assembler, AsmJitInstructionId.Return);
 	}
 
-	internal static void EmitInstruction(AsmJitOperand class56_0, AsmJitInstructionId enum7_0, AsmJitAssembler class53_0)
+	internal static void EmitInstruction(AsmJitOperand operand, AsmJitInstructionId instructionId, AsmJitAssembler assembler)
 	{
-		if (AsmJitRuntime.bool_0)
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate8_0(ref class53_0.struct19_0, enum7_0, class56_0);
+			AsmJitApi.emitOneOperandInstructionCdecl(ref assembler.assemblerState, instructionId, operand);
 			return;
 		}
-		AsmJitApi.delegate4_0(ref class53_0.struct19_0, enum7_0, class56_0);
+		AsmJitApi.emitOneOperandInstructionThisCall(ref assembler.assemblerState, instructionId, operand);
 	}
 
-	internal static void EmitX86FunctionCall(AsmJitOperand class56_0, object[] object_0, CallingConvention callingConvention_0, RemoteAssembler class47_0)
+	internal static void EmitX86FunctionCall(AsmJitOperand operand, object[] instanceArray, CallingConvention callingConvention, RemoteAssembler remoteAssembler)
 	{
-		bool[] array = new bool[object_0.Length];
-		if (callingConvention_0 == CallingConvention.ThisCall || callingConvention_0 == CallingConvention.FastCall)
+		bool[] array = new bool[instanceArray.Length];
+		if (callingConvention == CallingConvention.ThisCall || callingConvention == CallingConvention.FastCall)
 		{
-			int num = (callingConvention_0 == CallingConvention.FastCall) ? 2 : 1;
+			int num = (callingConvention == CallingConvention.FastCall) ? 2 : 1;
 			int num2 = 0;
 			int num3 = 0;
-			while (num2 < object_0.Length && num3 < num)
+			while (num2 < instanceArray.Length && num3 < num)
 			{
 				array[num2] = true;
-				RecoveredRuntime.WriteX86Argument(object_0[num2], class47_0, (RemoteAssembler.Enum6)num3);
+				RecoveredRuntime.WriteX86Argument(instanceArray[num2], remoteAssembler, (RemoteAssembler.X86ArgumentSlot)num3);
 				num3++;
 				num2++;
 			}
 		}
-		for (int i = object_0.Length - 1; i >= 0; i--)
+		for (int i = instanceArray.Length - 1; i >= 0; i--)
 		{
 			if (!array[i])
 			{
-				RecoveredRuntime.WriteX86Argument(object_0[i], class47_0, RemoteAssembler.Enum6.const_2);
+				RecoveredRuntime.WriteX86Argument(instanceArray[i], remoteAssembler, RemoteAssembler.X86ArgumentSlot.FirstStackArgument);
 			}
 		}
-		AsmJitImmediate @class = class56_0 as AsmJitImmediate;
+		AsmJitImmediate @class = operand as AsmJitImmediate;
 		if (RecoveredRuntime.OperandsNotEqual(@class, null))
 		{
-			RecoveredRuntime.EmitMoveImmediateToRegister(class47_0.class53_0, AsmJitRuntime.class63_37, @class);
-			AsmJitAssembler class53_ = class47_0.class53_0;
-			AsmJitGpRegister class63_ = AsmJitRuntime.class63_69;
+			RecoveredRuntime.EmitMoveImmediateToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister38, @class);
+			AsmJitAssembler class53_ = remoteAssembler.assembler;
+			AsmJitGpRegister class63_ = AsmJitRuntime.gpRegister70;
 			RecoveredRuntime.EmitCallRegister(class63_, class53_);
 		}
-		AsmJitGpRegister class2 = class56_0 as AsmJitGpRegister;
+		AsmJitGpRegister class2 = operand as AsmJitGpRegister;
 		if (RecoveredRuntime.RegistersNotEqual(null, class2))
 		{
-			RecoveredRuntime.EmitCallRegister(class2, class47_0.class53_0);
+			RecoveredRuntime.EmitCallRegister(class2, remoteAssembler.assembler);
 		}
 		if (RecoveredRuntime.OperandsEqual(@class, null) && RecoveredRuntime.RegistersEqual(null, class2))
 		{
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(24964));
 		}
-		if (callingConvention_0 == CallingConvention.Cdecl)
+		if (callingConvention == CallingConvention.Cdecl)
 		{
 			int num4 = 0;
-			foreach (object obj in object_0)
+			foreach (object obj in instanceArray)
 			{
-				if (!(obj is IntPtr) && !(obj is UIntPtr) && !(obj is RemoteAssembler.Class48))
+				if (!(obj is IntPtr) && !(obj is UIntPtr) && !(obj is RemoteAssembler.LabelReference))
 				{
 					num4 += obj.GetType().SizeOf();
 				}
@@ -1394,313 +1394,313 @@ public sealed partial class RecoveredRuntime
 					num4 += 4;
 				}
 			}
-			RecoveredRuntime.EmitAddRegisterImmediate(class47_0.class53_0, AsmJitRuntime.class63_41, RecoveredRuntime.CreateImmediate(num4));
+			RecoveredRuntime.EmitAddRegisterImmediate(remoteAssembler.assembler, AsmJitRuntime.gpRegister42, RecoveredRuntime.CreateImmediate(num4));
 			return;
 		}
 	}
 
-	internal static void EmitReturnAndPop(AsmJitAssembler class53_0, AsmJitImmediate class57_0)
+	internal static void EmitReturnAndPop(AsmJitAssembler assembler, AsmJitImmediate immediate)
 	{
-		EmitInstruction(class57_0, AsmJitInstructionId.const_502, class53_0);
+		EmitInstruction(immediate, AsmJitInstructionId.Return, assembler);
 	}
 
-	internal static void EmitAddRegisterImmediate(AsmJitAssembler class53_0, AsmJitGpRegister class63_0, AsmJitImmediate class57_0)
+	internal static void EmitAddRegisterImmediate(AsmJitAssembler assembler, AsmJitGpRegister gpRegister, AsmJitImmediate immediate)
 	{
-		EmitInstruction(class53_0, AsmJitInstructionId.const_1, class63_0, class57_0);
+		EmitInstruction(assembler, AsmJitInstructionId.Add, gpRegister, immediate);
 	}
 
-	internal static AsmJitMemoryOperand CreateWordLabelMemory(AsmJitLabel class58_0, long long_0)
+	internal static AsmJitMemoryOperand CreateWordLabelMemory(AsmJitLabel label, long longValue)
 	{
-		return CreateLabelMemoryOperand(2u, (IntPtr)long_0, class58_0);
+		return CreateLabelMemoryOperand(2u, (IntPtr)longValue, label);
 	}
 
-	internal static void EmitX64FunctionCall(RemoteAssembler class47_0, AsmJitOperand class56_0, object[] object_0)
+	internal static void EmitX64FunctionCall(RemoteAssembler remoteAssembler, AsmJitOperand operand, object[] instanceArray)
 	{
-		int num = (object_0.Length <= 4) ? 40 : (object_0.Length * 8);
-		AsmJitImmediate @class = class56_0 as AsmJitImmediate;
+		int num = (instanceArray.Length <= 4) ? 40 : (instanceArray.Length * 8);
+		AsmJitImmediate @class = operand as AsmJitImmediate;
 		num -= num % 16;
-		AsmJitAssembler class53_ = class47_0.class53_0;
-		AsmJitGpRegister class63_ = AsmJitRuntime.class63_57;
+		AsmJitAssembler class53_ = remoteAssembler.assembler;
+		AsmJitGpRegister class63_ = AsmJitRuntime.gpRegister58;
 		AsmJitImmediate class57_ = RecoveredRuntime.CreateImmediate(num + 8);
 		RecoveredRuntime.EmitSubtractRegisterImmediate(class63_, class57_, class53_);
-		if (!class47_0.GetRandomizeArgumentSetup())
+		if (!remoteAssembler.GetRandomizeArgumentSetup())
 		{
-			for (int i = 0; i < object_0.Length; i++)
+			for (int i = 0; i < instanceArray.Length; i++)
 			{
-				RecoveredRuntime.WriteX64Argument(class47_0, object_0[i], i);
+				RecoveredRuntime.WriteX64Argument(remoteAssembler, instanceArray[i], i);
 			}
 		}
 		else
 		{
-			int[] array = Enumerable.Range(0, object_0.Length).ToArray<int>();
+			int[] array = Enumerable.Range(0, instanceArray.Length).ToArray<int>();
 			array.Shuffle<int>();
 			foreach (int num2 in array)
 			{
-				RecoveredRuntime.WriteX64Argument(class47_0, object_0[num2], num2);
+				RecoveredRuntime.WriteX64Argument(remoteAssembler, instanceArray[num2], num2);
 			}
 		}
 		if (RecoveredRuntime.OperandsNotEqual(@class, null))
 		{
-			RecoveredRuntime.EmitMoveImmediateToRegister(class47_0.class53_0, AsmJitRuntime.class63_53, @class);
-			AsmJitAssembler class53_2 = class47_0.class53_0;
-			AsmJitGpRegister class63_2 = AsmJitRuntime.class63_53;
-			RecoveredRuntime.EmitCallRegister(class63_2, class53_2);
+			RecoveredRuntime.EmitMoveImmediateToRegister(remoteAssembler.assembler, AsmJitRuntime.gpRegister54, @class);
+			AsmJitAssembler assembler = remoteAssembler.assembler;
+			AsmJitGpRegister gpRegister = AsmJitRuntime.gpRegister54;
+			RecoveredRuntime.EmitCallRegister(gpRegister, assembler);
 		}
-		AsmJitGpRegister class2 = class56_0 as AsmJitGpRegister;
+		AsmJitGpRegister class2 = operand as AsmJitGpRegister;
 		if (RecoveredRuntime.RegistersNotEqual(null, class2))
 		{
-			RecoveredRuntime.EmitCallRegister(class2, class47_0.class53_0);
+			RecoveredRuntime.EmitCallRegister(class2, remoteAssembler.assembler);
 		}
 		if (RecoveredRuntime.OperandsEqual(@class, null) && RecoveredRuntime.RegistersEqual(null, class2))
 		{
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(24964));
 		}
-		RecoveredRuntime.EmitAddRegisterImmediate(class47_0.class53_0, AsmJitRuntime.class63_57, RecoveredRuntime.CreateImmediate(num + 8));
+		RecoveredRuntime.EmitAddRegisterImmediate(remoteAssembler.assembler, AsmJitRuntime.gpRegister58, RecoveredRuntime.CreateImmediate(num + 8));
 	}
 
-	internal static void EmitPushMemory(AsmJitAssembler class53_0, AsmJitMemoryOperand class59_0)
+	internal static void EmitPushMemory(AsmJitAssembler assembler, AsmJitMemoryOperand memoryOperand)
 	{
-		EmitInstruction(class59_0, AsmJitInstructionId.const_463, class53_0);
+		EmitInstruction(memoryOperand, AsmJitInstructionId.Push, assembler);
 	}
 
-	internal static void EmitCallRegister(AsmJitGpRegister class63_0, AsmJitAssembler class53_0)
+	internal static void EmitCallRegister(AsmJitGpRegister gpRegister, AsmJitAssembler assembler)
 	{
-		EmitInstruction(class63_0, AsmJitInstructionId.const_26, class53_0);
+		EmitInstruction(gpRegister, AsmJitInstructionId.Call, assembler);
 	}
 
-	internal static AsmJitImmediate CreateImmediate(uint uint_0)
+	internal static AsmJitImmediate CreateImmediate(uint uintValue)
 	{
-		return new AsmJitImmediate((IntPtr)(int)uint_0, bool_0: true);
+		return new AsmJitImmediate((IntPtr)(int)uintValue, flag: true);
 	}
 
-	internal static void SetLabelOperandData(AsmJitOperand.Struct13 struct13_0, AsmJitOperand class56_0)
+	internal static void SetLabelOperandData(AsmJitOperand.RegisterOperandData registerOperandData, AsmJitOperand operand)
 	{
-		class56_0.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.Struct13, AsmJitOperand.Struct7>(struct13_0));
+		operand.SetRawData(AsmJitOperand.Reinterpret<AsmJitOperand.RegisterOperandData, AsmJitOperand.RawOperandData>(registerOperandData));
 	}
 
-	internal static AsmJitImmediate CreateImmediate(ushort ushort_0)
+	internal static AsmJitImmediate CreateImmediate(ushort ushortValue)
 	{
-		return new AsmJitImmediate((IntPtr)ushort_0);
+		return new AsmJitImmediate((IntPtr)ushortValue);
 	}
 
-	internal static AsmJitOperand.Struct11 GetMemoryOperandData(AsmJitOperand class56_0)
+	internal static AsmJitOperand.MemoryOperandData GetMemoryOperandData(AsmJitOperand operand)
 	{
-		return AsmJitOperand.Reinterpret<AsmJitOperand.Struct7, AsmJitOperand.Struct11>(class56_0.GetRawData());
+		return AsmJitOperand.Reinterpret<AsmJitOperand.RawOperandData, AsmJitOperand.MemoryOperandData>(operand.GetRawData());
 	}
 
-	internal static void WriteX64Argument(RemoteAssembler class47_0, object object_0, int int_0)
+	internal static void WriteX64Argument(RemoteAssembler remoteAssembler, object instance, int intValue)
 	{
-		RemoteAssembler.Class48 @class = object_0 as RemoteAssembler.Class48;
+		RemoteAssembler.LabelReference @class = instance as RemoteAssembler.LabelReference;
 		if (@class != null)
 		{
-			RecoveredRuntime.WriteX64LabelArgument(int_0, @class.GetLabel(), class47_0);
+			RecoveredRuntime.WriteX64LabelArgument(intValue, @class.GetLabel(), remoteAssembler);
 			return;
 		}
-		AsmJitImmediate class2 = object_0.ToImmediate();
+		AsmJitImmediate class2 = instance.ToImmediate();
 		if (RecoveredRuntime.OperandsNotEqual(class2, null))
 		{
-			RecoveredRuntime.WriteX64ImmediateArgument(class47_0, class2, int_0, object_0 is float || object_0 is double);
+			RecoveredRuntime.WriteX64ImmediateArgument(remoteAssembler, class2, intValue, instance is float || instance is double);
 			return;
 		}
-		AsmJitGpRegister class3 = object_0 as AsmJitGpRegister;
+		AsmJitGpRegister class3 = instance as AsmJitGpRegister;
 		if (RecoveredRuntime.RegistersNotEqual(null, class3))
 		{
-			RecoveredRuntime.WriteX64RegisterArgument(int_0, class47_0, class3);
+			RecoveredRuntime.WriteX64RegisterArgument(intValue, remoteAssembler, class3);
 			return;
 		}
-		AsmJitMemoryOperand class59_ = object_0 as AsmJitMemoryOperand;
+		AsmJitMemoryOperand class59_ = instance as AsmJitMemoryOperand;
 		if (RecoveredRuntime.MemoryOperandsNotEqual(class59_, null))
 		{
-			RecoveredRuntime.WriteX64MemoryArgument(class59_, class47_0, int_0);
+			RecoveredRuntime.WriteX64MemoryArgument(class59_, remoteAssembler, intValue);
 			return;
 		}
 		throw new InvalidOperationException(EncodedStringTable.DecodeString(13555));
 	}
 
-	internal static bool RegistersNotEqual(AsmJitRegister class62_0, AsmJitRegister class62_1)
+	internal static bool RegistersNotEqual(AsmJitRegister register, AsmJitRegister register2)
 	{
-		return !RegistersEqual(class62_0, class62_1);
+		return !RegistersEqual(register, register2);
 	}
 
-	internal static AsmJitMemoryOperand CreateDwordBaseMemory(long long_0, AsmJitGpRegister class63_0)
+	internal static AsmJitMemoryOperand CreateDwordBaseMemory(long longValue, AsmJitGpRegister gpRegister)
 	{
-		return CreateBaseMemoryOperand((IntPtr)long_0, 4u, class63_0);
+		return CreateBaseMemoryOperand((IntPtr)longValue, 4u, gpRegister);
 	}
 
-	internal static IntPtr GetAssemblerCodePointer(AsmJitAssembler class53_0)
+	internal static IntPtr GetAssemblerCodePointer(AsmJitAssembler assembler)
 	{
-		if (!AsmJitRuntime.bool_0)
+		if (!AsmJitRuntime.flag)
 		{
-			return AsmJitApi.delegate11_0(ref class53_0.struct19_0);
+			return AsmJitApi.getAssemblerOffsetThisCall(ref assembler.assemblerState);
 		}
-		return AsmJitApi.delegate12_0(ref class53_0.struct19_0);
+		return AsmJitApi.getAssemblerOffsetCdecl(ref assembler.assemblerState);
 	}
 
-	internal static AsmJitOperand.Struct14 GetVariableOperandData(AsmJitOperand class56_0)
+	internal static AsmJitOperand.VariableOperandData GetVariableOperandData(AsmJitOperand operand)
 	{
-		return AsmJitOperand.Reinterpret<AsmJitOperand.Struct7, AsmJitOperand.Struct14>(class56_0.GetRawData());
+		return AsmJitOperand.Reinterpret<AsmJitOperand.RawOperandData, AsmJitOperand.VariableOperandData>(operand.GetRawData());
 	}
 
-	internal static bool InstallVectoredExceptionHandler(bool bool_0, ulong ulong_0, VectoredExceptionHandlerInstaller class92_0, IntPtr intptr_0)
+	internal static bool InstallVectoredExceptionHandler(bool flag, ulong ulongValue, VectoredExceptionHandlerInstaller vectoredExceptionHandlerInstaller, IntPtr address)
 	{
-		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(class92_0.GetRemoteProcess())[EncodedStringTable.DecodeString(8549)];
+		ProcessModuleInfo gclass = RecoveredRuntime.CaptureProcessModules(vectoredExceptionHandlerInstaller.GetRemoteProcess())[EncodedStringTable.DecodeString(8549)];
 		if (gclass == null)
 		{
 			throw new FileNotFoundException(EncodedStringTable.DecodeString(12731));
 		}
 		AsmJitAssembler @class = new AsmJitAssembler();
 		IntPtr value;
-		if (!class92_0.GetRemoteProcess().Is64Bit)
+		if (!vectoredExceptionHandlerInstaller.GetRemoteProcess().Is64Bit)
 		{
 			IntPtr intPtr = RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(27396), false);
-			for (int i = 0; i < class92_0.byte_0.Length - 4; i++)
+			for (int i = 0; i < vectoredExceptionHandlerInstaller.bytes.Length - 4; i++)
 			{
-				uint num = BitConverter.ToUInt32(class92_0.byte_0, i);
+				uint num = BitConverter.ToUInt32(vectoredExceptionHandlerInstaller.bytes, i);
 				if (num != 3735935610u)
 				{
 					if (num == 3735929054u)
 					{
-						BitConverter.GetBytes(intPtr.ToInt32()).CopyTo(class92_0.byte_0, i);
+						BitConverter.GetBytes(intPtr.ToInt32()).CopyTo(vectoredExceptionHandlerInstaller.bytes, i);
 						break;
 					}
 					if (num == 3735929042u)
 					{
-						value = RecoveredRuntime.GetNativeLoaderHooks(class92_0.GetRemoteProcess()).GetRemoveInvertedFunctionTableAddress();
-						BitConverter.GetBytes(value.ToInt32()).CopyTo(class92_0.byte_0, i);
+						value = RecoveredRuntime.GetNativeLoaderHooks(vectoredExceptionHandlerInstaller.GetRemoteProcess()).GetRemoveInvertedFunctionTableAddress();
+						BitConverter.GetBytes(value.ToInt32()).CopyTo(vectoredExceptionHandlerInstaller.bytes, i);
 					}
 				}
 				else
 				{
-					value = RecoveredRuntime.GetNativeLoaderHooks(class92_0.GetRemoteProcess()).GetInvertedFunctionTableAddress();
-					BitConverter.GetBytes(value.ToInt32()).CopyTo(class92_0.byte_0, i);
+					value = RecoveredRuntime.GetNativeLoaderHooks(vectoredExceptionHandlerInstaller.GetRemoteProcess()).GetInvertedFunctionTableAddress();
+					BitConverter.GetBytes(value.ToInt32()).CopyTo(vectoredExceptionHandlerInstaller.bytes, i);
 				}
 			}
-			class92_0.intptr_2 = RecoveredRuntime.AllocateRemoteMemory(class92_0, (long)class92_0.byte_0.Length, NativeTypes.Enum34.flag_2);
-			if (class92_0.intptr_2 == IntPtr.Zero)
+			vectoredExceptionHandlerInstaller.address2 = RecoveredRuntime.AllocateRemoteMemory(vectoredExceptionHandlerInstaller, (long)vectoredExceptionHandlerInstaller.bytes.Length, NativeTypes.MemoryProtection.ExecuteReadWrite);
+			if (vectoredExceptionHandlerInstaller.address2 == IntPtr.Zero)
 			{
 				throw new AccessViolationException(EncodedStringTable.DecodeString(27429));
 			}
-			if (!class92_0.WriteArray<byte>(class92_0.intptr_2, class92_0.byte_0))
+			if (!vectoredExceptionHandlerInstaller.WriteArray<byte>(vectoredExceptionHandlerInstaller.address2, vectoredExceptionHandlerInstaller.bytes))
 			{
 				throw new AccessViolationException(EncodedStringTable.DecodeString(27482));
 			}
 		}
 		else
 		{
-			if (class92_0.intptr_1 == IntPtr.Zero)
+			if (vectoredExceptionHandlerInstaller.address == IntPtr.Zero)
 			{
-				class92_0.intptr_1 = RecoveredRuntime.AllocateRemoteMemory(class92_0, 4096L, NativeTypes.Enum34.flag_6);
-				if (class92_0.intptr_1 == IntPtr.Zero)
+				vectoredExceptionHandlerInstaller.address = RecoveredRuntime.AllocateRemoteMemory(vectoredExceptionHandlerInstaller, 4096L, NativeTypes.MemoryProtection.ReadWrite);
+				if (vectoredExceptionHandlerInstaller.address == IntPtr.Zero)
 				{
 					throw new AccessViolationException(EncodedStringTable.DecodeString(27339));
 				}
 			}
-			VectoredExceptionHandlerInstaller.Struct71 @struct = class92_0.Read<VectoredExceptionHandlerInstaller.Struct71>(class92_0.intptr_1);
-			long num2 = @struct.intptr_0.ToInt64();
+			VectoredExceptionHandlerInstaller.InvertedFunctionTable @struct = vectoredExceptionHandlerInstaller.Read<VectoredExceptionHandlerInstaller.InvertedFunctionTable>(vectoredExceptionHandlerInstaller.address);
+			long num2 = @struct.address.ToInt64();
 			AsmJitLabel class58_;
-			AsmJitLabel class58_2;
-			AsmJitLabel class58_3;
-			AsmJitLabel class58_4;
+			AsmJitLabel label;
+			AsmJitLabel label2;
+			AsmJitLabel label3;
 			AsmJitGpRegister class63_;
-			AsmJitGpRegister class63_2;
-			AsmJitGpRegister class63_3;
+			AsmJitGpRegister gpRegister;
+			AsmJitGpRegister gpRegister2;
 			checked
 			{
-				@struct.struct70_0[(int)((IntPtr)num2)].intptr_0 = intptr_0;
-				@struct.struct70_0[(int)((IntPtr)num2)].intptr_1 = (IntPtr)((long)ulong_0);
-				@struct.intptr_0 = @struct.intptr_0.Add(1);
-				class92_0.Write<VectoredExceptionHandlerInstaller.Struct71>(class92_0.intptr_1, @struct);
+				@struct.invertedFunctionTableEntryArray[(int)((IntPtr)num2)].address = address;
+				@struct.invertedFunctionTableEntryArray[(int)((IntPtr)num2)].address2 = (IntPtr)((long)ulongValue);
+				@struct.address = @struct.address.Add(1);
+				vectoredExceptionHandlerInstaller.Write<VectoredExceptionHandlerInstaller.InvertedFunctionTable>(vectoredExceptionHandlerInstaller.address, @struct);
 				class58_ = RecoveredRuntime.CreateLabel(@class);
-				class58_2 = RecoveredRuntime.CreateLabel(@class);
-				class58_3 = RecoveredRuntime.CreateLabel(@class);
-				class58_4 = RecoveredRuntime.CreateLabel(@class);
-				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.class63_53, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_54, 0L));
-				AsmJitMemoryOperand class59_ = RecoveredRuntime.CreateDwordBaseMemory(0L, AsmJitRuntime.class63_53);
+				label = RecoveredRuntime.CreateLabel(@class);
+				label2 = RecoveredRuntime.CreateLabel(@class);
+				label3 = RecoveredRuntime.CreateLabel(@class);
+				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.gpRegister54, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister55, 0L));
+				AsmJitMemoryOperand class59_ = RecoveredRuntime.CreateDwordBaseMemory(0L, AsmJitRuntime.gpRegister54);
 				AsmJitImmediate class57_ = RecoveredRuntime.CreateImmediate(3765269347u);
 				RecoveredRuntime.EmitCompareMemoryImmediate(class57_, class59_, @class);
-				RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.const_0, @class, class58_);
-				class59_ = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_53, 32L);
+				RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.None, @class, class58_);
+				class59_ = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister54, 32L);
 				class57_ = RecoveredRuntime.CreateImmediate(26820608u);
 				RecoveredRuntime.EmitCompareMemoryImmediate(class57_, class59_, @class);
-				RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.const_0, @class, class58_);
-				class59_ = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_53, 56L);
+				RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.None, @class, class58_);
+				class59_ = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister54, 56L);
 				class57_ = RecoveredRuntime.CreateImmediate(0);
 				RecoveredRuntime.EmitCompareMemoryImmediate(class57_, class59_, @class);
-				RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.const_0, @class, class58_);
-				RecoveredRuntime.EmitMoveImmediateToRegister(@class, AsmJitRuntime.class63_62, new AsmJitImmediate(class92_0.intptr_1));
-				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.class63_55, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_62, 0L));
-				RecoveredRuntime.EmitAddRegisterImmediate(@class, AsmJitRuntime.class63_62, RecoveredRuntime.CreateImmediate(IntPtr.Size));
-				RecoveredRuntime.EmitXorRegisters(@class, AsmJitRuntime.class63_63, AsmJitRuntime.class63_63);
-				RecoveredRuntime.BindLabel(@class, class58_2);
-				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.class63_61, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_53, 48L));
-				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.class63_64, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_62, 0L));
-				class63_ = AsmJitRuntime.class63_61;
-				class63_2 = AsmJitRuntime.class63_64;
-				RecoveredRuntime.EmitCompareRegisters(class63_, @class, class63_2);
-				RecoveredRuntime.EmitLowerBoundJump(AsmJitJumpHint.const_0, class58_3, @class);
-				class63_3 = AsmJitRuntime.class63_64;
+				RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.None, @class, class58_);
+				RecoveredRuntime.EmitMoveImmediateToRegister(@class, AsmJitRuntime.gpRegister63, new AsmJitImmediate(vectoredExceptionHandlerInstaller.address));
+				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.gpRegister56, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister63, 0L));
+				RecoveredRuntime.EmitAddRegisterImmediate(@class, AsmJitRuntime.gpRegister63, RecoveredRuntime.CreateImmediate(IntPtr.Size));
+				RecoveredRuntime.EmitXorRegisters(@class, AsmJitRuntime.gpRegister64, AsmJitRuntime.gpRegister64);
+				RecoveredRuntime.BindLabel(@class, label);
+				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.gpRegister62, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister54, 48L));
+				RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.gpRegister65, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister63, 0L));
+				class63_ = AsmJitRuntime.gpRegister62;
+				gpRegister = AsmJitRuntime.gpRegister65;
+				RecoveredRuntime.EmitCompareRegisters(class63_, @class, gpRegister);
+				RecoveredRuntime.EmitLowerBoundJump(AsmJitJumpHint.None, label2, @class);
+				gpRegister2 = AsmJitRuntime.gpRegister65;
 			}
-			AsmJitMemoryOperand class59_2 = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_62, (long)IntPtr.Size);
-			RecoveredRuntime.EmitAddMemoryToRegister(class59_2, class63_3, @class);
-			class63_ = AsmJitRuntime.class63_61;
-			class63_2 = AsmJitRuntime.class63_64;
-			RecoveredRuntime.EmitCompareRegisters(class63_, @class, class63_2);
-			RecoveredRuntime.EmitUpperBoundJump(AsmJitJumpHint.const_0, class58_3, @class);
-			RecoveredRuntime.EmitUnconditionalJump(@class, class58_4);
-			RecoveredRuntime.BindLabel(@class, class58_3);
-			RecoveredRuntime.EmitAddRegisterImmediate(@class, AsmJitRuntime.class63_62, RecoveredRuntime.CreateImmediate(typeof(VectoredExceptionHandlerInstaller.Struct70).SizeOf()));
-			RecoveredRuntime.EmitAddRegisterImmediate(@class, AsmJitRuntime.class63_63, RecoveredRuntime.CreateImmediate(1));
-			class63_ = AsmJitRuntime.class63_63;
-			class63_2 = AsmJitRuntime.class63_55;
-			RecoveredRuntime.EmitCompareRegisters(class63_, @class, class63_2);
-			RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.const_0, @class, class58_2);
+			AsmJitMemoryOperand memoryOperand = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister63, (long)IntPtr.Size);
+			RecoveredRuntime.EmitAddMemoryToRegister(memoryOperand, gpRegister2, @class);
+			class63_ = AsmJitRuntime.gpRegister62;
+			gpRegister = AsmJitRuntime.gpRegister65;
+			RecoveredRuntime.EmitCompareRegisters(class63_, @class, gpRegister);
+			RecoveredRuntime.EmitUpperBoundJump(AsmJitJumpHint.None, label2, @class);
+			RecoveredRuntime.EmitUnconditionalJump(@class, label3);
+			RecoveredRuntime.BindLabel(@class, label2);
+			RecoveredRuntime.EmitAddRegisterImmediate(@class, AsmJitRuntime.gpRegister63, RecoveredRuntime.CreateImmediate(typeof(VectoredExceptionHandlerInstaller.InvertedFunctionTableEntry).SizeOf()));
+			RecoveredRuntime.EmitAddRegisterImmediate(@class, AsmJitRuntime.gpRegister64, RecoveredRuntime.CreateImmediate(1));
+			class63_ = AsmJitRuntime.gpRegister64;
+			gpRegister = AsmJitRuntime.gpRegister56;
+			RecoveredRuntime.EmitCompareRegisters(class63_, @class, gpRegister);
+			RecoveredRuntime.EmitComparisonFailureJump(AsmJitJumpHint.None, @class, label);
 			RecoveredRuntime.EmitUnconditionalJump(@class, class58_);
-			RecoveredRuntime.BindLabel(@class, class58_4);
-			AsmJitMemoryOperand class59_3 = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_53, 32L);
-			AsmJitImmediate class57_2 = RecoveredRuntime.CreateImmediate(429065504u);
-			RecoveredRuntime.EmitMoveImmediateToMemory(class57_2, class59_3, @class);
-			RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.class63_54, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_54, 0L));
-			RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.class63_55, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_62, 0L));
-			RecoveredRuntime.EmitMoveRegisterToMemory(@class, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.class63_53, 56L), AsmJitRuntime.class63_55);
+			RecoveredRuntime.BindLabel(@class, label3);
+			AsmJitMemoryOperand memoryOperand2 = RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister54, 32L);
+			AsmJitImmediate immediate = RecoveredRuntime.CreateImmediate(429065504u);
+			RecoveredRuntime.EmitMoveImmediateToMemory(immediate, memoryOperand2, @class);
+			RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.gpRegister55, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister55, 0L));
+			RecoveredRuntime.EmitMoveMemoryToRegister(@class, AsmJitRuntime.gpRegister56, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister63, 0L));
+			RecoveredRuntime.EmitMoveRegisterToMemory(@class, RecoveredRuntime.CreateQwordBaseMemory(AsmJitRuntime.gpRegister54, 56L), AsmJitRuntime.gpRegister56);
 			RecoveredRuntime.BindLabel(@class, class58_);
-			RecoveredRuntime.EmitXorRegisters(@class, AsmJitRuntime.class63_53, AsmJitRuntime.class63_53);
+			RecoveredRuntime.EmitXorRegisters(@class, AsmJitRuntime.gpRegister54, AsmJitRuntime.gpRegister54);
 			RecoveredRuntime.EmitReturn(@class);
 			RecoveredRuntime.EmbedByte(204, @class);
 			RecoveredRuntime.EmbedByte(204, @class);
 			RecoveredRuntime.EmbedByte(204, @class);
-			class92_0.intptr_2 = RecoveredRuntime.AssembleRemoteCode(@class, class92_0);
+			vectoredExceptionHandlerInstaller.address2 = RecoveredRuntime.AssembleRemoteCode(@class, vectoredExceptionHandlerInstaller);
 			RecoveredRuntime.DisposeAssemblerState(@class);
 		}
-		RemoteAssembler class2 = new RemoteAssembler(@class, class92_0.GetRemoteProcess());
+		RemoteAssembler class2 = new RemoteAssembler(@class, vectoredExceptionHandlerInstaller.GetRemoteProcess());
 		RecoveredRuntime.EmitRemoteCallPrologue(class2);
 		RecoveredRuntime.EmitRemoteCall(class2, new AsmJitImmediate(RecoveredRuntime.ResolveExportByName(gclass, EncodedStringTable.DecodeString(27531), false)), CallingConvention.StdCall, new object[]
 		{
 			0,
-			class92_0.intptr_2
+			vectoredExceptionHandlerInstaller.address2
 		});
 		class2.CaptureReturnValue<IntPtr>();
 		RecoveredRuntime.EmitRemoteCallEpilogue(class2, -1);
-		value = (class92_0.intptr_3 = class92_0.Execute<IntPtr>(class2));
+		value = (vectoredExceptionHandlerInstaller.address3 = vectoredExceptionHandlerInstaller.Execute<IntPtr>(class2));
 		return value != IntPtr.Zero;
 	}
 
-	internal static AsmJitMemoryOperand CreatePointerBaseMemory(AsmJitGpRegister class63_0, long long_0, RemoteAssembler class47_0)
+	internal static AsmJitMemoryOperand CreatePointerBaseMemory(AsmJitGpRegister gpRegister, long longValue, RemoteAssembler remoteAssembler)
 	{
-		if (class47_0.bool_0)
+		if (remoteAssembler.flag)
 		{
-			class47_0.class53_0.struct19_0.uint_2 |= 8u;
-			return CreateDwordBaseMemory(long_0, class63_0);
+			remoteAssembler.assembler.assemblerState.uintValue3 |= 8u;
+			return CreateDwordBaseMemory(longValue, gpRegister);
 		}
-		return CreateQwordBaseMemory(class63_0, long_0);
+		return CreateQwordBaseMemory(gpRegister, longValue);
 	}
 
-	internal static void EmbedByte(byte byte_0, AsmJitAssembler class53_0)
+	internal static void EmbedByte(byte byteValue, AsmJitAssembler assembler)
 	{
-		EmbedData(1L, byte_0, class53_0);
+		EmbedData(1L, byteValue, assembler);
 	}
 
-	internal static AsmJitImmediate CreateImmediate(float float_0)
+	internal static AsmJitImmediate CreateImmediate(float floatValue)
 	{
-		return new AsmJitImmediate((IntPtr)BitConverter.ToInt32(BitConverter.GetBytes(float_0), 0));
+		return new AsmJitImmediate((IntPtr)BitConverter.ToInt32(BitConverter.GetBytes(floatValue), 0));
 	}
 }

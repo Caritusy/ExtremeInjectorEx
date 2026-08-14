@@ -3,530 +3,530 @@ using System.Runtime.CompilerServices;
 public sealed class Pe64OptionalHeader : IPeOptionalHeader
 {
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort magic;
 
 	[CompilerGenerated]
-	internal byte byte_0;
+	internal byte majorLinkerVersion;
 
 	[CompilerGenerated]
-	internal byte byte_1;
+	internal byte minorLinkerVersion;
 
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint sizeOfCode;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint sizeOfInitializedData;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal uint sizeOfUninitializedData;
 
 	[CompilerGenerated]
-	internal uint uint_3;
+	internal uint addressOfEntryPoint;
 
 	[CompilerGenerated]
-	internal uint uint_4;
+	internal uint baseOfCode;
 
 	[CompilerGenerated]
-	internal uint uint_5;
+	internal uint baseOfData;
 
 	[CompilerGenerated]
-	internal ulong ulong_0;
+	internal ulong imageBase;
 
 	[CompilerGenerated]
-	internal uint uint_6;
+	internal uint sectionAlignment;
 
 	[CompilerGenerated]
-	internal uint uint_7;
+	internal uint fileAlignment;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort majorOperatingSystemVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_2;
+	internal ushort minorOperatingSystemVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_3;
+	internal ushort majorImageVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_4;
+	internal ushort minorImageVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_5;
+	internal ushort majorSubsystemVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_6;
+	internal ushort minorSubsystemVersion;
 
 	[CompilerGenerated]
-	internal uint uint_8;
+	internal uint win32VersionValue;
 
 	[CompilerGenerated]
-	internal uint uint_9;
+	internal uint sizeOfImage;
 
 	[CompilerGenerated]
-	internal uint uint_10;
+	internal uint sizeOfHeaders;
 
 	[CompilerGenerated]
-	internal uint uint_11;
+	internal uint checksum;
 
 	[CompilerGenerated]
-	internal Subsystem enum42_0;
+	internal Subsystem subsystem;
 
 	[CompilerGenerated]
-	internal DllCharacteristics enum38_0;
+	internal DllCharacteristics dllCharacteristics;
 
 	[CompilerGenerated]
-	internal ulong ulong_1;
+	internal ulong sizeOfStackReserve;
 
 	[CompilerGenerated]
-	internal ulong ulong_2;
+	internal ulong sizeOfStackCommit;
 
 	[CompilerGenerated]
-	internal ulong ulong_3;
+	internal ulong sizeOfHeapReserve;
 
 	[CompilerGenerated]
-	internal ulong ulong_4;
+	internal ulong sizeOfHeapCommit;
 
 	[CompilerGenerated]
-	internal uint uint_12;
+	internal uint loaderFlags;
 
 	[CompilerGenerated]
-	internal uint uint_13;
+	internal uint numberOfRvaAndSizes;
 
 	[CompilerGenerated]
-	internal DataDirectory[] class157_0;
+	internal DataDirectory[] dataDirectories;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetMagic()
 	{
-		return ushort_0;
+		return magic;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMagic(ushort ushort_7)
+	public void SetMagic(ushort ushortValue)
 	{
-		ushort_0 = ushort_7;
+		magic = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public byte GetMajorLinkerVersion()
 	{
-		return byte_0;
+		return majorLinkerVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorLinkerVersion(byte byte_2)
+	public void SetMajorLinkerVersion(byte byteValue)
 	{
-		byte_0 = byte_2;
+		majorLinkerVersion = byteValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public byte GetMinorLinkerVersion()
 	{
-		return byte_1;
+		return minorLinkerVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorLinkerVersion(byte byte_2)
+	public void SetMinorLinkerVersion(byte byteValue)
 	{
-		byte_1 = byte_2;
+		minorLinkerVersion = byteValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSizeOfCode()
 	{
-		return uint_0;
+		return sizeOfCode;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfCode(uint uint_14)
+	public void SetSizeOfCode(uint uintValue)
 	{
-		uint_0 = uint_14;
+		sizeOfCode = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSizeOfInitializedData()
 	{
-		return uint_1;
+		return sizeOfInitializedData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfInitializedData(uint uint_14)
+	public void SetSizeOfInitializedData(uint uintValue)
 	{
-		uint_1 = uint_14;
+		sizeOfInitializedData = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSizeOfUninitializedData()
 	{
-		return uint_2;
+		return sizeOfUninitializedData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfUninitializedData(uint uint_14)
+	public void SetSizeOfUninitializedData(uint uintValue)
 	{
-		uint_2 = uint_14;
+		sizeOfUninitializedData = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetAddressOfEntryPoint()
 	{
-		return uint_3;
+		return addressOfEntryPoint;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetAddressOfEntryPoint(uint uint_14)
+	public void SetAddressOfEntryPoint(uint uintValue)
 	{
-		uint_3 = uint_14;
+		addressOfEntryPoint = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetBaseOfCode()
 	{
-		return uint_4;
+		return baseOfCode;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetBaseOfCode(uint uint_14)
+	public void SetBaseOfCode(uint uintValue)
 	{
-		uint_4 = uint_14;
+		baseOfCode = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetBaseOfData()
 	{
-		return uint_5;
+		return baseOfData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetBaseOfData(uint uint_14)
+	public void SetBaseOfData(uint uintValue)
 	{
-		uint_5 = uint_14;
+		baseOfData = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ulong GetImageBase()
 	{
-		return ulong_0;
+		return imageBase;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetImageBase(ulong ulong_5)
+	public void SetImageBase(ulong ulongValue)
 	{
-		ulong_0 = ulong_5;
+		imageBase = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSectionAlignment()
 	{
-		return uint_6;
+		return sectionAlignment;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSectionAlignment(uint uint_14)
+	public void SetSectionAlignment(uint uintValue)
 	{
-		uint_6 = uint_14;
+		sectionAlignment = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetFileAlignment()
 	{
-		return uint_7;
+		return fileAlignment;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetFileAlignment(uint uint_14)
+	public void SetFileAlignment(uint uintValue)
 	{
-		uint_7 = uint_14;
+		fileAlignment = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetMajorOperatingSystemVersion()
 	{
-		return ushort_1;
+		return majorOperatingSystemVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorOperatingSystemVersion(ushort ushort_7)
+	public void SetMajorOperatingSystemVersion(ushort ushortValue)
 	{
-		ushort_1 = ushort_7;
+		majorOperatingSystemVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetMinorOperatingSystemVersion()
 	{
-		return ushort_2;
+		return minorOperatingSystemVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorOperatingSystemVersion(ushort ushort_7)
+	public void SetMinorOperatingSystemVersion(ushort ushortValue)
 	{
-		ushort_2 = ushort_7;
+		minorOperatingSystemVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetMajorImageVersion()
 	{
-		return ushort_3;
+		return majorImageVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorImageVersion(ushort ushort_7)
+	public void SetMajorImageVersion(ushort ushortValue)
 	{
-		ushort_3 = ushort_7;
+		majorImageVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetMinorImageVersion()
 	{
-		return ushort_4;
+		return minorImageVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorImageVersion(ushort ushort_7)
+	public void SetMinorImageVersion(ushort ushortValue)
 	{
-		ushort_4 = ushort_7;
+		minorImageVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetMajorSubsystemVersion()
 	{
-		return ushort_5;
+		return majorSubsystemVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorSubsystemVersion(ushort ushort_7)
+	public void SetMajorSubsystemVersion(ushort ushortValue)
 	{
-		ushort_5 = ushort_7;
+		majorSubsystemVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetMinorSubsystemVersion()
 	{
-		return ushort_6;
+		return minorSubsystemVersion;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorSubsystemVersion(ushort ushort_7)
+	public void SetMinorSubsystemVersion(ushort ushortValue)
 	{
-		ushort_6 = ushort_7;
+		minorSubsystemVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetWin32VersionValue()
 	{
-		return uint_8;
+		return win32VersionValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetWin32VersionValue(uint uint_14)
+	public void SetWin32VersionValue(uint uintValue)
 	{
-		uint_8 = uint_14;
+		win32VersionValue = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSizeOfImage()
 	{
-		return uint_9;
+		return sizeOfImage;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfImage(uint uint_14)
+	public void SetSizeOfImage(uint uintValue)
 	{
-		uint_9 = uint_14;
+		sizeOfImage = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSizeOfHeaders()
 	{
-		return uint_10;
+		return sizeOfHeaders;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfHeaders(uint uint_14)
+	public void SetSizeOfHeaders(uint uintValue)
 	{
-		uint_10 = uint_14;
+		sizeOfHeaders = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetChecksum()
 	{
-		return uint_11;
+		return checksum;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetChecksum(uint uint_14)
+	public void SetChecksum(uint uintValue)
 	{
-		uint_11 = uint_14;
+		checksum = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public Subsystem GetSubsystem()
 	{
-		return enum42_0;
+		return subsystem;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSubsystem(Subsystem enum42_1)
+	public void SetSubsystem(Subsystem subsystem2)
 	{
-		enum42_0 = enum42_1;
+		subsystem = subsystem2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public DllCharacteristics GetDllCharacteristics()
 	{
-		return enum38_0;
+		return dllCharacteristics;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDllCharacteristics(DllCharacteristics enum38_1)
+	public void SetDllCharacteristics(DllCharacteristics dllCharacteristics2)
 	{
-		enum38_0 = enum38_1;
+		dllCharacteristics = dllCharacteristics2;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ulong GetSizeOfStackReserve()
 	{
-		return ulong_1;
+		return sizeOfStackReserve;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfStackReserve(ulong ulong_5)
+	public void SetSizeOfStackReserve(ulong ulongValue)
 	{
-		ulong_1 = ulong_5;
+		sizeOfStackReserve = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ulong GetSizeOfStackCommit()
 	{
-		return ulong_2;
+		return sizeOfStackCommit;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfStackCommit(ulong ulong_5)
+	public void SetSizeOfStackCommit(ulong ulongValue)
 	{
-		ulong_2 = ulong_5;
+		sizeOfStackCommit = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ulong GetSizeOfHeapReserve()
 	{
-		return ulong_3;
+		return sizeOfHeapReserve;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfHeapReserve(ulong ulong_5)
+	public void SetSizeOfHeapReserve(ulong ulongValue)
 	{
-		ulong_3 = ulong_5;
+		sizeOfHeapReserve = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ulong GetSizeOfHeapCommit()
 	{
-		return ulong_4;
+		return sizeOfHeapCommit;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfHeapCommit(ulong ulong_5)
+	public void SetSizeOfHeapCommit(ulong ulongValue)
 	{
-		ulong_4 = ulong_5;
+		sizeOfHeapCommit = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetLoaderFlags()
 	{
-		return uint_12;
+		return loaderFlags;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetLoaderFlags(uint uint_14)
+	public void SetLoaderFlags(uint uintValue)
 	{
-		uint_12 = uint_14;
+		loaderFlags = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetNumberOfRvaAndSizes()
 	{
-		return uint_13;
+		return numberOfRvaAndSizes;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNumberOfRvaAndSizes(uint uint_14)
+	public void SetNumberOfRvaAndSizes(uint uintValue)
 	{
-		uint_13 = uint_14;
+		numberOfRvaAndSizes = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public DataDirectory[] GetDataDirectories()
 	{
-		return class157_0;
+		return dataDirectories;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDataDirectories(DataDirectory[] class157_1)
+	public void SetDataDirectories(DataDirectory[] dataDirectoryArray)
 	{
-		class157_0 = class157_1;
+		dataDirectories = dataDirectoryArray;
 	}
 
 	public Pe64OptionalHeader()

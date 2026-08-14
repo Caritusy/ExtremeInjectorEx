@@ -26,13 +26,13 @@ using Microsoft.Win32;
 public sealed partial class RecoveredRuntime
 {
 
-	internal static TypeBuilder DefineDecoyType(ModuleBuilder moduleBuilder_0)
+	internal static TypeBuilder DefineDecoyType(ModuleBuilder moduleBuilder)
 	{
-		TypeBuilder typeBuilder = moduleBuilder_0.DefineType(RecoveredRuntime.GenerateRandomIdentifier() + EncodedStringTable.DecodeString(952) + RecoveredRuntime.GenerateRandomIdentifier(), TypeAttributes.NotPublic);
-		int num = DynamicIlEmitter.random_0.Next(2, 20);
+		TypeBuilder typeBuilder = moduleBuilder.DefineType(RecoveredRuntime.GenerateRandomIdentifier() + EncodedStringTable.DecodeString(952) + RecoveredRuntime.GenerateRandomIdentifier(), TypeAttributes.NotPublic);
+		int num = DynamicIlEmitter.random.Next(2, 20);
 		for (int i = 0; i < num; i++)
 		{
-			Type type = DynamicIlEmitter.type_0[DynamicIlEmitter.random_0.Next(DynamicIlEmitter.type_0.Length)];
+			Type type = DynamicIlEmitter.typeArray[DynamicIlEmitter.random.Next(DynamicIlEmitter.typeArray.Length)];
 			ILGenerator ilgenerator = typeBuilder.DefineMethod(RecoveredRuntime.GenerateRandomIdentifier(), MethodAttributes.Private | MethodAttributes.FamANDAssem | MethodAttributes.Static, type, new Type[0]).GetILGenerator();
 			if (type != typeof(void))
 			{
@@ -41,17 +41,17 @@ public sealed partial class RecoveredRuntime
 				ilgenerator.Emit(OpCodes.Initobj, type);
 				ilgenerator.Emit(OpCodes.Ldloc_0);
 			}
-			int num2 = DynamicIlEmitter.random_0.Next(5);
+			int num2 = DynamicIlEmitter.random.Next(5);
 			for (int j = 0; j < num2; j++)
 			{
 				ilgenerator.Emit(OpCodes.Nop);
 			}
 			ilgenerator.Emit(OpCodes.Ret);
 		}
-		num = DynamicIlEmitter.random_0.Next(2, 20);
+		num = DynamicIlEmitter.random.Next(2, 20);
 		for (int k = 0; k < num; k++)
 		{
-			Type type2 = DynamicIlEmitter.type_0[DynamicIlEmitter.random_0.Next(DynamicIlEmitter.type_0.Length)];
+			Type type2 = DynamicIlEmitter.typeArray[DynamicIlEmitter.random.Next(DynamicIlEmitter.typeArray.Length)];
 			if (!(type2 == typeof(void)))
 			{
 				typeBuilder.DefineField(RecoveredRuntime.GenerateRandomIdentifier(), type2, FieldAttributes.Private | FieldAttributes.FamANDAssem | FieldAttributes.Static);
@@ -64,20 +64,20 @@ public sealed partial class RecoveredRuntime
 		return typeBuilder;
 	}
 
-	internal static string ReadResourceDirectoryString(int int_0, ResourceDirectory class166_0)
+	internal static string ReadResourceDirectoryString(int intValue, ResourceDirectory resourceDirectory)
 	{
-		if (!RecoveredRuntime.SeekResourceOffset(class166_0, (long)int_0))
+		if (!RecoveredRuntime.SeekResourceOffset(resourceDirectory, (long)intValue))
 		{
 			return null;
 		}
-		if (!RecoveredRuntime.IsCurrentResourceRangeValid(class166_0, 2))
+		if (!RecoveredRuntime.IsCurrentResourceRangeValid(resourceDirectory, 2))
 		{
 			return null;
 		}
-		int int_ = (int)(RecoveredRuntime.ReadResourceUInt16(class166_0) * 2);
-		if (RecoveredRuntime.IsCurrentResourceRangeValid(class166_0, int_))
+		int int_ = (int)(RecoveredRuntime.ReadResourceUInt16(resourceDirectory) * 2);
+		if (RecoveredRuntime.IsCurrentResourceRangeValid(resourceDirectory, int_))
 		{
-			byte[] bytes = RecoveredRuntime.ReadResourceBytes(class166_0, int_);
+			byte[] bytes = RecoveredRuntime.ReadResourceBytes(resourceDirectory, int_);
 			string result;
 			try
 			{
@@ -94,11 +94,11 @@ public sealed partial class RecoveredRuntime
 
 	internal static ResourceManager GetEmbeddedResourceManager()
 	{
-		if (EmbeddedResources.resourceManager_0 == null)
+		if (EmbeddedResources.resourceManager == null)
 		{
-			EmbeddedResources.resourceManager_0 = new ResourceManager(EncodedStringTable.DecodeString(13190), typeof(EmbeddedResources).Assembly);
+			EmbeddedResources.resourceManager = new ResourceManager(EncodedStringTable.DecodeString(13190), typeof(EmbeddedResources).Assembly);
 		}
-		return EmbeddedResources.resourceManager_0;
+		return EmbeddedResources.resourceManager;
 	}
 
 	internal static void InitializeResourceResolver()
@@ -112,9 +112,9 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static bool TryCheckForUpdate(out string string_0)
+	internal static bool TryCheckForUpdate(out string text2)
 	{
-		string_0 = null;
+		text2 = null;
 		bool result;
 		try
 		{
@@ -126,14 +126,14 @@ public sealed partial class RecoveredRuntime
 			{
 				using (CookieAwareWebClient @class = new CookieAwareWebClient())
 				{
-					string_0 = @class.DownloadString(EncodedStringTable.DecodeString(13589));
+					text2 = @class.DownloadString(EncodedStringTable.DecodeString(13589));
 					Version version = Assembly.GetExecutingAssembly().GetName().Version;
 					string text = string.Format(EncodedStringTable.DecodeString(13690), version.Major, version.Minor);
 					if (version.Build != 0)
 					{
 						text = text + EncodedStringTable.DecodeString(952) + version.Build;
 					}
-					result = (string_0 != text);
+					result = (text2 != text);
 				}
 			}
 		}
@@ -144,12 +144,12 @@ public sealed partial class RecoveredRuntime
 		return result;
 	}
 
-	internal static ICryptoTransform CreateDesTransform(bool bool_0, byte[] byte_0, byte[] byte_1)
+	internal static ICryptoTransform CreateDesTransform(bool flag, byte[] bytes, byte[] bytes2)
 	{
 		ICryptoTransform result;
 		using (DESCryptoServiceProvider descryptoServiceProvider = new DESCryptoServiceProvider())
 		{
-			result = ((!bool_0) ? descryptoServiceProvider.CreateEncryptor(byte_1, byte_0) : descryptoServiceProvider.CreateDecryptor(byte_1, byte_0));
+			result = ((!flag) ? descryptoServiceProvider.CreateEncryptor(bytes2, bytes) : descryptoServiceProvider.CreateDecryptor(bytes2, bytes));
 		}
 		return result;
 	}
@@ -214,9 +214,9 @@ public sealed partial class RecoveredRuntime
 		}
 	}
 
-	internal static byte[] DecompressEmbeddedData(byte[] byte_0)
+	internal static byte[] DecompressEmbeddedData(byte[] bytes)
 	{
-		DeflateDecoder.Stream1 stream = new DeflateDecoder.Stream1(byte_0);
+		DeflateDecoder.ReadOnlyMemoryStream stream = new DeflateDecoder.ReadOnlyMemoryStream(bytes);
 		byte[] array = new byte[0];
 		int num = RecoveredRuntime.ReadDeflateInt32(stream);
 		if (num == 67324752)
@@ -246,7 +246,7 @@ public sealed partial class RecoveredRuntime
 			}
 			byte[] array2 = new byte[stream.Length - stream.Position];
 			stream.Read(array2, 0, array2.Length);
-			DeflateDecoder.Class180 class180_ = new DeflateDecoder.Class180(array2);
+			DeflateDecoder.Inflater class180_ = new DeflateDecoder.Inflater(array2);
 			array = new byte[num5];
 			RecoveredRuntime.InflateBytes(array, 0, array.Length, class180_);
 			array2 = null;
@@ -270,8 +270,8 @@ public sealed partial class RecoveredRuntime
 					num11 = RecoveredRuntime.ReadDeflateInt32(stream);
 					byte[] array3 = new byte[num10];
 					stream.Read(array3, 0, array3.Length);
-					DeflateDecoder.Class180 class180_2 = new DeflateDecoder.Class180(array3);
-					RecoveredRuntime.InflateBytes(array, i, num11, class180_2);
+					DeflateDecoder.Inflater inflater = new DeflateDecoder.Inflater(array3);
+					RecoveredRuntime.InflateBytes(array, i, num11, inflater);
 				}
 			}
 			if (num8 == 2)
@@ -287,7 +287,7 @@ public sealed partial class RecoveredRuntime
 					179,
 					67
 				};
-				byte[] byte_2 = new byte[]
+				byte[] bytes2 = new byte[]
 				{
 					149,
 					124,
@@ -298,15 +298,15 @@ public sealed partial class RecoveredRuntime
 					16,
 					200
 				};
-				using (ICryptoTransform cryptoTransform = RecoveredRuntime.CreateDesTransform(true, byte_2, byte_))
+				using (ICryptoTransform cryptoTransform = RecoveredRuntime.CreateDesTransform(true, bytes2, byte_))
 				{
-					byte[] byte_3 = cryptoTransform.TransformFinalBlock(byte_0, 4, byte_0.Length - 4);
-					array = RecoveredRuntime.DecompressEmbeddedData(byte_3);
+					byte[] bytes3 = cryptoTransform.TransformFinalBlock(bytes, 4, bytes.Length - 4);
+					array = RecoveredRuntime.DecompressEmbeddedData(bytes3);
 				}
 			}
 			if (num8 == 3)
 			{
-				byte[] byte_4 = new byte[]
+				byte[] bytes4 = new byte[]
 				{
 					1,
 					1,
@@ -325,7 +325,7 @@ public sealed partial class RecoveredRuntime
 					1,
 					1
 				};
-				byte[] byte_5 = new byte[]
+				byte[] bytes5 = new byte[]
 				{
 					2,
 					2,
@@ -344,10 +344,10 @@ public sealed partial class RecoveredRuntime
 					2,
 					2
 				};
-				using (ICryptoTransform cryptoTransform2 = RecoveredRuntime.CreateRijndaelTransform(true, byte_4, byte_5))
+				using (ICryptoTransform cryptoTransform2 = RecoveredRuntime.CreateRijndaelTransform(true, bytes4, bytes5))
 				{
-					byte[] byte_6 = cryptoTransform2.TransformFinalBlock(byte_0, 4, byte_0.Length - 4);
-					array = RecoveredRuntime.DecompressEmbeddedData(byte_6);
+					byte[] bytes6 = cryptoTransform2.TransformFinalBlock(bytes, 4, bytes.Length - 4);
+					array = RecoveredRuntime.DecompressEmbeddedData(bytes6);
 				}
 			}
 		}
@@ -356,9 +356,9 @@ public sealed partial class RecoveredRuntime
 		return array;
 	}
 
-	internal static Assembly ResolveEmbeddedAssembly(object object_0, ResolveEventArgs resolveEventArgs_0)
+	internal static Assembly ResolveEmbeddedAssembly(object instance, ResolveEventArgs resolveEventArgs)
 	{
-		EmbeddedAssemblyResolver.Struct79 @struct = new EmbeddedAssemblyResolver.Struct79(resolveEventArgs_0.Name);
+		EmbeddedAssemblyResolver.AssemblyIdentity @struct = new EmbeddedAssemblyResolver.AssemblyIdentity(resolveEventArgs.Name);
 		string s = @struct.ToDisplayName(false);
 		string b = Convert.ToBase64String(Encoding.UTF8.GetBytes(s));
 		string[] array = _003CModule_003E.DecodeConstantWithKeyC<string>(3764124672u).Split(new char[]
@@ -376,9 +376,9 @@ public sealed partial class RecoveredRuntime
 				break;
 			}
 		}
-		if (text.Length == 0 && @struct.string_2.Length == 0)
+		if (text.Length == 0 && @struct.publicKeyToken.Length == 0)
 		{
-			b = Convert.ToBase64String(Encoding.UTF8.GetBytes(@struct.string_0));
+			b = Convert.ToBase64String(Encoding.UTF8.GetBytes(@struct.name));
 			for (int j = 0; j < array.Length - 1; j += 2)
 			{
 				if (array[j] == b)
@@ -398,11 +398,11 @@ public sealed partial class RecoveredRuntime
 				flag2 = (text2.IndexOf('t') >= 0);
 				text = text.Substring(num + 1);
 			}
-			lock (EmbeddedAssemblyResolver.dictionary_0)
+			lock (EmbeddedAssemblyResolver.dictionary)
 			{
-				if (EmbeddedAssemblyResolver.dictionary_0.ContainsKey(text))
+				if (EmbeddedAssemblyResolver.dictionary.ContainsKey(text))
 				{
-					return EmbeddedAssemblyResolver.dictionary_0[text];
+					return EmbeddedAssemblyResolver.dictionary[text];
 				}
 				Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(text);
 				if (manifestResourceStream != null)
@@ -436,7 +436,7 @@ public sealed partial class RecoveredRuntime
 						{
 							string text3 = string.Format(_003CModule_003E.DecodeConstantWithKeyB<string>(875068114u), Path.GetTempPath(), text);
 							Directory.CreateDirectory(text3);
-							string text4 = text3 + @struct.string_0 + _003CModule_003E.DecodeConstantWithKeyB<string>(4162067015u);
+							string text4 = text3 + @struct.name + _003CModule_003E.DecodeConstantWithKeyB<string>(4162067015u);
 							if (!File.Exists(text4))
 							{
 								FileStream fileStream = File.OpenWrite(text4);
@@ -451,7 +451,7 @@ public sealed partial class RecoveredRuntime
 						{
 						}
 					}
-					EmbeddedAssemblyResolver.dictionary_0[text] = assembly;
+					EmbeddedAssemblyResolver.dictionary[text] = assembly;
 					return assembly;
 				}
 			}
@@ -459,12 +459,12 @@ public sealed partial class RecoveredRuntime
 		return null;
 	}
 
-	internal static ICryptoTransform CreateRijndaelTransform(bool bool_0, byte[] byte_0, byte[] byte_1)
+	internal static ICryptoTransform CreateRijndaelTransform(bool flag, byte[] bytes, byte[] bytes2)
 	{
 		ICryptoTransform result;
 		using (SymmetricAlgorithm symmetricAlgorithm = new RijndaelManaged())
 		{
-			result = (bool_0 ? symmetricAlgorithm.CreateDecryptor(byte_0, byte_1) : symmetricAlgorithm.CreateEncryptor(byte_0, byte_1));
+			result = (flag ? symmetricAlgorithm.CreateDecryptor(bytes, bytes2) : symmetricAlgorithm.CreateEncryptor(bytes, bytes2));
 		}
 		return result;
 	}

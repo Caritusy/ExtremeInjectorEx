@@ -5,9 +5,9 @@ using System.Threading;
 
 public sealed class ResourceAssemblyResolver
 {
-	internal static Assembly assembly_0 = null;
+	internal static Assembly assemblyValue = null;
 
-	internal static string[] string_0 = new string[0];
+	internal static string[] strings = new string[0];
 
 	internal static void Initialize()
 	{
@@ -22,22 +22,22 @@ public sealed class ResourceAssemblyResolver
 
 	internal static Assembly ResolveResourceAssembly(object sender, ResolveEventArgs eventArgs)
 	{
-		if (ResourceAssemblyResolver.assembly_0 == null)
+		if (ResourceAssemblyResolver.assemblyValue == null)
 		{
-			lock (ResourceAssemblyResolver.string_0)
+			lock (ResourceAssemblyResolver.strings)
 			{
-				ResourceAssemblyResolver.assembly_0 = Assembly.Load(_003CModule_003E.DecodeConstantWithKeyA<string>(3928278315u));
-				if (ResourceAssemblyResolver.assembly_0 != null)
+				ResourceAssemblyResolver.assemblyValue = Assembly.Load(_003CModule_003E.DecodeConstantWithKeyA<string>(3928278315u));
+				if (ResourceAssemblyResolver.assemblyValue != null)
 				{
-					ResourceAssemblyResolver.string_0 = ResourceAssemblyResolver.assembly_0.GetManifestResourceNames();
+					ResourceAssemblyResolver.strings = ResourceAssemblyResolver.assemblyValue.GetManifestResourceNames();
 				}
 			}
 		}
 		string name = eventArgs.Name;
 		int i = 0;
-		while (i < ResourceAssemblyResolver.string_0.Length)
+		while (i < ResourceAssemblyResolver.strings.Length)
 		{
-			if (!(ResourceAssemblyResolver.string_0[i] == name))
+			if (!(ResourceAssemblyResolver.strings[i] == name))
 			{
 				i++;
 			}
@@ -45,7 +45,7 @@ public sealed class ResourceAssemblyResolver
 			{
 				if (ResourceAssemblyResolver.IsRequestFromExecutingAssembly())
 				{
-					return ResourceAssemblyResolver.assembly_0;
+					return ResourceAssemblyResolver.assemblyValue;
 				}
 				return null;
 			}

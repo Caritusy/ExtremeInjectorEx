@@ -5,57 +5,57 @@ public abstract class RemotePlatformStructure : RemoteStructure
 {
 	public sealed class RemoteFieldLayout
 	{
-		public int int_0;
+		public int intValue;
 
-		public bool bool_0;
+		public bool flag;
 
 		internal RemoteFieldLayout()
 		{
 		}
 	}
 
-	internal static Dictionary<Type, int[]> dictionary_0 = new Dictionary<Type, int[]>();
+	internal static Dictionary<Type, int[]> dictionary = new Dictionary<Type, int[]>();
 
-	internal static Dictionary<Type, int[]> dictionary_1;
+	internal static Dictionary<Type, int[]> dictionary2;
 
-	internal int[] int_1;
+	internal int[] intValueArray;
 
-	internal bool bool_1;
+	internal bool flag;
 
-	protected RemotePlatformStructure(int int_2, bool bool_2)
-		: base(int_2)
+	protected RemotePlatformStructure(int intValue, bool flag2)
+		: base(intValue)
 	{
-		this.bool_1 = bool_2;
-		this.int_1 = (bool_2 ? RemotePlatformStructure.dictionary_0[base.GetType()] : RemotePlatformStructure.dictionary_1[base.GetType()]);
+		this.flag = flag2;
+		this.intValueArray = (flag2 ? RemotePlatformStructure.dictionary[base.GetType()] : RemotePlatformStructure.dictionary2[base.GetType()]);
 	}
 
-	protected RemotePlatformStructure(IntPtr intptr_2, bool bool_2)
-		: base(intptr_2)
+	protected RemotePlatformStructure(IntPtr address, bool flag2)
+		: base(address)
 	{
-		bool_1 = bool_2;
-		int_1 = (bool_2 ? dictionary_0[GetType()] : dictionary_1[GetType()]);
+		flag = flag2;
+		intValueArray = (flag2 ? dictionary[GetType()] : dictionary2[GetType()]);
 	}
 
-	protected static void Register32BitLayout<T>(RemoteFieldLayout[] class168_0)
+	protected static void Register32BitLayout<T>(RemoteFieldLayout[] remoteFieldLayoutArray)
 	{
-		RegisterLayout<T>(bool_2: true, class168_0);
+		RegisterLayout<T>(flag2: true, remoteFieldLayoutArray);
 	}
 
-	protected static void Register64BitLayout<T>(RemoteFieldLayout[] class168_0)
+	protected static void Register64BitLayout<T>(RemoteFieldLayout[] remoteFieldLayoutArray)
 	{
-		RegisterLayout<T>(bool_2: false, class168_0);
+		RegisterLayout<T>(flag2: false, remoteFieldLayoutArray);
 	}
 
-	internal static void RegisterLayout<T>(bool bool_2, IList<RemoteFieldLayout> ilist_0)
+	internal static void RegisterLayout<T>(bool flag2, IList<RemoteFieldLayout> items)
 	{
-		int[] array = new int[ilist_0.Count + 1];
+		int[] array = new int[items.Count + 1];
 		int num = 0;
-		for (int i = 0; i < ilist_0.Count + 1; i++)
+		for (int i = 0; i < items.Count + 1; i++)
 		{
-			if (i < ilist_0.Count && !ilist_0[i].bool_0)
+			if (i < items.Count && !items[i].flag)
 			{
-				int num2 = ilist_0[i].int_0;
-				int num3 = bool_2 ? 4 : 8;
+				int num2 = items[i].intValue;
+				int num3 = flag2 ? 4 : 8;
 				if (num2 > num3)
 				{
 					num2 = num3;
@@ -67,12 +67,12 @@ public abstract class RemotePlatformStructure : RemoteStructure
 				}
 			}
 			array[i] = num;
-			if (i < ilist_0.Count)
+			if (i < items.Count)
 			{
-				num += ilist_0[i].int_0;
+				num += items[i].intValue;
 			}
 		}
-		Dictionary<Type, int[]> dictionary = bool_2 ? RemotePlatformStructure.dictionary_0 : RemotePlatformStructure.dictionary_1;
+		Dictionary<Type, int[]> dictionary = flag2 ? RemotePlatformStructure.dictionary : RemotePlatformStructure.dictionary2;
 		if (!dictionary.ContainsKey(typeof(T)))
 		{
 			dictionary.Add(typeof(T), array);
@@ -81,25 +81,25 @@ public abstract class RemotePlatformStructure : RemoteStructure
 		dictionary[typeof(T)] = array;
 	}
 
-	protected internal T ReadField<T>(int int_2)
+	protected internal T ReadField<T>(int intValue)
 	{
-		int num = this.int_1[int_2];
-		if (!this.bool_1 || typeof(T) != typeof(IntPtr))
+		int num = this.intValueArray[intValue];
+		if (!this.flag || typeof(T) != typeof(IntPtr))
 		{
 			return base.ReadFieldAtOffset<T>(num);
 		}
 		return (T)((object)((IntPtr)base.ReadFieldAtOffset<int>(num)));
 	}
 
-	protected void WriteField<T>(int int_2, T gparam_0)
+	protected void WriteField<T>(int intValue, T value)
 	{
-		int num = this.int_1[int_2];
-		if (this.bool_1 && typeof(T) == typeof(IntPtr))
+		int num = this.intValueArray[intValue];
+		if (this.flag && typeof(T) == typeof(IntPtr))
 		{
-			base.WriteFieldAtOffset<int>((int)((IntPtr)((object)gparam_0)), num);
+			base.WriteFieldAtOffset<int>((int)((IntPtr)((object)value)), num);
 			return;
 		}
-		base.WriteFieldAtOffset<T>(gparam_0, num);
+		base.WriteFieldAtOffset<T>(value, num);
 	}
 
 	static RemotePlatformStructure()

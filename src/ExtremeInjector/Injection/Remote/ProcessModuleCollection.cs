@@ -6,62 +6,62 @@ using System.Runtime.CompilerServices;
 public sealed class ProcessModuleCollection : List<ProcessModuleInfo>
 {
 	[CompilerGenerated]
-	public sealed class Class70
+	public sealed class ModuleNameMatcher
 	{
-		public string string_0;
+		public string text;
 
-		internal bool MatchesModuleName(ProcessModuleInfo gclass1_0)
+		internal bool MatchesModuleName(ProcessModuleInfo processModuleInfo)
 		{
-			return gclass1_0.GetModuleName().Equals(string_0, StringComparison.OrdinalIgnoreCase);
+			return processModuleInfo.GetModuleName().Equals(text, StringComparison.OrdinalIgnoreCase);
 		}
 
-		internal bool MatchesFilePath(ProcessModuleInfo gclass1_0)
+		internal bool MatchesFilePath(ProcessModuleInfo processModuleInfo)
 		{
-			return gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase);
-		}
-	}
-
-	[CompilerGenerated]
-	public sealed class Class71
-	{
-		public IntPtr intptr_0;
-
-		internal bool MatchesModuleBase(ProcessModuleInfo gclass1_0)
-		{
-			return gclass1_0.GetModuleBase() == intptr_0;
+			return processModuleInfo.GetFilePath().Equals(text, StringComparison.OrdinalIgnoreCase);
 		}
 	}
 
 	[CompilerGenerated]
-	public sealed class Class72
+	public sealed class ModuleBaseMatcher
 	{
-		public string string_0;
+		public IntPtr address;
 
-		internal bool MatchesFilePath(ProcessModuleInfo gclass1_0)
+		internal bool MatchesModuleBase(ProcessModuleInfo processModuleInfo)
 		{
-			return gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase);
+			return processModuleInfo.GetModuleBase() == address;
 		}
 	}
 
-	internal RemoteProcess gclass2_0;
-
-	public ProcessModuleInfo this[string string_0] => Find((ProcessModuleInfo gclass1_0) => gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase));
-
-	public ProcessModuleCollection(RemoteProcess gclass2_1)
+	[CompilerGenerated]
+	public sealed class ModulePathMatcher
 	{
-		gclass2_0 = gclass2_1;
+		public string text;
+
+		internal bool MatchesFilePath(ProcessModuleInfo processModuleInfo)
+		{
+			return processModuleInfo.GetFilePath().Equals(text, StringComparison.OrdinalIgnoreCase);
+		}
 	}
 
-	public IntPtr GetModuleBase(string string_0)
+	internal RemoteProcess remoteProcess;
+
+	public ProcessModuleInfo this[string text] => Find((ProcessModuleInfo processModuleInfo) => processModuleInfo.GetFilePath().Equals(text, StringComparison.OrdinalIgnoreCase));
+
+	public ProcessModuleCollection(RemoteProcess remoteProcess2)
+	{
+		remoteProcess = remoteProcess2;
+	}
+
+	public IntPtr GetModuleBase(string text)
 	{
 		int num;
-		if (!Path.IsPathRooted(string_0))
+		if (!Path.IsPathRooted(text))
 		{
-			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.GetFilePath().Equals(string_0, StringComparison.OrdinalIgnoreCase));
+			num = base.FindIndex((ProcessModuleInfo processModuleInfo) => processModuleInfo.GetFilePath().Equals(text, StringComparison.OrdinalIgnoreCase));
 		}
 		else
 		{
-			num = base.FindIndex((ProcessModuleInfo gclass1_0) => gclass1_0.GetModuleName().Equals(string_0, StringComparison.OrdinalIgnoreCase));
+			num = base.FindIndex((ProcessModuleInfo processModuleInfo) => processModuleInfo.GetModuleName().Equals(text, StringComparison.OrdinalIgnoreCase));
 		}
 		if (num < 0)
 		{

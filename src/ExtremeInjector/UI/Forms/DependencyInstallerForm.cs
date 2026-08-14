@@ -15,21 +15,21 @@ using Ionic.Zip;
 
 public sealed class DependencyInstallerForm : Form
 {
-	internal bool bool_0;
+	internal bool flag;
 
-	internal string string_0;
+	internal string text;
 
-	internal string string_1;
+	internal string text2;
 
-	internal string string_2;
+	internal string text3;
 
-	internal CookieAwareWebClient class20_0 = new CookieAwareWebClient();
+	internal CookieAwareWebClient cookieAwareWebClient = new CookieAwareWebClient();
 
-	internal IContainer icontainer_0;
+	internal IContainer container;
 
-	internal Label label_0;
+	internal Label label;
 
-	internal ProgressBar progressBar_0;
+	internal ProgressBar progressBar;
 
 	public DependencyInstallerForm()
 	{
@@ -40,29 +40,29 @@ public sealed class DependencyInstallerForm : Form
 		MinimizeBox = false;
 		ShowInTaskbar = false;
 		SizeGripStyle = SizeGripStyle.Hide;
-		class20_0.DownloadDataCompleted += class20_0_DownloadDataCompleted;
-		class20_0.DownloadProgressChanged += class20_0_DownloadProgressChanged;
+		cookieAwareWebClient.DownloadDataCompleted += class20_0_DownloadDataCompleted;
+		cookieAwareWebClient.DownloadProgressChanged += class20_0_DownloadProgressChanged;
 	}
 
 	internal void class20_0_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
 	{
 		base.Invoke(new MethodInvoker(delegate
 		{
-			this.progressBar_0.Value = e.ProgressPercentage;
+			this.progressBar.Value = e.ProgressPercentage;
 			string text = null;
-			if (this.class20_0.ResponseHeaders[EncodedStringTable.DecodeString(3814)] != null)
+			if (this.cookieAwareWebClient.ResponseHeaders[EncodedStringTable.DecodeString(3814)] != null)
 			{
-				text = new ContentDisposition(this.class20_0.ResponseHeaders[EncodedStringTable.DecodeString(3814)]).FileName;
+				text = new ContentDisposition(this.cookieAwareWebClient.ResponseHeaders[EncodedStringTable.DecodeString(3814)]).FileName;
 			}
 			if (string.IsNullOrEmpty(text))
 			{
-				text = this.string_2;
+				text = this.text3;
 			}
 			if (string.IsNullOrEmpty(text))
 			{
-				text = Uri.UnescapeDataString(Path.GetFileName(new Uri(this.string_0).AbsolutePath));
+				text = Uri.UnescapeDataString(Path.GetFileName(new Uri(this.text).AbsolutePath));
 			}
-			this.label_0.Text = string.Concat(new string[]
+			this.label.Text = string.Concat(new string[]
 			{
 				EncodedStringTable.DecodeString(3843),
 				text,
@@ -86,7 +86,7 @@ public sealed class DependencyInstallerForm : Form
 				return;
 			}
 
-			this.progressBar_0.Value = 100;
+			this.progressBar.Value = 100;
 			ThreadPool.QueueUserWorkItem(delegate
 			{
 				this.InstallDownloadedDependency(e.Result);
@@ -97,11 +97,11 @@ public sealed class DependencyInstallerForm : Form
 	private void InstallDownloadedDependency(byte[] downloadedData)
 	{
 		bool succeeded = true;
-		if (!this.bool_0)
+		if (!this.flag)
 		{
 			this.Invoke(new MethodInvoker(delegate
 			{
-				this.label_0.Text = EncodedStringTable.DecodeString(1869);
+				this.label.Text = EncodedStringTable.DecodeString(1869);
 			}));
 			using (MemoryStream memoryStream = new MemoryStream(downloadedData))
 			using (ZipFile zipFile = ZipFile.Read(memoryStream))
@@ -110,7 +110,7 @@ public sealed class DependencyInstallerForm : Form
 				{
 					try
 					{
-						zipEntry.Extract(this.string_1, (ExtractExistingFileAction)1);
+						zipEntry.Extract(this.text2, (ExtractExistingFileAction)1);
 					}
 					catch
 					{
@@ -122,13 +122,13 @@ public sealed class DependencyInstallerForm : Form
 		{
 			this.Invoke(new MethodInvoker(delegate
 			{
-				this.label_0.Text = EncodedStringTable.DecodeString(1847) + this.string_2 + EncodedStringTable.DecodeString(1864);
+				this.label.Text = EncodedStringTable.DecodeString(1847) + this.text3 + EncodedStringTable.DecodeString(1864);
 			}));
 			try
 			{
 				string temporaryDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 				Directory.CreateDirectory(temporaryDirectory);
-				string installerPath = Path.Combine(temporaryDirectory, this.string_2);
+				string installerPath = Path.Combine(temporaryDirectory, this.text3);
 				File.WriteAllBytes(installerPath, downloadedData);
 				Process process = Process.Start(installerPath);
 				if (process != null)
@@ -158,23 +158,23 @@ public sealed class DependencyInstallerForm : Form
 
 	internal void OnFormLoad(object sender, EventArgs e)
 	{
-		ThreadPool.QueueUserWorkItem(delegate(object object_0)
+		ThreadPool.QueueUserWorkItem(delegate(object instance)
 		{
-			if (this.bool_0)
+			if (this.flag)
 			{
 				bool flag = false;
 				try
 				{
-					string address = this.string_0.Replace(EncodedStringTable.DecodeString(1902), EncodedStringTable.DecodeString(1915));
-					IEnumerator enumerator = Regex.Matches(this.class20_0.DownloadString(address), EncodedStringTable.DecodeString(1936)).GetEnumerator();
+					string address = this.text.Replace(EncodedStringTable.DecodeString(1902), EncodedStringTable.DecodeString(1915));
+					IEnumerator enumerator = Regex.Matches(this.cookieAwareWebClient.DownloadString(address), EncodedStringTable.DecodeString(1936)).GetEnumerator();
 					{
 						while (enumerator.MoveNext())
 						{
 							string value = ((Match)enumerator.Current).Groups[EncodedStringTable.DecodeString(1969)].Value;
-							if (value.IndexOf(this.string_2, StringComparison.OrdinalIgnoreCase) != -1)
+							if (value.IndexOf(this.text3, StringComparison.OrdinalIgnoreCase) != -1)
 							{
 								flag = true;
-								this.class20_0.DownloadDataAsync(new Uri(value));
+								this.cookieAwareWebClient.DownloadDataAsync(new Uri(value));
 								break;
 							}
 						}
@@ -185,28 +185,28 @@ public sealed class DependencyInstallerForm : Form
 				}
 				if (!flag)
 				{
-					MessageBox.Show(EncodedStringTable.DecodeString(1978) + this.string_2 + EncodedStringTable.DecodeString(2023), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-					Process.Start(this.string_0);
+					MessageBox.Show(EncodedStringTable.DecodeString(1978) + this.text3 + EncodedStringTable.DecodeString(2023), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+					Process.Start(this.text);
 					return;
 				}
 			}
 			else
 			{
-				this.class20_0.DownloadDataAsync(new Uri(this.string_0));
+				this.cookieAwareWebClient.DownloadDataAsync(new Uri(this.text));
 			}
 		});
 	}
 
 	internal void OnFormClosing(object sender, FormClosingEventArgs e)
 	{
-		class20_0.CancelAsync();
+		cookieAwareWebClient.CancelAsync();
 	}
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing && this.icontainer_0 != null)
+		if (disposing && this.container != null)
 		{
-			this.icontainer_0.Dispose();
+			this.container.Dispose();
 		}
 		base.Dispose(disposing);
 	}

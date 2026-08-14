@@ -75,16 +75,16 @@ public sealed class Peb64 : RemotePeb
 		});
 	}
 
-	public Peb64(RemoteProcess gclass2_1)
-		: base(gclass2_1, bool_2: false)
+	public Peb64(RemoteProcess remoteProcess)
+		: base(remoteProcess, flag: false)
 	{
 		EnsureProcessHandle();
 	}
 
-	public Peb64(RemoteProcess gclass2_1, IntPtr intptr_2)
-		: base(gclass2_1, bool_2: false)
+	public Peb64(RemoteProcess remoteProcess, IntPtr address)
+		: base(remoteProcess, flag: false)
 	{
-		SetProcessHandle(intptr_2);
+		SetProcessHandle(address);
 	}
 
 	[SpecialName]

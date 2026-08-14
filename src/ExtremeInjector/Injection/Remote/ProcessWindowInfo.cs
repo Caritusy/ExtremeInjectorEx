@@ -5,67 +5,67 @@ using System.Runtime.CompilerServices;
 public sealed class ProcessWindowInfo
 {
 	[CompilerGenerated]
-	public sealed class Class78
+	public sealed class WindowCollector
 	{
-		public List<ProcessWindowInfo> list_0;
+		public List<ProcessWindowInfo> items;
 
-		internal bool CollectWindow(IntPtr intptr_0, IntPtr intptr_1)
+		internal bool CollectWindow(IntPtr address, IntPtr address2)
 		{
-			ProcessWindowInfo @class = new ProcessWindowInfo(intptr_0);
+			ProcessWindowInfo @class = new ProcessWindowInfo(address);
 			if (RecoveredRuntime.PopulateWindowIdentifiers(@class))
 			{
-				this.list_0.Add(@class);
+				this.items.Add(@class);
 			}
 			return true;
 		}
 	}
 
 	[CompilerGenerated]
-	internal IntPtr intptr_0;
+	internal IntPtr handle;
 
 	[CompilerGenerated]
-	internal int int_0;
+	internal int processId;
 
 	[CompilerGenerated]
-	internal int int_1;
+	internal int threadId;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetHandle()
 	{
-		return intptr_0;
+		return handle;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetHandle(IntPtr intptr_1)
+	internal void SetHandle(IntPtr address)
 	{
-		intptr_0 = intptr_1;
+		handle = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public int GetProcessId()
 	{
-		return int_0;
+		return processId;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetProcessId(int int_2)
+	internal void SetProcessId(int intValue)
 	{
-		int_0 = int_2;
+		processId = intValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetThreadId(int int_2)
+	internal void SetThreadId(int intValue)
 	{
-		int_1 = int_2;
+		threadId = intValue;
 	}
 
-	internal ProcessWindowInfo(IntPtr intptr_1)
+	internal ProcessWindowInfo(IntPtr address)
 	{
-		SetHandle(intptr_1);
+		SetHandle(address);
 	}
 }

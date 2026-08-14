@@ -4,21 +4,21 @@ using System.IO;
 
 public class PeImageReader : BoundsCheckedBinaryReader
 {
-	protected readonly PeImage class154_0;
+	protected readonly PeImage peImage;
 
-	protected PeImageReader(Stream stream_0, bool bool_0, PeImageLayout enum39_0)
-		: base(stream_0)
+	protected PeImageReader(Stream stream, bool flag, PeImageLayout peImageLayout)
+		: base(stream)
 	{
-		class154_0 = new PeImage(stream_0, bool_0, enum39_0);
+		peImage = new PeImage(stream, flag, peImageLayout);
 	}
 
-	protected PeImageReader(Stream stream_0, string string_0, bool bool_0, PeImageLayout enum39_0)
-		: base(stream_0)
+	protected PeImageReader(Stream stream, string text, bool flag, PeImageLayout peImageLayout)
+		: base(stream)
 	{
-		PeImage @class = new PeImage(stream_0, bool_0, enum39_0);
-		@class.SetFilePath(Path.GetFullPath(string_0));
-		@class.SetFileName(Path.GetFileName(string_0));
-		class154_0 = @class;
+		PeImage @class = new PeImage(stream, flag, peImageLayout);
+		@class.SetFilePath(Path.GetFullPath(text));
+		@class.SetFileName(Path.GetFileName(text));
+		peImage = @class;
 	}
 
 	protected virtual bool TryRead()
@@ -40,7 +40,7 @@ public class PeImageReader : BoundsCheckedBinaryReader
 			return false;
 		}
 
-		class154_0.SetDosHeader(dosHeader);
+		peImage.SetDosHeader(dosHeader);
 		BaseStream.Position = imageStart + dosHeader.GetPeHeaderOffset();
 
 		PeHeaders peHeaders = null;
@@ -49,9 +49,9 @@ public class PeImageReader : BoundsCheckedBinaryReader
 			return false;
 		}
 
-		class154_0.SetHeaders(peHeaders);
+		peImage.SetHeaders(peHeaders);
 		var sections = new List<PeSectionHeader>(peHeaders.GetCoffHeader().GetNumberOfSections());
-		class154_0.SetSections(sections);
+		peImage.SetSections(sections);
 		for (int index = 0; index < peHeaders.GetCoffHeader().GetNumberOfSections(); index++)
 		{
 			sections.Add(new PeSectionHeader(this));
@@ -62,36 +62,36 @@ public class PeImageReader : BoundsCheckedBinaryReader
 
 	protected virtual void ReadDirectories()
 	{
-		this.class154_0.SetImports(RecoveredRuntime.ReadImportDirectory(this.class154_0, this));
-		this.class154_0.SetDelayImports(RecoveredRuntime.ReadDelayImportDirectory(this, this.class154_0));
-		this.class154_0.SetExports(RecoveredRuntime.ReadExportDirectory(this.class154_0, this));
-		this.class154_0.SetBaseRelocations(RecoveredRuntime.ReadBaseRelocationDirectory(this.class154_0, this));
-		this.class154_0.SetResources(RecoveredRuntime.ReadResourceDirectory(this.class154_0, this));
-		this.class154_0.SetDebugDirectory(RecoveredRuntime.ReadDebugDirectory(this.class154_0, this));
-		this.class154_0.SetTlsDirectory(RecoveredRuntime.ReadTlsDirectory(this.class154_0, this));
-		this.class154_0.SetLoadConfigurationDirectory(RecoveredRuntime.ReadLoadConfigurationDirectory(this, this.class154_0));
-		this.class154_0.SetExceptionDirectory(RecoveredRuntime.ReadExceptionDirectory(this.class154_0, this));
-		this.class154_0.SetClrHeader(RecoveredRuntime.ReadClrHeader(this.class154_0, this));
+		this.peImage.SetImports(RecoveredRuntime.ReadImportDirectory(this.peImage, this));
+		this.peImage.SetDelayImports(RecoveredRuntime.ReadDelayImportDirectory(this, this.peImage));
+		this.peImage.SetExports(RecoveredRuntime.ReadExportDirectory(this.peImage, this));
+		this.peImage.SetBaseRelocations(RecoveredRuntime.ReadBaseRelocationDirectory(this.peImage, this));
+		this.peImage.SetResources(RecoveredRuntime.ReadResourceDirectory(this.peImage, this));
+		this.peImage.SetDebugDirectory(RecoveredRuntime.ReadDebugDirectory(this.peImage, this));
+		this.peImage.SetTlsDirectory(RecoveredRuntime.ReadTlsDirectory(this.peImage, this));
+		this.peImage.SetLoadConfigurationDirectory(RecoveredRuntime.ReadLoadConfigurationDirectory(this, this.peImage));
+		this.peImage.SetExceptionDirectory(RecoveredRuntime.ReadExceptionDirectory(this.peImage, this));
+		this.peImage.SetClrHeader(RecoveredRuntime.ReadClrHeader(this.peImage, this));
 	}
 
-	public static PeImage ReadFullImage(Stream stream_0, bool bool_0, PeImageLayout enum39_0)
+	public static PeImage ReadFullImage(Stream stream, bool flag, PeImageLayout peImageLayout)
 	{
-		PeImageReader @class = new PeImageReader(stream_0, bool_0, enum39_0);
+		PeImageReader @class = new PeImageReader(stream, flag, peImageLayout);
 		if (!@class.TryRead())
 		{
 			return null;
 		}
-		return @class.class154_0;
+		return @class.peImage;
 	}
 
-	public static PeImage ReadFullImage(Stream stream_0, string string_0, bool bool_0, PeImageLayout enum39_0)
+	public static PeImage ReadFullImage(Stream stream, string text, bool flag, PeImageLayout peImageLayout)
 	{
-		PeImageReader @class = new PeImageReader(stream_0, string_0, bool_0, enum39_0);
+		PeImageReader @class = new PeImageReader(stream, text, flag, peImageLayout);
 		if (!@class.TryRead())
 		{
 			return null;
 		}
-		return @class.class154_0;
+		return @class.peImage;
 	}
 
 }

@@ -4,22 +4,22 @@ using System.Runtime.InteropServices;
 
 public sealed class VectoredExceptionHandlerInstaller : RemoteCodeExecutorBase
 {
-	public struct Struct70
+	public struct InvertedFunctionTableEntry
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 	}
 
-	public struct Struct71
+	public struct InvertedFunctionTable
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 250)]
-		public Struct70[] struct70_0;
+		public InvertedFunctionTableEntry[] invertedFunctionTableEntryArray;
 	}
 
-	internal byte[] byte_0 = new byte[366]
+	internal byte[] bytes = new byte[366]
 	{
 		85, 139, 236, 131, 236, 24, 96, 184, 122, 218,
 		173, 222, 137, 69, 244, 184, 210, 192, 173, 222,
@@ -60,23 +60,23 @@ public sealed class VectoredExceptionHandlerInstaller : RemoteCodeExecutorBase
 		0, 0, 0, 194, 4, 0
 	};
 
-	internal IntPtr intptr_1;
+	internal IntPtr address;
 
-	internal IntPtr intptr_2;
+	internal IntPtr address2;
 
-	internal IntPtr intptr_3;
+	internal IntPtr address3;
 
-	public VectoredExceptionHandlerInstaller(RemoteProcess gclass2_1)
-		: base(gclass2_1)
+	public VectoredExceptionHandlerInstaller(RemoteProcess remoteProcess)
+		: base(remoteProcess)
 	{
-		EnsureAttachedToProcess(gclass2_1.ProcessId);
+		EnsureAttachedToProcess(remoteProcess.ProcessId);
 	}
 
 	protected override void EnsureProcessHandle()
 	{
 		if (base.GetProcessHandle() == IntPtr.Zero && base.GetProcessId() != -1)
 		{
-			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.GetProcessId()));
+			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.ProcessAccessRights.CreateThread | NativeTypes.ProcessAccessRights.VirtualMemoryOperation | NativeTypes.ProcessAccessRights.VirtualMemoryRead | NativeTypes.ProcessAccessRights.VirtualMemoryWrite | NativeTypes.ProcessAccessRights.QueryInformation, false, base.GetProcessId()));
 		}
 	}
 }

@@ -4,42 +4,42 @@ using System.Runtime.CompilerServices;
 public abstract class RemoteProcessComponent : RemoteMemoryAccessor, IDisposable
 {
 	[CompilerGenerated]
-	internal bool bool_1;
+	internal bool hideRemoteThreadFromDebugger;
 
 	[CompilerGenerated]
-	internal RemoteProcess gclass2_0;
+	internal RemoteProcess remoteProcess;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public bool GetHideRemoteThreadFromDebugger()
 	{
-		return bool_1;
+		return hideRemoteThreadFromDebugger;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetHideRemoteThreadFromDebugger(bool bool_2)
+	public void SetHideRemoteThreadFromDebugger(bool flag)
 	{
-		bool_1 = bool_2;
+		hideRemoteThreadFromDebugger = flag;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	protected internal RemoteProcess GetRemoteProcess()
 	{
-		return gclass2_0;
+		return remoteProcess;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected internal void SetRemoteProcess(RemoteProcess gclass2_1)
+	protected internal void SetRemoteProcess(RemoteProcess remoteProcess2)
 	{
-		gclass2_0 = gclass2_1;
+		remoteProcess = remoteProcess2;
 	}
 
-	protected RemoteProcessComponent(RemoteProcess gclass2_1)
+	protected RemoteProcessComponent(RemoteProcess remoteProcess2)
 	{
-		this.SetRemoteProcess(gclass2_1);
+		this.SetRemoteProcess(remoteProcess2);
 		base.SetAutoProtectMemory(false);
 	}
 

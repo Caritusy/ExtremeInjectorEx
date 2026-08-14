@@ -3,19 +3,19 @@ using System.Runtime.InteropServices;
 
 public sealed class AsmJitAssembler : IDisposable
 {
-	internal AsmJitAssemblerState struct19_0;
+	internal AsmJitAssemblerState assemblerState;
 
 	public bool Is32BitMode { get; set; }
 
 	public AsmJitAssembler()
 	{
-		this.struct19_0 = default(AsmJitAssemblerState);
-		if (AsmJitRuntime.bool_0)
+		this.assemblerState = default(AsmJitAssemblerState);
+		if (AsmJitRuntime.flag)
 		{
-			AsmJitApi.delegate2_0(ref this.struct19_0, IntPtr.Zero);
+			AsmJitApi.destroyAssemblerCdecl(ref this.assemblerState, IntPtr.Zero);
 			return;
 		}
-		AsmJitApi.delegate1_0(ref this.struct19_0, IntPtr.Zero);
+		AsmJitApi.destroyAssemblerThisCall(ref this.assemblerState, IntPtr.Zero);
 	}
 
 	~AsmJitAssembler()
@@ -28,8 +28,8 @@ public sealed class AsmJitAssembler : IDisposable
 		RecoveredRuntime.DisposeAssemblerState(this);
 	}
 
-	public void EmbedData<T>(T gparam_0) where T : struct
+	public void EmbedData<T>(T value) where T : struct
 	{
-		RecoveredRuntime.EmbedData(Marshal.SizeOf(typeof(T)), gparam_0, this);
+		RecoveredRuntime.EmbedData(Marshal.SizeOf(typeof(T)), value, this);
 	}
 }

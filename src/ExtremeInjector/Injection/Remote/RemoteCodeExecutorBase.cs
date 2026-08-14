@@ -8,30 +8,30 @@ public abstract class RemoteCodeExecutorBase : RemoteProcessComponent
 	private const uint WaitObject0 = 0;
 	private const uint WaitTimeout = 0x102;
 
-	protected RemoteCodeExecutorBase(RemoteProcess gclass2_1)
-		: base(gclass2_1)
+	protected RemoteCodeExecutorBase(RemoteProcess remoteProcess)
+		: base(remoteProcess)
 	{
 	}
 
-	protected internal T Execute<T>(RemoteAssembler class47_0)
+	protected internal T Execute<T>(RemoteAssembler remoteAssembler)
 	{
-		return ExecuteCore<T>(class47_0.class53_0, IntPtr.Zero, class47_0.GetResultOffset(), bool_2: true);
+		return ExecuteCore<T>(remoteAssembler.assembler, IntPtr.Zero, remoteAssembler.GetResultOffset(), flag: true);
 	}
 
-	protected internal T Execute<T>(RemoteAssembler class47_0, IntPtr intptr_1, bool bool_2)
+	protected internal T Execute<T>(RemoteAssembler remoteAssembler, IntPtr address, bool flag)
 	{
-		return ExecuteCore<T>(class47_0.class53_0, intptr_1, class47_0.GetResultOffset(), bool_2);
+		return ExecuteCore<T>(remoteAssembler.assembler, address, remoteAssembler.GetResultOffset(), flag);
 	}
 
-	protected T ExecuteCore<T>(AsmJitAssembler class53_0, IntPtr intptr_1, int int_1, bool bool_2)
+	protected T ExecuteCore<T>(AsmJitAssembler assembler, IntPtr address, int intValue, bool flag)
 	{
-		int codeSize = RecoveredRuntime.GetAssemblerOffset(class53_0);
+		int codeSize = RecoveredRuntime.GetAssemblerOffset(assembler);
 		if (codeSize <= 0)
 		{
 			throw new InvalidOperationException("The remote execution stub is empty.");
 		}
 
-		IntPtr remoteCode = RecoveredRuntime.AssembleRemoteCode(intptr_1, class53_0, this);
+		IntPtr remoteCode = RecoveredRuntime.AssembleRemoteCode(address, assembler, this);
 		if (remoteCode == IntPtr.Zero)
 		{
 			throw new AccessViolationException("Unable to allocate or write the remote execution stub.");
@@ -69,7 +69,7 @@ public abstract class RemoteCodeExecutorBase : RemoteProcessComponent
 			}
 
 			executionCompleted = true;
-			IntPtr resultAddress = remoteCode.Add(int_1);
+			IntPtr resultAddress = remoteCode.Add(intValue);
 			if (typeof(T) == typeof(IntPtr) && !RecoveredRuntime.Is32BitProcess(GetRemoteProcess()))
 			{
 				return (T)(object)(IntPtr)Read<int>(resultAddress);
@@ -85,7 +85,7 @@ public abstract class RemoteCodeExecutorBase : RemoteProcessComponent
 			}
 
 			// Never release code that a timed-out or indeterminate thread may still execute.
-			if (bool_2 && (executionCompleted || remoteThread == IntPtr.Zero))
+			if (flag && (executionCompleted || remoteThread == IntPtr.Zero))
 			{
 				ReleaseMemory(remoteCode);
 			}

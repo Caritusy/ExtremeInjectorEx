@@ -4,191 +4,191 @@ using System.Runtime.CompilerServices;
 public sealed class PeSectionHeader
 {
 	[CompilerGenerated]
-	internal string string_0;
+	internal string name;
 
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint virtualSize;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint virtualAddress;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal uint sizeOfRawData;
 
 	[CompilerGenerated]
-	internal uint uint_3;
+	internal uint pointerToRawData;
 
 	[CompilerGenerated]
-	internal uint uint_4;
+	internal uint pointerToRelocations;
 
 	[CompilerGenerated]
-	internal uint uint_5;
+	internal uint pointerToLineNumbers;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort numberOfRelocations;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort numberOfLineNumbers;
 
 	[CompilerGenerated]
-	internal SectionCharacteristics enum41_0;
+	internal SectionCharacteristics characteristics;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetName()
 	{
-		return string_0;
+		return name;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetName(string string_1)
+	public void SetName(string text)
 	{
-		string_0 = string_1;
+		name = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetVirtualSize()
 	{
-		return uint_0;
+		return virtualSize;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetVirtualSize(uint uint_6)
+	public void SetVirtualSize(uint uintValue)
 	{
-		uint_0 = uint_6;
+		virtualSize = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetVirtualAddress()
 	{
-		return uint_1;
+		return virtualAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetVirtualAddress(uint uint_6)
+	public void SetVirtualAddress(uint uintValue)
 	{
-		uint_1 = uint_6;
+		virtualAddress = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSizeOfRawData()
 	{
-		return uint_2;
+		return sizeOfRawData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfRawData(uint uint_6)
+	public void SetSizeOfRawData(uint uintValue)
 	{
-		uint_2 = uint_6;
+		sizeOfRawData = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetPointerToRawData()
 	{
-		return uint_3;
+		return pointerToRawData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetPointerToRawData(uint uint_6)
+	public void SetPointerToRawData(uint uintValue)
 	{
-		uint_3 = uint_6;
+		pointerToRawData = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetPointerToRelocations()
 	{
-		return uint_4;
+		return pointerToRelocations;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetPointerToRelocations(uint uint_6)
+	public void SetPointerToRelocations(uint uintValue)
 	{
-		uint_4 = uint_6;
+		pointerToRelocations = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetPointerToLineNumbers()
 	{
-		return uint_5;
+		return pointerToLineNumbers;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetPointerToLineNumbers(uint uint_6)
+	public void SetPointerToLineNumbers(uint uintValue)
 	{
-		uint_5 = uint_6;
+		pointerToLineNumbers = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetNumberOfRelocations()
 	{
-		return ushort_0;
+		return numberOfRelocations;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNumberOfRelocations(ushort ushort_2)
+	public void SetNumberOfRelocations(ushort ushortValue)
 	{
-		ushort_0 = ushort_2;
+		numberOfRelocations = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetNumberOfLineNumbers()
 	{
-		return ushort_1;
+		return numberOfLineNumbers;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNumberOfLineNumbers(ushort ushort_2)
+	public void SetNumberOfLineNumbers(ushort ushortValue)
 	{
-		ushort_1 = ushort_2;
+		numberOfLineNumbers = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public SectionCharacteristics GetCharacteristics()
 	{
-		return enum41_0;
+		return characteristics;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCharacteristics(SectionCharacteristics enum41_1)
+	public void SetCharacteristics(SectionCharacteristics sectionCharacteristics)
 	{
-		enum41_0 = enum41_1;
+		characteristics = sectionCharacteristics;
 	}
 
 	public PeSectionHeader()
 	{
 	}
 
-	public PeSectionHeader(BinaryReader binaryReader_0)
+	public PeSectionHeader(BinaryReader binaryReader)
 	{
-		byte[] ienumerable_ = binaryReader_0.ReadBytes(8);
+		byte[] ienumerable_ = binaryReader.ReadBytes(8);
 		this.SetName(RecoveredRuntime.ReadNullTerminatedByteString(ienumerable_));
-		this.SetVirtualSize(binaryReader_0.ReadUInt32());
-		this.SetVirtualAddress(binaryReader_0.ReadUInt32());
-		this.SetSizeOfRawData(binaryReader_0.ReadUInt32());
-		this.SetPointerToRawData(binaryReader_0.ReadUInt32());
-		this.SetPointerToRelocations(binaryReader_0.ReadUInt32());
-		this.SetPointerToLineNumbers(binaryReader_0.ReadUInt32());
-		this.SetNumberOfRelocations(binaryReader_0.ReadUInt16());
-		this.SetNumberOfLineNumbers(binaryReader_0.ReadUInt16());
-		this.SetCharacteristics((SectionCharacteristics)binaryReader_0.ReadUInt32());
+		this.SetVirtualSize(binaryReader.ReadUInt32());
+		this.SetVirtualAddress(binaryReader.ReadUInt32());
+		this.SetSizeOfRawData(binaryReader.ReadUInt32());
+		this.SetPointerToRawData(binaryReader.ReadUInt32());
+		this.SetPointerToRelocations(binaryReader.ReadUInt32());
+		this.SetPointerToLineNumbers(binaryReader.ReadUInt32());
+		this.SetNumberOfRelocations(binaryReader.ReadUInt16());
+		this.SetNumberOfLineNumbers(binaryReader.ReadUInt16());
+		this.SetCharacteristics((SectionCharacteristics)binaryReader.ReadUInt32());
 	}
 }

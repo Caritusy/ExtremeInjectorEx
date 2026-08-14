@@ -2,29 +2,29 @@ using System;
 
 public struct AsmJitAssemblerState
 {
-	internal IntPtr intptr_0;
+	internal IntPtr address;
 
-	public AsmJitZone struct15_0;
+	public AsmJitZone zone;
 
-	public IntPtr intptr_1;
+	public IntPtr address2;
 
-	public IntPtr intptr_2;
+	public IntPtr address3;
 
-	public uint uint_0;
+	public uint uintValue;
 
-	public uint uint_1;
+	public uint uintValue2;
 
-	public uint uint_2;
+	public uint uintValue3;
 
-	public AsmJitCodeBuffer struct17_0;
+	public AsmJitCodeBuffer codeBuffer;
 
-	public IntPtr intptr_3;
+	public IntPtr address4;
 
-	public IntPtr intptr_4;
+	public IntPtr address5;
 
-	public AsmJitDataBlock struct18_0;
+	public AsmJitDataBlock dataBlock;
 
-	public AsmJitDataBlock struct18_1;
+	public AsmJitDataBlock dataBlock2;
 
-	public IntPtr intptr_5;
+	public IntPtr address6;
 }

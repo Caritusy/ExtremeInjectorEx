@@ -1,34 +1,34 @@
-public struct LzmaBitTreeDecoder(int int_1)
+public struct LzmaBitTreeDecoder(int intValue2)
 {
-	internal LzmaBitDecoder[] struct86_0 = new LzmaBitDecoder[1 << int_1];
+	internal LzmaBitDecoder[] bitDecoderArray = new LzmaBitDecoder[1 << intValue2];
 
-	internal int int_0 = int_1;
+	internal int intValue = intValue2;
 
 	public void Initialize()
 	{
-		for (uint num = 1u; num < 1 << int_0; num++)
+		for (uint num = 1u; num < 1 << intValue; num++)
 		{
-			struct86_0[num].Initialize();
+			bitDecoderArray[num].Initialize();
 		}
 	}
 
-	public uint Decode(LzmaRangeDecoder class190_0)
+	public uint Decode(LzmaRangeDecoder rangeDecoder)
 	{
 		uint num = 1u;
-		for (int num2 = int_0; num2 > 0; num2--)
+		for (int num2 = intValue; num2 > 0; num2--)
 		{
-			num = (num << 1) + struct86_0[num].Decode(class190_0);
+			num = (num << 1) + bitDecoderArray[num].Decode(rangeDecoder);
 		}
-		return num - (uint)(1 << int_0);
+		return num - (uint)(1 << intValue);
 	}
 
-	public uint ReverseDecode(LzmaRangeDecoder class190_0)
+	public uint ReverseDecode(LzmaRangeDecoder rangeDecoder)
 	{
 		uint num = 1u;
 		uint num2 = 0u;
-		for (int i = 0; i < int_0; i++)
+		for (int i = 0; i < intValue; i++)
 		{
-			uint num3 = struct86_0[num].Decode(class190_0);
+			uint num3 = bitDecoderArray[num].Decode(rangeDecoder);
 			num <<= 1;
 			num += num3;
 			num2 |= num3 << i;
@@ -36,13 +36,13 @@ public struct LzmaBitTreeDecoder(int int_1)
 		return num2;
 	}
 
-	public static uint ReverseDecode(LzmaBitDecoder[] struct86_1, uint uint_0, LzmaRangeDecoder class190_0, int int_1)
+	public static uint ReverseDecode(LzmaBitDecoder[] bitDecoderArray2, uint uintValue, LzmaRangeDecoder rangeDecoder, int intValue2)
 	{
 		uint num = 1u;
 		uint num2 = 0u;
-		for (int i = 0; i < int_1; i++)
+		for (int i = 0; i < intValue2; i++)
 		{
-			uint num3 = struct86_1[uint_0 + num].Decode(class190_0);
+			uint num3 = bitDecoderArray2[uintValue + num].Decode(rangeDecoder);
 			num <<= 1;
 			num += num3;
 			num2 |= num3 << i;

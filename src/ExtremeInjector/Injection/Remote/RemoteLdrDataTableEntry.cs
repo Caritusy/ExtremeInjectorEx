@@ -3,10 +3,10 @@ using System.Runtime.CompilerServices;
 
 public abstract class RemoteLdrDataTableEntry : RemotePlatformStructure
 {
-	protected RemoteLdrDataTableEntry(IntPtr intptr_2, IntPtr intptr_3, bool bool_2)
-		: base(intptr_3, bool_2)
+	protected RemoteLdrDataTableEntry(IntPtr address, IntPtr address2, bool flag)
+		: base(address2, flag)
 	{
-		SetAddress(intptr_2);
+		SetAddress(address);
 	}
 
 	[SpecialName]

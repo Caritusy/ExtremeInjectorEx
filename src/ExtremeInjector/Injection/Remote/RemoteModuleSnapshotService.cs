@@ -25,7 +25,7 @@ internal static class RemoteModuleSnapshotService
 			}
 		}
 
-		foreach (ProcessModuleInfo trackedModule in process.list_1)
+		foreach (ProcessModuleInfo trackedModule in process.items2)
 		{
 			if (trackedModule != null && knownBases.Add(trackedModule.GetModuleBase()))
 			{
@@ -45,8 +45,8 @@ internal static class RemoteModuleSnapshotService
 
 		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(
 			process,
-			NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_9,
-			bool_0: false,
+			NativeTypes.ProcessAccessRights.VirtualMemoryRead | NativeTypes.ProcessAccessRights.QueryInformation,
+			flag: false,
 			process.ProcessId);
 		if (processHandle == IntPtr.Zero)
 		{
@@ -109,11 +109,11 @@ internal static class RemoteModuleSnapshotService
 			throw new ArgumentNullException(nameof(module));
 		}
 
-		RemoteProcess process = module.gclass2_0;
+		RemoteProcess process = module.remoteProcess;
 		IntPtr processHandle = RecoveredRuntime.OpenOrReuseProcessHandle(
 			process,
-			NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_9,
-			bool_0: false,
+			NativeTypes.ProcessAccessRights.VirtualMemoryRead | NativeTypes.ProcessAccessRights.QueryInformation,
+			flag: false,
 			process.ProcessId);
 		if (processHandle == IntPtr.Zero)
 		{
@@ -125,8 +125,8 @@ internal static class RemoteModuleSnapshotService
 			if (!RecoveredRuntime.GetModuleInformation(
 				processHandle,
 				module.GetModuleBase(),
-				out NativeTypes.Struct46 information,
-				typeof(NativeTypes.Struct46).SizeOf()))
+				out NativeTypes.ModuleInformation information,
+				typeof(NativeTypes.ModuleInformation).SizeOf()))
 			{
 				return false;
 			}
@@ -151,9 +151,9 @@ internal static class RemoteModuleSnapshotService
 				return false;
 			}
 
-			module.SetModuleBase(information.intptr_0);
-			module.SetEntryPoint(information.intptr_1);
-			module.SetImageSize(information.uint_0);
+			module.SetModuleBase(information.address);
+			module.SetEntryPoint(information.address2);
+			module.SetImageSize(information.uintValue);
 			module.SetModuleName(modulePath.ToString());
 			module.SetFilePath(moduleName.ToString());
 			return true;

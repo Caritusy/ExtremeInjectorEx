@@ -5,8 +5,8 @@ using System.Text;
 
 public sealed class LdrLoadDllInjector : DllInjector
 {
-	public LdrLoadDllInjector(RemoteProcess gclass2_1)
-		: base(gclass2_1)
+	public LdrLoadDllInjector(RemoteProcess remoteProcess)
+		: base(remoteProcess)
 	{
 	}
 
@@ -14,19 +14,19 @@ public sealed class LdrLoadDllInjector : DllInjector
 	{
 		if (base.GetProcessHandle() == IntPtr.Zero && base.GetProcessId() != -1)
 		{
-			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.Enum32.flag_2 | NativeTypes.Enum32.flag_3 | NativeTypes.Enum32.flag_4 | NativeTypes.Enum32.flag_5 | NativeTypes.Enum32.flag_9, false, base.GetProcessId()));
+			base.SetProcessHandle(RecoveredRuntime.OpenProcess(NativeTypes.ProcessAccessRights.CreateThread | NativeTypes.ProcessAccessRights.VirtualMemoryOperation | NativeTypes.ProcessAccessRights.VirtualMemoryRead | NativeTypes.ProcessAccessRights.VirtualMemoryWrite | NativeTypes.ProcessAccessRights.QueryInformation, false, base.GetProcessId()));
 		}
 	}
 
-	public override IntPtr Inject(string string_0)
+	public override IntPtr Inject(string text)
 	{
-		if (!Path.IsPathRooted(string_0))
+		if (!Path.IsPathRooted(text))
 		{
-			string_0 = Path.GetFullPath(string_0);
+			text = Path.GetFullPath(text);
 		}
-		if (!File.Exists(string_0))
+		if (!File.Exists(text))
 		{
-			throw new FileNotFoundException(EncodedStringTable.DecodeString(28151) + string_0 + EncodedStringTable.DecodeString(3656));
+			throw new FileNotFoundException(EncodedStringTable.DecodeString(28151) + text + EncodedStringTable.DecodeString(3656));
 		}
 		if (!base.EnsureAttachedToProcess(base.GetRemoteProcess().ProcessId))
 		{
@@ -43,8 +43,8 @@ public sealed class LdrLoadDllInjector : DllInjector
 			throw new MissingMethodException(EncodedStringTable.DecodeString(28237));
 		}
 		int int_;
-		int int_2;
-		IntPtr intPtr2 = this.BuildLoaderStub(intPtr, string_0, out int_, out int_2);
+		int intValue;
+		IntPtr intPtr2 = this.BuildLoaderStub(intPtr, text, out int_, out intValue);
 		IntPtr intPtr3 = RecoveredRuntime.StartRemoteThread(this, intPtr2, IntPtr.Zero);
 		if (intPtr3 == IntPtr.Zero)
 		{
@@ -57,7 +57,7 @@ public sealed class LdrLoadDllInjector : DllInjector
 			this.ReleaseMemory(intPtr2);
 			throw new Exception(EncodedStringTable.DecodeString(28330));
 		}
-		uint num = base.Read<uint>(intPtr2.Add(int_2));
+		uint num = base.Read<uint>(intPtr2.Add(intValue));
 		if (num != 0u)
 		{
 			this.ReleaseMemory(intPtr2);
@@ -69,9 +69,9 @@ public sealed class LdrLoadDllInjector : DllInjector
 		return result;
 	}
 
-	internal IntPtr BuildLoaderStub(IntPtr intptr_1, string string_0, out int int_1, out int int_2)
+	internal IntPtr BuildLoaderStub(IntPtr address, string text, out int intValue, out int intValue2)
 	{
-		IntPtr intPtr = RecoveredRuntime.AllocateRemoteMemory(this, 4096L, NativeTypes.Enum34.flag_2);
+		IntPtr intPtr = RecoveredRuntime.AllocateRemoteMemory(this, 4096L, NativeTypes.MemoryProtection.ExecuteReadWrite);
 		if (intPtr == IntPtr.Zero)
 		{
 			throw new AccessViolationException(EncodedStringTable.DecodeString(28957));
@@ -81,41 +81,41 @@ public sealed class LdrLoadDllInjector : DllInjector
 		class2.SetRandomizeArgumentSetup(true);
 		RemoteAssembler class47_ = class2;
 		AsmJitLabel class58_ = RecoveredRuntime.CreateLabel(@class);
-		AsmJitLabel class58_2 = RecoveredRuntime.CreateLabel(@class);
-		AsmJitLabel class58_3 = RecoveredRuntime.CreateLabel(@class);
+		AsmJitLabel label = RecoveredRuntime.CreateLabel(@class);
+		AsmJitLabel label2 = RecoveredRuntime.CreateLabel(@class);
 		RecoveredRuntime.EmitRemoteCallPrologue(class47_);
-		RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(intptr_1), CallingConvention.StdCall, new object[]
+		RecoveredRuntime.EmitRemoteCall(class47_, new AsmJitImmediate(address), CallingConvention.StdCall, new object[]
 		{
 			IntPtr.Zero,
 			IntPtr.Zero,
-			RecoveredRuntime.CreateLabelReference(class47_, class58_2),
+			RecoveredRuntime.CreateLabelReference(class47_, label),
 			RecoveredRuntime.CreateLabelReference(class47_, class58_)
 		});
 		if (RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()))
 		{
 			AsmJitAssembler class3 = @class;
-			class3.struct19_0.uint_2 = (class3.struct19_0.uint_2 | 8u);
+			class3.assemblerState.uintValue3 = (class3.assemblerState.uintValue3 | 8u);
 		}
-		RecoveredRuntime.EmitMoveRegisterToMemory(@class, RecoveredRuntime.CreateDwordLabelMemory(class58_3, 0L), AsmJitRuntime.class63_37);
+		RecoveredRuntime.EmitMoveRegisterToMemory(@class, RecoveredRuntime.CreateDwordLabelMemory(label2, 0L), AsmJitRuntime.gpRegister38);
 		RecoveredRuntime.EmitRemoteCallEpilogue(class47_, -1);
 		RecoveredRuntime.AlignRemoteData(class47_);
 		RecoveredRuntime.BindLabel(@class, class58_);
-		int_1 = RecoveredRuntime.GetAssemblerOffset(@class);
+		intValue = RecoveredRuntime.GetAssemblerOffset(@class);
 		RecoveredRuntime.EmbedNullPointer(class47_);
 		RecoveredRuntime.AlignRemoteData(class47_);
-		RecoveredRuntime.BindLabel(@class, class58_3);
-		int_2 = RecoveredRuntime.GetAssemblerOffset(@class);
+		RecoveredRuntime.BindLabel(@class, label2);
+		intValue2 = RecoveredRuntime.GetAssemblerOffset(@class);
 		RecoveredRuntime.EmbedUInt32(@class, 0u);
 		RecoveredRuntime.AlignRemoteData(class47_);
-		IntPtr intptr_2 = intPtr.Add(RecoveredRuntime.GetAssemblerOffset(@class));
-		byte[] bytes = Encoding.Unicode.GetBytes(string_0 + EncodedStringTable.DecodeString(12219));
+		IntPtr address2 = intPtr.Add(RecoveredRuntime.GetAssemblerOffset(@class));
+		byte[] bytes = Encoding.Unicode.GetBytes(text + EncodedStringTable.DecodeString(12219));
 		RecoveredRuntime.EmbedBytes(@class, bytes);
 		RecoveredRuntime.AlignRemoteData(class47_);
-		RecoveredRuntime.BindLabel(@class, class58_2);
+		RecoveredRuntime.BindLabel(@class, label);
 		RecoveredRuntime.EmbedUInt16(@class, (ushort)(bytes.Length - 2));
 		RecoveredRuntime.EmbedUInt16(@class, (ushort)bytes.Length);
 		RecoveredRuntime.AlignRemoteData(class47_);
-		RecoveredRuntime.EmbedPlatformPointer(class47_, intptr_2);
+		RecoveredRuntime.EmbedPlatformPointer(class47_, address2);
 		if (!(RecoveredRuntime.AssembleRemoteCode(intPtr, @class, this) == IntPtr.Zero))
 		{
 			return intPtr;

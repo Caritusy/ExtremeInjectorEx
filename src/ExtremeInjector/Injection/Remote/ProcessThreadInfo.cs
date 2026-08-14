@@ -6,86 +6,86 @@ using System.Runtime.CompilerServices;
 public sealed class ProcessThreadInfo
 {
 	[CompilerGenerated]
-	internal int int_0;
+	internal int threadId;
 
 	[CompilerGenerated]
-	internal IntPtr intptr_0;
+	internal IntPtr startAddress;
 
 	[CompilerGenerated]
-	internal int int_1;
+	internal int basePriority;
 
 	[CompilerGenerated]
-	internal int int_2;
+	internal int currentPriority;
 
 	[CompilerGenerated]
-	internal IntPtr intptr_1;
+	internal IntPtr tebAddress;
 
 	[CompilerGenerated]
-	internal ThreadPriorityLevel threadPriorityLevel_0;
+	internal ThreadPriorityLevel priorityLevel;
 
-	internal RemoteProcess gclass2_0;
+	internal RemoteProcess nativeInfo;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public int GetThreadId()
 	{
-		return int_0;
+		return threadId;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetThreadId(int int_3)
+	internal void SetThreadId(int intValue)
 	{
-		int_0 = int_3;
+		threadId = intValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetStartAddress()
 	{
-		return intptr_0;
+		return startAddress;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetStartAddress(IntPtr intptr_2)
+	internal void SetStartAddress(IntPtr address)
 	{
-		intptr_0 = intptr_2;
+		startAddress = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetBasePriority(int int_3)
+	internal void SetBasePriority(int intValue)
 	{
-		int_1 = int_3;
+		basePriority = intValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetCurrentPriority(int int_3)
+	internal void SetCurrentPriority(int intValue)
 	{
-		int_2 = int_3;
+		currentPriority = intValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetTebAddress(IntPtr intptr_2)
+	internal void SetTebAddress(IntPtr address)
 	{
-		intptr_1 = intptr_2;
+		tebAddress = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ThreadPriorityLevel GetPriorityLevel()
 	{
-		return threadPriorityLevel_0;
+		return priorityLevel;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetPriorityLevel(ThreadPriorityLevel threadPriorityLevel_1)
+	internal void SetPriorityLevel(ThreadPriorityLevel threadPriorityLevel)
 	{
-		threadPriorityLevel_0 = threadPriorityLevel_1;
+		priorityLevel = threadPriorityLevel;
 	}
 
 	[SpecialName]
@@ -93,11 +93,11 @@ public sealed class ProcessThreadInfo
 	{
 		foreach (NativeProcessInfo @class in RecoveredRuntime.EnumerateSystemProcesses())
 		{
-			if (@class.GetProcessRecord().intptr_0.ToInt64() == this.gclass2_0.ProcessId)
+			if (@class.GetProcessRecord().address.ToInt64() == this.nativeInfo.ProcessId)
 			{
-				foreach (NativeTypes.Struct40 @struct in @class.GetThreads())
+				foreach (NativeTypes.SystemThreadInformation @struct in @class.GetThreads())
 				{
-					IntPtr intPtr = @struct.struct48_0.intptr_1;
+					IntPtr intPtr = @struct.clientId.address2;
 					if (intPtr.ToInt64() == (long)this.GetThreadId())
 					{
 						return new NativeThreadInfo(@struct);
@@ -108,9 +108,9 @@ public sealed class ProcessThreadInfo
 		return null;
 	}
 
-	internal ProcessThreadInfo(RemoteProcess gclass2_1, int int_3)
+	internal ProcessThreadInfo(RemoteProcess remoteProcess, int intValue)
 	{
-		gclass2_0 = gclass2_1;
-		SetThreadId(int_3);
+		nativeInfo = remoteProcess;
+		SetThreadId(intValue);
 	}
 }

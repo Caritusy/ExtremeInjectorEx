@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 public sealed class AsmJitGpRegister : AsmJitRegister
 {
 	public AsmJitGpRegister()
-		: base(AsmJitRuntime.uint_0, 0u)
+		: base(AsmJitRuntime.uintValue, 0u)
 	{
 	}
 }

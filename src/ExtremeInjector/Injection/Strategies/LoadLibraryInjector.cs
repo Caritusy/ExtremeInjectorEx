@@ -4,12 +4,12 @@ using System.Text;
 
 public sealed class LoadLibraryInjector : DllInjector
 {
-	private const NativeTypes.Enum32 InjectionProcessAccess =
-		NativeTypes.Enum32.flag_2 |
-		NativeTypes.Enum32.flag_3 |
-		NativeTypes.Enum32.flag_4 |
-		NativeTypes.Enum32.flag_5 |
-		NativeTypes.Enum32.flag_9;
+	private const NativeTypes.ProcessAccessRights InjectionProcessAccess =
+		NativeTypes.ProcessAccessRights.CreateThread |
+		NativeTypes.ProcessAccessRights.VirtualMemoryOperation |
+		NativeTypes.ProcessAccessRights.VirtualMemoryRead |
+		NativeTypes.ProcessAccessRights.VirtualMemoryWrite |
+		NativeTypes.ProcessAccessRights.QueryInformation;
 
 	public LoadLibraryInjector(RemoteProcess process)
 		: base(process)
@@ -23,7 +23,7 @@ public sealed class LoadLibraryInjector : DllInjector
 			return;
 		}
 
-		SetProcessHandle(RecoveredRuntime.OpenProcess(InjectionProcessAccess, bool_0: false, GetProcessId()));
+		SetProcessHandle(RecoveredRuntime.OpenProcess(InjectionProcessAccess, flag: false, GetProcessId()));
 	}
 
 	public override IntPtr Inject(string modulePath)
@@ -36,14 +36,14 @@ public sealed class LoadLibraryInjector : DllInjector
 
 		ProcessModuleInfo kernel32 = RecoveredRuntime.CaptureProcessModules(process)["kernel32.dll"]
 			?? throw new FileNotFoundException("Unable to find kernel32.dll in the specified process.");
-		IntPtr loadLibraryAddress = RecoveredRuntime.ResolveExportByName(kernel32, "LoadLibraryW", bool_0: false);
+		IntPtr loadLibraryAddress = RecoveredRuntime.ResolveExportByName(kernel32, "LoadLibraryW", flag: false);
 		if (loadLibraryAddress == IntPtr.Zero)
 		{
 			throw new MissingMethodException("Unable to find the LoadLibraryW function inside the specified process.");
 		}
 
 		byte[] encodedPath = Encoding.Unicode.GetBytes(modulePath + "\0");
-		IntPtr remotePath = RecoveredRuntime.AllocateRemoteMemory(this, encodedPath.Length, NativeTypes.Enum34.flag_6);
+		IntPtr remotePath = RecoveredRuntime.AllocateRemoteMemory(this, encodedPath.Length, NativeTypes.MemoryProtection.ReadWrite);
 		if (remotePath == IntPtr.Zero)
 		{
 			throw new AccessViolationException("Unable to allocate memory for the injection path.");

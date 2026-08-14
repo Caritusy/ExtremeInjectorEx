@@ -5,166 +5,166 @@ using System.Runtime.CompilerServices;
 public sealed class ProcessModuleInfo
 {
 	[CompilerGenerated]
-	internal IntPtr intptr_0;
+	internal IntPtr moduleBase;
 
 	[CompilerGenerated]
-	internal IntPtr intptr_1;
+	internal IntPtr entryPoint;
 
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint imageSize;
 
 	[CompilerGenerated]
-	internal string string_0;
+	internal string moduleName;
 
 	[CompilerGenerated]
-	internal string string_1;
+	internal string filePath;
 
 	[CompilerGenerated]
-	internal bool bool_0;
+	internal bool is32Bit;
 
 	[CompilerGenerated]
-	internal bool bool_1;
+	internal bool isManualMapped;
 
-	internal List<ExportedSymbol> list_0;
+	internal List<ExportedSymbol> items;
 
-	internal RemoteProcess gclass2_0;
+	internal RemoteProcess remoteProcess;
 
-	internal ProcessModuleCollection class69_0;
+	internal ProcessModuleCollection processModuleCollection;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetModuleBase()
 	{
-		return intptr_0;
+		return moduleBase;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetModuleBase(IntPtr intptr_2)
+	internal void SetModuleBase(IntPtr address)
 	{
-		intptr_0 = intptr_2;
+		moduleBase = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public IntPtr GetEntryPoint()
 	{
-		return intptr_1;
+		return entryPoint;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetEntryPoint(IntPtr intptr_2)
+	internal void SetEntryPoint(IntPtr address)
 	{
-		intptr_1 = intptr_2;
+		entryPoint = address;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetImageSize()
 	{
-		return uint_0;
+		return imageSize;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetImageSize(uint uint_1)
+	internal void SetImageSize(uint uintValue)
 	{
-		uint_0 = uint_1;
+		imageSize = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetModuleName()
 	{
-		return string_0;
+		return moduleName;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetModuleName(string string_2)
+	internal void SetModuleName(string text)
 	{
-		string_0 = string_2;
+		moduleName = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetFilePath()
 	{
-		return string_1;
+		return filePath;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetFilePath(string string_2)
+	internal void SetFilePath(string text)
 	{
-		string_1 = string_2;
+		filePath = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public bool GetIs32Bit()
 	{
-		return bool_0;
+		return is32Bit;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetIs32Bit(bool bool_2)
+	internal void SetIs32Bit(bool flag)
 	{
-		bool_0 = bool_2;
+		is32Bit = flag;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public bool GetIsManualMapped()
 	{
-		return bool_1;
+		return isManualMapped;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	internal void SetIsManualMapped(bool bool_2)
+	internal void SetIsManualMapped(bool flag)
 	{
-		bool_1 = bool_2;
+		isManualMapped = flag;
 	}
 
-	internal ProcessModuleInfo(RemoteProcess gclass2_1, ProcessModuleCollection class69_1, IntPtr intptr_2, bool bool_2)
-		: this(gclass2_1, class69_1, intptr_2, bool_2, bool_3: false)
+	internal ProcessModuleInfo(RemoteProcess remoteProcess2, ProcessModuleCollection processModuleCollection2, IntPtr address, bool flag)
+		: this(remoteProcess2, processModuleCollection2, address, flag, flag2: false)
 	{
 	}
 
-	internal ProcessModuleInfo(RemoteProcess gclass2_1, ProcessModuleCollection class69_1, IntPtr intptr_2, bool bool_2, bool bool_3)
+	internal ProcessModuleInfo(RemoteProcess remoteProcess2, ProcessModuleCollection processModuleCollection2, IntPtr address, bool flag, bool flag2)
 	{
-		SetModuleBase(intptr_2);
-		SetIs32Bit(bool_2);
-		SetIsManualMapped(bool_3);
-		gclass2_0 = gclass2_1;
-		class69_0 = class69_1;
+		SetModuleBase(address);
+		SetIs32Bit(flag);
+		SetIsManualMapped(flag2);
+		remoteProcess = remoteProcess2;
+		processModuleCollection = processModuleCollection2;
 	}
 
-	internal IntPtr GetExportAddress(object object_0, bool bool_2)
+	internal IntPtr GetExportAddress(object instance, bool flag2)
 	{
 		bool flag;
-		ushort num = (!(flag = (object_0 is ushort))) ? (ushort)0 : ((ushort)object_0);
-		string b = (object_0 is string) ? ((string)object_0) : null;
-		if (this.list_0 == null)
+		ushort num = (!(flag = (instance is ushort))) ? (ushort)0 : ((ushort)instance);
+		string b = (instance is string) ? ((string)instance) : null;
+		if (this.items == null)
 		{
-			foreach (KeyValuePair<ProcessModuleInfo, List<ExportedSymbol>> keyValuePair in this.gclass2_0.dictionary_0)
+			foreach (KeyValuePair<ProcessModuleInfo, List<ExportedSymbol>> keyValuePair in this.remoteProcess.dictionary)
 			{
 				if (keyValuePair.Key.GetModuleBase() == this.GetModuleBase() && keyValuePair.Key.GetImageSize() == this.GetImageSize() && keyValuePair.Key.GetModuleName() == this.GetModuleName() && keyValuePair.Key.GetEntryPoint() == this.GetEntryPoint())
 				{
-					this.list_0 = keyValuePair.Value;
+					this.items = keyValuePair.Value;
 					break;
 				}
 			}
 		}
-		if (this.list_0 == null && RecoveredRuntime.GetRemoteModuleExports(this).Count == 0)
+		if (this.items == null && RecoveredRuntime.GetRemoteModuleExports(this).Count == 0)
 		{
 			return IntPtr.Zero;
 		}
 
-		foreach (ExportedSymbol symbol in this.list_0)
+		foreach (ExportedSymbol symbol in this.items)
 		{
 			if ((flag && symbol.GetOrdinal() != num) || (!flag && (!symbol.GetHasName() || symbol.GetName() != b)))
 			{
@@ -176,9 +176,9 @@ public sealed class ProcessModuleInfo
 				return this.GetModuleBase().Add((long)((ulong)symbol.GetAddressRva()));
 			}
 
-			ProcessModuleCollection modules = this.class69_0 == null || !bool_2
-				? RecoveredRuntime.CaptureProcessModules(this.gclass2_0)
-				: this.class69_0;
+			ProcessModuleCollection modules = this.processModuleCollection == null || !flag2
+				? RecoveredRuntime.CaptureProcessModules(this.remoteProcess)
+				: this.processModuleCollection;
 			ProcessModuleInfo forwardedModule = modules[symbol.GetForwarder().GetModuleName()];
 			if (forwardedModule == null)
 			{
@@ -192,7 +192,7 @@ public sealed class ProcessModuleInfo
 					return RecoveredRuntime.ResolveExportByName(forwardedModule, symbol.GetForwarder().GetName(), false);
 				}
 
-				string resolvedPath = RecoveredRuntime.ResolveDependencyPath(symbol.GetForwarder().GetModuleName(), this.GetFilePath(), null, DependencySearchFlags.flag_1, 0, IntPtr.Zero);
+				string resolvedPath = RecoveredRuntime.ResolveDependencyPath(symbol.GetForwarder().GetModuleName(), this.GetFilePath(), null, DependencySearchFlags.ApiSetOnly, 0, IntPtr.Zero);
 				if (!string.IsNullOrEmpty(resolvedPath))
 				{
 					forwardedModule = modules[resolvedPath];

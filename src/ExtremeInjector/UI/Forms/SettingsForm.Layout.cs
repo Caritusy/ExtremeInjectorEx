@@ -17,8 +17,8 @@ public sealed partial class SettingsForm
 	private void InitializeModernSettingsForm()
 	{
 		SuspendLayout();
-		icontainer_0 = new Container();
-		colorDialog_0 = new ColorDialog();
+		container = new Container();
+		colorDialog = new ColorDialog();
 
 		AutoScaleDimensions = new SizeF(96f, 96f);
 		AutoScaleMode = AutoScaleMode.Dpi;
@@ -60,7 +60,7 @@ public sealed partial class SettingsForm
 		settingsRootLayout.Controls.Add(CreateSettingsFooter(), 0, 3);
 		Controls.Add(settingsRootLayout);
 
-		AcceptButton = button_3;
+		AcceptButton = button4;
 		FormClosing += OnFormClosing;
 		ResumeLayout(performLayout: true);
 	}
@@ -147,9 +147,9 @@ public sealed partial class SettingsForm
 
 	private ModernCard CreateInjectionMethodCard()
 	{
-		groupBox_0 = CreateCard(UiText.Get("Settings.InjectionMethod"));
-		comboBox_0 = CreateComboBox("injectionMethodComboBox");
-		comboBox_0.Items.AddRange(new object[]
+		modernCard = CreateCard(UiText.Get("Settings.InjectionMethod"));
+		comboBox = CreateComboBox("injectionMethodComboBox");
+		comboBox.Items.AddRange(new object[]
 		{
 			UiText.Get("Settings.Method.Standard"),
 			UiText.Get("Settings.Method.ThreadHijacking"),
@@ -158,8 +158,8 @@ public sealed partial class SettingsForm
 			UiText.Get("Settings.Method.ManualMap")
 		});
 
-		button_0 = CreateSecondaryButton("advancedInjectOptions", UiText.Get("Settings.Advanced"));
-		button_0.Click += OnManualMapOptionsClick;
+		button = CreateSecondaryButton("advancedInjectOptions", UiText.Get("Settings.Advanced"));
+		button.Click += OnManualMapOptionsClick;
 
 		var row = new TableLayoutPanel
 		{
@@ -176,30 +176,30 @@ public sealed partial class SettingsForm
 		injectionBackendLabel = CreateFieldLabel(UiText.Get("Settings.InjectionBackend"));
 		row.Controls.Add(injectionBackendLabel, 0, 0);
 		row.SetColumnSpan(injectionBackendLabel, 2);
-		comboBox_0.Dock = DockStyle.Fill;
-		comboBox_0.Margin = new Padding(0, 0, 8, 0);
-		button_0.Dock = DockStyle.Fill;
-		button_0.Margin = Padding.Empty;
-		row.Controls.Add(comboBox_0, 0, 1);
-		row.Controls.Add(button_0, 1, 1);
-		groupBox_0.Controls.Add(row);
-		return groupBox_0;
+		comboBox.Dock = DockStyle.Fill;
+		comboBox.Margin = new Padding(0, 0, 8, 0);
+		button.Dock = DockStyle.Fill;
+		button.Margin = Padding.Empty;
+		row.Controls.Add(comboBox, 0, 1);
+		row.Controls.Add(button, 1, 1);
+		modernCard.Controls.Add(row);
+		return modernCard;
 	}
 
 	private ModernCard CreateInjectionBehaviorCard()
 	{
-		groupBox_1 = CreateCard(UiText.Get("Settings.InjectionBehavior"));
-		checkBox_2 = CreateCheckBox("autoInjectCheckBox", UiText.Get("Settings.AutoInject"));
-		checkBox_1 = CreateCheckBox("closeOnInjectCheckBox", UiText.Get("Settings.CloseOnInject"));
-		checkBox_0 = CreateCheckBox("stealthInjectCheckBox", UiText.Get("Settings.StealthInject"));
-		checkBox_2.CheckedChanged += OnAutoInjectChanged;
+		modernCard2 = CreateCard(UiText.Get("Settings.InjectionBehavior"));
+		checkBox3 = CreateCheckBox("autoInjectCheckBox", UiText.Get("Settings.AutoInject"));
+		checkBox2 = CreateCheckBox("closeOnInjectCheckBox", UiText.Get("Settings.CloseOnInject"));
+		checkBox = CreateCheckBox("stealthInjectCheckBox", UiText.Get("Settings.StealthInject"));
+		checkBox3.CheckedChanged += OnAutoInjectChanged;
 
-		label_1 = CreateFieldLabel(UiText.Get("Settings.DelayBefore"));
-		label_1.Name = "injectDelayLabel";
-		label_0 = CreateFieldLabel(UiText.Get("Settings.DelayBetween"));
-		label_0.Name = "delayBetweenLabel";
-		numericUpDown_1 = CreateDelayInput("injectDelayNumericUpDown");
-		numericUpDown_0 = CreateDelayInput("delayBetweenNumericUpDown");
+		label2 = CreateFieldLabel(UiText.Get("Settings.DelayBefore"));
+		label2.Name = "injectDelayLabel";
+		label = CreateFieldLabel(UiText.Get("Settings.DelayBetween"));
+		label.Name = "delayBetweenLabel";
+		numericUpDown2 = CreateDelayInput("injectDelayNumericUpDown");
+		numericUpDown = CreateDelayInput("delayBetweenNumericUpDown");
 
 		var layout = new TableLayoutPanel
 		{
@@ -216,28 +216,28 @@ public sealed partial class SettingsForm
 		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 34f));
 		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 37f));
 		layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 37f));
-		layout.Controls.Add(checkBox_2, 0, 0);
-		layout.SetColumnSpan(checkBox_2, 2);
-		layout.Controls.Add(checkBox_1, 0, 1);
-		layout.SetColumnSpan(checkBox_1, 2);
-		layout.Controls.Add(checkBox_0, 0, 2);
-		layout.SetColumnSpan(checkBox_0, 2);
-		layout.Controls.Add(label_1, 0, 3);
-		layout.Controls.Add(numericUpDown_1, 1, 3);
-		layout.Controls.Add(label_0, 0, 4);
-		layout.Controls.Add(numericUpDown_0, 1, 4);
-		groupBox_1.Controls.Add(layout);
-		return groupBox_1;
+		layout.Controls.Add(checkBox3, 0, 0);
+		layout.SetColumnSpan(checkBox3, 2);
+		layout.Controls.Add(checkBox2, 0, 1);
+		layout.SetColumnSpan(checkBox2, 2);
+		layout.Controls.Add(checkBox, 0, 2);
+		layout.SetColumnSpan(checkBox, 2);
+		layout.Controls.Add(label2, 0, 3);
+		layout.Controls.Add(numericUpDown2, 1, 3);
+		layout.Controls.Add(label, 0, 4);
+		layout.Controls.Add(numericUpDown, 1, 4);
+		modernCard2.Controls.Add(layout);
+		return modernCard2;
 	}
 
 	private ModernCard CreateScramblingCard()
 	{
-		groupBox_2 = CreateCard(UiText.Get("Settings.Scrambling"));
-		comboBox_1 = CreateComboBox("scramblePresetCheckBox");
-		comboBox_1.Items.AddRange(GetScramblePresetLabels());
-		comboBox_1.SelectedIndexChanged += OnScramblePresetChanged;
-		button_1 = CreateSecondaryButton("advancedScramblingOptions", UiText.Get("Settings.Advanced"));
-		button_1.Click += OnAdvancedScrambleSettingsClick;
+		modernCard3 = CreateCard(UiText.Get("Settings.Scrambling"));
+		comboBox2 = CreateComboBox("scramblePresetCheckBox");
+		comboBox2.Items.AddRange(GetScramblePresetLabels());
+		comboBox2.SelectedIndexChanged += OnScramblePresetChanged;
+		button2 = CreateSecondaryButton("advancedScramblingOptions", UiText.Get("Settings.Advanced"));
+		button2.Click += OnAdvancedScrambleSettingsClick;
 
 		var layout = new TableLayoutPanel
 		{
@@ -254,21 +254,21 @@ public sealed partial class SettingsForm
 		scramblePresetLabel = CreateFieldLabel(UiText.Get("Settings.Preset"));
 		layout.Controls.Add(scramblePresetLabel, 0, 0);
 		layout.SetColumnSpan(scramblePresetLabel, 2);
-		comboBox_1.Dock = DockStyle.Fill;
-		comboBox_1.Margin = new Padding(0, 0, 8, 0);
-		button_1.Dock = DockStyle.Fill;
-		button_1.Margin = Padding.Empty;
-		layout.Controls.Add(comboBox_1, 0, 1);
-		layout.Controls.Add(button_1, 1, 1);
-		groupBox_2.Controls.Add(layout);
-		return groupBox_2;
+		comboBox2.Dock = DockStyle.Fill;
+		comboBox2.Margin = new Padding(0, 0, 8, 0);
+		button2.Dock = DockStyle.Fill;
+		button2.Margin = Padding.Empty;
+		layout.Controls.Add(comboBox2, 0, 1);
+		layout.Controls.Add(button2, 1, 1);
+		modernCard3.Controls.Add(layout);
+		return modernCard3;
 	}
 
 	private ModernCard CreatePostInjectionCard()
 	{
-		groupBox_3 = CreateCard(UiText.Get("Settings.PostInjection"));
-		checkBox_3 = CreateCheckBox("hideModuleCheckBox", UiText.Get("Settings.HideModule"));
-		checkBox_4 = CreateCheckBox("erasePECheckBox", UiText.Get("Settings.ErasePe"));
+		modernCard4 = CreateCard(UiText.Get("Settings.PostInjection"));
+		checkBox4 = CreateCheckBox("hideModuleCheckBox", UiText.Get("Settings.HideModule"));
+		checkBox5 = CreateCheckBox("erasePECheckBox", UiText.Get("Settings.ErasePe"));
 		var layout = new FlowLayoutPanel
 		{
 			AutoScroll = false,
@@ -278,24 +278,24 @@ public sealed partial class SettingsForm
 			Padding = new Padding(0, 6, 0, 0),
 			WrapContents = false
 		};
-		layout.Controls.Add(checkBox_3);
-		layout.Controls.Add(checkBox_4);
-		groupBox_3.Controls.Add(layout);
-		return groupBox_3;
+		layout.Controls.Add(checkBox4);
+		layout.Controls.Add(checkBox5);
+		modernCard4.Controls.Add(layout);
+		return modernCard4;
 	}
 
 	private ModernCard CreateAppearanceCard()
 	{
-		groupBox_4 = CreateCard(UiText.Get("Settings.Appearance"));
-		label_4 = CreateFieldLabel(UiText.Get("Settings.TextColor"));
-		label_4.Name = "textColorLabel";
-		label_3 = CreateFieldLabel(UiText.Get("Settings.PrimaryAccent"));
-		label_3.Name = "backgroundColor1Label";
-		label_2 = CreateFieldLabel(UiText.Get("Settings.SecondaryAccent"));
-		label_2.Name = "backgroundColor2Label";
-		panel_2 = CreateColorSwatch("textColorBox", OnTextColorClick);
-		panel_1 = CreateColorSwatch("backgroundColor1Box", OnPrimaryColorClick);
-		panel_0 = CreateColorSwatch("backgroundColor2Box", OnSecondaryColorClick);
+		modernCard5 = CreateCard(UiText.Get("Settings.Appearance"));
+		label5 = CreateFieldLabel(UiText.Get("Settings.TextColor"));
+		label5.Name = "textColorLabel";
+		label4 = CreateFieldLabel(UiText.Get("Settings.PrimaryAccent"));
+		label4.Name = "backgroundColor1Label";
+		label3 = CreateFieldLabel(UiText.Get("Settings.SecondaryAccent"));
+		label3.Name = "backgroundColor2Label";
+		panel3 = CreateColorSwatch("textColorBox", OnTextColorClick);
+		panel2 = CreateColorSwatch("backgroundColor1Box", OnPrimaryColorClick);
+		panel = CreateColorSwatch("backgroundColor2Box", OnSecondaryColorClick);
 		languageLabel = CreateFieldLabel(UiText.Get("Settings.Language"));
 		languageComboBox = CreateComboBox("languageComboBox");
 		languageComboBox.Items.AddRange(GetLanguageLabels());
@@ -317,32 +317,32 @@ public sealed partial class SettingsForm
 		{
 			layout.RowStyles.Add(new RowStyle(SizeType.Percent, 20f));
 		}
-		layout.Controls.Add(label_4, 0, 0);
-		layout.Controls.Add(panel_2, 1, 0);
-		layout.Controls.Add(label_3, 0, 1);
-		layout.Controls.Add(panel_1, 1, 1);
-		layout.Controls.Add(label_2, 0, 2);
-		layout.Controls.Add(panel_0, 1, 2);
+		layout.Controls.Add(label5, 0, 0);
+		layout.Controls.Add(panel3, 1, 0);
+		layout.Controls.Add(label4, 0, 1);
+		layout.Controls.Add(panel2, 1, 1);
+		layout.Controls.Add(label3, 0, 2);
+		layout.Controls.Add(panel, 1, 2);
 		layout.Controls.Add(languageLabel, 0, 3);
 		languageComboBox.Dock = DockStyle.Fill;
 		languageComboBox.Margin = new Padding(6, 2, 0, 2);
 		layout.Controls.Add(languageComboBox, 1, 3);
 		layout.Controls.Add(randomizeWindowTitleCheckBox, 0, 4);
 		layout.SetColumnSpan(randomizeWindowTitleCheckBox, 2);
-		groupBox_4.Controls.Add(layout);
-		return groupBox_4;
+		modernCard5.Controls.Add(layout);
+		return modernCard5;
 	}
 
 	private ModernCard CreateToolsCard()
 	{
-		groupBox_5 = CreateCard(UiText.Get("Settings.Tools"));
-		groupBox_5.Margin = new Padding(0, 0, 0, 8);
-		button_4 = CreateSecondaryButton("startInSecureModeButton", UiText.Get("Settings.SecureMode"));
-		button_5 = CreateSecondaryButton("scrambleDLLButton", UiText.Get("Settings.ScrambleDll"));
-		button_6 = CreateSecondaryButton("viewProcessInformationButton", UiText.Get("Settings.ProcessInfo"));
-		button_4.Click += OnRestartSafeModeClick;
-		button_5.Click += OnScrambleDllClick;
-		button_6.Click += OnInspectProcessClick;
+		modernCard6 = CreateCard(UiText.Get("Settings.Tools"));
+		modernCard6.Margin = new Padding(0, 0, 0, 8);
+		button5 = CreateSecondaryButton("startInSecureModeButton", UiText.Get("Settings.SecureMode"));
+		button6 = CreateSecondaryButton("scrambleDLLButton", UiText.Get("Settings.ScrambleDll"));
+		button7 = CreateSecondaryButton("viewProcessInformationButton", UiText.Get("Settings.ProcessInfo"));
+		button5.Click += OnRestartSafeModeClick;
+		button6.Click += OnScrambleDllClick;
+		button7.Click += OnInspectProcessClick;
 
 		cliHintLabel = new Label
 		{
@@ -363,12 +363,12 @@ public sealed partial class SettingsForm
 			Padding = Padding.Empty,
 			WrapContents = false
 		};
-		button_4.Margin = new Padding(0, 0, 8, 0);
-		button_5.Margin = new Padding(0, 0, 8, 0);
-		button_6.Margin = Padding.Empty;
-		tools.Controls.Add(button_4);
-		tools.Controls.Add(button_5);
-		tools.Controls.Add(button_6);
+		button5.Margin = new Padding(0, 0, 8, 0);
+		button6.Margin = new Padding(0, 0, 8, 0);
+		button7.Margin = Padding.Empty;
+		tools.Controls.Add(button5);
+		tools.Controls.Add(button6);
+		tools.Controls.Add(button7);
 
 		var layout = new TableLayoutPanel
 		{
@@ -383,16 +383,16 @@ public sealed partial class SettingsForm
 		layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
 		layout.Controls.Add(cliHintLabel, 0, 0);
 		layout.Controls.Add(tools, 0, 1);
-		groupBox_5.Controls.Add(layout);
-		return groupBox_5;
+		modernCard6.Controls.Add(layout);
+		return modernCard6;
 	}
 
 	private Control CreateSettingsFooter()
 	{
-		button_2 = CreateSecondaryButton("resetButton", UiText.Get("Settings.Reset"));
-		button_2.Click += OnResetSettingsClick;
-		button_3 = new Button { Name = "okButton", Text = UiText.Get("Settings.SaveClose") };
-		button_3.Click += OnCloseClick;
+		button3 = CreateSecondaryButton("resetButton", UiText.Get("Settings.Reset"));
+		button3.Click += OnResetSettingsClick;
+		button4 = new Button { Name = "okButton", Text = UiText.Get("Settings.SaveClose") };
+		button4.Click += OnCloseClick;
 
 		var footer = new FlowLayoutPanel
 		{
@@ -403,10 +403,10 @@ public sealed partial class SettingsForm
 			Padding = new Padding(0, 7, 0, 0),
 			WrapContents = false
 		};
-		button_3.Margin = Padding.Empty;
-		button_2.Margin = new Padding(0, 0, 8, 0);
-		footer.Controls.Add(button_3);
-		footer.Controls.Add(button_2);
+		button4.Margin = Padding.Empty;
+		button3.Margin = new Padding(0, 0, 8, 0);
+		footer.Controls.Add(button4);
+		footer.Controls.Add(button3);
 		return footer;
 	}
 
@@ -416,13 +416,13 @@ public sealed partial class SettingsForm
 		Color hoverAccent = ModernUi.HarmonizeInteractiveColor(
 			accent,
 			ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor2));
-		ModernUi.StyleSecondaryButton(button_0, accent);
-		ModernUi.StyleSecondaryButton(button_1, accent);
-		ModernUi.StyleSecondaryButton(button_2, accent);
-		ModernUi.StyleSecondaryButton(button_4, accent);
-		ModernUi.StyleSecondaryButton(button_5, accent);
-		ModernUi.StyleSecondaryButton(button_6, accent);
-		ModernUi.StylePrimaryButton(button_3, accent, hoverAccent);
+		ModernUi.StyleSecondaryButton(button, accent);
+		ModernUi.StyleSecondaryButton(button2, accent);
+		ModernUi.StyleSecondaryButton(button3, accent);
+		ModernUi.StyleSecondaryButton(button5, accent);
+		ModernUi.StyleSecondaryButton(button6, accent);
+		ModernUi.StyleSecondaryButton(button7, accent);
+		ModernUi.StylePrimaryButton(button4, accent, hoverAccent);
 	}
 
 	internal void ApplyLocalizedText()
@@ -430,39 +430,39 @@ public sealed partial class SettingsForm
 		Text = UiText.Get("Settings.Title");
 		settingsTitleLabel.Text = UiText.Get("Settings.Title");
 		settingsDescriptionLabel.Text = UiText.Get("Settings.Description");
-		groupBox_0.Text = UiText.Get("Settings.InjectionMethod");
+		modernCard.Text = UiText.Get("Settings.InjectionMethod");
 		injectionBackendLabel.Text = UiText.Get("Settings.InjectionBackend");
-		button_0.Text = UiText.Get("Settings.Advanced");
-		groupBox_1.Text = UiText.Get("Settings.InjectionBehavior");
-		checkBox_2.Text = UiText.Get("Settings.AutoInject");
-		checkBox_1.Text = UiText.Get("Settings.CloseOnInject");
-		checkBox_0.Text = UiText.Get("Settings.StealthInject");
-		label_1.Text = UiText.Get("Settings.DelayBefore");
-		label_0.Text = UiText.Get("Settings.DelayBetween");
-		groupBox_2.Text = UiText.Get("Settings.Scrambling");
+		button.Text = UiText.Get("Settings.Advanced");
+		modernCard2.Text = UiText.Get("Settings.InjectionBehavior");
+		checkBox3.Text = UiText.Get("Settings.AutoInject");
+		checkBox2.Text = UiText.Get("Settings.CloseOnInject");
+		checkBox.Text = UiText.Get("Settings.StealthInject");
+		label2.Text = UiText.Get("Settings.DelayBefore");
+		label.Text = UiText.Get("Settings.DelayBetween");
+		modernCard3.Text = UiText.Get("Settings.Scrambling");
 		scramblePresetLabel.Text = UiText.Get("Settings.Preset");
-		button_1.Text = UiText.Get("Settings.Advanced");
-		groupBox_3.Text = UiText.Get("Settings.PostInjection");
-		checkBox_3.Text = UiText.Get("Settings.HideModule");
-		checkBox_4.Text = UiText.Get("Settings.ErasePe");
-		groupBox_4.Text = UiText.Get("Settings.Appearance");
-		label_4.Text = UiText.Get("Settings.TextColor");
-		label_3.Text = UiText.Get("Settings.PrimaryAccent");
-		label_2.Text = UiText.Get("Settings.SecondaryAccent");
+		button2.Text = UiText.Get("Settings.Advanced");
+		modernCard4.Text = UiText.Get("Settings.PostInjection");
+		checkBox4.Text = UiText.Get("Settings.HideModule");
+		checkBox5.Text = UiText.Get("Settings.ErasePe");
+		modernCard5.Text = UiText.Get("Settings.Appearance");
+		label5.Text = UiText.Get("Settings.TextColor");
+		label4.Text = UiText.Get("Settings.PrimaryAccent");
+		label3.Text = UiText.Get("Settings.SecondaryAccent");
 		languageLabel.Text = UiText.Get("Settings.Language");
 		randomizeWindowTitleCheckBox.Text = UiText.Get("Settings.RandomizeWindowTitle");
-		groupBox_5.Text = UiText.Get("Settings.Tools");
+		modernCard6.Text = UiText.Get("Settings.Tools");
 		cliHintLabel.Text = UiText.Get("Settings.CliHint");
-		button_4.Text = UiText.Get("Settings.SecureMode");
-		button_5.Text = UiText.Get("Settings.ScrambleDll");
-		button_6.Text = UiText.Get("Settings.ProcessInfo");
-		button_2.Text = UiText.Get("Settings.Reset");
-		button_3.Text = UiText.Get("Settings.SaveClose");
+		button5.Text = UiText.Get("Settings.SecureMode");
+		button6.Text = UiText.Get("Settings.ScrambleDll");
+		button7.Text = UiText.Get("Settings.ProcessInfo");
+		button3.Text = UiText.Get("Settings.Reset");
+		button4.Text = UiText.Get("Settings.SaveClose");
 
-		ReplaceComboItems(comboBox_0, GetInjectionMethodLabels());
-		comboBox_1.SelectedIndexChanged -= OnScramblePresetChanged;
-		ReplaceComboItems(comboBox_1, GetScramblePresetLabels());
-		comboBox_1.SelectedIndexChanged += OnScramblePresetChanged;
+		ReplaceComboItems(comboBox, GetInjectionMethodLabels());
+		comboBox2.SelectedIndexChanged -= OnScramblePresetChanged;
+		ReplaceComboItems(comboBox2, GetScramblePresetLabels());
+		comboBox2.SelectedIndexChanged += OnScramblePresetChanged;
 		languageComboBox.SelectedIndexChanged -= OnLanguageSelectionChanged;
 		ReplaceComboItems(languageComboBox, GetLanguageLabels());
 		languageComboBox.SelectedIndexChanged += OnLanguageSelectionChanged;

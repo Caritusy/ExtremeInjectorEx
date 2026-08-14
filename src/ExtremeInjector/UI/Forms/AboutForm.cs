@@ -7,15 +7,15 @@ using System.Windows.Forms;
 
 public sealed class AboutForm : Form
 {
-	internal IContainer icontainer_0;
-	internal Panel panel_0;
-	internal Label label_0;
-	internal Label label_1;
-	internal Label label_2;
-	internal Label label_3;
-	internal PictureBox pictureBox_0;
-	internal LinkLabel linkLabel_0;
-	internal Label label_4;
+	internal IContainer container;
+	internal Panel panel;
+	internal Label label;
+	internal Label label2;
+	internal Label label3;
+	internal Label label4;
+	internal PictureBox pictureBox;
+	internal LinkLabel linkLabel;
+	internal Label label5;
 
 	internal Button closeButton;
 
@@ -24,24 +24,24 @@ public sealed class AboutForm : Form
 		InitializeModernComponents();
 		ApplyLocalizedText();
 		Version version = Assembly.GetExecutingAssembly().GetName().Version;
-		label_0.Text = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+		label.Text = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 	}
 
 	private void InitializeModernComponents()
 	{
-		icontainer_0 = new Container();
-		panel_0 = new Panel();
-		label_0 = new Label();
-		label_1 = new Label();
-		label_2 = new Label();
-		label_3 = new Label();
-		pictureBox_0 = new PictureBox();
-		linkLabel_0 = new LinkLabel();
-		label_4 = new Label();
+		container = new Container();
+		panel = new Panel();
+		label = new Label();
+		label2 = new Label();
+		label3 = new Label();
+		label4 = new Label();
+		pictureBox = new PictureBox();
+		linkLabel = new LinkLabel();
+		label5 = new Label();
 		closeButton = new Button();
 
 		SuspendLayout();
-		((ISupportInitialize)pictureBox_0).BeginInit();
+		((ISupportInitialize)pictureBox).BeginInit();
 
 		AutoScaleDimensions = new SizeF(96f, 96f);
 		AutoScaleMode = AutoScaleMode.Dpi;
@@ -70,12 +70,12 @@ public sealed class AboutForm : Form
 		rootLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
 		rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-		panel_0.AutoSize = true;
-		panel_0.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-		panel_0.BackColor = ModernUi.Surface;
-		panel_0.Dock = DockStyle.Fill;
-		panel_0.Margin = Padding.Empty;
-		panel_0.Padding = new Padding(22, 18, 22, 16);
+		panel.AutoSize = true;
+		panel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+		panel.BackColor = ModernUi.Surface;
+		panel.Dock = DockStyle.Fill;
+		panel.Margin = Padding.Empty;
+		panel.Padding = new Padding(22, 18, 22, 16);
 
 		var headerLayout = new TableLayoutPanel
 		{
@@ -90,13 +90,13 @@ public sealed class AboutForm : Form
 		headerLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 
 		var resources = new ComponentResourceManager(typeof(AboutForm));
-		pictureBox_0.BackgroundImage = resources.GetObject("logoPictureBox.BackgroundImage") as Image;
-		pictureBox_0.BackgroundImageLayout = ImageLayout.Zoom;
-		pictureBox_0.Margin = new Padding(0, 1, 12, 0);
-		pictureBox_0.MinimumSize = new Size(48, 48);
-		pictureBox_0.Name = "logoPictureBox";
-		pictureBox_0.Size = new Size(48, 48);
-		pictureBox_0.TabStop = false;
+		pictureBox.BackgroundImage = resources.GetObject("logoPictureBox.BackgroundImage") as Image;
+		pictureBox.BackgroundImageLayout = ImageLayout.Zoom;
+		pictureBox.Margin = new Padding(0, 1, 12, 0);
+		pictureBox.MinimumSize = new Size(48, 48);
+		pictureBox.Name = "logoPictureBox";
+		pictureBox.Size = new Size(48, 48);
+		pictureBox.TabStop = false;
 
 		var identityLayout = new TableLayoutPanel
 		{
@@ -111,32 +111,32 @@ public sealed class AboutForm : Form
 		identityLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 		identityLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-		label_1.AutoSize = true;
-		label_1.Font = new Font("Segoe UI Semibold", 17.5f, FontStyle.Bold, GraphicsUnit.Point);
-		label_1.ForeColor = ModernUi.TextPrimary;
-		label_1.Margin = Padding.Empty;
-		label_1.Name = "productNameLabel";
-		label_1.Text = UiText.Get("About.Product");
+		label2.AutoSize = true;
+		label2.Font = new Font("Segoe UI Semibold", 17.5f, FontStyle.Bold, GraphicsUnit.Point);
+		label2.ForeColor = ModernUi.TextPrimary;
+		label2.Margin = Padding.Empty;
+		label2.Name = "productNameLabel";
+		label2.Text = UiText.Get("About.Product");
 
-		label_0.AutoSize = true;
-		label_0.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular, GraphicsUnit.Point);
-		label_0.ForeColor = ModernUi.TextSecondary;
-		label_0.Margin = new Padding(1, 4, 0, 0);
-		label_0.Name = "versionLabel";
+		label.AutoSize = true;
+		label.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular, GraphicsUnit.Point);
+		label.ForeColor = ModernUi.TextSecondary;
+		label.Margin = new Padding(1, 4, 0, 0);
+		label.Name = "versionLabel";
 
-		label_2.AutoSize = true;
-		label_2.Font = new Font("Segoe UI Semibold", 8.5f, FontStyle.Bold, GraphicsUnit.Point);
-		label_2.ForeColor = ModernUi.TextPrimary;
-		label_2.Margin = new Padding(1, 6, 0, 0);
-		label_2.Name = "initialsLabel";
-		label_2.Text = UiText.Get("About.Initials");
+		label3.AutoSize = true;
+		label3.Font = new Font("Segoe UI Semibold", 8.5f, FontStyle.Bold, GraphicsUnit.Point);
+		label3.ForeColor = ModernUi.TextPrimary;
+		label3.Margin = new Padding(1, 6, 0, 0);
+		label3.Name = "initialsLabel";
+		label3.Text = UiText.Get("About.Initials");
 
-		identityLayout.Controls.Add(label_1, 0, 0);
-		identityLayout.Controls.Add(label_0, 0, 1);
-		identityLayout.Controls.Add(label_2, 0, 2);
-		headerLayout.Controls.Add(pictureBox_0, 0, 0);
+		identityLayout.Controls.Add(label2, 0, 0);
+		identityLayout.Controls.Add(label, 0, 1);
+		identityLayout.Controls.Add(label3, 0, 2);
+		headerLayout.Controls.Add(pictureBox, 0, 0);
 		headerLayout.Controls.Add(identityLayout, 1, 0);
-		panel_0.Controls.Add(headerLayout);
+		panel.Controls.Add(headerLayout);
 
 		var creditsLayout = new TableLayoutPanel
 		{
@@ -151,35 +151,35 @@ public sealed class AboutForm : Form
 		creditsLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 		creditsLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-		label_3.AutoSize = true;
-		label_3.Dock = DockStyle.Top;
-		label_3.Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
-		label_3.ForeColor = ModernUi.TextPrimary;
-		label_3.Margin = Padding.Empty;
-		label_3.Name = "originalCreditLabel";
-		label_3.Text = UiText.Get("About.OriginalCredit");
+		label4.AutoSize = true;
+		label4.Dock = DockStyle.Top;
+		label4.Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
+		label4.ForeColor = ModernUi.TextPrimary;
+		label4.Margin = Padding.Empty;
+		label4.Name = "originalCreditLabel";
+		label4.Text = UiText.Get("About.OriginalCredit");
 
-		label_4.AutoSize = true;
-		label_4.Dock = DockStyle.Top;
-		label_4.Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
-		label_4.ForeColor = ModernUi.TextPrimary;
-		label_4.Margin = new Padding(0, 8, 0, 0);
-		label_4.Name = "exCreditLabel";
-		label_4.Text = UiText.Get("About.MaintainerCredit");
+		label5.AutoSize = true;
+		label5.Dock = DockStyle.Top;
+		label5.Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
+		label5.ForeColor = ModernUi.TextPrimary;
+		label5.Margin = new Padding(0, 8, 0, 0);
+		label5.Name = "exCreditLabel";
+		label5.Text = UiText.Get("About.MaintainerCredit");
 
 		Color accent = ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1);
-		linkLabel_0.ActiveLinkColor = ModernUi.Darken(accent, 0.18f);
-		linkLabel_0.AutoSize = true;
-		linkLabel_0.LinkColor = accent;
-		linkLabel_0.Anchor = AnchorStyles.Left;
-		linkLabel_0.Margin = Padding.Empty;
-		linkLabel_0.Name = "projectLinkLabel";
-		linkLabel_0.Text = UiText.Get("About.ProjectLink");
-		linkLabel_0.VisitedLinkColor = accent;
-		linkLabel_0.LinkClicked += OnProjectLinkClicked;
+		linkLabel.ActiveLinkColor = ModernUi.Darken(accent, 0.18f);
+		linkLabel.AutoSize = true;
+		linkLabel.LinkColor = accent;
+		linkLabel.Anchor = AnchorStyles.Left;
+		linkLabel.Margin = Padding.Empty;
+		linkLabel.Name = "projectLinkLabel";
+		linkLabel.Text = UiText.Get("About.ProjectLink");
+		linkLabel.VisitedLinkColor = accent;
+		linkLabel.LinkClicked += OnProjectLinkClicked;
 
-		creditsLayout.Controls.Add(label_3, 0, 0);
-		creditsLayout.Controls.Add(label_4, 0, 1);
+		creditsLayout.Controls.Add(label4, 0, 0);
+		creditsLayout.Controls.Add(label5, 0, 1);
 
 		var footerLayout = new TableLayoutPanel
 		{
@@ -200,28 +200,28 @@ public sealed class AboutForm : Form
 		closeButton.Name = "closeButton";
 		closeButton.Text = UiText.Get("Common.Close");
 		ModernUi.StylePrimaryButton(closeButton, accent, ModernUi.Darken(accent, 0.08f));
-		footerLayout.Controls.Add(linkLabel_0, 0, 0);
+		footerLayout.Controls.Add(linkLabel, 0, 0);
 		footerLayout.Controls.Add(closeButton, 1, 0);
 
-		rootLayout.Controls.Add(panel_0, 0, 0);
+		rootLayout.Controls.Add(panel, 0, 0);
 		rootLayout.Controls.Add(creditsLayout, 0, 1);
 		rootLayout.Controls.Add(footerLayout, 0, 2);
 		Controls.Add(rootLayout);
 		AcceptButton = closeButton;
 		CancelButton = closeButton;
 
-		((ISupportInitialize)pictureBox_0).EndInit();
+		((ISupportInitialize)pictureBox).EndInit();
 		ResumeLayout(performLayout: true);
 	}
 
 	private void ApplyLocalizedText()
 	{
 		Text = UiText.Get("About.Title");
-		label_1.Text = UiText.Get("About.Product");
-		label_2.Text = UiText.Get("About.Initials");
-		label_3.Text = UiText.Get("About.OriginalCredit");
-		label_4.Text = UiText.Get("About.MaintainerCredit");
-		linkLabel_0.Text = UiText.Get("About.ProjectLink");
+		label2.Text = UiText.Get("About.Product");
+		label3.Text = UiText.Get("About.Initials");
+		label4.Text = UiText.Get("About.OriginalCredit");
+		label5.Text = UiText.Get("About.MaintainerCredit");
+		linkLabel.Text = UiText.Get("About.ProjectLink");
 		closeButton.Text = UiText.Get("Common.Close");
 	}
 
@@ -245,7 +245,7 @@ public sealed class AboutForm : Form
 	{
 		if (disposing)
 		{
-			icontainer_0?.Dispose();
+			container?.Dispose();
 		}
 
 		base.Dispose(disposing);

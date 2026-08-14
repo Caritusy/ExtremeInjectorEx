@@ -3,48 +3,48 @@ using System.Runtime.CompilerServices;
 public abstract class ResourceIdentifier
 {
 	[CompilerGenerated]
-	internal string string_0;
+	internal string name;
 
 	[CompilerGenerated]
-	internal int int_0;
+	internal int id;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetName()
 	{
-		return string_0;
+		return name;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected void SetName(string string_1)
+	protected void SetName(string text)
 	{
-		string_0 = string_1;
+		name = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public int GetId()
 	{
-		return int_0;
+		return id;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	protected void SetId(int int_1)
+	protected void SetId(int intValue)
 	{
-		int_0 = int_1;
+		id = intValue;
 	}
 
-	protected ResourceIdentifier(int int_1)
+	protected ResourceIdentifier(int intValue)
 	{
 		this.SetName(null);
-		this.SetId(int_1);
+		this.SetId(intValue);
 	}
 
-	protected ResourceIdentifier(string string_1)
+	protected ResourceIdentifier(string text)
 	{
-		SetName(string_1);
+		SetName(text);
 		SetId(-1);
 	}
 }

@@ -3,50 +3,50 @@ using System.Runtime.CompilerServices;
 public sealed class ResourceDataEntry : ResourceIdentifier
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint dataRva;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint size;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetDataRva()
 	{
-		return uint_0;
+		return dataRva;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetDataRva(uint uint_2)
+	public void SetDataRva(uint uintValue)
 	{
-		uint_0 = uint_2;
+		dataRva = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSize()
 	{
-		return uint_1;
+		return size;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSize(uint uint_2)
+	public void SetSize(uint uintValue)
 	{
-		uint_1 = uint_2;
+		size = uintValue;
 	}
 
-	public ResourceDataEntry(int int_1, uint uint_2, uint uint_3)
-		: base(int_1)
+	public ResourceDataEntry(int intValue, uint uintValue, uint uintValue2)
+		: base(intValue)
 	{
-		SetDataRva(uint_2);
-		SetSize(uint_3);
+		SetDataRva(uintValue);
+		SetSize(uintValue2);
 	}
 
-	public ResourceDataEntry(string string_1, uint uint_2, uint uint_3)
-		: base(string_1)
+	public ResourceDataEntry(string text, uint uintValue, uint uintValue2)
+		: base(text)
 	{
-		SetDataRva(uint_2);
-		SetSize(uint_3);
+		SetDataRva(uintValue);
+		SetSize(uintValue2);
 	}
 }

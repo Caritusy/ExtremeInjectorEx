@@ -3,13 +3,13 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct BeaEngineRexPrefix
 {
-	public byte byte_0;
+	public byte byteValue;
 
-	public byte byte_1;
+	public byte byteValue2;
 
-	public byte byte_2;
+	public byte byteValue3;
 
-	public byte byte_3;
+	public byte byteValue4;
 
-	public byte byte_4;
+	public byte byteValue5;
 }

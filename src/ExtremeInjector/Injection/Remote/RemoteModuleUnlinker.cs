@@ -4,35 +4,35 @@ using System.Runtime.CompilerServices;
 public sealed class RemoteModuleUnlinker
 {
 	[CompilerGenerated]
-	public sealed class Class130
+	public sealed class ModuleBaseMatcher
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		internal bool MatchesModuleBase(ProcessModuleInfo gclass1_0)
+		internal bool MatchesModuleBase(ProcessModuleInfo processModuleInfo)
 		{
-			return gclass1_0.GetModuleBase() == intptr_0;
+			return processModuleInfo.GetModuleBase() == address;
 		}
 	}
 
 	[CompilerGenerated]
-	internal RemoteProcess gclass2_0;
+	internal RemoteProcess remoteProcess;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public RemoteProcess GetRemoteProcess()
 	{
-		return gclass2_0;
+		return remoteProcess;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetRemoteProcess(RemoteProcess gclass2_1)
+	public void SetRemoteProcess(RemoteProcess remoteProcess2)
 	{
-		gclass2_0 = gclass2_1;
+		remoteProcess = remoteProcess2;
 	}
 
-	public RemoteModuleUnlinker(RemoteProcess gclass2_1)
+	public RemoteModuleUnlinker(RemoteProcess remoteProcess2)
 	{
-		SetRemoteProcess(gclass2_1);
+		SetRemoteProcess(remoteProcess2);
 	}
 }

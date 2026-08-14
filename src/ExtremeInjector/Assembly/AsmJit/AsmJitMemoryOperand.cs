@@ -5,19 +5,19 @@ using System.Runtime.InteropServices;
 public sealed class AsmJitMemoryOperand : AsmJitOperand
 {
 	public AsmJitMemoryOperand()
-		: base(AsmJitRuntime.struct20_0)
+		: base(AsmJitRuntime.uninitializedOperandTag)
 	{
-		AsmJitOperand.Struct11 struct11_ = RecoveredRuntime.GetMemoryOperandData(this);
-		struct11_.enum8_0 = AsmJitOperandType.flag_2;
-		struct11_.byte_0 = 0;
-		struct11_.enum9_0 = AsmJitMemoryType.const_0;
+		AsmJitOperand.MemoryOperandData struct11_ = RecoveredRuntime.GetMemoryOperandData(this);
+		struct11_.operandType = AsmJitOperandType.Memory;
+		struct11_.byteValue = 0;
+		struct11_.memoryType = AsmJitMemoryType.Native;
 		struct11_.SetAddressingFlag(false);
 		struct11_.SetScaleShift(0);
-		struct11_.uint_0 = AsmJitRuntime.uint_0;
-		struct11_.uint_1 = AsmJitRuntime.uint_0;
-		struct11_.uint_2 = AsmJitRuntime.uint_0;
-		struct11_.intptr_0 = IntPtr.Zero;
-		struct11_.intptr_1 = IntPtr.Zero;
+		struct11_.uintValue = AsmJitRuntime.uintValue;
+		struct11_.uintValue2 = AsmJitRuntime.uintValue;
+		struct11_.uintValue3 = AsmJitRuntime.uintValue;
+		struct11_.address = IntPtr.Zero;
+		struct11_.address2 = IntPtr.Zero;
 		RecoveredRuntime.SetMemoryOperandData(struct11_, this);
 	}
 
@@ -28,14 +28,14 @@ public sealed class AsmJitMemoryOperand : AsmJitOperand
 		{
 			return false;
 		}
-		AsmJitOperand.Struct7 @struct = base.GetRawData();
-		AsmJitOperand.Struct7 struct2 = @class.GetRawData();
-		return @struct.uint_0[0] == struct2.uint_0[0] && @struct.uint_0[1] == struct2.uint_0[1] && @struct.uint_0[2] == struct2.uint_0[2] && @struct.uint_0[3] == struct2.uint_0[3] && @struct.intptr_0[0] == struct2.intptr_0[0] && @struct.intptr_0[1] == struct2.intptr_0[1];
+		AsmJitOperand.RawOperandData @struct = base.GetRawData();
+		AsmJitOperand.RawOperandData struct2 = @class.GetRawData();
+		return @struct.uintValueArray[0] == struct2.uintValueArray[0] && @struct.uintValueArray[1] == struct2.uintValueArray[1] && @struct.uintValueArray[2] == struct2.uintValueArray[2] && @struct.uintValueArray[3] == struct2.uintValueArray[3] && @struct.addresses[0] == struct2.addresses[0] && @struct.addresses[1] == struct2.addresses[1];
 	}
 
 	public override int GetHashCode()
 	{
-		Struct7 @struct = GetRawData();
-		return ((int)((((@struct.uint_0[0] * 397 + @struct.uint_0[1]) * 397 + @struct.uint_0[2]) * 397 + @struct.uint_0[3]) * 397) + (int)@struct.intptr_0[0]) * 397 + (int)@struct.intptr_0[1];
+		RawOperandData @struct = GetRawData();
+		return ((int)((((@struct.uintValueArray[0] * 397 + @struct.uintValueArray[1]) * 397 + @struct.uintValueArray[2]) * 397 + @struct.uintValueArray[3]) * 397) + (int)@struct.addresses[0]) * 397 + (int)@struct.addresses[1];
 	}
 }

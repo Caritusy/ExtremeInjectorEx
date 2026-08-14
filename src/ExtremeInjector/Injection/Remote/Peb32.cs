@@ -75,16 +75,16 @@ public sealed class Peb32 : RemotePeb
 		});
 	}
 
-	public Peb32(RemoteProcess gclass2_1)
-		: base(gclass2_1, bool_2: true)
+	public Peb32(RemoteProcess remoteProcess)
+		: base(remoteProcess, flag: true)
 	{
 		this.EnsureProcessHandle();
 	}
 
-	public Peb32(RemoteProcess gclass2_1, IntPtr intptr_2)
-		: base(gclass2_1, bool_2: true)
+	public Peb32(RemoteProcess remoteProcess, IntPtr address)
+		: base(remoteProcess, flag: true)
 	{
-		SetProcessHandle(intptr_2);
+		SetProcessHandle(address);
 	}
 
 	[SpecialName]

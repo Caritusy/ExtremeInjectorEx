@@ -2,99 +2,99 @@ using System.IO;
 
 public class LzmaOutputWindow
 {
-	public uint uint_0;
+	public uint uintValue;
 
-	internal byte[] byte_0;
+	internal byte[] bytes;
 
-	internal uint uint_1;
+	internal uint uintValue2;
 
-	internal Stream stream_0;
+	internal Stream stream;
 
-	internal uint uint_2;
+	internal uint uintValue3;
 
-	internal uint uint_3;
+	internal uint uintValue4;
 
-	public void Create(uint uint_4)
+	public void Create(uint uintValue5)
 	{
-		if (uint_3 != uint_4)
+		if (uintValue4 != uintValue5)
 		{
-			byte_0 = new byte[uint_4];
+			bytes = new byte[uintValue5];
 		}
-		uint_3 = uint_4;
-		uint_1 = 0u;
-		uint_2 = 0u;
+		uintValue4 = uintValue5;
+		uintValue2 = 0u;
+		uintValue3 = 0u;
 	}
 
-	public void SetStream(Stream stream_1, bool bool_0)
+	public void SetStream(Stream stream2, bool flag)
 	{
 		ReleaseStream();
-		stream_0 = stream_1;
-		if (!bool_0)
+		stream = stream2;
+		if (!flag)
 		{
-			uint_2 = 0u;
-			uint_1 = 0u;
-			uint_0 = 0u;
+			uintValue3 = 0u;
+			uintValue2 = 0u;
+			uintValue = 0u;
 		}
 	}
 
 	public void ReleaseStream()
 	{
 		Flush();
-		stream_0 = null;
+		stream = null;
 	}
 
 	public void Flush()
 	{
-		uint num = uint_1 - uint_2;
+		uint num = uintValue2 - uintValue3;
 		if (num != 0)
 		{
-			stream_0.Write(byte_0, (int)uint_2, (int)num);
-			if (uint_1 >= uint_3)
+			stream.Write(bytes, (int)uintValue3, (int)num);
+			if (uintValue2 >= uintValue4)
 			{
-				uint_1 = 0u;
+				uintValue2 = 0u;
 			}
-			uint_2 = uint_1;
+			uintValue3 = uintValue2;
 		}
 	}
 
-	public void CopyBlock(uint uint_4, uint uint_5)
+	public void CopyBlock(uint uintValue5, uint uintValue6)
 	{
-		uint num = uint_1 - uint_4 - 1;
-		if (num >= uint_3)
+		uint num = uintValue2 - uintValue5 - 1;
+		if (num >= uintValue4)
 		{
-			num += uint_3;
+			num += uintValue4;
 		}
-		while (uint_5 != 0)
+		while (uintValue6 != 0)
 		{
-			if (num >= uint_3)
+			if (num >= uintValue4)
 			{
 				num = 0u;
 			}
-			byte_0[uint_1++] = byte_0[num++];
-			if (uint_1 >= uint_3)
+			bytes[uintValue2++] = bytes[num++];
+			if (uintValue2 >= uintValue4)
 			{
 				Flush();
 			}
-			uint_5--;
+			uintValue6--;
 		}
 	}
 
-	public void PutByte(byte byte_1)
+	public void PutByte(byte byteValue)
 	{
-		byte_0[uint_1++] = byte_1;
-		if (uint_1 >= uint_3)
+		bytes[uintValue2++] = byteValue;
+		if (uintValue2 >= uintValue4)
 		{
 			Flush();
 		}
 	}
 
-	public byte GetByte(uint uint_4)
+	public byte GetByte(uint uintValue5)
 	{
-		uint num = uint_1 - uint_4 - 1;
-		if (num >= uint_3)
+		uint num = uintValue2 - uintValue5 - 1;
+		if (num >= uintValue4)
 		{
-			num += uint_3;
+			num += uintValue4;
 		}
-		return byte_0[num];
+		return bytes[num];
 	}
 }

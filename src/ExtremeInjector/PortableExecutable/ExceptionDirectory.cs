@@ -3,18 +3,18 @@ using System.IO;
 
 public sealed class ExceptionDirectory
 {
-	public List<RuntimeFunctionEntry> list_0 = new List<RuntimeFunctionEntry>();
+	public List<RuntimeFunctionEntry> items = new List<RuntimeFunctionEntry>();
 
-	internal ExceptionDirectory(BoundsCheckedBinaryReader class5_0, DataDirectory class157_0)
+	internal ExceptionDirectory(BoundsCheckedBinaryReader boundsCheckedBinaryReader, DataDirectory dataDirectory)
 	{
 		int num = 0;
-		while ((long)num < (long)((ulong)(class157_0.GetSize() / 12u)))
+		while ((long)num < (long)((ulong)(dataDirectory.GetSize() / 12u)))
 		{
-			List<RuntimeFunctionEntry> list = this.list_0;
+			List<RuntimeFunctionEntry> list = this.items;
 			RuntimeFunctionEntry @class = new RuntimeFunctionEntry();
-			@class.SetBeginAddress(class5_0.ReadUInt32());
-			@class.SetEndAddress(class5_0.ReadUInt32());
-			@class.SetUnwindInfoAddress(class5_0.ReadUInt32());
+			@class.SetBeginAddress(boundsCheckedBinaryReader.ReadUInt32());
+			@class.SetEndAddress(boundsCheckedBinaryReader.ReadUInt32());
+			@class.SetUnwindInfoAddress(boundsCheckedBinaryReader.ReadUInt32());
 			list.Add(@class);
 			num++;
 		}

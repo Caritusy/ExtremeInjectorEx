@@ -4,27 +4,27 @@ using System.Windows.Forms;
 
 public sealed class ManualMapOptionsForm : Form
 {
-	internal IContainer icontainer_0;
+	internal IContainer container;
 
-	internal GroupBox groupBox_0;
+	internal GroupBox groupBox;
 
-	internal CheckBox checkBox_0;
+	internal CheckBox checkBox;
 
-	internal CheckBox checkBox_1;
+	internal CheckBox checkBox2;
 
-	internal GroupBox groupBox_1;
+	internal GroupBox groupBox2;
 
-	internal CheckBox checkBox_2;
+	internal CheckBox checkBox3;
 
-	internal CheckBox checkBox_3;
+	internal CheckBox checkBox4;
 
 	public ManualMapOptionsForm()
 	{
 		RecoveredRuntime.InitializeManualMapOptionsForm(this);
-		this.checkBox_2.Checked = ApplicationSettings.Current.Options.Advanced.HideFromDebugger;
-		this.checkBox_1.Checked = ApplicationSettings.Current.Options.Advanced.ManualResolveImports;
-		this.checkBox_0.Checked = ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport;
-		this.checkBox_3.Checked = ApplicationSettings.Current.Options.Advanced.DisableSehValidation;
+		this.checkBox3.Checked = ApplicationSettings.Current.Options.Advanced.HideFromDebugger;
+		this.checkBox2.Checked = ApplicationSettings.Current.Options.Advanced.ManualResolveImports;
+		this.checkBox.Checked = ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport;
+		this.checkBox4.Checked = ApplicationSettings.Current.Options.Advanced.DisableSehValidation;
 	}
 
 	internal void OnHideFromDebuggerChanged(object sender, EventArgs e)
@@ -33,7 +33,7 @@ public sealed class ManualMapOptionsForm : Form
 		{
 			return;
 		}
-		ApplicationSettings.Current.Options.Advanced.HideFromDebugger = this.checkBox_2.Checked;
+		ApplicationSettings.Current.Options.Advanced.HideFromDebugger = this.checkBox3.Checked;
 	}
 
 	internal void OnManualResolveImportsChanged(object sender, EventArgs e)
@@ -42,7 +42,7 @@ public sealed class ManualMapOptionsForm : Form
 		{
 			return;
 		}
-		ApplicationSettings.Current.Options.Advanced.ManualResolveImports = this.checkBox_1.Checked;
+		ApplicationSettings.Current.Options.Advanced.ManualResolveImports = this.checkBox2.Checked;
 	}
 
 	internal void OnDisableExceptionSupportChanged(object sender, EventArgs e)
@@ -51,11 +51,11 @@ public sealed class ManualMapOptionsForm : Form
 		{
 			return;
 		}
-		if (this.checkBox_0.Checked && MessageBox.Show(EncodedStringTable.DecodeString(1371), EncodedStringTable.DecodeString(599), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+		if (this.checkBox.Checked && MessageBox.Show(EncodedStringTable.DecodeString(1371), EncodedStringTable.DecodeString(599), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
 		{
-			this.checkBox_0.Checked = false;
+			this.checkBox.Checked = false;
 		}
-		ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport = this.checkBox_0.Checked;
+		ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport = this.checkBox.Checked;
 	}
 
 	internal void OnDisableSehValidationChanged(object sender, EventArgs e)
@@ -64,18 +64,18 @@ public sealed class ManualMapOptionsForm : Form
 		{
 			return;
 		}
-		if (this.checkBox_3.Checked && MessageBox.Show(EncodedStringTable.DecodeString(1541), EncodedStringTable.DecodeString(599), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+		if (this.checkBox4.Checked && MessageBox.Show(EncodedStringTable.DecodeString(1541), EncodedStringTable.DecodeString(599), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
 		{
-			this.checkBox_3.Checked = false;
+			this.checkBox4.Checked = false;
 		}
-		ApplicationSettings.Current.Options.Advanced.DisableSehValidation = this.checkBox_3.Checked;
+		ApplicationSettings.Current.Options.Advanced.DisableSehValidation = this.checkBox4.Checked;
 	}
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing && this.icontainer_0 != null)
+		if (disposing && this.container != null)
 		{
-			this.icontainer_0.Dispose();
+			this.container.Dispose();
 		}
 		base.Dispose(disposing);
 	}

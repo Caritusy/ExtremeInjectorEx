@@ -9,49 +9,49 @@ public interface IPeOptionalHeader
 	byte GetMajorLinkerVersion();
 
 	[SpecialName]
-	void SetMajorLinkerVersion(byte byte_0);
+	void SetMajorLinkerVersion(byte byteValue);
 
 	[SpecialName]
 	byte GetMinorLinkerVersion();
 
 	[SpecialName]
-	void SetMinorLinkerVersion(byte byte_0);
+	void SetMinorLinkerVersion(byte byteValue);
 
 	[SpecialName]
 	uint GetSizeOfCode();
 
 	[SpecialName]
-	void SetSizeOfCode(uint uint_0);
+	void SetSizeOfCode(uint uintValue);
 
 	[SpecialName]
 	uint GetSizeOfInitializedData();
 
 	[SpecialName]
-	void SetSizeOfInitializedData(uint uint_0);
+	void SetSizeOfInitializedData(uint uintValue);
 
 	[SpecialName]
 	uint GetSizeOfUninitializedData();
 
 	[SpecialName]
-	void SetSizeOfUninitializedData(uint uint_0);
+	void SetSizeOfUninitializedData(uint uintValue);
 
 	[SpecialName]
 	uint GetAddressOfEntryPoint();
 
 	[SpecialName]
-	void SetAddressOfEntryPoint(uint uint_0);
+	void SetAddressOfEntryPoint(uint uintValue);
 
 	[SpecialName]
 	uint GetBaseOfCode();
 
 	[SpecialName]
-	void SetBaseOfCode(uint uint_0);
+	void SetBaseOfCode(uint uintValue);
 
 	[SpecialName]
 	uint GetBaseOfData();
 
 	[SpecialName]
-	void SetBaseOfData(uint uint_0);
+	void SetBaseOfData(uint uintValue);
 
 	[SpecialName]
 	ulong GetImageBase();
@@ -72,13 +72,13 @@ public interface IPeOptionalHeader
 	ushort GetMajorImageVersion();
 
 	[SpecialName]
-	void SetMajorImageVersion(ushort ushort_0);
+	void SetMajorImageVersion(ushort ushortValue);
 
 	[SpecialName]
 	ushort GetMinorImageVersion();
 
 	[SpecialName]
-	void SetMinorImageVersion(ushort ushort_0);
+	void SetMinorImageVersion(ushort ushortValue);
 
 	[SpecialName]
 	ushort GetMajorSubsystemVersion();
@@ -93,7 +93,7 @@ public interface IPeOptionalHeader
 	uint GetSizeOfImage();
 
 	[SpecialName]
-	void SetSizeOfImage(uint uint_0);
+	void SetSizeOfImage(uint uintValue);
 
 	[SpecialName]
 	uint GetSizeOfHeaders();
@@ -102,7 +102,7 @@ public interface IPeOptionalHeader
 	uint GetChecksum();
 
 	[SpecialName]
-	void SetChecksum(uint uint_0);
+	void SetChecksum(uint uintValue);
 
 	[SpecialName]
 	Subsystem GetSubsystem();
@@ -111,43 +111,43 @@ public interface IPeOptionalHeader
 	DllCharacteristics GetDllCharacteristics();
 
 	[SpecialName]
-	void SetDllCharacteristics(DllCharacteristics enum38_0);
+	void SetDllCharacteristics(DllCharacteristics dllCharacteristics);
 
 	[SpecialName]
 	ulong GetSizeOfStackReserve();
 
 	[SpecialName]
-	void SetSizeOfStackReserve(ulong ulong_0);
+	void SetSizeOfStackReserve(ulong ulongValue);
 
 	[SpecialName]
 	ulong GetSizeOfStackCommit();
 
 	[SpecialName]
-	void SetSizeOfStackCommit(ulong ulong_0);
+	void SetSizeOfStackCommit(ulong ulongValue);
 
 	[SpecialName]
 	ulong GetSizeOfHeapReserve();
 
 	[SpecialName]
-	void SetSizeOfHeapReserve(ulong ulong_0);
+	void SetSizeOfHeapReserve(ulong ulongValue);
 
 	[SpecialName]
 	ulong GetSizeOfHeapCommit();
 
 	[SpecialName]
-	void SetSizeOfHeapCommit(ulong ulong_0);
+	void SetSizeOfHeapCommit(ulong ulongValue);
 
 	[SpecialName]
 	uint GetLoaderFlags();
 
 	[SpecialName]
-	void SetLoaderFlags(uint uint_0);
+	void SetLoaderFlags(uint uintValue);
 
 	[SpecialName]
 	uint GetNumberOfRvaAndSizes();
 
 	[SpecialName]
-	void SetNumberOfRvaAndSizes(uint uint_0);
+	void SetNumberOfRvaAndSizes(uint uintValue);
 
 	[SpecialName]
 	DataDirectory[] GetDataDirectories();

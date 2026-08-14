@@ -6,80 +6,80 @@ using System.Text;
 
 internal class _003CModule_003E
 {
-	public struct Struct0
+	public struct BitDecoder
 	{
-		internal uint uint_0;
+		internal uint uintValue;
 
 		internal void Initialize()
 		{
-			uint_0 = 1024u;
+			uintValue = 1024u;
 		}
 
-		internal uint Decode(Class0 class0_0)
+		internal uint Decode(RangeDecoder rangeDecoder)
 		{
-			uint num = (class0_0.uint_1 >> 11) * this.uint_0;
-			if (class0_0.uint_0 >= num)
+			uint num = (rangeDecoder.uintValue2 >> 11) * this.uintValue;
+			if (rangeDecoder.uintValue >= num)
 			{
-				class0_0.uint_1 -= num;
-				class0_0.uint_0 -= num;
-				this.uint_0 -= this.uint_0 >> 5;
-				if (class0_0.uint_1 < 16777216u)
+				rangeDecoder.uintValue2 -= num;
+				rangeDecoder.uintValue -= num;
+				this.uintValue -= this.uintValue >> 5;
+				if (rangeDecoder.uintValue2 < 16777216u)
 				{
-					class0_0.uint_0 = (class0_0.uint_0 << 8 | (uint)((byte)class0_0.stream_0.ReadByte()));
-					class0_0.uint_1 <<= 8;
+					rangeDecoder.uintValue = (rangeDecoder.uintValue << 8 | (uint)((byte)rangeDecoder.stream.ReadByte()));
+					rangeDecoder.uintValue2 <<= 8;
 				}
 				return 1u;
 			}
-			class0_0.uint_1 = num;
-			this.uint_0 += 2048u - this.uint_0 >> 5;
-			if (class0_0.uint_1 < 16777216u)
+			rangeDecoder.uintValue2 = num;
+			this.uintValue += 2048u - this.uintValue >> 5;
+			if (rangeDecoder.uintValue2 < 16777216u)
 			{
-				class0_0.uint_0 = (class0_0.uint_0 << 8 | (uint)((byte)class0_0.stream_0.ReadByte()));
-				class0_0.uint_1 <<= 8;
+				rangeDecoder.uintValue = (rangeDecoder.uintValue << 8 | (uint)((byte)rangeDecoder.stream.ReadByte()));
+				rangeDecoder.uintValue2 <<= 8;
 			}
 			return 0u;
 		}
 	}
 
-	public struct Struct1
+	public struct BitTreeDecoder
 	{
-		internal readonly Struct0[] struct0_0;
+		internal readonly BitDecoder[] bitDecoderArray;
 
-		internal readonly int int_0;
+		internal readonly int intValue;
 
-		internal Struct1(int int_1)
+		internal BitTreeDecoder(int intValue2)
 		{
-			int_0 = int_1;
-			struct0_0 = new Struct0[1 << int_1];
+			intValue = intValue2;
+			bitDecoderArray = new BitDecoder[1 << intValue2];
 		}
 
 		internal void Initialize()
 		{
 			uint num = 1u;
-			while ((ulong)num < (ulong)(1L << (this.int_0 & 31)))
+			while ((ulong)num < (ulong)(1L << (this.intValue & 31)))
 			{
-				this.struct0_0[(int)((UIntPtr)num)].Initialize();
+				this.bitDecoderArray[(int)((UIntPtr)num)].Initialize();
 				num += 1u;
 			}
 		}
 
-		internal uint Decode(Class0 class0_0)
+		internal uint Decode(RangeDecoder rangeDecoder)
 		{
 			uint num = 1u;
-			for (int i = this.int_0; i > 0; i--)
+			for (int i = this.intValue; i > 0; i--)
 			{
-				num = (num << 1) + this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0);
+				num = (num << 1) + this.bitDecoderArray[(int)((UIntPtr)num)].Decode(rangeDecoder);
 			}
-			return num - (1u << this.int_0);
+			return num - (1u << this.intValue);
 		}
 
-		internal uint ReverseDecode(Class0 class0_0)
+		internal uint ReverseDecode(RangeDecoder rangeDecoder)
 		{
 			uint num = 1u;
 			uint num2 = 0u;
-			for (int i = 0; i < this.int_0; i++)
+			for (int i = 0; i < this.intValue; i++)
 			{
-				uint num3 = this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0);
+				uint num3 = this.bitDecoderArray[(int)((UIntPtr)num)].Decode(rangeDecoder);
 				num <<= 1;
 				num += num3;
 				num2 |= num3 << i;
@@ -87,13 +87,13 @@ internal class _003CModule_003E
 			return num2;
 		}
 
-		internal static uint ReverseDecode(Struct0[] struct0_1, uint uint_0, Class0 class0_0, int int_1)
+		internal static uint ReverseDecode(BitDecoder[] bitDecoderArray2, uint uintValue, RangeDecoder rangeDecoder, int intValue2)
 		{
 			uint num = 1u;
 			uint num2 = 0u;
-			for (int i = 0; i < int_1; i++)
+			for (int i = 0; i < intValue2; i++)
 			{
-				uint num3 = struct0_1[(int)((UIntPtr)(uint_0 + num))].Decode(class0_0);
+				uint num3 = bitDecoderArray2[(int)((UIntPtr)(uintValue + num))].Decode(rangeDecoder);
 				num <<= 1;
 				num += num3;
 				num2 |= num3 << i;
@@ -102,45 +102,45 @@ internal class _003CModule_003E
 		}
 	}
 
-	public class Class0
+	public class RangeDecoder
 	{
-		internal uint uint_0;
+		internal uint uintValue;
 
-		internal uint uint_1;
+		internal uint uintValue2;
 
-		internal Stream stream_0;
+		internal Stream stream;
 
-		internal void Initialize(Stream stream_1)
+		internal void Initialize(Stream stream2)
 		{
-			this.stream_0 = stream_1;
-			this.uint_0 = 0u;
-			this.uint_1 = uint.MaxValue;
+			this.stream = stream2;
+			this.uintValue = 0u;
+			this.uintValue2 = uint.MaxValue;
 			for (int i = 0; i < 5; i++)
 			{
-				this.uint_0 = (this.uint_0 << 8 | (uint)((byte)this.stream_0.ReadByte()));
+				this.uintValue = (this.uintValue << 8 | (uint)((byte)this.stream.ReadByte()));
 			}
 		}
 
 		internal void ReleaseStream()
 		{
-			stream_0 = null;
+			stream = null;
 		}
 
 		internal void Normalize()
 		{
-			while (this.uint_1 < 16777216u)
+			while (this.uintValue2 < 16777216u)
 			{
-				this.uint_0 = (this.uint_0 << 8 | (uint)((byte)this.stream_0.ReadByte()));
-				this.uint_1 <<= 8;
+				this.uintValue = (this.uintValue << 8 | (uint)((byte)this.stream.ReadByte()));
+				this.uintValue2 <<= 8;
 			}
 		}
 
-		internal uint DecodeDirectBits(int int_0)
+		internal uint DecodeDirectBits(int intValue)
 		{
-			uint num = this.uint_1;
-			uint num2 = this.uint_0;
+			uint num = this.uintValue2;
+			uint num2 = this.uintValue;
 			uint num3 = 0u;
-			for (int i = int_0; i > 0; i--)
+			for (int i = intValue; i > 0; i--)
 			{
 				num >>= 1;
 				uint num4 = num2 - num >> 31;
@@ -148,126 +148,126 @@ internal class _003CModule_003E
 				num3 = (num3 << 1 | 1u - num4);
 				if (num < 16777216u)
 				{
-					num2 = (num2 << 8 | (uint)((byte)this.stream_0.ReadByte()));
+					num2 = (num2 << 8 | (uint)((byte)this.stream.ReadByte()));
 					num <<= 8;
 				}
 			}
-			this.uint_1 = num;
-			this.uint_0 = num2;
+			this.uintValue2 = num;
+			this.uintValue = num2;
 			return num3;
 		}
 
-		internal Class0()
+		internal RangeDecoder()
 		{
 		}
 	}
 
-	public class Class1
+	public class EmbeddedLzmaDecoder
 	{
-		public class Class2
+		public class LengthDecoder
 		{
-			internal readonly Struct1[] struct1_0 = new Struct1[16];
+			internal readonly BitTreeDecoder[] bitTreeDecoderArray = new BitTreeDecoder[16];
 
-			internal readonly Struct1[] struct1_1 = new Struct1[16];
+			internal readonly BitTreeDecoder[] bitTreeDecoderArray2 = new BitTreeDecoder[16];
 
-			internal Struct0 struct0_0 = default(Struct0);
+			internal BitDecoder bitDecoder = default(BitDecoder);
 
-			internal Struct0 struct0_1 = default(Struct0);
+			internal BitDecoder bitDecoder2 = default(BitDecoder);
 
-			internal Struct1 struct1_2 = new Struct1(8);
+			internal BitTreeDecoder bitTreeDecoder = new BitTreeDecoder(8);
 
-			internal uint uint_0;
+			internal uint uintValue;
 
-			internal void Create(uint uint_1)
+			internal void Create(uint uintValue2)
 			{
-				for (uint num = this.uint_0; num < uint_1; num += 1u)
+				for (uint num = this.uintValue; num < uintValue2; num += 1u)
 				{
-					this.struct1_0[(int)((UIntPtr)num)] = new _003CModule_003E.Struct1(3);
-					this.struct1_1[(int)((UIntPtr)num)] = new _003CModule_003E.Struct1(3);
+					this.bitTreeDecoderArray[(int)((UIntPtr)num)] = new _003CModule_003E.BitTreeDecoder(3);
+					this.bitTreeDecoderArray2[(int)((UIntPtr)num)] = new _003CModule_003E.BitTreeDecoder(3);
 				}
-				this.uint_0 = uint_1;
+				this.uintValue = uintValue2;
 			}
 
 			internal void Initialize()
 			{
-				this.struct0_0.Initialize();
-				for (uint num = 0u; num < this.uint_0; num += 1u)
+				this.bitDecoder.Initialize();
+				for (uint num = 0u; num < this.uintValue; num += 1u)
 				{
-					this.struct1_0[(int)((UIntPtr)num)].Initialize();
-					this.struct1_1[(int)((UIntPtr)num)].Initialize();
+					this.bitTreeDecoderArray[(int)((UIntPtr)num)].Initialize();
+					this.bitTreeDecoderArray2[(int)((UIntPtr)num)].Initialize();
 				}
-				this.struct0_1.Initialize();
-				this.struct1_2.Initialize();
+				this.bitDecoder2.Initialize();
+				this.bitTreeDecoder.Initialize();
 			}
 
-			internal uint Decode(Class0 class0_0, uint uint_1)
+			internal uint Decode(RangeDecoder rangeDecoder, uint uintValue2)
 			{
-				if (this.struct0_0.Decode(class0_0) == 0u)
+				if (this.bitDecoder.Decode(rangeDecoder) == 0u)
 				{
-					return this.struct1_0[(int)((UIntPtr)uint_1)].Decode(class0_0);
+					return this.bitTreeDecoderArray[(int)((UIntPtr)uintValue2)].Decode(rangeDecoder);
 				}
 				uint num = 8u;
-				if (this.struct0_1.Decode(class0_0) != 0u)
+				if (this.bitDecoder2.Decode(rangeDecoder) != 0u)
 				{
 					num += 8u;
-					num += this.struct1_2.Decode(class0_0);
+					num += this.bitTreeDecoder.Decode(rangeDecoder);
 				}
 				else
 				{
-					num += this.struct1_1[(int)((UIntPtr)uint_1)].Decode(class0_0);
+					num += this.bitTreeDecoderArray2[(int)((UIntPtr)uintValue2)].Decode(rangeDecoder);
 				}
 				return num;
 			}
 
-			internal Class2()
+			internal LengthDecoder()
 			{
 			}
 		}
 
-		public class Class3
+		public class LiteralDecoder
 		{
-			public struct Struct2
+			public struct LiteralSubdecoder
 			{
-				internal Struct0[] struct0_0;
+				internal BitDecoder[] bitDecoderArray;
 
 				internal void Create()
 				{
-					struct0_0 = new Struct0[768];
+					bitDecoderArray = new BitDecoder[768];
 				}
 
 				internal void Initialize()
 				{
 					for (int i = 0; i < 768; i++)
 					{
-						this.struct0_0[i].Initialize();
+						this.bitDecoderArray[i].Initialize();
 					}
 				}
 
-				internal byte DecodeNormal(Class0 class0_0)
+				internal byte DecodeNormal(RangeDecoder rangeDecoder)
 				{
 					uint num = 1u;
 					do
 					{
-						num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0));
+						num = (num << 1 | this.bitDecoderArray[(int)((UIntPtr)num)].Decode(rangeDecoder));
 					}
 					while (num < 256u);
 					return (byte)num;
 				}
 
-				internal byte DecodeWithMatchByte(Class0 class0_0, byte byte_0)
+				internal byte DecodeWithMatchByte(RangeDecoder rangeDecoder, byte byteValue)
 				{
 					uint num = 1u;
 					while (num < 256u)
 					{
-						uint num2 = (uint)(byte_0 >> 7 & 1);
-						byte_0 = (byte)(byte_0 << 1);
-						uint num3 = this.struct0_0[(int)((UIntPtr)((1u + num2 << 8) + num))].Decode(class0_0);
+						uint num2 = (uint)(byteValue >> 7 & 1);
+						byteValue = (byte)(byteValue << 1);
+						uint num3 = this.bitDecoderArray[(int)((UIntPtr)((1u + num2 << 8) + num))].Decode(rangeDecoder);
 						num = (num << 1 | num3);
 						if (num2 != num3)
 						{
 							while (num < 256u)
 							{
-								num = (num << 1 | this.struct0_0[(int)((UIntPtr)num)].Decode(class0_0));
+								num = (num << 1 | this.bitDecoderArray[(int)((UIntPtr)num)].Decode(rangeDecoder));
 							}
 							return (byte)num;
 						}
@@ -276,26 +276,26 @@ internal class _003CModule_003E
 				}
 			}
 
-			internal Struct2[] struct2_0;
+			internal LiteralSubdecoder[] literalSubdecoderArray;
 
-			internal int int_0;
+			internal int intValue;
 
-			internal int int_1;
+			internal int intValue2;
 
-			internal uint uint_0;
+			internal uint uintValue;
 
-			internal void Create(int int_2, int int_3)
+			internal void Create(int intValue3, int intValue4)
 			{
-				if (this.struct2_0 == null || this.int_1 != int_3 || this.int_0 != int_2)
+				if (this.literalSubdecoderArray == null || this.intValue2 != intValue4 || this.intValue != intValue3)
 				{
-					this.int_0 = int_2;
-					this.uint_0 = (1u << int_2) - 1u;
-					this.int_1 = int_3;
-					uint num = 1u << this.int_1 + this.int_0;
-					this.struct2_0 = new _003CModule_003E.Class1.Class3.Struct2[num];
+					this.intValue = intValue3;
+					this.uintValue = (1u << intValue3) - 1u;
+					this.intValue2 = intValue4;
+					uint num = 1u << this.intValue2 + this.intValue;
+					this.literalSubdecoderArray = new _003CModule_003E.EmbeddedLzmaDecoder.LiteralDecoder.LiteralSubdecoder[num];
 					for (uint num2 = 0u; num2 < num; num2 += 1u)
 					{
-						this.struct2_0[(int)((UIntPtr)num2)].Create();
+						this.literalSubdecoderArray[(int)((UIntPtr)num2)].Create();
 					}
 					return;
 				}
@@ -303,167 +303,167 @@ internal class _003CModule_003E
 
 			internal void Initialize()
 			{
-				uint num = 1u << this.int_1 + this.int_0;
+				uint num = 1u << this.intValue2 + this.intValue;
 				for (uint num2 = 0u; num2 < num; num2 += 1u)
 				{
-					this.struct2_0[(int)((UIntPtr)num2)].Initialize();
+					this.literalSubdecoderArray[(int)((UIntPtr)num2)].Initialize();
 				}
 			}
 
-			internal uint GetDecoderIndex(uint uint_1, byte byte_0)
+			internal uint GetDecoderIndex(uint uintValue2, byte byteValue)
 			{
-				return ((uint_1 & uint_0) << int_1) + (uint)(byte_0 >> 8 - int_1);
+				return ((uintValue2 & uintValue) << intValue2) + (uint)(byteValue >> 8 - intValue2);
 			}
 
-			internal byte DecodeNormal(Class0 class0_0, uint uint_1, byte byte_0)
+			internal byte DecodeNormal(RangeDecoder rangeDecoder, uint uintValue2, byte byteValue)
 			{
-				return struct2_0[GetDecoderIndex(uint_1, byte_0)].DecodeNormal(class0_0);
+				return literalSubdecoderArray[GetDecoderIndex(uintValue2, byteValue)].DecodeNormal(rangeDecoder);
 			}
 
-			internal byte DecodeWithMatchByte(Class0 class0_0, uint uint_1, byte byte_0, byte byte_1)
+			internal byte DecodeWithMatchByte(RangeDecoder rangeDecoder, uint uintValue2, byte byteValue, byte byteValue2)
 			{
-				return struct2_0[GetDecoderIndex(uint_1, byte_0)].DecodeWithMatchByte(class0_0, byte_1);
+				return literalSubdecoderArray[GetDecoderIndex(uintValue2, byteValue)].DecodeWithMatchByte(rangeDecoder, byteValue2);
 			}
 
-			internal Class3()
+			internal LiteralDecoder()
 			{
 			}
 		}
 
-		internal readonly Struct0[] struct0_0 = new Struct0[192];
+		internal readonly BitDecoder[] bitDecoderArray = new BitDecoder[192];
 
-		internal readonly Struct0[] struct0_1 = new Struct0[192];
+		internal readonly BitDecoder[] bitDecoderArray2 = new BitDecoder[192];
 
-		internal readonly Struct0[] struct0_2 = new Struct0[12];
+		internal readonly BitDecoder[] bitDecoderArray3 = new BitDecoder[12];
 
-		internal readonly Struct0[] struct0_3 = new Struct0[12];
+		internal readonly BitDecoder[] bitDecoderArray4 = new BitDecoder[12];
 
-		internal readonly Struct0[] struct0_4 = new Struct0[12];
+		internal readonly BitDecoder[] bitDecoderArray5 = new BitDecoder[12];
 
-		internal readonly Struct0[] struct0_5 = new Struct0[12];
+		internal readonly BitDecoder[] bitDecoderArray6 = new BitDecoder[12];
 
-		internal readonly Class2 class2_0 = new Class2();
+		internal readonly LengthDecoder lengthDecoder = new LengthDecoder();
 
-		internal readonly Class3 class3_0 = new Class3();
+		internal readonly LiteralDecoder literalProperties = new LiteralDecoder();
 
-		internal readonly Class4 class4_0 = new Class4();
+		internal readonly OutputWindow outputWindow = new OutputWindow();
 
-		internal readonly Struct0[] struct0_6 = new Struct0[114];
+		internal readonly BitDecoder[] bitDecoderArray7 = new BitDecoder[114];
 
-		internal readonly Struct1[] struct1_0 = new Struct1[4];
+		internal readonly BitTreeDecoder[] bitTreeDecoderArray = new BitTreeDecoder[4];
 
-		internal readonly Class0 class0_0 = new Class0();
+		internal readonly RangeDecoder rangeDecoder = new RangeDecoder();
 
-		internal readonly Class2 class2_1 = new Class2();
+		internal readonly LengthDecoder lengthDecoder2 = new LengthDecoder();
 
-		internal bool bool_0;
+		internal bool flag;
 
-		internal uint uint_0;
+		internal uint uintValue;
 
-		internal uint uint_1;
+		internal uint uintValue2;
 
-		internal Struct1 struct1_1 = new Struct1(4);
+		internal BitTreeDecoder bitTreeDecoder = new BitTreeDecoder(4);
 
-		internal uint uint_2;
+		internal uint uintValue3;
 
-		internal Class1()
+		internal EmbeddedLzmaDecoder()
 		{
-			this.uint_0 = uint.MaxValue;
+			this.uintValue = uint.MaxValue;
 			int num = 0;
 			while ((long)num < 4L)
 			{
-				this.struct1_0[num] = new _003CModule_003E.Struct1(6);
+				this.bitTreeDecoderArray[num] = new _003CModule_003E.BitTreeDecoder(6);
 				num++;
 			}
 		}
 
-		internal void SetDictionarySize(uint uint_3)
+		internal void SetDictionarySize(uint uintValue4)
 		{
-			if (this.uint_0 != uint_3)
+			if (this.uintValue != uintValue4)
 			{
-				this.uint_0 = uint_3;
-				this.uint_1 = Math.Max(this.uint_0, 1u);
-				uint uint_4 = Math.Max(this.uint_1, 4096u);
-				this.class4_0.Create(uint_4);
+				this.uintValue = uintValue4;
+				this.uintValue2 = Math.Max(this.uintValue, 1u);
+				uint uintValue5 = Math.Max(this.uintValue2, 4096u);
+				this.outputWindow.Create(uintValue5);
 			}
 		}
 
-		internal void SetLiteralProperties(int int_0, int int_1)
+		internal void SetLiteralProperties(int intValue, int intValue2)
 		{
-			class3_0.Create(int_0, int_1);
+			literalProperties.Create(intValue, intValue2);
 		}
 
-		internal void SetPositionBits(int int_0)
+		internal void SetPositionBits(int intValue)
 		{
-			uint num = 1u << int_0;
-			this.class2_0.Create(num);
-			this.class2_1.Create(num);
-			this.uint_2 = num - 1u;
+			uint num = 1u << intValue;
+			this.lengthDecoder.Create(num);
+			this.lengthDecoder2.Create(num);
+			this.uintValue3 = num - 1u;
 		}
 
-		internal void Initialize(Stream stream_0, Stream stream_1)
+		internal void Initialize(Stream stream, Stream stream2)
 		{
-			this.class0_0.Initialize(stream_0);
-			this.class4_0.SetStream(stream_1, this.bool_0);
+			this.rangeDecoder.Initialize(stream);
+			this.outputWindow.SetStream(stream2, this.flag);
 			for (uint num = 0u; num < 12u; num += 1u)
 			{
-				for (uint num2 = 0u; num2 <= this.uint_2; num2 += 1u)
+				for (uint num2 = 0u; num2 <= this.uintValue3; num2 += 1u)
 				{
 					uint num3 = (num << 4) + num2;
-					this.struct0_0[(int)((UIntPtr)num3)].Initialize();
-					this.struct0_1[(int)((UIntPtr)num3)].Initialize();
+					this.bitDecoderArray[(int)((UIntPtr)num3)].Initialize();
+					this.bitDecoderArray2[(int)((UIntPtr)num3)].Initialize();
 				}
-				this.struct0_2[(int)((UIntPtr)num)].Initialize();
-				this.struct0_3[(int)((UIntPtr)num)].Initialize();
-				this.struct0_4[(int)((UIntPtr)num)].Initialize();
-				this.struct0_5[(int)((UIntPtr)num)].Initialize();
+				this.bitDecoderArray3[(int)((UIntPtr)num)].Initialize();
+				this.bitDecoderArray4[(int)((UIntPtr)num)].Initialize();
+				this.bitDecoderArray5[(int)((UIntPtr)num)].Initialize();
+				this.bitDecoderArray6[(int)((UIntPtr)num)].Initialize();
 			}
-			this.class3_0.Initialize();
+			this.literalProperties.Initialize();
 			for (uint num = 0u; num < 4u; num += 1u)
 			{
-				this.struct1_0[(int)((UIntPtr)num)].Initialize();
+				this.bitTreeDecoderArray[(int)((UIntPtr)num)].Initialize();
 			}
 			for (uint num = 0u; num < 114u; num += 1u)
 			{
-				this.struct0_6[(int)((UIntPtr)num)].Initialize();
+				this.bitDecoderArray7[(int)((UIntPtr)num)].Initialize();
 			}
-			this.class2_0.Initialize();
-			this.class2_1.Initialize();
-			this.struct1_1.Initialize();
+			this.lengthDecoder.Initialize();
+			this.lengthDecoder2.Initialize();
+			this.bitTreeDecoder.Initialize();
 		}
 
-		internal void Decode(Stream stream_0, Stream stream_1, long long_0, long long_1)
+		internal void Decode(Stream stream, Stream stream2, long longValue, long longValue2)
 		{
-			this.Initialize(stream_0, stream_1);
-			_003CModule_003E.Struct3 @struct = default(_003CModule_003E.Struct3);
+			this.Initialize(stream, stream2);
+			_003CModule_003E.DecoderState @struct = default(_003CModule_003E.DecoderState);
 			@struct.Initialize();
 			uint num = 0u;
 			uint num2 = 0u;
 			uint num3 = 0u;
 			uint num4 = 0u;
 			ulong num5 = 0UL;
-			if (num5 < (ulong)long_1)
+			if (num5 < (ulong)longValue2)
 			{
-				this.struct0_0[(int)((UIntPtr)(@struct.uint_0 << 4))].Decode(this.class0_0);
+				this.bitDecoderArray[(int)((UIntPtr)(@struct.isLiteralState << 4))].Decode(this.rangeDecoder);
 				@struct.UpdateLiteral();
-				byte byte_ = this.class3_0.DecodeNormal(this.class0_0, 0u, 0);
-				this.class4_0.PutByte(byte_);
+				byte byte_ = this.literalProperties.DecodeNormal(this.rangeDecoder, 0u, 0);
+				this.outputWindow.PutByte(byte_);
 				num5 += 1UL;
 			}
-			while (num5 < (ulong)long_1)
+			while (num5 < (ulong)longValue2)
 			{
-				uint num6 = (uint)num5 & this.uint_2;
-				if (this.struct0_0[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].Decode(this.class0_0) != 0u)
+				uint num6 = (uint)num5 & this.uintValue3;
+				if (this.bitDecoderArray[(int)((UIntPtr)((@struct.isLiteralState << 4) + num6))].Decode(this.rangeDecoder) != 0u)
 				{
 					uint num7;
-					if (this.struct0_2[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) != 1u)
+					if (this.bitDecoderArray3[(int)((UIntPtr)@struct.isLiteralState)].Decode(this.rangeDecoder) != 1u)
 					{
 						num4 = num3;
 						num3 = num2;
 						num2 = num;
-						num7 = 2u + this.class2_0.Decode(this.class0_0, num6);
+						num7 = 2u + this.lengthDecoder.Decode(this.rangeDecoder, num6);
 						@struct.UpdateMatch();
-						uint num8 = this.struct1_0[(int)((UIntPtr)_003CModule_003E.Class1.GetLengthToPositionState(num7))].Decode(this.class0_0);
+						uint num8 = this.bitTreeDecoderArray[(int)((UIntPtr)_003CModule_003E.EmbeddedLzmaDecoder.GetLengthToPositionState(num7))].Decode(this.rangeDecoder);
 						if (num8 < 4u)
 						{
 							num = num8;
@@ -474,23 +474,23 @@ internal class _003CModule_003E
 							num = (2u | (num8 & 1u)) << num9;
 							if (num8 < 14u)
 							{
-								num += _003CModule_003E.Struct1.ReverseDecode(this.struct0_6, num - num8 - 1u, this.class0_0, num9);
+								num += _003CModule_003E.BitTreeDecoder.ReverseDecode(this.bitDecoderArray7, num - num8 - 1u, this.rangeDecoder, num9);
 							}
 							else
 							{
-								num += this.class0_0.DecodeDirectBits(num9 - 4) << 4;
-								num += this.struct1_1.ReverseDecode(this.class0_0);
+								num += this.rangeDecoder.DecodeDirectBits(num9 - 4) << 4;
+								num += this.bitTreeDecoder.ReverseDecode(this.rangeDecoder);
 							}
 						}
 					}
 					else
 					{
-						if (this.struct0_3[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) == 0u)
+						if (this.bitDecoderArray4[(int)((UIntPtr)@struct.isLiteralState)].Decode(this.rangeDecoder) == 0u)
 						{
-							if (this.struct0_1[(int)((UIntPtr)((@struct.uint_0 << 4) + num6))].Decode(this.class0_0) == 0u)
+							if (this.bitDecoderArray2[(int)((UIntPtr)((@struct.isLiteralState << 4) + num6))].Decode(this.rangeDecoder) == 0u)
 							{
 								@struct.UpdateShortRepeatedMatch();
-								this.class4_0.PutByte(this.class4_0.GetByte(num));
+								this.outputWindow.PutByte(this.outputWindow.GetByte(num));
 								num5 += 1UL;
 								continue;
 							}
@@ -498,9 +498,9 @@ internal class _003CModule_003E
 						else
 						{
 							uint num10;
-							if (this.struct0_4[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) != 0u)
+							if (this.bitDecoderArray5[(int)((UIntPtr)@struct.isLiteralState)].Decode(this.rangeDecoder) != 0u)
 							{
-								if (this.struct0_5[(int)((UIntPtr)@struct.uint_0)].Decode(this.class0_0) != 0u)
+								if (this.bitDecoderArray6[(int)((UIntPtr)@struct.isLiteralState)].Decode(this.rangeDecoder) != 0u)
 								{
 									num10 = num4;
 									num4 = num3;
@@ -518,220 +518,220 @@ internal class _003CModule_003E
 							num2 = num;
 							num = num10;
 						}
-						num7 = this.class2_1.Decode(this.class0_0, num6) + 2u;
+						num7 = this.lengthDecoder2.Decode(this.rangeDecoder, num6) + 2u;
 						@struct.UpdateRepeatedMatch();
 					}
-					if (((ulong)num >= num5 || num >= this.uint_1) && num == 4294967295u)
+					if (((ulong)num >= num5 || num >= this.uintValue2) && num == 4294967295u)
 					{
 						break;
 					}
-					this.class4_0.CopyBlock(num, num7);
+					this.outputWindow.CopyBlock(num, num7);
 					num5 += (ulong)num7;
 				}
 				else
 				{
-					byte byte_2 = this.class4_0.GetByte(0u);
-					byte byte_3;
+					byte byteValue = this.outputWindow.GetByte(0u);
+					byte byteValue2;
 					if (!@struct.IsLiteralState())
 					{
-						byte_3 = this.class3_0.DecodeWithMatchByte(this.class0_0, (uint)num5, byte_2, this.class4_0.GetByte(num));
+						byteValue2 = this.literalProperties.DecodeWithMatchByte(this.rangeDecoder, (uint)num5, byteValue, this.outputWindow.GetByte(num));
 					}
 					else
 					{
-						byte_3 = this.class3_0.DecodeNormal(this.class0_0, (uint)num5, byte_2);
+						byteValue2 = this.literalProperties.DecodeNormal(this.rangeDecoder, (uint)num5, byteValue);
 					}
-					this.class4_0.PutByte(byte_3);
+					this.outputWindow.PutByte(byteValue2);
 					@struct.UpdateLiteral();
 					num5 += 1UL;
 				}
 			}
-			this.class4_0.Flush();
-			this.class4_0.ReleaseStream();
-			this.class0_0.ReleaseStream();
+			this.outputWindow.Flush();
+			this.outputWindow.ReleaseStream();
+			this.rangeDecoder.ReleaseStream();
 		}
 
-		internal void SetDecoderProperties(byte[] byte_0)
+		internal void SetDecoderProperties(byte[] bytes)
 		{
-			int int_ = (int)(byte_0[0] % 9);
-			int num = (int)(byte_0[0] / 9);
-			int int_2 = num % 5;
-			int int_3 = num / 5;
+			int int_ = (int)(bytes[0] % 9);
+			int num = (int)(bytes[0] / 9);
+			int intValue = num % 5;
+			int intValue2 = num / 5;
 			uint num2 = 0u;
 			for (int i = 0; i < 4; i++)
 			{
-				num2 += (uint)((uint)byte_0[1 + i] << i * 8);
+				num2 += (uint)((uint)bytes[1 + i] << i * 8);
 			}
 			this.SetDictionarySize(num2);
-			this.SetLiteralProperties(int_2, int_);
-			this.SetPositionBits(int_3);
+			this.SetLiteralProperties(intValue, int_);
+			this.SetPositionBits(intValue2);
 		}
 
-		internal static uint GetLengthToPositionState(uint uint_3)
+		internal static uint GetLengthToPositionState(uint uintValue4)
 		{
-			uint_3 -= 2;
-			if (uint_3 < 4)
+			uintValue4 -= 2;
+			if (uintValue4 < 4)
 			{
-				return uint_3;
+				return uintValue4;
 			}
 			return 3u;
 		}
 	}
 
-	public class Class4
+	public class OutputWindow
 	{
-		internal byte[] byte_0;
+		internal byte[] bytes;
 
-		internal uint uint_0;
+		internal uint uintValue;
 
-		internal Stream stream_0;
+		internal Stream stream;
 
-		internal uint uint_1;
+		internal uint uintValue2;
 
-		internal uint uint_2;
+		internal uint uintValue3;
 
-		internal void Create(uint uint_3)
+		internal void Create(uint uintValue4)
 		{
-			if (this.uint_2 != uint_3)
+			if (this.uintValue3 != uintValue4)
 			{
-				this.byte_0 = new byte[uint_3];
+				this.bytes = new byte[uintValue4];
 			}
-			this.uint_2 = uint_3;
-			this.uint_0 = 0u;
-			this.uint_1 = 0u;
+			this.uintValue3 = uintValue4;
+			this.uintValue = 0u;
+			this.uintValue2 = 0u;
 		}
 
-		internal void SetStream(Stream stream_1, bool bool_0)
+		internal void SetStream(Stream stream2, bool flag)
 		{
 			this.ReleaseStream();
-			this.stream_0 = stream_1;
-			if (!bool_0)
+			this.stream = stream2;
+			if (!flag)
 			{
-				this.uint_1 = 0u;
-				this.uint_0 = 0u;
+				this.uintValue2 = 0u;
+				this.uintValue = 0u;
 			}
 		}
 
 		internal void ReleaseStream()
 		{
 			this.Flush();
-			this.stream_0 = null;
-			Buffer.BlockCopy(new byte[this.byte_0.Length], 0, this.byte_0, 0, this.byte_0.Length);
+			this.stream = null;
+			Buffer.BlockCopy(new byte[this.bytes.Length], 0, this.bytes, 0, this.bytes.Length);
 		}
 
 		internal void Flush()
 		{
-			uint num = this.uint_0 - this.uint_1;
+			uint num = this.uintValue - this.uintValue2;
 			if (num == 0u)
 			{
 				return;
 			}
-			this.stream_0.Write(this.byte_0, (int)this.uint_1, (int)num);
-			if (this.uint_0 >= this.uint_2)
+			this.stream.Write(this.bytes, (int)this.uintValue2, (int)num);
+			if (this.uintValue >= this.uintValue3)
 			{
-				this.uint_0 = 0u;
+				this.uintValue = 0u;
 			}
-			this.uint_1 = this.uint_0;
+			this.uintValue2 = this.uintValue;
 		}
 
-		internal void CopyBlock(uint uint_3, uint uint_4)
+		internal void CopyBlock(uint uintValue4, uint uintValue5)
 		{
-			uint num = this.uint_0 - uint_3 - 1u;
-			if (num >= this.uint_2)
+			uint num = this.uintValue - uintValue4 - 1u;
+			if (num >= this.uintValue3)
 			{
-				num += this.uint_2;
+				num += this.uintValue3;
 			}
-			while (uint_4 > 0u)
+			while (uintValue5 > 0u)
 			{
-				if (num >= this.uint_2)
+				if (num >= this.uintValue3)
 				{
 					num = 0u;
 				}
-				this.byte_0[(int)((UIntPtr)(this.uint_0++))] = this.byte_0[(int)((UIntPtr)(num++))];
-				if (this.uint_0 >= this.uint_2)
+				this.bytes[(int)((UIntPtr)(this.uintValue++))] = this.bytes[(int)((UIntPtr)(num++))];
+				if (this.uintValue >= this.uintValue3)
 				{
 					this.Flush();
 				}
-				uint_4 -= 1u;
+				uintValue5 -= 1u;
 			}
 		}
 
-		internal void PutByte(byte byte_1)
+		internal void PutByte(byte byteValue)
 		{
-			this.byte_0[(int)((UIntPtr)(this.uint_0++))] = byte_1;
-			if (this.uint_0 >= this.uint_2)
+			this.bytes[(int)((UIntPtr)(this.uintValue++))] = byteValue;
+			if (this.uintValue >= this.uintValue3)
 			{
 				this.Flush();
 			}
 		}
 
-		internal byte GetByte(uint uint_3)
+		internal byte GetByte(uint uintValue4)
 		{
-			uint num = this.uint_0 - uint_3 - 1u;
-			if (num >= this.uint_2)
+			uint num = this.uintValue - uintValue4 - 1u;
+			if (num >= this.uintValue3)
 			{
-				num += this.uint_2;
+				num += this.uintValue3;
 			}
-			return this.byte_0[(int)((UIntPtr)num)];
+			return this.bytes[(int)((UIntPtr)num)];
 		}
 
-		internal Class4()
+		internal OutputWindow()
 		{
 		}
 	}
 
-	public struct Struct3
+	public struct DecoderState
 	{
-		internal uint uint_0;
+		internal uint isLiteralState;
 
 		internal void Initialize()
 		{
-			uint_0 = 0u;
+			isLiteralState = 0u;
 		}
 
 		internal void UpdateLiteral()
 		{
-			if (this.uint_0 < 4u)
+			if (this.isLiteralState < 4u)
 			{
-				this.uint_0 = 0u;
+				this.isLiteralState = 0u;
 				return;
 			}
-			if (this.uint_0 < 10u)
+			if (this.isLiteralState < 10u)
 			{
-				this.uint_0 -= 3u;
+				this.isLiteralState -= 3u;
 				return;
 			}
-			this.uint_0 -= 6u;
+			this.isLiteralState -= 6u;
 		}
 
 		internal void UpdateMatch()
 		{
-			uint_0 = ((uint_0 < 7) ? 7u : 10u);
+			isLiteralState = ((isLiteralState < 7) ? 7u : 10u);
 		}
 
 		internal void UpdateRepeatedMatch()
 		{
-			uint_0 = ((uint_0 < 7) ? 8u : 11u);
+			isLiteralState = ((isLiteralState < 7) ? 8u : 11u);
 		}
 
 		internal void UpdateShortRepeatedMatch()
 		{
-			uint_0 = ((uint_0 < 7) ? 9u : 11u);
+			isLiteralState = ((isLiteralState < 7) ? 9u : 11u);
 		}
 
 		internal bool IsLiteralState()
 		{
-			return uint_0 < 7;
+			return isLiteralState < 7;
 		}
 	}
 
 	[StructLayout(LayoutKind.Explicit, Size = 512)]
-	public struct Struct4
+	public struct EmbeddedPayloadData
 	{
 	}
 
-	internal static byte[] byte_0;
+	internal static byte[] bytes;
 
-	internal static Struct4 struct4_0/* Not supported: data(A8 85 AA 74 54 FB A6 4E 03 25 A1 5E 1E CF AF 7C 7A 4C 56 E6 04 CC D2 05 4A A0 59 62 34 FC AA 8C 48 29 1D F6 A9 59 37 B3 D6 B4 81 3D 60 2F 18 D2 8C D3 60 CB 5D 70 B3 64 2B 93 DE 94 63 FB AA CA E9 02 77 6B DD E1 DA 30 A7 84 33 F2 87 B1 25 EE CC 36 62 D1 E3 54 D4 76 3A A3 B9 EA F5 40 57 E6 82 9B A8 50 3F 91 34 8C 01 78 C5 7E DE 90 E4 82 03 64 27 B9 70 2B E2 97 34 FA B9 76 AC F3 C9 EC B2 C6 DC 45 D1 D8 59 ED 41 3E 7B B1 99 AE B4 F3 92 DE A6 97 AC E8 CA 87 68 4F BC 4D 3F 13 31 F8 68 07 F6 71 37 A5 CA 84 A9 FB 67 C7 EF FA 93 49 4B 7C 1C 1C ED 40 E9 C6 7A 83 A9 89 0B DD FC DF 44 F6 F2 5D C1 51 8B 8A 8C 11 36 F7 E0 E4 C7 B2 6E AD 78 14 FC DF 6D 6A 62 80 30 85 84 F9 0A 83 7E F8 F2 4E F8 3B 23 61 B7 47 48 5E E3 4E 2E 45 83 D9 75 DB 3F C8 2D ED 02 A0 F4 C5 88 00 C4 39 88 07 3A 82 2D 55 7C 19 2A D4 EB 0D 1E 95 9D D8 55 29 EF 8A FD E1 E6 6F 1B DE 60 37 BB 90 E5 56 C1 5F 2A C3 34 37 F3 8F 8F 87 E3 0D D8 BF 9D CF 36 7B FE E7 5C 73 7D 27 8B C9 BB 42 46 D6 17 46 61 57 D5 D1 1F DF 8D 7A 4A 62 7F 04 1C 80 21 D7 14 85 72 88 68 3C 20 CA EE 8D 6E AE 43 09 8E 13 16 37 38 4A 72 7B 11 C2 FF 84 F0 F5 79 C7 4E B6 42 35 E8 F2 7C 30 9E 79 F4 EF 61 48 5A 89 97 DC EF F4 5D 94 AB 46 9B AA F8 59 F7 3E 0C 20 10 78 96 05 44 47 23 C4 5A 69 EB 88 B0 C5 EE 6A 9E 20 FC 15 AA BF 5E 24 55 79 20 C3 9B F6 7A 91 05 A7 53 47 1B 05 3C 7B F4 C2 80 F5 34 A8 BD 3C E7 25 83 CD 7F AF B6 E0 86 56 9B 0F AA 8B 46 06 DA 60 BF 23 5C 0D 55 40 11 5F E4 8E 2D 65 5F 99 69 64 1F 6E 87 33 9F 63 9B 81 52 E2 9B F6 7A 91 05 A7 53 47 1B 05 3C 7B F4 C2 80 F5 34 A8 BD 3C E7 25) */;
+	internal static EmbeddedPayloadData embeddedPayloadData/* Not supported: data(A8 85 AA 74 54 FB A6 4E 03 25 A1 5E 1E CF AF 7C 7A 4C 56 E6 04 CC D2 05 4A A0 59 62 34 FC AA 8C 48 29 1D F6 A9 59 37 B3 D6 B4 81 3D 60 2F 18 D2 8C D3 60 CB 5D 70 B3 64 2B 93 DE 94 63 FB AA CA E9 02 77 6B DD E1 DA 30 A7 84 33 F2 87 B1 25 EE CC 36 62 D1 E3 54 D4 76 3A A3 B9 EA F5 40 57 E6 82 9B A8 50 3F 91 34 8C 01 78 C5 7E DE 90 E4 82 03 64 27 B9 70 2B E2 97 34 FA B9 76 AC F3 C9 EC B2 C6 DC 45 D1 D8 59 ED 41 3E 7B B1 99 AE B4 F3 92 DE A6 97 AC E8 CA 87 68 4F BC 4D 3F 13 31 F8 68 07 F6 71 37 A5 CA 84 A9 FB 67 C7 EF FA 93 49 4B 7C 1C 1C ED 40 E9 C6 7A 83 A9 89 0B DD FC DF 44 F6 F2 5D C1 51 8B 8A 8C 11 36 F7 E0 E4 C7 B2 6E AD 78 14 FC DF 6D 6A 62 80 30 85 84 F9 0A 83 7E F8 F2 4E F8 3B 23 61 B7 47 48 5E E3 4E 2E 45 83 D9 75 DB 3F C8 2D ED 02 A0 F4 C5 88 00 C4 39 88 07 3A 82 2D 55 7C 19 2A D4 EB 0D 1E 95 9D D8 55 29 EF 8A FD E1 E6 6F 1B DE 60 37 BB 90 E5 56 C1 5F 2A C3 34 37 F3 8F 8F 87 E3 0D D8 BF 9D CF 36 7B FE E7 5C 73 7D 27 8B C9 BB 42 46 D6 17 46 61 57 D5 D1 1F DF 8D 7A 4A 62 7F 04 1C 80 21 D7 14 85 72 88 68 3C 20 CA EE 8D 6E AE 43 09 8E 13 16 37 38 4A 72 7B 11 C2 FF 84 F0 F5 79 C7 4E B6 42 35 E8 F2 7C 30 9E 79 F4 EF 61 48 5A 89 97 DC EF F4 5D 94 AB 46 9B AA F8 59 F7 3E 0C 20 10 78 96 05 44 47 23 C4 5A 69 EB 88 B0 C5 EE 6A 9E 20 FC 15 AA BF 5E 24 55 79 20 C3 9B F6 7A 91 05 A7 53 47 1B 05 3C 7B F4 C2 80 F5 34 A8 BD 3C E7 25 83 CD 7F AF B6 E0 86 56 9B 0F AA 8B 46 06 DA 60 BF 23 5C 0D 55 40 11 5F E4 8E 2D 65 5F 99 69 64 1F 6E 87 33 9F 63 9B 81 52 E2 9B F6 7A 91 05 A7 53 47 1B 05 3C 7B F4 C2 80 F5 34 A8 BD 3C E7 25) */;
 
 	static _003CModule_003E()
 	{
@@ -740,10 +740,10 @@ internal class _003CModule_003E
 		RecoveredRuntime.InitializeResourceResolver();
 	}
 
-	internal static byte[] DecompressLzmaPayload(byte[] byte_1)
+	internal static byte[] DecompressLzmaPayload(byte[] bytes2)
 	{
-		MemoryStream memoryStream = new MemoryStream(byte_1);
-		_003CModule_003E.Class1 @class = new _003CModule_003E.Class1();
+		MemoryStream memoryStream = new MemoryStream(bytes2);
+		_003CModule_003E.EmbeddedLzmaDecoder @class = new _003CModule_003E.EmbeddedLzmaDecoder();
 		byte[] buffer = new byte[5];
 		memoryStream.Read(buffer, 0, 5);
 		@class.SetDecoderProperties(buffer);
@@ -940,168 +940,168 @@ internal class _003CModule_003E
 			}
 			num3 += 16;
 		}
-		_003CModule_003E.byte_0 = _003CModule_003E.DecompressLzmaPayload(array4);
+		_003CModule_003E.bytes = _003CModule_003E.DecompressLzmaPayload(array4);
 	}
 
-	internal static T DecodeConstantWithKeyA<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyA<T>(uint uintValue)
 	{
-		uint_0 = (uint_0 * 319591615u ^ 1651505086u);
-		uint num = uint_0 >> 30;
+		uintValue = (uintValue * 319591615u ^ 1651505086u);
+		uint num = uintValue >> 30;
 		T result = default(T);
-		uint_0 &= 1073741823u;
-		uint_0 <<= 2;
+		uintValue &= 1073741823u;
+		uintValue <<= 2;
 		if ((ulong)num != 0UL)
 		{
 			if ((ulong)num == 2UL)
 			{
 				T[] array = new T[1];
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, Marshal.SizeOf(typeof(T)));
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array, 0, Marshal.SizeOf(typeof(T)));
 				result = array[0];
 			}
 			else if ((ulong)num == 1UL)
 			{
-				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int num2 = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+				int length = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
 				Array array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, num2 - 4);
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array2, 0, num2 - 4);
 				result = (T)((object)array2);
 			}
 		}
 		else
 		{
-			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+			int count = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.bytes, (int)uintValue, count)));
 		}
 		return result;
 	}
 
-	internal static T DecodeConstantWithKeyB<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyB<T>(uint uintValue)
 	{
-		uint_0 = (uint_0 * 119080739u ^ 3110504502u);
-		uint num = uint_0 >> 30;
+		uintValue = (uintValue * 119080739u ^ 3110504502u);
+		uint num = uintValue >> 30;
 		T result = default(T);
-		uint_0 &= 1073741823u;
-		uint_0 <<= 2;
+		uintValue &= 1073741823u;
+		uintValue <<= 2;
 		if ((ulong)num != 1UL)
 		{
 			if ((ulong)num == 2UL)
 			{
 				T[] array = new T[1];
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, Marshal.SizeOf(typeof(T)));
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array, 0, Marshal.SizeOf(typeof(T)));
 				result = array[0];
 			}
 			else if ((ulong)num == 3UL)
 			{
-				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int num2 = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+				int length = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
 				Array array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, num2 - 4);
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array2, 0, num2 - 4);
 				result = (T)((object)array2);
 			}
 		}
 		else
 		{
-			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+			int count = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.bytes, (int)uintValue, count)));
 		}
 		return result;
 	}
 
-	internal static T DecodeConstantWithKeyC<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyC<T>(uint uintValue)
 	{
-		uint_0 = (uint_0 * 4058603021u ^ 1194576908u);
-		uint num = uint_0 >> 30;
+		uintValue = (uintValue * 4058603021u ^ 1194576908u);
+		uint num = uintValue >> 30;
 		T result = default(T);
-		uint_0 &= 1073741823u;
-		uint_0 <<= 2;
+		uintValue &= 1073741823u;
+		uintValue <<= 2;
 		if ((ulong)num != 3UL)
 		{
 			if ((ulong)num != 1UL)
 			{
 				if ((ulong)num == 0UL)
 				{
-					int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-					int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+					int num2 = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+					int length = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
 					Array array = Array.CreateInstance(typeof(T).GetElementType(), length);
-					Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, num2 - 4);
+					Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array, 0, num2 - 4);
 					result = (T)((object)array);
 				}
 			}
 			else
 			{
 				T[] array2 = new T[1];
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, Marshal.SizeOf(typeof(T)));
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array2, 0, Marshal.SizeOf(typeof(T)));
 				result = array2[0];
 			}
 		}
 		else
 		{
-			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+			int count = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.bytes, (int)uintValue, count)));
 		}
 		return result;
 	}
 
-	internal static T DecodeConstantWithKeyD<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyD<T>(uint uintValue)
 	{
-		uint_0 = (uint_0 * 938235797u ^ 1796485445u);
-		uint num = uint_0 >> 30;
+		uintValue = (uintValue * 938235797u ^ 1796485445u);
+		uint num = uintValue >> 30;
 		T result = default(T);
-		uint_0 &= 1073741823u;
-		uint_0 <<= 2;
+		uintValue &= 1073741823u;
+		uintValue <<= 2;
 		if ((ulong)num == 0UL)
 		{
-			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+			int count = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.bytes, (int)uintValue, count)));
 		}
 		else if ((ulong)num != 3UL)
 		{
 			if ((ulong)num == 2UL)
 			{
-				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int num2 = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+				int length = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
 				Array array = Array.CreateInstance(typeof(T).GetElementType(), length);
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, num2 - 4);
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array, 0, num2 - 4);
 				result = (T)((object)array);
 			}
 		}
 		else
 		{
 			T[] array2 = new T[1];
-			Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, Marshal.SizeOf(typeof(T)));
+			Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array2, 0, Marshal.SizeOf(typeof(T)));
 			result = array2[0];
 		}
 		return result;
 	}
 
-	internal static T DecodeConstantWithKeyE<T>(uint uint_0)
+	internal static T DecodeConstantWithKeyE<T>(uint uintValue)
 	{
-		uint_0 = (uint_0 * 1979878659u ^ 1723123948u);
-		uint num = uint_0 >> 30;
+		uintValue = (uintValue * 1979878659u ^ 1723123948u);
+		uint num = uintValue >> 30;
 		T result = default(T);
-		uint_0 &= 1073741823u;
-		uint_0 <<= 2;
+		uintValue &= 1073741823u;
+		uintValue <<= 2;
 		if ((ulong)num != 3UL)
 		{
 			if ((ulong)num == 1UL)
 			{
 				T[] array = new T[1];
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array, 0, Marshal.SizeOf(typeof(T)));
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array, 0, Marshal.SizeOf(typeof(T)));
 				result = array[0];
 			}
 			else if ((ulong)num == 2UL)
 			{
-				int num2 = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-				int length = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
+				int num2 = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+				int length = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
 				Array array2 = Array.CreateInstance(typeof(T).GetElementType(), length);
-				Buffer.BlockCopy(_003CModule_003E.byte_0, (int)uint_0, array2, 0, num2 - 4);
+				Buffer.BlockCopy(_003CModule_003E.bytes, (int)uintValue, array2, 0, num2 - 4);
 				result = (T)((object)array2);
 			}
 		}
 		else
 		{
-			int count = (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 8 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 16 | (int)_003CModule_003E.byte_0[(int)((UIntPtr)(uint_0++))] << 24;
-			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.byte_0, (int)uint_0, count)));
+			int count = (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 8 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 16 | (int)_003CModule_003E.bytes[(int)((UIntPtr)(uintValue++))] << 24;
+			result = (T)((object)string.Intern(Encoding.UTF8.GetString(_003CModule_003E.bytes, (int)uintValue, count)));
 		}
 		return result;
 	}

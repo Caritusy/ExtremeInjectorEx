@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 
 public interface IOrderedDictionaryEx<T, U> : IDictionary<T, U>, ICollection<KeyValuePair<T, U>>, IEnumerable<KeyValuePair<T, U>>, IEnumerable, IOrderedDictionary, IDictionary, ICollection
 {
-	new U this[int int_0] { get; set; }
+	new U this[int intValue] { get; set; }
 
 	new U this[T key] { get; set; }
 
@@ -20,17 +20,17 @@ public interface IOrderedDictionaryEx<T, U> : IDictionary<T, U>, ICollection<Key
 
 	void Clear();
 
-	void Insert(int int_0, T gparam_0, U gparam_1);
+	void Insert(int intValue, T value, U value2);
 
-	int IndexOfKey(T gparam_0);
+	int IndexOfKey(T value);
 
-	bool ContainsValue(U gparam_0);
+	bool ContainsValue(U value);
 
-	bool ContainsValue(U gparam_0, IEqualityComparer<U> iequalityComparer_0);
+	bool ContainsValue(U value, IEqualityComparer<U> equalityComparer);
 
 	bool ContainsKey(T key);
 
-	KeyValuePair<T, U> GetItemAt(int int_0);
+	KeyValuePair<T, U> GetItemAt(int intValue);
 
 	IEnumerator<KeyValuePair<T, U>> GetEnumerator();
 

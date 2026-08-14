@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 [GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
 public sealed class EmbeddedResources
 {
-	internal static ResourceManager resourceManager_0;
+	internal static ResourceManager resourceManager;
 
-	internal static CultureInfo cultureInfo_0;
+	internal static CultureInfo cultureInfo;
 
 	internal EmbeddedResources()
 	{

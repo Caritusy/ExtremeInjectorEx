@@ -92,55 +92,55 @@ public sealed partial class RecoveredRuntime
 		return -1;
 	}
 
-	internal static long FindPatternOffset(PeScrambler gclass4_0, byte[] byte_0, long long_0)
+	internal static long FindPatternOffset(PeScrambler peScrambler, byte[] bytes, long longValue)
 	{
-		gclass4_0.class154_0.GetStream().Position = long_0;
-		long num = gclass4_0.class154_0.GetStream().Length - (long)byte_0.Length;
+		peScrambler.peImage.GetStream().Position = longValue;
+		long num = peScrambler.peImage.GetStream().Length - (long)bytes.Length;
 		int num2 = 1048576;
-		BinaryReader binaryReader = new BinaryReader(gclass4_0.class154_0.GetStream());
-		while (gclass4_0.class154_0.GetStream().Position < num)
+		BinaryReader binaryReader = new BinaryReader(peScrambler.peImage.GetStream());
+		while (peScrambler.peImage.GetStream().Position < num)
 		{
-			if (gclass4_0.class154_0.GetStream().Position + (long)num2 >= gclass4_0.class154_0.GetStream().Length)
+			if (peScrambler.peImage.GetStream().Position + (long)num2 >= peScrambler.peImage.GetStream().Length)
 			{
-				num2 = (int)(gclass4_0.class154_0.GetStream().Length - gclass4_0.class154_0.GetStream().Position);
+				num2 = (int)(peScrambler.peImage.GetStream().Length - peScrambler.peImage.GetStream().Position);
 			}
-			int num3 = RecoveredRuntime.FindByteSequenceOptimized(binaryReader.ReadBytes(num2), byte_0, 0);
+			int num3 = RecoveredRuntime.FindByteSequenceOptimized(binaryReader.ReadBytes(num2), bytes, 0);
 			if (num3 != -1)
 			{
-				return gclass4_0.class154_0.GetStream().Position - (long)num2 + (long)num3;
+				return peScrambler.peImage.GetStream().Position - (long)num2 + (long)num3;
 			}
-			gclass4_0.class154_0.GetStream().Position -= (long)(byte_0.Length - 1);
+			peScrambler.peImage.GetStream().Position -= (long)(bytes.Length - 1);
 		}
 		return -1L;
 	}
 
-	internal static void EditModuleOptions(MainForm.ModuleRow class21_0)
+	internal static void EditModuleOptions(MainForm.ModuleRow moduleRow)
 	{
-		ShowModuleOptions(class21_0.Entry);
+		ShowModuleOptions(moduleRow.Entry);
 		ApplicationSettings.Save();
 	}
 
-	internal static IEnumerable<ResourceDirectoryNode> EnumerateResourceNodes(ResourceDirectoryNode class138_0)
+	internal static IEnumerable<ResourceDirectoryNode> EnumerateResourceNodes(ResourceDirectoryNode resourceDirectoryNode)
 	{
-		return new PeScrambler.Class136(-2)
+		return new PeScrambler.ResourceDirectoryTraversal(-2)
 		{
-			class138_2 = class138_0
+			resourceDirectoryNode3 = resourceDirectoryNode
 		};
 	}
 
-	internal unsafe static int FindByteSequence(byte[] byte_0, byte[] byte_1, int int_0)
+	internal unsafe static int FindByteSequence(byte[] bytes, byte[] bytes2, int intValue)
 	{
-		return IndexOfBytes(byte_0, byte_1, int_0);
+		return IndexOfBytes(bytes, bytes2, intValue);
 }
 
-	internal static int GetAvailableDeflateWindowBytes(DeflateDecoder.Class182 class182_0)
+	internal static int GetAvailableDeflateWindowBytes(DeflateDecoder.DeflateOutputWindow deflateOutputWindow)
 	{
-		return 32768 - class182_0.int_1;
+		return 32768 - deflateOutputWindow.intValue2;
 	}
 
-	internal unsafe static int FindMaskedByteSequence(int int_0, string string_0, string string_1, byte[] byte_0)
+	internal unsafe static int FindMaskedByteSequence(int intValue, string text, string text2, byte[] bytes)
 	{
-		return IndexOfMaskedByteString(byte_0, string_0, string_1, int_0);
+		return IndexOfMaskedByteString(bytes, text, text2, intValue);
 }
 
 	internal static void InitializeRuntimeResolvers()

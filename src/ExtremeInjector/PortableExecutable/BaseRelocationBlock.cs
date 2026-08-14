@@ -4,38 +4,38 @@ using System.Runtime.CompilerServices;
 public sealed class BaseRelocationBlock
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint pageRva;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint blockSize;
 
-	public List<BaseRelocationEntry> list_0 = new List<BaseRelocationEntry>();
+	public List<BaseRelocationEntry> items = new List<BaseRelocationEntry>();
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetPageRva()
 	{
-		return uint_0;
+		return pageRva;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetPageRva(uint uint_2)
+	public void SetPageRva(uint uintValue)
 	{
-		uint_0 = uint_2;
+		pageRva = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetBlockSize()
 	{
-		return uint_1;
+		return blockSize;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetBlockSize(uint uint_2)
+	public void SetBlockSize(uint uintValue)
 	{
-		uint_1 = uint_2;
+		blockSize = uintValue;
 	}
 }

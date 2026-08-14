@@ -16,20 +16,20 @@ public static class NativeTypes
 		NoTimeoutIfNotHung = 8u
 	}
 
-	public delegate bool WindowEnumerationCallback(IntPtr intptr_0, IntPtr intptr_1);
+	public delegate bool WindowEnumerationCallback(IntPtr address, IntPtr address2);
 
-	public struct NativeRect(int int_4, int int_5, int int_6, int int_7)
+	public struct NativeRect(int intValue, int intValue2, int intValue3, int intValue4)
 	{
-		public int Left = int_4;
+		public int Left = intValue;
 
-		public int Top = int_5;
+		public int Top = intValue2;
 
-		public int Right = int_6;
+		public int Right = intValue3;
 
-		public int Bottom = int_7;
+		public int Bottom = intValue4;
 
-		public NativeRect(Rectangle rectangle_0)
-			: this(rectangle_0.Left, rectangle_0.Top, rectangle_0.Right, rectangle_0.Bottom)
+		public NativeRect(Rectangle rectangle)
+			: this(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom)
 		{
 		}
 
@@ -46,14 +46,14 @@ public static class NativeTypes
 		}
 
 		[SpecialName]
-		public static Rectangle ToRectangle(NativeRect struct37_0)
+		public static Rectangle ToRectangle(NativeRect nativeRect)
 		{
-			return new Rectangle(struct37_0.Left, struct37_0.Top, struct37_0.GetWidth(), struct37_0.GetHeight());
+			return new Rectangle(nativeRect.Left, nativeRect.Top, nativeRect.GetWidth(), nativeRect.GetHeight());
 		}
 
-		public bool Equals(NativeRect struct37_0)
+		public bool Equals(NativeRect nativeRect)
 		{
-			return struct37_0.Left == this.Left && struct37_0.Top == this.Top && struct37_0.Right == this.Right && struct37_0.Bottom == this.Bottom;
+			return nativeRect.Left == this.Left && nativeRect.Top == this.Top && nativeRect.Right == this.Right && nativeRect.Bottom == this.Bottom;
 		}
 
 		public override bool Equals(object obj)
@@ -76,833 +76,627 @@ public static class NativeTypes
 		}
 	}
 
-	public struct Struct38
+	public struct OsVersionInfoEx
 	{
-		public int int_0;
+		public int intValue;
 
-		public int int_1;
+		public int intValue2;
 
-		public int int_2;
+		public int intValue3;
 
-		public int int_3;
+		public int intValue4;
 
-		public int int_4;
+		public int intValue5;
 
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string string_0;
+		public string text;
 
-		public ushort ushort_0;
+		public ushort ushortValue;
 
-		public ushort ushort_1;
+		public ushort ushortValue2;
 
-		public ushort ushort_2;
+		public ushort ushortValue3;
 
-		public byte byte_0;
+		public byte byteValue;
 
-		public byte byte_1;
+		public byte byteValue2;
 	}
 
-	public struct Struct39
+	public struct SystemProcessInformation
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
-		internal long[] long_0;
+		internal long[] longValueArray;
 
-		public long long_1;
+		public long longValue;
 
-		public long long_2;
+		public long longValue2;
 
-		public long long_3;
+		public long longValue3;
 
-		public Struct43 struct43_0;
+		public UnicodeString unicodeString;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public IntPtr intptr_2;
+		public IntPtr address3;
 
-		public Struct42 struct42_0;
+		public VmCounters vmCounters;
 
-		public IntPtr intptr_3;
+		public IntPtr address4;
 
-		public Struct41 struct41_0;
+		public IoCounters ioCounters;
 	}
 
-	public struct Struct40
+	public struct SystemThreadInformation
 	{
-		public long long_0;
+		public long longValue;
 
-		public long long_1;
+		public long longValue2;
 
-		public long long_2;
+		public long longValue3;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public Struct48 struct48_0;
+		public ClientId clientId;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public int int_0;
+		public int intValue;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public Enum23 enum23_0;
+		public NativeThreadWaitReason nativeThreadWaitReason;
 	}
 
-	public struct Struct41
+	public struct IoCounters
 	{
-		public ulong ulong_0;
+		public ulong ulongValue;
 
-		public ulong ulong_1;
+		public ulong ulongValue2;
 
-		public ulong ulong_2;
+		public ulong ulongValue3;
 
-		public ulong ulong_3;
+		public ulong ulongValue4;
 
-		public ulong ulong_4;
+		public ulong ulongValue5;
 
-		public ulong ulong_5;
+		public ulong ulongValue6;
 	}
 
-	public struct Struct42
+	public struct VmCounters
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public IntPtr intptr_2;
+		public IntPtr address3;
 
-		public IntPtr intptr_3;
+		public IntPtr address4;
 
-		public IntPtr intptr_4;
+		public IntPtr address5;
 
-		public IntPtr intptr_5;
+		public IntPtr address6;
 
-		public IntPtr intptr_6;
+		public IntPtr address7;
 
-		public IntPtr intptr_7;
+		public IntPtr address8;
 
-		public IntPtr intptr_8;
+		public IntPtr address9;
 
-		public IntPtr intptr_9;
+		public IntPtr address10;
 	}
 
-	public struct Struct43
+	public struct UnicodeString
 	{
-		public ushort ushort_0;
+		public ushort ushortValue;
 
-		public ushort ushort_1;
+		public ushort ushortValue2;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 
 		public override string ToString()
 		{
-			return Marshal.PtrToStringUni(intptr_0, ushort_0 / 2);
+			return Marshal.PtrToStringUni(address, ushortValue / 2);
 		}
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct44
+	public struct ThreadEntry32
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public uint uint_5;
+		public uint uintValue6;
 
-		public uint uint_6;
+		public uint uintValue7;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Struct45
+	public struct ProcessBasicInformation
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 
-		public IntPtr intptr_2;
+		public IntPtr address3;
 
-		public IntPtr intptr_3;
+		public IntPtr address4;
 
-		public UIntPtr uintptr_0;
+		public UIntPtr address5;
 
-		public IntPtr intptr_4;
+		public IntPtr address6;
 	}
 
-	public struct Struct46
+	public struct ModuleInformation
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 	}
 
-	public struct Struct47
+	public struct MemoryBasicInformation
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 
-		public Enum34 enum34_0;
+		public MemoryProtection memoryProtection;
 
-		public IntPtr intptr_2;
+		public IntPtr address3;
 
-		public Enum29 enum29_0;
+		public MemoryState memoryState;
 
-		public Enum34 enum34_1;
+		public MemoryProtection memoryProtection2;
 
-		public Enum30 enum30_0;
+		public MemoryType memoryType;
 	}
 
-	public struct Struct48
+	public struct ClientId
 	{
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 	}
 
-	public struct Struct49
+	public struct ThreadBasicInformation
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public Struct48 struct48_0;
+		public ClientId clientId;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 	}
 
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode, Pack = 4)]
-	public struct Struct50
+	public struct ActivationContext
 	{
-		public int int_0;
+		public int intValue;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public string string_0;
+		public string text;
 
-		public ushort ushort_0;
+		public ushort ushortValue;
 
-		public short short_0;
+		public short shortValue;
 
-		public string string_1;
+		public string text2;
 
-		public string string_2;
+		public string text3;
 
-		public string string_3;
+		public string text4;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 	}
 
-	public struct Struct51
+	public struct ActivationContext32
 	{
-		public int int_0;
+		public int intValue;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public ushort ushort_0;
+		public ushort ushortValue;
 
-		public short short_0;
+		public short shortValue;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public uint uint_5;
+		public uint uintValue6;
 	}
 
-	public struct Struct52
+	public struct ActivationContext64
 	{
-		public int int_0;
+		public int intValue;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public IntPtr intptr_0;
+		public IntPtr address;
 
-		public ushort ushort_0;
+		public ushort ushortValue;
 
-		public short short_0;
+		public short shortValue;
 
-		public IntPtr intptr_1;
+		public IntPtr address2;
 
-		public IntPtr intptr_2;
+		public IntPtr address3;
 
-		public IntPtr intptr_3;
+		public IntPtr address4;
 
-		public IntPtr intptr_4;
+		public IntPtr address5;
 	}
 
-	public struct Struct53
+	public struct FloatingSaveArea
 	{
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public uint uint_5;
+		public uint uintValue6;
 
-		public uint uint_6;
+		public uint uintValue7;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 80)]
-		public byte[] byte_0;
+		public byte[] bytes;
 
-		public uint uint_7;
+		public uint uintValue8;
 	}
 
-	public struct Struct54
+	public struct Context32
 	{
-		public Enum21 enum21_0;
+		public X86ContextFlags x86ContextFlags;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public uint uint_2;
+		public uint uintValue3;
 
-		public uint uint_3;
+		public uint uintValue4;
 
-		public uint uint_4;
+		public uint uintValue5;
 
-		public uint uint_5;
+		public uint uintValue6;
 
-		public Struct53 struct53_0;
+		public FloatingSaveArea floatingSaveArea;
 
-		public uint uint_6;
+		public uint uintValue7;
 
-		public uint uint_7;
+		public uint uintValue8;
 
-		public uint uint_8;
+		public uint uintValue9;
 
-		public uint uint_9;
+		public uint uintValue10;
 
-		public uint uint_10;
+		public uint uintValue11;
 
-		public uint uint_11;
+		public uint uintValue12;
 
-		public uint uint_12;
+		public uint uintValue13;
 
-		public uint uint_13;
+		public uint uintValue14;
 
-		public uint uint_14;
+		public uint uintValue15;
 
-		public uint uint_15;
+		public uint uintValue16;
 
-		public uint uint_16;
+		public uint uintValue17;
 
-		public uint uint_17;
+		public uint uintValue18;
 
-		public uint uint_18;
+		public uint uintValue19;
 
-		public uint uint_19;
+		public uint uintValue20;
 
-		public uint uint_20;
+		public uint uintValue21;
 
-		public uint uint_21;
+		public uint uintValue22;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)]
-		public byte[] byte_0;
+		public byte[] bytes;
 	}
 
-	public struct Struct55
+	public struct Context64
 	{
-		public ulong ulong_0;
+		public ulong ulongValue;
 
-		public ulong ulong_1;
+		public ulong ulongValue2;
 
-		public ulong ulong_2;
+		public ulong ulongValue3;
 
-		public ulong ulong_3;
+		public ulong ulongValue4;
 
-		public ulong ulong_4;
+		public ulong ulongValue5;
 
-		public ulong ulong_5;
+		public ulong ulongValue6;
 
-		public Enum22 enum22_0;
+		public X64ContextFlags x64ContextFlags;
 
-		public uint uint_0;
+		public uint uintValue;
 
-		public ushort ushort_0;
+		public ushort ushortValue;
 
-		public ushort ushort_1;
+		public ushort ushortValue2;
 
-		public ushort ushort_2;
+		public ushort ushortValue3;
 
-		public ushort ushort_3;
+		public ushort ushortValue4;
 
-		public ushort ushort_4;
+		public ushort ushortValue5;
 
-		public ushort ushort_5;
+		public ushort ushortValue6;
 
-		public uint uint_1;
+		public uint uintValue2;
 
-		public ulong ulong_6;
+		public ulong ulongValue7;
 
-		public ulong ulong_7;
+		public ulong ulongValue8;
 
-		public ulong ulong_8;
+		public ulong ulongValue9;
 
-		public ulong ulong_9;
+		public ulong ulongValue10;
 
-		public ulong ulong_10;
+		public ulong ulongValue11;
 
-		public ulong ulong_11;
+		public ulong ulongValue12;
 
-		public ulong ulong_12;
+		public ulong ulongValue13;
 
-		public ulong ulong_13;
+		public ulong ulongValue14;
 
-		public ulong ulong_14;
+		public ulong ulongValue15;
 
-		public ulong ulong_15;
+		public ulong ulongValue16;
 
-		public ulong ulong_16;
+		public ulong ulongValue17;
 
-		public ulong ulong_17;
+		public ulong ulongValue18;
 
-		public ulong ulong_18;
+		public ulong ulongValue19;
 
-		public ulong ulong_19;
+		public ulong ulongValue20;
 
-		public ulong ulong_20;
+		public ulong ulongValue21;
 
-		public ulong ulong_21;
+		public ulong ulongValue22;
 
-		public ulong ulong_22;
+		public ulong ulongValue23;
 
-		public ulong ulong_23;
+		public ulong ulongValue24;
 
-		public ulong ulong_24;
+		public ulong ulongValue25;
 
-		public ulong ulong_25;
+		public ulong ulongValue26;
 
-		public ulong ulong_26;
+		public ulong ulongValue27;
 
-		public ulong ulong_27;
+		public ulong ulongValue28;
 
-		public ulong ulong_28;
+		public ulong ulongValue29;
 
-		public Struct58 struct58_0;
+		public FloatingSaveAreaUnion floatingSaveAreaUnion;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 26)]
-		public Struct56[] struct56_0;
+		public M128A[] m128AArray;
 
-		public ulong ulong_29;
+		public ulong ulongValue30;
 
-		public ulong ulong_30;
+		public ulong ulongValue31;
 
-		public ulong ulong_31;
+		public ulong ulongValue32;
 
-		public ulong ulong_32;
+		public ulong ulongValue33;
 
-		public ulong ulong_33;
+		public ulong ulongValue34;
 
-		public ulong ulong_34;
+		public ulong ulongValue35;
 	}
 
-	public struct Struct56
+	public struct M128A
 	{
-		public ulong ulong_0;
+		public ulong ulongValue;
 
-		public long long_0;
+		public long longValue;
 	}
 
-	public struct Struct57
+	public struct XmmSaveArea32
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public Struct56[] struct56_0;
+		public M128A[] m128AArray;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-		public Struct56[] struct56_1;
+		public M128A[] m128AArray2;
 
-		public Struct56 struct56_2;
+		public M128A m128A;
 
-		public Struct56 struct56_3;
+		public M128A m128A2;
 
-		public Struct56 struct56_4;
+		public M128A m128A3;
 
-		public Struct56 struct56_5;
+		public M128A m128A4;
 
-		public Struct56 struct56_6;
+		public M128A m128A5;
 
-		public Struct56 struct56_7;
+		public M128A m128A6;
 
-		public Struct56 struct56_8;
+		public M128A m128A7;
 
-		public Struct56 struct56_9;
+		public M128A m128A8;
 
-		public Struct56 struct56_10;
+		public M128A m128A9;
 
-		public Struct56 struct56_11;
+		public M128A m128A10;
 
-		public Struct56 struct56_12;
+		public M128A m128A11;
 
-		public Struct56 struct56_13;
+		public M128A m128A12;
 
-		public Struct56 struct56_14;
+		public M128A m128A13;
 
-		public Struct56 struct56_15;
+		public M128A m128A14;
 
-		public Struct56 struct56_16;
+		public M128A m128A15;
 
-		public Struct56 struct56_17;
+		public M128A m128A16;
 
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 96)]
-		internal byte[] byte_0;
+		internal byte[] bytes;
 	}
 
 	[StructLayout(LayoutKind.Explicit)]
-	public struct Struct58
+	public struct FloatingSaveAreaUnion
 	{
 		[FieldOffset(0)]
-		public Struct57 struct57_0;
+		public XmmSaveArea32 xmmSaveArea32;
 	}
 
 	[Flags]
-	public enum Enum21 : uint
+	public enum X86ContextFlags : uint
 	{
-		flag_0 = 0x10000u,
-		flag_1 = flag_0,
-		flag_2 = 0x10001u,
-		flag_3 = 0x10002u,
-		flag_4 = 0x10004u,
-		flag_5 = 0x10008u,
-		flag_6 = 0x10010u,
-		flag_7 = 0x10020u,
-		flag_8 = 0x10007u,
-		flag_9 = 0x1003Fu,
-		flag_10 = 0x10040u
+		Control = 0x10001u
 	}
 
 	[Flags]
-	public enum Enum22 : uint
+	public enum X64ContextFlags : uint
 	{
-		flag_0 = 0x100000u,
-		flag_1 = 0x100001u,
-		flag_2 = 0x100002u,
-		flag_3 = 0x100004u,
-		flag_4 = 0x100008u,
-		flag_5 = 0x100010u,
-		flag_6 = 0x100007u,
-		flag_7 = 0x10001Fu,
-		flag_8 = 0x100020u
+		Control = 0x100001u
 	}
 
-	public enum Enum23 : uint
+	public enum NativeThreadWaitReason : uint
 	{
-		const_0,
-		const_1,
-		const_2,
-		const_3,
-		const_4,
-		const_5,
-		const_6,
-		const_7,
-		const_8,
-		const_9,
-		const_10,
-		const_11,
-		const_12,
-		const_13,
-		const_14,
-		const_15,
-		const_16,
-		const_17,
-		const_18,
-		const_19,
-		const_20,
-		const_21,
-		const_22,
-		const_23,
-		const_24,
-		const_25,
-		const_26,
-		const_27,
-		const_28,
-		const_29,
-		const_30,
-		const_31,
-		const_32,
-		const_33,
-		const_34,
-		const_35,
-		const_36,
-		const_37
+		Suspended = 5u
 	}
 
-	public enum Enum24
+	public enum SystemInformationClass
 	{
-		const_0,
-		const_1,
-		const_2,
-		const_3,
-		const_4,
-		const_5,
-		const_6,
-		const_7,
-		const_8,
-		const_9,
-		const_10,
-		const_11,
-		const_12,
-		const_13,
-		const_14,
-		const_15,
-		const_16,
-		const_17,
-		const_18,
-		const_19,
-		const_20,
-		const_21,
-		const_22,
-		const_23,
-		const_24,
-		const_25,
-		const_26,
-		const_27,
-		const_28,
-		const_29,
-		const_30,
-		const_31,
-		const_32,
-		const_33,
-		const_34,
-		const_35,
-		const_36,
-		const_37,
-		const_38,
-		const_39,
-		const_40,
-		const_41,
-		const_42,
-		const_43,
-		const_44,
-		const_45,
-		const_46,
-		const_47,
-		const_48,
-		const_49,
-		const_50,
-		const_51,
-		const_52,
-		const_53,
-		const_54,
-		const_55,
-		const_56,
-		const_57,
-		const_58,
-		const_59,
-		const_60,
-		const_61,
-		const_62,
-		const_63,
-		const_64,
-		const_65,
-		const_66,
-		const_67,
-		const_68,
-		const_69,
-		const_70,
-		const_71,
-		const_72,
-		const_73,
-		const_74,
-		const_75,
-		const_76,
-		const_77,
-		const_78,
-		const_79,
-		const_80,
-		const_81,
-		const_82
+		ProcessInformation = 5
 	}
 
-	public enum Enum25
+	public enum ThreadInformationClass
 	{
-		const_0,
-		const_1,
-		const_2,
-		const_3,
-		const_4,
-		const_5,
-		const_6,
-		const_7,
-		const_8,
-		const_9,
-		const_10,
-		const_11,
-		const_12,
-		const_13,
-		const_14,
-		const_15,
-		const_16,
-		const_17
+		BasicInformation = 0,
+		Win32StartAddress = 9,
+		HideFromDebugger = 17
 	}
 
-	public enum Enum26
+	public enum ProcessInformationClass
 	{
-		const_0 = 23,
-		const_1 = 9,
-		const_2 = 21,
-		const_3 = 5,
-		const_4 = 0,
-		const_5 = 7,
-		const_6 = 12,
-		const_7 = 17,
-		const_8 = 8,
-		const_9 = 20,
-		const_10 = 27,
-		const_11 = 2,
-		const_12 = 13,
-		const_13 = 10,
-		const_14 = 11,
-		const_15 = 14,
-		const_16 = 22,
-		const_17 = 18,
-		const_18 = 1,
-		const_19 = 6,
-		const_20 = 4,
-		const_21 = 16,
-		const_22 = 3,
-		const_23 = 15,
-		const_24 = 26,
-		const_25 = 19
+		BasicInformation = 0,
+		Wow64Information = 26
 	}
 
 	[Flags]
-	public enum Enum27 : uint
+	public enum SnapshotFlags : uint
 	{
-		flag_0 = 1u,
-		flag_1 = 2u,
-		flag_2 = 4u,
-		flag_3 = 8u,
-		flag_4 = 0x10u,
-		flag_5 = flag_0 | flag_1 | flag_2 | flag_3,
-		flag_6 = 0x80000000u,
-		flag_7 = 0x40000000u
+		Thread = 4u
 	}
 
-	public enum Enum28 : uint
+	public enum MemoryFreeType : uint
 	{
-		const_0 = 0x4000u,
-		const_1 = 0x8000u
+		Decommit = 0x4000u,
+		Release = 0x8000u
 	}
 
-	public enum Enum29 : uint
+	public enum MemoryState : uint
 	{
-		const_0 = 4096u,
-		const_1 = 65536u,
-		const_2 = 8192u
 	}
 
-	public enum Enum30 : uint
+	public enum MemoryType : uint
 	{
-		const_0 = 16777216u,
-		const_1 = 262144u,
-		const_2 = 131072u
 	}
 
 	[Flags]
-	public enum Enum31 : uint
+	public enum ThreadAccessRights : uint
 	{
-		flag_0 = 1u,
-		flag_1 = 2u,
-		flag_2 = 8u,
-		flag_3 = 0x10u,
-		flag_4 = 0x20u,
-		flag_5 = 0x40u,
-		flag_6 = 0x80u,
-		flag_7 = 0x100u,
-		flag_8 = 0x200u,
-		flag_9 = 0x800u,
-		flag_10 = 0x100000u
+		Terminate = 1u,
+		SuspendResume = 2u,
+		GetContext = 8u,
+		SetContext = 0x10u,
+		QueryInformation = 0x40u
 	}
 
 	[Flags]
-	public enum Enum32 : uint
+	public enum ProcessAccessRights : uint
 	{
-		flag_0 = 0x1F0FFFu,
-		flag_1 = 1u,
-		flag_2 = 2u,
-		flag_3 = 8u,
-		flag_4 = 0x10u,
-		flag_5 = 0x20u,
-		flag_6 = 0x40u,
-		flag_7 = 0x100u,
-		flag_8 = 0x200u,
-		flag_9 = 0x400u,
-		flag_10 = 0x1000u,
-		flag_11 = 0x100000u
+		Terminate = 1u,
+		CreateThread = 2u,
+		VirtualMemoryOperation = 8u,
+		VirtualMemoryRead = 0x10u,
+		VirtualMemoryWrite = 0x20u,
+		QueryInformation = 0x400u,
+		QueryLimitedInformation = 0x1000u,
+		Synchronize = 0x100000u
 	}
 
 	[Flags]
-	public enum Enum33 : uint
+	public enum MemoryAllocationType : uint
 	{
-		flag_0 = 0x1000u,
-		flag_1 = 0x2000u,
-		flag_2 = 0x80000u,
-		flag_3 = 0x20000000u,
-		flag_4 = 0x400000u,
-		flag_5 = 0x100000u,
-		flag_6 = 0x200000u
+		Commit = 0x1000u,
+		Reserve = 0x2000u
 	}
 
 	[Flags]
-	public enum Enum34 : uint
+	public enum MemoryProtection : uint
 	{
-		flag_0 = 0x10u,
-		flag_1 = 0x20u,
-		flag_2 = 0x40u,
-		flag_3 = 0x80u,
-		flag_4 = 1u,
-		flag_5 = 2u,
-		flag_6 = 4u,
-		flag_7 = 8u,
-		flag_8 = 0x100u,
-		flag_9 = 0x200u,
-		flag_10 = 0x400u
+		Execute = 0x10u,
+		ExecuteRead = 0x20u,
+		ExecuteReadWrite = 0x40u,
+		ExecuteWriteCopy = 0x80u,
+		NoAccess = 1u,
+		ReadOnly = 2u,
+		ReadWrite = 4u,
+		WriteCopy = 8u,
+		NoCache = 0x200u
 	}
 
-	public static readonly IntPtr intptr_0 = (IntPtr)(-1);
+	public static readonly IntPtr address = (IntPtr)(-1);
 
-	public static readonly int int_0 = Marshal.SizeOf(typeof(Struct47));
+	public static readonly int intValue = Marshal.SizeOf(typeof(MemoryBasicInformation));
 
 	[DllImport("kernel32.dll")]
 	[SuppressUnmanagedCodeSecurity]
-	public static extern int VirtualQueryEx(IntPtr intptr_1, IntPtr intptr_2, out Struct47 struct47_0, uint uint_0);
+	public static extern int VirtualQueryEx(IntPtr address2, IntPtr address3, out MemoryBasicInformation memoryBasicInformation, uint uintValue);
 }

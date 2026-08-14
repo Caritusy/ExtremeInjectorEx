@@ -6,21 +6,21 @@ public sealed class ProcessSelectorForm : Form
 {
 	internal RemoteProcess SelectedProcess { get; private set; }
 
-	internal IContainer icontainer_0;
+	internal IContainer container;
 
-	internal DataGridView dataGridView_0;
+	internal DataGridView dataGridView;
 
-	internal DataGridViewImageColumn dataGridViewImageColumn_0;
+	internal DataGridViewImageColumn dataGridViewImageColumn;
 
-	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn_0;
+	internal DataGridViewTextBoxColumn dataGridViewTextBoxColumn;
 
-	internal Button button_0;
+	internal Button button;
 
-	internal Button button_1;
+	internal Button button2;
 
-	internal Button button_2;
+	internal Button button3;
 
-	internal Button button_3;
+	internal Button button4;
 
 	public ProcessSelectorForm()
 	{
@@ -29,14 +29,14 @@ public sealed class ProcessSelectorForm : Form
 		FormBorderStyle = FormBorderStyle.FixedDialog;
 		ShowInTaskbar = false;
 		ModernUi.StylePrimaryButton(
-			button_2,
+			button3,
 			ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1),
 			ModernUi.HarmonizeInteractiveColor(
 				ModernUi.NormalizeAccent(ApplicationSettings.Current.Options.BackgroundColor1),
 				ApplicationSettings.Current.Options.BackgroundColor2));
-		button_2.AutoSize = false;
-		button_2.MinimumSize = System.Drawing.Size.Empty;
-		button_2.Padding = Padding.Empty;
+		button3.AutoSize = false;
+		button3.MinimumSize = System.Drawing.Size.Empty;
+		button3.Padding = Padding.Empty;
 		RecoveredRuntime.PopulateAllProcesses(this);
 	}
 
@@ -48,7 +48,7 @@ public sealed class ProcessSelectorForm : Form
 
 	internal void OnSelectClick(object sender, EventArgs e)
 	{
-		SelectedProcess = (RemoteProcess)dataGridView_0.SelectedRows[0].Tag;
+		SelectedProcess = (RemoteProcess)dataGridView.SelectedRows[0].Tag;
 		base.DialogResult = DialogResult.OK;
 		base.Close();
 	}
@@ -60,7 +60,7 @@ public sealed class ProcessSelectorForm : Form
 
 	internal void OnProcessDoubleClick(object sender, DataGridViewCellEventArgs e)
 	{
-		button_2.PerformClick();
+		button3.PerformClick();
 	}
 
 	internal void OnWindowedProcessesClick(object sender, EventArgs e)
@@ -70,9 +70,9 @@ public sealed class ProcessSelectorForm : Form
 
 	protected override void Dispose(bool disposing)
 	{
-		if (disposing && this.icontainer_0 != null)
+		if (disposing && this.container != null)
 		{
-			this.icontainer_0.Dispose();
+			this.container.Dispose();
 		}
 		base.Dispose(disposing);
 	}

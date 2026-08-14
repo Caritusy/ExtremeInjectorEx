@@ -4,204 +4,204 @@ using System.Runtime.CompilerServices;
 
 public sealed class ExportDirectory
 {
-	public List<string> list_0 = new List<string>();
+	public List<string> items = new List<string>();
 
-	public List<ExportedSymbol> list_1 = new List<ExportedSymbol>();
-
-	[CompilerGenerated]
-	internal uint uint_0;
+	public List<ExportedSymbol> items2 = new List<ExportedSymbol>();
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint characteristics;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal uint timeDateStamp;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort majorVersion;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal ushort minorVersion;
 
 	[CompilerGenerated]
-	internal uint uint_3;
+	internal uint nameRva;
 
 	[CompilerGenerated]
-	internal uint uint_4;
+	internal uint ordinalBase;
 
 	[CompilerGenerated]
-	internal uint uint_5;
+	internal uint numberOfFunctions;
 
 	[CompilerGenerated]
-	internal uint uint_6;
+	internal uint numberOfNames;
 
 	[CompilerGenerated]
-	internal uint uint_7;
+	internal uint addressOfFunctions;
 
 	[CompilerGenerated]
-	internal uint uint_8;
+	internal uint addressOfNames;
+
+	[CompilerGenerated]
+	internal uint addressOfNameOrdinals;
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCharacteristics(uint uint_9)
+	public void SetCharacteristics(uint uintValue)
 	{
-		uint_0 = uint_9;
+		characteristics = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetTimeDateStamp(uint uint_9)
+	public void SetTimeDateStamp(uint uintValue)
 	{
-		uint_1 = uint_9;
+		timeDateStamp = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorVersion(ushort ushort_2)
+	public void SetMajorVersion(ushort ushortValue)
 	{
-		ushort_0 = ushort_2;
+		majorVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorVersion(ushort ushort_2)
+	public void SetMinorVersion(ushort ushortValue)
 	{
-		ushort_1 = ushort_2;
+		minorVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNameRva(uint uint_9)
+	public void SetNameRva(uint uintValue)
 	{
-		uint_2 = uint_9;
+		nameRva = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetOrdinalBase()
 	{
-		return uint_3;
+		return ordinalBase;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetOrdinalBase(uint uint_9)
+	public void SetOrdinalBase(uint uintValue)
 	{
-		uint_3 = uint_9;
+		ordinalBase = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetNumberOfFunctions()
 	{
-		return uint_4;
+		return numberOfFunctions;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNumberOfFunctions(uint uint_9)
+	public void SetNumberOfFunctions(uint uintValue)
 	{
-		uint_4 = uint_9;
+		numberOfFunctions = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetNumberOfNames()
 	{
-		return uint_5;
+		return numberOfNames;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetNumberOfNames(uint uint_9)
+	public void SetNumberOfNames(uint uintValue)
 	{
-		uint_5 = uint_9;
+		numberOfNames = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetAddressOfFunctions()
 	{
-		return uint_6;
+		return addressOfFunctions;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetAddressOfFunctions(uint uint_9)
+	public void SetAddressOfFunctions(uint uintValue)
 	{
-		uint_6 = uint_9;
+		addressOfFunctions = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetAddressOfNames()
 	{
-		return uint_7;
+		return addressOfNames;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetAddressOfNames(uint uint_9)
+	public void SetAddressOfNames(uint uintValue)
 	{
-		uint_7 = uint_9;
+		addressOfNames = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetAddressOfNameOrdinals()
 	{
-		return uint_8;
+		return addressOfNameOrdinals;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetAddressOfNameOrdinals(uint uint_9)
+	public void SetAddressOfNameOrdinals(uint uintValue)
 	{
-		uint_8 = uint_9;
+		addressOfNameOrdinals = uintValue;
 	}
 
-	internal ExportDirectory(BoundsCheckedBinaryReader class5_0, PeImage class154_0, DataDirectory class157_0)
+	internal ExportDirectory(BoundsCheckedBinaryReader boundsCheckedBinaryReader, PeImage peImage, DataDirectory dataDirectory)
 	{
-		this.SetCharacteristics(class5_0.ReadUInt32());
-		this.SetTimeDateStamp(class5_0.ReadUInt32());
-		this.SetMajorVersion(class5_0.ReadUInt16());
-		this.SetMinorVersion(class5_0.ReadUInt16());
-		this.SetNameRva(class5_0.ReadUInt32());
-		this.SetOrdinalBase(class5_0.ReadUInt32());
-		this.SetNumberOfFunctions(class5_0.ReadUInt32());
-		this.SetNumberOfNames(class5_0.ReadUInt32());
-		this.SetAddressOfFunctions(class5_0.ReadUInt32());
-		this.SetAddressOfNames(class5_0.ReadUInt32());
-		this.SetAddressOfNameOrdinals(class5_0.ReadUInt32());
-		long num = RecoveredRuntime.MapRvaToFileOffset(class154_0, this.GetAddressOfNames());
-		long num2 = RecoveredRuntime.MapRvaToFileOffset(class154_0, this.GetAddressOfNameOrdinals());
-		long num3 = RecoveredRuntime.MapRvaToFileOffset(class154_0, this.GetAddressOfFunctions());
-		if (num != -1L && num2 != -1L && num3 != -1L && class5_0.IsValidOffset(num) && class5_0.IsValidOffset(num2) && class5_0.IsValidOffset(num3))
+		this.SetCharacteristics(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetTimeDateStamp(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetMajorVersion(boundsCheckedBinaryReader.ReadUInt16());
+		this.SetMinorVersion(boundsCheckedBinaryReader.ReadUInt16());
+		this.SetNameRva(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetOrdinalBase(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetNumberOfFunctions(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetNumberOfNames(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetAddressOfFunctions(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetAddressOfNames(boundsCheckedBinaryReader.ReadUInt32());
+		this.SetAddressOfNameOrdinals(boundsCheckedBinaryReader.ReadUInt32());
+		long num = RecoveredRuntime.MapRvaToFileOffset(peImage, this.GetAddressOfNames());
+		long num2 = RecoveredRuntime.MapRvaToFileOffset(peImage, this.GetAddressOfNameOrdinals());
+		long num3 = RecoveredRuntime.MapRvaToFileOffset(peImage, this.GetAddressOfFunctions());
+		if (num != -1L && num2 != -1L && num3 != -1L && boundsCheckedBinaryReader.IsValidOffset(num) && boundsCheckedBinaryReader.IsValidOffset(num2) && boundsCheckedBinaryReader.IsValidOffset(num3))
 		{
-			RecoveredRuntime.SeekReader(class5_0, num);
+			RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num);
 			bool[] array = new bool[this.GetNumberOfFunctions()];
 			for (uint num4 = 0u; num4 < this.GetNumberOfNames(); num4 += 1u)
 			{
-				RecoveredRuntime.SeekReader(class5_0, num + (long)((ulong)(num4 * 4u)));
-				long num5 = RecoveredRuntime.MapRvaToFileOffset(class154_0, class5_0.ReadUInt32());
-				if (num5 != -1L && class5_0.IsValidOffset(num5))
+				RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num + (long)((ulong)(num4 * 4u)));
+				long num5 = RecoveredRuntime.MapRvaToFileOffset(peImage, boundsCheckedBinaryReader.ReadUInt32());
+				if (num5 != -1L && boundsCheckedBinaryReader.IsValidOffset(num5))
 				{
-					RecoveredRuntime.SeekReader(class5_0, num5);
-					string text = RecoveredRuntime.ReadNullTerminatedAsciiString(class5_0);
-					this.list_0.Add(text);
-					RecoveredRuntime.SeekReader(class5_0, num2 + (long)((ulong)(num4 * 2u)));
-					ushort num6 = class5_0.ReadUInt16();
-					RecoveredRuntime.SeekReader(class5_0, num3 + (long)(num6 * 4));
-					uint num7 = class5_0.ReadUInt32();
+					RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num5);
+					string text = RecoveredRuntime.ReadNullTerminatedAsciiString(boundsCheckedBinaryReader);
+					this.items.Add(text);
+					RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num2 + (long)((ulong)(num4 * 2u)));
+					ushort num6 = boundsCheckedBinaryReader.ReadUInt16();
+					RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num3 + (long)(num6 * 4));
+					uint num7 = boundsCheckedBinaryReader.ReadUInt32();
 					ForwardedExport @class = null;
 					long num8 = -1L;
-					if (num7 >= class157_0.GetVirtualAddress() && num7 < class157_0.GetVirtualAddress() + class157_0.GetSize())
+					if (num7 >= dataDirectory.GetVirtualAddress() && num7 < dataDirectory.GetVirtualAddress() + dataDirectory.GetSize())
 					{
-						num8 = class5_0.BaseStream.Position;
-						long long_ = RecoveredRuntime.MapRvaToFileOffset(class154_0, num7);
-						RecoveredRuntime.SeekReader(class5_0, long_);
+						num8 = boundsCheckedBinaryReader.BaseStream.Position;
+						long long_ = RecoveredRuntime.MapRvaToFileOffset(peImage, num7);
+						RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, long_);
 						@class = new ForwardedExport();
-						string text2 = RecoveredRuntime.ReadNullTerminatedAsciiString(class5_0);
+						string text2 = RecoveredRuntime.ReadNullTerminatedAsciiString(boundsCheckedBinaryReader);
 						@class.SetModuleName(text2.Substring(0, text2.LastIndexOf('.')) + EncodedStringTable.DecodeString(10075));
 						int num9 = text2.LastIndexOf('.') + 1;
 						string text3 = text2.Substring(num9, text2.Length - num9);
@@ -217,7 +217,7 @@ public sealed class ExportDirectory
 					}
 					if (num8 != -1L)
 					{
-						RecoveredRuntime.SeekReader(class5_0, num8);
+						RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num8);
 					}
 					array[(int)num6] = true;
 					ExportedSymbol class2 = new ExportedSymbol();
@@ -227,20 +227,20 @@ public sealed class ExportDirectory
 					class2.SetAddressRva(num7);
 					class2.SetForwarder(@class);
 					ExportedSymbol item = class2;
-					this.list_1.Add(item);
+					this.items2.Add(item);
 				}
 			}
 			for (uint num10 = 0u; num10 < this.GetNumberOfFunctions(); num10 += 1u)
 			{
 				if (!array[(int)num10])
 				{
-					RecoveredRuntime.SeekReader(class5_0, num3 + (long)((ulong)(num10 * 4u)));
-					uint num11 = class5_0.ReadUInt32();
+					RecoveredRuntime.SeekReader(boundsCheckedBinaryReader, num3 + (long)((ulong)(num10 * 4u)));
+					uint num11 = boundsCheckedBinaryReader.ReadUInt32();
 					ExportedSymbol class3 = new ExportedSymbol();
 					class3.SetOrdinal((ushort)(num10 + this.GetOrdinalBase()));
 					class3.SetAddressRva(num11);
 					ExportedSymbol item2 = class3;
-					this.list_1.Add(item2);
+					this.items2.Add(item2);
 				}
 			}
 			return;

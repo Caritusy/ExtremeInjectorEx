@@ -3,80 +3,80 @@ using System.Runtime.CompilerServices;
 public sealed class ImportedSymbol
 {
 	[CompilerGenerated]
-	internal ulong ulong_0;
+	internal ulong thunkValue;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort ordinal;
 
 	[CompilerGenerated]
-	internal string string_0;
+	internal string name;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort hint;
 
 	[CompilerGenerated]
-	internal bool bool_0;
+	internal bool isOrdinal;
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ulong GetThunkValue()
 	{
-		return ulong_0;
+		return thunkValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetThunkValue(ulong ulong_1)
+	public void SetThunkValue(ulong ulongValue)
 	{
-		ulong_0 = ulong_1;
+		thunkValue = ulongValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public ushort GetOrdinal()
 	{
-		return ushort_0;
+		return ordinal;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetOrdinal(ushort ushort_2)
+	public void SetOrdinal(ushort ushortValue)
 	{
-		ushort_0 = ushort_2;
+		ordinal = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public string GetName()
 	{
-		return string_0;
+		return name;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetName(string string_1)
+	public void SetName(string text)
 	{
-		string_0 = string_1;
+		name = text;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetHint(ushort ushort_2)
+	public void SetHint(ushort ushortValue)
 	{
-		ushort_1 = ushort_2;
+		hint = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public bool GetIsOrdinal()
 	{
-		return bool_0;
+		return isOrdinal;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetIsOrdinal(bool bool_1)
+	public void SetIsOrdinal(bool flag)
 	{
-		bool_0 = bool_1;
+		isOrdinal = flag;
 	}
 }

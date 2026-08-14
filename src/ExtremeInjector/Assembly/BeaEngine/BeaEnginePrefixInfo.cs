@@ -7,42 +7,42 @@ public struct BeaEnginePrefixInfo
 	[StructLayout(LayoutKind.Sequential, Size = 2)]
 	[CompilerGenerated]
 	[UnsafeValueType]
-	public struct Struct24
+	public struct PrefixBytes
 	{
-		public byte byte_0;
+		public byte byteValue;
 	}
 
-	public int int_0;
+	public int intValue;
 
-	public int int_1;
+	public int intValue2;
 
-	public byte byte_0;
+	public byte byteValue;
 
-	public byte byte_1;
+	public byte byteValue2;
 
-	public byte byte_2;
+	public byte byteValue3;
 
-	public byte byte_3;
+	public byte byteValue4;
 
-	public byte byte_4;
+	public byte byteValue5;
 
-	public byte byte_5;
+	public byte byteValue6;
 
-	public byte byte_6;
+	public byte byteValue7;
 
-	public byte byte_7;
+	public byte byteValue8;
 
-	public byte byte_8;
+	public byte byteValue9;
 
-	public byte byte_9;
+	public byte byteValue10;
 
-	public byte byte_10;
+	public byte byteValue11;
 
-	public byte byte_11;
+	public byte byteValue12;
 
-	public byte byte_12;
+	public byte byteValue13;
 
-	public BeaEngineRexPrefix struct22_0;
+	public BeaEngineRexPrefix rexPrefix;
 
-	public Struct24 struct24_0;
+	public PrefixBytes prefixBytes;
 }

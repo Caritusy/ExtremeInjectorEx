@@ -4,119 +4,119 @@ using System.Runtime.CompilerServices;
 public sealed class DebugDirectoryEntry
 {
 	[CompilerGenerated]
-	internal uint uint_0;
+	internal uint characteristics;
 
 	[CompilerGenerated]
-	internal uint uint_1;
+	internal uint timeDateStamp;
 
 	[CompilerGenerated]
-	internal ushort ushort_0;
+	internal ushort majorVersion;
 
 	[CompilerGenerated]
-	internal ushort ushort_1;
+	internal ushort minorVersion;
 
 	[CompilerGenerated]
-	internal DebugDirectoryType enum37_0;
+	internal DebugDirectoryType typeValue;
 
 	[CompilerGenerated]
-	internal uint uint_2;
+	internal uint sizeOfData;
 
 	[CompilerGenerated]
-	internal uint uint_3;
+	internal uint addressOfRawData;
 
 	[CompilerGenerated]
-	internal uint uint_4;
+	internal uint pointerToRawData;
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetCharacteristics(uint uint_5)
+	public void SetCharacteristics(uint uintValue)
 	{
-		uint_0 = uint_5;
+		characteristics = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetTimeDateStamp(uint uint_5)
+	public void SetTimeDateStamp(uint uintValue)
 	{
-		uint_1 = uint_5;
+		timeDateStamp = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMajorVersion(ushort ushort_2)
+	public void SetMajorVersion(ushort ushortValue)
 	{
-		ushort_0 = ushort_2;
+		majorVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetMinorVersion(ushort ushort_2)
+	public void SetMinorVersion(ushort ushortValue)
 	{
-		ushort_1 = ushort_2;
+		minorVersion = ushortValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetType(DebugDirectoryType enum37_1)
+	public void SetType(DebugDirectoryType debugDirectoryType)
 	{
-		enum37_0 = enum37_1;
+		typeValue = debugDirectoryType;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetSizeOfData()
 	{
-		return uint_2;
+		return sizeOfData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetSizeOfData(uint uint_5)
+	public void SetSizeOfData(uint uintValue)
 	{
-		uint_2 = uint_5;
+		sizeOfData = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetAddressOfRawData()
 	{
-		return uint_3;
+		return addressOfRawData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetAddressOfRawData(uint uint_5)
+	public void SetAddressOfRawData(uint uintValue)
 	{
-		uint_3 = uint_5;
+		addressOfRawData = uintValue;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
 	public uint GetPointerToRawData()
 	{
-		return uint_4;
+		return pointerToRawData;
 	}
 
 	[SpecialName]
 	[CompilerGenerated]
-	public void SetPointerToRawData(uint uint_5)
+	public void SetPointerToRawData(uint uintValue)
 	{
-		uint_4 = uint_5;
+		pointerToRawData = uintValue;
 	}
 
 	protected DebugDirectoryEntry()
 	{
 	}
 
-	internal DebugDirectoryEntry(BoundsCheckedBinaryReader class5_0)
+	internal DebugDirectoryEntry(BoundsCheckedBinaryReader boundsCheckedBinaryReader)
 	{
-		SetCharacteristics(class5_0.ReadUInt32());
-		SetTimeDateStamp(class5_0.ReadUInt32());
-		SetMajorVersion(class5_0.ReadUInt16());
-		SetMinorVersion(class5_0.ReadUInt16());
-		SetType((DebugDirectoryType)class5_0.ReadUInt32());
-		SetSizeOfData(class5_0.ReadUInt32());
-		SetAddressOfRawData(class5_0.ReadUInt32());
-		SetPointerToRawData(class5_0.ReadUInt32());
+		SetCharacteristics(boundsCheckedBinaryReader.ReadUInt32());
+		SetTimeDateStamp(boundsCheckedBinaryReader.ReadUInt32());
+		SetMajorVersion(boundsCheckedBinaryReader.ReadUInt16());
+		SetMinorVersion(boundsCheckedBinaryReader.ReadUInt16());
+		SetType((DebugDirectoryType)boundsCheckedBinaryReader.ReadUInt32());
+		SetSizeOfData(boundsCheckedBinaryReader.ReadUInt32());
+		SetAddressOfRawData(boundsCheckedBinaryReader.ReadUInt32());
+		SetPointerToRawData(boundsCheckedBinaryReader.ReadUInt32());
 	}
 }
