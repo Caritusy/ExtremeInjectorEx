@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-public sealed class ManualMapOptionsForm : Form
+public sealed partial class ManualMapOptionsForm : Form
 {
 	internal IContainer container = null;
 
@@ -20,7 +20,7 @@ public sealed class ManualMapOptionsForm : Form
 
 	public ManualMapOptionsForm()
 	{
-		RecoveredRuntime.InitializeManualMapOptionsForm(this);
+		InitializeModernManualMapOptionsForm();
 		this.checkBox3.Checked = ApplicationSettings.Current.Options.Advanced.HideFromDebugger;
 		this.checkBox2.Checked = ApplicationSettings.Current.Options.Advanced.ManualResolveImports;
 		this.checkBox.Checked = ApplicationSettings.Current.Options.Advanced.DisableExceptionSupport;
@@ -51,7 +51,7 @@ public sealed class ManualMapOptionsForm : Form
 		{
 			return;
 		}
-		if (this.checkBox.Checked && MessageBox.Show(EncodedStringTable.DecodeString(1371), EncodedStringTable.DecodeString(599), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+		if (this.checkBox.Checked && MessageBox.Show(this, UiText.Get("ManualMap.DisableExceptionsWarning"), UiText.Get("App.Title"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
 		{
 			this.checkBox.Checked = false;
 		}
@@ -64,7 +64,7 @@ public sealed class ManualMapOptionsForm : Form
 		{
 			return;
 		}
-		if (this.checkBox4.Checked && MessageBox.Show(EncodedStringTable.DecodeString(1541), EncodedStringTable.DecodeString(599), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+		if (this.checkBox4.Checked && MessageBox.Show(this, UiText.Get("ManualMap.DisableSehValidationWarning"), UiText.Get("App.Title"), MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
 		{
 			this.checkBox4.Checked = false;
 		}

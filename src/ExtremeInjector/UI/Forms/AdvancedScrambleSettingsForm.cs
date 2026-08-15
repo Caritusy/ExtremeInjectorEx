@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using ExtremeInjector;
 
-public sealed class AdvancedScrambleSettingsForm : Form
+public sealed partial class AdvancedScrambleSettingsForm : Form
 {
 	internal IContainer container = null;
 
@@ -42,13 +42,7 @@ public sealed class AdvancedScrambleSettingsForm : Form
 
 	public AdvancedScrambleSettingsForm()
 	{
-		RecoveredRuntime.InitializeAdvancedScrambleSettingsForm(this);
-		ModernUi.ApplyLegacyFormTheme(this);
-		FormBorderStyle = FormBorderStyle.FixedDialog;
-		MaximizeBox = false;
-		MinimizeBox = false;
-		ShowInTaskbar = false;
-		SizeGripStyle = SizeGripStyle.Hide;
+		InitializeModernScrambleSettingsForm();
 		checkBox4.CheckedChanged += delegate
 		{
 			RecoveredRuntime.UpdateScrambleOptionAvailability(this);

@@ -86,6 +86,7 @@
   <data name="Module.Type" xml:space="preserve"><value>类型</value></data>
   <data name="Module.Value" xml:space="preserve"><value>值</value></data>
   <data name="Module.Done" xml:space="preserve"><value>完成</value></data>
+  <data name="Module.Export.None" xml:space="preserve"><value>不调用导出函数</value></data>
   <data name="Module.Convention.StdCall" xml:space="preserve"><value>StdCall</value></data>
   <data name="Module.Convention.FastCall" xml:space="preserve"><value>FastCall</value></data>
   <data name="Module.Convention.Cdecl" xml:space="preserve"><value>Cdecl</value></data>
@@ -104,14 +105,19 @@
   <data name="About.ProjectLink" xml:space="preserve"><value>在 GitHub 上查看项目</value></data>
   <data name="Common.Close" xml:space="preserve"><value>关闭</value></data>
   <data name="Common.OK" xml:space="preserve"><value>确定</value></data>
+  <data name="Common.Cancel" xml:space="preserve"><value>取消</value></data>
   <data name="ManualMap.Title" xml:space="preserve"><value>高级注入设置</value></data>
+  <data name="ManualMap.Description" xml:space="preserve"><value>配置手动映射的底层行为。仅在确有需要时关闭兼容性保护。</value></data>
   <data name="ManualMap.Options" xml:space="preserve"><value>手动映射选项</value></data>
   <data name="ManualMap.General" xml:space="preserve"><value>常规</value></data>
   <data name="ManualMap.DisableExceptions" xml:space="preserve"><value>禁用异常支持</value></data>
   <data name="ManualMap.MapImports" xml:space="preserve"><value>解析导入表</value></data>
   <data name="ManualMap.HideThreads" xml:space="preserve"><value>向调试器隐藏线程</value></data>
   <data name="ManualMap.DisableSehValidation" xml:space="preserve"><value>禁用 SEH 处理程序校验</value></data>
+  <data name="ManualMap.DisableExceptionsWarning" xml:space="preserve"><value>禁用异常支持后，映射的模块将无法正常使用栈展开和 C++ 异常处理。是否继续？</value></data>
+  <data name="ManualMap.DisableSehValidationWarning" xml:space="preserve"><value>禁用 SEH 处理程序校验会移除针对 32 位模块的重要兼容性保护。是否继续？</value></data>
   <data name="Scramble.Title" xml:space="preserve"><value>高级混淆设置</value></data>
+  <data name="Scramble.Description" xml:space="preserve"><value>选择自定义混淆预设中需要执行的 PE 变换。</value></data>
   <data name="Scramble.HeaderOptions" xml:space="preserve"><value>PE 头选项</value></data>
   <data name="Scramble.SectionOptions" xml:space="preserve"><value>节选项</value></data>
   <data name="Scramble.DirectoryOptions" xml:space="preserve"><value>数据目录选项</value></data>
@@ -129,9 +135,10 @@
   <data name="Scramble.ShiftMemory" xml:space="preserve"><value>平移节的内存位置</value></data>
   <data name="Scramble.StripCharacteristics" xml:space="preserve"><value>清除节特征标志</value></data>
   <data name="ProcessList.Title" xml:space="preserve"><value>进程列表</value></data>
-  <data name="ProcessList.Processes" xml:space="preserve"><value>进程列表</value></data>
-  <data name="ProcessList.Windows" xml:space="preserve"><value>窗口列表</value></data>
+  <data name="ProcessList.Processes" xml:space="preserve"><value>所有进程</value></data>
+  <data name="ProcessList.Windows" xml:space="preserve"><value>有窗口的进程</value></data>
   <data name="ProcessList.Select" xml:space="preserve"><value>选择</value></data>
+  <data name="ProcessList.Entry" xml:space="preserve"><value>{1}（{0}）</value></data>
   <data name="ProcessInfo.Title" xml:space="preserve"><value>进程信息</value></data>
   <data name="ProcessInfo.Process" xml:space="preserve"><value>进程</value></data>
   <data name="ProcessInfo.Summary" xml:space="preserve"><value>{0}&#xA;{1}&#xA;进程 ID：0x{2:X}（{2}）&#xA;模块：{3}    线程：{4}</value></data>
@@ -148,6 +155,16 @@
   <data name="ProcessInfo.Suspend" xml:space="preserve"><value>挂起</value></data>
   <data name="ProcessInfo.Resume" xml:space="preserve"><value>恢复</value></data>
   <data name="ProcessInfo.KillThread" xml:space="preserve"><value>终止</value></data>
+  <data name="ProcessInfo.SummaryPlaceholder" xml:space="preserve"><value>正在读取进程信息…</value></data>
+  <data name="Message.Process.Terminated" xml:space="preserve"><value>进程已终止。</value></data>
+  <data name="Message.Process.TerminateFailed" xml:space="preserve"><value>无法终止该进程。&#xA;&#xA;{0}</value></data>
+  <data name="Message.Process.UnloadSucceeded" xml:space="preserve"><value>模块“{0}”已卸载。</value></data>
+  <data name="Message.Process.UnloadFailed" xml:space="preserve"><value>无法卸载模块“{0}”。</value></data>
+  <data name="Message.Process.UnloadError" xml:space="preserve"><value>卸载模块时发生错误。&#xA;&#xA;{0}</value></data>
+  <data name="Message.Process.ThreadActionFailed" xml:space="preserve"><value>线程操作“{0}”失败。</value></data>
+  <data name="Message.Process.ThreadActionSucceeded" xml:space="preserve"><value>线程操作“{0}”已完成。</value></data>
+  <data name="Message.Process.ThreadTerminateFailed" xml:space="preserve"><value>无法终止该线程。</value></data>
+  <data name="Message.Process.ThreadTerminated" xml:space="preserve"><value>线程已终止。</value></data>
   <data name="Dependency.Title" xml:space="preserve"><value>安装依赖项</value></data>
   <data name="Dependency.Connecting" xml:space="preserve"><value>正在连接下载服务器…</value></data>
   <data name="Dependency.Downloading" xml:space="preserve"><value>正在下载 {0}… [{1}/{2}]</value></data>
@@ -195,6 +212,8 @@
   <data name="Message.Dependency.SetupFailed" xml:space="preserve"><value>无法保存或启动安装程序。&#xA;&#xA;{0}</value></data>
   <data name="Message.Dependency.Completed" xml:space="preserve"><value>依赖项已成功安装。</value></data>
   <data name="Message.Dependency.ManualInstall" xml:space="preserve"><value>页面打开后，请先下载并安装“{0}”，然后再开始注入。</value></data>
+  <data name="Message.Dependency.ExtractFailed" xml:space="preserve"><value>无法解压已下载的文件。&#xA;&#xA;{0}</value></data>
+  <data name="Message.Dependency.InvalidAddress" xml:space="preserve"><value>依赖项下载地址缺失或格式无效。</value></data>
   <data name="Message.NewVersion" xml:space="preserve"><value>Extreme Injector Ex {0} 已发布。&#xA;&#xA;请前往 GitHub 下载：&#xA;&#xA;https://github.com/Caritusy/ExtremeInjectorEx</value></data>
   <data name="Cli.Help" xml:space="preserve"><value>Extreme Injector Ex 命令行&#xA;&#xA;用法：&#xA;  Extreme Injector.exe --cli (--pid &lt;进程 ID&gt; | --process &lt;进程名&gt;) [选项]&#xA;  Extreme Injector.exe -c --help&#xA;&#xA;选择目标进程：&#xA;  --pid &lt;进程 ID&gt;                  按 PID 精确选择一个进程。&#xA;  --process &lt;进程名&gt;               按可执行文件名选择一个进程。&#xA;  --auto-inject / --no-auto-inject  等待／不等待指定名称的进程启动。&#xA;  --wait-timeout &lt;秒&gt;              超过指定时间后停止等待；0 表示无限等待。&#xA;  如果进程名匹配多个进程，命令将失败并列出 [序号] 窗口标题 (PID)。&#xA;&#xA;DLL 与导出函数：&#xA;  --dll &lt;路径&gt;                     添加 DLL；可重复指定多个。&#xA;  --clear-dlls                     清空已保存的 DLL 列表。&#xA;  --enable-dll / --disable-dll     启用／禁用最近添加的 DLL。&#xA;  --export &lt;名称&gt;                  调用最近添加 DLL 的导出函数。&#xA;  --calling-convention &lt;值&gt;       stdcall | fastcall | cdecl。&#xA;  --arg &lt;类型:值&gt;                 添加导出函数参数。类型：ansi、unicode、byte、uint16、uint32、uint64、float。&#xA;&#xA;注入：&#xA;  --method &lt;值&gt;                   standard | thread-hijacking | ldrp-load-dll | ldrp-load-dll-stub | manual-map。&#xA;  --close-on-inject / --no-close-on-inject&#xA;  --stealth / --no-stealth&#xA;  --delay-before &lt;毫秒&gt;           每次注入前的延迟。&#xA;  --delay-between &lt;毫秒&gt;          多个 DLL 之间的延迟。&#xA;  --erase-pe / --no-erase-pe&#xA;  --hide-module / --no-hide-module&#xA;  --hide-from-debugger / --no-hide-from-debugger&#xA;  --resolve-imports / --no-resolve-imports&#xA;  --disable-exceptions / --enable-exceptions&#xA;  --disable-seh-validation / --enable-seh-validation&#xA;&#xA;DLL 混淆：&#xA;  --scramble &lt;none|basic|standard|extreme|custom&gt;&#xA;  --scramble-header-fields / --no-scramble-header-fields&#xA;  --remove-useless-data / --keep-useless-data&#xA;  --insert-sections / --no-insert-sections&#xA;  --shift-section-data / --no-shift-section-data&#xA;  --modify-code / --no-modify-code&#xA;  --rename-sections / --no-rename-sections&#xA;  --new-entry-point / --no-new-entry-point&#xA;  --modify-imports / --no-modify-imports&#xA;  --remove-debug-data / --keep-debug-data&#xA;  --move-relocations / --no-move-relocations&#xA;  --fake-debug-directory / --no-fake-debug-directory&#xA;  --strip-section-flags / --keep-section-flags&#xA;  --shift-section-memory / --no-shift-section-memory&#xA;&#xA;界面与持久化：&#xA;  --language &lt;system|en|zh-CN&gt;&#xA;  --random-title / --no-random-title&#xA;  --primary-color &lt;#RRGGBB&gt; --secondary-color &lt;#RRGGBB&gt; --text-color &lt;#RRGGBB&gt;&#xA;  --reset-settings                  在内存中将全部设置恢复为默认值。&#xA;  --save-settings                   保存本次指定的设置；无需提供目标进程。&#xA;  --reset-warnings&#xA;  --ack-ldrp-warning / --unack-ldrp-warning&#xA;  --ack-manual-map-warning / --unack-manual-map-warning&#xA;  --ack-scramble-warning / --unack-scramble-warning&#xA;  -h, --help                        显示此帮助。</value></data>
   <data name="Cli.Error.TargetRequired" xml:space="preserve"><value>请使用 --pid &lt;进程 ID&gt; 或 --process &lt;进程名&gt; 选择目标进程。</value></data>

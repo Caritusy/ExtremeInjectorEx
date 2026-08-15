@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,7 +11,6 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -51,28 +49,6 @@ public sealed partial class RecoveredRuntime
 		finally
 		{
 			RecoveredRuntime.CloseTransientProcessHandle(remoteProcess, processHandle);
-		}
-	}
-
-	internal static void PopulateAllProcesses(ProcessSelectorForm processSelectorForm)
-	{
-		processSelectorForm.dataGridView.Rows.Clear();
-		foreach (RemoteProcess gclass in RecoveredRuntime.EnumerateRemoteProcesses())
-		{
-			Icon icon = RecoveredRuntime.GetFileIcon(gclass.FilePath, IconSize.Large);
-			Bitmap bitmap = (icon == null) ? new Bitmap(22, 22) : RecoveredRuntime.CreateSmallIconBitmap(icon);
-			int index = processSelectorForm.dataGridView.Rows.Add(new object[]
-			{
-				bitmap,
-				string.Format(EncodedStringTable.DecodeString(12039), gclass.ProcessId, gclass.Name)
-			});
-			processSelectorForm.dataGridView.Rows[index].Tag = gclass;
-		}
-		bool flag = processSelectorForm.dataGridView.Rows.Count > 0;
-		processSelectorForm.button3.Enabled = flag;
-		if (flag)
-		{
-			processSelectorForm.dataGridView.Rows[0].Selected = true;
 		}
 	}
 
@@ -208,13 +184,19 @@ public sealed partial class RecoveredRuntime
 
 	internal static void UpdateThreadActionText(ProcessInspectorForm processInspectorForm)
 	{
+		if (processInspectorForm.dataGridView2.SelectedRows.Count == 0)
+		{
+			processInspectorForm.button4.Text = UiText.Get("ProcessInfo.Suspend");
+			return;
+		}
+
 		NativeThreadInfo @class = ((ProcessThreadInfo)processInspectorForm.dataGridView2.SelectedRows[0].Tag).GetNativeInfo();
 		if (@class.systemThreadInformation.uintValue4 == 5u && @class.systemThreadInformation.nativeThreadWaitReason == NativeTypes.NativeThreadWaitReason.Suspended)
 		{
-			processInspectorForm.button4.Text = EncodedStringTable.DecodeString(2546);
+			processInspectorForm.button4.Text = UiText.Get("ProcessInfo.Resume");
 			return;
 		}
-		processInspectorForm.button4.Text = EncodedStringTable.DecodeString(12632);
+		processInspectorForm.button4.Text = UiText.Get("ProcessInfo.Suspend");
 	}
 
 	internal static bool ResumeProcessThread(ProcessThreadInfo processThreadInfo)
@@ -273,34 +255,6 @@ public sealed partial class RecoveredRuntime
 		CloseHandle(address);
 	}
 
-	internal static void PopulateWindowedProcesses(ProcessSelectorForm processSelectorForm)
-	{
-		processSelectorForm.dataGridView.Rows.Clear();
-		foreach (ProcessWindowInfo window in RecoveredRuntime.EnumerateTopLevelWindows())
-		{
-			string title = RecoveredRuntime.GetWindowTitle(window);
-			if (!RecoveredRuntime.IsProcessWindowVisible(window) || title.Length == 0)
-			{
-				continue;
-			}
-
-			RemoteProcess process = RecoveredRuntime.OpenRemoteProcessById(window.GetProcessId());
-			if (process == null)
-			{
-				continue;
-			}
-
-			Icon icon = RecoveredRuntime.GetWindowIcon(window);
-			Bitmap bitmap = icon == null ? new Bitmap(22, 22) : RecoveredRuntime.CreateSmallIconBitmap(icon);
-			int index = processSelectorForm.dataGridView.Rows.Add(new object[]
-			{
-				bitmap,
-				string.Format(EncodedStringTable.DecodeString(12039), window.GetProcessId(), title)
-			});
-			processSelectorForm.dataGridView.Rows[index].Tag = process;
-		}
-	}
-
 	internal static IntPtr CreateRemoteThreadHandle(IntPtr address, IntPtr address2, bool flag, RemoteProcessComponent remoteProcessComponent)
 	{
 		IntPtr threadHandle;
@@ -344,7 +298,7 @@ public sealed partial class RecoveredRuntime
 		foreach (RemoteProcess gclass in RecoveredRuntime.EnumerateRemoteProcesses())
 		{
 			string text = gclass.Name;
-			if (!flag && text.EndsWith(EncodedStringTable.DecodeString(93), StringComparison.OrdinalIgnoreCase))
+			if (!flag && text.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
 			{
 				text = text.Substring(0, text.Length - 4);
 			}
@@ -764,99 +718,6 @@ public sealed partial class RecoveredRuntime
 			return string.Empty;
 		}
 		return stringBuilder.ToString();
-	}
-
-	internal static void InitializeProcessSelectorForm(ProcessSelectorForm processSelectorForm)
-	{
-		ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(ProcessSelectorForm));
-		processSelectorForm.dataGridView = new DataGridView();
-		processSelectorForm.dataGridViewImageColumn = new DataGridViewImageColumn();
-		processSelectorForm.dataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-		processSelectorForm.button = new Button();
-		processSelectorForm.button2 = new Button();
-		processSelectorForm.button3 = new Button();
-		processSelectorForm.button4 = new Button();
-		((ISupportInitialize)processSelectorForm.dataGridView).BeginInit();
-		processSelectorForm.SuspendLayout();
-		processSelectorForm.dataGridView.AllowUserToAddRows = false;
-		processSelectorForm.dataGridView.AllowUserToDeleteRows = false;
-		processSelectorForm.dataGridView.AllowUserToResizeColumns = false;
-		processSelectorForm.dataGridView.AllowUserToResizeRows = false;
-		processSelectorForm.dataGridView.BackgroundColor = Color.White;
-		processSelectorForm.dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
-		processSelectorForm.dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-		processSelectorForm.dataGridView.ColumnHeadersVisible = false;
-		processSelectorForm.dataGridView.Columns.AddRange(new DataGridViewColumn[]
-		{
-			processSelectorForm.dataGridViewImageColumn,
-			processSelectorForm.dataGridViewTextBoxColumn
-		});
-		processSelectorForm.dataGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
-		processSelectorForm.dataGridView.Location = new Point(11, 13);
-		processSelectorForm.dataGridView.MultiSelect = false;
-		processSelectorForm.dataGridView.Name = EncodedStringTable.DecodeString(23504);
-		processSelectorForm.dataGridView.ReadOnly = true;
-		processSelectorForm.dataGridView.RowHeadersVisible = false;
-		processSelectorForm.dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-		processSelectorForm.dataGridView.RowTemplate.Resizable = DataGridViewTriState.False;
-		processSelectorForm.dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-		processSelectorForm.dataGridView.Size = new Size(248, 204);
-		processSelectorForm.dataGridView.TabIndex = 0;
-		processSelectorForm.dataGridView.CellContentDoubleClick += processSelectorForm.OnProcessDoubleClick;
-		processSelectorForm.dataGridViewImageColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-		processSelectorForm.dataGridViewImageColumn.HeaderText = EncodedStringTable.DecodeString(394);
-		processSelectorForm.dataGridViewImageColumn.Name = EncodedStringTable.DecodeString(23541);
-		processSelectorForm.dataGridViewImageColumn.ReadOnly = true;
-		processSelectorForm.dataGridViewImageColumn.Width = 32;
-		processSelectorForm.dataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-		processSelectorForm.dataGridViewTextBoxColumn.HeaderText = EncodedStringTable.DecodeString(394);
-		processSelectorForm.dataGridViewTextBoxColumn.Name = EncodedStringTable.DecodeString(23566);
-		processSelectorForm.dataGridViewTextBoxColumn.ReadOnly = true;
-		processSelectorForm.button.Location = new Point(10, 223);
-		processSelectorForm.button.Name = EncodedStringTable.DecodeString(23591);
-		processSelectorForm.button.Size = new Size(122, 23);
-		processSelectorForm.button.TabIndex = 1;
-		processSelectorForm.button.Text = EncodedStringTable.DecodeString(23616);
-		processSelectorForm.button.UseVisualStyleBackColor = true;
-		processSelectorForm.button.Click += processSelectorForm.OnAllProcessesClick;
-		processSelectorForm.button2.Location = new Point(138, 223);
-		processSelectorForm.button2.Name = EncodedStringTable.DecodeString(23633);
-		processSelectorForm.button2.Size = new Size(122, 23);
-		processSelectorForm.button2.TabIndex = 2;
-		processSelectorForm.button2.Text = EncodedStringTable.DecodeString(23658);
-		processSelectorForm.button2.UseVisualStyleBackColor = true;
-		processSelectorForm.button2.Click += processSelectorForm.OnWindowedProcessesClick;
-		processSelectorForm.button3.Location = new Point(10, 252);
-		processSelectorForm.button3.Name = EncodedStringTable.DecodeString(23675);
-		processSelectorForm.button3.Size = new Size(122, 23);
-		processSelectorForm.button3.TabIndex = 3;
-		processSelectorForm.button3.Text = EncodedStringTable.DecodeString(23692);
-		processSelectorForm.button3.UseVisualStyleBackColor = true;
-		processSelectorForm.button3.Click += processSelectorForm.OnSelectClick;
-		processSelectorForm.button4.Location = new Point(138, 252);
-		processSelectorForm.button4.Name = EncodedStringTable.DecodeString(23701);
-		processSelectorForm.button4.Size = new Size(122, 23);
-		processSelectorForm.button4.TabIndex = 4;
-		processSelectorForm.button4.Text = EncodedStringTable.DecodeString(23718);
-		processSelectorForm.button4.UseVisualStyleBackColor = true;
-		processSelectorForm.button4.Click += processSelectorForm.OnCancelClick;
-		processSelectorForm.AutoScaleDimensions = new SizeF(96f, 96f);
-		processSelectorForm.AutoScaleMode = AutoScaleMode.Dpi;
-		processSelectorForm.ClientSize = new Size(270, 283);
-		processSelectorForm.Controls.Add(processSelectorForm.button4);
-		processSelectorForm.Controls.Add(processSelectorForm.button3);
-		processSelectorForm.Controls.Add(processSelectorForm.button2);
-		processSelectorForm.Controls.Add(processSelectorForm.button);
-		processSelectorForm.Controls.Add(processSelectorForm.dataGridView);
-		processSelectorForm.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
-		processSelectorForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-		processSelectorForm.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
-		processSelectorForm.MaximizeBox = false;
-		processSelectorForm.MinimizeBox = false;
-		processSelectorForm.Name = EncodedStringTable.DecodeString(23727);
-		processSelectorForm.Text = EncodedStringTable.DecodeString(23616);
-		((ISupportInitialize)processSelectorForm.dataGridView).EndInit();
-		processSelectorForm.ResumeLayout(false);
 	}
 
 	internal unsafe static IntPtr LocateLdrpLoadDll64(IntPtr address, LdrLoadDllStubInjector ldrLoadDllStubInjector, ProcessModuleInfo processModuleInfo)

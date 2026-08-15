@@ -95,13 +95,19 @@ public sealed partial class SettingsForm : Form
 
 	internal void OnAdvancedScrambleSettingsClick(object sender, EventArgs e)
 	{
-		new AdvancedScrambleSettingsForm().ShowDialog();
+		using (var form = new AdvancedScrambleSettingsForm())
+		{
+			form.ShowDialog(this);
+		}
 		RecoveredRuntime.SelectCurrentScramblePreset(this);
 	}
 
 	internal void OnManualMapOptionsClick(object sender, EventArgs e)
 	{
-		new ManualMapOptionsForm().ShowDialog();
+		using (var form = new ManualMapOptionsForm())
+		{
+			form.ShowDialog(this);
+		}
 	}
 
 	internal void ApplySelectedScramblePreset()
@@ -217,12 +223,12 @@ public sealed partial class SettingsForm : Form
 		if (!ApplicationSettings.Current.Warnings.ScrambleAcknowledged)
 		{
 			ApplicationSettings.Current.Warnings.ScrambleAcknowledged = true;
-			MessageBox.Show(EncodedStringTable.DecodeString(2930), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show(this, UiText.Get("Message.ScrambleStandaloneInfo"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 		using (OpenFileDialog openFileDialog = new OpenFileDialog())
 		{
-			openFileDialog.Filter = EncodedStringTable.DecodeString(497);
-			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			openFileDialog.Filter = UiText.Get("Dialog.DllFilter");
+			if (openFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				try
 				{
@@ -234,8 +240,8 @@ public sealed partial class SettingsForm : Form
 							{
 								saveFileDialog.Filter = openFileDialog.Filter;
 								saveFileDialog.InitialDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-								saveFileDialog.FileName = Path.GetFileNameWithoutExtension(openFileDialog.FileName) + EncodedStringTable.DecodeString(3096);
-								if (saveFileDialog.ShowDialog() == DialogResult.OK)
+								saveFileDialog.FileName = Path.GetFileNameWithoutExtension(openFileDialog.FileName) + "_scrambled.dll";
+								if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
 								{
 									InjectorScrambleOptions injectorScrambleOptions_ = ApplicationSettings.Current.Options.Scramble;
 									PeScrambleOptions class2 = new PeScrambleOptions();
@@ -257,7 +263,7 @@ public sealed partial class SettingsForm : Form
 									{
 										RecoveredRuntime.ScramblePeImage(gclass);
 										RecoveredRuntime.SaveScrambledImage(saveFileDialog.FileName, gclass);
-										MessageBox.Show(EncodedStringTable.DecodeString(3117), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+										MessageBox.Show(this, UiText.Get("Message.ScrambleSuccess"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 									}
 								}
 							}
@@ -266,7 +272,7 @@ public sealed partial class SettingsForm : Form
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show(EncodedStringTable.DecodeString(3186) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(this, UiText.Format("Message.ScrambleFailed", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 			}
 		}
@@ -288,22 +294,13 @@ public sealed partial class SettingsForm : Form
 				try
 				{
 					RecoveredRuntime.ScramblePeImage(gclass);
-					string string_ = EncodedStringTable.DecodeString(3275);
-					Encoding ascii = Encoding.ASCII;
-					RecoveredRuntime.ReplaceStringWithRandomValue(ascii, gclass, string_);
-					string_ = EncodedStringTable.DecodeString(3300);
-					ascii = Encoding.ASCII;
-					RecoveredRuntime.ReplaceStringWithRandomValue(ascii, gclass, string_);
-					string text2 = EncodedStringTable.DecodeString(3321);
-					Encoding encoding_ = Encoding.ASCII;
-					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, text2);
-					text2 = EncodedStringTable.DecodeString(3321);
-					encoding_ = Encoding.Unicode;
-					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, text2);
-					text2 = EncodedStringTable.DecodeString(3275);
-					encoding_ = Encoding.Unicode;
-					RecoveredRuntime.RemoveEncodedString(encoding_, gclass, text2);
-					string text = RecoveredRuntime.CreateUniqueTemporaryPath(EncodedStringTable.DecodeString(93));
+					string[] identifyingText = { "Extreme Injector Ex", "Extreme Injector", "master131" };
+					foreach (string value in identifyingText)
+					{
+						RecoveredRuntime.ReplaceStringWithRandomValue(Encoding.ASCII, gclass, value);
+						RecoveredRuntime.ReplaceStringWithRandomValue(Encoding.Unicode, gclass, value);
+					}
+					string text = RecoveredRuntime.CreateUniqueTemporaryPath(".exe");
 					ApplicationSettings.Save();
 					MemoryStream memoryStream = new MemoryStream();
 					RecoveredRuntime.WriteScrambledImage(gclass, memoryStream);
@@ -314,7 +311,7 @@ public sealed partial class SettingsForm : Form
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show(EncodedStringTable.DecodeString(3334) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(this, UiText.Format("Message.SecureModeFailed", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 			}
 		}

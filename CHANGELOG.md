@@ -23,6 +23,16 @@ Notable changes to Extreme Injector Ex are documented here.
 - Pinned GitHub Actions to reviewed immutable revisions and enabled automated action updates.
 - Replaced the legacy DotNetZip extraction path with a bounded standard-library implementation that rejects archive path traversal.
 
+### Fixed
+
+- Prevented legacy dialogs from passing a null decoded resource name to `ComponentResourceManager`.
+- Rebuilt the process selector with stable resources, localized text, safe empty-selection handling, and flicker-resistant rendering.
+- Restored deterministic Windows capability initialization so process discovery and architecture checks no longer fall back to broken legacy paths.
+- Integrated module enablement into the DLL-name cell so its checkbox remains visible without a separate narrow column.
+- Replaced null decoded choice labels in module options and rebuilt both advanced-settings dialogs with complete localized controls.
+- Removed the final live recovered-form initializers by rebuilding the process inspector and dependency installer with localized modern controls.
+- Restored localized standalone scrambling, secure-mode, process-action, thread-action, and dependency-installation status paths.
+
 ## [3.7.4] - 2026-08-15
 
 ### Added

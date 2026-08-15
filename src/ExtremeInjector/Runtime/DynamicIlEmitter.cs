@@ -103,7 +103,7 @@ public static class DynamicIlEmitter
 	{
 		AssemblyName assemblyName = new AssemblyName(RecoveredRuntime.GenerateRandomIdentifier());
 		AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Save);
-		ModuleBuilder moduleBuilder_ = assemblyBuilder.DefineDynamicModule(assemblyName.Name, assemblyName.Name + EncodedStringTable.DecodeString(93));
+		ModuleBuilder moduleBuilder_ = assemblyBuilder.DefineDynamicModule(assemblyName.Name, assemblyName.Name + ".exe");
 		int num = DynamicIlEmitter.random.Next(5, 30);
 		int num2 = DynamicIlEmitter.random.Next(num);
 		MethodBuilder methodBuilder = null;
@@ -122,8 +122,8 @@ public static class DynamicIlEmitter
 			typeBuilder.CreateType();
 		}
 		assemblyBuilder.SetEntryPoint(methodBuilder, fileKind);
-		assemblyBuilder.Save(assemblyName.Name + EncodedStringTable.DecodeString(93));
-		File.Move(assemblyName.Name + EncodedStringTable.DecodeString(93), outputPath);
+		assemblyBuilder.Save(assemblyName.Name + ".exe");
+		File.Move(assemblyName.Name + ".exe", outputPath);
 	}
 
 	internal static MethodInfo GetMethod(Type type, string methodName)

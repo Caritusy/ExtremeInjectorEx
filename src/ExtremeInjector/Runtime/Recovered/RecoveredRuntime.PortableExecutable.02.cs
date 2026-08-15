@@ -923,12 +923,13 @@ public sealed partial class RecoveredRuntime
 				}
 			}
 
-			int index = mainForm.moduleGrid.Rows.Add(flag, Path.GetFileName(text));
+			int index = mainForm.moduleGrid.Rows.Add(Path.GetFileName(text));
 			MainForm.ModuleRow moduleRow = new MainForm.ModuleRow(moduleEntry);
 			SetModulePath(moduleRow, text);
+			moduleRow.Entry.Enabled = flag;
 			mainForm.moduleGrid.Rows[index].Tag = moduleRow;
-			mainForm.moduleGrid.Rows[index].Cells[1].ToolTipText = text;
-			mainForm.moduleGrid.Rows[index].Cells[2].ToolTipText = UiText.Get("Main.AdvancedOptionsTooltip");
+			mainForm.moduleGrid.Rows[index].Cells[0].ToolTipText = text;
+			mainForm.moduleGrid.Rows[index].Cells[1].ToolTipText = UiText.Get("Main.AdvancedOptionsTooltip");
 
 			if (moduleEntry == null)
 			{

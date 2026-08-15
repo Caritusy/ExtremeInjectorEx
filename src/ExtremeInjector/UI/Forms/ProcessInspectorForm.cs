@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Resources;
 using System.Windows.Forms;
 
 public sealed class ProcessInspectorForm : Form
@@ -52,12 +53,135 @@ public sealed class ProcessInspectorForm : Form
 
 	public ProcessInspectorForm()
 	{
-		RecoveredRuntime.InitializeProcessInspectorForm(this);
-		ModernUi.ApplyLegacyFormTheme(this);
+		InitializeModernComponents();
 		ApplyModernLayout();
+		ModernUi.ApplyLegacyFormTheme(this);
 		ModernUi.StyleDangerButton(button);
 		ModernUi.StyleDangerButton(button2);
 		ModernUi.StyleDangerButton(button5);
+	}
+
+	private void InitializeModernComponents()
+	{
+		container = new Container();
+		button = CreateButton("terminateProcessButton", "ProcessInfo.KillProcess", OnTerminateProcessClick);
+		button2 = CreateButton("unloadModuleButton", "ProcessInfo.UnloadModule", OnUnloadModuleClick);
+		button2.Enabled = false;
+		button3 = CreateButton("closeButton", "Common.Close", OnCloseClick);
+		button4 = CreateButton("toggleThreadSuspensionButton", "ProcessInfo.Suspend", OnToggleThreadSuspensionClick);
+		button4.Enabled = false;
+		button5 = CreateButton("terminateThreadButton", "ProcessInfo.KillThread", OnTerminateThreadClick);
+		button5.Enabled = false;
+
+		dataGridViewTextBoxColumn = CreateColumn("moduleNameColumn", "ProcessInfo.ModuleName", DataGridViewAutoSizeColumnMode.Fill);
+		dataGridViewTextBoxColumn2 = CreateColumn("moduleBaseColumn", "ProcessInfo.ModuleBase", DataGridViewAutoSizeColumnMode.None, 130);
+		dataGridViewTextBoxColumn3 = CreateColumn("moduleSizeColumn", "ProcessInfo.ModuleSize", DataGridViewAutoSizeColumnMode.None, 110);
+		dataGridView = CreateGrid("moduleGrid", dataGridViewTextBoxColumn, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3);
+		dataGridView.SelectionChanged += OnModuleSelectionChanged;
+		dataGridView.SortCompare += OnGridSortCompare;
+
+		dataGridViewTextBoxColumn4 = CreateColumn("threadIdColumn", "ProcessInfo.ThreadId", DataGridViewAutoSizeColumnMode.None, 100);
+		dataGridViewTextBoxColumn5 = CreateColumn("startAddressColumn", "ProcessInfo.StartAddress", DataGridViewAutoSizeColumnMode.Fill);
+		dataGridViewTextBoxColumn6 = CreateColumn("priorityColumn", "ProcessInfo.Priority", DataGridViewAutoSizeColumnMode.None, 110);
+		dataGridView2 = CreateGrid("threadGrid", dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6);
+		dataGridView2.SelectionChanged += OnThreadSelectionChanged;
+		dataGridView2.SortCompare += OnGridSortCompare;
+
+		label = new Label
+		{
+			Name = "processSummaryLabel",
+			Text = UiText.Get("ProcessInfo.SummaryPlaceholder")
+		};
+		pictureBox = new PictureBox
+		{
+			BackColor = Color.Transparent,
+			Name = "processIcon",
+			TabStop = false
+		};
+		groupBox = new ModernGroupBox
+		{
+			Name = "processSummaryCard",
+			Text = UiText.Get("ProcessInfo.Process")
+		};
+		tabPage = new TabPage
+		{
+			Name = "modulesTab",
+			Text = UiText.Get("ProcessInfo.Modules")
+		};
+		tabPage2 = new TabPage
+		{
+			Name = "threadsTab",
+			Text = UiText.Get("ProcessInfo.Threads")
+		};
+		tabControl = new ModernTabControl
+		{
+			Name = "processDetailsTabs"
+		};
+		tabControl.TabPages.Add(tabPage);
+		tabControl.TabPages.Add(tabPage2);
+
+		timer = new Timer(container)
+		{
+			Interval = 250
+		};
+		timer.Tick += OnProcessExitTimerTick;
+
+		AutoScaleDimensions = new SizeF(96f, 96f);
+		AutoScaleMode = AutoScaleMode.Dpi;
+		BackColor = ModernUi.Window;
+		Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
+		Name = "ProcessInspectorForm";
+		ShowInTaskbar = false;
+		StartPosition = FormStartPosition.CenterParent;
+		Text = UiText.Get("ProcessInfo.Title");
+		Icon = new ComponentResourceManager(typeof(ProcessInspectorForm)).GetObject("$this.Icon") as Icon;
+		Load += OnFormLoad;
+	}
+
+	private static Button CreateButton(string name, string textKey, EventHandler handler)
+	{
+		var result = new Button
+		{
+			Name = name,
+			Text = UiText.Get(textKey)
+		};
+		result.Click += handler;
+		return result;
+	}
+
+	private static DataGridViewTextBoxColumn CreateColumn(
+		string name,
+		string textKey,
+		DataGridViewAutoSizeColumnMode autoSizeMode,
+		int width = 100)
+	{
+		return new DataGridViewTextBoxColumn
+		{
+			AutoSizeMode = autoSizeMode,
+			HeaderText = UiText.Get(textKey),
+			Name = name,
+			ReadOnly = true,
+			Width = width
+		};
+	}
+
+	private static DataGridView CreateGrid(string name, params DataGridViewColumn[] columns)
+	{
+		var result = new DataGridView
+		{
+			AllowUserToAddRows = false,
+			AllowUserToDeleteRows = false,
+			AllowUserToResizeRows = false,
+			AutoGenerateColumns = false,
+			ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+			MultiSelect = false,
+			Name = name,
+			ReadOnly = true,
+			RowHeadersVisible = false,
+			SelectionMode = DataGridViewSelectionMode.FullRowSelect
+		};
+		result.Columns.AddRange(columns);
+		return result;
 	}
 
 	private void ApplyModernLayout()
@@ -182,67 +306,74 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void RefreshProcessDetails()
 	{
+		if (SelectedProcess == null)
+		{
+			return;
+		}
+
 		this.dataGridView.Rows.Clear();
 		this.dataGridView2.Rows.Clear();
-		ProcessModuleCollection @class = RecoveredRuntime.CaptureProcessModules(SelectedProcess);
-		foreach (ProcessModuleInfo gclass in @class)
+		ProcessModuleCollection modules = RecoveredRuntime.CaptureProcessModules(SelectedProcess);
+		List<ProcessThreadInfo> threads = RecoveredRuntime.EnumerateProcessThreads(SelectedProcess);
+		foreach (ProcessModuleInfo module in modules)
 		{
-			if (!gclass.GetIsManualMapped())
+			if (!module.GetIsManualMapped())
 			{
 				DataGridViewRow dataGridViewRow = new DataGridViewRow
 				{
-					Tag = gclass
+					Tag = module
 				};
 				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
 				{
-					Value = gclass.GetFilePath(),
-					Tag = gclass.GetFilePath()
+					Value = module.GetFilePath(),
+					Tag = module.GetFilePath()
 				});
 				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
 				{
-					Value = EncodedStringTable.DecodeString(2072) + gclass.GetModuleBase().ToString(EncodedStringTable.DecodeString(2077)),
-					Tag = gclass.GetModuleBase().ToInt64()
+					Value = "0x" + module.GetModuleBase().ToString("X"),
+					Tag = module.GetModuleBase().ToInt64()
 				});
 				dataGridViewRow.Cells.Add(new DataGridViewTextBoxCell
 				{
-					Value = RecoveredRuntime.FormatByteSize((long)((ulong)gclass.GetImageSize())),
-					Tag = gclass.GetImageSize()
+					Value = RecoveredRuntime.FormatByteSize((long)((ulong)module.GetImageSize())),
+					Tag = module.GetImageSize()
 				});
 				this.dataGridView.Rows.Add(dataGridViewRow);
 			}
 		}
 		using (Icon icon = RecoveredRuntime.GetFileIcon(SelectedProcess.FilePath, IconSize.Large))
 		{
+			Image oldImage = this.pictureBox.BackgroundImage;
 			this.pictureBox.BackgroundImage = ((icon == null) ? null : icon.ToBitmap());
+			oldImage?.Dispose();
 		}
-		this.label.Text = string.Format(EncodedStringTable.DecodeString(2082), new object[]
-		{
+		this.label.Text = UiText.Format(
+			"ProcessInfo.Summary",
 			SelectedProcess.Name,
 			SelectedProcess.FilePath,
 			SelectedProcess.ProcessId,
-			RecoveredRuntime.CaptureProcessModules(SelectedProcess).Count,
-			RecoveredRuntime.EnumerateProcessThreads(SelectedProcess).Count
-		});
-		foreach (ProcessThreadInfo class2 in RecoveredRuntime.EnumerateProcessThreads(SelectedProcess))
+			modules.Count,
+			threads.Count);
+		foreach (ProcessThreadInfo thread in threads)
 		{
 			DataGridViewRow dataGridViewRow2 = new DataGridViewRow
 			{
-				Tag = class2
+				Tag = thread
 			};
 			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = class2.GetThreadId().ToString(),
-				Tag = class2.GetThreadId()
+				Value = thread.GetThreadId().ToString(),
+				Tag = thread.GetThreadId()
 			});
 			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = ProcessInspectorForm.FormatAddress(@class, class2.GetStartAddress()),
-				Tag = class2.GetStartAddress()
+				Value = ProcessInspectorForm.FormatAddress(modules, thread.GetStartAddress()),
+				Tag = thread.GetStartAddress()
 			});
 			dataGridViewRow2.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = RecoveredRuntime.FormatThreadPriority(class2.GetPriorityLevel()),
-				Tag = class2.GetPriorityLevel()
+				Value = RecoveredRuntime.FormatThreadPriority(thread.GetPriorityLevel()),
+				Tag = thread.GetPriorityLevel()
 			});
 			this.dataGridView2.Rows.Add(dataGridViewRow2);
 		}
@@ -250,36 +381,30 @@ public sealed class ProcessInspectorForm : Form
 
 	internal static string FormatAddress(IEnumerable<ProcessModuleInfo> items, IntPtr address)
 	{
-		foreach (ProcessModuleInfo gclass in items)
+		foreach (ProcessModuleInfo module in items)
 		{
-			if ((long)address >= (long)gclass.GetModuleBase() && (long)address <= (long)gclass.GetModuleBase() + (long)((ulong)gclass.GetImageSize()))
+			if ((long)address >= (long)module.GetModuleBase() && (long)address <= (long)module.GetModuleBase() + (long)((ulong)module.GetImageSize()))
 			{
-				List<ExportedSymbol> list = RecoveredRuntime.GetRemoteModuleExports(gclass);
-				uint num = (uint)((long)address - (long)gclass.GetModuleBase());
-				ExportedSymbol @class = null;
-				foreach (ExportedSymbol class2 in list)
+				List<ExportedSymbol> exports = RecoveredRuntime.GetRemoteModuleExports(module);
+				uint relativeAddress = (uint)((long)address - (long)module.GetModuleBase());
+				ExportedSymbol nearestExport = null;
+				foreach (ExportedSymbol export in exports)
 				{
-					if (num > class2.GetAddressRva() && (@class == null || class2.GetAddressRva() > @class.GetAddressRva()))
+					if (relativeAddress >= export.GetAddressRva() && (nearestExport == null || export.GetAddressRva() > nearestExport.GetAddressRva()))
 					{
-						@class = class2;
+						nearestExport = export;
 					}
 				}
-				if (@class != null)
+				if (nearestExport != null)
 				{
-					uint num2 = num - @class.GetAddressRva();
-					return string.Concat(new string[]
-					{
-						gclass.GetFilePath(),
-						EncodedStringTable.DecodeString(2176),
-						(!@class.GetHasName()) ? @class.GetOrdinal().ToString() : @class.GetName(),
-						EncodedStringTable.DecodeString(2171),
-						num2.ToString(EncodedStringTable.DecodeString(2077))
-					});
+					uint offset = relativeAddress - nearestExport.GetAddressRva();
+					string exportName = nearestExport.GetHasName() ? nearestExport.GetName() : nearestExport.GetOrdinal().ToString();
+					return module.GetFilePath() + "!" + exportName + "+0x" + offset.ToString("X");
 				}
-				return gclass.GetFilePath() + EncodedStringTable.DecodeString(2171) + num.ToString(EncodedStringTable.DecodeString(2077));
+				return module.GetFilePath() + "+0x" + relativeAddress.ToString("X");
 			}
 		}
-		return EncodedStringTable.DecodeString(2072) + address.ToString(EncodedStringTable.DecodeString(2077));
+		return "0x" + address.ToString("X");
 	}
 
 	internal void OnCloseClick(object sender, EventArgs e)
@@ -292,11 +417,11 @@ public sealed class ProcessInspectorForm : Form
 		try
 		{
 			RecoveredRuntime.TerminateRemoteProcess(SelectedProcess);
-			MessageBox.Show(EncodedStringTable.DecodeString(2181), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show(this, UiText.Get("Message.Process.Terminated"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-		catch (Exception)
+		catch (Exception exception)
 		{
-			MessageBox.Show(EncodedStringTable.DecodeString(2242), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(this, UiText.Format("Message.Process.TerminateFailed", exception.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
@@ -318,7 +443,7 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void OnModuleSelectionChanged(object sender, EventArgs e)
 	{
-		button2.Enabled = timer.Enabled;
+		button2.Enabled = timer.Enabled && dataGridView.SelectedRows.Count > 0;
 	}
 
 	internal void OnGridSortCompare(object sender, DataGridViewSortCompareEventArgs e)
@@ -342,29 +467,35 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void OnUnloadModuleClick(object sender, EventArgs e)
 	{
+		if (dataGridView.SelectedRows.Count == 0)
+		{
+			return;
+		}
+
 		try
 		{
-			ProcessModuleInfo gclass = (ProcessModuleInfo)this.dataGridView.SelectedRows[0].Tag;
-			if (RecoveredRuntime.UnloadProcessModule(gclass, new RemoteModuleManager(SelectedProcess)))
+			ProcessModuleInfo module = (ProcessModuleInfo)this.dataGridView.SelectedRows[0].Tag;
+			if (RecoveredRuntime.UnloadProcessModule(module, new RemoteModuleManager(SelectedProcess)))
 			{
 				this.RefreshProcessDetails();
-				MessageBox.Show(gclass.GetFilePath() + EncodedStringTable.DecodeString(2327), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+				MessageBox.Show(this, UiText.Format("Message.Process.UnloadSucceeded", module.GetFilePath()), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			else
 			{
-				MessageBox.Show(gclass.GetFilePath() + EncodedStringTable.DecodeString(2396), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(this, UiText.Format("Message.Process.UnloadFailed", module.GetFilePath()), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 		catch (Exception ex)
 		{
-			MessageBox.Show(EncodedStringTable.DecodeString(2453) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			MessageBox.Show(this, UiText.Format("Message.Process.UnloadError", ex.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 	}
 
 	internal void OnThreadSelectionChanged(object sender, EventArgs e)
 	{
-		this.button4.Enabled = (this.button5.Enabled = this.timer.Enabled);
-		if (this.timer.Enabled)
+		bool hasSelection = this.timer.Enabled && dataGridView2.SelectedRows.Count > 0;
+		this.button4.Enabled = (this.button5.Enabled = hasSelection);
+		if (hasSelection)
 		{
 			RecoveredRuntime.UpdateThreadActionText(this);
 		}
@@ -372,27 +503,41 @@ public sealed class ProcessInspectorForm : Form
 
 	internal void OnToggleThreadSuspensionClick(object sender, EventArgs e)
 	{
-		ProcessThreadInfo class75_ = (ProcessThreadInfo)this.dataGridView2.SelectedRows[0].Tag;
-		bool flag;
-		if (!((!(flag = (this.button4.Text == EncodedStringTable.DecodeString(2546)))) ? RecoveredRuntime.SuspendProcessThread(class75_) : RecoveredRuntime.ResumeProcessThread(class75_)))
+		if (dataGridView2.SelectedRows.Count == 0)
 		{
-			MessageBox.Show(EncodedStringTable.DecodeString(2555) + (flag ? EncodedStringTable.DecodeString(2585) : EncodedStringTable.DecodeString(2572)) + EncodedStringTable.DecodeString(2594), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			return;
+		}
+
+		ProcessThreadInfo thread = (ProcessThreadInfo)this.dataGridView2.SelectedRows[0].Tag;
+		bool resume = this.button4.Text == UiText.Get("ProcessInfo.Resume");
+		bool succeeded = resume
+			? RecoveredRuntime.ResumeProcessThread(thread)
+			: RecoveredRuntime.SuspendProcessThread(thread);
+		string action = resume ? UiText.Get("ProcessInfo.Resume") : UiText.Get("ProcessInfo.Suspend");
+		if (!succeeded)
+		{
+			MessageBox.Show(this, UiText.Format("Message.Process.ThreadActionFailed", action), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 		else
 		{
-			MessageBox.Show(EncodedStringTable.DecodeString(2623) + ((!flag) ? EncodedStringTable.DecodeString(2664) : EncodedStringTable.DecodeString(2677)) + EncodedStringTable.DecodeString(2690), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			MessageBox.Show(this, UiText.Format("Message.Process.ThreadActionSucceeded", action), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 		RecoveredRuntime.UpdateThreadActionText(this);
 	}
 
 	internal void OnTerminateThreadClick(object sender, EventArgs e)
 	{
-		if (!RecoveredRuntime.TerminateProcessThread((ProcessThreadInfo)this.dataGridView2.SelectedRows[0].Tag))
+		if (dataGridView2.SelectedRows.Count == 0)
 		{
-			MessageBox.Show(EncodedStringTable.DecodeString(2711), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			return;
 		}
-		MessageBox.Show(EncodedStringTable.DecodeString(2796), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+		if (!RecoveredRuntime.TerminateProcessThread((ProcessThreadInfo)this.dataGridView2.SelectedRows[0].Tag))
+		{
+			MessageBox.Show(this, UiText.Get("Message.Process.ThreadTerminateFailed"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			return;
+		}
+		MessageBox.Show(this, UiText.Get("Message.Process.ThreadTerminated"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 	}
 
 	protected override void Dispose(bool disposing)

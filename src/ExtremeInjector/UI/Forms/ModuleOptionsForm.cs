@@ -51,7 +51,12 @@ public sealed partial class ModuleOptionsForm : Form
 
 	internal void OnFormLoad(object sender, EventArgs e)
 	{
-		this.exportRoutineComboBox.Items.Add(EncodedStringTable.DecodeString(394));
+		PopulateChoiceLists();
+		if (Module == null || Image == null)
+		{
+			return;
+		}
+
 		int selectedIndex = 0;
 		if (Image.GetExports() != null)
 		{
@@ -68,9 +73,6 @@ public sealed partial class ModuleOptionsForm : Form
 			}
 		}
 		this.exportRoutineComboBox.SelectedIndex = selectedIndex;
-		this.callingConventionComboBox.Items.Add(EncodedStringTable.DecodeString(395));
-		this.callingConventionComboBox.Items.Add(EncodedStringTable.DecodeString(408));
-		this.callingConventionComboBox.Items.Add(EncodedStringTable.DecodeString(417));
 		if (Module.CallingConvention != (CallingConvention)0)
 		{
 			if (Module.CallingConvention == CallingConvention.StdCall)
@@ -90,13 +92,7 @@ public sealed partial class ModuleOptionsForm : Form
 		{
 			this.callingConventionComboBox.SelectedIndex = 0;
 		}
-		this.parameterTypeComboBox.Items.Add(EncodedStringTable.DecodeString(430));
-		this.parameterTypeComboBox.Items.Add(EncodedStringTable.DecodeString(439));
-		this.parameterTypeComboBox.Items.Add(EncodedStringTable.DecodeString(452));
-		this.parameterTypeComboBox.Items.Add(EncodedStringTable.DecodeString(461));
-		this.parameterTypeComboBox.Items.Add(EncodedStringTable.DecodeString(470));
-		this.parameterTypeComboBox.Items.Add(EncodedStringTable.DecodeString(479));
-		this.parameterTypeComboBox.Items.Add(EncodedStringTable.DecodeString(488));
+		this.parameterTypeComboBox.SelectedIndex = 0;
 		if (Module.Parameters == null)
 		{
 			return;
@@ -107,19 +103,47 @@ public sealed partial class ModuleOptionsForm : Form
 		}
 	}
 
+	internal void PopulateChoiceLists()
+	{
+		exportRoutineComboBox.Items.Clear();
+		exportRoutineComboBox.Items.Add(UiText.Get("Module.Export.None"));
+
+		callingConventionComboBox.Items.Clear();
+		callingConventionComboBox.Items.Add(UiText.Get("Module.Convention.StdCall"));
+		callingConventionComboBox.Items.Add(UiText.Get("Module.Convention.Cdecl"));
+		callingConventionComboBox.Items.Add(UiText.Get("Module.Convention.FastCall"));
+
+		parameterTypeComboBox.Items.Clear();
+		parameterTypeComboBox.Items.Add(UiText.Get("Module.Parameter.AnsiString"));
+		parameterTypeComboBox.Items.Add(UiText.Get("Module.Parameter.UnicodeString"));
+		parameterTypeComboBox.Items.Add(UiText.Get("Module.Parameter.Byte"));
+		parameterTypeComboBox.Items.Add(UiText.Get("Module.Parameter.Word"));
+		parameterTypeComboBox.Items.Add(UiText.Get("Module.Parameter.Dword"));
+		parameterTypeComboBox.Items.Add(UiText.Get("Module.Parameter.Qword"));
+		parameterTypeComboBox.Items.Add(UiText.Get("Module.Parameter.Float"));
+	}
+
 	internal void OnExportSelectionChanged(object sender, EventArgs e)
 	{
-		bool hasSelectedExport = exportRoutineComboBox.SelectedIndex != 0;
+		bool hasSelectedExport = exportRoutineComboBox.SelectedIndex > 0;
 		button.Enabled = hasSelectedExport;
 		parameterValueTextBox.Enabled = hasSelectedExport;
 		parameterTypeComboBox.Enabled = hasSelectedExport;
 		parametersGrid.Enabled = hasSelectedExport;
 		callingConventionComboBox.Enabled = hasSelectedExport;
-		Module.ExportName = hasSelectedExport ? exportRoutineComboBox.SelectedItem.ToString() : string.Empty;
+		if (Module != null)
+		{
+			Module.ExportName = hasSelectedExport ? exportRoutineComboBox.SelectedItem.ToString() : string.Empty;
+		}
 	}
 
 	internal void OnCallingConventionChanged(object sender, EventArgs e)
 	{
+		if (Module == null)
+		{
+			return;
+		}
+
 		if (this.callingConventionComboBox.SelectedIndex == 0)
 		{
 			Module.CallingConvention = CallingConvention.StdCall;
@@ -162,7 +186,10 @@ public sealed partial class ModuleOptionsForm : Form
 
 	internal void OnParameterRowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
 	{
-		Module.Parameters.RemoveAt(e.RowIndex);
+		if (Module?.Parameters != null && e.RowIndex >= 0 && e.RowIndex < Module.Parameters.Count)
+		{
+			Module.Parameters.RemoveAt(e.RowIndex);
+		}
 		int num = 0;
 		foreach (DataGridViewRow row in this.parametersGrid.Rows)
 		{

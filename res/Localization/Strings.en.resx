@@ -86,6 +86,7 @@
   <data name="Module.Type" xml:space="preserve"><value>Type</value></data>
   <data name="Module.Value" xml:space="preserve"><value>Value</value></data>
   <data name="Module.Done" xml:space="preserve"><value>Done</value></data>
+  <data name="Module.Export.None" xml:space="preserve"><value>Do not call an export</value></data>
   <data name="Module.Convention.StdCall" xml:space="preserve"><value>StdCall</value></data>
   <data name="Module.Convention.FastCall" xml:space="preserve"><value>FastCall</value></data>
   <data name="Module.Convention.Cdecl" xml:space="preserve"><value>Cdecl</value></data>
@@ -104,14 +105,19 @@
   <data name="About.ProjectLink" xml:space="preserve"><value>View project on GitHub</value></data>
   <data name="Common.Close" xml:space="preserve"><value>Close</value></data>
   <data name="Common.OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Common.Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="ManualMap.Title" xml:space="preserve"><value>Advanced injection settings</value></data>
+  <data name="ManualMap.Description" xml:space="preserve"><value>Configure low-level Manual Map behavior. Change compatibility safeguards only when required.</value></data>
   <data name="ManualMap.Options" xml:space="preserve"><value>Manual map options</value></data>
   <data name="ManualMap.General" xml:space="preserve"><value>General</value></data>
   <data name="ManualMap.DisableExceptions" xml:space="preserve"><value>Disable exception support</value></data>
   <data name="ManualMap.MapImports" xml:space="preserve"><value>Resolve imports manually</value></data>
   <data name="ManualMap.HideThreads" xml:space="preserve"><value>Hide threads from the debugger</value></data>
   <data name="ManualMap.DisableSehValidation" xml:space="preserve"><value>Disable SEH handler validation</value></data>
+  <data name="ManualMap.DisableExceptionsWarning" xml:space="preserve"><value>Disabling exception support prevents mapped modules from using normal unwind and C++ exception handling. Continue?</value></data>
+  <data name="ManualMap.DisableSehValidationWarning" xml:space="preserve"><value>Disabling SEH handler validation removes an important compatibility safeguard for 32-bit modules. Continue?</value></data>
   <data name="Scramble.Title" xml:space="preserve"><value>Advanced scrambling settings</value></data>
+  <data name="Scramble.Description" xml:space="preserve"><value>Choose the PE transformations included in the custom scrambling preset.</value></data>
   <data name="Scramble.HeaderOptions" xml:space="preserve"><value>PE header options</value></data>
   <data name="Scramble.SectionOptions" xml:space="preserve"><value>Section options</value></data>
   <data name="Scramble.DirectoryOptions" xml:space="preserve"><value>Data-directory options</value></data>
@@ -129,9 +135,10 @@
   <data name="Scramble.ShiftMemory" xml:space="preserve"><value>Shift section memory</value></data>
   <data name="Scramble.StripCharacteristics" xml:space="preserve"><value>Strip section characteristics</value></data>
   <data name="ProcessList.Title" xml:space="preserve"><value>Process list</value></data>
-  <data name="ProcessList.Processes" xml:space="preserve"><value>Process list</value></data>
-  <data name="ProcessList.Windows" xml:space="preserve"><value>Window list</value></data>
+  <data name="ProcessList.Processes" xml:space="preserve"><value>All processes</value></data>
+  <data name="ProcessList.Windows" xml:space="preserve"><value>Processes with windows</value></data>
   <data name="ProcessList.Select" xml:space="preserve"><value>Select</value></data>
+  <data name="ProcessList.Entry" xml:space="preserve"><value>{1} ({0})</value></data>
   <data name="ProcessInfo.Title" xml:space="preserve"><value>Process information</value></data>
   <data name="ProcessInfo.Process" xml:space="preserve"><value>Process</value></data>
   <data name="ProcessInfo.Summary" xml:space="preserve"><value>{0}&#xA;{1}&#xA;Process ID: 0x{2:X} ({2})&#xA;Modules: {3}    Threads: {4}</value></data>
@@ -148,6 +155,16 @@
   <data name="ProcessInfo.Suspend" xml:space="preserve"><value>Suspend</value></data>
   <data name="ProcessInfo.Resume" xml:space="preserve"><value>Resume</value></data>
   <data name="ProcessInfo.KillThread" xml:space="preserve"><value>Terminate</value></data>
+  <data name="ProcessInfo.SummaryPlaceholder" xml:space="preserve"><value>Loading process details...</value></data>
+  <data name="Message.Process.Terminated" xml:space="preserve"><value>The process was terminated.</value></data>
+  <data name="Message.Process.TerminateFailed" xml:space="preserve"><value>The process could not be terminated.&#xA;&#xA;{0}</value></data>
+  <data name="Message.Process.UnloadSucceeded" xml:space="preserve"><value>The module “{0}” was unloaded.</value></data>
+  <data name="Message.Process.UnloadFailed" xml:space="preserve"><value>The module “{0}” could not be unloaded.</value></data>
+  <data name="Message.Process.UnloadError" xml:space="preserve"><value>An error occurred while unloading the module.&#xA;&#xA;{0}</value></data>
+  <data name="Message.Process.ThreadActionFailed" xml:space="preserve"><value>The thread action “{0}” failed.</value></data>
+  <data name="Message.Process.ThreadActionSucceeded" xml:space="preserve"><value>The thread action “{0}” completed successfully.</value></data>
+  <data name="Message.Process.ThreadTerminateFailed" xml:space="preserve"><value>The thread could not be terminated.</value></data>
+  <data name="Message.Process.ThreadTerminated" xml:space="preserve"><value>The thread was terminated.</value></data>
   <data name="Dependency.Title" xml:space="preserve"><value>Dependency installer</value></data>
   <data name="Dependency.Connecting" xml:space="preserve"><value>Connecting to the download server...</value></data>
   <data name="Dependency.Downloading" xml:space="preserve"><value>Downloading {0}... [{1}/{2}]</value></data>
@@ -195,6 +212,8 @@
   <data name="Message.Dependency.SetupFailed" xml:space="preserve"><value>The installer could not be saved or started.&#xA;&#xA;{0}</value></data>
   <data name="Message.Dependency.Completed" xml:space="preserve"><value>The dependency was installed successfully.</value></data>
   <data name="Message.Dependency.ManualInstall" xml:space="preserve"><value>When the page opens, download and install “{0}” before starting injection.</value></data>
+  <data name="Message.Dependency.ExtractFailed" xml:space="preserve"><value>The downloaded archive could not be extracted.&#xA;&#xA;{0}</value></data>
+  <data name="Message.Dependency.InvalidAddress" xml:space="preserve"><value>The dependency download address is missing or invalid.</value></data>
   <data name="Message.NewVersion" xml:space="preserve"><value>Extreme Injector Ex {0} is available.&#xA;&#xA;Download it from GitHub:&#xA;&#xA;https://github.com/Caritusy/ExtremeInjectorEx</value></data>
   <data name="Cli.Help" xml:space="preserve"><value>Extreme Injector Ex command line&#xA;&#xA;Usage:&#xA;  Extreme Injector.exe --cli (--pid &lt;id&gt; | --process &lt;name&gt;) [options]&#xA;  Extreme Injector.exe -c --help&#xA;&#xA;Target selection:&#xA;  --pid &lt;id&gt;                         Select one process by PID.&#xA;  --process &lt;name&gt;                   Select one process by executable name.&#xA;  --auto-inject / --no-auto-inject   Wait / do not wait for a named process.&#xA;  --wait-timeout &lt;seconds&gt;           Stop waiting after this duration; 0 waits indefinitely.&#xA;  If a name matches multiple processes, the command fails and lists [index] window title (PID).&#xA;&#xA;DLLs and exported routines:&#xA;  --dll &lt;path&gt;                       Add a DLL; repeat for multiple DLLs.&#xA;  --clear-dlls                       Clear the saved DLL list.&#xA;  --enable-dll / --disable-dll       Enable / disable the most recently added DLL.&#xA;  --export &lt;name&gt;                   Invoke an export from the most recent DLL.&#xA;  --calling-convention &lt;value&gt;      stdcall | fastcall | cdecl.&#xA;  --arg &lt;type:value&gt;                Add an export argument. Types: ansi, unicode, byte, uint16, uint32, uint64, float.&#xA;&#xA;Injection:&#xA;  --method &lt;value&gt;                  standard | thread-hijacking | ldrp-load-dll | ldrp-load-dll-stub | manual-map.&#xA;  --close-on-inject / --no-close-on-inject&#xA;  --stealth / --no-stealth&#xA;  --delay-before &lt;ms&gt;               Delay before each injection.&#xA;  --delay-between &lt;ms&gt;              Delay between DLLs.&#xA;  --erase-pe / --no-erase-pe&#xA;  --hide-module / --no-hide-module&#xA;  --hide-from-debugger / --no-hide-from-debugger&#xA;  --resolve-imports / --no-resolve-imports&#xA;  --disable-exceptions / --enable-exceptions&#xA;  --disable-seh-validation / --enable-seh-validation&#xA;&#xA;DLL scrambling:&#xA;  --scramble &lt;none|basic|standard|extreme|custom&gt;&#xA;  --scramble-header-fields / --no-scramble-header-fields&#xA;  --remove-useless-data / --keep-useless-data&#xA;  --insert-sections / --no-insert-sections&#xA;  --shift-section-data / --no-shift-section-data&#xA;  --modify-code / --no-modify-code&#xA;  --rename-sections / --no-rename-sections&#xA;  --new-entry-point / --no-new-entry-point&#xA;  --modify-imports / --no-modify-imports&#xA;  --remove-debug-data / --keep-debug-data&#xA;  --move-relocations / --no-move-relocations&#xA;  --fake-debug-directory / --no-fake-debug-directory&#xA;  --strip-section-flags / --keep-section-flags&#xA;  --shift-section-memory / --no-shift-section-memory&#xA;&#xA;Interface and persistence:&#xA;  --language &lt;system|en|zh-CN&gt;&#xA;  --random-title / --no-random-title&#xA;  --primary-color &lt;#RRGGBB&gt; --secondary-color &lt;#RRGGBB&gt; --text-color &lt;#RRGGBB&gt;&#xA;  --reset-settings                   Restore every setting to its default in memory.&#xA;  --save-settings                    Save supplied settings; may be used without a target.&#xA;  --reset-warnings&#xA;  --ack-ldrp-warning / --unack-ldrp-warning&#xA;  --ack-manual-map-warning / --unack-manual-map-warning&#xA;  --ack-scramble-warning / --unack-scramble-warning&#xA;  -h, --help                         Show this help.</value></data>
   <data name="Cli.Error.TargetRequired" xml:space="preserve"><value>Select a target with --pid &lt;id&gt; or --process &lt;name&gt;.</value></data>

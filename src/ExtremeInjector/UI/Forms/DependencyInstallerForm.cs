@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Mime;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -32,8 +34,7 @@ public sealed class DependencyInstallerForm : Form
 
 	public DependencyInstallerForm()
 	{
-		RecoveredRuntime.InitializeDependencyInstallerForm(this);
-		ModernUi.ApplyLegacyFormTheme(this);
+		InitializeModernComponents();
 		FormBorderStyle = FormBorderStyle.FixedDialog;
 		MaximizeBox = false;
 		MinimizeBox = false;
@@ -43,34 +44,87 @@ public sealed class DependencyInstallerForm : Form
 		cookieAwareWebClient.DownloadProgressChanged += OnDownloadProgressChanged;
 	}
 
+	private void InitializeModernComponents()
+	{
+		SuspendLayout();
+		container = new Container();
+		label = new Label
+		{
+			AutoEllipsis = true,
+			Dock = DockStyle.Fill,
+			ForeColor = ModernUi.TextSecondary,
+			Name = "downloadStatusLabel",
+			Text = UiText.Get("Dependency.Connecting"),
+			TextAlign = ContentAlignment.MiddleLeft
+		};
+		progressBar = new ProgressBar
+		{
+			Dock = DockStyle.Fill,
+			Name = "downloadProgressBar",
+			Style = ProgressBarStyle.Continuous
+		};
+
+		var root = new TableLayoutPanel
+		{
+			BackColor = ModernUi.Window,
+			ColumnCount = 1,
+			Dock = DockStyle.Fill,
+			Margin = Padding.Empty,
+			Padding = new Padding(18, 14, 18, 16),
+			RowCount = 2
+		};
+		root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+		root.RowStyles.Add(new RowStyle(SizeType.Absolute, 32f));
+		root.RowStyles.Add(new RowStyle(SizeType.Absolute, 24f));
+		root.Controls.Add(label, 0, 0);
+		root.Controls.Add(progressBar, 0, 1);
+
+		AutoScaleDimensions = new SizeF(96f, 96f);
+		AutoScaleMode = AutoScaleMode.Dpi;
+		BackColor = ModernUi.Window;
+		ClientSize = new Size(520, 86);
+		Controls.Add(root);
+		Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point);
+		Icon = new ComponentResourceManager(typeof(DependencyInstallerForm)).GetObject("$this.Icon") as Icon;
+		Name = "DependencyInstallerForm";
+		StartPosition = FormStartPosition.CenterParent;
+		Text = UiText.Get("Dependency.Title");
+		FormClosing += OnFormClosing;
+		Load += OnFormLoad;
+		ResumeLayout(performLayout: true);
+	}
+
 	internal void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
 	{
 		base.Invoke(new MethodInvoker(delegate
 		{
 			this.progressBar.Value = e.ProgressPercentage;
-			string text = null;
-			if (this.cookieAwareWebClient.ResponseHeaders[EncodedStringTable.DecodeString(3814)] != null)
+			string fileName = null;
+			string disposition = this.cookieAwareWebClient.ResponseHeaders?["Content-Disposition"];
+			if (!string.IsNullOrWhiteSpace(disposition))
 			{
-				text = new ContentDisposition(this.cookieAwareWebClient.ResponseHeaders[EncodedStringTable.DecodeString(3814)]).FileName;
+				try
+				{
+					fileName = new ContentDisposition(disposition).FileName;
+				}
+				catch (FormatException)
+				{
+					// A malformed optional header must not abort an otherwise valid download.
+				}
 			}
-			if (string.IsNullOrEmpty(text))
+			if (string.IsNullOrEmpty(fileName))
 			{
-				text = this.text3;
+				fileName = this.text3;
 			}
-			if (string.IsNullOrEmpty(text))
+			if (string.IsNullOrEmpty(fileName))
 			{
-				text = Uri.UnescapeDataString(Path.GetFileName(new Uri(this.text).AbsolutePath));
+				fileName = Uri.UnescapeDataString(Path.GetFileName(new Uri(this.text).AbsolutePath));
 			}
-			this.label.Text = string.Concat(new string[]
-			{
-				EncodedStringTable.DecodeString(3843),
-				text,
-				EncodedStringTable.DecodeString(3860),
+			this.label.Text = UiText.Format(
+				"Dependency.Downloading",
+				fileName,
 				RecoveredRuntime.FormatByteSize(e.BytesReceived),
-				EncodedStringTable.DecodeString(3869),
-				RecoveredRuntime.FormatByteSize(e.TotalBytesToReceive),
-				EncodedStringTable.DecodeString(3874)
-			});
+				RecoveredRuntime.FormatByteSize(e.TotalBytesToReceive));
 		}));
 	}
 
@@ -78,9 +132,15 @@ public sealed class DependencyInstallerForm : Form
 	{
 		base.Invoke(new MethodInvoker(delegate
 		{
+			if (e.Cancelled)
+			{
+				Close();
+				return;
+			}
+
 			if (e.Error != null)
 			{
-				MessageBox.Show(this, EncodedStringTable.DecodeString(3879) + e.Error.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(this, UiText.Format("Message.Dependency.DownloadFailed", e.Error.Message), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				this.Close();
 				return;
 			}
@@ -100,7 +160,7 @@ public sealed class DependencyInstallerForm : Form
 		{
 			this.Invoke(new MethodInvoker(delegate
 			{
-				this.label.Text = EncodedStringTable.DecodeString(1869);
+				this.label.Text = UiText.Get("Dependency.Extracting");
 			}));
 			try
 			{
@@ -108,7 +168,7 @@ public sealed class DependencyInstallerForm : Form
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(EncodedStringTable.DecodeString(4029) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				ShowMessage(UiText.Format("Message.Dependency.ExtractFailed", ex.Message), MessageBoxIcon.Exclamation);
 				succeeded = false;
 			}
 		}
@@ -116,7 +176,7 @@ public sealed class DependencyInstallerForm : Form
 		{
 			this.Invoke(new MethodInvoker(delegate
 			{
-				this.label.Text = EncodedStringTable.DecodeString(1847) + this.text3 + EncodedStringTable.DecodeString(1864);
+				this.label.Text = UiText.Format("Dependency.Installing", this.text3);
 			}));
 			try
 			{
@@ -130,7 +190,7 @@ public sealed class DependencyInstallerForm : Form
 					process.WaitForExit();
 					if (process.ExitCode != 0)
 					{
-						throw new Exception(EncodedStringTable.DecodeString(3956) + process.ExitCode);
+						throw new InvalidOperationException(UiText.Format("Message.Dependency.SetupExitCode", process.ExitCode));
 					}
 					Thread.Sleep(100);
 					File.Delete(installerPath);
@@ -138,49 +198,81 @@ public sealed class DependencyInstallerForm : Form
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(EncodedStringTable.DecodeString(4029) + ex.Message, EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				ShowMessage(UiText.Format("Message.Dependency.SetupFailed", ex.Message), MessageBoxIcon.Exclamation);
 				succeeded = false;
 			}
 		}
 
 		if (succeeded)
 		{
-			MessageBox.Show(EncodedStringTable.DecodeString(4102), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+			ShowMessage(UiText.Get("Message.Dependency.Completed"), MessageBoxIcon.Information);
 		}
 		this.Invoke(new MethodInvoker(this.Close));
 	}
 
+	private void ShowMessage(string message, MessageBoxIcon icon)
+	{
+		if (IsDisposed)
+		{
+			return;
+		}
+
+		Invoke(new MethodInvoker(() =>
+			MessageBox.Show(this, message, UiText.Get("App.Title"), MessageBoxButtons.OK, icon)));
+	}
+
 	internal void OnFormLoad(object sender, EventArgs e)
 	{
+		if (!Uri.TryCreate(this.text, UriKind.Absolute, out _))
+		{
+			MessageBox.Show(this, UiText.Get("Message.Dependency.InvalidAddress"), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			Close();
+			return;
+		}
+
 		ThreadPool.QueueUserWorkItem(delegate(object instance)
 		{
 			if (this.flag)
 			{
-				bool flag = false;
+				bool downloadStarted = false;
 				try
 				{
-					string address = this.text.Replace(EncodedStringTable.DecodeString(1902), EncodedStringTable.DecodeString(1915));
-					IEnumerator enumerator = Regex.Matches(this.cookieAwareWebClient.DownloadString(address), EncodedStringTable.DecodeString(1936)).GetEnumerator();
+					string address = Regex.Replace(
+						this.text,
+						@"/details\.aspx",
+						"/confirmation.aspx",
+						RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+					string downloadPage = this.cookieAwareWebClient.DownloadString(address);
+					MatchCollection matches = Regex.Matches(
+						downloadPage,
+						@"href\s*=\s*[""'](?<url>https?://[^""']+)[""']",
+						RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+					foreach (Match match in matches)
 					{
-						while (enumerator.MoveNext())
+						string value = WebUtility.HtmlDecode(match.Groups["url"].Value);
+						if (value.IndexOf(this.text3, StringComparison.OrdinalIgnoreCase) != -1 &&
+							Uri.TryCreate(value, UriKind.Absolute, out Uri downloadUri))
 						{
-							string value = ((Match)enumerator.Current).Groups[EncodedStringTable.DecodeString(1969)].Value;
-							if (value.IndexOf(this.text3, StringComparison.OrdinalIgnoreCase) != -1)
-							{
-								flag = true;
-								this.cookieAwareWebClient.DownloadDataAsync(new Uri(value));
-								break;
-							}
+							downloadStarted = true;
+							this.cookieAwareWebClient.DownloadDataAsync(downloadUri);
+							break;
 						}
 					}
 				}
 				catch
 				{
 				}
-				if (!flag)
+				if (!downloadStarted)
 				{
-					MessageBox.Show(EncodedStringTable.DecodeString(1978) + this.text3 + EncodedStringTable.DecodeString(2023), EncodedStringTable.DecodeString(599), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-					Process.Start(this.text);
+					ShowMessage(UiText.Format("Message.Dependency.ManualInstall", this.text3), MessageBoxIcon.Information);
+					try
+					{
+						Process.Start(this.text);
+					}
+					finally
+					{
+						this.Invoke(new MethodInvoker(this.Close));
+					}
 					return;
 				}
 			}

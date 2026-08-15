@@ -45,8 +45,7 @@ public sealed class MainForm : Form
 	internal Button injectButton;
 	internal Button aboutButton;
 	internal Button settingsButton;
-	internal DataGridViewCheckBoxColumn enabledColumn;
-	internal DataGridViewTextBoxColumn dllNameColumn;
+	internal ModuleListColumn moduleColumn;
 	internal DataGridViewButtonColumn exportOptionsColumn;
 	internal Panel processSurface;
 	private Panel processNameFrame;
@@ -113,8 +112,7 @@ public sealed class MainForm : Form
 		injectButton = new Button();
 		aboutButton = new Button();
 		settingsButton = new Button();
-		enabledColumn = new DataGridViewCheckBoxColumn();
-		dllNameColumn = new DataGridViewTextBoxColumn();
+		moduleColumn = new ModuleListColumn();
 		exportOptionsColumn = new DataGridViewButtonColumn();
 		processSurface = new Panel();
 		processNameFrame = new Panel();
@@ -339,15 +337,11 @@ public sealed class MainForm : Form
 		commandLayout.Controls.Add(clearButton, 0, 4);
 		commandRail.Controls.Add(commandLayout);
 
-		enabledColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-		enabledColumn.HeaderText = string.Empty;
-		enabledColumn.Name = "enabledColumn";
-		enabledColumn.Width = 38;
-		dllNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-		dllNameColumn.HeaderText = UiText.Get("Main.DllColumn");
-		dllNameColumn.MinimumWidth = 180;
-		dllNameColumn.Name = "dllNameColumn";
-		dllNameColumn.ReadOnly = true;
+		moduleColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+		moduleColumn.HeaderText = UiText.Get("Main.DllColumn");
+		moduleColumn.MinimumWidth = 180;
+		moduleColumn.Name = "moduleColumn";
+		moduleColumn.ReadOnly = true;
 		exportOptionsColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 		exportOptionsColumn.FlatStyle = FlatStyle.Flat;
 		exportOptionsColumn.HeaderText = string.Empty;
@@ -366,7 +360,7 @@ public sealed class MainForm : Form
 		moduleGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
 		moduleGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 		moduleGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-		moduleGrid.Columns.AddRange(enabledColumn, dllNameColumn, exportOptionsColumn);
+		moduleGrid.Columns.AddRange(moduleColumn, exportOptionsColumn);
 		moduleGrid.Dock = DockStyle.Fill;
 		moduleGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
 		moduleGrid.GridColor = ModernUi.Border;
@@ -377,6 +371,7 @@ public sealed class MainForm : Form
 		moduleGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 		moduleGrid.TabIndex = 2;
 		moduleGrid.CellMouseUp += OnModuleGridCellMouseUp;
+		moduleGrid.KeyDown += OnModuleGridKeyDown;
 		moduleGrid.SelectionChanged += OnModuleSelectionChanged;
 		moduleGrid.RowsAdded += OnModuleRowsChanged;
 		moduleGrid.RowsRemoved += OnModuleRowsChanged;
@@ -482,11 +477,9 @@ public sealed class MainForm : Form
 		moduleGrid.ColumnHeadersDefaultCellStyle.SelectionBackColor = ModernUi.SurfaceMuted;
 		moduleGrid.ColumnHeadersDefaultCellStyle.SelectionForeColor = ModernUi.TextSecondary;
 		moduleGrid.EnableHeadersVisualStyles = false;
-		enabledColumn.Width = ScaleLogical(38);
-		dllNameColumn.MinimumWidth = ScaleLogical(160);
+		moduleColumn.MinimumWidth = ScaleLogical(160);
 		exportOptionsColumn.Width = ScaleLogical(82);
-		enabledColumn.HeaderCell.Style.BackColor = ModernUi.SurfaceMuted;
-		dllNameColumn.HeaderCell.Style.BackColor = ModernUi.SurfaceMuted;
+		moduleColumn.HeaderCell.Style.BackColor = ModernUi.SurfaceMuted;
 		exportOptionsColumn.HeaderCell.Style.BackColor = ModernUi.SurfaceMuted;
 		((EmptyStateDataGridView)moduleGrid).RefreshContentMetrics();
 	}
@@ -753,7 +746,7 @@ public sealed class MainForm : Form
 			return;
 		}
 
-		if (e.ColumnIndex == enabledColumn.Index)
+		if (e.ColumnIndex == moduleColumn.Index && ModuleListCell.IsCheckBoxHit(moduleGrid, e.X))
 		{
 			RecoveredRuntime.ToggleModuleEnabled(this, e.RowIndex);
 		}
@@ -761,6 +754,18 @@ public sealed class MainForm : Form
 		{
 			RecoveredRuntime.EditModuleOptions((ModuleRow)moduleGrid.Rows[e.RowIndex].Tag);
 		}
+	}
+
+	internal void OnModuleGridKeyDown(object sender, KeyEventArgs e)
+	{
+		if (e.KeyCode != Keys.Space || moduleGrid.SelectedRows.Count == 0)
+		{
+			return;
+		}
+
+		RecoveredRuntime.ToggleModuleEnabled(this, moduleGrid.SelectedRows[0].Index);
+		e.Handled = true;
+		e.SuppressKeyPress = true;
 	}
 
 	internal void OnProcessIconClicked(object sender, EventArgs e)
@@ -882,7 +887,7 @@ public sealed class MainForm : Form
 		toggleButton.Text = UiText.Get("Main.Toggle");
 		removeButton.Text = UiText.Get("Main.Remove");
 		clearButton.Text = UiText.Get("Main.Clear");
-		dllNameColumn.HeaderText = UiText.Get("Main.DllColumn");
+		moduleColumn.HeaderText = UiText.Get("Main.DllColumn");
 		exportOptionsColumn.Text = UiText.Get("Main.Options");
 		aboutButton.Text = UiText.Get("Main.About");
 		settingsButton.Text = UiText.Get("Main.Settings");

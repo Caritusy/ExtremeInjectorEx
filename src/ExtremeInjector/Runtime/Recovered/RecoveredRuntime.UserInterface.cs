@@ -65,9 +65,9 @@ public sealed partial class RecoveredRuntime
 		}
 
 		DataGridViewRow row = mainForm.moduleGrid.Rows[intValue];
-		bool enabled = !(bool)row.Cells[0].Value;
-		row.Cells[0].Value = enabled;
-		((MainForm.ModuleRow)row.Tag).Entry.Enabled = enabled;
+		MainForm.ModuleRow module = (MainForm.ModuleRow)row.Tag;
+		module.Entry.Enabled = !module.Entry.Enabled;
+		mainForm.moduleGrid.InvalidateCell(mainForm.moduleColumn.Index, intValue);
 		ApplicationSettings.Save();
 	}
 
@@ -95,7 +95,7 @@ public sealed partial class RecoveredRuntime
 		dependencyInstallerForm.Controls.Add(dependencyInstallerForm.label);
 		dependencyInstallerForm.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
 		dependencyInstallerForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-		dependencyInstallerForm.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
+		dependencyInstallerForm.Icon = componentResourceManager.GetObject("$this.Icon") as Icon;
 		dependencyInstallerForm.MaximizeBox = false;
 		dependencyInstallerForm.MinimizeBox = false;
 		dependencyInstallerForm.Name = EncodedStringTable.DecodeString(13079);
@@ -108,7 +108,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static bool StripNumericPrefix(ref string text, [Out] ModuleOptionsForm moduleOptionsForm, string text2)
 	{
-		if (text2.StartsWith(EncodedStringTable.DecodeString(2072)) || text2.StartsWith(EncodedStringTable.DecodeString(13195)))
+		if (text2.StartsWith("0x", StringComparison.Ordinal) || text2.StartsWith("0X", StringComparison.Ordinal))
 		{
 			text = text2.Substring(2);
 			return true;
@@ -586,7 +586,7 @@ public sealed partial class RecoveredRuntime
 		processInspectorForm.Controls.Add(processInspectorForm.groupBox);
 		processInspectorForm.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
 		processInspectorForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
-		processInspectorForm.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
+		processInspectorForm.Icon = componentResourceManager.GetObject("$this.Icon") as Icon;
 		processInspectorForm.MaximizeBox = false;
 		processInspectorForm.MinimizeBox = false;
 		processInspectorForm.Name = EncodedStringTable.DecodeString(27002);

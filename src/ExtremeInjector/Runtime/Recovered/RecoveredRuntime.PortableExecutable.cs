@@ -556,12 +556,14 @@ public sealed partial class RecoveredRuntime
 					return;
 				}
 
-				ModuleOptionsForm form = new ModuleOptionsForm
+				using (ModuleOptionsForm form = new ModuleOptionsForm
 				{
 					Module = moduleEntry,
 					Image = image
-				};
+				})
+				{
 				form.ShowDialog();
+				}
 			}
 		}
 		catch
@@ -847,7 +849,7 @@ public sealed partial class RecoveredRuntime
 		manualMapOptionsForm.Controls.Add(manualMapOptionsForm.groupBox);
 		manualMapOptionsForm.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
 		manualMapOptionsForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-		manualMapOptionsForm.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
+		manualMapOptionsForm.Icon = componentResourceManager.GetObject("$this.Icon") as Icon;
 		manualMapOptionsForm.Name = EncodedStringTable.DecodeString(15029);
 		manualMapOptionsForm.StartPosition = FormStartPosition.CenterParent;
 		manualMapOptionsForm.Text = EncodedStringTable.DecodeString(15058);
@@ -1011,7 +1013,7 @@ public sealed partial class RecoveredRuntime
 		advancedScrambleSettingsForm.Controls.Add(advancedScrambleSettingsForm.groupBox);
 		advancedScrambleSettingsForm.Font = new Font(EncodedStringTable.DecodeString(11956), 8.25f);
 		advancedScrambleSettingsForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-		advancedScrambleSettingsForm.Icon = (Icon)componentResourceManager.GetObject(EncodedStringTable.DecodeString(13062));
+		advancedScrambleSettingsForm.Icon = componentResourceManager.GetObject("$this.Icon") as Icon;
 		advancedScrambleSettingsForm.Name = EncodedStringTable.DecodeString(16071);
 		advancedScrambleSettingsForm.StartPosition = FormStartPosition.CenterParent;
 		advancedScrambleSettingsForm.Text = EncodedStringTable.DecodeString(16100);

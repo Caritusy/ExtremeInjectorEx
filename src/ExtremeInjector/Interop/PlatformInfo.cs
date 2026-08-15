@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -61,6 +62,87 @@ public static class PlatformInfo
 
 	static PlatformInfo()
 	{
+		flag = IntPtr.Size == 8;
+		randomElement = new Random();
+		random = new CryptoRandom<RNGCryptoServiceProvider>();
+
+		NativeTypes.OsVersionInfoEx version = GetOperatingSystemVersion();
+		flag2 = IsVersionAtLeast(version, major: 6, minor: 0);
+		flag3 = IsVersionAtLeast(version, major: 6, minor: 1);
+		flag4 = IsVersionAtLeast(version, major: 5, minor: 1, servicePackMajor: 2);
+		flag5 = IsVersionAtLeast(version, major: 5, minor: 1, servicePackMajor: 3);
+		flag6 = IsVersionAtLeast(version, major: 6, minor: 2);
+		flag7 = IsVersionAtLeast(version, major: 6, minor: 3);
+		flag8 = IsVersionAtLeast(version, major: 10, minor: 0);
+		flag9 = IsVersionAtLeast(version, major: 10, minor: 0, build: 14393);
+		flag10 = IsVersionAtLeast(version, major: 10, minor: 0, build: 15063);
+		flag11 = IsVersionAtLeast(version, major: 10, minor: 0, build: 16299);
+		flag12 = IsVersionAtLeast(version, major: 10, minor: 1);
+
+		text = GetWindowsDirectory();
+		text2 = Path.Combine(text, "System32");
+		text3 = Path.Combine(text, "SysWOW64");
+		text4 = Path.Combine(text, "System");
+	}
+
+	private static NativeTypes.OsVersionInfoEx GetOperatingSystemVersion()
+	{
+		var version = new NativeTypes.OsVersionInfoEx
+		{
+			intValue = Marshal.SizeOf(typeof(NativeTypes.OsVersionInfoEx))
+		};
+		if (RecoveredRuntime.RtlGetVersion(ref version) == 0)
+		{
+			return version;
+		}
+
+		Version fallback = Environment.OSVersion.Version;
+		version.intValue2 = fallback.Major;
+		version.intValue3 = fallback.Minor;
+		version.intValue4 = fallback.Build;
+		return version;
+	}
+
+	private static bool IsVersionAtLeast(
+		NativeTypes.OsVersionInfoEx current,
+		int major,
+		int minor,
+		int build = -1,
+		ushort servicePackMajor = 0)
+	{
+		if (current.intValue2 != major)
+		{
+			return current.intValue2 > major;
+		}
+
+		if (current.intValue3 != minor)
+		{
+			return current.intValue3 > minor;
+		}
+
+		if (build >= 0 && current.intValue4 != build)
+		{
+			return current.intValue4 > build;
+		}
+
+		return current.ushortValue >= servicePackMajor;
+	}
+
+	private static string GetWindowsDirectory()
+	{
+		var path = new StringBuilder(260);
+		if (RecoveredRuntime.GetWindowsDirectory(path, path.Capacity) != 0)
+		{
+			return path.ToString();
+		}
+
+		string fallback = Environment.GetEnvironmentVariable("windir");
+		if (string.IsNullOrWhiteSpace(fallback))
+		{
+			throw new InvalidOperationException("Windows did not report its installation directory.");
+		}
+
+		return fallback;
 	}
 
 	public static string ConvertDevicePathToDosPath(string text5)

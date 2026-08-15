@@ -11,8 +11,10 @@
     <PackageReference Include="MSTest.TestFramework" Version="4.3.3" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.IO.Compression" />
-    <ProjectReference Include="..\..\src\ExtremeInjector\ExtremeInjector.csproj" />
+	<Reference Include="System.Drawing" />
+	<Reference Include="System.IO.Compression" />
+	<Reference Include="System.Windows.Forms" />
+	<ProjectReference Include="..\..\src\ExtremeInjector\ExtremeInjector.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\res\Localization\Strings.en.resx"
