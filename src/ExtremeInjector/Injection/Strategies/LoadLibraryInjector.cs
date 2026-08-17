@@ -6,10 +6,6 @@ using System.Text;
 
 public sealed class LoadLibraryInjector : DllInjector
 {
-	private const uint RemoteExecutionTimeoutMilliseconds = 30_000;
-	private const uint WaitObject0 = 0;
-	private const uint WaitTimeout = 0x102;
-
 	private const NativeTypes.ProcessAccessRights InjectionProcessAccess =
 		NativeTypes.ProcessAccessRights.CreateThread |
 		NativeTypes.ProcessAccessRights.VirtualMemoryOperation |
@@ -89,18 +85,7 @@ public sealed class LoadLibraryInjector : DllInjector
 					"Unable to create the LoadLibraryW remote execution thread.");
 			}
 
-			uint waitResult = RecoveredRuntime.WaitForSingleObject(remoteThread, RemoteExecutionTimeoutMilliseconds);
-			if (waitResult == WaitTimeout)
-			{
-				throw new RemoteExecutionTimeoutException(
-					"Timed out while waiting for LoadLibraryW. The remote allocation was retained because the thread may still be running.");
-			}
-			if (waitResult != WaitObject0)
-			{
-				throw new RemoteExecutionTimeoutException(
-					"Waiting for LoadLibraryW failed. The remote allocation was retained because the execution state is unknown.",
-					new Win32Exception(Marshal.GetLastWin32Error()));
-			}
+			WaitForRemoteThreadCompletion(remoteThread, "LoadLibraryW");
 
 			executionCompleted = true;
 			if (RecoveredRuntime.HasProcessExited(process))

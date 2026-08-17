@@ -45,33 +45,56 @@ public sealed class LdrLoadDllInjector : DllInjector
 		int int_;
 		int intValue;
 		IntPtr intPtr2 = this.BuildLoaderStub(intPtr, text, out int_, out intValue);
-		IntPtr intPtr3 = RecoveredRuntime.StartRemoteThread(this, intPtr2, IntPtr.Zero);
-		if (intPtr3 == IntPtr.Zero)
+		IntPtr intPtr3 = IntPtr.Zero;
+		bool executionCompleted = false;
+		try
 		{
-			this.ReleaseMemory(intPtr2);
-			throw new AccessViolationException(EncodedStringTable.DecodeString(12914));
+			intPtr3 = RecoveredRuntime.StartRemoteThread(this, intPtr2, IntPtr.Zero);
+			if (intPtr3 == IntPtr.Zero)
+			{
+				throw new AccessViolationException(EncodedStringTable.DecodeString(12914));
+			}
+
+			base.WaitForRemoteThreadCompletion(intPtr3, "LdrLoadDll");
+			executionCompleted = true;
+			if (RecoveredRuntime.HasProcessExited(base.GetRemoteProcess()))
+			{
+				throw new Exception(EncodedStringTable.DecodeString(28330));
+			}
+
+			uint num = base.Read<uint>(intPtr2.Add(intValue));
+			if (num != 0u)
+			{
+				throw new Exception(EncodedStringTable.DecodeString(28411) + num.ToString(EncodedStringTable.DecodeString(28492)) + EncodedStringTable.DecodeString(3656), RecoveredRuntime.CreateWin32ExceptionFromNtStatus(num, this));
+			}
+
+			return RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess())
+				? new IntPtr(unchecked((long)base.Read<uint>(intPtr2.Add(int_))))
+				: base.Read<IntPtr>(intPtr2.Add(int_));
 		}
-		RecoveredRuntime.WaitForRemoteThread(this, intPtr3, -1);
-		if (RecoveredRuntime.HasProcessExited(base.GetRemoteProcess()))
+		finally
 		{
-			this.ReleaseMemory(intPtr2);
-			throw new Exception(EncodedStringTable.DecodeString(28330));
+			if (intPtr3 != IntPtr.Zero)
+			{
+				RecoveredRuntime.CloseRemoteHandle(this, intPtr3);
+			}
+			if (executionCompleted || intPtr3 == IntPtr.Zero)
+			{
+				this.ReleaseMemory(intPtr2);
+			}
 		}
-		uint num = base.Read<uint>(intPtr2.Add(intValue));
-		if (num != 0u)
-		{
-			this.ReleaseMemory(intPtr2);
-			throw new Exception(EncodedStringTable.DecodeString(28411) + num.ToString(EncodedStringTable.DecodeString(28492)) + EncodedStringTable.DecodeString(3656), RecoveredRuntime.CreateWin32ExceptionFromNtStatus(num, this));
-		}
-		IntPtr result = RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()) ? ((IntPtr)((long)((ulong)base.Read<uint>(intPtr2.Add(int_))))) : base.Read<IntPtr>(intPtr2.Add(int_));
-		this.ReleaseMemory(intPtr2);
-		RecoveredRuntime.CloseRemoteHandle(this, intPtr3);
-		return result;
 	}
 
 	internal IntPtr BuildLoaderStub(IntPtr address, string text, out int intValue, out int intValue2)
 	{
-		IntPtr intPtr = RecoveredRuntime.AllocateRemoteMemory(this, 4096L, NativeTypes.MemoryProtection.ExecuteReadWrite);
+		byte[] bytes = Encoding.Unicode.GetBytes(text + EncodedStringTable.DecodeString(12219));
+		if (bytes.Length > ushort.MaxValue)
+		{
+			throw new ArgumentException("The DLL path is too long for a remote UNICODE_STRING.", nameof(text));
+		}
+
+		long allocationSize = checked(4096L + bytes.Length);
+		IntPtr intPtr = RecoveredRuntime.AllocateRemoteMemory(this, allocationSize, NativeTypes.MemoryProtection.ExecuteReadWrite);
 		if (intPtr == IntPtr.Zero)
 		{
 			throw new AccessViolationException(EncodedStringTable.DecodeString(28957));
@@ -108,7 +131,6 @@ public sealed class LdrLoadDllInjector : DllInjector
 		RecoveredRuntime.EmbedUInt32(@class, 0u);
 		RecoveredRuntime.AlignRemoteData(class47_);
 		IntPtr address2 = intPtr.Add(RecoveredRuntime.GetAssemblerOffset(@class));
-		byte[] bytes = Encoding.Unicode.GetBytes(text + EncodedStringTable.DecodeString(12219));
 		RecoveredRuntime.EmbedBytes(@class, bytes);
 		RecoveredRuntime.AlignRemoteData(class47_);
 		RecoveredRuntime.BindLabel(@class, label);
@@ -116,6 +138,11 @@ public sealed class LdrLoadDllInjector : DllInjector
 		RecoveredRuntime.EmbedUInt16(@class, (ushort)bytes.Length);
 		RecoveredRuntime.AlignRemoteData(class47_);
 		RecoveredRuntime.EmbedPlatformPointer(class47_, address2);
+		if (RecoveredRuntime.GetAssemblerOffset(@class) > allocationSize)
+		{
+			this.ReleaseMemory(intPtr);
+			throw new InvalidOperationException("The generated LdrLoadDll stub exceeds its remote allocation.");
+		}
 		if (!(RecoveredRuntime.AssembleRemoteCode(intPtr, @class, this) == IntPtr.Zero))
 		{
 			return intPtr;
