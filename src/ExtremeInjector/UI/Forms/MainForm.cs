@@ -606,12 +606,12 @@ public sealed class MainForm : Form
 		}
 
 		bool injectionSucceeded = attemptedInjection && allModulesSucceeded;
-		Invoke((Action)(() => RecoveredRuntime.CompleteInjection(injectionSucceeded, this)));
+		RecoveredRuntime.TryBeginInvoke(this, () => RecoveredRuntime.CompleteInjection(injectionSucceeded, this));
 	}
 
 	private void SetProcessStatus(string status)
 	{
-		Invoke((Action)(() => processDescriptionLabel.Text = status));
+		RecoveredRuntime.TryBeginInvoke(this, () => processDescriptionLabel.Text = status);
 	}
 
 	internal void OnSelectProcessClicked(object sender, EventArgs e)
