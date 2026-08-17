@@ -139,6 +139,37 @@ public sealed partial class RecoveredRuntime
 		});
 	}
 
+	internal static void ReportInjectionErrorSafely(
+		Action<string, Exception> reportError,
+		string message,
+		Exception exception)
+	{
+		if (reportError == null)
+		{
+			return;
+		}
+
+		try
+		{
+			reportError(message, exception);
+		}
+		catch (Exception reportingException)
+		{
+			try
+			{
+				Trace.TraceError(
+					"The injection error reporter failed: {0}{1}{2}",
+					reportingException,
+					Environment.NewLine,
+					FormatExceptionChain(message, exception, flag: true));
+			}
+			catch
+			{
+				// Error reporting must never change the injection result.
+			}
+		}
+	}
+
 	internal static void ShowUnsupportedWindowsXpMessage(string text, MainForm mainForm, string text2)
 	{
 		MessageBox.Show(mainForm, UiText.Format("Message.Dependency.UnsupportedXp", text2, text), UiText.Get("App.Title"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -209,7 +240,10 @@ public sealed partial class RecoveredRuntime
 		catch (Exception exception)
 		{
 			string processName = process?.Name ?? UiText.Get("Common.UnknownProcess");
-			reportError?.Invoke(UiText.Format("Message.InjectFailed", Path.GetFileName(sourceModulePath), processName), exception);
+			ReportInjectionErrorSafely(
+				reportError,
+				UiText.Format("Message.InjectFailed", Path.GetFileName(sourceModulePath), processName),
+				exception);
 			return false;
 		}
 		finally

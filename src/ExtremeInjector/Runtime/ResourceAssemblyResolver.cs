@@ -5,6 +5,8 @@ using System.Threading;
 
 public sealed class ResourceAssemblyResolver
 {
+	private static readonly object syncRoot = new object();
+
 	internal static Assembly assemblyValue = null;
 
 	internal static string[] strings = new string[0];
@@ -24,9 +26,12 @@ public sealed class ResourceAssemblyResolver
 	{
 		if (ResourceAssemblyResolver.assemblyValue == null)
 		{
-			lock (ResourceAssemblyResolver.strings)
+			lock (ResourceAssemblyResolver.syncRoot)
 			{
-				ResourceAssemblyResolver.assemblyValue = Assembly.Load(_003CModule_003E.DecodeConstantWithKeyA<string>(3928278315u));
+				string assemblyName = _003CModule_003E.DecodeConstantWithKeyA<string>(3928278315u);
+				ResourceAssemblyResolver.assemblyValue ??=
+					RecoveredRuntime.ResolveEmbeddedAssembly(null, new ResolveEventArgs(assemblyName)) ??
+					Assembly.Load(assemblyName);
 				if (ResourceAssemblyResolver.assemblyValue != null)
 				{
 					ResourceAssemblyResolver.strings = ResourceAssemblyResolver.assemblyValue.GetManifestResourceNames();

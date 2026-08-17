@@ -740,7 +740,10 @@ public sealed partial class RecoveredRuntime
 			}
 			catch (Exception exception)
 			{
-				reportError?.Invoke(UiText.Format("Message.ErasePeFailed", Path.GetFileName(sourceModulePath)), exception);
+				ReportInjectionErrorSafely(
+					reportError,
+					UiText.Format("Message.ErasePeFailed", Path.GetFileName(sourceModulePath)),
+					exception);
 			}
 		}
 
@@ -752,7 +755,10 @@ public sealed partial class RecoveredRuntime
 			}
 			catch (Exception exception)
 			{
-				reportError?.Invoke(UiText.Format("Message.HideModuleFailed", Path.GetFileName(sourceModulePath)), exception);
+				ReportInjectionErrorSafely(
+					reportError,
+					UiText.Format("Message.HideModuleFailed", Path.GetFileName(sourceModulePath)),
+					exception);
 			}
 		}
 	}

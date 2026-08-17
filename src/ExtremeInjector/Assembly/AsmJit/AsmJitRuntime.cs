@@ -220,6 +220,8 @@ public static class AsmJitRuntime
 
 	static AsmJitRuntime()
 	{
+		AsmJitRuntime.flag = IntPtr.Size == 8;
+		AsmJitRuntime.uintValue = uint.MaxValue;
 		AsmJitRuntime.nativeLibraryImage = new NativeLibraryImage(AsmJitRuntime.flag ? RecoveredRuntime.GetAsmJitX64Image() : RecoveredRuntime.GetAsmJitX86Image(), true);
 		RecoveredRuntime.InitializeAsmJitRegisters();
 	}
