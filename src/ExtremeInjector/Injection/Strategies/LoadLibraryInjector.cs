@@ -1,9 +1,15 @@
 using System;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 public sealed class LoadLibraryInjector : DllInjector
 {
+	private const uint RemoteExecutionTimeoutMilliseconds = 30_000;
+	private const uint WaitObject0 = 0;
+	private const uint WaitTimeout = 0x102;
+
 	private const NativeTypes.ProcessAccessRights InjectionProcessAccess =
 		NativeTypes.ProcessAccessRights.CreateThread |
 		NativeTypes.ProcessAccessRights.VirtualMemoryOperation |
@@ -28,6 +34,15 @@ public sealed class LoadLibraryInjector : DllInjector
 
 	public override IntPtr Inject(string modulePath)
 	{
+		if (!Path.IsPathRooted(modulePath))
+		{
+			modulePath = Path.GetFullPath(modulePath);
+		}
+		if (!File.Exists(modulePath))
+		{
+			throw new FileNotFoundException("Unable to find the module to inject.", modulePath);
+		}
+
 		RemoteProcess process = GetRemoteProcess();
 		if (!EnsureAttachedToProcess(process.ProcessId))
 		{
@@ -42,40 +57,143 @@ public sealed class LoadLibraryInjector : DllInjector
 			throw new MissingMethodException("Unable to find the LoadLibraryW function inside the specified process.");
 		}
 
-		byte[] encodedPath = Encoding.Unicode.GetBytes(modulePath + "\0");
-		IntPtr remotePath = RecoveredRuntime.AllocateRemoteMemory(this, encodedPath.Length, NativeTypes.MemoryProtection.ReadWrite);
-		if (remotePath == IntPtr.Zero)
+		IntPtr getLastErrorAddress = RecoveredRuntime.ResolveExportByName(kernel32, "GetLastError", flag: false);
+		if (getLastErrorAddress == IntPtr.Zero)
 		{
-			throw new AccessViolationException("Unable to allocate memory for the injection path.");
+			throw new MissingMethodException("Unable to find the GetLastError function inside the specified process.");
 		}
 
+		IntPtr remoteCode = BuildLoaderStub(
+			loadLibraryAddress,
+			getLastErrorAddress,
+			modulePath,
+			out int moduleResultOffset,
+			out int errorResultOffset,
+			out int codeSize);
+		IntPtr remoteThread = IntPtr.Zero;
+		bool executionCompleted = false;
 		try
 		{
-			if (!WriteArray(remotePath, encodedPath))
+			if (!RecoveredRuntime.FlushInstructionCache(GetProcessHandle(), remoteCode, (UIntPtr)(uint)codeSize))
 			{
-				throw new AccessViolationException("Unable to write memory for the injection path.");
+				throw new Win32Exception(
+					Marshal.GetLastWin32Error(),
+					"Unable to flush the LoadLibraryW remote execution stub from the instruction cache.");
 			}
 
-			IntPtr remoteThread = RecoveredRuntime.StartRemoteThread(this, loadLibraryAddress, remotePath);
+			remoteThread = RecoveredRuntime.StartRemoteThread(this, remoteCode, IntPtr.Zero);
 			if (remoteThread == IntPtr.Zero)
 			{
-				throw new AccessViolationException("Unable to create thread in the specified process.");
+				throw new Win32Exception(
+					Marshal.GetLastWin32Error(),
+					"Unable to create the LoadLibraryW remote execution thread.");
 			}
 
-			try
+			uint waitResult = RecoveredRuntime.WaitForSingleObject(remoteThread, RemoteExecutionTimeoutMilliseconds);
+			if (waitResult == WaitTimeout)
 			{
-				RecoveredRuntime.WaitForRemoteThread(this, remoteThread, -1);
+				throw new RemoteExecutionTimeoutException(
+					"Timed out while waiting for LoadLibraryW. The remote allocation was retained because the thread may still be running.");
 			}
-			finally
+			if (waitResult != WaitObject0)
 			{
-				RecoveredRuntime.CloseRemoteHandle(this, remoteThread);
+				throw new RemoteExecutionTimeoutException(
+					"Waiting for LoadLibraryW failed. The remote allocation was retained because the execution state is unknown.",
+					new Win32Exception(Marshal.GetLastWin32Error()));
 			}
+
+			executionCompleted = true;
+			if (RecoveredRuntime.HasProcessExited(process))
+			{
+				throw new InvalidOperationException("The target process exited while LoadLibraryW was running.");
+			}
+
+			IntPtr moduleBase = RecoveredRuntime.Is32BitProcess(process)
+				? new IntPtr(unchecked((long)Read<uint>(remoteCode.Add(moduleResultOffset))))
+				: Read<IntPtr>(remoteCode.Add(moduleResultOffset));
+			int loaderError = Read<int>(remoteCode.Add(errorResultOffset));
+			if (moduleBase == IntPtr.Zero)
+			{
+				Win32Exception loaderException = loaderError == 0
+					? null
+					: new Win32Exception(loaderError);
+				string errorDetail = loaderException?.Message ??
+					"LoadLibraryW returned NULL without setting a Windows error.";
+				throw new DllNotFoundException(
+					$"LoadLibraryW failed to load '{modulePath}' with Windows error {loaderError}: {errorDetail}",
+					loaderException);
+			}
+
+			return moduleBase;
 		}
 		finally
 		{
-			ReleaseMemory(remotePath);
+			if (remoteThread != IntPtr.Zero)
+			{
+				RecoveredRuntime.CloseRemoteHandle(this, remoteThread);
+			}
+			if (executionCompleted || remoteThread == IntPtr.Zero)
+			{
+				ReleaseMemory(remoteCode);
+			}
 		}
+	}
 
-		return RecoveredRuntime.CaptureProcessModules(process).GetModuleBase(Path.GetFileName(modulePath));
+	internal IntPtr BuildLoaderStub(
+		IntPtr loadLibraryAddress,
+		IntPtr getLastErrorAddress,
+		string modulePath,
+		out int moduleResultOffset,
+		out int errorResultOffset,
+		out int codeSize)
+	{
+		AsmJitAssembler assembler = new AsmJitAssembler();
+		RemoteAssembler remoteAssembler = new RemoteAssembler(assembler, GetRemoteProcess());
+		AsmJitLabel moduleResult = RecoveredRuntime.CreateLabel(assembler);
+		AsmJitLabel errorResult = RecoveredRuntime.CreateLabel(assembler);
+		AsmJitLabel pathData = RecoveredRuntime.CreateLabel(assembler);
+
+		RecoveredRuntime.EmitRemoteCallPrologue(remoteAssembler);
+		RecoveredRuntime.EmitRemoteCall(
+			remoteAssembler,
+			new AsmJitImmediate(loadLibraryAddress),
+			CallingConvention.StdCall,
+			new object[] { RecoveredRuntime.CreateLabelReference(remoteAssembler, pathData) });
+		RecoveredRuntime.EmitMoveRegisterToMemory(
+			assembler,
+			RecoveredRuntime.CreatePointerLabelMemory(remoteAssembler, moduleResult, 0L),
+			RecoveredRuntime.Is32BitProcess(GetRemoteProcess()) ? AsmJitRuntime.gpRegister38 : AsmJitRuntime.gpRegister54);
+		RecoveredRuntime.EmitRemoteCall(
+			remoteAssembler,
+			new AsmJitImmediate(getLastErrorAddress),
+			CallingConvention.StdCall,
+			Array.Empty<object>());
+		RecoveredRuntime.EmitMoveRegisterToMemory(
+			assembler,
+			RecoveredRuntime.CreateDwordLabelMemoryForProcess(0L, remoteAssembler, errorResult),
+			AsmJitRuntime.gpRegister38);
+		RecoveredRuntime.EmitRemoteCallEpilogue(remoteAssembler, -1);
+
+		RecoveredRuntime.AlignRemoteData(remoteAssembler);
+		RecoveredRuntime.BindLabel(assembler, moduleResult);
+		moduleResultOffset = RecoveredRuntime.GetAssemblerOffset(assembler);
+		RecoveredRuntime.EmbedNullPointer(remoteAssembler);
+
+		RecoveredRuntime.AlignRemoteData(remoteAssembler);
+		RecoveredRuntime.BindLabel(assembler, errorResult);
+		errorResultOffset = RecoveredRuntime.GetAssemblerOffset(assembler);
+		RecoveredRuntime.EmbedInt32(assembler, 0);
+
+		RecoveredRuntime.AlignRemoteData(remoteAssembler);
+		RecoveredRuntime.BindLabel(assembler, pathData);
+		RecoveredRuntime.EmbedBytes(assembler, Encoding.Unicode.GetBytes(modulePath + "\0"));
+		codeSize = RecoveredRuntime.GetAssemblerOffset(assembler);
+
+		IntPtr remoteCode = RecoveredRuntime.AssembleRemoteCode(assembler, this);
+		if (remoteCode == IntPtr.Zero)
+		{
+			throw new AccessViolationException("Unable to allocate or write the LoadLibraryW remote execution stub.");
+		}
+		return remoteCode;
 	}
 }

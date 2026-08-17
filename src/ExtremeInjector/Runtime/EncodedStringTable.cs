@@ -7,15 +7,15 @@ using System.Threading;
 
 public sealed class EncodedStringTable
 {
-	internal static readonly string text = null;
+	internal static readonly string text;
 
-	internal static readonly string text2 = null;
+	internal static readonly string text2;
 
 	internal static readonly byte[] bytes;
 
 	internal static readonly Dictionary<int, string> dictionary;
 
-	internal static readonly object instance = null;
+	internal static readonly object instance;
 
 	internal static readonly bool flag;
 
@@ -87,6 +87,9 @@ public sealed class EncodedStringTable
 
 	static EncodedStringTable()
 	{
+		EncodedStringTable.text = _003CModule_003E.DecodeConstantWithKeyE<string>(1174137030u);
+		EncodedStringTable.text2 = _003CModule_003E.DecodeConstantWithKeyD<string>(1533425201u);
+		EncodedStringTable.instance = new object();
 		if (EncodedStringTable.text == _003CModule_003E.DecodeConstantWithKeyB<string>(1753162200u))
 		{
 			EncodedStringTable.flag = true;

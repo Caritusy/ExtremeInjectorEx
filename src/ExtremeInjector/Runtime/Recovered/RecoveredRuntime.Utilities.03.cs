@@ -347,20 +347,24 @@ public sealed partial class RecoveredRuntime
 
 	internal static string FormatExceptionChain(string text2, Exception exception, bool flag)
 	{
+		const string ExceptionSeparator = "\n\n";
+		const string TypeMessageSeparator = ": ";
+		const string SentenceTerminator = ".";
+
 		Type type = exception.GetType();
-		string text = text2;
+		string text = text2 ?? string.Empty;
 		if (flag)
 		{
-			text += EncodedStringTable.DecodeString(24371);
+			text += ExceptionSeparator;
 		}
-		text = text + type.FullName + EncodedStringTable.DecodeString(24376) + exception.Message;
-		if (!text.EndsWith(EncodedStringTable.DecodeString(952)))
+		text = text + type.FullName + TypeMessageSeparator + exception.Message;
+		if (!text.EndsWith(SentenceTerminator, StringComparison.Ordinal))
 		{
-			text += EncodedStringTable.DecodeString(952);
+			text += SentenceTerminator;
 		}
 		if (exception.InnerException != null)
 		{
-			return RecoveredRuntime.FormatExceptionChain(text + EncodedStringTable.DecodeString(24371), exception.InnerException, false);
+			return RecoveredRuntime.FormatExceptionChain(text + ExceptionSeparator, exception.InnerException, false);
 		}
 		return text;
 	}
