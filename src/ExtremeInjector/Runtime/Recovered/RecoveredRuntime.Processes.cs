@@ -239,15 +239,37 @@ public sealed partial class RecoveredRuntime
 			throw new MissingMethodException(EncodedStringTable.DecodeString(12817));
 		}
 		IntPtr intPtr2 = RecoveredRuntime.StartRemoteThread(remoteModuleManager, intPtr, @class.isDifferentModule.GetModuleBase());
-		if (!(intPtr2 == IntPtr.Zero))
+		if (intPtr2 == IntPtr.Zero)
 		{
-			RecoveredRuntime.WaitForRemoteThread(remoteModuleManager, intPtr2, -1);
-			uint num;
-			RecoveredRuntime.GetExitCodeThread(intPtr2, out num);
-			RecoveredRuntime.CloseRemoteHandle(remoteModuleManager, intPtr2);
+			throw new AccessViolationException(EncodedStringTable.DecodeString(12914));
+		}
+
+		try
+		{
+			const uint waitObject0 = 0;
+			const uint waitTimeout = 0x102;
+			uint waitResult = RecoveredRuntime.WaitForSingleObject(intPtr2, RemoteCodeExecutorBase.RemoteExecutionTimeoutMilliseconds);
+			if (waitResult == waitTimeout)
+			{
+				throw new RemoteExecutionTimeoutException("Timed out while waiting for the remote module unload thread.");
+			}
+			if (waitResult != waitObject0)
+			{
+				throw new RemoteExecutionTimeoutException(
+					"Waiting for the remote module unload thread failed.",
+					new Win32Exception(Marshal.GetLastWin32Error()));
+			}
+
+			if (!RecoveredRuntime.GetExitCodeThread(intPtr2, out uint num))
+			{
+				throw new Win32Exception(Marshal.GetLastWin32Error(), "Unable to read the remote module unload result.");
+			}
 			return num == 0u && RecoveredRuntime.CaptureProcessModules(remoteModuleManager.GetRemoteProcess()).All(new Func<ProcessModuleInfo, bool>(@class.IsDifferentModule));
 		}
-		throw new AccessViolationException(EncodedStringTable.DecodeString(12914));
+		finally
+		{
+			RecoveredRuntime.CloseRemoteHandle(remoteModuleManager, intPtr2);
+		}
 	}
 
 	internal static void CloseRemoteHandle(RemoteProcessComponent remoteProcessComponent, IntPtr address)
@@ -324,7 +346,7 @@ public sealed partial class RecoveredRuntime
 
 	internal static bool WaitForRemoteThread(RemoteProcessComponent remoteProcessComponent, IntPtr address, int intValue)
 	{
-		return WaitForSingleObject(address, (intValue == -1) ? uint.MaxValue : ((uint)intValue)) == 0;
+		return WaitForSingleObject(address, (intValue == -1) ? RemoteCodeExecutorBase.RemoteExecutionTimeoutMilliseconds : ((uint)intValue)) == 0;
 	}
 
 	internal static RemoteProcess[] EnumerateRemoteProcesses()

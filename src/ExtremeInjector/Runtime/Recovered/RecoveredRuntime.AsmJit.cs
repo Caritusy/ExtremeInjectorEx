@@ -1003,19 +1003,37 @@ public sealed partial class RecoveredRuntime
 
 	internal static bool ExecuteAssemblerThread(AsmJitAssembler assembler, RemoteCodeExecutorBase remoteCodeExecutorBase)
 	{
-		IntPtr intPtr = RecoveredRuntime.AssembleRemoteCode(assembler, remoteCodeExecutorBase);
-		if (intPtr == IntPtr.Zero)
+		IntPtr remoteCode = RecoveredRuntime.AssembleRemoteCode(assembler, remoteCodeExecutorBase);
+		if (remoteCode == IntPtr.Zero)
 		{
 			return false;
 		}
-		IntPtr intPtr2 = RecoveredRuntime.StartRemoteThread(remoteCodeExecutorBase, intPtr, IntPtr.Zero);
-		if (!(intPtr2 == IntPtr.Zero))
+
+		IntPtr remoteThread = IntPtr.Zero;
+		bool executionCompleted = false;
+		try
 		{
-			RecoveredRuntime.WaitForRemoteThread(remoteCodeExecutorBase, intPtr2, -1);
-			RecoveredRuntime.CloseRemoteHandle(remoteCodeExecutorBase, intPtr2);
+			remoteThread = RecoveredRuntime.StartRemoteThread(remoteCodeExecutorBase, remoteCode, IntPtr.Zero);
+			if (remoteThread == IntPtr.Zero)
+			{
+				return false;
+			}
+
+			remoteCodeExecutorBase.WaitForRemoteThreadCompletion(remoteThread, "the assembler thread");
+			executionCompleted = true;
 			return true;
 		}
-		return false;
+		finally
+		{
+			if (remoteThread != IntPtr.Zero)
+			{
+				RecoveredRuntime.CloseRemoteHandle(remoteCodeExecutorBase, remoteThread);
+			}
+			if (executionCompleted || remoteThread == IntPtr.Zero)
+			{
+				remoteCodeExecutorBase.ReleaseRemoteCode(remoteCode);
+			}
+		}
 	}
 
 	internal static void EmitUnconditionalJump(AsmJitAssembler assembler, AsmJitLabel label)

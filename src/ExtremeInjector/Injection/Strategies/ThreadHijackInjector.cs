@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -69,49 +70,82 @@ public sealed class ThreadHijackInjector : DllInjector
 		{
 			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30617));
 		}
-		if (RecoveredRuntime.SuspendThread(intPtr3) == -1)
+
+		bool threadSuspended = false;
+		bool hijackInstalled = false;
+		bool executionCompleted = false;
+		IntPtr intPtr4 = IntPtr.Zero;
+		try
 		{
+			if (RecoveredRuntime.SuspendThread(intPtr3) == -1)
+			{
+				throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30694));
+			}
+			threadSuspended = true;
+
+			byte[] bytes = Encoding.Unicode.GetBytes(text + EncodedStringTable.DecodeString(12219));
+			int int_;
+			int intValue;
+			int intValue2;
+			if (RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()))
+			{
+				intPtr4 = this.PrepareWow64Hijack(intPtr3, intPtr, intPtr2, bytes, out int_, out intValue, out intValue2);
+			}
+			else
+			{
+				intPtr4 = this.PrepareX64Hijack(intPtr3, intPtr, intPtr2, bytes, out int_, out intValue, out intValue2);
+			}
+			hijackInstalled = true;
+
+			if (RecoveredRuntime.ResumeThread(intPtr3) == -1)
+			{
+				throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30775));
+			}
+			threadSuspended = false;
+
+			Stopwatch waitTimer = Stopwatch.StartNew();
+			while (true)
+			{
+				if (RecoveredRuntime.HasProcessExited(base.GetRemoteProcess()))
+				{
+					executionCompleted = true;
+					throw new Exception(EncodedStringTable.DecodeString(28330));
+				}
+				if (base.Read<uint>(intPtr4.Add(int_)) != 0u)
+				{
+					executionCompleted = true;
+					break;
+				}
+				if (waitTimer.ElapsedMilliseconds >= RemoteExecutionTimeoutMilliseconds)
+				{
+					throw new RemoteExecutionTimeoutException(
+						"Timed out while waiting for the hijacked thread. Its remote code allocation was retained because it may still execute.");
+				}
+				Thread.Sleep(100);
+			}
+
+			int num = base.Read<int>(intPtr4.Add(intValue2));
+			if (num != 0)
+			{
+				throw new Exception(EncodedStringTable.DecodeString(30909), new Win32Exception(num));
+			}
+
+			return RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess())
+				? new IntPtr(unchecked((long)base.Read<uint>(intPtr4.Add(intValue))))
+				: base.Read<IntPtr>(intPtr4.Add(intValue));
+		}
+		finally
+		{
+			if (threadSuspended)
+			{
+				RecoveredRuntime.ResumeThread(intPtr3);
+			}
 			RecoveredRuntime.CloseRemoteHandle(this, intPtr3);
-			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30694));
+			if (intPtr4 != IntPtr.Zero && (!hijackInstalled || executionCompleted))
+			{
+				this.ReleaseMemory(intPtr4);
+			}
 		}
-		byte[] bytes = Encoding.Unicode.GetBytes(text + EncodedStringTable.DecodeString(12219));
-		int int_;
-		int intValue;
-		int intValue2;
-		IntPtr intPtr4;
-		if (RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()))
-		{
-			intPtr4 = this.PrepareWow64Hijack(intPtr3, intPtr, intPtr2, bytes, out int_, out intValue, out intValue2);
-		}
-		else
-		{
-			intPtr4 = this.PrepareX64Hijack(intPtr3, intPtr, intPtr2, bytes, out int_, out intValue, out intValue2);
-		}
-		if (RecoveredRuntime.ResumeThread(intPtr3) == -1)
-		{
-			RecoveredRuntime.CloseRemoteHandle(this, intPtr3);
-			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30775));
-		}
-		bool flag = false;
-		while (!(flag = RecoveredRuntime.HasProcessExited(base.GetRemoteProcess())) && base.Read<uint>(intPtr4.Add(int_)) == 0u)
-		{
-			Thread.Sleep(100);
-		}
-		if (flag)
-		{
-			throw new Exception(EncodedStringTable.DecodeString(28330));
-		}
-		int num = base.Read<int>(intPtr4.Add(intValue2));
-		if (num == 0)
-		{
-			IntPtr result = RecoveredRuntime.Is32BitProcess(base.GetRemoteProcess()) ? ((IntPtr)((long)((ulong)base.Read<uint>(intPtr4.Add(intValue))))) : base.Read<IntPtr>(intPtr4.Add(intValue));
-			this.ReleaseMemory(intPtr4);
-			RecoveredRuntime.CloseRemoteHandle(this, intPtr3);
-			return result;
-		}
-		this.ReleaseMemory(intPtr4);
-		RecoveredRuntime.CloseRemoteHandle(this, intPtr3);
-		throw new Exception(EncodedStringTable.DecodeString(30909), new Win32Exception(num));
 	}
 
 	internal IntPtr PrepareWow64Hijack(IntPtr address, IntPtr address2, IntPtr address3, byte[] bytes, out int intValue, out int intValue2, out int intValue3)
@@ -120,33 +154,40 @@ public sealed class ThreadHijackInjector : DllInjector
 		NativeTypes.Context32 @struct = default(NativeTypes.Context32);
 		@struct.x86ContextFlags = NativeTypes.X86ContextFlags.Control;
 		NativeTypes.Context32 struct2 = @struct;
-		if (!(PlatformInfo.flag ? RecoveredRuntime.Wow64GetThreadContext(address, ref struct2) : RecoveredRuntime.GetThreadContext(address, ref struct2)))
+		Stopwatch retryTimer = Stopwatch.StartNew();
+		while (true)
 		{
-			RecoveredRuntime.ResumeThread(address);
-			RecoveredRuntime.CloseRemoteHandle(this, address);
-			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30974));
-		}
-		if (struct2.uintValue19 == 51u)
-		{
-			RecoveredRuntime.ResumeThread(address);
+			if (!(PlatformInfo.flag ? RecoveredRuntime.Wow64GetThreadContext(address, ref struct2) : RecoveredRuntime.GetThreadContext(address, ref struct2)))
+			{
+				throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30974));
+			}
+			if (struct2.uintValue19 != 51u)
+			{
+				break;
+			}
+			if (retryTimer.ElapsedMilliseconds >= RemoteExecutionTimeoutMilliseconds)
+			{
+				throw new RemoteExecutionTimeoutException("Timed out while waiting for a WOW64 thread context that can be hijacked.");
+			}
+			if (RecoveredRuntime.ResumeThread(address) == -1)
+			{
+				throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30775));
+			}
 			Thread.Sleep(1);
-			RecoveredRuntime.SuspendThread(address);
-			return this.PrepareWow64Hijack(address, address2, address3, bytes, out intValue, out intValue2, out intValue3);
+			if (RecoveredRuntime.SuspendThread(address) == -1)
+			{
+				throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30694));
+			}
 		}
 		IntPtr intPtr = RecoveredRuntime.BuildThreadHijackStub32(this, address2, address3, bytes, out struct2, out intValue, out intValue2, ref intValue3);
 		if (intPtr == IntPtr.Zero)
 		{
-			this.ReleaseMemory(intPtr);
-			RecoveredRuntime.ResumeThread(address);
-			RecoveredRuntime.CloseRemoteHandle(this, address);
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(31039));
 		}
 		struct2.uintValue18 = (uint)((int)intPtr);
 		if (!(PlatformInfo.flag ? RecoveredRuntime.Wow64SetThreadContext(address, ref struct2) : RecoveredRuntime.SetThreadContext32(address, ref struct2)))
 		{
 			this.ReleaseMemory(intPtr);
-			RecoveredRuntime.ResumeThread(address);
-			RecoveredRuntime.CloseRemoteHandle(this, address);
 			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(31140));
 		}
 		return intPtr;
@@ -161,24 +202,17 @@ public sealed class ThreadHijackInjector : DllInjector
 		};
 		if (!RecoveredRuntime.GetAlignedThreadContext(ref @struct, address))
 		{
-			RecoveredRuntime.ResumeThread(address);
-			RecoveredRuntime.CloseRemoteHandle(this, address);
 			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(30974));
 		}
 		IntPtr intPtr = RecoveredRuntime.BuildThreadHijackStub64(this, address2, address3, bytes, out @struct, out intValue, out intValue2, ref intValue3);
 		if (intPtr == IntPtr.Zero)
 		{
-			this.ReleaseMemory(intPtr);
-			RecoveredRuntime.ResumeThread(address);
-			RecoveredRuntime.CloseRemoteHandle(this, address);
 			throw new InvalidOperationException(EncodedStringTable.DecodeString(31039));
 		}
 		@struct.ulongValue29 = (ulong)((long)intPtr);
 		if (!RecoveredRuntime.SetAlignedThreadContext(ref @struct, address))
 		{
 			this.ReleaseMemory(intPtr);
-			RecoveredRuntime.ResumeThread(address);
-			RecoveredRuntime.CloseRemoteHandle(this, address);
 			throw new UnauthorizedAccessException(EncodedStringTable.DecodeString(31140));
 		}
 		return intPtr;
