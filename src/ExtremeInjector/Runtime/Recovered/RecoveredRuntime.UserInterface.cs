@@ -126,9 +126,90 @@ public sealed partial class RecoveredRuntime
 			.ToArray();
 	}
 
+	internal static bool TryInvoke(Control control, Action action)
+	{
+		if (!CanDispatch(control, action))
+		{
+			return false;
+		}
+
+		try
+		{
+			if (control.InvokeRequired)
+			{
+				control.Invoke((MethodInvoker)(() =>
+				{
+					InvokeActionSafely(control, action);
+				}));
+			}
+			else
+			{
+				InvokeActionSafely(control, action);
+			}
+			return true;
+		}
+		catch (ObjectDisposedException)
+		{
+			return false;
+		}
+		catch (InvalidOperationException)
+		{
+			return false;
+		}
+	}
+
+	internal static bool TryBeginInvoke(Control control, Action action)
+	{
+		if (!CanDispatch(control, action))
+		{
+			return false;
+		}
+
+		try
+		{
+			control.BeginInvoke((MethodInvoker)(() =>
+			{
+				InvokeActionSafely(control, action);
+			}));
+			return true;
+		}
+		catch (ObjectDisposedException)
+		{
+			return false;
+		}
+		catch (InvalidOperationException)
+		{
+			return false;
+		}
+	}
+
+	private static void InvokeActionSafely(Control control, Action action)
+	{
+		if (!CanDispatch(control, action))
+		{
+			return;
+		}
+
+		try
+		{
+			action();
+		}
+		catch (ObjectDisposedException)
+		{
+		}
+		catch (InvalidOperationException)
+		{
+		}
+	}
+
+	private static bool CanDispatch(Control control, Action action)
+	{
+		return control != null && action != null && !control.IsDisposed && !control.Disposing && control.IsHandleCreated;
+	}
+
 	internal static void ShowInjectionError(MainForm mainForm, string message, Exception exception)
 	{
-		mainForm.Invoke((MethodInvoker)delegate
+		if (!TryInvoke(mainForm, delegate
 		{
 			MessageBox.Show(
 				mainForm,
@@ -136,7 +217,10 @@ public sealed partial class RecoveredRuntime
 				UiText.Get("App.Title"),
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation);
-		});
+		}))
+		{
+			Trace.TraceError(FormatExceptionChain(message, exception, flag: true));
+		}
 	}
 
 	internal static void ReportInjectionErrorSafely(
@@ -180,10 +264,13 @@ public sealed partial class RecoveredRuntime
 		for (int elapsedMilliseconds = 0; elapsedMilliseconds < intValue; elapsedMilliseconds += 100)
 		{
 			float remainingSeconds = (float)(intValue - elapsedMilliseconds) / 1000f;
-			mainForm.BeginInvoke((Action)(() =>
+			if (!TryBeginInvoke(mainForm, () =>
 			{
 				mainForm.processDescriptionLabel.Text = string.Format(text, remainingSeconds);
-			}));
+			}))
+			{
+				return;
+			}
 			Thread.Sleep(100);
 		}
 	}
@@ -196,7 +283,7 @@ public sealed partial class RecoveredRuntime
 			ApplicationSettings.Current.Options,
 			scramblePreset,
 			sourceModulePath,
-			message => mainForm.Invoke((MethodInvoker)delegate
+			message => TryInvoke(mainForm, delegate
 			{
 				MessageBox.Show(
 					mainForm,

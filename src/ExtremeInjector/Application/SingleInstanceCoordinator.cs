@@ -105,18 +105,12 @@ internal sealed class SingleInstanceCoordinator : IDisposable
 			return;
 		}
 
-		try
-		{
-			window.BeginInvoke((Action)(() => BringWindowToForeground(window)));
-		}
-		catch (InvalidOperationException)
-		{
-		}
+		RecoveredRuntime.TryBeginInvoke(window, () => BringWindowToForeground(window));
 	}
 
 	private static void BringWindowToForeground(Form window)
 	{
-		if (window.IsDisposed)
+		if (window.IsDisposed || window.Disposing || !window.IsHandleCreated)
 		{
 			return;
 		}

@@ -96,8 +96,12 @@ public sealed class DependencyInstallerForm : Form
 
 	internal void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
 	{
-		base.Invoke(new MethodInvoker(delegate
+		RecoveredRuntime.TryBeginInvoke(this, delegate
 		{
+			if (progressBar == null || label == null)
+			{
+				return;
+			}
 			this.progressBar.Value = e.ProgressPercentage;
 			string fileName = null;
 			string disposition = this.cookieAwareWebClient.ResponseHeaders?["Content-Disposition"];
@@ -125,12 +129,12 @@ public sealed class DependencyInstallerForm : Form
 				fileName,
 				RecoveredRuntime.FormatByteSize(e.BytesReceived),
 				RecoveredRuntime.FormatByteSize(e.TotalBytesToReceive));
-		}));
+		});
 	}
 
 	internal void OnDownloadCompleted(object sender, DownloadDataCompletedEventArgs e)
 	{
-		base.Invoke(new MethodInvoker(delegate
+		RecoveredRuntime.TryBeginInvoke(this, delegate
 		{
 			if (e.Cancelled)
 			{
@@ -150,7 +154,7 @@ public sealed class DependencyInstallerForm : Form
 			{
 				this.InstallDownloadedDependency(e.Result);
 			});
-		}));
+		});
 	}
 
 	private void InstallDownloadedDependency(byte[] downloadedData)
@@ -158,10 +162,13 @@ public sealed class DependencyInstallerForm : Form
 		bool succeeded = true;
 		if (!this.flag)
 		{
-			this.Invoke(new MethodInvoker(delegate
+			if (!RecoveredRuntime.TryInvoke(this, delegate
 			{
 				this.label.Text = UiText.Get("Dependency.Extracting");
-			}));
+			}))
+			{
+				return;
+			}
 			try
 			{
 				SafeZipExtractor.Extract(downloadedData, this.text2);
@@ -174,10 +181,13 @@ public sealed class DependencyInstallerForm : Form
 		}
 		else
 		{
-			this.Invoke(new MethodInvoker(delegate
+			if (!RecoveredRuntime.TryInvoke(this, delegate
 			{
 				this.label.Text = UiText.Format("Dependency.Installing", this.text3);
-			}));
+			}))
+			{
+				return;
+			}
 			try
 			{
 				string temporaryDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -207,18 +217,13 @@ public sealed class DependencyInstallerForm : Form
 		{
 			ShowMessage(UiText.Get("Message.Dependency.Completed"), MessageBoxIcon.Information);
 		}
-		this.Invoke(new MethodInvoker(this.Close));
+		RecoveredRuntime.TryBeginInvoke(this, Close);
 	}
 
 	private void ShowMessage(string message, MessageBoxIcon icon)
 	{
-		if (IsDisposed)
-		{
-			return;
-		}
-
-		Invoke(new MethodInvoker(() =>
-			MessageBox.Show(this, message, UiText.Get("App.Title"), MessageBoxButtons.OK, icon)));
+		RecoveredRuntime.TryBeginInvoke(this, () =>
+			MessageBox.Show(this, message, UiText.Get("App.Title"), MessageBoxButtons.OK, icon));
 	}
 
 	internal void OnFormLoad(object sender, EventArgs e)
@@ -271,7 +276,7 @@ public sealed class DependencyInstallerForm : Form
 					}
 					finally
 					{
-						this.Invoke(new MethodInvoker(this.Close));
+						RecoveredRuntime.TryBeginInvoke(this, Close);
 					}
 					return;
 				}
